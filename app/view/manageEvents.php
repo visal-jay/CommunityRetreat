@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Public/assets/newstyles.css">
+    <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<style>
+    textarea {
+        height: 150px;
+        padding: 12px 20px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+        font-size: 16px;
+        resize: none;
+    }
+
+    
+    .form {
+        min-width: 50%;
+        overflow: hidden;
+        height: 0px;
+        transition: height, 0.3s linear;
+    }
+
+    .show-form {
+        height: 700px;
+        transition: height, 0.3s linear;
+    }
+
+    #map {
+        height: 350px;
+        width: 350px;
+        border-radius: 8px;
+    }
+
+    table {
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    td {
+        text-align: center;
+        padding: 1rem 0;
+    }
+
+    .event-card-details {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .date {
+        display: flex;
+        flex-direction: row;
+    }
+
+    @media screen and (max-width:800px) {
+        .card-container{
+        height: 220px;
+    }
+        .form {
+            width: 80%;
+
+        }
+
+        .show-form {
+            height: 800px;
+            transition: height, 0.3s linear;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        #map{
+            width: 300px;
+            height: 300px;
+        }
+
+        table tr>* {
+            display: block;
+        }
+
+        table tr {
+            display: table-cell;
+        }
+
+        table th {
+            padding: .5rem 0;
+            text-align: left;
+        }
+
+        td {
+            padding: .5rem 0;
+        }
+
+        .event-card-details {
+            flex-direction: column;
+        }
+
+
+        .date {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+</style>
+<?php include "nav.php" ?>
+
+<body>
+    <div class="flex-col flex-center margin-side-lg">
+        <h1>Manage Events</h1>
+
+        <button class="btn btn-solid margin-lg" onclick="addEvent()">Add Event &nbsp; <i class="fas fa-plus"></i></button>
+        <div class="form">
+            <div class="form-item">
+                <label>Event name</label>
+                <input type="text" name="eventname" class="form-ctrl" placeholder=" Enter Event Name" required style="font-family:Arial, FontAwesome" />
+                <label>Description</label>
+                <textarea name="description" class="form-ctrl"></textarea>
+
+                <div class="date" style="justify-content:space-evenly">
+                    <div class="flex-col">
+                        <label>Start date</label>
+                        <input type="date" class="form-ctrl">
+                    </div>
+                    <div class="flex-col">
+                        <label>End date</label>
+                        <input type="date" class="form-ctrl">
+                    </div>
+                </div>
+                <div class="flex-col flex-center">
+                    <div class="border-round" id="map"></div>
+                </div>
+
+            </div>
+            <button onclick="printMarker()">Print location</button>
+        </div>
+        <div class="card-container margin-side-lg">
+            <h3 class="heading">Dog rescue</h3>
+            <div class="event-card-details">
+                <table>
+                    <tr>
+                        <th>Added date</th>
+                        <th>Published date</th>
+                        <th>Volunteering</th>
+                        <th>Donations</th>
+
+                    </tr>
+                    <tr>
+                        <td>2010.10.20</td>
+                        <td>2010.10.20</td>
+                        <td><i class="fas fa-check clr-green"></i></td>
+                        <td><i class="fas fa-times clr-red"></i></td>
+                    </tr>
+                </table>
+                <div class="flex-row flex-center">
+                    <button class="btn btn-solid bg-red border-red" onclick="remove()">Remove</button>
+                    <div class="flex-row flex-space " style="display: none; padding-top:1rem;" >
+                        <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
+                        <i class="fas fa-check clr-green margin-side-md"></i>&nbsp;
+                        <i class="fas fa-times clr-red  margin-side-md" onclick="cancel()"></i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
+<script>
+    function addEvent() {
+        document.querySelector(".form").classList.toggle("show-form");
+    }
+
+    function remove() {
+        event.target.style.display = "none";
+        event.target.nextElementSibling.style.display="flex";
+    }
+
+    function cancel(){
+        var cancel=event.target.parentNode;
+        cancel.style.display="none";
+        cancel.previousElementSibling.style.display="block";
+
+    }
+    let map;
+    var marker;
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: {
+                lat: -34.397,
+                lng: 150.644
+            },
+            zoom: 8,
+        });
+    }
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    getLocation();
+    printMarker = () => console.log(marker.getPosition().toJSON());
+
+    function showPosition(position) {
+
+        var myLatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+        marker = new google.maps.Marker({
+            position: myLatlng,
+            draggable: true,
+            title: "Hello World!"
+        });
+
+        // To add the marker to the map, call setMap();
+        marker.setMap(map);
+        map.setCenter(myLatlng);
+        map.setZoom(15)
+    }
+</script>
+
+</html>

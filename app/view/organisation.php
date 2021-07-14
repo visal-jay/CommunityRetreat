@@ -42,7 +42,7 @@
         min-height: 100px;
         background-color: gray;
         overflow: hidden;
-        aspect-ratio: 4/1.2;
+        aspect-ratio: 4/1.75;
         max-width: 80%;
     }
 
@@ -56,7 +56,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        
+
     }
 
     .nav-secondary-bar {
@@ -102,51 +102,66 @@
         background: #16c79a;
     }
 
-    table {
+
+    p {
+        text-align: justify;
+        text-justify: inter-word;
+    }
+
+    h1,
+    h2 {
+        margin: 5px 0;
+    }
+
+    .info {
+        padding: 0 2rem;
+    }
+
+    #map {
         width: 100%;
-        table-layout: fixed;
+        aspect-ratio: 2/1;
     }
 
-    td {
-        text-align: center;
-        padding: 1rem 0;
+    .image-upload {
+        position: absolute;
+        bottom: 11px;
+        right: 11px;
     }
 
-    .event-card-details {
-        display: flex;
-        flex-direction: row;
+    .image-upload>input {
+        display: none;
+
     }
 
-    h1 ,h2{
-        margin: 0px;
+    textarea {
+        height: 150px;
+        padding: 12px 20px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+        font-size: 16px;
+        resize: none;
     }
 
-    .info{
-        text-align: center;
-    }
     @media screen and (max-width:767px) {
-        h1{
+        h1 {
             font-size: 1.5rem;
         }
-        table tr>* {
-            display: block;
+
+        h2 {
+            font-size: 1rem;
         }
 
-        table tr {
-            display: table-cell;
-        }
 
-        table th {
-            padding: .5rem 0;
-            text-align: left;
-        }
-
-        td {
-            padding: .5rem 0;
-        }
 
         .event-card-details {
             flex-direction: column;
+        }
+
+        #map {
+            width: 300px;
+            height: 300px;
         }
     }
 </style>
@@ -156,22 +171,66 @@
 
     <div class="photo-container ">
         <div class="cover-place-holder cover border-round">
-            <img src="/Public/assets/photo.jpeg" alt="" class="photo-element">
+            <img src="/Public/assets/photo.jpeg" alt="" class="photo-element" styl>
+
+            <div class="image-upload hidden form">
+                <label for="file-input">
+                    <i class="fas fa-edit clr-white"></i>
+                </label>
+                <input id="file-input" type="file" />
+            </div>
         </div>
         <div class="profile-pic border-round">
             <img src="/Public/assets/newphoto.jpeg" alt="" class="photo-element">
+            <div class="image-upload hidden form">
+                <label for="file-input">
+                    <i class="fas fa-edit clr-white"></i>
+                </label>
+
+                <input id="file-input" type="file" />
+            </div>
         </div>
     </div>
-    <div class="flex-row flex-center">
-        <h1>Organisation name</h1>
+
+    <div class="flex-col flex-center ">
+
+        <div class="info ">
+            <div class="flex-row flex-center">
+                <div class="data">
+                    <h1>Organistion name</h1>
+                </div>
+            </div>
+            <div class="flex-col">
+                <h2>About us</h2>
+                <div class="data">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus corporis ex, veniam hic omnis quas nisi et ducimus iste. Qui ipsum assumenda blanditiis expedita alias quisquam architecto! Tempore, corporis beatae.</p>
+                </div>
+                <textarea name="description" class="form form-ctrl hidden" placeholder="Enter about us">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae magni eveniet porro, ipsa mollitia dolores ipsam optio aliquam, debitis voluptatum accusamus cum perferendis, amet facere expedita nostrum laboriosam quas iste!</textarea>
+            </div>
+            <div class="flex-col">
+                <h2>Contact us</h2>
+                <input type="email" class="form form-ctrl hidden" placeholder=" Enter email" value="organistaion@domain.com" required>
+                <input type="tel" class="form form-ctrl hidden" placeholder="Enter telephone number" value="0119929292" pattern="^[+]?[0-9]{10,12}$" required>
+                <div class="data">
+                    <a href="mailto:comapny@gmail.com">organistaion@domain.com </a>
+                    <p>0119929292</p>
+                </div>
+            </div>
+            <div class="flex-col flex-center">
+                <h2>Locate us</h2>
+
+                <div class="data" id="map"></div>
+
+            </div>
+
+            <div class="flex-row" style="justify-content:flex-end;">
+                <button class="btn btn-solid data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
+                <button class="btn btn-solid bg-red border-red form hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
+                <button class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
+            </div>
+        </div>
     </div>
 
-    <div class="info">
-        <div class="flex-col">
-            <h2>About us</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus corporis ex, veniam hic omnis quas nisi et ducimus iste. Qui ipsum assumenda blanditiis expedita alias quisquam architecto! Tempore, corporis beatae.</p>
-   </div>
-         </div>
     <div class="nav-secondary">
         <div class="nav-secondary-bar margin-lg">
             <a class="btn  margin-side-md" style=" margin-bottom:10px;" href="/view/adoption_listing.php ">About</a>
@@ -191,21 +250,75 @@
 
 
 </body>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
+
 <script>
+    function edit() {
+        var data = document.getElementsByClassName("data");
+        var form = document.getElementsByClassName("form");
+        for (var i = 0; i < data.length; i++) {
+            data[i].classList.toggle("hidden");
+        }
+        for (var i = 0; i < form.length; i++) {
+            form[i].classList.toggle("hidden");
+        }
+    }
+
     function resizeProfile() {
         var coverHeight = (document.querySelector(".cover").offsetHeight);
         document.querySelector(".profile-pic").style.top = coverHeight + "px";
         var profileHeight = (document.querySelector(".profile-pic").offsetHeight);
-        document.querySelector(".photo-container").style.height = (parseInt(coverHeight)+parseInt(profileHeight)) + "px";
+        document.querySelector(".photo-container").style.height = (parseInt(coverHeight) + parseInt(profileHeight) * 0.75) + "px";
     }
-    window.onload = resizeProfile();
-    window.addEventListener("resize", resizeProfile);
+
+    function resizeInfo() {
+        var coverWidth = (document.querySelector(".cover").offsetWidth);
+        document.querySelector(".info").style.width = coverWidth + "px";
+    }
+
+    function resize() {
+        resizeProfile();
+        resizeInfo();
+    }
+    window.onload = resize();
+    window.addEventListener("resize", resize);
+
 
     document.querySelector(".active").scrollIntoView({
         behavior: 'auto',
         block: 'center',
         inline: 'center'
     });
+
+    let map;
+    var marker;
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: {
+                lat: -34.397,
+                lng: 150.644
+            },
+            zoom: 8,
+        });
+        showPosition();
+    }
+
+    function showPosition(position) {
+
+        var myLatlng = new google.maps.LatLng(6, 79);
+
+        marker = new google.maps.Marker({
+            position: myLatlng,
+            draggable: true,
+            title: "Hello World!"
+        });
+
+        // To add the marker to the map, call setMap();
+        marker.setMap(map);
+        map.setCenter(myLatlng);
+        map.setZoom(15)
+    }
 </script>
 
 </html>

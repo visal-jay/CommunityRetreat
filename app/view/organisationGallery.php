@@ -98,7 +98,7 @@
             <button tyoe="submit" class="btn ">Save</button>
         </div>
 
-        <div class="grid flex margin-lg">
+        <div class="grid margin-lg">
             <figure class="item">
                 <div class="photo-container flex flex-center content"><img src="/Public/assets/login-image.jpg" style="object-fit: cover;" alt=""></div>
             </figure>

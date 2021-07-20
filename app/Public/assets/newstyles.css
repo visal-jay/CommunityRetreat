@@ -122,6 +122,10 @@ body {
   text-decoration: none;
 }
 
+.flex {
+  display: flex;
+}
+
 .flex-col {
   display: flex;
   flex-direction: column;
@@ -323,12 +327,12 @@ header .logo img {
     flex: 1;
   }
 
-  #near-me {
+  nav #near-me {
     margin-bottom: 1rem;
   }
 
   .card-container {
-    padding: 0 2rem 1rem;
+    padding: 0rem 1rem;
   }
 }
 /* HEADER END *//*# sourceMappingURL=newstyles.css.map */

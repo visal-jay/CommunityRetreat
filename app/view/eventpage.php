@@ -171,6 +171,7 @@
             <a class="btn margin-side-md" style=" margin-bottom:10px;" href="/view/adoption_listing.php ">Feedback</a>
             <a class="btn margin-side-md" style=" margin-bottom:10px;" href="# ">Budget</a>
             <a class="btn margin-side-md" style=" margin-bottom:10px;" href="# ">User Roles</a>
+            <a class="btn margin-side-md" style=" margin-bottom:10px;" href="# ">Volunteers</a>
         </div>
     </div>
 

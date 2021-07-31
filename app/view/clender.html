@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>
-            index
+            calender
         </title>
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,10 +10,11 @@
             <link rel="stylesheet" href="../Public/assets/newstyles.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
             <link rel="stylesheet" href= "../Public/assets/style/fontawesome.min.css">
-            <link rel="stylesheet" href="../Public/assets/style/historystyle.css">
-            <script defer src="../Public/assets/js/main.js"></script>
+            <link rel="stylesheet" href="../Public/assets/style/calenderstyle.css">
+            <script defer src="../Public/assets/js/calender.js"></script>
+           <!---- <script defer src="../Public/assets/js/calenderdata.js"></script>-->
         
-
+      
     </head>
     <body>
         <header class="header">
@@ -44,54 +45,55 @@
 
         </header>
         <h1 id="topic">
-            Activity Log
+            Calender
         </h1>
-        
-       <div class="table-container">
-           
-            <table class="event-table" id = "table">
-                <thead>
-                    <tr>
-                        <th>Event name</th>
-                        <th>Date</th>
-                        <th>Activity</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody id="table-body">
-
-                </tbody>
-                  
-            </table>
-        
-                
-
-            
-            
-              
-            </div>
-        
-    </div>
-       <div class="pop-up-container" id="popup">
-           <div class="pop-up">
-                <h3>Are you sure ?</h3>
-               <div class="confirm-buttons">
+        <div class = "calender-container">
+            <div class="calender">
+                <div class="month">
+                    <i class = "fas fa-angle-left prev "></i>
+                    <div class="date">
+                        <h1></h1>
+                        <p></p>
+                    </div>
+                    <i class = "fas fa-angle-right next"></i>   
+                </div>
+                <div class="weekdays">
+                    <div>Sun</div>
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                </div>
+                <div class="days">
                    
-                    <button onclick = "onDelete('')" class= "btn bg-green clr-white border-green">Yes</button>
-                    <button onclick="popupLoad()" class= "btn bg-red clr-white border-red">No</button>
-               </div>
-           </div>
-       </div>
-    <script>
-        const tableEl = document.querySelector('table');
-        function popupLoad(){
-            var popup = document.getElementById("popup");
-            popup.classList.toggle("pop-up-load");
-        }
- 
-    </script>
+                </div>
+            </div>
+        </div>
+        <div class="event-popup-container">
+            <div class="event-popup card-container">
+                <div class="event-popup-header">
+                    <div class="close-btn"><button class="btn btn-icon  popup-form-cancelbtn" onclick="popupHide()"><i class="fas fa-times clr-red"></i></button></div>
+                    <h2>Events on</h2>
+                    
+                </div>
+                <div class="date-event-popup">
+                    <p></p>
+                </div>
+                <div class="event-items">
+                    
+                </div>
+            </div>
+            
+        </div>
+
+            
 
 
+
+        
     </body>
+   
 
 </html>

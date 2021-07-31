@@ -1,0 +1,43 @@
+*{
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+}
+
+#topic{
+
+    text-align:center;
+    padding-top:10px;
+    color: #16c79a;
+}
+.notifications-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.notifications-form{
+    width: 90%;
+    display:flex;
+    flex-direction: column;
+    
+
+}
+.notificationbar{
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    
+}
+.image-div{
+    display:flex;
+    align-self: center;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    border:2px solid  rgb(252, 246, 246);
+    background: rgb(202, 196, 196);
+}
+.description{
+    padding:1.5rem 0.5rem 1rem;
+}

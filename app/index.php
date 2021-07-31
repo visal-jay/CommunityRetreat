@@ -23,7 +23,6 @@ spl_autoload_register('myAutoload');
 $url = isset($_GET["url"]) ? $_GET["url"] : "";
 $path = explode("/", $url);
 
-
 $controllerName =$path[0]."Controller";
 $action = $path[1];
 $c = new $controllerName();

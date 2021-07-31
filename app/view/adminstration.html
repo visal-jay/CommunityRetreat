@@ -10,8 +10,8 @@
             <link rel="stylesheet" href="../Public/assets/newstyles.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
             <link rel="stylesheet" href= "../Public/assets/style/fontawesome.min.css">
-            <link rel="stylesheet" href="../Public/assets/style/historystyle.css">
-            <script defer src="../Public/assets/js/main.js"></script>
+            <link rel="stylesheet" href="../Public/assets/style/admininstativestyles.css">
+            <script defer src="../Public/assets/js/admininis.js"></script>
         
 
     </head>
@@ -44,53 +44,23 @@
 
         </header>
         <h1 id="topic">
-            Activity Log
+            Adminstration
         </h1>
+        <div class="eventsearchbar">
+            <form action="/action_page.html" class="search-bar" style="height:fit-content">
+                <input type="search" class="form-ctrl" placeholder="Search event" >
+                <button type="" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
+            </form>
+
+        </div>
         
-       <div class="table-container">
+        <div class="main-container" id="table-container">
            
-            <table class="event-table" id = "table">
-                <thead>
-                    <tr>
-                        <th>Event name</th>
-                        <th>Date</th>
-                        <th>Activity</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody id="table-body">
-
-                </tbody>
-                  
-            </table>
-        
-                
-
             
-            
-              
-            </div>
+        </div>
         
-    </div>
-       <div class="pop-up-container" id="popup">
-           <div class="pop-up">
-                <h3>Are you sure ?</h3>
-               <div class="confirm-buttons">
-                   
-                    <button onclick = "onDelete('')" class= "btn bg-green clr-white border-green">Yes</button>
-                    <button onclick="popupLoad()" class= "btn bg-red clr-white border-red">No</button>
-               </div>
-           </div>
-       </div>
-    <script>
-        const tableEl = document.querySelector('table');
-        function popupLoad(){
-            var popup = document.getElementById("popup");
-            popup.classList.toggle("pop-up-load");
-        }
- 
-    </script>
-
+       
+   
 
     </body>
 

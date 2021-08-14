@@ -14,11 +14,41 @@
 <style>
     .styled-table {
     border-collapse: collapse;
-    margin: 25px 0;
+    margin: 25px 25px;
     font-size: 0.9em;
-    font-family: sans-serif;
-    min-width: 400px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    min-width: 80%;
+    max-width: 100%;
+}
+.styled-table th, td{
+    text-align: left;
+}
+#role{
+    margin-bottom: 0px;
+}
+
+.flex-row-to-col{
+    display: flex;
+    flex-direction: row;
+}
+
+th, td{
+    padding-right: 20px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+#del{
+    padding-left: 30px;
+}
+
+@media screen and (max-width:767px) {
+    .flex-row-to-col{
+        flex-direction: column;
+} 
+
+.search-bar-role{
+    width: 50%;
+}
 }
 </style>
 
@@ -29,12 +59,23 @@
     <div class="flex-col flex-center">
     <h1>User Roles</h1>
 
-    <div class="flex-row flex-center">
-        <form action="/action_page.html" class="search-bar" style="height:fit-content">
-            <input type="search" class="form-ctrl" placeholder="Search User">
-            <button type="" class="btn-icon clr-green "><i class=" fa fa-search"></i></button>
+    <div>
+        <form class="flex-center flex-row-to-col" action="/action_page.html" style="height:fit-content">
+        <div class="flex-row flex-center">
+            <div class="search-bar search-bar-role">
+                    <input type="search" class="form-ctrl" placeholder="Search User">
+                    <button type="" class="btn-icon clr-green "><i class=" fa fa-search"></i></button>
+                </div>
+            <select class="form-ctrl" id="role" required>
+                <option value="" disabled selected>Select role</option>
+                <option value="Moderator">Moderator</option>
+                <option value="Treasurer">Treasurer</option>
+            </select>
+        </div>
+        <div>
+            <button type="submit" class="btn margin-lg" onclick="add()">Add User &nbsp; <i class="fas fa-plus"></i></button>
+        </div>
         </form>
-        <button class="btn margin-lg" onclick="add()">Add User &nbsp; <i class="fas fa-plus"></i></button>
     </div>
     
 
@@ -43,12 +84,27 @@
             <tr>
                 <th>User</th>
                 <th>User Role</th>
-                <th>Delete</th>
+                <th><button class="btn btn-solid bg-red border-red data" onclick="del()">Delete User&nbsp;&nbsp; <i class="far fa-trash-alt"></i></button></th>
+            </tr>
+            <tr>
+                <td>Visal Jayathilake</td>
+                <td>Admin</td>
+                <td id="del"><i class="btn-icon far fa-trash-alt clr-red form hidden" onclick="del()"></i></td>
+            </tr>
+            <tr>
+                <td>Pudara Semini</td>
+                <td>Treasurer</td>
+                <td id="del"><i class="btn-icon far fa-trash-alt clr-red form hidden" onclick="del()"></i></td>
             </tr>
             <tr>
                 <td>Venodi Widanagamage</td>
-                <td>Admin</td>
-                <td><i class="btn-icon far fa-trash-alt clr-red"></i></td>
+                <td>Moderator</td>
+                <td id="del"><i class="btn-icon far fa-trash-alt clr-red form hidden" onclick="del()"></i></td>
+            </tr>
+            <tr>
+                <td>Manuka Dewanarayana</td>
+                <td>Registered User</td>
+                <td id="del"><i class="btn-icon far fa-trash-alt clr-red form hidden" onclick="del()"></i></td>
             </tr>
         </table>
         </div>
@@ -56,8 +112,19 @@
 </body>
 
 <script>
-        function add() {
+    function add() {
         document.querySelector(".form").classList.toggle("show-form");
+    }
+
+    function del() {
+        var data = document.getElementsByClassName("data");
+        var form = document.getElementsByClassName("form");
+        for (var i = 0; i < data.length; i++) {
+            data[i].classList.toggle("hidden");
+        }
+        for (var i = 0; i < form.length; i++) {
+            form[i].classList.toggle("hidden");
+        }
     }
 </script>
 

@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="../Public/assets/newstyles.css">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../Public/assets/style/newstyles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="stylesheet" href= "../Public/assets/style/profilestyle.css">
         <link rel="stylesheet" href= "../Public/assets/style/fontawesome.min.css">
@@ -36,7 +39,7 @@
             </button>
 
         </header>
-        <div class="body-main">
+        
             <div class="profilecontainer">
                   <div class="profilecontainer-top">
                         <div class="profilepic-pic-div">
@@ -47,36 +50,35 @@
                         
                             <div class="aboutme-container">
                                 <div class="edit-intro-btn">
-                                    <h2  id="name">Iroshan Umayangana</h2>
-                                    <button class="btn btn-clr" onclick="showEddite('nameupdater')"><i class= "fas fa-pen fa-1x" id="edit-icon"></i></button>
+                                    <h2  id="name">Iroshan Umayangana jayathilaaka</h2>
                                 </div>
-                                <h3 id="livefrom"><i class="fas fa-map-marker-alt" id="marker"></i> Matara,Sri Lanka</h3>
-
+                                <br><h3 id="livefrom"><i class="fas fa-map-marker-alt" id="marker"></i> Matara,Sri Lanka</h3>
+                                <button class="btn btn-icon "  onclick="showEddite('nameupdater')">Edit bio</button>
                             </div>
-                            <div class="intro-editor">
-                                <div class="edit-container" id="nameupdater">
-                                    <div class="new">
-                                        <label for="text" class = "edit-coontainer" >Enter your name:</label>
-                                        <input type= "text"  id="nameinput" placeholder = "Enter the name"><br>
-                                    </div>
-                                    <div class="new">
-                                        <label for="text" class = "edit-coontainer" >Country:</label>
-                                        <input type= "text"  id="countryinput" placeholder = "Enter the country"><br>
-                                    </div>
-                                    <div class="new">
-                                        <label for="text" class = "edit-coontainer" >Town:</label>
-                                        <input type= "text"  id="towninput" placeholder = "Enter the town"><br>
-                                    </div>
-                                    <div class="updatebtn">
-                                        <button type= "submit" class="btn bg-green clr-white" onclick="changeName('name','livefrom','towninput','countryinput','nameupdater')" >Update</button>
-                                        <button type= "submit" class="btn bg-red border-red clr-white" onclick="showEddite('nameupdater')" >Cancel</button>
-                                    </div>
+                
+                            <div class="name-update-form" id="nameupdater">
+                                <div class="input-container">
+                                    <label for="text"  >Enter your name:</label>
+                                    <input type= "text" id="nameinput" placeholder = "Enter the name"><br>
+                               
+                                
+                                    <label for="text"  >Country:</label>
+                                    <input type= "text"  id="countryinput" placeholder = "Enter the country"><br>
+                                
+                               
+                                    <label for="text"  >Town:</label>
+                                    <input type= "text" id="towninput" placeholder = "Enter the town"><br>
                                 </div>
+                                <div class ="intro-update-btn">
+                                    <button type= "submit" class="btn bg-green clr-white" onclick="changeName('name','livefrom','towninput','countryinput','nameupdater')" >Update</button>
+                                    <button type= "submit" class="btn bg-red border-red clr-white" onclick="showEddite('nameupdater')" >Cancel</button>
+                                </div>
+                                
                             </div>
                             
                         
                        
-                        <div class="contact-settings">
+                       <div class="contact-settings">
                             <h2>Contact-info</h2>
                             <hr>
                         
@@ -92,20 +94,20 @@
                                             <h3 id="email">2019cs031@gmail.com</h3>
                                         </div>
                                         <div class="email-change-btn">
-                                            <button class="btn btn-clr" onclick=" showEddite('emailupdater')"><i class= "fas fa-pen fa-1x" id="edit-icon"></i></button>
+                                            <button class="btn btn-clr"  onclick=" showEddite('emailupdater')"><i class= "fas fa-pen fa-1x" id="edit-icon"></i></button>
                                         </div>
                                     </div>
                                   
-                                    <div class="edit-container" id="emailupdater">
-                                        <div class="new">
-                                            <label for="text" class = "form-item label" >Enter new email:</label>
+                                    <div class="name-update-form" id="emailupdater">
+                                        <div class="input-container">
+                                            <label for="text"  >Enter new email:</label>
                                             <input type= "text" placeholder = "Enter new email" id ="emailinput"><br>
+                                        
+                                            <div class="intro-update-btn">
+                                                <button type= "submit" class="btn bg-green clr-white"  onclick="changeUserName('email','emailupdater')">Update</button>
+                                                <button type= "submit" class="btn bg-red border-red clr-white" onclick=" showEddite('emailupdater')" >Cancel</button>
+                                            </div>
                                         </div>
-                                        <div class="updatebtn">
-                                            <button type= "submit" class="btn bg-green clr-white"  onclick="changeUserName('email','emailupdater')">Update</button>
-                                            <button type= "submit" class="btn bg-red border-red clr-white" onclick=" showEddite('emailupdater')" >Cancel</button>
-                                        </div>
-  
                                     </div>
 
                                     <div class="mobile-container">
@@ -123,16 +125,17 @@
                                         </div>
                                        
                                     </div>
-                                    <div class="edit-container" id="mobileupdater">
-                                        <div class="new">
+                                    <div class="name-update-form" id="mobileupdater">
+                                        <div class="input-container">
+                                        
                                             <label for="text" class = "form-item label" >Enter new mobile:</label>
                                             <input type= "text"  placeholder = "Enter new mobile" id="mobileinput"><br>
+                                        
+                                            <div class="intro-update-btn">
+                                                <button type= "submit" class="btn bg-green clr-white"  onclick="changeUserName('mobile','mobileupdater')" >Update</button>
+                                                <button type= "submit" class="btn bg-red border-red clr-white" onclick=" showEddite('mobileupdater')">Cancel</button>
+                                            </div>
                                         </div>
-                                        <div class="updatebtn">
-                                            <button type= "submit" class="btn bg-green clr-white"  onclick="changeUserName('mobile','mobileupdater')" >Update</button>
-                                        <button type= "submit" class="btn bg-red border-red clr-white" onclick=" showEddite('mobileupdater')">Cancel</button>
-                                        </div>
-  
                                     </div>
                                     
                                          
@@ -162,14 +165,15 @@
                                             <button class="btn btn-clr" onclick="showEddite('usernameupdater')"><i class= "fas fa-pen fa-1x" id="edit-icon"></i></button>
                                         </div>
                                     </div>
-                                    <div class="edit-container" id="usernameupdater">
-                                        <div class="new">
+                                    <div class="name-update-form" id="usernameupdater">
+                                        <div class="input-container">
                                             <label for="text" class = "edit-coontainer" >Enter new username:</label>
                                             <input type= "text"  id="usernameinput" placeholder = "Enter new username"><br>
-                                        </div>
-                                        <div class="updatebtn">
-                                            <button type= "submit" class="btn bg-green clr-white" onclick="changeUserName('username','usernameupdater')" >Update</button>
-                                            <button type= "submit" class="btn bg-red border-red clr-white" onclick="showEddite('usernameupdater')" >Cancel</button>
+                                        
+                                             <div class="intro-update-btn">
+                                                <button type= "submit" class="btn bg-green clr-white" onclick="changeUserName('username','usernameupdater')" >Update</button>
+                                                <button type= "submit" class="btn bg-red border-red clr-white" onclick="showEddite('usernameupdater')" >Cancel</button>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="password-container">
@@ -179,37 +183,34 @@
                                         </div>
                                        
                                         <div class="password">
-                                            <input type= "password"  class="form-ctrl"  id="password" disabled><br>
+                                            <input type= "password"    id="password" disabled><br>
                                         </div>
                                         <div class="password-change-btn">
                                                 <button class="btn btn-clr"  onclick="showEddite('passwordupdater')"><i class= "fas fa-pen fa-1x" id="edit-icon"></i></button>
                                         </div>
                                         
                                     </div>
-                                    <div class="password-edit-container"  id="passwordupdater">
-                                        <div class="new-password">
+                                    <div class="name-update-form"  id="passwordupdater">
+                                        <div class="input-container">
+                                        
                                             <label for="password" class = "form-item label" >Enter current password:</label>
                                             <input type= "password"  placeholder = "Enter current password:" id="passwordinputold" ><br>
-                                            
-                                        </div>
-                                        <div class="new">
+                                       
                                             <label for="password" class = "form-item label" >Enter new password: </label>
                                             <input type= "password" placeholder = "Enter new password:" id = "passwordinputnew"><br>
                                             
                                             
-                                            
-                                        </div>
-                                        <div class="new">
+                                      
                                             <label for="password" class = "form-item label" >Confirm password:</label>
                                             <input type= "password"  placeholder = "Enter current password:" id="passwordinput" >
                                             <span id="alert"></span><br>
                                             
+                                        
+                                            <div class="intro-update-btn">
+                                                <button type= "submit" class="btn bg-green clr-white"  onclick="passwordmatch('passwordinputnew','passwordinput','alert','passwordupdater')" >Update</button>
+                                                <button type= "submit" class="btn bg-red border-red clr-white"  onclick="showEddite('passwordupdater')">Cancel</button>
+                                            </div>
                                         </div>
-                                        <div class="updatebtn">
-                                            <button type= "submit" class="btn bg-green clr-white"  onclick="passwordmatch('passwordinputnew','passwordinput','alert','passwordupdater')" >Update</button>
-                                            <button type= "submit" class="btn bg-red border-red clr-white"  onclick="showEddite('passwordupdater')">Cancel</button>
-                                        </div>
-                                    
                                     </div>    
                                 </div>
                                
@@ -222,8 +223,13 @@
                   </div>
                  
             </div>
+
+        
+   
+
         </div>
     <script src = "../Public/assets/app.js" ></script>
+
     <script>
         function showEddite(elementId){
             // alert()
@@ -250,7 +256,7 @@
         }
         function changeName(elementId1,elementId2,elementId3,elementId4,containerID){
             document.getElementById(elementId1).innerText = document.getElementById(elementId1+'input').value;
-            document.getElementById(elementId2).innerText = document.getElementById('livefrom').innerText +  document.getElementById(elementId3).value + " , " +  document.getElementById(elementId4).value;
+            document.getElementById(elementId2).innerText =  document.getElementById(elementId3).value + " , " +  document.getElementById(elementId4).value;
             document.getElementById(containerID).classList.toggle("hide");
             
         }

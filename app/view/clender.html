@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            calender
+        </title>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="../Public/assets/newstyles.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+            <link rel="stylesheet" href= "../Public/assets/style/fontawesome.min.css">
+            <link rel="stylesheet" href="../Public/assets/style/calenderstyle.css">
+            <script defer src="../Public/assets/js/calender.js"></script>
+           <!---- <script defer src="../Public/assets/js/calenderdata.js"></script>-->
+        
+      
+    </head>
+    <body>
+        <header class="header">
+            <a class=" logo ">
+                <img src="../Public/assets/visal logo.png">
+            </a>
+            <nav class="main-nav ">
+                <div class="flex justify-between " style="width:100% ">
+                    <button class="btn btn-link more-btn " onclick="document.querySelector( '.main-nav').classList.toggle( 'shown') ">
+                        <i class="fa fa-times fa-2x"></i>
+                    </button>
+                </div>
+                <button class="btn btn-solid" id="near-me"><i class="fas fa-map-marker-alt" ></i>&nbsp;Near me</button>
+                <form action="/action_page.html" class="search-bar" style="height:fit-content">
+                    <input type="search" class="form-ctrl" placeholder="Search" >
+                    <button type="" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
+                </form>
+                <a class="nav-link margin-side-md" href="/view/adoption_listing.php ">About</a>
+                <a class="nav-link margin-side-md" href="# ">Calender</a>
+                <a class="nav-link margin-side-md" href="# ">History</a>
+            </nav>
+ 
+            <a class="btn btn-solid" href="profile.html" style="font-size:1rem "><i class="fa fa-user "> </i>Me </a>
+
+            <button class="btn more-btn " onclick="document.querySelector( '.main-nav').classList.toggle( 'shown') ">
+                <i class="fa fa-bars "></i>
+            </button>
+
+        </header>
+        <h1 id="topic">
+            Calender
+        </h1>
+        <div class = "calender-container">
+            <div class="calender">
+                <div class="month">
+                    <i class = "fas fa-angle-left prev "></i>
+                    <div class="date">
+                        <h1></h1>
+                        <p></p>
+                    </div>
+                    <i class = "fas fa-angle-right next"></i>   
+                </div>
+                <div class="weekdays">
+                    <div>Sun</div>
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                </div>
+                <div class="days">
+                   
+                </div>
+            </div>
+        </div>
+        <div class="event-popup-container">
+            <div class="event-popup card-container">
+                <div class="event-popup-header">
+                    <div class="close-btn"><button class="btn btn-icon  popup-form-cancelbtn" onclick="popupHide()"><i class="fas fa-times clr-red"></i></button></div>
+                    <h2>Events on</h2>
+                    
+                </div>
+                <div class="date-event-popup">
+                    <p></p>
+                </div>
+                <div class="event-items">
+                    
+                </div>
+            </div>
+            
+        </div>
+
+            
+
+
+
+        
+    </body>
+   
+
+</html>

@@ -2,9 +2,9 @@
     margin: 0%;
     padding: 0%;
 }
+
 .body-main{
     display: flex;
-    
     justify-content: center;
     align-content:flex-end;
 }
@@ -13,19 +13,31 @@
     height: 100%;
     width: 100%;
     display: flex;
-    align-items:center;
+    align-items: center;
     flex-direction: column;
-    border-radius: 5px;
+  
    
 
 }
+
 .profilecontainer-top{
    
     display: flex;
-    width: 60%;
+    width: 90%;
     flex-direction: column;
     position:relative;
     
+    
+}
+@media  (min-width: 800px) {
+    .profilecontainer{
+        width: 80%;
+        align-items: center;
+        margin:auto;
+    }
+    .profilecontainer-top{
+        width: 70%;
+    }
     
 }
 
@@ -35,8 +47,8 @@
     align-self: center;
     height: 200px;
     width: 200px;
-    transform: translate(3%,0%);
-    border-radius: 80px;
+    transform: translate(0%,0%);
+    border-radius: 20px;
     overflow: hidden;
     border:2px solid  rgb(252, 246, 246);
     background: rgb(202, 196, 196);
@@ -71,46 +83,97 @@
     flex-direction: column;
     justify-content: center;
     background-color: white;
-    padding: 10px 50px 50px 50px;
-
+    
 
 }
+
+br.responsive {
+    display: inline; 
+  }
+  
+ 
 .aboutme-container h2{
-    margin: auto;
+    
+    text-align: center;
     font-weight:500;
+    white-space: wrap;
    
 }
 .aboutme-container h3{
-    margin:auto;
+
+    text-align: center;
     font-weight:normal;
     color:rgb(111, 114, 114);
+    white-space: nowrap;
   
     
     
 }
-.edit-intro-btn{
-    margin: auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding:  0px 0px  0px 70px;
+
+
+.name-update-form{
+    display: none;
+    margin:auto;
+    width: 60%;
+    position:relative;
+    padding: 0.3em 0.5em;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background: transparent;
+    border-radius: 6px;
+    font-family: inherit;
+    margin-bottom: 0.8rem;
+}
+.name-update-form input[type=text]{
+    margin:auto;
+    width: 100%;
+    padding: 0.3em ;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background: transparent;
+    border-radius: 6px;
+    font-family: inherit;
+   
+}
+.name-update-form input[type=password]{
+    margin:auto;
+    width: 100%;
+    padding: 0.3em ;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background: transparent;
+    border-radius: 6px;
+    font-family: inherit;
+   
+}
+.name-update-form input[type=text]:focus{
+    box-shadow: 0px 0px 0px 1px #16c79a;
+    border-color: #16c79a;
 }
 
-.edit-intro-btn button{
-    height:50px;
-    width:50px;
-    border:none;
-    margin-top: 5px;
-    margin-left: 20px;
-}
+
+
+
+
 .intro-editor{
     display: flex;
     justify-content: center;
+}
+.intro-update-btn{
+    display: flex;
+    justify-content: space-evenly;
 }
 #marker{
     margin-bottom: 1rem;
     color:rgb(111, 114, 114);
 }
+.input-container{
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    width:80%;
+}
+
 
 #envelope{
     color: grey;
@@ -120,11 +183,17 @@
     color: grey;
     font-weight: 900;
 }
+.contact-settings{
+    margin-top: 10px;
+}
 
 .contact-settings h2{
     margin-left: 30px;
     font-weight: normal;
     color: #16c79a;;
+}
+hr{
+    margin: 5px 0 5px;
 }
 .contact-info{
     
@@ -132,30 +201,41 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    padding: 50px 50px 50px 50px;
+    padding: 2em 2em 2em;
+    
     
     
 }
 
-
 .email-container{
+    position: relative;
     display: flex;
     width: 100%;
+   
     
 }
 .email{
-    width: 100%;
+    word-break: break-all;
     font-weight: normal;
-     padding-left: 50px;
+    margin: auto;
+    position: relative;
 
 }
+
 .email h3{
+   
+    white-space: wrap;
     font-weight: normal;
     
+    
+    
 }
+
+
 .email-change-btn{
+    display: flex;
     position: relative;
-    padding: 12px;
+    padding: 5px;
     right: 0%;
    
 }
@@ -168,66 +248,31 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 1em;
     
 }
-.edit-container{
-    display: none;
-    padding: 0.3em 0.5em;
-    width: 70%;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    background: transparent;
-    border-radius: 6px;
-    font-family: inherit;
-    margin-bottom: 0.8rem;
-   
-}
 
-
-.edit-container input[type=text]:focus{
-    box-shadow: 0px 0px 0px 1px #16c79a;
-    border-color: #16c79a;
-}
-.edit-container input[type=text]{
-    padding: 0.3em 0.5em;
-    width: 60%;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    background: transparent;
-    border-radius: 6px;
-    font-family: inherit;
-    margin-bottom: 0.8rem;
-}
-
-.updatebtn{
-    display:flex;
-    flex-direction:row;
-    justify-content: space-evenly;
-}
-.new{
-    display:flex;
-    flex-direction:row;
-    justify-content: space-evenly;
-}
 .mobile-container{
+    position: relative;
     display: flex;
-    padding-top: 20px;
-    flex-direction: row;
     width: 100%;
+    
   
 }
 .mobile{
     
-    width: 100%;
-    padding-left: 30px;
-    
+    word-break: break-all;
+    font-weight: normal;
+    margin: auto;
+    position: relative;
 }
 .mobile h3{
     font-weight: normal;
 }
 .mobile-change-btn{
+    display: flex;
     position: relative;
-    padding: 12px;
+    padding: 5px;
     right: 0%;
 }
 .mobile-change-btn button{
@@ -240,6 +285,7 @@
     display: flex;
     flex-direction: column; 
     align-items: center;
+    padding: 1em;
    
     
 }
@@ -254,30 +300,32 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    padding: 50px 50px 50px 50px;
+    padding: 2em 2em 2em;
     
 }
 
 
 .username-container{
+    position: relative;
     display: flex;
-    flex-direction: row;
     width: 100%;
+   
+  
      
 }
 .username{
-    display: flex;
-    flex-direction: row;
-    padding-left: 30px;
-    width: 100%;
-    justify-content: space-between;
+    word-break: break-all;
+    font-weight: normal;
+    margin: auto;
+    position: relative;
 }
 .username h3{
     font-weight: normal;
 }
 .username-change-btn{
+    display: flex;
     position: relative;
-    padding: 12px;
+    padding: 5px;
     right: 0%;
 }
 .username-change-btn button{
@@ -289,21 +337,23 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 1em 0.5em 1em;
    
     
 }
 .password-container{
+    position: relative;
     display: flex;
-    margin-top: 20px;
-    flex-direction: row;
     width: 100%;
-  
+   
 }
 .password{
 
-    width: 100%;
-    padding-left: 25px;
-   
+    word-break: break-all;
+    font-weight: normal;
+    margin: auto;
+    position: relative;
+    font-size: 30px;
     
     
 }
@@ -314,10 +364,13 @@
     border: none;
     background: transparent;
     color:black;
+    text-align: center;
+   
 }
 .password-change-btn{
+    display: flex;
     position: relative;
-    padding: 12px;
+    padding: 5px;
     right: 0%;
 }
 .password-change-btn button{
@@ -330,6 +383,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 1em 0.5em 1em;
    
     
 }
@@ -345,17 +399,7 @@
     margin-bottom: 0.8rem;
     box-sizing: border-box;
 }
-.password-edit-container input[type=password]{
-    padding: 0.3em 0.5em;
-    width: 60%;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    background: transparent;
-    border-radius: 6px;
-    font-family: inherit;
-    margin-bottom: 0.8rem;
-    box-sizing: border-box;
-}
+
 .password-edit-container input[type=password]:focus{
     box-shadow: 0px 0px 0px 1px #16c79a;
     border-color: #16c79a;
@@ -380,4 +424,24 @@
     font-size: 15px;
     color: red;
     text-align: center;
+}
+@media screen and (max-width: 600px) {
+    .profilecontainer{
+        font-size: 13px;
+    }
+    .contact-info{
+        padding: 2em 0.5em 2em;
+    }
+    .login-info{
+        padding: 2em 0.5em 2em;
+    }
+    .name-update-form{
+        width: 90%;
+        font-size: 13px;
+    }
+    .password input[type="password"]{
+        font-size: 25px;
+    }
+
+    
 }

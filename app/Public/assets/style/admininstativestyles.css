@@ -1,0 +1,99 @@
+*{
+    margin: 0%;
+    padding: 0%;
+}
+#topic{
+
+    text-align:center;
+    padding-top:10px;
+    color: #16c79a;
+
+} 
+.eventsearchbar{
+    padding:2em 0 ;
+    display:flex;
+    justify-content: center;
+    
+}
+.main-container{
+    padding: 0 5em 0;
+}
+a{
+    text-decoration:none;
+}
+th{
+
+    text-align: center;
+    width:50%;
+}
+td{
+    text-align: center;
+    width:50%;
+    
+}
+.datalabel-eventname{
+    display:none;
+}
+.datalabe2-position{
+    display:none;
+}
+#card{
+    margin: 2em;
+    padding:2.5em;
+}
+@media screen and (max-width: 640px){
+    .adminstrative-table thead{
+
+        display: none;
+
+    }
+    .adminstrative-table, .adminstrative-table tbody, .adminstrative-table tr, .adminstrative-table td {
+               
+        display: block;
+        width: 100%;
+        word-break: break-all;
+        padding: 0.2em 0em 0.2em ;
+       
+
+    }
+    .adminstrative-table td{
+        display: flex;
+        flex-flow: row;
+        justify-content: space-between;
+        position: relative;
+        text-align: left; 
+        
+    }
+
+    .datalabel-eventname{
+        display:flex;
+        font-weight: 600;
+        white-space:nowrap;
+        
+    }
+    .datalabe2-position{
+        display:flex;
+        font-weight: 600;
+        white-space:nowrap;
+        
+    }
+   
+    #card{
+       
+        padding:0.4em;
+    }
+    .main-container{
+        padding: 0.2em;
+    }
+    .adminstrative-table td::before{
+        content:attr(data-label);
+        position: absolute;
+        left:0;
+        font-weight: 600;
+        font-size: 14px;
+        text-align:left;
+    }
+   
+
+        
+}

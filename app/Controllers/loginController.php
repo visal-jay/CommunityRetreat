@@ -7,7 +7,9 @@ class LoginController
 
         $data = [
             'login' => true,
-            'signupUser' => true
+            'signupUser' => true,
+            'passwordErr'=>"",
+            'emailErr'=>""
         ];
         session_start();
         if ($_SESSION["data"]!=null)

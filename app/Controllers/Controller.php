@@ -3,6 +3,7 @@ class Controller
 {
     function HomePage()
     {
+        
         $model = new Model();
         $data = [
             'name'    => 'Dave',

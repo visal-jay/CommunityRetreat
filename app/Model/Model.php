@@ -12,8 +12,6 @@ class Model
             // Throw an Exception when an error occurs
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
-
-
         return $db;
     }
 

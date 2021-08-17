@@ -3,11 +3,10 @@ class Model
 {
     protected static function getDB()
     {
-        require './refresh_db.php';
         static $db = null;
 
         if ($db === null) {
-            $dsn = 'mysql:host=localhost;dbname=mvc;charset=utf8';
+            $dsn = 'mysql:host=localhost;dbname=communityretreat_db;charset=utf8';
             $db = new PDO($dsn, "root", "root");
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);

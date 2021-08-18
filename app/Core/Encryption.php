@@ -9,7 +9,6 @@ class Encryption
 
     private function loadEncryptionKeyFromConfig()
     {
-        //$key = Key::createNewRandomKey();
         $keyAscii = "def000008ba46253635efd0420af09e956de0219dd24c9e3a64fd4630bdfc6af8f69895eb43eef0d0390be27fef36ec22c17ffb8ad290f7a5f131bed23df2e51c45e4da1";
         return Key::loadFromAsciiSafeString($keyAscii);
     }
@@ -23,7 +22,7 @@ class Encryption
         return $ciphertext;
     }
 
-    public function decrypt($string, $purpose = '')
+    public function decrypt($string,$purpose = '')
     {
         $key = $this->loadEncryptionKeyFromConfig();
 

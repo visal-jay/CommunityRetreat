@@ -1,4 +1,5 @@
 <?php
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Defuse\Crypto\Key;
@@ -9,53 +10,57 @@ require './Libararies/PHPMailer-6.5.0/src/SMTP.php';
 
 require_once('./Libararies/defuse-crypto.phar');
 
-
 class SignupController
 {
-
     function validate()
     {
-        $validate=new Validation();
-        $organisation=new Organisation();
-        
-        if (!$validate->email($_POST["email"])) {
-            $data["emailErr"]="Invalid email";
-        }
-        elseif (isset($_POST["signupOrg"]) AND $organisation->checkUserEmail($_POST["email"])){
-            $data["emailErr"]="Email already taken";
-        }
-        elseif (!$validate->password($_POST["password"]))
-        {
-            $data["passwordErr"]="Invalid password";
-        }
-        if (isset($data["emailErr"]) OR isset($data["passwordErr"])){
-            $data["signup"]=true;
-            if(isset($_POST["signupUser"]))  
-                $data["signupUser"]=true;
-            elseif (isset($_POST["signupOrg"])) 
-                $data["signupOrg"]=true;
-            
-            Controller::redirect("/login/view",$data);
-        }
-        echo "shit";
-        $_POST["username"]="hello";
-        $_POST["contact_number"]="123";
-        $_POST["account_number"]="123";
-        $_POST["username"]="hello";
+        $validate = new Validation();
+        $organisation = new Organisation();
+        $registered_user = new RegisteredUser();
+        $user= new User();
 
-        if (isset($_POST["signupOrg"]))
+        if (!$validate->email($_POST["email"])) {
+            $data["emailErr"] = "Invalid email";
+        }
+
+        if ($user->checkUserEmail($_POST["email"])) {
+            $data["emailErr"] = "Email already taken";
+        }
+
+        if (!$validate->password($_POST["password"])) {
+            $data["passwordErr"] = "Invalid password";
+        }
+        
+        if (isset($data["emailErr"]) or isset($data["passwordErr"])) {
+            $data["signup"] = true;
+            if (isset($_POST["signupUser"]))
+                $data["signupUser"] = true;
+            elseif (isset($_POST["signupOrg"]))
+                $data["signupOrg"] = true;
+
+            Controller::redirect("/login/view", $data);
+        }
+
+        if (isset($_POST["signupOrg"])) {
+            $_POST["username"] = "hello";
+            $_POST["contact_number"] = "123";
+            $_POST["account_number"] = "123";
+            $_POST["username"] = "hello";
             $organisation->addOrganisation($_POST);
+        }
     }
 
-    function verifyEmail(){
-        $key=$_GET["key"];
-        $encyption=new Encryption;
-        $data=$encyption->decrypt($key,'email verificaition');
-        $organisation=new Organisation;
-        if($organisation->authenticate($data["email"],$data["password"])){
-            Controller::redirect("/view/organisationDashboard.php");
-        }
+    function verifyEmail()
+    {
+        $key = $_GET["key"];
+        $encyption = new Encryption;
+        $data = $encyption->decrypt($key, 'email verificaition');
+        $user = new User;
+        if ($user_details=$user->authenticate($data["email"], $data["password"],0)) {
+           $user->setVerification($user_details["uid"]);
+        } 
         else
-            Controller::redirect("login/view");
+            Controller::redirect('/login/view');
+        LoginController::validate($data["email"],$data["password"]);
     }
 }

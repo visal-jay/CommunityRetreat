@@ -4,15 +4,11 @@ class LoginController
 
     function view()
     {
-
-        $data = [
-            'login' => true,
-            'signupUser' => true
-        ];
-        session_start();
-        if ($_SESSION["data"]!=null)
-            $data = $_SESSION["data"];
-        View::render("login", $data);
-        
+        $_GET["signup"]=isset($_GET["signup"])?true:false;
+        $_GET["login"]= $_GET["signup"]==true?false:true;
+        $_GET["signupOrg"]=isset($_GET["signupOrg"])?true:false;
+        $_GET["signupUser"]=$_GET["signupOrg"]==true?false:true;
+        $_GET=array_merge(["passwordErr"=>'',"emailErr"=>''],$_GET);
+        View::render("login");
     }
 }

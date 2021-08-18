@@ -1,5 +1,5 @@
 <?php
-function myAutoload($name)
+function autoLoad($name)
 {
     if (file_exists('./Controllers/' . $name . '.php')) {
         require_once './Controllers/' . $name . '.php';
@@ -8,24 +8,21 @@ function myAutoload($name)
     } else if (file_exists('./View/' . $name . '.php')) {
         require_once './View/' . $name . '.php';
     }
-    else{
-        echo "wrong";
+    else if (file_exists('./Core/' . $name . '.php')) {
+        require_once './Core/' . $name . '.php';
     }
 }
 
-spl_autoload_register('myAutoload');
+spl_autoload_register('autoLoad');
+
+error_reporting(E_ALL);
+set_error_handler('ErrorHandler::error');
+set_exception_handler('ErrorHandler::exception');
 
 
 
+$routing = new Routing();
 
-
-
-$url = isset($_GET["url"]) ? $_GET["url"] : "";
-$path = explode("/", $url);
-
-$controllerName =$path[0]."Controller";
-$action = $path[1];
-$c = new $controllerName();
-$c-> $action();
+$routing->process($_SERVER['QUERY_STRING']);
 
 

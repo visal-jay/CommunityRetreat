@@ -287,9 +287,12 @@ CREATE TABLE `login` (
   `user_type` varchar(30) NOT NULL,
   `password` varchar(255) NOT NULL,
   `uid` varchar(10) NOT NULL,
-  `verified` tinyint(1) NOT NULL DEFAULT 0,
-  `time_stamp` timestamp NOT NULL DEFAULT current_timestamp()
+  `verified` tinyint(1) NOT NULL DEFAULT '0',
+  `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `failed_login_count` int(11) NOT NULL DEFAULT '0',
+  `first_failed_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 -- --------------------------------------------------------
 

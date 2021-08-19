@@ -36,10 +36,10 @@ class Mail
         }
     }
 
-    public  function verificationEmail($reciever, $url, $subject)
+    public  function verificationEmail($reciever,$body_file, $url, $subject)
     {
         $recievers = [$reciever];    
-        $body = View::renderTostring('confirmationMail',["url" => $url]);
+        $body = View::renderTostring($body_file,["url" => $url]);
         $this->sendMail($recievers, $subject, $body);
     }
 }

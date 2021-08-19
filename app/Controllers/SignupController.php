@@ -46,6 +46,7 @@ class SignupController
             $_POST["contact_number"] = "123";
             $_POST["account_number"] = "123";
             $_POST["username"] = "hello";
+            $_POST["first_failed_login"]=time();
             $organisation->addOrganisation($_POST);
         }
     }

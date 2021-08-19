@@ -30,7 +30,7 @@ class Organisation extends User{
         $encryption=new Encryption;
         $parameters=["key"=>$encryption->encrypt(array_intersect_key($data,["email"=>'',"password"=>'']),'email verificaition')];
         $mail=new Mail;
-        $mail->verificationEmail($data["email"],"localhost/signup/verifyemail?".$query=http_build_query($parameters),'signup');
+        $mail->verificationEmail($data["email"],"confirmationMail","localhost/signup/verifyemail?".http_build_query($parameters),'Signup');
     }
 
 

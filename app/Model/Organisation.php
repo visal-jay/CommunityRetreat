@@ -1,29 +1,20 @@
 <?php
-class Organisation extends Model{
+class Organisation extends User{
 
-    public function checkUserEmail ($email){
-        $query = 'SELECT COUNT(*) as count FROM organization where email = :email ';
-        $params = ["email" => "$email"];
-        echo $email;
-        if((Organisation::select($query,$params))[0]["count"]==1)
-            return true;
-        else
-            return false;
-    }
 
     public function addOrganisation ($data)
     {
         $db = Model::getDB();
         $db->beginTransaction();
 
-        $insertOrgSql = 'INSERT INTO `organization` (`email`,`username`, `contact_number`, `account_number`) VALUES (:email,  :username, :contact_number, :account_number)';
-        $stmt=$db->prepare($insertOrgSql);
+        $insert_org_ql = 'INSERT INTO `organization` (`email`,`username`, `contact_number`, `account_number`) VALUES (:email,  :username, :contact_number, :account_number)';
+        $stmt=$db->prepare($insert_org_ql);
         $insertData=array_intersect_key($data,["email"=>'',"username"=>'',"contact_number"=>'',"account_number"=>'']);
         $stmt->execute($insertData);
         $stmt->closeCursor();
 
-        $lastInsertOrgSql='SELECT uid FROM organization ORDER BY uid DESC LIMIT 1 ';
-        $stmt=$db->prepare($lastInsertOrgSql);
+        $last_insert_org_sql='SELECT uid FROM organization ORDER BY uid DESC LIMIT 1 ';
+        $stmt=$db->prepare($last_insert_org_sql);
         $stmt->execute([]);
         $data["uid"] = $stmt->fetchColumn();
         $stmt->closeCursor();
@@ -39,18 +30,9 @@ class Organisation extends Model{
         $encryption=new Encryption;
         $parameters=["key"=>$encryption->encrypt(array_intersect_key($data,["email"=>'',"password"=>'']),'email verificaition')];
         $mail=new Mail;
-        $mail->verificationEmail($data["email"],"/signup/verifyemail?".$query=http_build_query($parameters),'signup');
+        $mail->verificationEmail($data["email"],"confirmationMail","localhost/signup/verifyemail?".http_build_query($parameters),'Signup');
     }
 
-    public function authenticate($email,$password)
-    {
-        $query = 'SELECT COUNT(*) as count FROM login where email = :email AND password = :password';
-        $params = ["email" => "$email","password"=>"$password"];
-        $result=Organisation::select($query,$params);
-        if ($result[0]["count"]== 1)
-            return true;
-        else
-            return false;
-    }
+
 
 }

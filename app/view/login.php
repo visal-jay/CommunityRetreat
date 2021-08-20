@@ -123,14 +123,14 @@
                     <div class="switch-btn <?php if($_GET["login"]) echo "shown";?>" onclick="switchf('login-form','signup-form')">Login</div>
                     <div class="switch-btn <?php if($_GET["signup"]) echo "shown";?>" onclick="switchf('signup-form','login-form')">Sign Up</div>
                 </div>
-                <form id="login-form" class="form <?php if($_GET["login"]) echo "shown";?>">
+                <form action="/Login/validate" method="post"id="login-form" class="form <?php if($_GET["login"]) echo "shown";?>">
                     <div class="form-item">
                         <label>Username</label>
-                        <input class="form-ctrl" placeholder="&#xF007; &nbsp; Enter Username"/>
+                        <input name="email" class="form-ctrl" placeholder="&#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome"/>
                     </div>
                     <div class="form-item">
                         <label>Password</label>
-                        <input class="form-ctrl" placeholder="&#xF007; &nbsp; Enter Password"/>
+                        <input name="password" class="form-ctrl" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome"/>
                     </div>
                     <button type="submit" class="btn btn-solid ">Login</button>
                 </form>

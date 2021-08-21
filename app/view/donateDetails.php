@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/Public/assets/newstyles.css">
@@ -10,112 +11,149 @@
 </head>
 
 <style>
+table {
+    width: 100%;
+    table-layout: fixed;
+}
 
-    table{
-        width: 100%;
-        table-layout: fixed;
-    }
+table,
+th,
+td {
+    text-align: center;
+    padding: 7px 10px 20px;
+}
 
-    table, th, td {
-        text-align: center;
-        padding: 7px 10px 20px;
-    }
+td,
+h1 {
+    text-align: center;
+}
 
-    h1{
-        color: #16c79a;
-        text-align: center;
-    }
-    
-    .donation-details-btn{
-        text-align: center;
-        margin: 25px;
-    }
+.donation-details-btn {
+    text-align: center;
+    margin: 25px;
+}
+
+.headers {
+    text-align: center;
+}
+
+.initial-donation-enable-btn {
+    height: 80vh;
+    text-align: center;
+    top: 50%;
+    position: fixed;
+    width: 100%;
+}
+
+.blur {
+    filter: blur(2px);
+}
+
+.hide {
+    display: hide;
+}
+
+.secondary-donation-enable-disable-btn {
+    text-align: right;
+    margin-right: 200px;
+    margin-bottom: 20px;
+}
 
 @media screen and (max-width:768px) {
 
-    /*.event-table thead{
-        display: none;
+    h1 {
+        text-align: center;
     }
 
-    .event-table, .event-table tbody, .event-table tr{
-        display: block;
-        width: 100%;
-
+    #mytable .scroll {
+        overflow: scroll;
     }
-
-    .event-table td{
-        display:flex;
-        width: 100%;
-        flex-direction: row;
-        justify-content: space-between ;
-        padding: 10px 10px 10px;
-    }
-
-    .event-table tr{
-        margin-bottom: 15px;
-        border-radius: 8px;
-        box-shadow: 0px 0px 0px 1px silver;
-        border-top: 3px solid #16c79a;
-    }
-
-    .event-table td:before{    
-        position: absolute;
-        left:0;
-        width:100%;
-        padding-left: 15px;
-        font-weight: 600;
-        font-size: 14px;
-        text-align:left;
-        
-    }*/
 }
-
 </style>
 
 <body>
-<div class="background">
-    <h1>Donation Details</h1>
-    <div class="event-table">
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Date</th> 
-                    <th>Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>J.K.Wijayathilake</td>
-                    <td>2020.10.21</td>
-                    <td>rs.100000</td>
-                </tr>
-                <tr>
-                    <td>M.D.Karunarathne</td>
-                    <td>2020.10.25</td>
-                    <td>rs.150000</td>
-                </tr>
-                <tr>
-                    <td>P.V.Kumarasinghe</td>
-                    <td>2020.11.02</td>
-                    <td>rs.120000</td>
-                </tr>
-                <tr>
-                    <td>H.N.Hewawithrane</td>
-                    <td>2020.11.05</td>
-                    <td>rs.200000</td>
-                </tr>
-                <tr>
-                    <td>R.S.Thilakawardhane</td>
-                    <td>2020.11.10</td>
-                    <td>rs.1000000</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="initial-donation-enable-btn">
+        <button class="btn btn-md btn-solid" id="initial-donation-enable-btn"
+            onclick="myFunction(); hide('initial-donation-enable-btn')">Enable
+            Donations</button>
     </div>
-    <div class="donation-details-btn">
-        <button class="btn btn-md btn-solid">Full donation details</button>
+    <div class="background blur" id="background1">
+        <h1>Donation Details</h1>
+        <div class="secondary-donation-enable-disable-btn">
+            <button class="btn btn-md btn-solid" id="enable-disable-btn"
+                onclick="change_enable_disable_button('enable-disable-btn')">Disable Donations</button>
+        </div>
+        <div class=" event-table">
+            <table id="mytable">
+                <thead>
+                    <tr class="headers">
+                        <th class="scroll">Name</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="scroll">J.K.Wijayathilake</td>
+                        <td>2020.10.21</td>
+                        <td>rs.100000</td>
+                    </tr>
+                    <tr>
+                        <td class="scroll">M.D.Karunarathne</td>
+                        <td>2020.10.25</td>
+                        <td>rs.150000</td>
+                    </tr>
+                    <tr>
+                        <td class="scroll">P.V.Kumarasinghe</td>
+                        <td>2020.11.02</td>
+                        <td>rs.120000</td>
+                    </tr>
+                    <tr>
+                        <td class="scroll">H.N.Hewawithrane</td>
+                        <td>2020.11.05</td>
+                        <td>rs.200000</td>
+                    </tr>
+                    <tr>
+                        <td class="scroll">R.S.Thilakawardhane</td>
+                        <td>2020.11.10</td>
+                        <td>rs.100000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="donation-details-btn">
+            <button class="btn btn-md btn-solid">Full donation details</button>
+        </div>
     </div>
-</div>
 </body>
+
+<script>
+function myFunction() {
+    var element = document.getElementById("background1");
+    element.classList.remove("blur");
+}
+
+function hide(id) {
+    document.getElementById(id).classList.toggle("hide");
+}
+
+function change_enable_disable_button(id) {
+    var x = document.getElementById(id)
+
+    if (x.innnerHTML == "Disable Donations") {
+        x.innerHTML = "Enable Donations";
+    } else {
+        x.innnerHTML = "Disable Donations";
+    }
+}
+
+/*function on() {
+document.getElementById("blur").style.display = "none";
+}*/
+
+/*function off() {
+    document.getElementById("blur").style.display = "block";
+}*/
+</script>
+
 </html>

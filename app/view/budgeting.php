@@ -28,7 +28,7 @@
 		box-shadow: inset 0px 0px 30px 0px white;
 		filter: blur(0px);
 		position: relative;
-		box-shadow: inset 0 0 10px #000000;
+		box-shadow: inset 100px 100px 100px #c6f7ea;
 	}
 
 	.height100 {
@@ -195,7 +195,7 @@
 
 		<h2 class="header">Expense</h2>
 		<form action="" class="form">
-			<button class="btn btn-md btn-solid margin-md" style="background-color: #ff6363; border-color:#ff6363" type="button" name="button" id="btn" value="Add" onclick="show_hide('expense-form') ">Add &nbsp;<i class="fas fa-plus"></i></button>
+			<button class="btn btn-md btn-solid margin-md" type="button" name="button" id="btn" value="Add" onclick="show_hide('expense-form') ">Add &nbsp;<i class="fas fa-plus"></i></button>
 			<div id="expense-form" style="margin-top: 20px;" class="hidden">
 				<div class="input form-item">Details <input class="form-ctrl" id="details" type="text" placeholder="Enter the details" /></div>
 				<div class="input form-item">Amount <input class="form-ctrl" id="amount" type="text" placeholder="Enter the amount" /></div>

@@ -8,11 +8,12 @@ class Controller
         exit();
     }
 
-    public function accessCheck($userroles=[]){
-        session_start();
-        if (isset($_SESSION["user_type"]))
+    public static function accessCheck($userroles=[]){
+        if(!isset($_SESSION))
+            session_start();
+        if (isset($_SESSION["user"]["user_type"]))
             foreach ($userroles as $userrole)
-                if ($userrole == $_SESSION["user_type"])
+                if ($userrole == $_SESSION["user"]["user_type"])
                     return $userrole;
         Controller::redirect('/login/view');
     }

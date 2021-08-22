@@ -1,14 +1,13 @@
 <?php
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\SMTP;  
 
 class Mail
 {
-
     private $mail = NULL;
 
+  
     public function sendMail($recievers, $subject, $body)
     {
         $this->mail = new PHPMailer(true);
@@ -24,10 +23,11 @@ class Mail
         $this->mail->setFrom('communityretreatproject@gmail.com', 'Commuintyretreat');
         $this->mail->isHTML(true);
 
+
         foreach ($recievers as $reciever) {
             $this->mail->addAddress($reciever);
         }
-        $this->mail->Body    = $body;
+        $this->mail->Body = $body;
         $this->mail->Subject= $subject;
         try {
             $this->mail->send();
@@ -38,6 +38,7 @@ class Mail
 
     public  function verificationEmail($reciever,$body_file, $url, $subject)
     {
+        echo 'asdaslkdjalsd';
         $recievers = [$reciever];    
         $body = View::renderTostring($body_file,["url" => $url]);
         $this->sendMail($recievers, $subject, $body);

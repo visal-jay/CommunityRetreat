@@ -1,3 +1,5 @@
+SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+
 DROP DATABASE IF EXISTS `communityretreat_db`;
 
 CREATE DATABASE `communityretreat_db`;
@@ -317,12 +319,20 @@ CREATE TABLE `organization` (
   `uid` varchar(10) NOT NULL,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `contact_number` int(12) NOT NULL,
-  `profile_pic` blob DEFAULT NULL,
-  `cover_pic` blob DEFAULT NULL,
-  `about_us` text DEFAULT NULL,
+  `contact_number` varchar(12) NOT NULL,
+  `profile_pic` blob,
+  `cover_pic` blob,
+  `about_us` text,
+  `latlang` point DEFAULT NULL,
   `account_number` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `organization`
+--
+
+INSERT INTO `organization` (`uid`, `username`, `email`, `contact_number`, `profile_pic`, `cover_pic`, `about_us`, `latlang`, `account_number`) VALUES
+('ORG0000071', 'hello', 'visaljayathilaka@gmail.com', '0718864469', NULL, NULL, 'dljaskldkasmdkasdasdasdasdasdasdasdfsdfsdfsdfsdfdasdasdasdadasdasdasdasdasd', 0x000000000101000000894160e5d0221c408b6ce7fba9395440, 123);
 
 
 -- --------------------------------------------------------

@@ -84,27 +84,33 @@ th, td{
             <tr>
                 <th>User</th>
                 <th>User Role</th>
-                <th><button class="btn btn-solid bg-red border-red data" onclick="del()">Delete User&nbsp;&nbsp; <i class="far fa-trash-alt"></i></button></th>
+                <th></th>
             </tr>
             <tr>
                 <td>Visal Jayathilake</td>
                 <td>Admin</td>
-                <td id="del"><i class="btn-icon far fa-trash-alt clr-red form hidden" onclick="del()"></i></td>
+                <td id="del"><i class="btn-icon far fa-trash-alt clr-red" onclick="del()"></i></td>
             </tr>
             <tr>
                 <td>Pudara Semini</td>
                 <td>Treasurer</td>
-                <td id="del"><i class="btn-icon far fa-trash-alt clr-red form hidden" onclick="del()"></i></td>
+                <td id="del"><i class="btn-icon far fa-trash-alt clr-red" onclick="del()"></i></td>
             </tr>
             <tr>
                 <td>Venodi Widanagamage</td>
                 <td>Moderator</td>
-                <td id="del"><i class="btn-icon far fa-trash-alt clr-red form hidden" onclick="del()"></i></td>
+                <td id="del"><i class="btn-icon far fa-trash-alt clr-red" onclick="del()"></i>
+                    <div class="flex-row flex-space" style="display: none; padding-top:1rem;">
+                        <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
+                        <i class="fas fa-check clr-green margin-side-md"></i>&nbsp;
+                        <i class="fas fa-times clr-red  margin-side-md" onclick="cancel()"></i>
+                    </div>
+                </td>
             </tr>
             <tr>
                 <td>Manuka Dewanarayana</td>
                 <td>Registered User</td>
-                <td id="del"><i class="btn-icon far fa-trash-alt clr-red form hidden" onclick="del()"></i></td>
+                <td id="del"><i class="btn-icon far fa-trash-alt clr-red" onclick="del()"></i></td>
             </tr>
         </table>
         </div>

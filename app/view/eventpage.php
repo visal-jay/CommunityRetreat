@@ -72,6 +72,17 @@
         color: white !important;
     }
 
+    .image-upload {
+        position: absolute;
+        bottom: 11px;
+        right: 11px;
+    }
+
+    .image-upload>input {
+        display: none;
+
+    }
+
     /* Designing for scroll-bar */
     ::-webkit-scrollbar {
         width: 2px;
@@ -157,10 +168,18 @@
     <div class="photo-container ">
         <div class="cover-place-holder cover border-round">
             <img src="/Public/assets/mountains.jfif" alt="" class="photo-element">
+            <div class="image-upload hidden form">
+                <label for="file-input">
+                    <i class="fas fa-edit clr-white"></i>
+                </label>
+                <input id="file-input" type="file" />
+            </div>
         </div>
     </div>
     <div class="flex-row flex-center">
-        <h1>Event Name</h1>
+        <h1 class="data">Event Name</h1>
+        
+        <input type="text" name="Event Name" class="form form-ctrl hidden" placeholder="Enter event name" required></input>
     </div>
 
     <div class="nav-secondary">
@@ -172,20 +191,48 @@
             <a class="btn margin-side-md" style=" margin-bottom:10px;" href="# ">Budget</a>
             <a class="btn margin-side-md" style=" margin-bottom:10px;" href="# ">User Roles</a>
             <a class="btn margin-side-md" style=" margin-bottom:10px;" href="# ">Volunteers</a>
+            <a class="btn margin-side-md" style=" margin-bottom:10px;" href="# ">Work Timeline</a>
         </div>
     </div>
 
+    <div class="flex-row" style="justify-content:flex-end;">
+        <button class="btn btn-solid data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
+        <button class="btn btn-solid bg-red border-red form hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
+        <button class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
+    </div>
 
 </body>
 <script>
+    function edit() {
+        var data = document.getElementsByClassName("data");
+        var form = document.getElementsByClassName("form");
+        for (var i = 0; i < data.length; i++) {
+            data[i].classList.toggle("hidden");
+        }
+        for (var i = 0; i < form.length; i++) {
+            form[i].classList.toggle("hidden");
+        }
+    }
+
     function resizeProfile() {
         var coverHeight = (document.querySelector(".cover").offsetHeight);
         document.querySelector(".profile-pic").style.top = coverHeight + "px";
         var profileHeight = (document.querySelector(".profile-pic").offsetHeight);
-        document.querySelector(".photo-container").style.height = (parseInt(coverHeight)+parseInt(profileHeight)) + "px";
+        document.querySelector(".photo-container").style.height = (parseInt(coverHeight) + parseInt(profileHeight) * 0.75) + "px";
     }
-    window.onload = resizeProfile();
-    window.addEventListener("resize", resizeProfile);
+
+    function resizeInfo() {
+        var coverWidth = (document.querySelector(".cover").offsetWidth);
+        document.querySelector(".info").style.width = coverWidth + "px";
+    }
+
+    function resize() {
+        resizeProfile();
+        resizeInfo();
+    }
+    window.onload = resize();
+    window.addEventListener("resize", resize);
+
 
     document.querySelector(".active").scrollIntoView({
         behavior: 'auto',

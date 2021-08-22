@@ -112,7 +112,6 @@
         width: 75%;
     }
 
-<<<<<<< HEAD
     textarea {
         height: 150px;
         padding: 12px 20px;
@@ -164,10 +163,11 @@
             width: 100%;
         }
 
+        .progress {
+        width: 75%;
     }
-=======
-}
->>>>>>> bcbc6e592375bccf1d0d21ffa9b437caa255b57a
+
+    }
 </style>
 
 <body>
@@ -243,7 +243,6 @@
                     </div>
                 </div>
 
-<<<<<<< HEAD
             </div>
 
             <div class="flex-col content border-round container-size margin-md" style="background-color: #eeeeee">
@@ -256,20 +255,6 @@
 
             <div class="flex-col flex-center content border-round container-size margin-md" style="background-color: #03142d">
                 <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
-=======
-                <p class="margin-lg">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took
-                    a galley of type and scrambled it to make a type specimen book. It has survived not only five
-                    centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was
-                    popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and
-                    more recently with desktop publishing software like Aldus PageMaker including versions of Lorem
-                    Ipsum</p>
-            </div>
-
-            <div class="flex-col flex-center content border-round container-size margin-md"
-                style="background-color: #03142d">
-                <p style="color:white">Interested in joining hands with us?</p>
->>>>>>> bcbc6e592375bccf1d0d21ffa9b437caa255b57a
                 <div class="progress" data-width="100%">
                     <div class="volunteers-progress-bar"></div>
                 </div>
@@ -277,17 +262,11 @@
                     volunteer</button>
             </div>
 
-<<<<<<< HEAD
-            <div class="flex-col flex-center content border-round container-size margin-md" style="background-color: #03142d">
-                <p class="margin-md" style="color:white; text-align:center">Would you like to give value to your hard-earned money by contributing to this community service project?</p>
-                <div class="progress" data-width="15%">
-=======
             <div class="flex-col flex-center content border-round container-size margin-md"
                 style="background-color: #03142d">
                 <p style="color:white">Would you like to give value to your hard-earned money by contributing to this
                     community service project?</p>
                 <div class="progress" data-width="10%">
->>>>>>> bcbc6e592375bccf1d0d21ffa9b437caa255b57a
                     <div class="donaters-progress-bar"></div>
                 </div>
                 <button class="btn clr-green margin-md"
@@ -322,13 +301,7 @@
                 <h2>Donation form</h2>
             </div>
             <div>
-<<<<<<< HEAD
                 <button class="btn-icon btn-close" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
-=======
-                <button class="btn-icon btn-close"
-                    onclick="togglePopup('form');blur_background('background');stillBackground('id1')"><i
-                        class="fas fa-times"></i></button>
->>>>>>> bcbc6e592375bccf1d0d21ffa9b437caa255b57a
             </div>
             <form action="/action_page.php" class="form-container">
 
@@ -373,16 +346,21 @@
 </body>
 
 <script>
-<<<<<<< HEAD
+
+    function edit() {
+        var data = document.getElementsByClassName("data");
+        var form = document.getElementsByClassName("form");
+        for (var i = 0; i < data.length; i++) {
+            data[i].classList.toggle("hidden");
+        }
+        for (var i = 0; i < form.length; i++) {
+            form[i].classList.toggle("hidden");
+        }
+    }
 
     function togglePopup(id) {
         document.getElementById(id).classList.toggle("active");
     }
-=======
-function togglePopup(id) {
-    document.getElementById(id).classList.toggle("active");
-}
->>>>>>> bcbc6e592375bccf1d0d21ffa9b437caa255b57a
 
 function blur_background(id) {
     document.getElementById(id).classList.toggle("blurred")
@@ -413,27 +391,6 @@ function animateProgressBar(el, width) {
         usedWidth = '20%';
     }
 
-<<<<<<< HEAD
-    function edit() {
-        var data = document.getElementsByClassName("data");
-        var form = document.getElementsByClassName("form");
-        for (var i = 0; i < data.length; i++) {
-            data[i].classList.toggle("hidden");
-        }
-        for (var i = 0; i < form.length; i++) {
-            form[i].classList.toggle("hidden");
-        }
-    }
-
-    function animateProgressBar(el, width) {
-        el.animate({
-            width: width
-        }, {
-            duration: 2000,
-            step: function(now, fx) {
-                if (fx.prop == 'width') {
-                    el.html(Math.round(now * 100) / 100 + '%');
-=======
     el.animate({
         width: usedWidth
     }, {
@@ -442,7 +399,6 @@ function animateProgressBar(el, width) {
             if (fx.prop == 'width') {
                 if (parseInt(width.replace('%', '')) < now) {
                     now = parseInt(width.replace('%', ''));
->>>>>>> bcbc6e592375bccf1d0d21ffa9b437caa255b57a
                 }
                 el.html(Math.round(now * 100) / 100 + '%');
             }

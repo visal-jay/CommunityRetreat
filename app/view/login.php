@@ -73,6 +73,10 @@
     }
 
     .ctx {
+        position: absolute;
+        top:50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-gap: 4rem;

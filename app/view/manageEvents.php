@@ -21,7 +21,7 @@
         resize: none;
     }
 
-    
+
     .form {
         min-width: 50%;
         overflow: hidden;
@@ -30,7 +30,7 @@
     }
 
     .show-form {
-        height: 700px;
+        height: 720px;
         transition: height, 0.3s linear;
     }
 
@@ -61,9 +61,10 @@
     }
 
     @media screen and (max-width:800px) {
-        .card-container{
-        height: 220px;
-    }
+        .card-container {
+            height: 220px;
+        }
+
         .form {
             width: 80%;
 
@@ -77,7 +78,8 @@
         ::-webkit-scrollbar {
             display: none;
         }
-        #map{
+
+        #map {
             width: 300px;
             height: 300px;
         }
@@ -118,27 +120,40 @@
 
         <button class="btn btn-solid margin-lg" onclick="addEvent()">Add Event &nbsp; <i class="fas fa-plus"></i></button>
         <div class="form">
-            <div class="form-item">
+            <form class="form-item" method="post" action="/event/addEvent">
                 <label>Event name</label>
-                <input type="text" name="eventname" class="form-ctrl" placeholder=" Enter Event Name" required style="font-family:Arial, FontAwesome" />
+                <input type="text" name="event_name" class="form-ctrl" placeholder=" Enter Event Name" required style="font-family:Arial, FontAwesome" />
                 <label>Description</label>
-                <textarea name="description" class="form-ctrl"></textarea>
+                <textarea name="about" class="form-ctrl"></textarea>
 
                 <div class="date" style="justify-content:space-evenly">
                     <div class="flex-col">
-                        <label>Start date</label>
-                        <input type="date" class="form-ctrl">
+                        <label>Date</label>
+                        <input type="date" name="start_date" class="form-ctrl">
                     </div>
                     <div class="flex-col">
-                        <label>End date</label>
-                        <input type="date" class="form-ctrl">
+                        <label>Starting time</label>
+                        <input type="time" name="start_time" class="form-ctrl">
+                    </div>
+                    <div class="flex-col">
+                        <label>Mode of the even</label>
+                        <select class="form-ctrl" id="mode" name="mode" required onchange="eventMode(event);">
+                            <option value="" disabled selected>Select the mode of the event</option>
+                            <option value="Physical">Physical</option>
+                            <option value="Virtual">Virtual</option>
+                            <option value="Physical & Virtual">Physical & Virtual</option>
+                        </select>
                     </div>
                 </div>
                 <div class="flex-col flex-center">
                     <div class="border-round" id="map"></div>
+                    <div class="latlang" class="form hidden">
+                        <input class="hidden" name="longitude" id="longitude" value=NULL>
+                        <input class="hidden" name="latitude" id="latitude" value=NULL>
+                    </div>
                 </div>
-
-            </div>
+            <button type="submit" class="btn btn-solid margin-md">Add</button>
+            </form>
             <button onclick="printMarker()">Print location</button>
         </div>
         <div class="card-container margin-side-lg">
@@ -161,7 +176,7 @@
                 </table>
                 <div class="flex-row flex-center">
                     <button class="btn btn-solid bg-red border-red" onclick="remove()">Remove</button>
-                    <div class="flex-row flex-space " style="display: none; padding-top:1rem;" >
+                    <div class="flex-row flex-space " style="display: none; padding-top:1rem;">
                         <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
                         <i class="fas fa-check clr-green margin-side-md"></i>&nbsp;
                         <i class="fas fa-times clr-red  margin-side-md" onclick="cancel()"></i>
@@ -179,17 +194,29 @@
         document.querySelector(".form").classList.toggle("show-form");
     }
 
+    function eventMode(event) {
+        if (event.target.selectedIndex == 1 || event.target.selectedIndex == 3) {
+            document.getElementById("map").style.opacity = "1";
+            document.getElementById("map").style.pointerEvents = "unset";
+
+        } else {
+            document.getElementById("map").style.opacity = "0.3";
+            document.getElementById("map").style.pointerEvents = "none";
+        }
+    }
+
     function remove() {
         event.target.style.display = "none";
-        event.target.nextElementSibling.style.display="flex";
+        event.target.nextElementSibling.style.display = "flex";
     }
 
-    function cancel(){
-        var cancel=event.target.parentNode;
-        cancel.style.display="none";
-        cancel.previousElementSibling.style.display="block";
+    function cancel() {
+        var cancel = event.target.parentNode;
+        cancel.style.display = "none";
+        cancel.previousElementSibling.style.display = "block";
 
     }
+
     let map;
     var marker;
 
@@ -226,6 +253,12 @@
 
         // To add the marker to the map, call setMap();
         marker.setMap(map);
+
+        google.maps.event.addListener(marker, 'dragend', function(evt) {
+            document.getElementById('longitude').value = evt.latLng.lng().toFixed(3);
+            document.getElementById('latitude').value = evt.latLng.lat().toFixed(3);
+            //document.getElementById('current').innerHTML = '<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';
+        });
         map.setCenter(myLatlng);
         map.setZoom(15)
     }

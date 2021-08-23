@@ -27,10 +27,12 @@ class Model
         return  $result;
     }
 
+
     public static function insert($query, $params = [])
     {
         $db = Model::getDB();
         $stmt = $db->prepare($query);
         $stmt->execute($params);
     }
+    
 }

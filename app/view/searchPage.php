@@ -11,8 +11,16 @@
 </head>
 <style>
     .grid {
+        margin-top: 2rem;
         display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+        gap: 1rem;
+    }
 
+    figure {
+        margin: 0;
+        display: grid;
+        grid-template-rows: 1fr auto;
     }
 
     h1 {
@@ -25,6 +33,8 @@
     }
 
     p {
+        overflow: hidden;
+        text-overflow: ellipsis;
         white-space: nowrap;
     }
 
@@ -83,13 +93,12 @@
         background: #04AA6D;
         cursor: pointer;
     }
-    .choice-menu{
+
+    .choice-menu {
         display: none;
-        
     }
 
-    #sort,
-    #date {
+    #sort,#date {
         margin: 0;
     }
 
@@ -127,21 +136,61 @@
         width: 80%;
     }
 
-    @media screen and (max-width:767px) {
-        .choice-menu{
-        display: none;
-        display: flex;
-        align-self: flex-end;
-    }
-        choices {
-        height: 0;
+    figure {
         overflow: hidden;
+        border-radius: 8px;
+        margin: 0;
+        display: grid;
+        grid-template-rows: 1fr auto;
+    }
+
+    figure>img {
         
+        grid-row: 1 / -1;
+        grid-column: 1;
     }
+
+    .grid div {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        align-items: baseline;
+        height: fit-content;
+        border-radius: 8px;
+        transition: all .4s ease-in-out;
+    }
+
+    .grid div img {
+        aspect-ratio: 4/2;
+        width: 100%;
+        border-radius: 8px;
+    }
+
+    @media screen and (max-width:767px) {
+
+        .slider {
+            width: auto;
+        }
+        .grid {
+            grid-gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        }
+
+        .choice-menu {
+            display: none;
+            display: flex;
+            align-self: flex-end;
+        }
+
+        choices {
+            height: 0;
+            overflow: hidden;
+
+        }
+
         .show-choices {
-        height: 150px;
-        transition: height, 0.3s linear;
-    }
+            height: 150px;
+            transition: height, 0.3s linear;
+        }
 
         .slidecontainer {
             width: 80%;
@@ -172,7 +221,7 @@
                 <input type="search" class="form-ctrl" placeholder="Search">
                 <button type="" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
             </form>
-            <button class="btn btn-solid" id="near-me" ><i class="fas fa-map-marker-alt"></i>&nbsp;Near me</button>
+            <button class="btn btn-solid" id="near-me"><i class="fas fa-map-marker-alt"></i>&nbsp;Near me</button>
         </search>
 
         <div class="choice-menu margin-md">
@@ -199,11 +248,53 @@
                 </select>
             </div>
         </choices>
+
+        <events class="grid">
+            <figure class="item bg-green">
+                <div class="content">
+                    <div class="photo-container flex flex-center"><img src="/Public/assets/mountains.jfif" style="object-fit: cover;" alt=""></div>
+                    <p class="margin-md" style="color:white;">Manuka Dewanarayana</p>
+                </div>
+            </figure>
+            <figure class="item bg-green">
+                <div class="content">
+                <div class="photo-container flex flex-center content"><img src="/Public/assets/photo.jpeg" style="object-fit: cover;" alt=""></div>
+
+                    <p class="margin-md" style="color:white;">Manuka Dewanarayana</p>
+                </div>
+            </figure>
+            <figure class="item bg-green">
+                <div class="content">
+                    <div class="photo-container flex flex-center"><img src="/Public/assets/mountains.jfif" style="object-fit: cover;" alt=""></div>
+                    <p class="margin-md" style="color:white;">Manuka Dewanarayana</p>
+                </div>
+            </figure>
+            <figure class="item bg-green">
+                <div class="content">
+                    <div class="photo-container flex flex-center"><img src="/Public/assets/mountains.jfif" style="object-fit: cover;" alt=""></div>
+                    <p class="margin-md" style="color:white;">Manusdaskdml;asdl;as;ldka Dewanarayana</p>
+                </div>
+            </figure>
+
+            <figure class="item bg-green">
+                <div class="content">
+                    <div class="photo-container flex flex-center"><img src="/Public/assets/mountains.jfif" style="object-fit: cover;" alt=""></div>
+                    <p class="margin-md" style="color:white;">Manusdaskdml;asdl;as;ldka Dewanarayana</p>
+                </div>
+            </figure>
+
+            <figure class="item bg-green">
+                <div class="content">
+                    <div class="photo-container flex flex-center"><img src="/Public/assets/mountains.jfif" style="object-fit: cover;" alt=""></div>
+                    <p class="margin-md" style="color:white;">Manusdaskdml;asdl;as;ldka Dewanarayana</p>
+                </div>
+            </figure>
+        </events>
     </div>
 
 </body>
 <script>
-    function choices(){
+    function choices() {
         document.getElementsByTagName("choices")[0].classList.toggle("show-choices");
     }
     var slider = document.getElementById("myRange");

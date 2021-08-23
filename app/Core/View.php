@@ -8,6 +8,7 @@ class View
     }
 
 
+
     static function renderTostring($view_name,$args=[])
     {
         extract($args, EXTR_SKIP);

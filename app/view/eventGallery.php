@@ -45,6 +45,7 @@
     border-radius: 8px;
     width: fit-content;
     height: fit-content;
+    border: 1px solid #16c79a;
     }
     
     p{

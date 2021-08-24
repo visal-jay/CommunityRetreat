@@ -123,14 +123,20 @@
     }
 
     .icon-width {
-            width: 20px;
-        }
-    @media screen and (max-width:800px) {
-        .progress {
-        width: 75%;
+        width: 20px;
     }
 
-        
+    ::placeholder {
+        color: black;
+        opacity: 1;
+    }
+
+    @media screen and (max-width:800px) {
+        .progress {
+            width: 75%;
+        }
+
+
 
         .container-size {
             width: 90%;
@@ -148,6 +154,11 @@
 
         .form {
             width: 100%;
+        }
+
+        .textbox {
+            box-sizing: border-box;
+            padding: 1rem;
         }
 
     }
@@ -228,7 +239,7 @@
 
             </div>
 
-            <div class="flex-col content border-round container-size margin-md" style="background-color: #eeeeee">
+            <div class="textbox flex-col content border-round container-size margin-md" style="background-color: #eeeeee">
                 <h3 class="margin-lg">Description</h3>
                 <div class="data">
                     <p class="margin-lg">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
@@ -245,7 +256,7 @@
                     volunteer</button>
             </div>
 
-            <div class="flex-col flex-center content border-round container-size margin-md" style="background-color: #03142d">
+            <div class="flex-col flex-center content border-round container-size margin-md" style="background-color: #03142d; text-align:center">
                 <p style="color:white">Would you like to give value to your hard-earned money by contributing to this
                     community service project?</p>
                 <div class="progress" data-width="10%">

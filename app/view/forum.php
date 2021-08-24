@@ -62,6 +62,52 @@
         flex-direction: row;
     }
 
+    .popup .btn-close {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        width: 30px;
+        height: 30px;
+        color: black;
+        font-size: 1.5rem;
+        padding: 2px 5px 7px 5px;
+    }
+
+    .popup.active .content {
+        transition: all 300ms ease-in-out;
+        transform: translate(-50%, -50%);
+    }
+
+    .blurred {
+        filter: blur(2px);
+        overflow: hidden;
+    }
+
+    .popup .content {
+        position: fixed;
+        transform: scale(0);
+        width: 40%;
+        z-index: 2;
+        text-align: center;
+        padding: 20px;
+        border-radius: 8px;
+        background: white;
+        box-shadow: 0px 0px 11px 2px rgba(0, 0, 0, 0.93);
+        z-index: 1;
+        left: 50%;
+        top: 50%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    input[type="date"]::before { 
+	content: attr(data-placeholder);
+	width: 100%;
+    }
+
+    input[type="date"]:focus::before,
+    input[type="date"]:valid::before { display: none }
+
     @media screen and (max-width:800px) {
         .card-container{
             height: fit-content;
@@ -111,10 +157,30 @@
 <?php include "nav.php" ?>
 
 <body>
-    <div class="flex-col flex-center margin-side-lg">
-        <button class="btn margin-lg" onclick="add()">Add Announcement &nbsp; <i class="fas fa-plus"></i></button>
-        <div class="card-container margin-side-lg">
+    <div class="flex-col flex-center margin-side-lg" id="background">
+    <button class="btn btn-icon btn-close margin-lg" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')">Add Announcement &nbsp; <i class="fas fa-plus"></i></button>
+    <div class="popup" id="form">
+    <div class="content">
+        <form action="/action_page.php" class="form-container">
 
+            <div class="form-item">
+                <label>Title</label>
+                <input type="text" required class="form-ctrl" placeholder="Enter Title">
+            </div>
+
+            <div class="form-item">
+                <label>Date</label>
+                <input type="date" required class="form-ctrl" data-placeholder="Enter Date">
+            </div>
+
+            <div class="form-item">
+                <label>Announcement</label>
+                <input type="text" required class="form-ctrl" placeholder="Enter Announcement details">
+            </div>
+
+    </div>
+
+        <div class="card-container margin-side-lg">
             <div class="flex-col event-card-details">
                 <h3 class="margin-md">Announcement</h3>
                 <date class="margin-md">28.10.2021</date>
@@ -130,9 +196,23 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
 <script>
+
+       function togglePopup(id) {
+        document.getElementById(id).classList.toggle("active");
+    }
+
+    function blur_background(id) {
+        document.getElementById(id).classList.toggle("blurred")
+    }
+
+    function stillBackground(id) {
+        document.getElementById(id).classList.toggle("still");
+    }
+
     function add() {
         document.querySelector(".form").classList.toggle("show-form");
     }
+
 </script>
 
 </html>

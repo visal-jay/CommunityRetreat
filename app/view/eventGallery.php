@@ -182,6 +182,8 @@
         block: 'center',
         inline: 'center'
     });
+
+    location.reload();
 </script>
 
 </html>

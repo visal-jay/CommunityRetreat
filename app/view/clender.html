@@ -16,7 +16,7 @@
         
       
     </head>
-    <body>
+    <body id="body">
         <header class="header">
             <a class=" logo ">
                 <img src="../Public/assets/visal logo.png">
@@ -50,12 +50,19 @@
         <div class = "calender-container">
             <div class="calender">
                 <div class="month">
-                    <i class = "fas fa-angle-left prev "></i>
+                    <div class="angle-btn">
+                        <i class = "fas fa-angle-left fa-2x prev "></i>
+                    </div>
+
                     <div class="date">
                         <h1></h1>
                         <p></p>
                     </div>
-                    <i class = "fas fa-angle-right next"></i>   
+
+                    <div class="angle-btn">
+                         <i class = "fas fa-angle-right fa-2x next "></i> 
+                    </div>
+                     
                 </div>
                 <div class="weekdays">
                     <div>Sun</div>
@@ -72,7 +79,7 @@
             </div>
         </div>
         <div class="event-popup-container">
-            <div class="event-popup card-container">
+            <div class="event-popup" >
                 <div class="event-popup-header">
                     <div class="close-btn"><button class="btn btn-icon  popup-form-cancelbtn" onclick="popupHide()"><i class="fas fa-times clr-red"></i></button></div>
                     <h2>Events on</h2>

@@ -1,384 +1,505 @@
-* {
-  margin: 0%;
-  padding: 0%;
+*{
+    margin: 0%;
+    padding: 0%;
 }
 
-.body-main {
-  display: flex;
-  justify-content: center;
-  align-content: flex-end;
+.body-main{
+    display: flex;
+    justify-content: center;
+    align-content:flex-end;
 }
 
-.profilecontainer {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-
-.profilecontainer-top {
-  display: flex;
-  width: 90%;
-  flex-direction: column;
-  position: relative;
-}
-@media (min-width: 800px) {
-  .profilecontainer {
-    width: 80%;
+.profilecontainer{
+    height: 100%;
+    width: 100%;
+    display: flex;
     align-items: center;
-    margin: auto;
-  }
-  .profilecontainer-top {
-    width: 70%;
-  }
+    flex-direction: column;
+  
+   
+
 }
 
-.profilepic-pic-div {
-  display: flex;
-  align-self: center;
-  height: 200px;
-  width: 200px;
-  transform: translate(0%, 0%);
-  border-radius: 20px;
-  overflow: hidden;
-  border: 2px solid rgb(252, 246, 246);
-  background: rgb(202, 196, 196);
+.profilecontainer-top{
+   
+    display: flex;
+    width: 90%;
+    flex-direction: column;
+    position:relative;
+    
+    
 }
-#dp {
-  height: 200px;
-  width: 200px;
-}
-#file {
-  display: none;
-}
-#uploadbtn {
-  height: 40px;
-  width: 200px;
-  bottom: 0;
-  position: absolute;
-  transform: translatex(0%);
-  text-align: center;
-  background-color: black;
-  color: wheat;
-  line-height: 40px;
-  font-size: 15px;
-  cursor: pointer;
-  display: none;
+@media  (min-width: 800px) {
+    .profilecontainer{
+        width: 80%;
+        align-items: center;
+        margin:auto;
+    }
+    .profilecontainer-top{
+        width: 70%;
+    }
+    
 }
 
-.aboutme-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: white;
+
+.profilepic-pic-div{
+    display:flex;
+    align-self: center;
+    height: 200px;
+    width: 200px;
+    transform: translate(0%,0%);
+    border-radius: 20px;
+    overflow: hidden;
+    border:2px solid  rgb(252, 246, 246);
+    background: rgb(202, 196, 196);
+}
+#dp{
+   height: 200px;
+   width: 200px;
+   
+    
+}
+#file{
+    display:none;
+}
+#uploadbtn{
+    height:40px;
+    width: 200px;
+    bottom: 0;
+    position:absolute;
+    transform: translatex(0%);
+    text-align: center;
+    background-color:black;
+    color: wheat;
+    line-height:40px;
+    font-size:15px;
+    cursor: pointer;
+    display:none;
+
+}
+
+.aboutme-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    
+
 }
 
 br.responsive {
-  display: inline;
+    display: inline; 
+  }
+  
+ 
+.aboutme-container h2{
+    
+    text-align: center;
+    font-weight:500;
+    white-space: wrap;
+   
+}
+.aboutme-container h3{
+
+    text-align: center;
+    font-weight:normal;
+    color:rgb(111, 114, 114);
+    white-space: nowrap;
+  
+    
+    
 }
 
-.aboutme-container h2 {
-  text-align: center;
-  font-weight: 500;
-  white-space: wrap;
+
+.update-form{
+    display: none;
+    margin:auto;
+    width: 60%;
+    position:relative;
+    padding: 0.3em 0.5em;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background: transparent;
+    border-radius: 6px;
+    font-family: inherit;
+    margin-bottom: 0.8rem;
 }
-.aboutme-container h3 {
-  text-align: center;
-  font-weight: normal;
-  color: rgb(111, 114, 114);
-  white-space: nowrap;
+.update-form input[type=text]{
+    margin:auto;
+    width: 100%;
+    padding: 0.3em ;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background: transparent;
+    border-radius: 6px;
+    font-family: inherit;
+   
+}
+.update-form input[type=password]{
+    margin:auto;
+    width: 100%;
+    padding: 0.3em ;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background: transparent;
+    border-radius: 6px;
+    font-family: inherit;
+   
+}
+.update-form input[type=text]:focus{
+    box-shadow: 0px 0px 0px 1px #16c79a;
+    border-color: #16c79a;
 }
 
-.name-update-form {
-  display: none;
-  margin: auto;
-  width: 60%;
-  position: relative;
-  padding: 0.3em 0.5em;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  background: transparent;
-  border-radius: 6px;
-  font-family: inherit;
-  margin-bottom: 0.8rem;
+
+.intro-update-btn{
+    display: flex;
+    justify-content: space-evenly;
 }
-.name-update-form input[type="text"] {
-  margin: auto;
-  width: 100%;
-  padding: 0.3em;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  background: transparent;
-  border-radius: 6px;
-  font-family: inherit;
+#marker{
+    margin-bottom: 1rem;
+    color:rgb(111, 114, 114);
 }
-.name-update-form input[type="password"] {
-  margin: auto;
-  width: 100%;
-  padding: 0.3em;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  background: transparent;
-  border-radius: 6px;
-  font-family: inherit;
-}
-.name-update-form input[type="text"]:focus {
-  box-shadow: 0px 0px 0px 1px #16c79a;
-  border-color: #16c79a;
+.input-container{
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    width:80%;
 }
 
-.blur{
-    filter: blur(5px);
+
+#envelope{
+    color: grey;
+    font-weight: 900;
 }
-label{
-    margin-bottom: 0.4em;
+#mobi{
+    color: grey;
+    font-weight: 900;
 }
-#reset-password{
-    background-color: white;
-    padding: 2rem;
-    width: 70%;
+.contact-settings{
+    margin-top: 10px;
+}
+
+.contact-settings h2{
+    margin-left: 30px;
+    font-weight: normal;
+    color: #16c79a;;
+}
+hr{
+    margin: 5px 0 5px;
+}
+.contact-info{
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 2em 2em 2em;
+    
+    
+    
+}
+.location-container{
     position: relative;
-    top:-70%;
+    display: flex;
+    width: 100%;
+   
+    
 }
-.intro-editor {
-  display: flex;
-  justify-content: center;
-}
-.intro-update-btn {
-  display: flex;
-  justify-content: space-evenly;
-}
-#marker {
-  margin-bottom: 1rem;
-  color: rgb(111, 114, 114);
-}
-.input-container {
-  display: flex;
-  margin: auto;
-  flex-direction: column;
-  width: 80%;
+.location{
+    word-break: break-all;
+    font-weight: normal;
+    margin: auto;
+    position: relative;
+
 }
 
-#envelope {
-  color: grey;
-  font-weight: 900;
-}
-#mobi {
-  color: grey;
-  font-weight: 900;
-}
-.contact-settings {
-  margin-top: 10px;
+.location h3{
+   
+    white-space: wrap;
+    font-weight: normal;
+    
+    
+    
 }
 
-.contact-settings h2 {
-  margin-left: 30px;
-  font-weight: normal;
-  color: #16c79a;
+
+.location-change-btn{
+    display: flex;
+    position: relative;
+    padding: 5px;
+    right: 0%;
+   
 }
-hr {
-  margin: 5px 0 5px;
+.location-change-btn button{
+   
+    border:none;
+   
 }
-.contact-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  padding: 2em 2em 2em;
+.location-icon{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
+    
 }
 
-.email-container {
-  position: relative;
-  display: flex;
-  width: 100%;
+.email-container{
+    position: relative;
+    display: flex;
+    width: 100%;
+   
+    
 }
-.email {
-  word-break: break-all;
-  font-weight: normal;
-  margin: auto;
-  position: relative;
+.email{
+    word-break: break-all;
+    font-weight: normal;
+    margin: auto;
+    position: relative;
+
 }
 
-.email h3 {
-  white-space: wrap;
-  font-weight: normal;
+.email h3{
+   
+    white-space: wrap;
+    font-weight: normal;
+    
+    
+    
 }
 
-.email-change-btn {
-  display: flex;
-  position: relative;
-  padding: 5px;
-  right: 0%;
+
+.email-change-btn{
+    display: flex;
+    position: relative;
+    padding: 5px;
+    right: 0%;
+   
 }
-.email-change-btn button {
-  border: none;
+.email-change-btn button{
+   
+    border:none;
+   
 }
-.email-icon {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1em;
+.email-icon{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
+    
 }
 
-.mobile-container {
-  position: relative;
-  display: flex;
-  width: 100%;
+.mobile-container{
+    position: relative;
+    display: flex;
+    width: 100%;
+    
+  
 }
-.mobile {
-  word-break: break-all;
-  font-weight: normal;
-  margin: auto;
-  position: relative;
+.mobile{
+    
+    word-break: break-all;
+    font-weight: normal;
+    margin: auto;
+    position: relative;
 }
-.mobile h3 {
-  font-weight: normal;
+.mobile h3{
+    font-weight: normal;
 }
-.mobile-change-btn {
-  display: flex;
-  position: relative;
-  padding: 5px;
-  right: 0%;
+.mobile-change-btn{
+    display: flex;
+    position: relative;
+    padding: 5px;
+    right: 0%;
 }
-.mobile-change-btn button {
-  border: none;
-}
-
-.mobile-icon {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1em;
-}
-.security-settings h2 {
-  margin-left: 30px;
-  font-weight: normal;
-  color: #16c79a;
-}
-.login-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  padding: 2em 2em 2em;
+.mobile-change-btn button{
+    
+    border:none;
+   
 }
 
-.username-container {
-  position: relative;
-  display: flex;
-  width: 100%;
+.mobile-icon{
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    padding: 1em;
+   
+    
 }
-.username {
-  word-break: break-all;
-  font-weight: normal;
-  margin: auto;
-  position: relative;
+.security-settings h2{
+    margin-left: 30px;
+    font-weight: normal;
+    color: #16c79a;
 }
-.username h3 {
-  font-weight: normal;
-}
-.username-change-btn {
-  display: flex;
-  position: relative;
-  padding: 5px;
-  right: 0%;
-}
-.username-change-btn button {
-  border: none;
-}
-.username-icon {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1em 0.5em 1em;
-}
-.password-container {
-  position: relative;
-  display: flex;
-  width: 100%;
-}
-.password {
-  word-break: break-all;
-  font-weight: normal;
-  margin: auto;
-  position: relative;
-  font-size: 30px;
-}
-.password input[type="password"] {
-  margin: 8px 0;
-  width: 100%;
-  font-size: inherit;
-  border: none;
-  background: transparent;
-  color: black;
-  text-align: center;
-}
-.password-change-btn {
-  display: flex;
-  position: relative;
-  padding: 5px;
-  right: 0%;
-}
-.password-change-btn button {
-  border: none;
+.login-info{
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 2em 2em 2em;
+    
 }
 
-.password-icon {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1em 0.5em 1em;
+
+.username-container{
+    position: relative;
+    display: flex;
+    width: 100%;
+   
+  
+     
 }
-.password-edit-container {
-  display: none;
-  padding: 0.3em 0.5em;
-  width: 70%;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  background: transparent;
-  border-radius: 6px;
-  font-family: inherit;
-  margin-bottom: 0.8rem;
-  box-sizing: border-box;
+.username{
+    word-break: break-all;
+    font-weight: normal;
+    margin: auto;
+    position: relative;
+}
+.username h3{
+    font-weight: normal;
+}
+.username-change-btn{
+    display: flex;
+    position: relative;
+    padding: 5px;
+    right: 0%;
+}
+.username-change-btn button{
+   
+    border:none;
+   
+}
+.username-icon{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em 0.5em 1em;
+   
+    
+}
+.password-container{
+    position: relative;
+    display: flex;
+    width: 100%;
+   
+}
+.password{
+
+    word-break: break-all;
+    font-weight: normal;
+    margin: auto;
+    position: relative;
+    font-size: 30px;
+    
+    
+}
+.password input[type="password"]{
+    margin: 8px 0;
+    width: 100%;
+    font-size: inherit;
+    border: none;
+    background: transparent;
+    color:black;
+    text-align: center;
+   
+}
+.password-change-btn{
+    display: flex;
+    position: relative;
+    padding: 5px;
+    right: 0%;
+}
+.password-change-btn button{
+    
+    border:none;
+   
 }
 
-.password-edit-container input[type="password"]:focus {
-  box-shadow: 0px 0px 0px 1px #16c79a;
-  border-color: #16c79a;
+.password-icon{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em 0.5em 1em;
+   
+    
 }
-.new-password {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
+.password-edit-container{
+    display: none;
+    padding: 0.3em 0.5em;
+    width: 70%;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background: transparent;
+    border-radius: 6px;
+    font-family: inherit;
+    margin-bottom: 0.8rem;
+    box-sizing: border-box;
+}
+
+.password-edit-container input[type=password]:focus{
+    box-shadow: 0px 0px 0px 1px #16c79a;
+    border-color: #16c79a;
+}
+.new-password{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-evenly;
 }
 
 .unhide {
-  display: block;
+  
+    display: block;
+   
 }
 .hide {
-  display: none;
+  
+    display: none;
+   
 }
-#alert {
-  font-size: 15px;
-  color: red;
-  text-align: center;
+#alert{
+    font-size: 15px;
+    color: red;
+    text-align: center;
 }
 @media screen and (max-width: 600px) {
-  .profilecontainer {
-    font-size: 13px;
-  }
-  .contact-info {
-    padding: 2em 0.5em 2em;
-  }
-  .login-info {
-    padding: 2em 0.5em 2em;
-  }
-  .name-update-form {
-    width: 90%;
-    font-size: 13px;
-  }
-  .password input[type="password"] {
-    font-size: 25px;
-  }
+    .profilecontainer{
+        font-size: 13px;
+    }
+    .contact-info{
+        padding: 2em 0.5em 2em;
+    }
+    .login-info{
+        padding: 2em 0.5em 2em;
+    }
+    .update-form{
+        width: 90%;
+        font-size: 13px;
+    }
+    .update-form input[type=text]{
+        font-size: 11px;
+    }
+    .password input[type="password"]{
+        font-size: 25px;
+    }
+    .update-form button{
+        font-size: 0.9rem;
+    }
+    
+
+    
+}
+@media screen  and (max-width: 400px){
+    .update-form{
+        width: 90%;
+        font-size: 13px;
+    }
+    .update-form button{
+        font-size: 0.8rem;
+    }
+}
+@media screen  and (max-width: 350px){
+    .update-form button{
+        font-size: 0.7rem;
+    }
 }

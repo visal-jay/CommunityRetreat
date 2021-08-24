@@ -50,6 +50,15 @@
         width: 200px;
     }
 
+    search input[type=search] {
+        width: 90%;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
+    }
+
+    search input[type=search]:focus {
+        width: 100%;
+    }
     .homepage {
         margin: 0 auto;
         width: 80%;

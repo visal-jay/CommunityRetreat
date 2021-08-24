@@ -76,7 +76,8 @@ class LoginController
                 Controller::redirect("/view/organisationDashboard.php");
             elseif ($user_type == "admin")
                 Controller::redirect("/view/organisationDashboard.php");
-        } else (new LoginController)->loginFailed($email);
+        } 
+        else (new LoginController)->loginFailed($email);
     }
 
     private function loginFailed($email)
@@ -104,3 +105,4 @@ class LoginController
         }
     }
 }
+

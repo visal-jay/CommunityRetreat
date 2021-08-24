@@ -37,7 +37,6 @@ class SignupController
                 $data["signupUser"] = true;
             elseif (isset($_POST["signupOrg"]))
                 $data["signupOrg"] = true;
-
             Controller::redirect("/login/view", $data);
         }
 

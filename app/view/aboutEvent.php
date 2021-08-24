@@ -164,79 +164,119 @@
     }
 </style>
 
-<body>
+<?php
+if(!isset($moderator)) $moderator=false;
+if(!isset($treasurer)) $treasurer=false;
+$organization = $admin = $registered_user = $guest_user = false;
+if (!isset($_SESSION)) session_start();
+if (isset($_SESSION["user"]["user_type"])) {
+    if ($_SESSION["user"]["user_type"] == "organization") {
+        $organization = true;
+    }
+    if ($_SESSION["user"]["user_type"] == "admin") {
+        $$admin = true;
+    }
+    if ($_SESSION["user"]["user_type"] == "registered_user") {
+        $registered_user = true;
+    }
+} 
+else {
+    $guest_user = true;
+    }
+?>
 
+
+
+<body>
     <div id="background">
         <?php include "nav.php" ?>
         <div class="flex-col flex-center">
             <h1>About</h1>
             <div class="content border-round container-size margin-md" style="background-color: #eeeeee">
-
-                <div class="date-container">
-                    <div class="flex-row margin-lg">
-                        <i class="btn-icon icon-width far fa-calendar-alt clr-green margin-side-lg"></i>
-                        <h4 class="head-margin data">28th October 2021</h4>
-                        <input type="date" name="Event date" class="form form-ctrl hidden" data-placeholder="Event is on?" required></input>
-                    </div>
-                </div>
-
-                <div class="time-container">
-                    <div class="flex-row margin-lg">
-                        <i class="btn-icon icon-width far fa-clock clr-green margin-side-lg"></i>
-                        <h4 class="head-margin data">10.00 AM</h4>
-                        <input type="time" name="Event time" class="form form-ctrl hidden" data-placeholder="Event starts at?" required></input>
-                    </div>
-                </div>
-
-                <div class="venue-container">
-                    <div class="flex-row margin-lg">
-                        <i class="btn-icon icon-width fas fa-map-marker-alt clr-green margin-side-lg"></i>
-                        <h4 class="head-margin data">Mount Lavinia Beach</h4>
-                        <input type="text" name="Event location" class="form form-ctrl hidden" placeholder="Event is in?" required></input>
-                    </div>
-                </div>
-
-                <div class="human-container">
-                    <div class="flex-row margin-lg">
-                        <i class="btn-icon icon-width fas fa-user-friends clr-green margin-side-lg"></i>
-                        <h4 class="head-margin data">100 people volunteered</h4>
-                        <input type="text" name="Volunteers" class="form form-ctrl hidden" placeholder="Number of volunteers?" required></input>
-                    </div>
-                </div>
-
-                <div class="human-container">
-                    <div class="flex-row margin-lg">
-                        <i class="btn-icon icon-width fas fa-hand-holding-usd clr-green margin-side-lg"></i>
-                        <h4 class="head-margin data">15 people donated</h4>
-                        <input type="text" name="Donations" class="form form-ctrl hidden" placeholder="Number of donators?" required></input>
-                    </div>
-                </div>
-
-                <div class="flag-container">
-                    <div class="flex-row margin-lg">
-                        <i class="btn-icon icon-width far fa-flag clr-green margin-side-lg"></i>
-                        <div class="flex-row">
-                            <p class="head-margin data">Event by <b>AIESEC in University of Colombo</b></p>
-                            <input type="text" name="Organizer" class="form form-ctrl hidden" placeholder="Organized by?" required></input>
+                <?php if ($organization || $moderator) { ?>
+                    <form action="event/updateDetails" method="post">
+                    <?php } ?>
+                    <div class="date-container">
+                        <div class="flex-row margin-lg">
+                            <i class="btn-icon icon-width far fa-calendar-alt clr-green margin-side-lg"></i>
+                            <h4 class="head-margin data"><?= $start_date; ?></h4>
+                            <?php if ($organization || $moderator) { ?>
+                            <input type="date" name="start_date" class="form form-ctrl hidden" data-placeholder="Event is on?" value="<?= $start_date ?>"required></input>
+                            <?php } ?>
                         </div>
                     </div>
-                </div>
 
-                <div class="globe-container">
-                    <div class="flex-row margin-lg">
-                        <i class="btn-icon icon-width fas fa-globe clr-green margin-side-lg"></i>
-                        <h4 class="head-margin data">Physical Event</h4>
-                        <form action="/action_page.php" class="hidden form" required>
+                    <div class="time-container">
+                        <div class="flex-row margin-lg">
+                            <i class="btn-icon icon-width far fa-clock clr-green margin-side-lg"></i>
+                            <h4 class="head-margin data">10.00 AM</h4>
+                            <?php if ($organization || $moderator) { ?>
+                            <input type="time" name="Event time" class="form form-ctrl hidden" data-placeholder="Event starts at?" required></input>
+                            <?php } ?>
+                        </div>
+                    </div>
+
+                    <div class="venue-container">
+                        <div class="flex-row margin-lg">
+                            <i class="btn-icon icon-width fas fa-map-marker-alt clr-green margin-side-lg"></i>
+                            <h4 class="head-margin data">Mount Lavinia Beach</h4>
+                            <?php if ($organization || $moderator) { ?>
+                            <input type="text" name="Event location" class="form form-ctrl hidden" placeholder="Event is in?" required></input>
+                            <?php } ?>
+                        </div>
+                    </div>
+
+                    <div class="human-container">
+                        <div class="flex-row margin-lg">
+                            <i class="btn-icon icon-width fas fa-user-friends clr-green margin-side-lg"></i>
+                            <h4 class="head-margin data">100 people volunteered</h4>
+                            <?php if ($organization || $moderator) { ?>
+                            <input type="num" name="Volunteers" class="form form-ctrl hidden" placeholder="Number of volunteers?" required></input>
+                            <?php } ?>
+                        </div>
+                    </div>
+
+                    <div class="human-container">
+                        <div class="flex-row margin-lg">
+                            <i class="btn-icon icon-width fas fa-hand-holding-usd clr-green margin-side-lg"></i>
+                            <h4 class="head-margin data">15 people donated</h4>
+                            <?php if ($organization || $moderator) { ?>
+                            <input type="text" name="Donations" class="form form-ctrl hidden" placeholder="Number of donators?" required></input>
+                            <p><?php if(isset($_GET["volunteerErr"])) echo $_GET["volunteerErr"]; ?></p>
+                            <?php } ?>
+                        </div>
+                    </div>
+
+                    <div class="flag-container">
+                        <div class="flex-row margin-lg">
+                            <i class="btn-icon icon-width far fa-flag clr-green margin-side-lg"></i>
+                            <div class="flex-row">
+                                <p class="head-margin data">Event by <b>AIESEC in University of Colombo</b></p>
+                                <?php if ($organization || $moderator) { ?>
+                                <input type="text" name="Organizer" class="form form-ctrl hidden" placeholder="Organized by?" required></input>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="globe-container">
+                        <div class="flex-row margin-lg">
+                            <i class="btn-icon icon-width fas fa-globe clr-green margin-side-lg"></i>
+                            <h4 class="head-margin data">Physical Event</h4>
+                            <?php if ($organization || $moderator) { ?>
                             <select class="form-ctrl" id="mode" required>
                                 <option value="" disabled selected>Select the mode of the event</option>
                                 <option value="Physical">Physical</option>
                                 <option value="Virtual">Virtual</option>
                                 <option value="Physical & Virtual">Physical & Virtual</option>
                             </select>
-                        </form>
+                            <?php } ?>
+                        </div>
                     </div>
-                </div>
-
+                    <?php if ($organization) { ?>
+                    </form>
+                    <?php } ?>
+                
             </div>
 
             <div class="textbox flex-col content border-round container-size margin-md" style="background-color: #eeeeee">
@@ -346,6 +386,8 @@
             form[i].classList.toggle("hidden");
         }
     }
+
+    <?php if(isset($_GET["volunteerErr"])) echo "edit();" ?>
 
     function togglePopup(id) {
         document.getElementById(id).classList.toggle("active");

@@ -18,8 +18,8 @@
     }
 
     .profile-pic {
-        max-width: 10%;
-        min-width: 60px;
+        max-width: 9%;
+        min-width: 80px;
         aspect-ratio: 1/1;
         background-color: gray;
         border: 1px solid white;
@@ -42,7 +42,7 @@
         min-height: 100px;
         background-color: gray;
         overflow: hidden;
-        aspect-ratio: 4/1.75;
+        aspect-ratio: 5/2;
         max-width: 80%;
     }
 

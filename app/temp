@@ -1,8 +1,0 @@
-DELIMITER $$
-CREATE TRIGGER `organization_DELETE` AFTER DELETE ON `organization`
- FOR EACH ROW BEGIN
-  DELETE FROM login WHERE login.uid=old.uid;
-END$$
-DELIMITER
-Me to Everyone (01:22)
-CREATE DEFINER=`root`@`localhost` EVENT `remove_unverified` ON SCHEDULE EVERY 1 HOUR STARTS '2021-08-19 00:19:49' ON COMPLETION NOT PRESERVE ENABLE DO DELETE FROM login where timestamp>DATEADD(hh, -1, GETDATE())

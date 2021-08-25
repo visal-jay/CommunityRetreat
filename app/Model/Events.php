@@ -72,8 +72,8 @@ class Events extends Model
             $params["latitude"] = $latitude;
             $params["longitude"] = $longitude;
             $params["latitude2"] = $latitude;
-            if ($distance == NULL)
-                $distance = 20;
+            /* if ($distance == NULL )
+                $distance = 20; */
         } else
             $query = $query . $query_table;
 

@@ -4,6 +4,7 @@ class Organisation extends User{
 
     public function addOrganisation ($data)
     {
+        
         $db = Model::getDB();
         $db->beginTransaction();
 
@@ -12,7 +13,7 @@ class Organisation extends User{
         $insertData=array_intersect_key($data,["email"=>'',"username"=>'',"contact_number"=>'',"account_number"=>'']);
         $stmt->execute($insertData);
         $stmt->closeCursor();
-
+       
         $last_insert_org_sql='SELECT uid FROM organization ORDER BY uid DESC LIMIT 1 ';
         $stmt=$db->prepare($last_insert_org_sql);
         $stmt->execute([]);
@@ -68,6 +69,9 @@ class Organisation extends User{
     public function updateDetails($uid,$data){
         
         //$data=array_merge(["username"=>'',"email"=>'',"contact_number"=>'',"longitude"=>'',"latitude"=>'',"profile_pic"=>'',"cover_pic"=>'',"about_us"=>''],$data);
+        foreach (array_keys($data, NULL) as $key) {
+            unset($array[$key]);
+        }
         if(!$old_data=$this->getDetails($uid))
             return false;
         $params= array_merge($old_data,$data);
@@ -75,5 +79,39 @@ class Organisation extends User{
         unset($params["map"]);
         $query = 'UPDATE organization SET username= :username, email= :email, contact_number = :contact_number , latlang=POINT(:latitude,:longitude) ,profile_pic= :profile_pic,cover_pic=:cover_pic,about_us=:about_us  WHERE uid = :uid';
         User::insert($query,$params);       
+    }
+
+    public function getEvents($status="deleted"){
+        $query = 'SELECT event_name,start_date,volunteer_status,donation_status from event WHERE NOT status="deleted" AND ';
+        //$params = ["uid" => $uid];
+        //$result=User::select($query,$params);
+    }
+
+    public function query($args){
+        $org_username = NULL;
+        extract($args, EXTR_OVERWRITE);
+
+        $query_select_primary = "SELECT uid ";
+        $query_table = 'FROM organization WHERE ';
+        $query_filter_organization_name = ' username LIKE  "%:org_username%" AND ';
+        $query_filter_last = ' 1=1 ';
+
+        $query = $query_select_primary;
+
+        $query = $query . $query_table;
+
+        if ($org_username != NULL) {
+            $query = $query . $query_filter_organization_name;
+            $params["org_username"] = $org_username;
+        }
+
+        $query = $query . $query_filter_last;
+      
+        $result = Model::select($query, $params);
+        
+        if(count($result)==0)
+            return false;
+        return $result;
+
     }
 }

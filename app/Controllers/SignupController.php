@@ -67,6 +67,7 @@ class SignupController
     }
 
     function checkEmailAvailable(){
+        if((new Validation)->email($_POST["email"]));
         echo json_encode(array("taken"=>(new User)->checkUserEmail($_POST["email"])));
     }
 }

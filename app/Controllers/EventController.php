@@ -44,4 +44,6 @@ class EventController{
         $events->updateDetails($_POST);
         Controller::redirect("event/view");
     }
+
+  
 }

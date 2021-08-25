@@ -1,4 +1,9 @@
 <?php
+
+require __DIR__ .'/../Libararies/PHPMailer-6.5.0/src/Exception.php';
+require __DIR__ .'/../Libararies/PHPMailer-6.5.0/src/PHPMailer.php';
+require __DIR__ .'/../Libararies/PHPMailer-6.5.0/src/SMTP.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;  
@@ -38,7 +43,6 @@ class Mail
 
     public  function verificationEmail($reciever,$body_file, $url, $subject)
     {
-        echo 'asdaslkdjalsd';
         $recievers = [$reciever];    
         $body = View::renderTostring($body_file,["url" => $url]);
         $this->sendMail($recievers, $subject, $body);

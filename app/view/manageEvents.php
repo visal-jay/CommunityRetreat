@@ -163,11 +163,13 @@
                     <tr>
                         <th>Added date</th>
                         <th>Published date</th>
+                        <th>Event date</th>
                         <th>Volunteering</th>
                         <th>Donations</th>
 
                     </tr>
                     <tr>
+                        <td>2010.10.20</td>
                         <td>2010.10.20</td>
                         <td>2010.10.20</td>
                         <td><i class="fas fa-check clr-green"></i></td>

@@ -243,6 +243,17 @@ header .logo img {
   border: none;
 }
 
+.nav-search-bar input[type=search] {
+  width: 100px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+
+
+.nav-search-bar input[type=search]:focus {
+  width: 200px;
+}
+
 .search-bar {
   border: 1px solid #ccc;
   border-radius: 8px;

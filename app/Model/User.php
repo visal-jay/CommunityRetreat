@@ -5,7 +5,6 @@ class User extends Model
     {
         $query = 'SELECT COUNT(*) as count FROM login where email = :email ';
         $params = ["email" => $email];
-        echo $email;
         if ((User::select($query, $params))[0]["count"] == 1)
             return true;
         else
@@ -25,7 +24,7 @@ class User extends Model
 
     public function getForgotPasswordKey ($email){
         $encryption= new Encryption;
-        $query = 'SELECT email,passowrd FROM login where email = :email AND verified= 1';
+        $query = 'SELECT email,password FROM login where email = :email AND verified= 1';
         $params = ["email" => $email];
         $result=User::select($query,$params);
         $time= (int)shell_exec("date '+%s'");
@@ -55,6 +54,7 @@ class User extends Model
         User::insert($query,$params);
     }
 
+    
     function checkLoginAcess($email){
         $bad_login_limit = 5;
         $lockout_time = 600;
@@ -62,9 +62,9 @@ class User extends Model
         $params = ["email" => $email,"verified"=>1];
         $result=User::select($query,$params);
         var_dump($result);
-        if (count($result)> 1){
+        if (count($result)>= 1){
             extract($result[0], EXTR_OVERWRITE);
-           $time= shell_exec("date '+%s' ");
+           $time= (int) shell_exec("date '+%s' ");
             if (($failed_login_count >= $bad_login_limit) && ($time - $first_failed_login < $lockout_time))
                 return true;
             else
@@ -72,6 +72,12 @@ class User extends Model
         }
         else
             return false;
+    }
+
+    function resetPassword($email,$password){
+        $query = 'UPDATE login SET password= :password  WHERE email = :email';
+        $params = ["email" => $email,"password"=>$password];
+        User::insert($query,$params);
     }
 
 }

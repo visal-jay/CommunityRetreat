@@ -28,7 +28,7 @@ class SignupController
         }
 
         if (!$validate->password($_POST["password"])) {
-            $data["passwordErr"] = "Invalid password";
+            $data["passwordErr"] = "Strong password required<br> Combine least 8 of the following: uppercase letters,lowercase letters,numbers and symbols";
         }
         
         if (isset($data["emailErr"]) or isset($data["passwordErr"])) {
@@ -37,7 +37,6 @@ class SignupController
                 $data["signupUser"] = true;
             elseif (isset($_POST["signupOrg"]))
                 $data["signupOrg"] = true;
-
             Controller::redirect("/login/view", $data);
         }
 
@@ -53,6 +52,8 @@ class SignupController
 
     function verifyEmail()
     {
+        if(!isset($_GET["key"]))
+            Controller::redirect('/login/view');
         $key = $_GET["key"];
         $encyption = new Encryption;
         $data = $encyption->decrypt($key, 'email verificaition');
@@ -63,5 +64,9 @@ class SignupController
         else
             Controller::redirect('/login/view');
         LoginController::validate($data["email"],$data["password"]);
+    }
+
+    function checkEmailAvailable(){
+        echo json_encode(array("taken"=>(new User)->checkUserEmail($_POST["email"])));
     }
 }

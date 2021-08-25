@@ -140,6 +140,7 @@
         rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
         rowSpan = Math.ceil((item.querySelector('.content').getBoundingClientRect().height + rowGap) / (rowHeight + rowGap));
         item.style.gridRowEnd = "span " + rowSpan;
+        //location.reload();
     }
 
     function resizeAllGridItems() {
@@ -153,6 +154,10 @@
     window.addEventListener("resize", resizeAllGridItems);
 
 
+    allItems = document.getElementsByClassName("item");
+    for (x = 0; x < allItems.length; x++) {
+        imagesLoaded(allItems[x], resizeInstance);
+    }
 
     document.querySelector(".side-nav .active").scrollIntoView({
         behavior: 'auto',

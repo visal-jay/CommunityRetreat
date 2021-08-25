@@ -32,7 +32,7 @@
 
                             <h2 style="font-family:Whitney,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;font-weight:500;font-size:20px;color:#4f545c;letter-spacing:0.27px">
                               Hey CommunityRetreater,</h2>
-                            <p>Forgot your password? We recieved a request to reset he passowrd for your account. Click below to verify your email address:</p>
+                            <p>Forgot your password? We recieved a request to reset he passowrd for your account. Click below to reset your password:</p>
                           </div>
                         </td>
                       </tr>

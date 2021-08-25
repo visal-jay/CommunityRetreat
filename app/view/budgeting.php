@@ -1,3 +1,4 @@
+<?php if(!isset($_SESSION)) session_start(); ?>
 <!DOCTYPE html>
 <html lang="en" id="id1">
 
@@ -162,6 +163,31 @@ p {
 }
 </style>
 
+<?php 
+
+var_dump($incomes);
+if(!isset($moderator)) $moderator= false;
+if(!isset($treasurer)) $treasurer= false;
+$organization = $admin =$registered_user = $guest_user = false;
+
+if(isset($_SESSION ["user"] ["user_type"])){
+    if($_SESSION ["user"] ["user_type"] == "organization"){
+        $organization = true;
+    }
+    
+    if($_SESSION ["user"] ["user_type"] == "admin"){
+        $admin = true;
+    }
+
+    if($_SESSION ["user"] ["user_type"] == "registered_user"){
+        $registered_user = true;
+    }
+    
+}else{
+    $guest_user= true;
+}
+?>
+
 <body>
     <div class="container" id="container">
         <div>
@@ -170,60 +196,41 @@ p {
             </h1>
         </div>
         <h2 class="header">Income</h2>
-        <form action="" class="form">
+
+        <form action="/budget/addIncome" method="post" class=" form">
+
             <div>
                 <button class="btn btn-md btn-solid margin-md" type="button" id="button" value="Add"
                     onclick="show_hide('income-form')">Add &nbsp;<i class="fas fa-plus"></i></button>
             </div>
             <div id="income-form" class="hidden" style="margin-top: 20px;">
                 <div class="input form-item">Details
-                    <input class="form-ctrl" id="details" type="text" placeholder="Enter the details" />
+                    <input class="form-ctrl" name="details" id=" details" type="text" placeholder="Enter the details" />
                 </div>
                 <div class="input form-item">Amount
-                    <input class="form-ctrl" id="amount" type="text" placeholder="Enter the amount" />
+                    <input class="form-ctrl" name="amount" id="amount" type="text" placeholder="Enter the amount" />
                 </div>
                 <div class="form-action-buttons">
-                    <input class="btn btn-md" type="submit" value="Submit">
+                    <button class="btn btn-md" name="submit" type="submit" value="submit">Submit</button>
                 </div>
             </div>
+            <?php if($organization || $treasurer) {?>
         </form>
+        <?php } ?>
         <div class="income-info" id="income-info">
+            <?php foreach($incomes as $income){ ?>
             <div class="card-container">
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas id officia perspiciatis ipsam,
-                    maxime veritatis in aut autem sapiente odit eveniet ipsa saepe laudantium quibusdam? Voluptatum
-                    incidunt dolore dolorem magnam.</p>
-                <p>1000000</p>
+                <p><?= $income["details"] ?></p>
+                <p><?= $income["amount"] ?></p>
                 <div class="flex-row-to-col">
                     <button class="btn btn-solid update-delete-btn "
-                        onclick="togglePopup('update-form', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas id officia perspiciatis ipsam, maxime veritatis in aut autem sapiente odit eveniet ipsa saepe laudantium quibusdam? Voluptatum incidunt dolore dolorem magnam.', '1000000'); blur_background('container');stillBackground('id1')">update</button>
-                    <button class="btn bg-red update-delete-btn  clr-white del">Delete</button>
+                        onclick="togglePopup('update-form','<?= $income['details'] ?>', '<?= $income['amount'] ?>'); blur_background('container');stillBackground('id1')">update</button>
+                    <button class="btn bg-red update-delete-btn  clr-white del" name="delete" value="delete"
+                        id>Delete</button>
                 </div>
             </div>
+            <?php } ?>
 
-            <div class="card-container">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi veritatis cum ducimus neque,
-                    facilis
-                    dolorum sed dolorem accusantium. Harum, ducimus facere earum dolor consequatur iure impedit non
-                    voluptatem? Vel, ullam.</p>
-                <p>1000000</p>
-                <div class="flex-row-to-col">
-                    <button class="btn btn-solid update-delete-btn "
-                        onclick="togglePopup('update-form', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas id officia perspiciatis ipsam, maxime veritatis in aut autem sapiente odit eveniet ipsa saepe laudantium quibusdam? Voluptatum incidunt dolore dolorem magnam.', '1000000'); blur_background('container');stillBackground('id1') ">update</button>
-                    <button class="btn bg-red update-delete-btn  clr-white del">Delete</button>
-                </div>
-            </div>
-
-            <div class="card-container">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid facilis dignissimos, amet quas
-                    reiciendis ex corporis quisquam nulla quam quia minus quos non voluptas voluptatem harum odit
-                    delectus doloribus nisi.</p>
-                <p>1000000</p>
-                <div class="flex-row-to-col">
-                    <button class="btn btn-solid update-delete-btn "
-                        onclick="togglePopup('update-form', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas id officia perspiciatis ipsam, maxime veritatis in aut autem sapiente odit eveniet ipsa saepe laudantium quibusdam? Voluptatum incidunt dolore dolorem magnam.', '1000000'); blur_background('container');stillBackground('id1')">update</button>
-                    <button class="btn bg-red update-delete-btn  clr-white del">Delete</button>
-                </div>
-            </div>
         </div>
 
         <div>
@@ -234,59 +241,37 @@ p {
 
         <h2 class="header">Expense</h2>
 
-        <form action="" class="form">
+        <form action="/budget/addExpense" method="post" class="form">
+
             <button class="btn btn-md btn-solid margin-md" type="button" name="button" id="btn" value="Add"
                 onclick="show_hide('expense-form') ">Add &nbsp;<i class="fas fa-plus"></i></button>
             <div id="expense-form" style="margin-top: 20px;" class="hidden">
                 <div class="input form-item">Details
-                    <input class="form-ctrl" id="details" type="text" placeholder="Enter the details" />
+                    <input class="form-ctrl" name="details" id="details" type="text" placeholder="Enter the details" />
                 </div>
                 <div class="input form-item">Amount
-                    <input class="form-ctrl" id="amount" type="text" placeholder="Enter the amount" />
+                    <input class="form-ctrl" name="amount" id="amount" type="text" placeholder="Enter the amount" />
                 </div>
                 <div class="form-action-buttons">
-                    <input class="btn btn-md" type="submit" value="Submit">
-
+                    <button class="btn btn-md" name="submit" type=" submit" value="Submit">Submit</button>
                 </div>
             </div>
         </form>
 
         <div class="expense-info" id="expense-info">
+            <?php foreach($expenses as $expense){ ?>
             <div class="card-container">
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas id officia perspiciatis ipsam,
-                    maxime veritatis in aut autem sapiente odit eveniet ipsa saepe laudantium quibusdam? Voluptatum
-                    incidunt dolore dolorem magnam.</p>
-                <p>1000000</p>
+                <p><?= $expense["details"] ?></p>
+                <p><?= $expense["amount"] ?></p>
                 <div class="flex-row-to-col">
                     <button class="btn btn-solid update-delete-btn "
-                        onclick="togglePopup('update-form', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas id officia perspiciatis ipsam, maxime veritatis in aut autem sapiente odit eveniet ipsa saepe laudantium quibusdam? Voluptatum incidunt dolore dolorem magnam.', '1000000'); blur_background('container');stillBackground('id1')">update</button>
-                    <button class="btn bg-red update-delete-btn  clr-white del">Delete</button>
+                        onclick="togglePopup('update-form','<?= $expense['details'] ?>', '<?= $expense['details'] ?>', '<?= $expense['record_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
+                    <button class="btn bg-red update-delete-btn  clr-white del" name="record_id"
+                        value="<?= $expense['record_id'] ?>">Delete</button>
                 </div>
             </div>
+            <?php } ?>
 
-            <div class="card-container">
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas id officia perspiciatis ipsam,
-                    maxime veritatis in aut autem sapiente odit eveniet ipsa saepe laudantium quibusdam? Voluptatum
-                    incidunt dolore dolorem magnam.</p>
-                <p>1000000</p>
-                <div class="flex-row-to-col">
-                    <button class="btn btn-solid update-delete-btn "
-                        onclick="togglePopup('update-form', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas id officia perspiciatis ipsam, maxime veritatis in aut autem sapiente odit eveniet ipsa saepe laudantium quibusdam? Voluptatum incidunt dolore dolorem magnam.', '1000000'); blur_background('container');stillBackground('id1')">update</button>
-                    <button class="btn bg-red update-delete-btn  clr-white del">Delete</button>
-                </div>
-            </div>
-
-            <div class="card-container">
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas id officia perspiciatis ipsam,
-                    maxime veritatis in aut autem sapiente odit eveniet ipsa saepe laudantium quibusdam? Voluptatum
-                    incidunt dolore dolorem magnam.</p>
-                <p>1000000</p>
-                <div class="flex-row-to-col">
-                    <button class="btn btn-solid update-delete-btn "
-                        onclick="togglePopup('update-form', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas id officia perspiciatis ipsam, maxime veritatis in aut autem sapiente odit eveniet ipsa saepe laudantium quibusdam? Voluptatum incidunt dolore dolorem magnam.', '1000000'); blur_background('container');stillBackground('id1')">update</button>
-                    <button class="btn bg-red update-delete-btn  clr-white del">Delete</button>
-                </div>
-            </div>
         </div>
         <div>
             <button class="btn btn-solid btn-md read-more-btn"
@@ -296,11 +281,11 @@ p {
     </div>
     <div class="update-container">
         <div class="popup unblurred box" id="update-form">
-            <form action="" class="update-form">
+            <form action="/budget/updateIncome" class="update-form">
                 <div class="input form-item">Details <input class="form-ctrl" id="details" type="text" /></div>
                 <div class="input form-item">Amount <input class="form-ctrl" id="amount" type="text" />
                     <div class="flex-row-to-col">
-                        <button type="submit" class="btn btn-solid save-btn">Save</button>
+                        <button type="submit" id="save" name="record_id" class=" btn btn-solid save-btn">Save</button>
                         <button type="button" class="btn bg-red clr-white del"
                             onclick="togglePopup('update-form');blur_background('container');stillBackground('id1')">Cancel</button>
                     </div>
@@ -318,11 +303,13 @@ p {
         document.getElementById(id).classList.toggle("hidden");
     }
 
-    function togglePopup(id, description = 0, amount = 0) {
+    function togglePopup(id, description = 0, amount = 0, record_id) {
         var form = document.getElementById(id);
         form.classList.toggle("active");
         form.querySelector("#details").setAttribute("value", description);
         form.querySelector("#amount").setAttribute("value", amount);
+        form.querySelector("#save").setAttribute("value", record_id);
+
     }
 
     function blur_background(id) {

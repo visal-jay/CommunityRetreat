@@ -37,7 +37,21 @@
     padding:5%;
     
 }
+.angle-btn{
+    display: flex;
+    width: 10%;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+   
+   
+}
+.prev:hover , .next:hover{
+    color: #16c79a;
+    cursor: pointer;
+}
 .date{
+    width: 90%;
     text-align: center;
     margin:auto;
 }
@@ -84,6 +98,7 @@
 }
 .next-days, .prev-days{
     opacity: 0.5;
+    transition: 10s;
 }
 .today{
     background-color: #a6f5e1;
@@ -107,11 +122,26 @@
     
 }
 .event-popup{
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    box-shadow: 0px 0px 0px 1px silver;
+    border-top: 3px solid #16c79a;
+    padding: 0 0.8rem;
     width: 40%;
     margin:auto;
     background-color: honeydew;
     position: fixed;
+   
 } 
+.event-popup-header{
+    position: relative;
+}
+.close-btn{
+    top: 50;
+    right: 0;
+    position: absolute;
+}
 .event-popup h2 {
     text-align: center;
     padding-top: 1rem;
@@ -119,23 +149,6 @@
 .event-popup p{
     text-align: center;
     font-weight: 300;
-}
-.event-container{
-    display: flex;
-    flex-direction: row;
-    width:100%;
-    padding:1rem 0rem 1rem 0rem;
-}
-.event-info{
-    text-align: left;
-    padding: 1rem;
-}
-
-.pop-up-load{
-    display: flex;
-}
-.hide{
-    display: none;
 }
 .event-items{
     display:flex;
@@ -145,6 +158,32 @@
     padding: 0.8rem 0rem;
     width:100%;
 }
+.event-container{
+    display: flex;
+    flex-direction: row;
+    width:100%;
+    padding:1rem  ;
+}
+.event-info{
+    text-align: left;
+    padding: 1rem;
+
+}
+
+.pop-up-load{
+    display:flex;
+   
+    
+}
+
+.overflow{
+    overflow:hidden;
+}
+  
+.hide{
+    display: none;
+}
+
 .flag-container{
     position: relative;
     padding: 0 0.7rem;
@@ -158,17 +197,23 @@ a{
     text-decoration: none;
     
 }
-.event-popup-header{
-    display: inline-flexbox;
-}
 
 .close-btn{
     float: right;
 }
+@media screen and (max-width: 900px){
+    .event-popup{
+        width: 50%;
+    }
+}
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 768px) {
     .days div{
         height: 5rem;
+    }
+    .event-popup{
+        width: 60%;
+        font-size: 14px;
     }
     
 }
@@ -178,6 +223,16 @@ a{
     }
     .month{
         padding: 3%;
+    }
+    .prev , .next{
+        font-size: 25px;
+    }
+    .event-container{
+        padding: 0.3rem;
+    }
+    .event-popup{
+        width: 80%;
+        
     }
 
     
@@ -189,6 +244,14 @@ a{
     .month{
        font-size: 14px;
     }
+    .prev , .next{
+        font-size: 20px;
+    }
+    .event-popup{
+        width: 85%;
+        font-size: 13px;
+    }
+
      
 }
 @media screen and (max-width: 320px) {

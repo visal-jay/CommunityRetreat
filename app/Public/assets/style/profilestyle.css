@@ -111,7 +111,7 @@ br.responsive {
 }
 
 
-.name-update-form{
+.update-form{
     display: none;
     margin:auto;
     width: 60%;
@@ -124,7 +124,7 @@ br.responsive {
     font-family: inherit;
     margin-bottom: 0.8rem;
 }
-.name-update-form input[type=text]{
+.update-form input[type=text]{
     margin:auto;
     width: 100%;
     padding: 0.3em ;
@@ -135,7 +135,7 @@ br.responsive {
     font-family: inherit;
    
 }
-.name-update-form input[type=password]{
+.update-form input[type=password]{
     margin:auto;
     width: 100%;
     padding: 0.3em ;
@@ -146,19 +146,12 @@ br.responsive {
     font-family: inherit;
    
 }
-.name-update-form input[type=text]:focus{
+.update-form input[type=text]:focus{
     box-shadow: 0px 0px 0px 1px #16c79a;
     border-color: #16c79a;
 }
 
 
-
-
-
-.intro-editor{
-    display: flex;
-    justify-content: center;
-}
 .intro-update-btn{
     display: flex;
     justify-content: space-evenly;
@@ -204,6 +197,50 @@ hr{
     padding: 2em 2em 2em;
     
     
+    
+}
+.location-container{
+    position: relative;
+    display: flex;
+    width: 100%;
+   
+    
+}
+.location{
+    word-break: break-all;
+    font-weight: normal;
+    margin: auto;
+    position: relative;
+
+}
+
+.location h3{
+   
+    white-space: wrap;
+    font-weight: normal;
+    
+    
+    
+}
+
+
+.location-change-btn{
+    display: flex;
+    position: relative;
+    padding: 5px;
+    right: 0%;
+   
+}
+.location-change-btn button{
+   
+    border:none;
+   
+}
+.location-icon{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
     
 }
 
@@ -435,13 +472,34 @@ hr{
     .login-info{
         padding: 2em 0.5em 2em;
     }
-    .name-update-form{
+    .update-form{
         width: 90%;
         font-size: 13px;
+    }
+    .update-form input[type=text]{
+        font-size: 11px;
     }
     .password input[type="password"]{
         font-size: 25px;
     }
+    .update-form button{
+        font-size: 0.9rem;
+    }
+    
 
     
+}
+@media screen  and (max-width: 400px){
+    .update-form{
+        width: 90%;
+        font-size: 13px;
+    }
+    .update-form button{
+        font-size: 0.8rem;
+    }
+}
+@media screen  and (max-width: 350px){
+    .update-form button{
+        font-size: 0.7rem;
+    }
 }

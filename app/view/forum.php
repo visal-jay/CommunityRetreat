@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="id1">
 
 <head>
     <meta charset="UTF-8">
@@ -12,15 +12,16 @@
 </head>
 
 <style>
-    h3{
+    h3 {
         margin: 0;
     }
+
     update {
         display: flex;
         justify-content: flex-end;
     }
 
-    .align-left{
+    .align-left {
         text-align: left;
     }
 
@@ -100,18 +101,41 @@
         flex-direction: column;
     }
 
-    input[type="date"]::before { 
-	content: attr(data-placeholder);
-	width: 100%;
+    input[type="date"]::before {
+        content: attr(data-placeholder);
+        width: 100%;
     }
 
     input[type="date"]:focus::before,
-    input[type="date"]:valid::before { display: none }
+    input[type="date"]:valid::before {
+        display: none
+    }
+
+    .still {
+        overflow: hidden;
+    }
+
+    ::placeholder {
+        color: black;
+        opacity: 1;
+    }
+
+    textarea {
+        min-height: 200px;
+        padding: 12px 20px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+        font-size: 16px;
+        resize: none;
+    }
 
     @media screen and (max-width:800px) {
-        .card-container{
+        .card-container {
             height: fit-content;
-    }
+        }
+
         .form {
             width: 80%;
 
@@ -125,7 +149,8 @@
         ::-webkit-scrollbar {
             display: none;
         }
-        #map{
+
+        #map {
             width: 300px;
             height: 300px;
         }
@@ -157,47 +182,58 @@
 <?php include "nav.php" ?>
 
 <body>
-    <div class="flex-col flex-center margin-side-lg" id="background">
-    <button class="btn btn-icon btn-close margin-lg" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')">Add Announcement &nbsp; <i class="fas fa-plus"></i></button>
-    <div class="popup" id="form">
-    <div class="content">
-        <form action="/action_page.php" class="form-container">
-
-            <div class="form-item">
-                <label>Title</label>
-                <input type="text" required class="form-ctrl" placeholder="Enter Title">
-            </div>
-
-            <div class="form-item">
-                <label>Date</label>
-                <input type="date" required class="form-ctrl" data-placeholder="Enter Date">
-            </div>
-
-            <div class="form-item">
-                <label>Announcement</label>
-                <input type="text" required class="form-ctrl" placeholder="Enter Announcement details">
-            </div>
-
-    </div>
+    <div id="background">
+        <div class="flex-col flex-center margin-side-lg">
+            <button class="btn btn-solid btn-close margin-lg" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')">Add Announcement &nbsp; <i class="fas fa-plus"></i></button>
+        </div>
 
         <div class="card-container margin-side-lg">
             <div class="flex-col event-card-details">
                 <h3 class="margin-md">Announcement</h3>
                 <date class="margin-md">28.10.2021</date>
                 <description class="margin-md">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione nemo nostrum perspiciatis. Impedit, praesentium. Fuga ab numquam distinctio reprehenderit laudantium quae possimus, odio quisquam quia officia illo laborum eligendi ea?</description>
-                    <update class="margin-md">
-                        <i class="btn-icon far fa-edit clr-green margin-side-md"></i>
-                        <i class="btn-icon far fa-trash-alt clr-red margin-side-md"></i>
-                    </update>
+                <update class="margin-md">
+                    <i class="btn-icon far fa-edit clr-green margin-side-md"></i>
+                    <i class="btn-icon far fa-trash-alt clr-red margin-side-md"></i>
+                </update>
             </div>
+        </div>
+    </div>
+
+    <div class="popup" id="form">
+        <div class="content">
+            <form action="/action_page.php" class="form-container">
+                <div>
+                    <h3 class="margin-md">New Announcement</h3>
+                </div>
+
+                <div class="form-item">
+                    <label>Title</label>
+                    <input type="text" required class="form-ctrl" placeholder="Enter Title">
+                </div>
+
+                <div class="form-item">
+                    <label>Date</label>
+                    <input type="date" required class="form-ctrl" data-placeholder="Enter Date">
+                </div>
+
+                <div class="form-item">
+                    <label>Announcement</label>
+                    <textarea name="task" class="form form-ctrl" placeholder="Enter announcement" required>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae magni eveniet porro, ipsa mollitia dolores ipsam optio aliquam, debitis voluptatum accusamus cum perferendis, amet facere expedita nostrum laboriosam quas iste!</textarea>
+                </div>
+
+                <button class="btn btn-solid margin-md" type="submit" disabled>Post</button>
+
+                <div>
+                    <button class="btn-icon btn-close" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
+                </div>
+            </form>
         </div>
     </div>
 </body>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
 <script>
-
-       function togglePopup(id) {
+    function togglePopup(id) {
         document.getElementById(id).classList.toggle("active");
     }
 
@@ -212,7 +248,6 @@
     function add() {
         document.querySelector(".form").classList.toggle("show-form");
     }
-
 </script>
 
 </html>

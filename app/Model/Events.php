@@ -25,10 +25,14 @@ class Events extends Model
 
     public function getDetails($event_id)
     {
-        $query = 'SELECT `event_id`, `event_name`, `org_uid`, ST_X(`latlang`) as latitude, ST_Y(`latlang`) as longitude, `start_date`, `start_time`, `about`, `mode`, `volunteer_capacity`, `donation_capacity`, `cover_photo`, `donation_status`, `volunteer_status`, `donations`, `volunteered` as event  FROM event_details where event_id=:event_id ';
+        $query = 'SELECT `event_id`, `event_name`, `org_uid`, ST_X(`latlang`) as latitude, ST_Y(`latlang`) as longitude, `start_date`, `start_time`, `end_time`, `about`, `mode`, `volunteer_capacity`, `donation_capacity`, `cover_photo`, `donation_status`, `volunteer_status`, `donations`, `volunteered`  FROM event_details where event_id=:event_id ';
         $params = ["event_id" => $event_id];
         $result = Model::select($query, $params);
-        return $result[0];
+      
+        if(count($result[0])>=1)
+            return $result[0];
+        else
+            return false;
     }
 
     public function updateDetails($data)

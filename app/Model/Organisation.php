@@ -49,11 +49,13 @@ class Organisation extends User{
 
 
     public function getDetails($uid){
+        var_dump($uid);
         $query = 'SELECT  org.username,org.email,org.contact_number,ST_X(org.latlang) as latitude ,ST_Y(org.latlang) as longitude ,org.profile_pic,org.cover_pic,org.about_us FROM organization org INNER JOIN login ON org.uid= login.uid WHERE org.uid = :uid  AND verified=1';
         $params = ["uid" => $uid];
         $result=User::select($query,$params);
         $result[0]["map"]=true;
-        if (count($result[0])>=1) {
+        
+        if (count($result[0])>1 ) {
             if($result[0]["latitude"]==NULL || $result[0]["longitude"]==NULL ){
             $result[0]["map"]=false;
             $result[0]["latitude"]=7.6;

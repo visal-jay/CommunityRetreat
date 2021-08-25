@@ -13,106 +13,117 @@
 
 <style>
     .styled-table {
-    border-collapse: collapse;
-    margin: 25px 25px;
-    font-size: 0.9em;
-    min-width: 80%;
-    max-width: 100%;
-}
-.styled-table th, td{
-    text-align: left;
-}
-#role{
-    margin-bottom: 0px;
-}
+        border-collapse: collapse;
+        margin: 25px 25px;
+        font-size: 0.9em;
+        min-width: 80%;
+        max-width: 100%;
+        width: 600px;
+    }
 
-.flex-row-to-col{
-    display: flex;
-    flex-direction: row;
-}
+    .styled-table th,
+    td {
+        text-align: left;
+    }
 
-th, td{
-    padding-right: 20px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-}
+    #role {
+        margin-bottom: 0px;
+    }
 
-#del{
-    padding-left: 30px;
-}
+    .flex-row-to-col {
+        display: flex;
+        flex-direction: row;
+    }
 
-@media screen and (max-width:767px) {
-    .flex-row-to-col{
-        flex-direction: column;
-} 
+    th,
+    td {
+        padding-right: 20px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
 
-.search-bar-role{
-    width: 50%;
-}
-}
+    #del {
+        padding-left: 30px;
+    }
+
+    @media screen and (max-width:767px) {
+
+        .flex-row-to-col {
+            flex-direction: column;
+        }
+
+        .search-bar-role {
+            width: 50%;
+        }
+
+
+        .styled-table {
+            width: 200px;
+        }
+    }
 </style>
 
 <?php include "nav.php" ?>
 
 <body>
-    
-    <div class="flex-col flex-center">
-    <h1>User Roles</h1>
 
-    <div>
-        <form class="flex-center flex-row-to-col" action="/action_page.html" style="height:fit-content">
-        <div class="flex-row flex-center">
-            <div class="search-bar search-bar-role">
-                    <input type="search" class="form-ctrl" placeholder="Search User">
-                    <button type="" class="btn-icon clr-green "><i class=" fa fa-search"></i></button>
-                </div>
-            <select class="form-ctrl" id="role" required>
-                <option value="" disabled selected>Select role</option>
-                <option value="Moderator">Moderator</option>
-                <option value="Treasurer">Treasurer</option>
-            </select>
-        </div>
+    <div class="flex-col flex-center">
+        <h1>User Roles</h1>
+
         <div>
-            <button type="submit" class="btn margin-lg" onclick="add()">Add User &nbsp; <i class="fas fa-plus"></i></button>
+            <form class="flex-center flex-row-to-col" action="/action_page.html" style="height:fit-content">
+                <div class="flex-row flex-center">
+                    <div class="search-bar search-bar-role">
+                        <input type="search" class="form-ctrl" placeholder="Search User">
+                        <button type="" class="btn-icon clr-green "><i class=" fa fa-search"></i></button>
+                    </div>
+                    <select class="form-ctrl" id="role" required>
+                        <option value="" disabled selected>Select role</option>
+                        <option value="Moderator">Moderator</option>
+                        <option value="Treasurer">Treasurer</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="submit" class="btn margin-lg" onclick="add()">Add User &nbsp; <i class="fas fa-plus"></i></button>
+                </div>
+            </form>
         </div>
-        </form>
-    </div>
-    
+
 
         <div class="event-card-details">
-        <table class="styled-table">
-            <tr>
-                <th>User</th>
-                <th>User Role</th>
-                <th></th>
-            </tr>
-            <tr>
-                <td>Visal Jayathilake</td>
-                <td>Admin</td>
-                <td id="del"><i class="btn-icon far fa-trash-alt clr-red" onclick="del()"></i></td>
-            </tr>
-            <tr>
-                <td>Pudara Semini</td>
-                <td>Treasurer</td>
-                <td id="del"><i class="btn-icon far fa-trash-alt clr-red" onclick="del()"></i></td>
-            </tr>
-            <tr>
-                <td>Venodi Widanagamage</td>
-                <td>Moderator</td>
-                <td id="del"><i class="btn-icon far fa-trash-alt clr-red" onclick="del()"></i>
-                    <div class="flex-row flex-space" style="display: none; padding-top:1rem;">
-                        <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
-                        <i class="fas fa-check clr-green margin-side-md"></i>&nbsp;
-                        <i class="fas fa-times clr-red  margin-side-md" onclick="cancel()"></i>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>Manuka Dewanarayana</td>
-                <td>Registered User</td>
-                <td id="del"><i class="btn-icon far fa-trash-alt clr-red" onclick="del()"></i></td>
-            </tr>
-        </table>
+            <table class="styled-table">
+                <tr>
+                    <th>User</th>
+                    <th>User Role</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Visal Jayathilake</td>
+                    <td>Admin</td>
+                    <td id="del"><i class="btn-icon far fa-trash-alt clr-red" onclick="del()"></i></td>
+                </tr>
+                <tr>
+                    <td>Pudara Semini</td>
+                    <td>Treasurer</td>
+                    <td id="del"><i class="btn-icon far fa-trash-alt clr-red" onclick="del()"></i></td>
+                </tr>
+                <tr>
+                    <td>Venodi Widanagamage</td>
+                    <td>Moderator</td>
+                    <td id="del"><i class="btn-icon far fa-trash-alt clr-red" onclick="del()"></i>
+                        <div class="flex-row flex-space" style="display: none; padding-top:1rem;">
+                            <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
+                            <i class="fas fa-check clr-green margin-side-md"></i>&nbsp;
+                            <i class="fas fa-times clr-red  margin-side-md" onclick="cancel()"></i>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Manuka Dewanarayana</td>
+                    <td>Registered User</td>
+                    <td id="del"><i class="btn-icon far fa-trash-alt clr-red" onclick="del()"></i></td>
+                </tr>
+            </table>
         </div>
     </div>
 </body>

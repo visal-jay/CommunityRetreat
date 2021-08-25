@@ -3,13 +3,13 @@ class Model
 {
     protected static function getDB()
     {
-        require './DB-implement.php';
+        //require './DB-implement.php';
 
         static $db = null;
 
         if ($db === null) {
             $dsn = 'mysql:host=localhost;dbname=communityretreat_db;charset=utf8';
-            $db = new PDO($dsn, "root", "root");
+            $db = new PDO($dsn, "root", "");
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         }

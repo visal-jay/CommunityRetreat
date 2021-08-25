@@ -193,8 +193,13 @@
                 <date class="margin-md">28.10.2021</date>
                 <description class="margin-md">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione nemo nostrum perspiciatis. Impedit, praesentium. Fuga ab numquam distinctio reprehenderit laudantium quae possimus, odio quisquam quia officia illo laborum eligendi ea?</description>
                 <update class="margin-md">
-                    <i class="btn-icon far fa-edit clr-green margin-side-md"></i>
-                    <i class="btn-icon far fa-trash-alt clr-red margin-side-md"></i>
+                    <button class="btn btn-solid bg-green border-green" onclick="edit()"><i class="btn-icon far fa-edit margin-side-md">Edit</i></button>
+                    <button class="btn btn-solid bg-red border-red" onclick="remove()"><i class="btn-icon far fa-trash-alt margin-side-md">Remove</i></button>
+                    <div class="flex-row flex-space " style="display: none; padding-top:1rem;">
+                        <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
+                        <i class="fas fa-check clr-green margin-side-md"></i>&nbsp;
+                        <i class="fas fa-times clr-red  margin-side-md" onclick="cancel()"></i>
+                    </div>
                 </update>
             </div>
         </div>
@@ -247,6 +252,29 @@
 
     function add() {
         document.querySelector(".form").classList.toggle("show-form");
+    }
+
+    function edit() {
+        var data = document.getElementsByClassName("data");
+        var form = document.getElementsByClassName("form");
+        for (var i = 0; i < data.length; i++) {
+            data[i].classList.toggle("hidden");
+        }
+        for (var i = 0; i < form.length; i++) {
+            form[i].classList.toggle("hidden");
+        }
+    }
+
+    function remove() {
+        event.target.style.display = "none";
+        event.target.nextElementSibling.style.display = "flex";
+    }
+
+    function cancel() {
+        var cancel = event.target.parentNode;
+        cancel.style.display = "none";
+        cancel.previousElementSibling.style.display = "block";
+
     }
 </script>
 

@@ -1,3 +1,4 @@
+<?php if(!isset($_SESSION)) session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +14,6 @@
 <body>
     <?php 
     $organization=$admin=$registered_user=$guest_user=false;
-    if(!isset($_SESSION)) session_start(); 
     if(isset($_SESSION["user"]["user_type"])){
         if ($_SESSION["user"]["user_type"]=="organization") {$organization=true;}
         if ($_SESSION["user"]["user_type"]=="admin") {$$admin=true;}
@@ -39,7 +39,7 @@
                 <button class="btn btn-solid" id="near-me"><i class="fas fa-map-marker-alt" ></i>&nbsp;Near me</button>
                 <?php } ?>
                 <?php if (!$organization) { ?>
-                <form action="/action_page.html" class="search-bar" style="height:fit-content">
+                <form action="/search/" class="search-bar nav-search-bar" style="height:fit-content">
                     <input type="search" class="form-ctrl" placeholder="Search" >
                     <button type="" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
                 </form>

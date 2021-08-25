@@ -23,6 +23,12 @@ class OrganisationController{
         Controller::redirect("/Organisation/dashboard");
     }
 
+    public function events(){
+        if(!isset($_SESSION))
+            session_start();
+        $event=new Events;
+        $data=$event->query(["org_uid"=> $_SESSION["user"]["uid"]]);
+    }
 
-    
+
 }

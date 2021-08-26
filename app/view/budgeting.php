@@ -3,7 +3,7 @@
 <html lang="en" id="id1">
 
 <head>
-    <title>DATA</title>
+    <title>Budget</title>
     <link rel="stylesheet" href="/public/assets/newstyles.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,12 +13,13 @@
 
 <style>
 .income-info {
-    height: 200px;
+    max-height: 200px;
     overflow: hidden;
     transition: all .5s ease-in-out;
     box-shadow: inset 0px 0px 30px 0px white;
     filter: blur(0px);
     position: relative;
+    min-height: fit-content;
 
 }
 
@@ -33,6 +34,7 @@
 }
 
 .height100 {
+    max-height: fit-content;
     height: fit-content;
 }
 
@@ -65,10 +67,6 @@
     justify-content: center;
 }
 
-.form {
-    width: 400px;
-}
-
 .read-more-btn {
     cursor: pointer;
 }
@@ -85,6 +83,14 @@
 p {
     margin: 1rem;
     width: 350px;
+}
+
+.income-form {
+    width: 50%;
+}
+
+.expense-form {
+    width: 50%;
 }
 
 .update-form {
@@ -125,6 +131,10 @@ p {
 
 .center {
     text-align: center;
+}
+
+.form1 {
+    display: flex;
 }
 
 @media screen and (max-width:800px) {
@@ -188,7 +198,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
     <div class="container" id="container">
         <h2 class="header margin-md">Income</h2>
 
-        <form action="/budget/addIncome" method="post" class=" form">
+        <form action="/budget/addIncome" method="post" class="form income-form">
 
             <div>
                 <button class="btn btn-md btn-solid margin-md" type="button" id="button" value="Add"
@@ -205,20 +215,21 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     <button class="btn btn-md" name="submit" type="submit" value="submit">Submit</button>
                 </div>
             </div>
-            <?php if($organization || $treasurer) {?>
         </form>
-        <?php } ?>
         <div class="income-info" id="income-info">
             <?php foreach($incomes as $income){ ?>
             <div class="card-container">
-                <p><?= $income["details"] ?></p>
-                <p><?= $income["amount"] ?></p>
-                <div class="flex-row-to-col">
-                    <button class="btn btn-solid update-delete-btn "
-                        onclick="togglePopup('update-form','<?= $income['details'] ?>', '<?= $income['amount'] ?>'); blur_background('container');stillBackground('id1')">update</button>
-                    <button class="btn bg-red update-delete-btn  clr-white del" name="delete" value="delete"
-                        id>Delete</button>
-                </div>
+                <form action="budget/deleteIncome" method="post" class="form1">
+                    <p><?= $income["details"] ?></p>
+                    <p><?= $income["amount"] ?></p>
+                    <div class="flex-row-to-col">
+                        <button class="btn btn-solid update-delete-btn "
+                            onclick="togglePopup('update-form','<?= $income['details'] ?>', '<?= $income['amount'] ?>', '<?= $income['record_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
+                        <button class="btn bg-red update-delete-btn  clr-white del"
+                            onclick="location.href = '/budget/delete'" name="delete"
+                            value=<?= $income['record_id'] ?>>Delete</button>
+                    </div>
+                </form>
             </div>
             <?php } ?>
 
@@ -232,7 +243,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
 
         <h2 class="header margin-md">Expense</h2>
 
-        <form action="/budget/addExpense" method="post" class="form">
+        <form action="/budget/addExpense" method="post" class="form expense-form">
 
             <button class="btn btn-md btn-solid margin-md" type="button" name="button" id="btn" value="Add"
                 onclick="show_hide('expense-form') ">Add &nbsp;<i class="fas fa-plus"></i></button>
@@ -256,7 +267,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
                 <p><?= $expense["amount"] ?></p>
                 <div class="flex-row-to-col">
                     <button class="btn btn-solid update-delete-btn "
-                        onclick="togglePopup('update-form','<?= $expense['details'] ?>', '<?= $expense['details'] ?>', '<?= $expense['record_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
+                        onclick="togglePopup('update-form','<?= $expense['details'] ?>', '<?= $expense['amount'] ?>', '<?= $expense['record_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
                     <button class="btn bg-red update-delete-btn  clr-white del" name="record_id"
                         value="<?= $expense['record_id'] ?>">Delete</button>
                 </div>
@@ -272,18 +283,20 @@ if(isset($_SESSION ["user"] ["user_type"])){
     </div>
     <div class="update-container">
         <div class="popup unblurred box" id="update-form">
-            <form action="/budget/updateIncome" class="update-form">
-                <div class="input form-item">Details <input class="form-ctrl" id="details" type="text" /></div>
-                <div class="input form-item">Amount <input class="form-ctrl" id="amount" type="text" />
-                    <div class="flex-row-to-col">
-                        <button type="submit" id="save" name="record_id" class=" btn btn-solid save-btn">Save</button>
-                        <button type="button" class="btn bg-red clr-white del"
-                            onclick="togglePopup('update-form');blur_background('container');stillBackground('id1')">Cancel</button>
-                    </div>
+            <form action="/budget/update" method="post" class="update-form">
+                <div class="input form-item">Details <input class="form-ctrl" name="details" id="details" type="text" />
+                </div>
+                <div class="input form-item">Amount <input class="form-ctrl" name="amount" id="amount" type="text" />
+                </div>
+                <div class="flex-row-to-col">
+                    <button type="submit" id="save" name="record_id" class=" btn btn-solid save-btn">Save</button>
+                    <button type="button" class="btn bg-red clr-white del"
+                        onclick="togglePopup('update-form');blur_background('container');stillBackground('id1')">Cancel</button>
                 </div>
             </form>
         </div>
     </div>
+
 
     <script>
     function show(id) {
@@ -296,6 +309,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
 
     function togglePopup(id, description = 0, amount = 0, record_id) {
         var form = document.getElementById(id);
+        console.log(record_id);
         form.classList.toggle("active");
         form.querySelector("#details").setAttribute("value", description);
         form.querySelector("#amount").setAttribute("value", amount);

@@ -195,7 +195,7 @@ if (isset($_SESSION["user"]["user_type"])) {
             <h1>About</h1>
             <div class="content border-round container-size margin-md" style="background-color: #eeeeee">
                 <?php if ($organization || $moderator) { ?>
-                    <form action="event/updateDetails" method="post">
+                    <form action="event/updateDetails" method="post" id="update-form">
                     <?php } ?>
                     <div class="date-container">
                         <div class="flex-row margin-lg">
@@ -309,7 +309,7 @@ if (isset($_SESSION["user"]["user_type"])) {
             <div class="flex-row flex-center content border-round container-size">
                 <button class="btn data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
                 <button class="btn btn-solid bg-red border-red form hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
-                <button class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
+                <button class="btn btn-solid form hidden" form="update-form">Save &nbsp; <i class="fas fa-check "></i></button>
                 <button id="publish-btn" class="btn margin-lg" onclick="togglePopup('publish'); blur_background('background'); stillBackground('id1')">Publish</button>
             </div>
         </div>

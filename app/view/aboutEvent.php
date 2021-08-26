@@ -191,7 +191,6 @@ if (isset($_SESSION["user"]["user_type"])) {
 
 <body>
     <div id="background">
-        <?php include "nav.php" ?>
         <div class="flex-col flex-center">
             <h1>About</h1>
             <div class="content border-round container-size margin-md" style="background-color: #eeeeee">
@@ -256,10 +255,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width far fa-flag clr-green margin-side-lg"></i>
                             <div class="flex-row">
-                                <p class="head-margin data">Event by <b><?= $org_username ?></b></p>
-                                <?php if ($organization || $moderator) { ?>
-                                    <input type="text" name="Organizer" class="form form-ctrl hidden" placeholder="Organized by?" required></input>
-                                <?php } ?>
+                                <p class="head-margin">Event by <b><?= $org_username ?></b></p>
                             </div>
                         </div>
                     </div>

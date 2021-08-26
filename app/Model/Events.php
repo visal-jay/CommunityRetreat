@@ -44,7 +44,7 @@ class Events extends Model
 
     public function query($args)
     {
-        $city = $latitude = $longitude = $mode = $start_date = $org_uid = $distance = $order_type = $way = $status = NULL;
+        $name=$city = $latitude = $longitude = $mode = $start_date = $org_uid = $distance = $order_type = $way = $status = NULL;
         extract($args, EXTR_OVERWRITE);
         //var_dump($args);
         $params=array();
@@ -58,16 +58,17 @@ class Events extends Model
 
         }
         //$query='SELECT event_id, ( 6371 * acos( cos( radians(6.848) ) * cos( radians( ST_X(latlang) ) ) * cos( radians( ST_Y(latlang) ) - radians(80.005) ) + sin( radians(6.848) ) * sin( radians( ST_X(latlang) ) ) ) ) AS distance FROM event';
-        $query_select_primary = "SELECT event_id ";
+        $query_select_primary = "SELECT * ";
         $query_select_secondary = ', ( 6371 * acos( cos( radians(:latitude) ) * cos( radians( ST_X(latlang) ) ) * cos( radians( ST_Y(latlang) ) - radians(:longitude) ) + sin( radians(:latitude2) ) * sin( radians( ST_X(latlang) ) ) ) ) AS distance ';
         $query_table = 'FROM event_details WHERE ';
         $query_filter_event_mode = ' mode=:mode AND ';
         $query_filter_date = ' start_date= :start_date AND ';
         $query_filter_organzation = ' org_uid =:org_uid AND ';
         $query_filter_status = ' status =:status AND ';
-        $query_filter_name=' event_name LIKE "%:event_name% AND';
+        $query_filter_name=' event_name LIKE :name AND';
         $query_filter_last = ' 1=1 ';
-        $query_filter_distance = ' HAVING distance <= :distance';
+        $query_filter_distance= ' distance=distance AND ';
+        $query_filter_near = ' distance <= :distance AND ';
 
         $query = $query_select_primary;
 
@@ -76,8 +77,9 @@ class Events extends Model
             $params["latitude"] = $latitude;
             $params["longitude"] = $longitude;
             $params["latitude2"] = $latitude;
-            if ($distance == NULL)
-                $distance = 20;
+            if ($distance == NULL && $city!=NULL)
+                $distance = 10;
+            //$query=$query . " distance =distance AND ";
         } else
             $query = $query . $query_table;
 
@@ -92,6 +94,11 @@ class Events extends Model
             $params["start_date"] = $start_date;
         }
 
+        if ($name!=NULL){
+            $query = $query .$query_filter_name;
+            $params["name"]="%$name%";
+        }
+
         if ($org_uid != NULL) {
             $query = $query . $query_filter_organzation;
             $params["org_uid"] = $org_uid;
@@ -102,13 +109,18 @@ class Events extends Model
             $params["status"] = $status;
         }
 
-        $query = $query . $query_filter_last;
+        $query = $query . $query_filter_last ." HAVING ";
+
+        if ($longitude != NULL && $latitude != NULL && $order_type=="distance") {
+            $query = $query . $query_filter_distance;
+        }
 
         if ($longitude != NULL && $latitude != NULL && $distance != NULL) {
-            $query = $query . $query_filter_distance;
+            $query = $query . $query_filter_near;
             $params["distance"] = $distance;
         }
 
+        $query = $query . $query_filter_last;
         
 
         if ($order_type != NULL) {
@@ -119,11 +131,12 @@ class Events extends Model
                 }
             $query = $query ." ORDER BY " . $order_type;
             if ($way == NULL)
-                $way = 'ASC';
+                $way = 'DESC';
             $query = $query . " " . $way;
         }
 
-        //var_dump($query);
+        /* var_dump($query);
+        var_dump($params); */
         $result = Model::select($query, $params);
         
    

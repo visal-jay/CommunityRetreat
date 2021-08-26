@@ -1,4 +1,3 @@
-<?php if(!isset($_SESSION)) session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,7 +35,7 @@
                 </div>
 
                 <?php if(!$admin && !$organization) { ?>
-                <button class="btn btn-solid" id="near-me"><i class="fas fa-map-marker-alt" ></i>&nbsp;Near me</button>
+                <button type="button" class="btn btn-solid" id="near-me" onclick="nearme()" ><i class="fas fa-map-marker-alt"></i>&nbsp;Near me</button>
                 <?php } ?>
                 <?php if (!$organization) { ?>
                 <form action="/search/" class="search-bar nav-search-bar" style="height:fit-content">
@@ -68,14 +67,36 @@
                 <?php } ?>
 
             </nav>
-    
+                    
+            <?php if(isset($username)) { ?>
+            <a class="btn btn-solid"  style="font-size:1rem "><i class="fa fa-user "> </i> &nbsp; <?= $username ?> </a>
+            <?php } else {?>
             <a class="btn btn-solid" href="/login/view" style="font-size:1rem "><i class="fa fa-user "> </i> &nbsp; Sign In </a>
-
+            <?php } ?>
+            
             <button class="btn more-btn " onclick="document.querySelector( '.main-nav').classList.toggle( 'shown') ">
                 <i class="fa fa-bars "></i>
             </button>
 
         </header>
 </body>
+
+<script>
+    var latitude = "";
+    var longitude = "";
+
+    navigator.geolocation.getCurrentPosition((position) => {
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+        console.log(latitude,"hello");
+    });
+
+    function nearme(){
+        let link = "/search/view?"+"longitude="+longitude+"&latitude="+latitude+"&distance=20";
+        location.href=link;
+    }
+
+
+</script>
 
 </html>

@@ -2,14 +2,14 @@
 class Budget extends Model 
 {
     public function getIncomeDetails($event_id){
-        $query = 'SELECT * FROM income where event_id=:event_id ';
+        $query = 'SELECT CONCAT("INC",`record_id`) as record_id, `time_stamp`, `event_id`, `uid`, `status`, `details`, `amount` FROM income where event_id=:event_id AND status = "current" ';
         $params = ["event_id" => $event_id];
         $result=Model::select($query,$params);
         return $result;
     }
 
     public function getExpenseDetails($event_id){
-        $query = 'SELECT * FROM expense where event_id=:event_id ';
+        $query = 'SELECT CONCAT("EXP",`record_id`) as record_id, `time_stamp`, `event_id`, `uid`, `status`, `details`, `amount` FROM expense where event_id=:event_id AND status = "current" ';
         $params = ["event_id" => $event_id];
         $result=Model::select($query,$params);
        return $result;
@@ -39,26 +39,85 @@ class Budget extends Model
 
      public function updateIncome($data){
         extract($data,EXTR_OVERWRITE);
-
+        $record_id = str_replace("INC", "", $record_id);
+        $db = Model::getDB();
+        $db->beginTransaction();
+        
         if(!isset($_SESSION)) session_start();
-        $query = 'SELECT * FROM income where record_id=:record_id ';
+        $uid = $_SESSION["user"]["uid"] = "REG0000016";
+                
+        $query = "UPDATE income SET status = 'updated' WHERE record_id = :record_id ORDER BY time_stamp DESC LIMIT 1";
         $params = ["record_id" => $record_id];
-        $result=Model::select($query,$params);
-        return $result;
-
-        $data["uid"] = $_SESSION["user"]["uid"] = "REG0000016";
-         /*var_dump($data);*/
-         
-         $query = 'INSERT INTO `expense` (`details`, `amount`, `uid`, `event_id`) VALUES (:details,  :amount, :uid, :event_id)';
-         $params=array_intersect_key($data,["details"=>'',"amount"=>'', "uid"=>'', "event_id"=>'']);
-           
-         Model::insert($query,$params);     
-     }
-
-    public function deleteIncome($data){
-        if(!isset($_SESSION)) session_start();
-        $query = 'DELETE * FROM income WHERE record_id=:record_id';
+        $stmt= $db->prepare($query);
+        $stmt->execute($params);
+        $stmt->closeCursor();
+        
+        $query = "SELECT event_id FROM income WHERE record_id = :record_id";
+        $stmt= $db->prepare($query);
+        $stmt->execute($params); 
+        $result = $stmt->fetchColumn();
+        var_dump($result);
+        $stmt->closeCursor();
+        
+        $event_id = $result;
+        $query = "INSERT INTO income (event_id, status, uid, details, amount, record_id) VALUES (:event_id, 'current', :uid, :details, :amount, :record_id)"; 
+        $params = ["record_id" => $record_id, "event_id"=>$event_id, "uid"=>$uid, "details"=>$details, "amount"=>$amount];
+        $stmt= $db->prepare($query);
+        $stmt->execute($params); 
+        
+        $db->commit();
     }
 
+    public function updateExpense($data){
+        $db = Model::getDB();
+        $db->beginTransaction();
+        
+        if(!isset($_SESSION)) session_start();
+        $uid = $_SESSION["user"]["uid"] = "REG0000016";
+        extract($data,EXTR_OVERWRITE);        
+        $query = "UPDATE expense SET status = 'updated' WHERE record_id = :record_id ORDER BY time_stamp DESC LIMIT 1";
+        $params = ["record_id" => $record_id];
+        $stmt= $db->prepare($query);
+        $stmt->execute($params);
+        $stmt->closeCursor();
+        
+        $query = "SELECT event_id FROM expense WHERE record_id = :record_id";
+        $stmt= $db->prepare($query);
+        $stmt->execute($params); 
+        $result = $stmt->fetchColumn();
+        var_dump($result);
+        $stmt->closeCursor();
+        
+        $event_id = $result;
+        $query = "INSERT INTO expense (event_id, status, uid, details, amount, record_id) VALUES (:event_id, 'current', :uid, :details, :amount, :record_id)"; 
+        $params = ["record_id" => $record_id, "event_id"=>$event_id, "uid"=>$uid, "details"=>$details, "amount"=>$amount];
+        $stmt= $db->prepare($query);
+        $stmt->execute($params); 
+        
+        $db->commit();
+    }
+
+    public function deleteIncome($data){
+        
+        if(!isset($_SESSION)) session_start();
+        $uid = $_SESSION["user"]["uid"] = "REG0000016";
+        extract($data,EXTR_OVERWRITE);        
+        $query = "UPDATE income SET status = 'deleted' WHERE record_id = :record_id ORDER BY time_stamp DESC LIMIT 1";
+        $params = ["record_id" => $record_id];
+        
+        Model::insert($query, $params);
+    }
+    
+
+    public function deleteExpense($data){
+        
+        if(!isset($_SESSION)) session_start();
+        $uid = $_SESSION["user"]["uid"] = "REG0000016";
+        extract($data,EXTR_OVERWRITE);        
+        $query = "UPDATE expense SET status = 'deleted' WHERE record_id = :record_id ORDER BY time_stamp DESC LIMIT 1";
+        $params = ["record_id" => $record_id];
+        
+        Model::insert($query, $params);
+    }
 	
 }

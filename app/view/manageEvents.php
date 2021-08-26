@@ -136,7 +136,7 @@
                         <input type="time" name="start_time" class="form-ctrl">
                     </div>
                     <div class="flex-col">
-                        <label>Mode of the even</label>
+                        <label>Mode of the event</label>
                         <select class="form-ctrl" id="mode" name="mode" required onchange="eventMode(event);">
                             <option value="" disabled selected>Select the mode of the event</option>
                             <option value="Physical">Physical</option>
@@ -161,16 +161,12 @@
             <div class="event-card-details">
                 <table>
                     <tr>
-                        <th>Added date</th>
-                        <th>Published date</th>
                         <th>Event date</th>
                         <th>Volunteering</th>
                         <th>Donations</th>
 
                     </tr>
                     <tr>
-                        <td>2010.10.20</td>
-                        <td>2010.10.20</td>
                         <td>2010.10.20</td>
                         <td><i class="fas fa-check clr-green"></i></td>
                         <td><i class="fas fa-times clr-red"></i></td>

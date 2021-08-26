@@ -132,7 +132,7 @@
         display: none;
     }
 
-    .latlang>input{
+    .latlang>input {
         height: 0px;
     }
 
@@ -171,31 +171,54 @@
     }
 </style>
 <?php include "nav.php"; ?>
+
 <body>
-    <?php $_SESSION["user"]["user_type"]="organization"; if($_SESSION["user"]["user_type"]=="organization") { ?> 
-    <form action="/organisation/update" method="post">
-    <?php } ?>
+    <?php
+    $_SESSION["user"]["user_type"] = "organization";
+
+    if (!isset($moderator)) $moderator = false;
+    if (!isset($treasurer)) $treasurer = false;
+    $organization = $admin = $registered_user = $guest_user = false;
+
+    if (isset($_SESSION["user"]["user_type"])) {
+        if ($_SESSION["user"]["user_type"] == "organization") {
+            $organization = true;
+        }
+        if ($_SESSION["user"]["user_type"] == "admin") {
+            $$admin = true;
+        }
+        if ($_SESSION["user"]["user_type"] == "registered_user") {
+            $registered_user = true;
+        }
+    } else {
+        $guest_user = true;
+    }
+    ?>
+
+    <?php if ($organization) { ?>
+        <form action="/organisation/update" method="post">
+        <?php } ?>
         <div class="photo-container">
             <div class="cover-place-holder cover border-round">
                 <img src="/Public/assets/photo.jpeg" alt="" class="photo-element" styl>
-                <?php if($_SESSION["user"]["user_type"]=="organization") { ?> 
-                <div class="image-upload hidden form">
-                    <label for="file-input">
-                        <i class="fas fa-edit clr-white"></i>
-                    </label>
-                    <input id="file-input" type="file" />
-                </div>
+                <?php if ($organization) { ?>
+                    <div class="image-upload hidden form">
+                        <label for="file-input">
+                            <i class="fas fa-edit clr-white"></i>
+                        </label>
+                        <input id="file-input" type="file" />
+                    </div>
                 <?php } ?>
             </div>
             <div class="profile-pic border-round">
                 <img src="/Public/assets/newphoto.jpeg" alt="" class="photo-element">
-                <?php if($_SESSION["user"]["user_type"]=="organization") { ?> 
-                <div class="image-upload hidden form">
-                    <label for="file-input">
-                        <i class="fas fa-edit clr-white"></i>
-                    </label>
-                    <input id="file-input" type="file" />
-                </div>
+                <?php if ($organization) { ?>
+                    <div class="image-upload hidden form">
+                        <label for="file-input">
+                            <i class="fas fa-edit clr-white"></i>
+                        </label>
+                        <input id="file-input" type="file" />
+                    </div>
                 <?php } ?>
             </div>
         </div>
@@ -212,85 +235,71 @@
                     <div class="data">
                         <p><?= $about_us ?></p>
                     </div>
-                    <?php if($_SESSION["user"]["user_type"]=="organization") { ?> 
-                    <textarea name="about_us" class="form form-ctrl hidden" placeholder="Enter about us"><?= $about_us ?></textarea>
+                    <?php if ($organization) { ?>
+                        <textarea name="about_us" class="form form-ctrl hidden" placeholder="Enter about us"><?= $about_us ?></textarea>
                     <?php } ?>
                 </div>
                 <div class="flex-col">
                     <h2>Contact us</h2>
-                    <?php if($_SESSION["user"]["user_type"]=="organization") { ?> 
-                    <input type="email" class="form form-ctrl hidden" placeholder=" Enter email" value="<?= $email ?>" required>
-                    <input type="tel" name="contact_number" class="form form-ctrl hidden" placeholder="Enter telephone number" value="<?= $contact_number ?>" pattern="^[+]?[0-9]{10,12}$" required>
+                    <?php if ($organization) { ?>
+                        <input type="email" class="form form-ctrl hidden" placeholder=" Enter email" value="<?= $email ?>" required>
+                        <input type="tel" name="contact_number" class="form form-ctrl hidden" placeholder="Enter telephone number" value="<?= $contact_number ?>" pattern="^[+]?[0-9]{10,12}$" required>
                     <?php } ?>
                     <div class="data">
                         <a href="mailto:<?= $email ?>"><?= $email ?> </a>
                         <p><?= $contact_number ?></p>
                     </div>
                 </div>
-                <?php if($_SESSION["user"]["user_type"]=="organization" || (isset($map) && $map==true)) { ?>
-                <div class="flex-col flex-center">
-                    <h2>Locate us</h2>
-                    <div id="map"></div>
-                    <div class="latlang" class="form hidden">
-                        <input class="hidden" name="longitude" id="longitude" value="<?= $longitude ?>">
-                        <input class="hidden" name="latitude" id="latitude" value="<?= $latitude ?>">
+                <?php if ($organization || (isset($map) && $map == true)) { ?>
+                    <div class="flex-col flex-center margin-md">
+                        <h2>Locate us</h2>
+                        <div id="map" class="border-round"></div>
+                        <div class="latlang" class="form hidden">
+                            <input class="hidden" name="longitude" id="longitude" value="<?= $longitude ?>">
+                            <input class="hidden" name="latitude" id="latitude" value="<?= $latitude ?>">
+                        </div>
                     </div>
-                </div>
                 <?php } ?>
 
-                <?php if($_SESSION["user"]["user_type"]=="organization") { ?> 
-                <div class="flex-row" style="justify-content:flex-end;">
-                    <button type="button" class="btn btn-solid data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
-                    <button type="button" class="btn btn-solid bg-red border-red margin-side-md form hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
-                    <button type="submit" class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
-                </div>
+                <?php if ($organization) { ?>
+                    <div class="flex-row" style="justify-content:flex-end;">
+                        <button type="button" class="btn btn-solid data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
+                        <button type="button" class="btn btn-solid bg-red border-red margin-side-md form hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
+                        <button type="submit" class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
+                    </div>
                 <?php } ?>
             </div>
         </div>
-     <?php if($_SESSION["user"]["user_type"]=="organization") { ?> 
-    </form>
-    <?php } ?>
-    <div class="nav-secondary">
-        <div class="nav-secondary-bar margin-lg">
-            <a class="btn  margin-side-md" style=" margin-bottom:10px;" href="/view/adoption_listing.php ">About</a>
-            <a class="btn margin-side-md" style=" margin-bottom:10px;" href="# ">Events</a>
-            <a class="btn margin-side-md" style=" margin-bottom:10px;" href="# ">Gallery</a>
-            <a class="btn margin-side-md" style=" margin-bottom:10px;" href="/view/adoption_listing.php ">Feedback</a>
-            <a class="btn margin-side-md" style=" margin-bottom:10px;" href="/view/adoption_listing.php ">About</a>
-            <a class="btn margin-side-md" style=" margin-bottom:10px;" href="# ">Events</a>
-            <a class="btn margin-side-md" style=" margin-bottom:10px;" href="# ">Gallery</a>
-            <a class="btn margin-side-md" style=" margin-bottom:10px;" href="/view/adoption_listing.php ">Feedback</a>
-            <a class="  btn margin-side-md active" style=" margin-bottom:10px;" href="/view/adoption_listing.php ">About</a>
-            <a class=" btn margin-side-md" style=" margin-bottom:10px;" href="# ">Events</a>
-            <a class=" btn margin-side-md" style=" margin-bottom:10px;" href="# ">Gallery</a>
-            <a class="btn margin-side-md" style=" margin-bottom:10px;" href="/view/adoption_listing.php ">Fuck</a>
-        </div>
-    </div>
+        <?php if ($organization) { ?>
+        </form>
+        <?php } ?>
+
 
 
 </body>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
 
-<script>  
-<?php if($_SESSION["user"]["user_type"]=="organization") { ?> 
-    function edit() {
-        if (marker.draggable == false)
-            marker.setOptions({
-                draggable: true
-            });
-        else
-            marker.setOptions({
-                draggable: false
-            });
-        var data = document.getElementsByClassName("data");
-        var form = document.getElementsByClassName("form");
-        for (var i = 0; i < data.length; i++) {
-            data[i].classList.toggle("hidden");
+<script>
+    <?php if ($organization) { ?>
+
+        function edit() {
+            if (marker.draggable == false)
+                marker.setOptions({
+                    draggable: true
+                });
+            else
+                marker.setOptions({
+                    draggable: false
+                });
+            var data = document.getElementsByClassName("data");
+            var form = document.getElementsByClassName("form");
+            for (var i = 0; i < data.length; i++) {
+                data[i].classList.toggle("hidden");
+            }
+            for (var i = 0; i < form.length; i++) {
+                form[i].classList.toggle("hidden");
+            }
         }
-        for (var i = 0; i < form.length; i++) {
-            form[i].classList.toggle("hidden");
-        }
-    }
     <?php } ?>
 
     function resizeProfile() {
@@ -313,12 +322,6 @@
     window.addEventListener("resize", resize);
 
 
-    document.querySelector(".active").scrollIntoView({
-        behavior: 'auto',
-        block: 'center',
-        inline: 'center'
-    });
-
     let map;
     var marker;
 
@@ -332,6 +335,14 @@
         });
         showPosition();
     }
+    var latitude = <?= $latitude ?>;
+    var longitude = <?= $longitude ?>;
+    console.log(latitude,longitude);
+
+    navigator.geolocation.getCurrentPosition((position) => {
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+    });
 
     function showPosition(position) {
         var myLatlng = new google.maps.LatLng(<?= $latitude ?>, <?= $longitude ?>);
@@ -348,8 +359,8 @@
         map.setZoom(10)
 
         google.maps.event.addListener(marker, 'dragend', function(evt) {
-            document.getElementById('longitude').value=evt.latLng.lng().toFixed(3);
-            document.getElementById('latitude').value=evt.latLng.lat().toFixed(3);
+            document.getElementById('longitude').value = evt.latLng.lng().toFixed(3);
+            document.getElementById('latitude').value = evt.latLng.lat().toFixed(3);
             //document.getElementById('current').innerHTML = '<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';
         });
     }

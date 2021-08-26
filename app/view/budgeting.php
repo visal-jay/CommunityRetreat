@@ -39,9 +39,8 @@
 .container {
     border-radius: 5px;
     background-color: white;
-    padding: 20px;
+    padding: 0 20px;
     display: block;
-    margin-top: 10px;
 }
 
 .card-container {
@@ -63,7 +62,6 @@
 }
 
 .header {
-    margin-bottom: 20px;
     justify-content: center;
 }
 
@@ -164,8 +162,6 @@ p {
 </style>
 
 <?php 
-
-var_dump($incomes);
 if(!isset($moderator)) $moderator= false;
 if(!isset($treasurer)) $treasurer= false;
 $organization = $admin =$registered_user = $guest_user = false;
@@ -190,12 +186,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
 
 <body>
     <div class="container" id="container">
-        <div>
-            <h1 class="header">
-                Budgeting system
-            </h1>
-        </div>
-        <h2 class="header">Income</h2>
+        <h2 class="header margin-md">Income</h2>
 
         <form action="/budget/addIncome" method="post" class=" form">
 
@@ -239,7 +230,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     class="fas fa-chevron-down"></i></button>
         </div>
 
-        <h2 class="header">Expense</h2>
+        <h2 class="header margin-md">Expense</h2>
 
         <form action="/budget/addExpense" method="post" class="form">
 

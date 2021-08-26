@@ -1,3 +1,4 @@
+<?php if(!isset($_SESSION)) session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,7 +34,7 @@
         margin: 0;
     }
 
-    p {
+    figure p {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -95,14 +96,20 @@
         cursor: pointer;
     }
 
+    .slidecontainer p{
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
     .choice-menu {
         display: none;
     }
 
     #sort,
     #date,
-    #way {
+    #way,#mode {
         margin: 0;
+        margin-left:0.5rem;
     }
 
     search {
@@ -138,6 +145,32 @@
         margin: 0;
         display: grid;
         grid-template-rows: 1fr auto;
+       
+    }
+
+    figure .content {
+        position: relative;
+    }
+
+    figure .stats{
+        position: absolute;
+        width: 100%;
+        height: 100% !important;
+        background-color: #000000aa;
+        color: white;
+        display: none;
+        text-align: center;
+        align-items: center !important;
+        justify-content: center;
+    }
+
+    .photo-container {
+        position: relative;
+    }
+
+    figure:hover .stats{
+        display: flex;
+        
     }
 
     figure>img {
@@ -214,9 +247,9 @@
     <div class="homepage flex-col flex-center">
         <h1>Search to your choice</h1>
         <search class="flex-row-to-col flex-center border-round">
-            <form action="/action_page.html" class="flex-row-to-col flex-center">
+            <form action="/search/view" class="flex-row-to-col flex-center">
                 <div class="search-bar" style="height:fit-content">
-                    <input type="search" class="form-ctrl" placeholder="Search">
+                    <input type="search" class="form-ctrl clr-white" placeholder="Search" id="in-search">
                     <button type="submit" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
                 </div>
                 <div><button class="btn btn-solid" id="near-me"><i class="fas fa-map-marker-alt"></i>&nbsp;Near me</button></div>
@@ -228,13 +261,11 @@
             <button class="btn-icon" onclick="choices()"><i class="fas fa-sliders-h" style="font-size:1.5em"></i></button>
         </div>
 
-        <choices class="flex-row-to-col flex-space">
-
-
+        <choices class="flex-col">
+            <div class="flex-row-to-col  flex-space">
             <div class="search-bar">
                 <input type="search" class="form-ctrl" id="city" placeholder="Search by location">
             </div>
-
             <div class="slidecontainer flex-row flex-center">
                 <label for="myRange">Distance: </label>
                 <input type="range" min="0" max="100" value="0" class="slider" id="myRange" onchange="search();">
@@ -244,7 +275,9 @@
                 <label>Date: &nbsp; </label>
                 <input type="date" class="form-ctrl" id="date" onchange="search();">
             </div>
-            <div class="flex-row flex-center margin-md">
+            </div>
+            <div class="flex-row-to-col flex-center">
+                <div class="flex-row flex-center margin-md">
                 <select id="sort" class="form-ctrl" onchange="search();">
                     <option selected disabled>Sort by</option>
                     <option value=distance>Distance</option>
@@ -257,49 +290,17 @@
                     <option value=ASC>Ascending</option>
                     <option value=DESC>Descending</option>
                 </select>
+                </div>
+                <select class="form-ctrl" id="mode" name="mode" style="margin-left:0.5rem" required onchange="search();">
+                    <option value="" disabled selected>Select the mode of the event</option>
+                    <option value="Physical">Physical</option>
+                    <option value="Virtual">Virtual</option>
+                    <option value="Physical & Virtual">Physical & Virtual</option>
+                </select>
             </div>
         </choices>
 
         <events class="grid">
-            <figure class="item bg-green">
-                <div class="content">
-                    <div class="photo-container flex flex-center"><img src="/Public/assets/mountains.jfif" style="object-fit: cover;" alt=""></div>
-                    <p class="margin-md" style="color:white;">Manuka Dewanarayana</p>
-                </div>
-            </figure>
-            <figure class="item bg-green">
-                <div class="content">
-                    <div class="photo-container flex flex-center content"><img src="/Public/assets/photo.jpeg" style="object-fit: cover;" alt=""></div>
-
-                    <p class="margin-md" style="color:white;">Manuka Dewanarayana</p>
-                </div>
-            </figure>
-            <figure class="item bg-green">
-                <div class="content">
-                    <div class="photo-container flex flex-center"><img src="/Public/assets/mountains.jfif" style="object-fit: cover;" alt=""></div>
-                    <p class="margin-md" style="color:white;">Manuka Dewanarayana</p>
-                </div>
-            </figure>
-            <figure class="item bg-green">
-                <div class="content">
-                    <div class="photo-container flex flex-center"><img src="/Public/assets/mountains.jfif" style="object-fit: cover;" alt=""></div>
-                    <p class="margin-md" style="color:white;">Manusdaskdml;asdl;as;ldka Dewanarayana</p>
-                </div>
-            </figure>
-
-            <figure class="item bg-green">
-                <div class="content">
-                    <div class="photo-container flex flex-center"><img src="/Public/assets/mountains.jfif" style="object-fit: cover;" alt=""></div>
-                    <p class="margin-md" style="color:white;">Manusdaskdml;asdl;as;ldka Dewanarayana</p>
-                </div>
-            </figure>
-
-            <figure class="item bg-green">
-                <div class="content">
-                    <div class="photo-container flex flex-center"><img src="/Public/assets/mountains.jfif" style="object-fit: cover;" alt=""></div>
-                    <p class="margin-md" style="color:white;">Manusdaskdml;asdl;as;ldka Dewanarayana</p>
-                </div>
-            </figure>
         </events>
     </div>
 
@@ -324,17 +325,21 @@
         return div.firstChild;
     }
 
-    var latitude = "";
-    var longitude = "";
+    let pos=new URLSearchParams (location.search);
+    var latitude = pos.get("latitude");
+    var longitude = pos.get("longitude");
+    var range = pos.get("distance")
 
-    navigator.geolocation.getCurrentPosition((position) =>{
-                latitude = position.coords.latitude;
-                longitude = position.coords.longitude;
+    navigator.geolocation.getCurrentPosition((position) => {
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
     });
 
     function search() {
         var city = (document.getElementById("city").value);
-        var range = document.getElementById("myRange").value == "0" ? "" : document.getElementById("myRange").value;
+        var name = document.getElementById("in-search").value;
+        var mode = (document.getElementById("mode").value);
+        range = document.getElementById("myRange").value == "" ? document.getElementById("myRange").value : range;
         var date = document.getElementById("date").value;
         var sort = document.getElementById("sort").value == "Sort by" ? "" : document.getElementById("sort").value;
         var way = document.getElementById("way").value == "Sort" ? "" : document.getElementById("way").value;
@@ -346,8 +351,10 @@
             type: "post", //request type,
             dataType: 'json',
             data: {
+                name:name,
+                mode:mode,
                 latitude: latitude,
-                longitude: longitude, 
+                longitude: longitude,
                 city: city,
                 distance: range,
                 order_type: range,
@@ -363,7 +370,17 @@
                     let template = `
                         <figure class="item bg-green">
                             <div class="content">
-                                <div class="photo-container flex flex-center"><img src="/Public/assets/mountains.jfif" style="object-fit: cover;" alt=""></div>
+                                <div class="photo-container flex flex-center"><img src="/Public/assets/mountains.jfif" style="object-fit: cover;" alt="">
+                                    <div class="stats">
+                                    <div>
+                                        <span>Volunteered ${evn.volunteered==null ? 0 : Math.round(evn.volunteer_percent)}%</span>
+                                        <br>
+                                        <span>Donations ${evn.dotaion_percent==null ? 0 : Math.round(evn.dotaion_percent)}%</span>
+                                        <br>
+                                        <span>Distance ${evn.distance==null ? 0 : Math.round(evn.distance)} KM</span>
+                                        </div>
+                                    </div>
+                                </div>
                                 <p class="margin-md" style="color:white;">${evn.event_name}</p>
                             </div>
                         </figure>
@@ -377,7 +394,8 @@
 
     window.onload = search;
     //console.log()
-    document.getElementById("city").addEventListener('keyup', debounce(search, 1000));
+    document.getElementById("city").addEventListener('keyup', debounce(search, 500));
+    document.getElementById("in-search").addEventListener('keyup', debounce(search, 500));
 
 
     function choices() {

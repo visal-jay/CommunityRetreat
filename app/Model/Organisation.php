@@ -58,8 +58,8 @@ class Organisation extends User{
         if (count($result[0])>1 ) {
             if($result[0]["latitude"]==NULL || $result[0]["longitude"]==NULL ){
             $result[0]["map"]=false;
-            $result[0]["latitude"]=7.6;
-            $result[0]["longitude"]=7.6;
+            /* $result[0]["latitude"]=7.6;
+            $result[0]["longitude"]=7.6; */
             }
             return $result[0];
         }

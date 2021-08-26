@@ -5,13 +5,11 @@ class BudgetController
     public function view(){
         //Controller::accessCheck(["organization","treasurer"],$_GET["event_id"]);
         $budget = new Budget();
-        var_dump($_GET);
-        $_GET["event_id"]=2;
         $expense_details=$budget->getExpenseDetails($_GET["event_id"]);
         $income_details=$budget->getIncomeDetails($_GET["event_id"]);
         $data["incomes"]=$income_details;
         $data["expenses"]=$expense_details;
-        View::render("budgeting",$data);
+        View::render("eventPage",$data);
         
     } 
      
@@ -43,8 +41,6 @@ class BudgetController
 	
     public function updateIncome(){
         $budget = new Budget();
-        var_dump($_GET);
-        exit();
         $income_details=$budget->getIncomeDetails($_GET["record_id"]);
         $old_data["incomes"]=$income_details;
         View::render("budgeting",$old_data);

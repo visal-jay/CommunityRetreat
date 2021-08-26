@@ -24,6 +24,7 @@ class Budget extends Model
      }
 
      public function updateIncome($data){
+         extract($data,EXTR_OVERWRITE);
         if(!isset($_SESSION)) session_start();
         $query = 'SELECT * FROM income where record_id=:record_id ';
         $params = ["record_id" => $record_id];

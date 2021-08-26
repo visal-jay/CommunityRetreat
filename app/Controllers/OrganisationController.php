@@ -3,6 +3,7 @@ session_start();
 
 class OrganisationController{
     public function view($org_id=''){
+
         $org_id= isset($_GET["org_id"]) ? $_GET["org_id"] : $org_id;
         $data= (new Organisation)->getDetails($org_id);
         View::render("organisationDashboard",$data);

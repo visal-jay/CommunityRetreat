@@ -3,7 +3,7 @@
 <html lang="en" id="id1">
 
 <head>
-    <title>DATA</title>
+    <title>Budget</title>
     <link rel="stylesheet" href="/public/assets/newstyles.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -67,10 +67,6 @@
     justify-content: center;
 }
 
-.form {
-    width: 400px;
-}
-
 .read-more-btn {
     cursor: pointer;
 }
@@ -87,6 +83,14 @@
 p {
     margin: 1rem;
     width: 350px;
+}
+
+.income-form {
+    width: 50%;
+}
+
+.expense-form {
+    width: 50%;
 }
 
 .update-form {
@@ -197,7 +201,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
         </div>
         <h2 class="header">Income</h2>
 
-        <form action="/budget/addIncome" method="post" class=" form">
+        <form action="/budget/addIncome" method="post" class="form income-form">
 
             <div>
                 <button class="btn btn-md btn-solid margin-md" type="button" id="button" value="Add"
@@ -214,9 +218,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     <button class="btn btn-md" name="submit" type="submit" value="submit">Submit</button>
                 </div>
             </div>
-            <?php if($organization || $treasurer) {?>
         </form>
-        <?php } ?>
         <div class="income-info" id="income-info">
             <?php foreach($incomes as $income){ ?>
             <div class="card-container">
@@ -241,7 +243,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
 
         <h2 class="header">Expense</h2>
 
-        <form action="/budget/addExpense" method="post" class="form">
+        <form action="/budget/addExpense" method="post" class="form expense-form">
 
             <button class="btn btn-md btn-solid margin-md" type="button" name="button" id="btn" value="Add"
                 onclick="show_hide('expense-form') ">Add &nbsp;<i class="fas fa-plus"></i></button>

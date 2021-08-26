@@ -1,6 +1,20 @@
 <?php
 class Budget extends Model 
 {
+    public function getIncomeDetails($event_id){
+        $query = 'SELECT * FROM income where event_id=:event_id ';
+        $params = ["event_id" => $event_id];
+        $result=Model::select($query,$params);
+        return $result;
+    }
+
+    public function getExpenseDetails($event_id){
+        $query = 'SELECT * FROM expense where event_id=:event_id ';
+        $params = ["event_id" => $event_id];
+        $result=Model::select($query,$params);
+       return $result;
+    }
+    
 	public function addIncome($data){
        if(!isset($_SESSION)) session_start();
        $data["uid"] = $_SESSION["user"]["uid"] = "REG0000016";
@@ -24,6 +38,8 @@ class Budget extends Model
      }
 
      public function updateIncome($data){
+        extract($data,EXTR_OVERWRITE);
+
         if(!isset($_SESSION)) session_start();
         $query = 'SELECT * FROM income where record_id=:record_id ';
         $params = ["record_id" => $record_id];
@@ -39,18 +55,9 @@ class Budget extends Model
          Model::insert($query,$params);     
      }
 
-    public function getIncomeDetails($event_id){
-        $query = 'SELECT * FROM income where event_id=:event_id ';
-        $params = ["event_id" => $event_id];
-        $result=Model::select($query,$params);
-        return $result;
-    }
-
-    public function getExpenseDetails($event_id){
-        $query = 'SELECT * FROM expense where event_id=:event_id ';
-        $params = ["event_id" => $event_id];
-        $result=Model::select($query,$params);
-       return $result;
+    public function deleteIncome($data){
+        if(!isset($_SESSION)) session_start();
+        $query = 'DELETE * FROM income WHERE record_id=:record_id';
     }
 
 	

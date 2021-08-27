@@ -193,9 +193,9 @@
                 <date class="margin-md">28.10.2021</date>
                 <description class="margin-md">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione nemo nostrum perspiciatis. Impedit, praesentium. Fuga ab numquam distinctio reprehenderit laudantium quae possimus, odio quisquam quia officia illo laborum eligendi ea?</description>
                 <update class="margin-md">
-                    <button class="btn btn-solid bg-green border-green" onclick="edit()"><i class="btn-icon far fa-edit margin-side-md">Edit</i></button>
-                    <button class="btn btn-solid bg-red border-red" onclick="remove()"><i class="btn-icon far fa-trash-alt margin-side-md">Remove</i></button>
-                    <div class="flex-row flex-space " style="display: none; padding-top:1rem;">
+                    <button class="btn margin-side-md" onclick="edit()"><i class="btn-icon far fa-edit margin-side-md">&nbsp;&nbsp;Edit</i></button>
+                    <button class="btn clr-red border-red " onclick="remove()"><i class="btn-icon far fa-trash-alt margin-side-md">&nbsp;&nbsp;Remove</i></button>
+                    <div class="flex-row flex-space" style="display: none; padding-top:1rem;">
                         <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
                         <i class="fas fa-check clr-green margin-side-md"></i>&nbsp;
                         <i class="fas fa-times clr-red  margin-side-md" onclick="cancel()"></i>
@@ -265,6 +265,7 @@
         }
     }
 
+    //check about the 'onclick' on text and the icon of the button
     function remove() {
         event.target.style.display = "none";
         event.target.nextElementSibling.style.display = "flex";

@@ -202,7 +202,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                             <i class="btn-icon icon-width far fa-calendar-alt clr-green margin-side-lg"></i>
                             <h4 class="head-margin data"><?= $start_date ?></h4>
                             <?php if ($organization || $moderator) { ?>
-                                <input type="date" value="$start_date" name="start_date" class="form form-ctrl hidden" data-placeholder="Event is on?" value="<?= $start_date ?>" required></input>
+                                <input type="date" value="<?= $start_date ?>" name="start_date" class="form form-ctrl hidden" data-placeholder="Event is on?" value="<?= $start_date ?>" required></input>
                             <?php } ?>
                         </div>
                     </div>
@@ -212,7 +212,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                             <i class="btn-icon icon-width far fa-clock clr-green margin-side-lg"></i>
                             <h4 class="head-margin data"><?= $start_time ?></h4>
                             <?php if ($organization || $moderator) { ?>
-                                <input type="time" value="$start_time" name="Event time" class="form form-ctrl hidden" data-placeholder="Event starts at?" required></input>
+                                <input type="time" value="<?= $start_time ?>" name="Event time" class="form form-ctrl hidden" data-placeholder="Event starts at?" required></input>
                             <?php } ?>
                         </div>
                     </div>

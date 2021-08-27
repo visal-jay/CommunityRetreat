@@ -115,6 +115,7 @@
 
     .info {
         padding: 0 2rem;
+        margin-bottom: 100px;
     }
 
     #map {
@@ -137,6 +138,9 @@
     }
 
 
+    .map-not{
+        opacity: 0.5;
+    }
 
     textarea {
         height: 150px;
@@ -174,7 +178,7 @@
 
 <body>
     <?php
-    $_SESSION["user"]["user_type"] = "organization";
+    //$_SESSION["user"]["user_type"] = "organization";
 
     if (!isset($moderator)) $moderator = false;
     if (!isset($treasurer)) $treasurer = false;
@@ -253,7 +257,7 @@
                 <?php if ($organization || (isset($map) && $map == true)) { ?>
                     <div class="flex-col flex-center margin-md">
                         <h2>Locate us</h2>
-                        <div id="map" class="border-round"></div>
+                        <div id="map" class="border-round <?php if(!$map) echo "map-not";?> "></div>
                         <div class="latlang" class="form hidden">
                             <input class="hidden" name="longitude" id="longitude" value="<?= $longitude ?>">
                             <input class="hidden" name="latitude" id="latitude" value="<?= $latitude ?>">
@@ -262,7 +266,7 @@
                 <?php } ?>
 
                 <?php if ($organization) { ?>
-                    <div class="flex-row" style="justify-content:flex-end;">
+                    <div class="flex-row flex-center" >
                         <button type="button" class="btn btn-solid data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
                         <button type="button" class="btn btn-solid bg-red border-red margin-side-md form hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
                         <button type="submit" class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
@@ -291,6 +295,8 @@
                 marker.setOptions({
                     draggable: false
                 });
+            if(!<?php if($map) echo 'true'; else echo 'false'; ?>)
+                document.getElementById('map').classList.toggle("map-not");
             var data = document.getElementsByClassName("data");
             var form = document.getElementsByClassName("form");
             for (var i = 0; i < data.length; i++) {
@@ -324,8 +330,13 @@
 
     let map;
     var marker;
+    var lat = "<?= $latitude ?>";
+    var long = "<?= $longitude ?>";
+
+    console.log(latitude,longitude);
 
     function initMap() {
+        console.log("fuck");
         map = new google.maps.Map(document.getElementById("map"), {
             center: {
                 lat: -34.397,
@@ -333,24 +344,29 @@
             },
             zoom: 6,
         });
-        showPosition();
+        if(lat!="" || long!="")
+            showPosition();
     }
-    var latitude = <?= $latitude ?>;
-    var longitude = <?= $longitude ?>;
-    console.log(latitude,longitude);
+    
 
-    navigator.geolocation.getCurrentPosition((position) => {
-        latitude = position.coords.latitude;
-        longitude = position.coords.longitude;
-    });
+    if(lat==="" && long==="" ){
+        navigator.geolocation.getCurrentPosition((position) => {
+            lat = position.coords.latitude;
+            long = position.coords.longitude;
+            showPosition();
+        });
+    }
+   
+
 
     function showPosition(position) {
-        var myLatlng = new google.maps.LatLng(<?= $latitude ?>, <?= $longitude ?>);
-
+        console.log(latitude,longitude);
+        var myLatlng = new google.maps.LatLng(lat, long);
+        
         marker = new google.maps.Marker({
             position: myLatlng,
             draggable: false,
-            title: "Hello World!"
+            title: "Your location!"
         });
 
         // To add the marker to the map, call setMap();

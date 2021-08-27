@@ -212,7 +212,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 3rem;
 }
 
 .main-nav {
@@ -256,6 +256,34 @@ header .logo img {
 
 .nav-search-bar input[type=search]:focus {
   width: 200px;
+}
+
+.nav-drop-down{
+  position: relative;
+}
+
+.nav-drop-down-list{
+  background-color: white;
+  z-index: 10000;
+  position: absolute;
+  right: 1px;
+  top:40px;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+}
+
+.nav-drop-down-list .nav-link {
+  width:80px;
+  text-decoration: none;
+  color: black;
+  padding: 0rem 0.0rem 0.3rem 0rem;
+  cursor: pointer;
+  transition: text-decoration-color 0.3s ease-in-out;
+  transition: border-bottom 0.1s ease-in-out;
+}
+.nav-drop-down-list .nav-link:hover {
+  color: $green;
+  border-bottom: 2px solid black;
 }
 
 .search-bar {
@@ -303,6 +331,9 @@ header .logo img {
     display: block;
   }
 
+  .header{
+    padding: 1rem 1rem;
+  }
   .main-nav {
     display: none;
     position: absolute;

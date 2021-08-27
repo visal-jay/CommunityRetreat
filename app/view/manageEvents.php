@@ -21,6 +21,10 @@
         resize: none;
     }
 
+    .events {
+        width: 80%;
+    }
+
 
     .form {
         min-width: 50%;
@@ -30,7 +34,7 @@
     }
 
     .show-form {
-        height: 720px;
+        height: 750px;
         transition: height, 0.3s linear;
     }
 
@@ -61,6 +65,10 @@
     }
 
     @media screen and (max-width:800px) {
+        .events {
+            width: 100%;
+        }
+
         .card-container {
             height: 220px;
         }
@@ -71,7 +79,7 @@
         }
 
         .show-form {
-            height: 800px;
+            height: 900px;
             transition: height, 0.3s linear;
         }
 
@@ -115,6 +123,25 @@
 <?php include "nav.php" ?>
 
 <body>
+    <?php if (!isset($_SESSION)) session_start();
+    if (!isset($moderator)) $moderator = false;
+    if (!isset($treasurer)) $treasurer = false;
+    $organization = $admin = $registered_user = $guest_user = false;
+
+    if (isset($_SESSION["user"]["user_type"])) {
+        if ($_SESSION["user"]["user_type"] == "organization") {
+            $organization = true;
+        }
+        if ($_SESSION["user"]["user_type"] == "admin") {
+            $$admin = true;
+        }
+        if ($_SESSION["user"]["user_type"] == "registered_user") {
+            $registered_user = true;
+        }
+    } else {
+        $guest_user = true;
+    }
+    ?>
     <div class="flex-col flex-center margin-side-lg">
         <h1>Manage Events</h1>
 
@@ -136,6 +163,10 @@
                         <input type="time" name="start_time" class="form-ctrl">
                     </div>
                     <div class="flex-col">
+                        <label>Ending time</label>
+                        <input type="time" name="end_time" class="form-ctrl">
+                    </div>
+                    <div class="flex-col">
                         <label>Mode of the event</label>
                         <select class="form-ctrl" id="mode" name="mode" required onchange="eventMode(event);">
                             <option value="" disabled selected>Select the mode of the event</option>
@@ -152,41 +183,48 @@
                         <input class="hidden" name="latitude" id="latitude" value=NULL>
                     </div>
                 </div>
-            <button type="submit" class="btn btn-solid margin-md">Add</button>
+                <button type="submit" class="btn btn-solid margin-md">Add</button>
             </form>
-            <button onclick="printMarker()">Print location</button>
         </div>
-        <div class="card-container margin-side-lg">
-            <h3 class="heading">Dog rescue</h3>
-            <div class="event-card-details">
-                <table>
-                    <tr>
-                        <th>Event date</th>
-                        <th>Volunteering</th>
-                        <th>Donations</th>
+        <div class="events">
+            <?php foreach ($events as $event) { ?>
+                <div class="card-container margin-md">
+                    <h3 class="heading"><?= $event["event_name"] ?></h3>
+                    <div class="event-card-details margin-md">
+                        <table>
+                            <tr>
+                                <th>Event date</th>
+                                <th>Volunteering</th>
+                                <th>Donations</th>
 
-                    </tr>
-                    <tr>
-                        <td>2010.10.20</td>
-                        <td><i class="fas fa-check clr-green"></i></td>
-                        <td><i class="fas fa-times clr-red"></i></td>
-                    </tr>
-                </table>
-                <div class="flex-row flex-center">
-                    <button class="btn btn-solid bg-red border-red" onclick="remove()">Remove</button>
-                    <div class="flex-row flex-space " style="display: none; padding-top:1rem;">
-                        <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
-                        <i class="fas fa-check clr-green margin-side-md"></i>&nbsp;
-                        <i class="fas fa-times clr-red  margin-side-md" onclick="cancel()"></i>
+                            </tr>
+                            <tr>
+                                <td><?= $event["start_date"] ?></td>
+                                <td><?php if ($event["donation_status"]) { ?><i class="fas fa-check clr-green"></i><?php } else { ?><i class="fas fa-times clr-red"></i><?php } ?> </td>
+                                <td><?php if ($event["volunteer_status"]) { ?><i class="fas fa-check clr-green"></i><?php } else { ?><i class="fas fa-times clr-red"></i><?php } ?> </td>
+                            </tr>
+                        </table>
+                        <div class="flex-row flex-center">
+                            <button class="btn btn-solid bg-red border-red" onclick="remove()">Remove</button>
+                            <div class="flex-row flex-space " style="display: none; padding-top:1rem;">
+                                <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
+                                <form method="post" action="/event/remove" class="flex-row flex-center">
+                                    <input name="event_id" class="hidden" value="<?= $event["event_id"] ?>">
+                                    <button class="btn-icon flex-row flex-center"><i type="submit" class="fas fa-check clr-green margin-side-md"></i>&nbsp;</button>
+                                </form>
+                                <i class="fas fa-times clr-red  margin-side-md" onclick="cancel()"></i>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-
-            </div>
+            <?php } ?>
         </div>
     </div>
 </body>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
+
 <script>
     function addEvent() {
         document.querySelector(".form").classList.toggle("show-form");
@@ -226,6 +264,7 @@
             },
             zoom: 8,
         });
+        getLocation();
     }
 
     function getLocation() {
@@ -236,17 +275,15 @@
         }
     }
 
-    getLocation();
-    printMarker = () => console.log(marker.getPosition().toJSON());
 
     function showPosition(position) {
-
+        console.log(position);
         var myLatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
         marker = new google.maps.Marker({
             position: myLatlng,
             draggable: true,
-            title: "Hello World!"
+            title: "Event location"
         });
 
         // To add the marker to the map, call setMap();

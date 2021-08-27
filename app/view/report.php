@@ -33,6 +33,7 @@
     }
 
 </style>
+<?php include "nav.php" ?>
 
 <body>
     <div class="background">

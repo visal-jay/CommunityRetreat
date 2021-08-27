@@ -37,6 +37,15 @@ class User extends Model
         User::insert($query,$params);
     }
 
+    public function getUsername($uid){
+        if($result=(new Organisation)->getDetails($uid))
+            return $result["username"];
+       /*  if($result=(new RegisteredUser)->getDetails($uid))
+            return $result["username"]; */
+        if($result=(new Admin)->getDetails($uid))
+            return $result["username"];
+    }
+
     function getFailedLogin($email){
         $query = 'SELECT UNIX_TIMESTAMP(first_failed_login) as first_failed_login, failed_login_count FROM login WHERE email= :email AND verified = :verified LIMIT 1';
         $params = ["email" => $email,"verified"=>1];

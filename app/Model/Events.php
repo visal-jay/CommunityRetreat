@@ -6,21 +6,24 @@ class Events extends Model
     {
         session_start();
         $data["org_uid"] = $_SESSION["user"]["uid"];
+        if ($data["longitude"] == "NULL" || $data["latitude"] == "NULL") 
+            $data["map"] = "false";
+        else
+            $data["map"] = "true";
+       
+        $query = "INSERT INTO `event` (`event_name`, `org_uid`, `latlang`, `start_date`,`start_time`,`end_time`, `about`,`mode`) VALUES (:event_name,  :org_uid, IF (STRCMP(:map, 'false')=0 ,NULL,POINT(:latitude ,:longitude)),:start_date,:start_time, :end_time , :about ,:mode)";
+        $params = array_intersect_key($data, ["event_name" => '', "org_uid" => '', "latitude" => '', "longitude" => '', "start_date" => '', "start_time" => '',"end_time"=>'', "about" => '', "mode" => '', "map" => '']);
+            
         var_dump($data);
-        if ($data["longitude"] == "NULL" || $data["latitude"] == "NULL") {
-            $data["map"] = true;
-        } else
-            $data["map"] = false;
-        /*    $query = 'INSERT INTO event (`event_name`, `org_uid`, `start_date`,`start_time`, `about`,`mode`) VALUES (:event_name,  :org_uid, :start_date,:start_time, :about, :mode)';
-            $params=array_intersect_key($data,["event_name"=>'',"org_uid"=>'',"start_date"=>'',"start_time"=>'',"about"=>'',"mode"=>'']);
-            var_dump($params);
-        }
-        else */ {
-            $query = 'INSERT INTO `event` (`event_name`, `org_uid`, `latlang`, `start_date`,`start_time`, `about`,`mode`) VALUES (:event_name,  :org_uid, IF (:map="false" ,NULL,POINT(:latitude ,:longitude)),:start_date,:start_time , :about ,:mode)';
-            $params = array_intersect_key($data, ["event_name" => '', "org_uid" => '', "latitude" => '', "longitude" => '', "start_date" => '', "start_time" => '', "about" => '', "mode" => '', "map" => '']);
-        }
 
         Model::insert($query, $params);
+        exit();
+    }
+
+    public function remove($event_id){
+        $query="UPDATE `event` SET status='deleted' WHERE event_id= :event_id";
+        $params=["event_id"=>$event_id];
+        Model::insert($query,$params);
     }
 
     public function getDetails($event_id)

@@ -1,3 +1,4 @@
+<?php if(!isset($_SESSION)) session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,10 +53,10 @@
                 <?php } ?>
 
                 <?php if($organization) { ?>
-                <a class="nav-link margin-side-md" href="/view/adoption_listing.php ">Home</a>
-                <a class="nav-link margin-side-md" href="# ">Events</a>
-                <a class="nav-link margin-side-md" href="# ">Gallery</a>
-                <a class="nav-link margin-side-md" href="# ">Statics</a>
+                <a class="nav-link margin-side-md" href="/organisation/dashboard ">Home</a>
+                <a class="nav-link margin-side-md" href="/organisation/events">Events</a>
+                <a class="nav-link margin-side-md" href="/organisation/gallery">Gallery</a>
+                <a class="nav-link margin-side-md" href="/organisation/report">Statics</a>
                 <?php } ?>
 
                 <?php if($admin) { ?>
@@ -68,12 +69,19 @@
 
             </nav>
                     
-            <?php if(isset($username)) { ?>
-            <a class="btn btn-solid"  style="font-size:1rem "><i class="fa fa-user "> </i> &nbsp; <?= $username ?> </a>
-            <?php } else {?>
-            <a class="btn btn-solid" href="/login/view" style="font-size:1rem "><i class="fa fa-user "> </i> &nbsp; Sign In </a>
-            <?php } ?>
-            
+            <div class="nav-drop-down">
+                <?php if(isset($_SESSION["user"]["username"])) { ?>
+                <a class="btn btn-solid"  style="font-size:1rem" onclick="document.querySelector('.nav-drop-down-list').classList.toggle('hidden')" ><i class="fa fa-user "> </i> &nbsp; <?= $_SESSION["user"]["username"]?> &nbsp; <i class="fas fa-chevron-down"></i></a>
+                <?php } else {?>
+                <a class="btn btn-solid" href="/login/view" style="font-size:1rem "><i class="fa fa-user "> </i> &nbsp; Sign In </a>
+                <?php } ?>
+                <div class="nav-drop-down-list hidden">
+                    <div class="flex-col">
+                    <a class="nav-link margin-md" ><i class="far fa-user"></i>&nbsp; Profile</a>
+                    <a class="nav-link margin-side-md" href=""><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</a>
+                    </div>
+                </div>
+            </div>
             <button class="btn more-btn " onclick="document.querySelector( '.main-nav').classList.toggle( 'shown') ">
                 <i class="fa fa-bars "></i>
             </button>

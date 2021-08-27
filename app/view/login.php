@@ -65,7 +65,7 @@
         position: relative;
         margin: 1rem;
         border: 1px solid transparent;
-        min-height: 400px;
+        min-height: 500px;
         max-height: max-content;
         overflow: hidden;
         max-width: 300px;
@@ -74,9 +74,9 @@
 
     .ctx {
         position: absolute;
-        top:50%;
+        top: 60%;
         left: 50%;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-gap: 4rem;
@@ -171,28 +171,49 @@
                         <form action="/Signup/validate" method="post" id="signup-form-user" class="form <?php if ($_GET["signupUser"]) echo "shown"; ?>">
                             <div class="form-item">
                                 <label>Username</label>
-                                <input type="text" name="email" class="form-ctrl" onkeyup="checkMail(this.value)" placeholder=" &#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
+                                <input type="text" name="username" class="form-ctrl" placeholder=" &#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
                                 <p class="error email-error" style="margin:0px"><?php echo $_GET["emailErr"]; ?></p>
+                            </div>
+                            <div class="form-item">
+                                <label>Email</label>
+                                <input type="text" name="email" class="form-ctrl" onkeyup="checkMail(this.value)" placeholder=" &#xf0e0; &nbsp; Enter Email" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
+                                <p class="error email-error" style="margin:0px"><?php echo $_GET["emailErr"]; ?></p>
+                            </div>
+                            <div class="form-item">
+                                <label>Telephone</label>
+                                <input type="password" name="contact_number" class="form-ctrl" onkeyup="checkTelephone(this.value)" placeholder="&#xf879; &nbsp; Enter phone number" required style="font-family:Arial, FontAwesome" />
+                                <p class="error telephone-error" style="margin:0px"><?php echo $_GET["telephoneErr"]; ?></p>
                             </div>
                             <div class="form-item">
                                 <label>Password</label>
                                 <input type="password" name="password" onkeyup="checkPassword(this.value)" class="form-ctrl" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
                                 <p class="error password-error" style="margin:0px"><?php echo $_GET["passwordErr"]; ?></p>
                             </div>
-                            <button name="signupUser" type="submit" class="btn btn-solid margin-md">Sign Up</button>
+                            
+                            <button name="signupUser" type="submit" class="btn btn-solid margin-md" value="registered-user">Sign Up</button>
                         </form>
                         <form action="/Signup/validate" method="post" id="signup-form-organisation" class="form <?php if ($_GET["signupOrg"]) echo "shown"; ?>">
                             <div class="form-item">
-                                <label>Organisation</label>
-                                <input name="email" class="form-ctrl" onkeyup="checkMail(this.value)" placeholder="&#xF007; &nbsp; Enter Oragnisation Name" required style="font-family:Arial, FontAwesome" />
+                                <label>Organization name</label>
+                                <input type="text" name="username" class="form-ctrl" placeholder=" &#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
                                 <p class="error email-error" style="margin:0px"><?php echo $_GET["emailErr"]; ?></p>
+                            </div>
+                            <div class="form-item">
+                                <label>Email</label>
+                                <input type="text" name="email" class="form-ctrl" onkeyup="checkMail(this.value)" placeholder=" &#xf0e0; &nbsp; Enter Email" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
+                                <p class="error email-error" style="margin:0px"><?php echo $_GET["emailErr"]; ?></p>
+                            </div>
+                            <div class="form-item">
+                                <label>Telephone</label>
+                                <input type="password" name="contact_number" class="form-ctrl" onkeyup="checkTelephone(this.value)" placeholder="&#xf879; &nbsp; Enter phone number" required style="font-family:Arial, FontAwesome" />
+                                <p class="error telephone-error" style="margin:0px"><?php echo $_GET["telephoneErr"]; ?></p>
                             </div>
                             <div class="form-item">
                                 <label>Password</label>
                                 <input name="password" type="password" onkeyup="checkPassword(this.value)" class="form-ctrl" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
                                 <p class="error password-error" style="margin:0px"><?php echo $_GET["passwordErr"]; ?></p>
                             </div>
-                            <button type="submit" class="btn btn-solid margin-md" name="signupOrg">Sign Up</button>
+                            <button type="submit" class="btn btn-solid margin-md" value="organization" name="signupOrg">Sign Up</button>
                         </form>
                     </div>
                 </div>
@@ -255,16 +276,26 @@
             }
 
             function checkPassword(password) {
-                var err="";
+                var err = "";
                 const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-                if (!pattern.test(password)) 
+                if (!pattern.test(password))
                     var err = "Strong password required<br> Combine least 8 of the following: uppercase letters,lowercase letters,numbers and symbols";
                 let password_errors = document.querySelectorAll(".password-error");
                 for (let error of password_errors) {
                     error.innerHTML = err;
                 }
             }
-            
+
+            function checkTelephone(number) {
+                var err = "";
+                const pattern = /^[+]?[0-9]{10,11}$/;
+                if (!pattern.test(number))
+                    var err = "Valid phone number required";
+                let telephone_errors = document.querySelectorAll(".telephone-error");
+                for (let error of telephone_errors) {
+                    error.innerHTML = err;
+                }
+            }
         </script>
 
 

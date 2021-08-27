@@ -4,9 +4,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Defuse\Crypto\Key;
 
-require './Libararies/PHPMailer-6.5.0/src/Exception.php';
-require './Libararies/PHPMailer-6.5.0/src/PHPMailer.php';
-require './Libararies/PHPMailer-6.5.0/src/SMTP.php';
+
 
 require_once('./Libararies/defuse-crypto.phar');
 
@@ -30,6 +28,7 @@ class SignupController
         if (!$validate->password($_POST["password"])) {
             $data["passwordErr"] = "Strong password required<br> Combine least 8 of the following: uppercase letters,lowercase letters,numbers and symbols";
         }
+
         
         if (isset($data["emailErr"]) or isset($data["passwordErr"])) {
             $data["signup"] = true;
@@ -41,12 +40,12 @@ class SignupController
         }
 
         if (isset($_POST["signupOrg"])) {
-            $_POST["username"] = "hello";
-            $_POST["contact_number"] = "123";
-            $_POST["account_number"] = "123";
-            $_POST["username"] = "hello";
             $_POST["first_failed_login"]=time();
             $organisation->addOrganisation($_POST);
+        }
+
+        elseif(isset($_POST["signupUser"])){
+            $registered_user->addRegisteredUser($_POST);
         }
     }
 

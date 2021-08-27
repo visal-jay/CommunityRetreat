@@ -13,6 +13,11 @@ class OrganisationController{
         $this->view($_SESSION["user"]["uid"]);
     }
 
+    public function gallery(){
+        View::render("organisationGallery");
+    }
+
+
     public function update(){
         Controller::accessCheck(["organization"]);
         $validate = new Validation();
@@ -28,7 +33,13 @@ class OrganisationController{
         if(!isset($_SESSION))
             session_start();
         $event=new Events;
-        $data=$event->query(["org_uid"=> $_SESSION["user"]["uid"]]);
+        $data["events"]=$event->query(["org_uid"=> $_SESSION["user"]["uid"]]);
+        //var_dump($data);
+        View::render("manageEvents",$data);
+    }
+
+    public function report(){
+        View::render("report");
     }
 
 

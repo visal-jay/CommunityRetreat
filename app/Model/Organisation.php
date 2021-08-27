@@ -4,13 +4,12 @@ class Organisation extends User{
 
     public function addOrganisation ($data)
     {
-        
         $db = Model::getDB();
         $db->beginTransaction();
 
-        $insert_org_ql = 'INSERT INTO `organization` (`email`,`username`, `contact_number`, `account_number`) VALUES (:email,  :username, :contact_number, :account_number)';
+        $insert_org_ql = 'INSERT INTO `organization` (`email`,`username`, `contact_number`) VALUES (:email,  :username, :contact_number)';
         $stmt=$db->prepare($insert_org_ql);
-        $insertData=array_intersect_key($data,["email"=>'',"username"=>'',"contact_number"=>'',"account_number"=>'']);
+        $insertData=array_intersect_key($data,["email"=>'',"username"=>'',"contact_number"=>'']);
         $stmt->execute($insertData);
         $stmt->closeCursor();
        
@@ -30,26 +29,14 @@ class Organisation extends User{
 
         $encryption=new Encryption;
         $parameters=["key"=>$encryption->encrypt(array_intersect_key($data,["email"=>'',"password"=>'']),'email verificaition')];
-        
-        var_dump($parameters);
-        if(class_exists('Mail')){
-            echo 'wtf';
-        }
-        else
-            echo 'birch';
 
         $mail=new Mail;
-        echo 'shit';
-        if(isset($mail)){
-            echo 'dsdas';
-            var_dump($mail);
-        }
+        
         $mail->verificationEmail($data["email"],"confirmationMail","localhost/signup/verifyemail?".http_build_query($parameters),'Signup');
     }
 
 
     public function getDetails($uid){
-        var_dump($uid);
         $query = 'SELECT  org.username,org.email,org.contact_number,ST_X(org.latlang) as latitude ,ST_Y(org.latlang) as longitude ,org.profile_pic,org.cover_pic,org.about_us FROM organization org INNER JOIN login ON org.uid= login.uid WHERE org.uid = :uid  AND verified=1';
         $params = ["uid" => $uid];
         $result=User::select($query,$params);

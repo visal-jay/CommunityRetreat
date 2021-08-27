@@ -11,7 +11,7 @@ class LoginController
         $_GET["login"] = $_GET["signup"] == true ? false : true;
         $_GET["signupOrg"] = isset($_GET["signupOrg"]) ? true : false;
         $_GET["signupUser"] = $_GET["signupOrg"] == true ? false : true;
-        $_GET = array_merge(["passwordErr" => '', "emailErr" => '', "loginErr" => ''], $_GET);
+        $_GET = array_merge(["passwordErr" => '', "emailErr" => '', "loginErr" => '',"telephoneErr"=>''], $_GET);
         View::render("login");
     }
 
@@ -66,10 +66,10 @@ class LoginController
             Controller::redirect("/login/view", ["loginErr" => 'You are currently locked out<br>Try again later', "loginDenied" => true,"login"=>true]);
 
         if ($user_details = $user->authenticate($email, $password)) {
+            $user_details["username"]=$user->getUsername($user_details["uid"]);
             session_start();
-            $_SESSION["user"] = array_intersect_key($user_details, ["uid" => '', "user_type" => '']);
+            $_SESSION["user"] = array_intersect_key($user_details, ["uid" => '', "user_type" => '',"username"=>'']);
             $user_type = $user_details["user_type"];
-
             if ($user_type == "organization")
                 Controller::redirect("/organisation/dashboard");
             elseif ($user_type == "registereduser")

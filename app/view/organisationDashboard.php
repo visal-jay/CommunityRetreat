@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/Public/assets/newstyles.css">
+    <link rel="stylesheet" href="../Public/assets/newstyles.css">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
@@ -177,7 +177,7 @@
     <?php } ?>
         <div class="photo-container">
             <div class="cover-place-holder cover border-round">
-                <img src="/Public/assets/photo.jpeg" alt="" class="photo-element" styl>
+                <img src="../Public/assets/photo.jpeg" alt="" class="photo-element" styl>
                 <?php if($_SESSION["user"]["user_type"]=="organization") { ?> 
                 <div class="image-upload hidden form">
                     <label for="file-input">
@@ -188,7 +188,7 @@
                 <?php } ?>
             </div>
             <div class="profile-pic border-round">
-                <img src="/Public/assets/newphoto.jpeg" alt="" class="photo-element">
+                <img src="../Public/assets/newphoto.jpeg" alt="" class="photo-element">
                 <?php if($_SESSION["user"]["user_type"]=="organization") { ?> 
                 <div class="image-upload hidden form">
                     <label for="file-input">

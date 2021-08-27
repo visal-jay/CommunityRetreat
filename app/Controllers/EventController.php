@@ -3,8 +3,8 @@ class EventController{
 
     public function view(){
         if (isset($_GET["event_id"])){
-            $register_user=new RegisteredUser;
-            $event=new Events;
+                $register_user=new RegisteredUser();
+                $event=new Events;
                 if(!isset($_SESSION)) 
                     session_start();
                 $uid=$_SESSION["user"]["uid"];

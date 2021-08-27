@@ -6,10 +6,12 @@ class OrganisationController{
         $org_id= isset($_GET["org_id"]) ? $_GET["org_id"] : $org_id;
         $data= (new Organisation)->getDetails($org_id);
         View::render("organisationDashboard",$data);
+        
     }
 
     public function dashboard(){
         $this->view($_SESSION["user"]["uid"]);
+        
     }
 
     public function update(){
@@ -22,7 +24,8 @@ class OrganisationController{
         (new Organisation)->updateDetails($_SESSION["user"]["uid"],$_POST);
         Controller::redirect("/Organisation/dashboard");
     }
-
+    
 
     
 }
+

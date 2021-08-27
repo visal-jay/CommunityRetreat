@@ -1,4 +1,5 @@
 <?php
+
 class User extends Model
 {
     public function checkUserEmail($email)
@@ -79,5 +80,6 @@ class User extends Model
         $params = ["email" => $email,"password"=>$password];
         User::insert($query,$params);
     }
+    
 
 }

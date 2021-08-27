@@ -1,6 +1,7 @@
 *{
     margin: 0%;
     padding: 0%;
+    
 }
 
 .body-main{
@@ -8,6 +9,11 @@
     justify-content: center;
     align-content:flex-end;
 }
+#edit-user-profile-form{
+    
+    height: 100%;
+    width: 100%;
+  }
 
 .profilecontainer{
     height: 100%;
@@ -176,11 +182,11 @@ br.responsive {
     color: grey;
     font-weight: 900;
 }
-.contact-settings{
+.details-settings{
     margin-top: 10px;
 }
 
-.contact-settings h2{
+.details-settings h2{
     margin-left: 30px;
     font-weight: normal;
     color: #16c79a;;
@@ -188,7 +194,7 @@ br.responsive {
 hr{
     margin: 5px 0 5px;
 }
-.contact-info{
+.details{
     
     display: flex;
     flex-direction: column;
@@ -326,7 +332,7 @@ hr{
    
     
 }
-.security-settings h2{
+.login-settings h2{
     margin-left: 30px;
     font-weight: normal;
     color: #16c79a;
@@ -466,7 +472,7 @@ hr{
     .profilecontainer{
         font-size: 13px;
     }
-    .contact-info{
+    .details{
         padding: 2em 0.5em 2em;
     }
     .login-info{
@@ -477,7 +483,7 @@ hr{
         font-size: 13px;
     }
     .update-form input[type=text]{
-        font-size: 11px;
+        font-size: 13px;
     }
     .password input[type="password"]{
         font-size: 25px;
@@ -489,7 +495,28 @@ hr{
 
     
 }
-@media screen  and (max-width: 400px){
+@media screen  and (max-width: 420px){
+    .profilepic-pic-div{
+        height:150px;
+        width: 150px;
+    }
+    #dp{
+        height:150px;
+        width: 150px;
+    }
+    
+}
+@media screen  and (max-width: 350px){
+    
+    .details{
+        padding: 2em 0em 2em;
+    }
+    .update-form input[type=text]{
+        font-size: 12px;
+    }
+    .login-info{
+        padding: 2em 0em 2em;
+    }
     .update-form{
         width: 90%;
         font-size: 13px;

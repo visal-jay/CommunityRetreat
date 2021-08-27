@@ -23,7 +23,8 @@ class RegisteredUser extends User
         $query = 'SELECT * FROM registered_user reg JOIN login ON reg.uid= login.uid WHERE reg.uid = :uid AND verified=1';
         $params = ["uid" => $uid];
         $result= User::select($query,$params);
-        if(count($result[0])>=1)
+        
+        if(count($result)==1)
 
             return $result[0];
         else
@@ -59,7 +60,7 @@ class RegisteredUser extends User
         $stmt->closeCursor();
 
         $data["user_type"]="organization";
-        $insertOrgLoginSql = 'INSERT INTO `login` (`email`,`password`, `uid`, `user_type`) VALUES (:email,  :password, :uid, "registered_user")';
+        $insertOrgLoginSql = 'INSERT INTO `login` (`email`,`password`, `uid`, `user_type`) VALUES (:email,  :password, :uid, "registered user")';
         $stmt=$db->prepare($insertOrgLoginSql);
         $insertData=array_intersect_key($data,["email"=>'',"password"=>'',"uid"=>'']);
         $stmt->execute($insertData);

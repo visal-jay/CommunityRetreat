@@ -122,7 +122,7 @@
                     <input type="search" class="form-ctrl" placeholder="Search">
                     <button type="" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
                 </form>
-                <button class="btn btn-solid" id="near-me"><i class="fas fa-map-marker-alt"></i>&nbsp;Near me</button>
+                <button class="btn btn-solid" id="near-me" onclick="nearme()"><i class="fas fa-map-marker-alt"></i>&nbsp;Near me</button>
             </div>
         </search>
 

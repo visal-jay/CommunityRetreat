@@ -144,7 +144,7 @@
                     </div>
                     <div class="form-item">
                         <label>Password</label>
-                        <input name="password" class="form-ctrl" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
+                        <input type="password" name="password" class="form-ctrl" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
                     </div>
                     <p class="error" style="margin:0px"><?php echo $_GET["loginErr"]; ?></p>
                     <a onclick="switchf('forgot-form','login-form')">Forgot your password?</a>
@@ -181,7 +181,7 @@
                             </div>
                             <div class="form-item">
                                 <label>Telephone</label>
-                                <input type="password" name="contact_number" class="form-ctrl" onkeyup="checkTelephone(this.value)" placeholder="&#xf879; &nbsp; Enter phone number" required style="font-family:Arial, FontAwesome" />
+                                <input type="text" name="contact_number" class="form-ctrl" onkeyup="checkTelephone(this.value)" placeholder="&#xf879; &nbsp; Enter phone number" required style="font-family:Arial, FontAwesome" />
                                 <p class="error telephone-error" style="margin:0px"><?php echo $_GET["telephoneErr"]; ?></p>
                             </div>
                             <div class="form-item">
@@ -205,7 +205,7 @@
                             </div>
                             <div class="form-item">
                                 <label>Telephone</label>
-                                <input type="password" name="contact_number" class="form-ctrl" onkeyup="checkTelephone(this.value)" placeholder="&#xf879; &nbsp; Enter phone number" required style="font-family:Arial, FontAwesome" />
+                                <input type="text" name="contact_number" class="form-ctrl" onkeyup="checkTelephone(this.value)" placeholder="&#xf879; &nbsp; Enter phone number" required style="font-family:Arial, FontAwesome" />
                                 <p class="error telephone-error" style="margin:0px"><?php echo $_GET["telephoneErr"]; ?></p>
                             </div>
                             <div class="form-item">

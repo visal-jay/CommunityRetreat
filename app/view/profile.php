@@ -11,39 +11,12 @@
         <link rel="stylesheet" href= "../Public/assets/style/fontawesome.min.css">
         <title>Registrationuser profile</title>
     </head>
+    <?php require("nav.php") ?>
     <body>
         <?php 
             $_SESSION["uid"] = "REG0000022";
             
         ?>
-      
-        <header class="header">
-            <a class=" logo ">
-                <img src="../Public/assets/visal logo.png">
-            </a>
-            <nav class="main-nav ">
-                <div class="flex justify-between " style="width:100% ">
-                    <button class="btn btn-link more-btn " onclick="document.querySelector( '.main-nav').classList.toggle( 'shown') ">
-                        <i class="fa fa-times fa-2x"></i>
-                    </button>
-                </div>
-                <button class="btn btn-solid" id="near-me"><i class="fas fa-map-marker-alt" ></i>&nbsp;Near me</button>
-                <form action="/action_page.html" class="search-bar" style="height:fit-content">
-                    <input type="search" class="form-ctrl" placeholder="Search" >
-                    <button type="" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
-                </form>
-                <a class="nav-link margin-side-md" href="/view/adoption_listing.php ">About</a>
-                <a class="nav-link margin-side-md" href="clender.html">Calender</a>
-                <a class="nav-link margin-side-md" href="history.html">History</a>
-            </nav>
- 
-            <a class="btn btn-solid" href="profile.php" style="font-size:1rem "><i class="fa fa-user "> </i>Me </a>
-
-            <button class="btn more-btn " onclick="document.querySelector( '.main-nav').classList.toggle( 'shown') ">
-                <i class="fa fa-bars "></i>
-            </button>
-
-        </header>
         
     
         <form action="/RegisteredUser/updateProfile" method="post" id="edit-user-profile-form" >

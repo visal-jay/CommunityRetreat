@@ -33,8 +33,12 @@ class OrganisationController{
         if(!isset($_SESSION))
             session_start();
         $event=new Events;
-        $data["events"]=$event->query(["org_uid"=> $_SESSION["user"]["uid"]]);
-        //var_dump($data);
+        $data["events"]=array();
+        if($result=$event->query(["org_uid"=> $_SESSION["user"]["uid"],"status"=>"published"]))
+            array_push($data["events"],$result[0]);
+        if($result=$event->query(["org_uid"=> $_SESSION["user"]["uid"],"status"=>"added"]))
+        array_push($data["events"],$result[0]);
+        
         View::render("manageEvents",$data);
     }
 

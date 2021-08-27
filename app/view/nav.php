@@ -17,7 +17,7 @@
     if(isset($_SESSION["user"]["user_type"])){
         if ($_SESSION["user"]["user_type"]=="organization") {$organization=true;}
         if ($_SESSION["user"]["user_type"]=="admin") {$$admin=true;}
-        if ($_SESSION["user"]["user_type"]=="registered_user") {$registered_user=true;}
+        if ($_SESSION["user"]["user_type"]=="registered user") {$registered_user=true;}
     }
     else {
         $guest_user=true;
@@ -46,9 +46,9 @@
                 <?php } ?>
 
                 <?php if($registered_user) { ?>
-                <a class="nav-link margin-side-md" href="/view/adoption_listing.php ">Home</a>
-                <a class="nav-link margin-side-md" href="# ">Calender</a>
-                <a class="nav-link margin-side-md" href="# ">Administratored</a>
+                <a class="nav-link margin-side-md" href="/user/home">Home</a>
+                <a class="nav-link margin-side-md" href="/user/calendar">Calender</a>
+                <a class="nav-link margin-side-md" href="/user/administratored">Administratored</a>
                 <a class="nav-link margin-side-md" href="# "></a>
                 <?php } ?>
 
@@ -71,14 +71,14 @@
                     
             <div class="nav-drop-down">
                 <?php if(isset($_SESSION["user"]["username"])) { ?>
-                <a class="btn btn-solid"  style="font-size:1rem" onclick="document.querySelector('.nav-drop-down-list').classList.toggle('hidden')" ><i class="fa fa-user "> </i> &nbsp; <?= $_SESSION["user"]["username"]?> &nbsp; <i class="fas fa-chevron-down"></i></a>
+                <a class="btn btn-solid"  id="nav-drop" style="font-size:1rem" onclick="document.querySelector('.nav-drop-down-list').classList.toggle('hidden')" ><i class="fa fa-user "> </i> &nbsp; <?= $_SESSION["user"]["username"]?> &nbsp; <i class="fas fa-chevron-down"></i></a>
                 <?php } else {?>
                 <a class="btn btn-solid" href="/login/view" style="font-size:1rem "><i class="fa fa-user "> </i> &nbsp; Sign In </a>
                 <?php } ?>
                 <div class="nav-drop-down-list hidden">
                     <div class="flex-col">
-                    <a class="nav-link margin-md" ><i class="far fa-user"></i>&nbsp; Profile</a>
-                    <a class="nav-link margin-side-md" href=""><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</a>
+                    <a href="/user/profile" class="nav-link margin-md" ><i class="far fa-user"></i>&nbsp; Profile</a>
+                    <a href="/login/logout" class="nav-link margin-side-md" href=""><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</a>
                     </div>
                 </div>
             </div>
@@ -103,6 +103,16 @@
         let link = "/search/view?"+"longitude="+longitude+"&latitude="+latitude+"&distance=20";
         location.href=link;
     }
+
+    document.addEventListener("click", (evt) => {
+    let targetElement = evt.target;
+    console.log(targetElement);
+    let navDropdownButton = document.getElementById('nav-drop');
+    console.log(navDropdownButton);
+    let navDropdown=document.querySelector('.nav-drop-down-list');
+    if (targetElement!=navDropdownButton)
+        navDropdown.classList.add('hidden');
+    });
 
 
 </script>

@@ -40,8 +40,8 @@ class User extends Model
     public function getUsername($uid){
         if($result=(new Organisation)->getDetails($uid))
             return $result["username"];
-       /*  if($result=(new RegisteredUser)->getDetails($uid))
-            return $result["username"]; */
+        if($result=(new RegisteredUser)->getDetails($uid))
+            return $result["username"];
         if($result=(new Admin)->getDetails($uid))
             return $result["username"];
     }

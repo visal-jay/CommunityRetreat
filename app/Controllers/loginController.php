@@ -70,10 +70,11 @@ class LoginController
             session_start();
             $_SESSION["user"] = array_intersect_key($user_details, ["uid" => '', "user_type" => '',"username"=>'']);
             $user_type = $user_details["user_type"];
+
             if ($user_type == "organization")
                 Controller::redirect("/organisation/dashboard");
-            elseif ($user_type == "registereduser")
-                Controller::redirect("/view/organisationDashboard.php");
+            elseif ($user_type == "registered user")
+                Controller::redirect("/user/home");
             elseif ($user_type == "admin")
                 Controller::redirect("/view/organisationDashboard.php");
         } 

@@ -7,7 +7,7 @@ class Admin extends User{
         $params = ["uid" => $uid];
         $result=User::select($query,$params);
         
-        if (count($result[0])>1 )
+        if (count($result)==1 )
             return $result[0];
         else
             return false;

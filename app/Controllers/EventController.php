@@ -22,10 +22,8 @@ class EventController
         $uid = $_SESSION["user"]["uid"] = "REG0000016";
         if ($event_details = $event->getDetails($_GET["event_id"])) {
             $data = $event_details;
-            $organisation_details = $organisation->getDetails($event_details['org_uid']);
             if ($user_roles = $register_user->getUserRoles($uid, $_GET["event_id"]))
             $data = array_merge($data, $user_roles);
-            $data["org_username"] = $organisation_details["username"];
             $data["volunteered"] = $data["volunteered"] == "" ? "0" :  $data["volunteered"];
             $data["donations"] = $data["donations"] == "" ? "0" :  $data["donations"];
             View::render("eventPage", $data);

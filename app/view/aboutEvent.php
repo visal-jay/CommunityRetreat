@@ -202,7 +202,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                             <i class="btn-icon icon-width far fa-calendar-alt clr-green margin-side-lg"></i>
                             <h4 class="head-margin data"><?= $start_date ?></h4>
                             <?php if ($organization || $moderator) { ?>
-                                <input type="date" name="start_date" class="form form-ctrl hidden" data-placeholder="Event is on?" value="<?= $start_date ?>" required></input>
+                                <input type="date" value="<?= $start_date ?>" name="start_date" class="form form-ctrl hidden" data-placeholder="Event is on?" value="<?= $start_date ?>" required></input>
                             <?php } ?>
                         </div>
                     </div>
@@ -212,17 +212,17 @@ if (isset($_SESSION["user"]["user_type"])) {
                             <i class="btn-icon icon-width far fa-clock clr-green margin-side-lg"></i>
                             <h4 class="head-margin data"><?= $start_time ?></h4>
                             <?php if ($organization || $moderator) { ?>
-                                <input type="time" name="Event time" class="form form-ctrl hidden" data-placeholder="Event starts at?" required></input>
+                                <input type="time" value="<?= $start_time ?>" name="Event time" class="form form-ctrl hidden" data-placeholder="Event starts at?" required></input>
                             <?php } ?>
                         </div>
                     </div>
 
-                    <!-- <div class="time-container">
+                    <div class="time-container">
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width fas fa-hourglass-start clr-green margin-side-lg"></i>
                             <h4 class="head-margin data"><?= $duration ?></h4>
                         </div>
-                    </div> -->
+                    </div>
 
                     <div class="venue-container">
                         <div class="flex-row margin-lg">
@@ -237,7 +237,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                     <div class="globe-container">
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width fas fa-globe clr-green margin-side-lg"></i>
-                            <h4 class="head-margin data">Physical Event</h4>
+                            <h4 class="head-margin data"><?= $mode ?></h4>
                                 <?php if ($organization || $moderator) { ?>
                                     <div class="form hidden">
                                     <select class="form-ctrl" id="mode" required>
@@ -255,7 +255,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width far fa-flag clr-green margin-side-lg"></i>
                             <div class="flex-row">
-                                <p class="head-margin">Event by <b><?= $org_username ?></b></p>
+                                <p class="head-margin">Event by <b><?= $organisation_username ?></b></p>
                             </div>
                         </div>
                     </div>
@@ -310,7 +310,9 @@ if (isset($_SESSION["user"]["user_type"])) {
                 <button class="btn data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
                 <button class="btn btn-solid bg-red border-red form hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
                 <button class="btn btn-solid form hidden" form="update-form">Save &nbsp; <i class="fas fa-check "></i></button>
-                <button id="publish-btn" class="btn margin-lg" onclick="togglePopup('publish'); blur_background('background'); stillBackground('id1')">Publish</button>
+                <?php if ($status == "added") { ?>
+                    <button id="publish-btn" class="btn margin-lg" onclick="togglePopup('publish'); blur_background('background'); stillBackground('id1')">Publish</button>
+                <?php } ?>
             </div>
         </div>
     </div>

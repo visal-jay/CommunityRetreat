@@ -8,18 +8,19 @@ class Controller
         exit();
     }
 
-    public static function accessCheck($userroles=[],$event_id=''){
+    public static function accessCheck($userroles=[],$event_id='-1'){
         if(!isset($_SESSION))
             session_start();
         if (isset($_SESSION["user"]["user_type"])){
             $data=array();
             if (in_array($_SESSION["user"]["user_type"], $userroles))
-                array_push($data,$_SESSION["user"]["user_type"]);
-            $moderator_treasurer=(new RegisteredUser)->getUserRoles($_SESSION["user"]["uid"],$event_id);
+                array_push($data,[$_SESSION["user"]["user_type"]=>true]);
+            if($moderator_treasurer=(new RegisteredUser)->getUserRoles($_SESSION["user"]["uid"],$event_id)){
             if (in_array("moderator", $moderator_treasurer) && in_array("moderator", $userroles))
-                array_push($data,"moderator");
+                array_push($data,["moderator"=>true]);
             if (in_array("treasurer", $moderator_treasurer) && in_array("treasurer", $userroles))
-                array_push($data,"treasurer");
+                array_push($data,["treasurer"=>true]);
+            }
             return $data;
         }
         

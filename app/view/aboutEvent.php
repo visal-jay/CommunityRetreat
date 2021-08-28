@@ -220,7 +220,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                     <div class="time-container">
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width fas fa-hourglass-start clr-green margin-side-lg"></i>
-                            <h4 class="head-margin data"><?= $duration ?></h4>
+                            <h4 class="head-margin"><?= $duration ?></h4>
                         </div>
                     </div>
 

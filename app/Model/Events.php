@@ -17,7 +17,7 @@ class Events extends Model
         var_dump($data);
 
         Model::insert($query, $params);
-        exit();
+        
     }
 
     public function remove($event_id){

@@ -81,6 +81,12 @@ class LoginController
         else (new LoginController)->loginFailed($email);
     }
 
+    public function logout(){
+        if(!isset($_SESSION)) session_start();
+        session_destroy();
+        Controller::redirect('/login/view');
+    }
+
     private function loginFailed($email)
     {
         $bad_login_limit = 5;

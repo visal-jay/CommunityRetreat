@@ -168,8 +168,6 @@
 
 <body>
     <?php
-        $_SESSION["user"]["user_type"] = "organization";
-
         if (!isset($moderator)) $moderator = false;
         if (!isset($treasurer)) $treasurer = false;
         $organization = $admin = $registered_user = $guest_user = false;
@@ -223,7 +221,7 @@
             <a class="btn margin-side-md <?php if($page=="budget") echo "nav-active";?>" style=" margin-bottom:10px;" href="/event/view?page=budget&&event_id=<?= $_GET["event_id"]?>">Budget</a>
             <?php } ?>
             <?php if($organization){ ?>
-            <a class="btn margin-side-md <?php if($page=="userrole") echo "nav-active";?>" style=" margin-bottom:10px;" href="/event/view?page=userroles&&event_id=<?= $_GET["event_id"]?>">User Roles</a>
+            <a class="btn margin-side-md <?php if($page=="userroles") echo "nav-active";?>" style=" margin-bottom:10px;" href="/event/view?page=userroles&&event_id=<?= $_GET["event_id"]?>">User Roles</a>
             <?php } ?>
         </div>
     </div>

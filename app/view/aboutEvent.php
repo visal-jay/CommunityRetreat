@@ -166,7 +166,6 @@
 </style>
 
 <?php
-$_SESSION["user"]["user_type"] = "organization";
 
 if (!isset($moderator)) $moderator = false;
 if (!isset($treasurer)) $treasurer = false;

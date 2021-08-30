@@ -39,8 +39,8 @@
                 <button type="button" class="btn btn-solid" id="near-me" onclick="nearme()" ><i class="fas fa-map-marker-alt"></i>&nbsp;Near me</button>
                 <?php } ?>
                 <?php if (!$organization) { ?>
-                <form action="/search/" class="search-bar nav-search-bar" style="height:fit-content">
-                    <input type="search" class="form-ctrl" placeholder="Search" >
+                <form action="/search/view" method="get" class="search-bar nav-search-bar" style="height:fit-content">
+                    <input name="search" type="search" id="nav-search" class="form-ctrl" placeholder="Search" >
                     <button type="" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
                 </form>
                 <?php } ?>
@@ -100,7 +100,13 @@
     });
 
     function nearme(){
-        let link = "/search/view?"+"longitude="+longitude+"&latitude="+latitude+"&distance=20";
+        console.log("shfkjsd");
+        let link = "/search/view?distance=20";
+        location.href=link;
+    }
+
+    function navSearch(){
+        let link = "/search/view?"+"search="+document.getElementById('nav-search').value;
         location.href=link;
     }
 

@@ -38,7 +38,11 @@ class OrganisationController{
             array_push($data["events"],$result[0]);
         if($result=$event->query(["org_uid"=> $_SESSION["user"]["uid"],"status"=>"added"]))
         array_push($data["events"],$result[0]);
-        
+
+        usort($data["events"], function($a, $b) {
+            return $a['event_id'] <=> $b['event_id'];
+        });
+
         View::render("manageEvents",$data);
     }
 

@@ -129,17 +129,17 @@
 
         <div class="item flex-row-to-col flex-space">
             <register class="flex-col flex-center">
-                <img src="/Public/assets/org.png" alt="">
+                <img src="/Public/assets/handshake.gif" alt="">
                 <div class="flex-col flex-center">
-                    <h3>Register as a Organisation</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt sapiente fuga error obcaecati culpa suscipit recusandae, </p>
+                    <h3>Register as an User</h3>
+                    <p style="text-align: center">By registering as an user you will be eligible to VOLUNTEER for events proudly. <br> You will be able to push yourself more and DONATE generously. </p>
                 </div>
             </register>
             <register class="flex-col flex-center">
-                <img src="/Public/assets/org.png" alt="">
+                <img src="/Public/assets/Employees.gif" alt="">
                 <div class="flex-col flex-center">
-                    <h3>Register as a Organisation</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt sapiente fuga error obcaecati culpa suscipit recusandae, </p>
+                    <h3>Register as an Organisation</h3>
+                    <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
                 </div>
             </register>
 

@@ -132,6 +132,15 @@
         opacity: 1;
     }
 
+    label {
+        height: fit-content;
+    }
+
+    .flex-row-to-col {
+        display: flex;
+        flex-direction: row;
+    }
+
     @media screen and (max-width:800px) {
         .progress {
             width: 75%;
@@ -160,6 +169,10 @@
         .textbox {
             box-sizing: border-box;
             padding: 1rem;
+        }
+
+        .flex-row-to-col {
+            flex-direction: column;
         }
 
     }
@@ -202,7 +215,10 @@ if (isset($_SESSION["user"]["user_type"])) {
                             <i class="btn-icon icon-width far fa-calendar-alt clr-green margin-side-lg"></i>
                             <h4 class="head-margin data"><?= $start_date ?></h4>
                             <?php if ($organization || $moderator) { ?>
-                                <input type="date" value="<?= $start_date ?>" name="start_date" class="form form-ctrl hidden" data-placeholder="Event is on?" value="<?= $start_date ?>" required></input>
+                                <div class="flex-row flex-center">
+                                    <label class="form hidden margin-side-md" for="start_date">Event date</label>
+                                    <input type="date" value="<?= $start_date ?>" name="start_date" class="form form-ctrl hidden" data-placeholder="Event is on?" value="<?= $start_date ?>" required></input>
+                                </div>
                             <?php } ?>
                         </div>
                     </div>
@@ -212,7 +228,12 @@ if (isset($_SESSION["user"]["user_type"])) {
                             <i class="btn-icon icon-width far fa-clock clr-green margin-side-lg"></i>
                             <h4 class="head-margin data"><?= $start_time ?></h4>
                             <?php if ($organization || $moderator) { ?>
-                                <input type="time" value="<?= $start_time ?>" name="Event time" class="form form-ctrl hidden" data-placeholder="Event starts at?" required></input>
+                                <div class="flex-row flex-center">
+                                    <label class="form hidden margin-side-md" for="start_time">Starts at?</label>
+                                    <input type="time" value="<?= $start_time ?>" name="start_time" class="form form-ctrl hidden" data-placeholder="Event starts at?" required></input>
+                                    <label class="form hidden margin-side-md" for="end_time">Ends at?</label>
+                                    <input type="time" value="<?= $end_time ?>" name="end_time" class="form form-ctrl hidden" data-placeholder="Event ends at?" required></input>
+                                </div>
                             <?php } ?>
                         </div>
                     </div>
@@ -224,8 +245,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                         </div>
                     </div>
 
-                    <!--                     Visal meka balanna input class="form"
- -->
+                    <!-- Visal meka balanna input class="form"-->
                     <div class="venue-container">
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width fas fa-map-marker-alt clr-green margin-side-lg"></i>
@@ -242,12 +262,18 @@ if (isset($_SESSION["user"]["user_type"])) {
                             <h4 class="head-margin data"><?= $mode ?></h4>
                             <?php if ($organization || $moderator) { ?>
                                 <div class="form hidden">
-                                    <select class="form-ctrl" id="mode" required>
-                                        <option value="" disabled selected>Select the mode of the event</option>
-                                        <option value="Physical">Physical</option>
-                                        <option value="Virtual">Virtual</option>
-                                        <option value="Physical & Virtual">Physical & Virtual</option>
-                                    </select>
+                                    <div class="flex-row flex-center">
+                                        <label class="form hidden margin-side-md" for="mode">Event mode</label>
+                                        <select name="mode" class="form-ctrl" id="mode" required>
+                                            <option value="<?= $mode ?>" selected><?= $mode ?></option>
+                                            <?php $options = ["Physical", "Virtual", "Physical & Virtual"];
+                                            foreach ($options as $option) {
+                                                if ($option != $mode) { ?>
+                                                    <option value="<?= $option ?>"><?= $option ?></option>
+                                            <?php }
+                                            } ?>
+                                        </select>
+                                    </div>
                                 </div>
                             <?php } ?>
                         </div>
@@ -276,19 +302,21 @@ if (isset($_SESSION["user"]["user_type"])) {
                         </div>
                     </div>
 
+                    <div class="textbox flex-col content border-round container-size margin-md" style="background-color: #eeeeee">
+                        <h3 class="margin-lg">Description</h3>
+                        <div class="data">
+                            <p class="margin-lg"><?= $about ?></p>
+                        </div>
+                        <textarea name="about" value="<?= $about ?>" class="form form-ctrl margin-lg hidden" placeholder="Enter about us">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae magni eveniet porro, ipsa mollitia dolores ipsam optio aliquam, debitis voluptatum accusamus cum perferendis, amet facere expedita nostrum laboriosam quas iste!</textarea>
+                    </div>
+
                     <?php if ($organization || $moderator) { ?>
                     </form>
                 <?php } ?>
 
             </div>
 
-            <div class="textbox flex-col content border-round container-size margin-md" style="background-color: #eeeeee">
-                <h3 class="margin-lg">Description</h3>
-                <div class="data">
-                    <p class="margin-lg">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
-                </div>
-                <textarea name="description" class="form form-ctrl margin-lg hidden" placeholder="Enter about us">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae magni eveniet porro, ipsa mollitia dolores ipsam optio aliquam, debitis voluptatum accusamus cum perferendis, amet facere expedita nostrum laboriosam quas iste!</textarea>
-            </div>
+
 
             <div class="flex-col flex-center content border-round container-size margin-md" style="background-color: #03142d">
                 <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
@@ -310,8 +338,8 @@ if (isset($_SESSION["user"]["user_type"])) {
 
             <div class="flex-row flex-center content border-round container-size">
                 <button class="btn data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
-                <button type="button" class="btn btn-solid bg-red border-red form hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
-                <button form="update-form" type="submit" class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
+                <button type="button" class="btn btn-solid bg-red border-red form margin-side-md hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
+                <button name="event_id" value="<?= $_GET["event_id"] ?>" form="update-form" type="submit" class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
                 <?php if ($status == "added") { ?>
                     <button id="publish-btn" class="btn margin-lg" onclick="togglePopup('publish'); blur_background('background'); stillBackground('id1')">Publish</button>
                 <?php } ?>

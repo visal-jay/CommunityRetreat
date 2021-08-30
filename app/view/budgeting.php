@@ -20,16 +20,16 @@
     filter: blur(0px);
     position: relative;
     min-height: fit-content;
-
 }
 
 .expense-info {
-    height: 200px;
+    max-height: 200px;
     overflow: hidden;
     transition: all .5s ease-in-out;
     box-shadow: inset 0px 0px 30px 0px white;
     filter: blur(0px);
     position: relative;
+    min-height: fit-content;
 
 }
 
@@ -133,9 +133,6 @@ p {
     text-align: center;
 }
 
-.form1 {
-    display: flex;
-}
 
 @media screen and (max-width:800px) {
 
@@ -143,14 +140,12 @@ p {
         margin: 0;
         white-space: nowrap;
         overflow: scroll;
-        /* width: 150px; */
-        /* box-sizing: content-box; */
+        padding: 10px;
     }
 
     .card-container {
         align-items: flex-start;
         justify-content: left;
-        flex-direction: column;
         height: fit-content;
     }
 
@@ -195,10 +190,10 @@ if(isset($_SESSION ["user"] ["user_type"])){
 ?>
 
 <body>
-    <div class="container" id="container">
+    <div class="container flex-col flex-center" id="container">
         <h2 class="header margin-md">Income</h2>
 
-        <form action="/budget/addIncome" method="post" class="form income-form">
+        <form action="/budget/addIncome?" method="post" class="form income-form">
 
             <div>
                 <button class="btn btn-md btn-solid margin-md" type="button" id="button" value="Add"
@@ -212,24 +207,28 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     <input class="form-ctrl" name="amount" id="amount" type="text" placeholder="Enter the amount" />
                 </div>
                 <div class="form-action-buttons">
-                    <button class="btn btn-md" name="submit" type="submit" value="submit">Submit</button>
+                    <button class="btn btn-md" name="event_id" type="submit"
+                        value="<?= $_GET["event_id"] ?>">Submit</button>
                 </div>
             </div>
         </form>
         <div class="income-info" id="income-info">
             <?php foreach($incomes as $income){ ?>
-            <div class="card-container">
-                <form action="budget/deleteIncome" method="post" class="form1">
-                    <p><?= $income["details"] ?></p>
-                    <p><?= $income["amount"] ?></p>
-                    <div class="flex-row-to-col">
+            <div class=" card-container">
+                <p><?= $income["details"] ?></p>
+                <p><?= $income["amount"] ?></p>
+                <div class="flex-row">
+                    <div>
                         <button class="btn btn-solid update-delete-btn "
-                            onclick="togglePopup('update-form','<?= $income['details'] ?>', '<?= $income['amount'] ?>', '<?= $income['record_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
-                        <button class="btn bg-red update-delete-btn  clr-white del"
-                            onclick="location.href = '/budget/delete'" name="delete"
-                            value=<?= $income['record_id'] ?>>Delete</button>
+                            onclick="togglePopup('update-form','<?= $income['details'] ?>', '<?= $income['amount'] ?>', '<?= $income['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
                     </div>
-                </form>
+                    <form action="/budget/delete?" method="post">
+                        <input type="text" class="hidden" name="record_id" value="<?= $income['record_id'] ?>">
+                        <button class="btn bg-red update-delete-btn  clr-white del" name="event_id" type="submit"
+                            value=<?= $_GET['event_id'] ?>>
+                            Delete</button>
+                    </form>
+                </div>
             </div>
             <?php } ?>
 
@@ -243,7 +242,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
 
         <h2 class="header margin-md">Expense</h2>
 
-        <form action="/budget/addExpense" method="post" class="form expense-form">
+        <form action="/budget/addExpense?" method="post" class="form expense-form">
 
             <button class="btn btn-md btn-solid margin-md" type="button" name="button" id="btn" value="Add"
                 onclick="show_hide('expense-form') ">Add &nbsp;<i class="fas fa-plus"></i></button>
@@ -255,7 +254,8 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     <input class="form-ctrl" name="amount" id="amount" type="text" placeholder="Enter the amount" />
                 </div>
                 <div class="form-action-buttons">
-                    <button class="btn btn-md" name="submit" type=" submit" value="Submit">Submit</button>
+                    <button class="btn btn-md" name="event_id" type="submit"
+                        value="<?= $_GET["event_id"] ?>">Submit</button>
                 </div>
             </div>
         </form>
@@ -265,11 +265,17 @@ if(isset($_SESSION ["user"] ["user_type"])){
             <div class="card-container">
                 <p><?= $expense["details"] ?></p>
                 <p><?= $expense["amount"] ?></p>
-                <div class="flex-row-to-col">
-                    <button class="btn btn-solid update-delete-btn "
-                        onclick="togglePopup('update-form','<?= $expense['details'] ?>', '<?= $expense['amount'] ?>', '<?= $expense['record_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
-                    <button class="btn bg-red update-delete-btn  clr-white del" name="record_id"
-                        value="<?= $expense['record_id'] ?>">Delete</button>
+                <div class="flex-row">
+                    <div>
+                        <button class="btn btn-solid update-delete-btn "
+                            onclick="togglePopup('update-form','<?= $expense['details'] ?>', '<?= $expense['amount'] ?>', '<?= $expense['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
+                    </div>
+                    <form action="/budget/delete?" method="post">
+                        <input type="text" class="hidden" name="record_id" value="<?= $expense['record_id'] ?>">
+                        <button class="btn bg-red update-delete-btn  clr-white del" name="event_id" type="submit"
+                            value=<?= $_GET['event_id'] ?>>
+                            Delete</button>
+                    </form>
                 </div>
             </div>
             <?php } ?>
@@ -288,8 +294,9 @@ if(isset($_SESSION ["user"] ["user_type"])){
                 </div>
                 <div class="input form-item">Amount <input class="form-ctrl" name="amount" id="amount" type="text" />
                 </div>
+                <input type="text" class="hidden" name="record_id" id="record_id">
                 <div class="flex-row-to-col">
-                    <button type="submit" id="save" name="record_id" class=" btn btn-solid save-btn">Save</button>
+                    <button type="submit" id="save" name="event_id" class=" btn btn-solid save-btn">Save</button>
                     <button type="button" class="btn bg-red clr-white del"
                         onclick="togglePopup('update-form');blur_background('container');stillBackground('id1')">Cancel</button>
                 </div>
@@ -307,14 +314,14 @@ if(isset($_SESSION ["user"] ["user_type"])){
         document.getElementById(id).classList.toggle("hidden");
     }
 
-    function togglePopup(id, description = 0, amount = 0, record_id) {
+    function togglePopup(id, description = 0, amount = 0, record_id, event_id) {
         var form = document.getElementById(id);
         console.log(record_id);
         form.classList.toggle("active");
         form.querySelector("#details").setAttribute("value", description);
         form.querySelector("#amount").setAttribute("value", amount);
-        form.querySelector("#save").setAttribute("value", record_id);
-
+        form.querySelector("#record_id").setAttribute("value", record_id);
+        form.querySelector("#save").setAttribute("value", event_id);
     }
 
     function blur_background(id) {

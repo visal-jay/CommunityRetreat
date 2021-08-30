@@ -305,6 +305,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                 <button class="btn clr-green margin-md" onclick="togglePopup('form'); blur_background('background');stillBackground('id1')"><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
             </div>
 
+            <?php if($organization || $moderator) { ?>
             <div class="flex-row flex-center content border-round container-size">
                 <button class="btn data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
                 <button class="btn btn-solid bg-red border-red form hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
@@ -313,6 +314,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                     <button id="publish-btn" class="btn margin-lg" onclick="togglePopup('publish'); blur_background('background'); stillBackground('id1')">Publish</button>
                 <?php } ?>
             </div>
+            <?php } ?>
         </div>
     </div>
 

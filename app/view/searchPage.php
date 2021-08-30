@@ -367,7 +367,6 @@
                 longitude: longitude,
                 city: city,
                 distance: range,
-                order_type: range,
                 start_date: date,
                 order_type: sort,
                 way: way,

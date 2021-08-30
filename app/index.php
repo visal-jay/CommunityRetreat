@@ -19,7 +19,7 @@ error_reporting(E_ALL);
 set_error_handler('ErrorHandler::error');
 set_exception_handler('ErrorHandler::exception');
 
-
+if(!isset($_SESSION)) session_start();
 
 $routing = new Routing();
 

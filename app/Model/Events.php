@@ -47,7 +47,7 @@ class Events extends Model
 
     public function query($args)
     {
-        $name=$city = $latitude = $longitude = $mode = $start_date = $org_uid = $distance = $order_type = $way = $status = NULL;
+        $name=$city = $latitude = $longitude = $mode = $start_date = $org_uid = $distance = $order_type = $way = $status = $limit= NULL;
         extract($args, EXTR_OVERWRITE);
         //var_dump($args);
         $params=array();
@@ -72,6 +72,7 @@ class Events extends Model
         $query_filter_last = ' 1=1 ';
         $query_filter_distance= ' distance=distance AND ';
         $query_filter_near = ' distance <= :distance AND ';
+        $query_filter_limit = ' LIMIT :limit ';
 
         $query = $query_select_primary;
 
@@ -112,6 +113,12 @@ class Events extends Model
             $params["status"] = $status;
         }
 
+        if($order_type=='volunteer_percent')
+            $query=$query . ' volunteer_percent=volunteer_percent AND ';
+
+        if($order_type=='dotaion_percent')
+            $query=$query . ' dotaion_percent=dotaion_percent AND ';
+
         $query = $query . $query_filter_last ." HAVING ";
 
         if ($longitude != NULL && $latitude != NULL && $order_type=="distance") {
@@ -138,7 +145,12 @@ class Events extends Model
             $query = $query . " " . $way;
         }
 
-        /* var_dump($query);
+        if($limit != NULL){
+            $query=$query . $query_filter_limit;
+            $params["limit"]=$limit;
+        }
+
+       /*  var_dump($query);
         var_dump($params); */
         $result = Model::select($query, $params);
         

@@ -19,7 +19,8 @@
     box-shadow: inset 0px 0px 30px 0px white;
     filter: blur(0px);
     position: relative;
-    min-height: fit-content;
+    min-height: 150px;
+    min-width: 800px;
 }
 
 .expense-info {
@@ -29,8 +30,8 @@
     box-shadow: inset 0px 0px 30px 0px white;
     filter: blur(0px);
     position: relative;
-    min-height: fit-content;
-
+    min-height: 150px;
+    min-width: 800px;
 }
 
 .height100 {

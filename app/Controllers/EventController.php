@@ -65,17 +65,12 @@ class EventController
 
     public function updateDetails()
     {
-        Controller::accessCheck(["moderator", "organization"], $_GET["event_id"]);
+        Controller::accessCheck(["moderator", "organization"], $_POST["event_id"]);
         $validate = new Validation;
-        if (!$validate->telephone($_POST["telephone"])) {
-            $data["telephoneErr"] = "You eneterd wrong number";
-        }
-        if (isset($data["emailErr"]))
-            Controller::redirect("/event/view", $data);
-
+       
         $events = new Events;
         $events->updateDetails($_POST);
-        Controller::redirect("event/view");
+        Controller::redirect("/event/view?page=about&&event_id=" .$_POST["event_id"]);
     }
 
     public function remove(){

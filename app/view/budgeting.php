@@ -161,7 +161,7 @@ p {
         left: 50%;
         position: fixed;
         width: 80%;
-
+        top: 40%;
     }
 }
 </style>

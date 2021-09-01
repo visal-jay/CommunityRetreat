@@ -54,8 +54,7 @@ td {
 }
 
 .form {
-    width: 50px;
-    height: 20px;
+    width: 150px;
     text-align: center;
 }
 
@@ -82,9 +81,7 @@ td {
     /* margin: 0 auto; */
     max-width: 100%;
     display: flex;
-    width: 30%;
-    text-align: left;
-    margin: 0;
+    width: 31%;
 }
 
 .section {
@@ -107,30 +104,13 @@ input {
     margin-inline-end: 0px;
 }
 
-.edit-btn {
-    margin-block-start: 1rem;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-}
-
-.close-btn {
-    margin-block-start: 1rem;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-}
-
+.edit-btn,
+.close-btn,
 .save-btn {
     margin-block-start: 1rem;
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
-}
-
-.form {
-    width: 60px;
-    height: 28px;
-    text-align: center;
 }
 
 .secondary-donation-enable-disable-btn {
@@ -149,12 +129,10 @@ input {
         overflow: scroll;
     }
 
-    .close-btn {
-        padding: 8px;
-    }
-
+    .edit-btn,
+    .close-btn,
     .save-btn {
-        padding: 8px;
+        margin: 5px;
     }
 
     .container-size {
@@ -186,26 +164,32 @@ input {
             <h1>Donation Details</h1>
 
             <div class="row container">
-                <div class=" column section">
+                <div class="column section">
                     <h4>Donation capacity</h4>
                 </div>
                 <div class="column section">
                     <div class="data">
-                        <a>56</a>
+                        <a>100000</a>
                     </div>
-                    <input name="donation-capacity" type="number" value="56" min="50" max="1000"
-                        class=" form form-ctrl hidden" />
+                    <div>
+                        <input name="donation-capacity" type="number" value="100000" min="1000" max="10000000"
+                            class=" form form-ctrl hidden" />
+                    </div>
                 </div>
-                <div class="column section">
-                    <button class="btn btn-solid btn-md data edit-btn" onclick="edit()">Edit
-                        &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
-                    <button class="btn btn-solid btn-md bg-red border-red form hidden close-btn" onclick="edit()">Close
+            </div>
+            <div>
+                <button class="btn btn-solid btn-md data edit-btn" onclick="edit()">Edit
+                    &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
+                <div class="flex-row-to-col">
+                    <button class=" btn btn-solid btn-md bg-red border-red form hidden close-btn" onclick="edit()">
+                        Close
                         &nbsp;&nbsp;
                         <i class="fas fa-times "></i></button>
                     <button class=" btn btn-solid btn-md form hidden save-btn">Save &nbsp; <i
                             class="fas fa-check "></i></button>
                 </div>
             </div>
+
 
             <div class="secondary-donation-enable-disable-btn">
                 <button class="btn btn-md btn-solid" id="enable-disable-btn"

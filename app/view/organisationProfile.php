@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../Public/assets/style/newstyles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-        <link rel="stylesheet" href= "../Public/assets/style/profilestyle.css">
+        <link rel="stylesheet" href= "../Public/assets/style/organisationprofilestyle.css">
         <link rel="stylesheet" href= "../Public/assets/style/fontawesome.min.css">
         <title>Registrationuser profile</title>
     </head>
@@ -49,18 +49,15 @@
         
             <div class="profilecontainer">
                   <div class="profilecontainer-top">
-                        <div class="profilepic-pic-div">
-                            <img src="../Public/assets/User-icon.png" id="dp" >
-                            <input type= "file" id="file" >
-                            <label for="file" id="uploadbtn">upload photo</label>
-        
-                        </div>
+                       
                         
                             <div class="aboutme-container">
                                 <div class="intro">
-                                    <h2  id="name"><?= $username; ?></h2>
+                                    <h2  id="name">Visal Jayathilaka</h2><br><br>
+                                    
+
                                 </div>
-                                
+                               
                                 <a href="activityLog" class="view-activitylog-btn" role="button" ><i class="fa fa-history"></i>&nbsp&nbspActivity log</a>
                                 
                             </div>
@@ -84,7 +81,7 @@
                                         </div>
             
                                         <div class="username">
-                                            <h3 id="username"><?= $username?></h3>
+                                            <h3 id="username"></h3>
             
                                         </div>
                                         <div class="username-change-btn">
@@ -108,8 +105,8 @@
                                 </form>                   
                                   
 
-                                   
-                              
+
+                               
 
                                     <div class="mobile-container">
                                         <div class="mobile-icon">
@@ -133,8 +130,8 @@
                                         <div class="input-container">
                                         
                                             <label for="text" class = "form-item label" >Enter new mobile:</label>
-                            
-                                            <input type="text" placeholder = "Enter new mobile"  name="contact_number" pattern="[+]{1}[9]{1}[4]{1}[0-9]{9}" title="Phone number with +94 and remaing 9 digit with 0-9"><br>
+                                            <input type= "text"  placeholder = "Enter new mobile" id="mobileinput" name="contact_number" ><br>
+                                            <p id="alert"><?php  echo $_GET["telephoneerr"]; ?></p>
                                         
                                             <div class="intro-update-btn">
                                                 <button type= "submit" class="btn bg-green clr-white"  onclick=" updateField('mobile','mobileupdater')" >Update</button>
@@ -143,6 +140,36 @@
                                         </div>
                                     </div>
                                     </form>
+                                                                                          
+                                    <div class="account-number-container">
+                                        <div class="account-number-icon">
+                                            <i class="fas fa-money-check-alt fa-2x clr-gray" id="user"></i>
+                                            <label id="user-label">Account No</label>
+                                        </div>
+            
+                                        <div class="account-number">
+                                            <h3 id="account-number"></h3>
+            
+                                        </div>
+                                        <div class="account-number-change-btn">
+                                            <button class="btn btn-clr" type="button" onclick="showEddite('account-number-updater')"><i class="fas fa-pen fa-1x" id="edit-icon"></i></button>
+                                        </div>
+                                    </div>
+
+                                    <!--username update form-->
+                                <form action="/RegisteredUser/updateUsername" method="post" id="edit-user-profile-form"   >   
+                                    <div class="update-form" id="account-number-updater">
+                                        <div class="input-container">
+                                            <label for="text" class="edit-coontainer">Enter new account number:</label>
+                                            <input type="text" id="usernameinput" placeholder="Enter new account number" name="account_number" ><br>
+            
+                                            <div class="intro-update-btn">
+                                                <button type="submit" class="btn bg-green clr-white" onclick=" updateField('account-number','account-number-updater')">Update</button>
+                                                <button type="button" class="btn bg-red border-red clr-white" onclick="showEddite('account-number-updater')">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form> 
 
                               
                                          
@@ -205,24 +232,21 @@
                                             </div>
                                             
                                         </div>
-                                        <!--password update form-->
-                                      <form action="/RegisteredUser/updatePassword" method="post" id="edit-user-profile-form"   >       
                                         <div class="update-form"  id="passwordupdater">
                                             <div class="input-container">
                                             
-                                                <label for="password" class = "form-item label">Enter current password:</label>
-                                                <input type= "password"  placeholder = "Enter current password:" id="passwordinputold"   name="current_password" onkeyup="checkPassword(this.value)" ><br>
-                                                <p id="alert"></p>
+                                                <label for="password" class = "form-item label" >Enter current password:</label>
+                                                <input type= "password"  placeholder = "Enter current password:" id="passwordinputold"   ><br>
                                         
                                                 <label for="password" class = "form-item label" >Enter new password: </label>
-                                                <input type= "password" placeholder = "Enter new password:" id = "passwordinputnew" name="new_password" onkeyup="checkPassword(this.value)"><br>
+                                                <input type= "password" placeholder = "Enter new password:" id = "passwordinputnew"  ><br>
                                                 
                                                 
                                         
                                                 <label for="password" class = "form-item label" >Confirm password:</label>
                                                 <input type= "password"  placeholder = "Enter current password:" id="passwordinput" name="password" >
                                                 <span id="alert"></span><br>
-                                                <p class="alert"><?php echo $_GET["newpassworderr"]; ?></p>
+                                                <p id="alert"><?php echo $_GET["passworderr"]; ?></p>
                                                 
                                             
                                                 <div class="intro-update-btn">
@@ -231,7 +255,6 @@
                                                 </div>
                                             </div>
                                         </div> 
-                                      </form>
 
              
                                     </div>
@@ -258,45 +281,6 @@
     <script src = "../Public/assets/js/app.js" ></script>
 
     <script>
-         function checkPassword(password) {
-                if (password.length == 0) {
-                    let email_errors = document.getElementById("alert");
-                    for (let error of email_errors) {
-                        error.innerHTML = "";
-                    }
-                    return;
-                } else
-
-                    $.ajax({
-                        url: "/RegisteredUser/checkPassword", //the page containing php script
-                        type: "post", //request type,
-                        dataType: 'json',
-                        data: {
-                           password: current_password
-                        },
-                        success: function(result) {
-                            console.log(result);
-                            if (result.taken == true) {
-                                var err = "password Doesn't match";
-                            } else
-                                var err = "";
-                            let errors = document.getElementById("alert");
-                            for (let error of errors) {
-                                error.innerHTML = err;
-                            }
-                        }
-                    });
-            }
-            function checkPassword(password) {
-                var err="";
-                const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-                if (!pattern.test(password)) 
-                    var err = "Strong password required<br> Combine least 8 of the following: uppercase letters,lowercase letters,numbers and symbols";
-                let password_errors = document.querySelectorAll(".alert");
-                for (let error of password_errors) {
-                    error.innerHTML = err;
-                }
-            }
         function showEddite(elementId){
             // alert()
             document.getElementById(elementId).classList.toggle("unhide");

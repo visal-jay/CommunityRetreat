@@ -4,11 +4,7 @@
     
 }
 
-.body-main{
-    display: flex;
-    justify-content: center;
-    align-content:flex-end;
-}
+
 #edit-user-profile-form{
     
     height: 100%;
@@ -22,6 +18,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    
   
    
 
@@ -41,6 +38,7 @@
         width: 80%;
         align-items: center;
         margin:auto;
+        margin-top:6rem;
     }
     .profilecontainer-top{
         width: 70%;
@@ -121,8 +119,7 @@
     text-decoration: none !important;
     color: #16c79a;
     padding: 0 1em; 
-    align-self: center; 
-    margin: 1rem;   
+    align-self: center;    
 
 }
 .view-activitylog-btn:hover {
@@ -146,10 +143,14 @@ br.responsive {
     text-align: center;
     font-weight:normal;
     color:rgb(111, 114, 114);
-    white-space: nowrap;
-  
-    
-    
+    white-space: nowrap;   
+}
+.aboutme-container h4{
+
+    text-align: center;
+    font-weight:normal;
+    color:rgb(111, 114, 114);
+    white-space: nowrap;   
 }
 
 
@@ -242,6 +243,7 @@ hr{
     
 }
 
+
 .email-container{
     position: relative;
     display: flex;
@@ -283,7 +285,7 @@ hr{
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1em 1em  1em;
+    padding: 1em;
     
 }
 
@@ -376,6 +378,41 @@ hr{
    
     
 }
+.account-number-container{
+    position: relative;
+    display: flex;
+    width: 100%;
+  
+}
+
+.account-number{
+    word-break: break-all;
+    font-weight: normal;
+    margin: auto;
+    position: relative;
+}
+.account-number h3{
+    font-weight: normal;
+}
+.account-number-change-btn{
+    display: flex;
+    position: relative;
+    padding: 5px;
+    right: 0%;
+}
+.account-number-change-btn button{
+   
+    border:none;
+   
+}
+.account-number-icon{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em 0em 1em;
+   
+    
+}
 .password-container{
     position: relative;
     display: flex;
@@ -455,7 +492,7 @@ hr{
     display: none;
    
 }
-.alert{
+#alert{
     font-size: 15px;
     color: red;
     text-align: center;

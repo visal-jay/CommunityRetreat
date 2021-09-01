@@ -1,4 +1,5 @@
 <?php
+
 class User extends Model
 {
     public function checkUserEmail($email)
@@ -35,15 +36,6 @@ class User extends Model
         $query = 'UPDATE login SET verified=1  WHERE uid = :uid';
         $params = ["uid" => $uid];
         User::insert($query,$params);
-    }
-
-    public function getUsername($uid){
-        if($result=(new Organisation)->getDetails($uid))
-            return $result["username"];
-        if($result=(new RegisteredUser)->getDetails($uid))
-            return $result["username"];
-        if($result=(new Admin)->getDetails($uid))
-            return $result["username"];
     }
 
     function getFailedLogin($email){
@@ -87,6 +79,18 @@ class User extends Model
         $query = 'UPDATE login SET password= :password  WHERE email = :email';
         $params = ["email" => $email,"password"=>$password];
         User::insert($query,$params);
+    }
+
+    function checkCurrentPassword($uid,$password){
+        $query= 'SELECT password FROM registered_user reg JOIN login ON reg.uid= login.uid WHERE reg.uid = :uid AND verified=1';
+        $params = ["uid"=> $uid];
+        $result= USER::select($query,$params);
+        if($result[0]['password']==$password){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
 }

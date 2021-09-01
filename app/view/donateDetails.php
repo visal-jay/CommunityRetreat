@@ -139,11 +139,7 @@ input {
 
 @media screen and (max-width:768px) {
 
-    table,
-    th,
-    td {
-        padding: 5px 8px 12px;
-    }
+ 
 
     body {
         font-size: 13px;

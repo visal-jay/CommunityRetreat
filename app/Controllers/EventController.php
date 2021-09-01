@@ -36,11 +36,23 @@ class EventController
     }
 
     public function gallery(){
-        View::render('eventPage');
+        
     }
 
     public function budget(){
         (new BudgetController)->view();
+    }
+
+    public function donations(){
+        View::render('eventPage');
+    }
+
+    public function volunteers(){
+        $ip = $_SERVER['REMOTE_ADDR'];
+        View::render("eventPage",);
+    }
+    public function volunteerValidate(){
+        View::render("volunteerThank");
     }
 
     public function addEvent()

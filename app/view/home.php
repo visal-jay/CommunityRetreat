@@ -116,7 +116,7 @@
         border-radius: 8px;
         margin: 0 1rem;
         width: 200px;
-        min-width: 170px;
+        min-width: 200px;
     }
 
     figure .content {

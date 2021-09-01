@@ -142,23 +142,6 @@
             font-size: 1.5rem;
         }
 
-        table tr>* {
-            display: block;
-        }
-
-        table tr {
-            display: table-cell;
-        }
-
-        table th {
-            padding: .5rem 0;
-            text-align: left;
-        }
-
-        td {
-            padding: .5rem 0;
-        }
-
         .event-card-details {
             flex-direction: column;
         }
@@ -219,6 +202,7 @@
             <?php } ?>
             <?php if($organization || $treasurer){ ?>
             <a class="btn margin-side-md <?php if($page=="budget") echo "nav-active";?>" style=" margin-bottom:10px;" href="/event/view?page=budget&&event_id=<?= $_GET["event_id"]?>">Budget</a>
+            <a class="btn margin-side-md <?php if($page=="donations") echo "nav-active";?>" style=" margin-bottom:10px;" href="/event/view?page=donations&&event_id=<?= $_GET["event_id"]?>">Donations</a>
             <?php } ?>
             <?php if($organization){ ?>
             <a class="btn margin-side-md <?php if($page=="userroles") echo "nav-active";?>" style=" margin-bottom:10px;" href="/event/view?page=userroles&&event_id=<?= $_GET["event_id"]?>">User Roles</a>
@@ -234,6 +218,9 @@
     elseif(isset($_GET["page"]) && $_GET["page"]=="budget") require __DIR__ . "/budgeting.php";
     elseif(isset($_GET["page"]) && $_GET["page"]=="userroles") require __DIR__ . "/roles.php";
     elseif(isset($_GET["page"]) && $_GET["page"]=="timeline") require __DIR__ . "/workTimeline.php";
+    elseif(isset($_GET["page"]) && $_GET["page"]=="donations") require __DIR__ . "/donateDetails.php";
+    elseif(isset($_GET["page"]) && $_GET["page"]=="volunteers") require __DIR__ . "/volunteer.php";
+
     ?>
 
 
@@ -252,6 +239,7 @@
 
     function resizeProfile() {
         var coverHeight = (document.querySelector(".cover").offsetHeight);
+        console.log(coverHeight);
         document.querySelector(".photo-container").style.height = parseInt(coverHeight) + "px";
     }
 

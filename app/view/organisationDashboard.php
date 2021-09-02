@@ -200,17 +200,17 @@
     ?>
 
     <?php if ($organization) { ?>
-        <form action="/organisation/update" method="post">
+        <form action="/organisation/update" method="post" enctype="multipart/form-data">
         <?php } ?>
         <div class="photo-container">
             <div class="cover-place-holder cover border-round">
-                <img src="/Public/assets/photo.jpeg" alt="" class="photo-element" styl>
+                <img src="<?= $cover_pic ?>" alt="" class="photo-element" styl>
                 <?php if ($organization) { ?>
                     <div class="image-upload hidden form">
                         <label for="file-input">
                             <i class="fas fa-edit clr-white"></i>
                         </label>
-                        <input id="file-input" type="file" />
+                        <input id="file-input" name="cover-photo" type="file" />
                     </div>
                 <?php } ?>
             </div>

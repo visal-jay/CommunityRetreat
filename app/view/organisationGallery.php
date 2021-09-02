@@ -22,7 +22,7 @@
         transition: height, 0.3s linear;
     }
 
-    .photo-container {
+    .gallery-container {
         display: flex;
         border-radius: 8px;
         box-shadow: 0px 0px 0px 1px rgb(192, 192, 192);
@@ -30,6 +30,7 @@
     }
 
     .grid {
+        width: 80%;
         display: grid;
         grid-gap: 10px;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -38,9 +39,18 @@
 
 
     figure {
+        position: relative;
+        background: #eeeeee;
         margin: 0;
         display: grid;
         grid-template-rows: 1fr auto;
+        border-radius: 8px;
+        width: fit-content;
+        height: fit-content;
+    }
+
+    p {
+        margin: 0.5rem;
     }
 
     figure>img {
@@ -51,7 +61,6 @@
     .grid div {
         align-items: baseline;
         height: fit-content;
-        margin: 20px;
         border-radius: 8px;
         transition: all .4s ease-in-out;
     }
@@ -61,14 +70,22 @@
         width: 100%;
     }
 
-    .grid div:active {
-        width: 100%;
-        transform: scale(1.5, 1.5);
+    .delete-button {
+        background: white;
+        opacity: 0.5;
+        padding: 0.2rem;
+        position: absolute;
+        right: 11px;
+        top: 11px;
+        border-radius: 1px !important;
+        transition: opacity 0.2s ease-in-out;
     }
 
-    .grid div:hover {
-        width: 100%;
-        transform: scale(1.1);
+    .delete-button:hover {
+        opacity: 1;
+    }
+    .delete-button:active{
+        opacity: 1;
     }
 
     @media screen and (max-width:767px) {
@@ -86,41 +103,73 @@
         }
     }
 </style>
+
 <?php include "nav.php" ?>
 
 <body>
     <div class="flex-col flex-center margin-side-lg">
         <h1>Gallery</h1>
         <button class="btn btn-solid margin-lg" onclick="addPhoto()">Add photo &nbsp; <i class="fas fa-plus"></i></button>
-        <div class="form flex-col flex-center">
+        <form class="form flex-col flex-center" action="/organisation/addPhoto" method="post" enctype="multipart/form-data">
             <label for="myfile">Select a file:</label>
-            <input type="file" class="form-ctrl margin-md" id="myfile" name="myfile">
-            <button tyoe="submit" class="btn ">Save</button>
-        </div>
+            <input type="file" class="form-ctrl margin-md" id="myfile" name="photo">
+            <button type="submit" class="btn ">Save</button>
+        </form>
+
 
         <div class="grid margin-lg">
+            <?php foreach ($photos as $photo) { ?>
+                <figure class="item bg-green">
+                    <div class="content">
+                        <?php if ($photo["uid"] == $_SESSION["user"]["uid"]) { ?>
+                            <form class="delete-button" method="post" action="/organisation/deletePhoto">
+                                <button type="submit" class="btn-icon" name="photo" value="<?= $photo["image"] ?>"> <i class="far fa-trash-alt"></i></button>
+                            </form>
+                        <?php  } ?>
+                        <div class="gallery-container flex flex-center"><img src="<?= $photo["image"] ?>" style="object-fit: cover;" alt=""></div>
+                    </div>
+                </figure>
+            <?php } ?>
             <figure class="item">
+                <div class="delete-button">
+                    <i class="far fa-trash-alt"></i>
+                </div>
                 <div class="photo-container flex flex-center content"><img src="/Public/assets/login-image.jpg" style="object-fit: cover;" alt=""></div>
             </figure>
             <figure class="item">
-                <div class="photo-container flex flex-center content"><img src="/Public/assets/login-image.jpg" style="object-fit: cover;" alt=""></div>
-            </figure>
-            <figure class="item">
+                <div class="delete-button">
+                    <i class="far fa-trash-alt"></i>
+                </div>
                 <div class="photo-container flex flex-center content"><img src="/Public/assets/newphoto.jpeg" style="object-fit: cover;" alt=""></div>
             </figure>
             <figure class="item">
+                <div class="delete-button">
+                    <i class="far fa-trash-alt"></i>
+                </div>
                 <div class="photo-container flex flex-center content"><img src="/Public/assets/photo.jpeg" style="object-fit: cover;" alt=""></div>
             </figure>
             <figure class="item">
+                <div class="delete-button">
+                    <i class="far fa-trash-alt"></i>
+                </div>
                 <div class="photo-container flex flex-center content"><img src="/Public/assets/login-image.jpg" style="object-fit: cover;" alt=""></div>
             </figure>
             <figure class="item">
+                <div class="delete-button">
+                    <i class="far fa-trash-alt"></i>
+                </div>
                 <div class="photo-container flex flex-center content"><img src="/Public/assets/photo.jpeg" style="object-fit: cover;" alt=""></div>
             </figure>
             <figure class="item">
+                <div class="delete-button">
+                    <i class="far fa-trash-alt"></i>
+                </div>
                 <div class="photo-container flex flex-center content"><img src="/Public/assets/login-image.jpg" style="object-fit: cover;" alt=""></div>
             </figure>
             <figure class="item">
+                <div class="delete-button">
+                    <i class="far fa-trash-alt"></i>
+                </div>
                 <div class="photo-container flex flex-center content"><img src="/Public/assets/login-image.jpg" style="object-fit: cover;" alt=""></div>
             </figure>
 

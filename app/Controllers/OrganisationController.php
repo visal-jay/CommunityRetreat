@@ -1,5 +1,6 @@
 <?php
-session_start();
+
+//use Defuse\Crypto\File;
 
 class OrganisationController{
     public function view($org_id=''){
@@ -13,10 +14,23 @@ class OrganisationController{
         $this->view($_SESSION["user"]["uid"]);
     }
 
-    public function gallery(){
-        View::render("organisationGallery");
+    public function addPhoto(){
+        (new Gallery)->addPhoto([],true);
+        Controller::redirect("/organisation/gallery");
     }
 
+
+    public function gallery(){
+        if (!$data=(new Gallery)->getGallery(["uid"=>$_SESSION["user"]["uid"]],true))
+            $data=array();
+
+        View::render("organisationGallery",array_merge(["photos"=>$data]));
+    }
+
+    public function deletePhoto(){
+        (new Gallery)->deletePhoto(["image"=>$_POST["photo"]],true);
+        Controller::redirect("/organisation/gallery");
+    }
 
     public function update(){
         Controller::accessCheck(["organization"]);

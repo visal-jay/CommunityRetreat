@@ -43,8 +43,8 @@ class Events extends Model
         $old_data = $this->getDetails($data["event_id"]);
         var_dump($old_data);
         $new_data = array_merge($old_data, $data);
-        $params= array_intersect_key($new_data, ['event_id'=>"", 'start_date'=>"", 'start_time'=>"",'end_time'=>"", 'mode'=>"", 'about'=>""]);
-        $query = "UPDATE event SET `start_date` = :start_date, `start_time`= :start_time, `end_time`= :end_time, `mode` = :mode, `about`=:about WHERE `event_id`=:event_id ";
+        $params= array_intersect_key($new_data, ['event_id'=>"", 'event_name'=>"", 'start_date'=>"", 'start_time'=>"",'end_time'=>"", 'about'=>"", 'mode'=>""]);
+        $query = "UPDATE event SET `event_name` = :event_name, `start_date` = :start_date, `start_time`= :start_time, `end_time`= :end_time, `mode` = :mode, `about`=:about WHERE `event_id`=:event_id ";
         Model::insert($query,$params);
     }
 

@@ -14,8 +14,12 @@
 </head>
 
 <style>
-    .container-size {
+    .container-size1 {
         width: 70%;
+    }
+
+    .container-size2 {
+        width: 98%;
     }
 
     .head-margin {
@@ -133,7 +137,9 @@
     }
 
     label {
+        white-space: nowrap;
         height: fit-content;
+        width: fit-content !important;
     }
 
     .flex-row-to-col {
@@ -146,10 +152,12 @@
             width: 75%;
         }
 
-
-
-        .container-size {
+        .container-size1 {
             width: 90%;
+        }
+
+        .container-size2 {
+            width: 88%;
         }
 
         .popup .content {
@@ -206,7 +214,7 @@ if (isset($_SESSION["user"]["user_type"])) {
     <div id="background">
         <div class="flex-col flex-center">
             <h1>About</h1>
-            <div class="content border-round container-size margin-md" style="background-color: #eeeeee">
+            <div class="content border-round container-size1 margin-md" style="background-color: #eeeeee">
                 <?php if ($organization || $moderator) { ?>
                     <form action="/event/updateDetails" method="post" id="update-form">
                     <?php } ?>
@@ -216,8 +224,8 @@ if (isset($_SESSION["user"]["user_type"])) {
                             <h4 class="head-margin data"><?= $start_date ?></h4>
                             <?php if ($organization || $moderator) { ?>
                                 <div class="flex-row flex-center">
-                                    <label class="form hidden margin-side-md" for="start_date">Event date</label>
-                                    <input type="date" value="<?= $start_date ?>" name="start_date" class="form form-ctrl hidden" data-placeholder="Event is on?" value="<?= $start_date ?>" required></input>
+                                    <label class="form hidden" for="start_date">Event date</label>
+                                    <input type="date" value="<?= $start_date ?>" name="start_date" class="form form-ctrl margin-side-md hidden" data-placeholder="Event is on?" value="<?= $start_date ?>" required></input>
                                 </div>
                             <?php } ?>
                         </div>
@@ -228,11 +236,15 @@ if (isset($_SESSION["user"]["user_type"])) {
                             <i class="btn-icon icon-width far fa-clock clr-green margin-side-lg"></i>
                             <h4 class="head-margin data"><?= $start_time ?></h4>
                             <?php if ($organization || $moderator) { ?>
-                                <div class="flex-row flex-center">
-                                    <label class="form hidden margin-side-md" for="start_time">Starts at?</label>
-                                    <input type="time" value="<?= $start_time ?>" name="start_time" class="form form-ctrl hidden" data-placeholder="Event starts at?" required></input>
-                                    <label class="form hidden margin-side-md" for="end_time">Ends at?</label>
-                                    <input type="time" value="<?= $end_time ?>" name="end_time" class="form form-ctrl hidden" data-placeholder="Event ends at?" required></input>
+                                <div class="flex-row-to-col flex-center">
+                                    <div class="flex-row">
+                                        <label class="form hidden" for="start_time">Starts at?</label>
+                                        <input type="time" value="<?= $start_time ?>" name="start_time" class="form form-ctrl margin-side-md hidden" data-placeholder="Event starts at?" required></input>
+                                    </div>
+                                    <div class="flex-row">
+                                        <label class="form hidden" for="end_time">Ends at?</label>
+                                        <input type="time" value="<?= $end_time ?>" name="end_time" class="form form-ctrl margin-side-md hidden" data-placeholder="Event ends at?" required></input>
+                                    </div>
                                 </div>
                             <?php } ?>
                         </div>
@@ -263,8 +275,8 @@ if (isset($_SESSION["user"]["user_type"])) {
                             <?php if ($organization || $moderator) { ?>
                                 <div class="form hidden">
                                     <div class="flex-row flex-center">
-                                        <label class="form hidden margin-side-md" for="mode">Event mode</label>
-                                        <select name="mode" class="form-ctrl" id="mode" required>
+                                        <label class="form hidden" for="mode">Event mode</label>
+                                        <select name="mode" class="form-ctrl margin-side-md" id="mode" required>
                                             <option value="<?= $mode ?>" selected><?= $mode ?></option>
                                             <?php $options = ["Physical", "Virtual", "Physical & Virtual"];
                                             foreach ($options as $option) {
@@ -302,12 +314,12 @@ if (isset($_SESSION["user"]["user_type"])) {
                         </div>
                     </div>
 
-                    <div class="textbox flex-col content border-round container-size margin-md" style="background-color: #eeeeee">
-                        <h3 class="margin-lg">Description</h3>
+                    <div class="textbox flex-col content border-round container-size2 margin-md" style="background-color: #eeeeee">
+                        <h3 class="margin-side-lg">Description</h3>
                         <div class="data">
                             <p class="margin-lg"><?= $about ?></p>
                         </div>
-                        <textarea name="about" value="<?= $about ?>" class="form form-ctrl margin-lg hidden" placeholder="Enter about us">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae magni eveniet porro, ipsa mollitia dolores ipsam optio aliquam, debitis voluptatum accusamus cum perferendis, amet facere expedita nostrum laboriosam quas iste!</textarea>
+                        <textarea name="about" value="<?= $about ?>" class="form form-ctrl margin-lg hidden" placeholder="Enter about us"><?= $about ?></textarea>
                     </div>
 
                     <?php if ($organization || $moderator) { ?>
@@ -318,7 +330,7 @@ if (isset($_SESSION["user"]["user_type"])) {
 
 
 
-            <div class="flex-col flex-center content border-round container-size margin-md" style="background-color: #03142d">
+            <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d">
                 <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
                 <div class="progress" data-width="100%">
                     <div class="volunteers-progress-bar"></div>
@@ -327,7 +339,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                     volunteer</button>
             </div>
 
-            <div class="flex-col flex-center content border-round container-size margin-md" style="background-color: #03142d; text-align:center">
+            <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d; text-align:center">
                 <p style="color:white">Would you like to give value to your hard-earned money by contributing to this
                     community service project?</p>
                 <div class="progress" data-width="10%">
@@ -336,7 +348,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                 <button class="btn clr-green margin-md" onclick="togglePopup('form'); blur_background('background');stillBackground('id1')"><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
             </div>
 
-            <div class="flex-row flex-center content border-round container-size">
+            <div class="flex-row flex-center content border-round container-size1">
                 <button class="btn data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
                 <button type="button" class="btn btn-solid bg-red border-red form margin-side-md hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
                 <button name="event_id" value="<?= $_GET["event_id"] ?>" form="update-form" type="submit" class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
@@ -346,12 +358,6 @@ if (isset($_SESSION["user"]["user_type"])) {
             </div>
         </div>
     </div>
-
-    <form action="/search" method="post" id="id1">
-        <input type="text">
-    </form>
-    <button type="submit" form="id1"></button>
-
 
     <div class="popup" id="publish">
         <div class="content">

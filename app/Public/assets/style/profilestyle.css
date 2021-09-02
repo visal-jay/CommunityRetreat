@@ -13,6 +13,7 @@
     
     height: 100%;
     width: 100%;
+    
   }
 
 .profilecontainer{
@@ -92,6 +93,41 @@
     
 
 }
+.view-activitylog-btn{
+   
+    transition: opacity 0.2s ease-in;
+    font: inherit;
+    vertical-align: baseline;
+    box-sizing: border-box;
+    text-shadow: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 400;
+    outline: none;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 100%;
+    min-width: -webkit-fit-content;
+    min-width: -moz-fit-content;
+    min-width: fit-content;
+    display: inline-flex;
+    padding: 0 0.4em;
+    min-height: 2em;
+    border: none;
+    font-size: 1rem;
+    background: #e1fdf7;;
+    border-radius: 6px;
+    text-decoration: none !important;
+    color: #16c79a;
+    padding: 0 1em; 
+    align-self: center; 
+    margin: 1rem;   
+
+}
+.view-activitylog-btn:hover {
+    opacity: 0.75;
+  }
 
 br.responsive {
     display: inline; 
@@ -205,50 +241,6 @@ hr{
     
     
 }
-.location-container{
-    position: relative;
-    display: flex;
-    width: 100%;
-   
-    
-}
-.location{
-    word-break: break-all;
-    font-weight: normal;
-    margin: auto;
-    position: relative;
-
-}
-
-.location h3{
-   
-    white-space: wrap;
-    font-weight: normal;
-    
-    
-    
-}
-
-
-.location-change-btn{
-    display: flex;
-    position: relative;
-    padding: 5px;
-    right: 0%;
-   
-}
-.location-change-btn button{
-   
-    border:none;
-   
-}
-.location-icon{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1em;
-    
-}
 
 .email-container{
     position: relative;
@@ -291,7 +283,7 @@ hr{
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1em;
+    padding: 1em 1em  1em;
     
 }
 
@@ -426,7 +418,7 @@ hr{
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1em 0.5em 1em;
+    padding: 1em 0em 1em;
    
     
 }
@@ -463,7 +455,7 @@ hr{
     display: none;
    
 }
-#alert{
+.alert{
     font-size: 15px;
     color: red;
     text-align: center;
@@ -527,6 +519,10 @@ hr{
 }
 @media screen  and (max-width: 350px){
     .update-form button{
-        font-size: 0.7rem;
+        font-size: 0.7rem; 
+    }
+    .view-activitylog-btn{
+
+        font-size: 0.7rem; 
     }
 }

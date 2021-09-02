@@ -91,7 +91,7 @@
     }
 
     /* Track */
-/*     ::-webkit-scrollbar-track {
+    /*     ::-webkit-scrollbar-track {
         background: gainsboro;
         border-radius: 5px;
         padding: 10px;
@@ -168,6 +168,12 @@
         } else {
             $guest_user = true;
         }
+        if ($_SESSION["user"]["user_type"] == "registered_user") {
+            $registered_user = true;
+        }
+        else {
+        $guest_user = true;
+    }
     ?>
 
     <div class="photo-container">
@@ -184,24 +190,23 @@
         </div>
     </div>
 
-    <div class="flex-row flex-center margin-md">
-        <h1 class="data"><?= $event_name ?></h1>
-        <?php if (($organization || $moderator) && ($_GET["page"]=="about") ){ ?>
-        <label class="form hidden margin-side-md" for="event_name">Event name </label><br>
-        <input type="text" name="event_name" class="form form-ctrl hidden" placeholder="Enter event name" form="update-form" value="<?= $event_name ?>" required></input>
-        <?php } ?>
-    </div>
+    <?php if ($organization || $moderator) { ?>
+        <div class="flex-row flex-center margin-md">
+            <h1 class="data"><?= $event_name ?></h1>
+            <input value="<?= $event_name ?>" type="text" name="event_name" class="form form-ctrl hidden" placeholder="Enter event name" required></input>
+        </div>
+    <?php } ?>
 
     <div class="nav-secondary">
         <div class="nav-secondary-bar margin-lg">
-            <?php $page=$_GET["page"] ?>
-            <a class="btn margin-side-md <?php if($page=="about") echo "nav-active";?>" style=" margin-bottom:10px;" href="/event/view?page=about&&event_id=<?= $_GET["event_id"]?> " >About</a>
-            <a class="btn margin-side-md <?php if($page=="gallery") echo "nav-active";?>" style=" margin-bottom:10px;" href="/event/view?page=gallery&&event_id=<?= $_GET["event_id"]?>">Gallery</a>
-            <a class="btn margin-side-md <?php if($page=="forum") echo "nav-active";?>" style=" margin-bottom:10px;" href="/event/view?page=forum&&event_id=<?= $_GET["event_id"]?>">Forum</a>
-            <a class="btn margin-side-md <?php if($page=="feeeback") echo "nav-active";?>" style=" margin-bottom:10px;" href="/event/view?page=feedback&&event_id=<?= $_GET["event_id"]?>">Feedback</a>
-            <?php if($organization || $moderator) { ?>
-            <a class="btn margin-side-md <?php if($page=="volunteers") echo "nav-active";?>" style=" margin-bottom:10px;" href="/event/view?page=volunteers&&event_id=<?= $_GET["event_id"]?>">Volunteers</a>
-            <a class="btn margin-side-md <?php if($page=="timeline") echo "nav-nav-active";?>" style=" margin-bottom:10px;" href="/event/view?page=timeline&&event_id=<?= $_GET["event_id"]?>">Work Timeline</a>
+            <?php $page = $_GET["page"] ?>
+            <a class="btn margin-side-md <?php if ($page == "about") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=about&&event_id=<?= $_GET["event_id"] ?> ">About</a>
+            <a class="btn margin-side-md <?php if ($page == "gallery") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=gallery&&event_id=<?= $_GET["event_id"] ?>">Gallery</a>
+            <a class="btn margin-side-md <?php if ($page == "forum") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=forum&&event_id <?= $_GET["event_id"] ?>">Forum</a>
+            <a class="btn margin-side-md <?php if ($page == "feeeback") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=feedback&&event_id=<?= $_GET["event_id"] ?>">Feedback</a>
+            <?php if ($organization || $moderator) { ?>
+                <a class="btn margin-side-md <?php if ($page == "volunteers") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=volunteers&&event_id=<?= $_GET["event_id"] ?>">Volunteers</a>
+                <a class="btn margin-side-md <?php if ($page == "timeline") echo "nav-nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=timeline&&event_id=<?= $_GET["event_id"] ?>">Work Timeline</a>
             <?php } ?>
             <?php if($organization || $treasurer){ ?>
             <a class="btn margin-side-md <?php if($page=="budget") echo "nav-active";?>" style=" margin-bottom:10px;" href="/event/view?page=budget&&event_id=<?= $_GET["event_id"]?>">Budget</a>

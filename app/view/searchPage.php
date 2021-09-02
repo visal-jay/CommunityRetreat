@@ -1,4 +1,4 @@
-<?php if(!isset($_SESSION)) session_start(); ?>
+<?php if (!isset($_SESSION)) session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -96,7 +96,7 @@
         cursor: pointer;
     }
 
-    .slidecontainer p{
+    .slidecontainer p {
         text-overflow: ellipsis;
         white-space: nowrap;
     }
@@ -107,9 +107,10 @@
 
     #sort,
     #date,
-    #way,#mode {
+    #way,
+    #mode {
         margin: 0;
-        margin-left:0.5rem;
+        margin-left: 0.5rem;
     }
 
     search {
@@ -145,14 +146,14 @@
         margin: 0;
         display: grid;
         grid-template-rows: 1fr auto;
-       
+
     }
 
     figure .content {
         position: relative;
     }
 
-    figure .stats{
+    figure .stats {
         position: absolute;
         width: 100%;
         height: 100% !important;
@@ -168,9 +169,9 @@
         position: relative;
     }
 
-    figure:hover .stats{
+    figure:hover .stats {
         display: flex;
-        
+
     }
 
     figure>img {
@@ -252,7 +253,7 @@
                     <input type="search" class="form-ctrl clr-white" placeholder="Search" id="in-search">
                     <button type="submit" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
                 </div>
-                <div><button class="btn btn-solid" id="near-me"><i class="fas fa-map-marker-alt"></i>&nbsp;Near me</button></div>
+                <div><button type="button" class="btn btn-solid" id="near-me" onclick="nearme()"><i class="fas fa-map-marker-alt"></i>&nbsp;Near me</button></div>
 
             </form>
         </search>
@@ -263,33 +264,33 @@
 
         <choices class="flex-col">
             <div class="flex-row-to-col  flex-space">
-            <div class="search-bar">
-                <input type="search" class="form-ctrl" id="city" placeholder="Search by location">
-            </div>
-            <div class="slidecontainer flex-row flex-center">
-                <label for="myRange">Distance: </label>
-                <input type="range" min="0" max="100" value="0" class="slider" id="myRange" onchange="search();">
-                <p><span id="demo"></span> km</p>
-            </div>
-            <div class="flex-row flex-center">
-                <label>Date: &nbsp; </label>
-                <input type="date" class="form-ctrl" id="date" onchange="search();">
-            </div>
+                <div class="search-bar">
+                    <input type="search" class="form-ctrl" id="city" placeholder="Search by location">
+                </div>
+                <div class="slidecontainer flex-row flex-center">
+                    <label for="myRange">Distance: </label>
+                    <input type="range" min="0" max="100" value="0" class="slider" id="myRange" onchange="search();">
+                    <p><span id="demo"></span> km</p>
+                </div>
+                <div class="flex-row flex-center">
+                    <label>Date: &nbsp; </label>
+                    <input type="date" class="form-ctrl" id="date" onchange="search();">
+                </div>
             </div>
             <div class="flex-row-to-col flex-center">
                 <div class="flex-row flex-center margin-md">
-                <select id="sort" class="form-ctrl" onchange="search();">
-                    <option selected disabled>Sort by</option>
-                    <option value=distance>Distance</option>
-                    <option value=start_date>Date</option>
-                    <option value=volunteered>Volunteers</option>
-                    <option value=donations>Donations</option>
-                </select>
-                <select id="way" class="form-ctrl" style="margin-left:0.5rem" onchange="search();">
-                    <option selected disabled>Sort</option>
-                    <option value=ASC>Ascending</option>
-                    <option value=DESC>Descending</option>
-                </select>
+                    <select id="sort" class="form-ctrl" onchange="search();">
+                        <option selected disabled>Sort by</option>
+                        <option value=distance>Distance</option>
+                        <option value=start_date>Date</option>
+                        <option value=volunteered>Volunteers</option>
+                        <option value=donations>Donations</option>
+                    </select>
+                    <select id="way" class="form-ctrl" style="margin-left:0.5rem" onchange="search();">
+                        <option selected disabled>Sort</option>
+                        <option value=ASC>Ascending</option>
+                        <option value=DESC>Descending</option>
+                    </select>
                 </div>
                 <select class="form-ctrl" id="mode" name="mode" style="margin-left:0.5rem" required onchange="search();">
                     <option value="" disabled selected>Select the mode of the event</option>
@@ -320,23 +321,32 @@
     function createElementFromHTML(htmlString) {
         var div = document.createElement('div');
         div.innerHTML = htmlString.trim();
-
-        // Change this to div.childNodes to support multiple top-level nodes
         return div.firstChild;
     }
 
-    let pos=new URLSearchParams (location.search);
-    var latitude = pos.get("latitude");
-    var longitude = pos.get("longitude");
-    var range = pos.get("distance")
+    let params = new URLSearchParams(location.search);
+    /*var latitude = pos.get("latitude");
+    var longitude = pos.get("longitude");*/
+    var range = params.get("distance");
+    document.getElementById("in-search").value = params.get("search");
 
-    navigator.geolocation.getCurrentPosition((position) => {
-        latitude = position.coords.latitude;
-        longitude = position.coords.longitude;
-    });
 
-    function search() {
+    function getCoordinates() {
+        return new Promise(
+            function(resolve, reject) {
+                navigator.geolocation.getCurrentPosition(resolve, reject);
+            }
+        );
+    }
+
+    async function search() {
+
+        const position = await getCoordinates();
+        let latitude = position.coords.latitude;
+        let longitude = position.coords.longitude;
+
         var city = (document.getElementById("city").value);
+        //name = document.getElementById("in-search").value == "" ? document.getElementById("in-search").value : name;
         var name = document.getElementById("in-search").value;
         var mode = (document.getElementById("mode").value);
         range = document.getElementById("myRange").value == "" ? document.getElementById("myRange").value : range;
@@ -351,13 +361,12 @@
             type: "post", //request type,
             dataType: 'json',
             data: {
-                name:name,
-                mode:mode,
+                name: name,
+                mode: mode,
                 latitude: latitude,
                 longitude: longitude,
                 city: city,
                 distance: range,
-                order_type: range,
                 start_date: date,
                 order_type: sort,
                 way: way,
@@ -368,7 +377,7 @@
                 parent_container.innerHTML = "";
                 result.forEach(evn => {
                     let template = `
-                        <figure class="item bg-green">
+                        <figure class="item bg-green" onclick="location.href = '/event/view?page=about&&event_id=${evn.event_id}' ">
                             <div class="content">
                                 <div class="photo-container flex flex-center"><img src="/Public/assets/mountains.jfif" style="object-fit: cover;" alt="">
                                     <div class="stats">
@@ -377,7 +386,7 @@
                                         <br>
                                         <span>Donations ${evn.dotaion_percent==null ? 0 : Math.round(evn.dotaion_percent)}%</span>
                                         <br>
-                                        <span>Distance ${evn.distance==null ? 0 : Math.round(evn.distance)} KM</span>
+                                        <span>Distance ${evn.distance==null ? "- " : Math.round(evn.distance)} KM</span>
                                         </div>
                                     </div>
                                 </div>
@@ -401,6 +410,7 @@
     function choices() {
         document.getElementsByTagName("choices")[0].classList.toggle("show-choices");
     }
+
     var slider = document.getElementById("myRange");
     var output = document.getElementById("demo");
     output.innerHTML = slider.value;
@@ -408,6 +418,8 @@
     slider.oninput = function() {
         output.innerHTML = this.value;
     }
+
+
 </script>
 
 

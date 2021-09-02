@@ -7,7 +7,7 @@
 #topic{
 
     text-align:center;
-    padding-top:10px;
+    padding:50px 0px 20px 0px;
     color: #16c79a;
 }
 .notifications-container{
@@ -16,28 +16,86 @@
     align-items: center;
 }
 .notifications-form{
-    width: 90%;
+    width: 60%;
     display:flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #eeeeee;
+    border-radius: 10px;
     
 
 }
 .notificationbar{
-    width:100%;
+    width:80%;
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    padding: 0.2rem 0.3rem 0.2rem;
+    
     
 }
 .image-div{
     display:flex;
     align-self: center;
-    height: 80px;
-    width: 80px;
+    height: 60px;
+    width: 60px;
     border-radius: 50%;
     overflow: hidden;
+    transform: translate(0%,0%);
     border:2px solid  rgb(252, 246, 246);
     background: rgb(202, 196, 196);
 }
+.image-div img{
+    height: 60px;
+    width: 60px;
+    
+     
+ }
 .description{
+    width:70%;
     padding:1.5rem 0.5rem 1rem;
+}
+@media screen  and (max-width: 768px){
+
+    .notifications-form{
+        width: 80%;
+    }
+    
+}
+@media screen  and (max-width: 768px){
+
+    .notifications-form{
+        width: 80%;
+    }
+    
+}
+
+@media screen  and (max-width: 500px){
+    .image-div{
+        height:55px;
+        width: 55px;
+    }
+    .image-div img{
+        height:55px;
+        width: 55px;
+    }
+
+}
+@media screen  and (max-width: 450px){
+    .notifications-container{
+        font-size: 14px;
+    }
+    .notifications-form{
+        width: 90%;
+    }
+    .notificationbar{
+        width: 100%;
+    }
+    .description{
+        width: 80%;
+    }
+ 
+
+    
 }

@@ -142,23 +142,6 @@
             font-size: 1.5rem;
         }
 
-        table tr>* {
-            display: block;
-        }
-
-        table tr {
-            display: table-cell;
-        }
-
-        table th {
-            padding: .5rem 0;
-            text-align: left;
-        }
-
-        td {
-            padding: .5rem 0;
-        }
-
         .event-card-details {
             flex-direction: column;
         }
@@ -169,23 +152,27 @@
 
 <body>
     <?php
-    $_SESSION["user"]["user_type"] = "organization";
+        if (!isset($moderator)) $moderator = false;
+        if (!isset($treasurer)) $treasurer = false;
+        $organization = $admin = $registered_user = $guest_user = false;
 
-    if (!isset($moderator)) $moderator = false;
-    if (!isset($treasurer)) $treasurer = false;
-    $organization = $admin = $registered_user = $guest_user = false;
-
-    if (isset($_SESSION["user"]["user_type"])) {
-        if ($_SESSION["user"]["user_type"] == "organization") {
-            $organization = true;
-        }
-        if ($_SESSION["user"]["user_type"] == "admin") {
-            $$admin = true;
+        if (isset($_SESSION["user"]["user_type"])) {
+            if ($_SESSION["user"]["user_type"] == "organization") {
+                $organization = true;
+            }
+            if ($_SESSION["user"]["user_type"] == "admin") {
+                $$admin = true;
+            }
+            if ($_SESSION["user"]["user_type"] == "registered_user") {
+                $registered_user = true;
+            }
+        } else {
+            $guest_user = true;
         }
         if ($_SESSION["user"]["user_type"] == "registered_user") {
             $registered_user = true;
         }
-    } else {
+        else {
         $guest_user = true;
     }
     ?>
@@ -222,23 +209,27 @@
                 <a class="btn margin-side-md <?php if ($page == "volunteers") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=volunteers&&event_id=<?= $_GET["event_id"] ?>">Volunteers</a>
                 <a class="btn margin-side-md <?php if ($page == "timeline") echo "nav-nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=timeline&&event_id=<?= $_GET["event_id"] ?>">Work Timeline</a>
             <?php } ?>
-            <?php if ($organization || $treasurer) { ?>
-                <a class="btn margin-side-md <?php if ($page == "budget") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=budget&&event_id=<?= $_GET["event_id"] ?>">Budget</a>
+            <?php if($organization || $treasurer){ ?>
+            <a class="btn margin-side-md <?php if($page=="budget") echo "nav-active";?>" style=" margin-bottom:10px;" href="/event/view?page=budget&&event_id=<?= $_GET["event_id"]?>">Budget</a>
+            <a class="btn margin-side-md <?php if($page=="donations") echo "nav-active";?>" style=" margin-bottom:10px;" href="/event/view?page=donations&&event_id=<?= $_GET["event_id"]?>">Donations</a>
             <?php } ?>
-            <?php if ($organization) { ?>
-                <a class="btn margin-side-md <?php if ($page == "userrole") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=userroles&&event_id=<?= $_GET["event_id"] ?>">User Roles</a>
+            <?php if($organization){ ?>
+            <a class="btn margin-side-md <?php if($page=="userroles") echo "nav-active";?>" style=" margin-bottom:10px;" href="/event/view?page=userroles&&event_id=<?= $_GET["event_id"]?>">User Roles</a>
             <?php } ?>
         </div>
     </div>
 
-    <?php
-    if (isset($_GET["page"]) && $_GET["page"] == "about") require __DIR__ . "/aboutEvent.php";
-    elseif (isset($_GET["page"]) && $_GET["page"] == "gallery") require __DIR__ .  "/eventGallery.php";
-    elseif (isset($_GET["page"]) && $_GET["page"] == "forum") require __DIR__ . "/forum.php";
-    elseif (isset($_GET["page"]) && $_GET["page"] == "feedback") require __DIR__ . "/eventGallery.php";
-    elseif (isset($_GET["page"]) && $_GET["page"] == "budget") require __DIR__ . "/budgeting.php";
-    elseif (isset($_GET["page"]) && $_GET["page"] == "userroles") require __DIR__ . "/roles.php";
-    elseif (isset($_GET["page"]) && $_GET["page"] == "timeline") require __DIR__ . "/workTimeline.php";
+    <?php 
+    if(isset($_GET["page"]) && $_GET["page"]=="about") require __DIR__ . "/aboutEvent.php";
+    elseif(isset($_GET["page"]) && $_GET["page"]=="gallery") require __DIR__ .  "/eventGallery.php";
+    elseif(isset($_GET["page"]) && $_GET["page"]=="forum") require __DIR__ . "/forum.php";
+    elseif(isset($_GET["page"]) && $_GET["page"]=="feedback") require __DIR__ . "/eventGallery.php";
+    elseif(isset($_GET["page"]) && $_GET["page"]=="budget") require __DIR__ . "/budgeting.php";
+    elseif(isset($_GET["page"]) && $_GET["page"]=="userroles") require __DIR__ . "/roles.php";
+    elseif(isset($_GET["page"]) && $_GET["page"]=="timeline") require __DIR__ . "/workTimeline.php";
+    elseif(isset($_GET["page"]) && $_GET["page"]=="donations") require __DIR__ . "/donateDetails.php";
+    elseif(isset($_GET["page"]) && $_GET["page"]=="volunteers") require __DIR__ . "/volunteer.php";
+
     ?>
 
 
@@ -257,6 +248,7 @@
 
     function resizeProfile() {
         var coverHeight = (document.querySelector(".cover").offsetHeight);
+        console.log(coverHeight);
         document.querySelector(".photo-container").style.height = parseInt(coverHeight) + "px";
     }
 

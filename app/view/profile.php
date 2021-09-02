@@ -11,15 +11,42 @@
         <link rel="stylesheet" href= "../Public/assets/style/fontawesome.min.css">
         <title>Registrationuser profile</title>
     </head>
-    <?php require("nav.php") ?>
     <body>
         <?php 
             $_SESSION["uid"] = "REG0000022";
             
         ?>
         
-    
-        <form action="/RegisteredUser/updateProfile" method="post" id="edit-user-profile-form" >
+        <header class="header">
+            <a class=" logo ">
+                <img src="../Public/assets/visal logo.png">
+            </a>
+            <nav class="main-nav ">
+                <div class="flex justify-between " style="width:100% ">
+                    <button class="btn btn-link more-btn " onclick="document.querySelector( '.main-nav').classList.toggle( 'shown') ">
+                        <i class="fa fa-times fa-2x"></i>
+                    </button>
+                </div>
+                <button class="btn btn-solid" id="near-me"><i class="fas fa-map-marker-alt" ></i>&nbsp;Near me</button>
+                <form action="/action_page.html" class="search-bar" style="height:fit-content">
+                    <input type="search" class="form-ctrl" placeholder="Search" >
+                    <button type="" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
+                </form>
+                <a class="nav-link margin-side-md" href="/view/adoption_listing.php ">About</a>
+                <a class="nav-link margin-side-md" href="clender.html">Calender</a>
+                <a class="nav-link margin-side-md" href="history.html">History</a>
+            </nav>
+ 
+            <a class="btn btn-solid" href="profile.php" style="font-size:1rem"><i class="fa fa-user "> </i>Me </a>
+
+            <button class="btn more-btn " onclick="document.querySelector( '.main-nav').classList.toggle( 'shown') ">
+                <i class="fa fa-bars "></i>
+            </button>
+
+        </header>
+        
+        
+        
             <div class="profilecontainer">
                   <div class="profilecontainer-top">
                         <div class="profilepic-pic-div">
@@ -30,16 +57,17 @@
                         </div>
                         
                             <div class="aboutme-container">
-                                <div class="edit-intro-btn">
+                                <div class="intro">
                                     <h2  id="name"><?= $username; ?></h2>
                                 </div>
-                                <br><h3 id="livefrom"><i class="fas fa-map-marker-alt" id="marker"></i><?= $city; ?>,<?= $country; ?></h3>
+                                
+                                <a href="activityLog" class="view-activitylog-btn" role="button" ><i class="fa fa-history"></i>&nbsp&nbspActivity log</a>
                                 
                             </div>
                 
                             
                             
-                        
+                            
                        
                        <div class="details-settings">
                             <h2>Details</h2>
@@ -63,6 +91,9 @@
                                             <button class="btn btn-clr" type="button" onclick="showEddite('usernameupdater')"><i class="fas fa-pen fa-1x" id="edit-icon"></i></button>
                                         </div>
                                     </div>
+
+                                    <!--username update form-->
+                                <form action="/RegisteredUser/updateUsername" method="post" id="edit-user-profile-form"   >   
                                     <div class="update-form" id="usernameupdater">
                                         <div class="input-container">
                                             <label for="text" class="edit-coontainer">Enter new username:</label>
@@ -74,42 +105,11 @@
                                             </div>
                                         </div>
                                     </div>
+                                </form>                   
                                   
 
-                                    <div class="location-container">
-                                        <div class="location-icon">
-                                            <i class="fas fa-map-marker-alt fa-2x" id="marker"></i>
-                                            <label  for="location" id="mobile-label">Location</label>
-                                        </div>
-                                       
-                                        <div class="location" id="location">
-                                            <h3><?= $city ?>,<?= $country ?></h3>
- 
-                                        </div>
-                                        <div class="location-change-btn">
-                                            <button class="btn btn-clr" type="button" onclick=" showEddite('locationupdater')"><i class= "fas fa-pen fa-1x" id="edit-icon"></i></button>
-                                        </div>
-                                       
-                                    </div>
-
-
-                                    <div class="update-form" id="locationupdater">
-                                        <div class="input-container">
-                                            
-                                            <label for="text">Country:</label>
-                                            <input type="text" id="countryinput" placeholder="Enter the country" name="country" ><br>
-                    
-                    
-                                            <label for="text">Town:</label>
-                                            <input type="text" id="towninput" placeholder="Enter the town" name="city" ><br>
-                                        </div>
-                                        <div class="intro-update-btn">
-                                            <button type="submit" class="btn bg-green clr-white" onclick=" updateField('name','livefrom','towninput','countryinput','nameupdater')">Update</button>
-                                            <button type="button" class="btn bg-red border-red clr-white" onclick="showEddite('locationupdater')">Cancel</button>
-                                        </div>
-
-                                    </div>
-                                
+                                   
+                              
 
                                     <div class="mobile-container">
                                         <div class="mobile-icon">
@@ -126,11 +126,15 @@
                                         </div>
                                        
                                     </div>
+
+                                     <!--mobile update form-->
+                                    <form action="/RegisteredUser/updateContactNumber" method="post" id="edit-user-profile-form"   >   
                                     <div class="update-form" id="mobileupdater">
                                         <div class="input-container">
                                         
                                             <label for="text" class = "form-item label" >Enter new mobile:</label>
-                                            <input type= "text"  placeholder = "Enter new mobile" id="mobileinput" name="contact_number" ><br>
+                            
+                                            <input type="text" placeholder = "Enter new mobile"  name="contact_number" pattern="[+]{1}[9]{1}[4]{1}[0-9]{9}" title="Phone number with +94 and remaing 9 digit with 0-9"><br>
                                         
                                             <div class="intro-update-btn">
                                                 <button type= "submit" class="btn bg-green clr-white"  onclick=" updateField('mobile','mobileupdater')" >Update</button>
@@ -138,6 +142,8 @@
                                             </div>
                                         </div>
                                     </div>
+                                    </form>
+
                               
                                          
                                 </div>
@@ -168,6 +174,8 @@
                                             </div>
                                         </div>
                                     
+                                      <!--email update form-->
+                                      <form action="/RegisteredUser/updateEmail" method="post" id="edit-user-profile-form"   >                                          
                                         <div class="update-form" id="emailupdater">
                                             <div class="input-container">
                                                 <label for="text"  >Enter new email:</label>
@@ -179,8 +187,9 @@
                                                 </div>
                                             </div>
                                         </div>
+                                      </form>
                                     
-
+         
                                       
                                         <div class="password-container">
                                             <div class="password-icon">
@@ -196,21 +205,24 @@
                                             </div>
                                             
                                         </div>
+                                        <!--password update form-->
+                                      <form action="/RegisteredUser/updatePassword" method="post" id="edit-user-profile-form"   >       
                                         <div class="update-form"  id="passwordupdater">
                                             <div class="input-container">
                                             
-                                                <label for="password" class = "form-item label" >Enter current password:</label>
-                                                <input type= "password"  placeholder = "Enter current password:" id="passwordinputold"   ><br>
+                                                <label for="password" class = "form-item label">Enter current password:</label>
+                                                <input type= "password"  placeholder = "Enter current password:" id="passwordinputold"   name="current_password" onkeyup="checkPassword(this.value)" ><br>
+                                                <p id="alert"></p>
                                         
                                                 <label for="password" class = "form-item label" >Enter new password: </label>
-                                                <input type= "password" placeholder = "Enter new password:" id = "passwordinputnew"  ><br>
+                                                <input type= "password" placeholder = "Enter new password:" id = "passwordinputnew" name="new_password" onkeyup="checkPassword(this.value)"><br>
                                                 
                                                 
                                         
                                                 <label for="password" class = "form-item label" >Confirm password:</label>
                                                 <input type= "password"  placeholder = "Enter current password:" id="passwordinput" name="password" >
                                                 <span id="alert"></span><br>
-                                                <p id="alert"><?php echo $_GET["passworderr"]; ?></p>
+                                                <p class="alert"><?php echo $_GET["newpassworderr"]; ?></p>
                                                 
                                             
                                                 <div class="intro-update-btn">
@@ -219,8 +231,9 @@
                                                 </div>
                                             </div>
                                         </div> 
+                                      </form>
 
-            </form>   
+             
                                     </div>
                                 
                             
@@ -238,13 +251,52 @@
 
         </div>
 
-  
+       
      
    
 
     <script src = "../Public/assets/js/app.js" ></script>
 
     <script>
+         function checkPassword(password) {
+                if (password.length == 0) {
+                    let email_errors = document.getElementById("alert");
+                    for (let error of email_errors) {
+                        error.innerHTML = "";
+                    }
+                    return;
+                } else
+
+                    $.ajax({
+                        url: "/RegisteredUser/checkPassword", //the page containing php script
+                        type: "post", //request type,
+                        dataType: 'json',
+                        data: {
+                           password: current_password
+                        },
+                        success: function(result) {
+                            console.log(result);
+                            if (result.taken == true) {
+                                var err = "password Doesn't match";
+                            } else
+                                var err = "";
+                            let errors = document.getElementById("alert");
+                            for (let error of errors) {
+                                error.innerHTML = err;
+                            }
+                        }
+                    });
+            }
+            function checkPassword(password) {
+                var err="";
+                const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                if (!pattern.test(password)) 
+                    var err = "Strong password required<br> Combine least 8 of the following: uppercase letters,lowercase letters,numbers and symbols";
+                let password_errors = document.querySelectorAll(".alert");
+                for (let error of password_errors) {
+                    error.innerHTML = err;
+                }
+            }
         function showEddite(elementId){
             // alert()
             document.getElementById(elementId).classList.toggle("unhide");

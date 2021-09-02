@@ -63,7 +63,6 @@
     }
 </style>
 
-<?php include "nav.php" ?>
 
 <body>
 

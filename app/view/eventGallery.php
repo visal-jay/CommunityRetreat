@@ -22,7 +22,7 @@
         transition: height, 0.3s linear;
     }
 
-    .photo-container {
+    .gallery-container {
         display: flex;
         border-radius: 8px;
         box-shadow: 0px 0px 0px 1px rgb(192, 192, 192);
@@ -89,7 +89,6 @@
         }
     }
 </style>
-<?php include "nav.php" ?>
 
 <body>
     <div class="flex-col flex-center margin-side-lg">
@@ -104,49 +103,49 @@
         <div class="grid margin-lg">
             <figure class="item bg-green">
                 <div class="content">
-                    <div class="photo-container flex flex-center"><img src="/Public/assets/photo.jpeg" style="object-fit: cover;" alt=""></div>
+                    <div class="gallery-container flex flex-center"><img src="/Public/assets/photo.jpeg" style="object-fit: cover;" alt=""></div>
                     <p style="color:white;">Venodi Widanagamage</p>
                 </div>
             </figure>
             <figure class="item bg-green">
                 <div class="content">
-                    <div class="photo-container flex flex-center"><img src="/Public/assets/login-image.jpg" style="object-fit: cover;" alt=""></div>
+                    <div class="gallery-container flex flex-center"><img src="/Public/assets/login-image.jpg" style="object-fit: cover;" alt=""></div>
                     <p style="color:white;">Visal Jayathilake</p>
                 </div>
             </figure>
             <figure class="item bg-green">
                 <div class="content">
-                    <div class="photo-container flex flex-center"><img src="/Public/assets/mountains.jfif" style="object-fit: cover;" alt=""></div>
+                    <div class="gallery-container flex flex-center"><img src="/Public/assets/mountains.jfif" style="object-fit: cover;" alt=""></div>
                     <p style="color:white;">Manuka Dewanarayana</p>
                 </div>
             </figure>
             <figure class="item bg-green">
                 <div class="content">
-                    <div class="photo-container flex flex-center"><img src="/Public/assets/photo.jpeg" style="object-fit: cover;" alt=""></div>
+                    <div class="gallery-container flex flex-center"><img src="/Public/assets/photo.jpeg" style="object-fit: cover;" alt=""></div>
                     <p style="color:white;">Pudara Semini</p>
                 </div>
             </figure>
             <figure class="item bg-green">
                 <div class="content">
-                    <div class="photo-container flex flex-center"><img src="/Public/assets/photo.jpeg" style="object-fit: cover;" alt=""></div>
+                    <div class="gallery-container flex flex-center"><img src="/Public/assets/photo.jpeg" style="object-fit: cover;" alt=""></div>
                     <p style="color:white;">Venodi Widanagamage</p>
                 </div>
             </figure>
             <figure class="item bg-green">
                 <div class="content">
-                    <div class="photo-container flex flex-center"><img src="/Public/assets/login-image.jpg" style="object-fit: cover;" alt=""></div>
+                    <div class="gallery-container flex flex-center"><img src="/Public/assets/login-image.jpg" style="object-fit: cover;" alt=""></div>
                     <p style="color:white;">Visal Jayathilake</p>
                 </div>
             </figure>
             <figure class="item bg-green">
                 <div class="content">
-                    <div class="photo-container flex flex-center"><img src="/Public/assets/mountains.jfif" style="object-fit: cover;" alt=""></div>
+                    <div class="gallery-container flex flex-center"><img src="/Public/assets/mountains.jfif" style="object-fit: cover;" alt=""></div>
                     <p style="color:white;">Manuka Dewanarayana</p>
                 </div>
             </figure>
             <figure class="item bg-green">
                 <div class="content">
-                    <div class="photo-container flex flex-center"><img src="/Public/assets/photo.jpeg" style="object-fit: cover;" alt=""></div>
+                    <div class="gallery-container flex flex-center"><img src="/Public/assets/photo.jpeg" style="object-fit: cover;" alt=""></div>
                     <p style="color:white;">Pudara Semini</p>
                 </div>
             </figure>

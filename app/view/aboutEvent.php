@@ -187,7 +187,6 @@
 </style>
 
 <?php
-$_SESSION["user"]["user_type"] = "organization";
 
 if (!isset($moderator)) $moderator = false;
 if (!isset($treasurer)) $treasurer = false;
@@ -216,7 +215,7 @@ if (isset($_SESSION["user"]["user_type"])) {
             <h1>About</h1>
             <div class="content border-round container-size1 margin-md" style="background-color: #eeeeee">
                 <?php if ($organization || $moderator) { ?>
-                    <form action="/event/updateDetails" method="post" id="update-form">
+                    <form action="event/updateDetails" method="post" id="update-form">
                     <?php } ?>
                     <div class="date-container">
                         <div class="flex-row margin-lg">
@@ -263,7 +262,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                             <i class="btn-icon icon-width fas fa-map-marker-alt clr-green margin-side-lg"></i>
                             <h4 class="head-margin data">Mount Lavinia Beach</h4>
                             <?php if ($organization || $moderator) { ?>
-                                <input type="text" name="Event location" class="form-ctrl hidden" placeholder="Event is in?"></input>
+                                <input type="text" name="Event location" class="form form-ctrl hidden" placeholder="Event is in?" required></input>
                             <?php } ?>
                         </div>
                     </div>
@@ -314,8 +313,9 @@ if (isset($_SESSION["user"]["user_type"])) {
                         </div>
                     </div>
 
-                    <div class="textbox flex-col content border-round container-size2 margin-md" style="background-color: #eeeeee">
-                        <h3 class="margin-side-lg">Description</h3>
+                   
+                    <div class="textbox flex-col content border-round container-size margin-md" style="background-color: #eeeeee">
+                        <h3 class="margin-lg">Description</h3>
                         <div class="data">
                             <p class="margin-lg"><?= $about ?></p>
                         </div>

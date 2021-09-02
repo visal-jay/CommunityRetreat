@@ -25,7 +25,10 @@
         width: 80%;
     }
 
-
+    .event-link{
+        text-decoration-color: none;
+        color:black;
+    }
     .form {
         min-width: 50%;
         overflow: hidden;
@@ -189,7 +192,7 @@
         <div class="events">
             <?php foreach ($events as $event) { ?>
                 <div class="card-container margin-md">
-                    <h3 class="heading"><?= $event["event_name"] ?></h3>
+                    <a class="event-link" href="/event/view?page=about&&event_id=<?= $event["event_id"] ?>"><h3 class="heading"><?= $event["event_name"] ?></h3></a>
                     <div class="event-card-details margin-md">
                         <table>
                             <tr>

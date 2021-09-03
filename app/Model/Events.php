@@ -42,22 +42,25 @@ class Events extends Model
     {
 
         $params=array();
-        if (isset($_FILES["cover-photo"])) {
+        if ($_FILES["cover-photo"]["size"]!=NULL) {
+            echo "why";
             $cover_pic = new Image($data["event_id"], "event/cover/", "cover-photo", true);
             $params["cover_photo"] = $cover_pic->getURL();
         }
 
-        if ($data["longitude"] == "NULL" || $data["latitude"] == "NULL")
+        if (isset($data["longitude"]) || isset($data["latitude"]))
             $data["map"] = "false";
         else
             $data["map"] = "true";
 
         $old_data = $this->getDetails($data["event_id"]);
         $new_data = array_merge($old_data, $data);
-        $update_data = array_intersect_key($new_data, ['event_id' => "", 'start_date' => "", 'start_time' => "", 'end_time' => "", 'mode' => "", 'about' => "", 'event_name' => "", 'longitude' => "", 'latitude' => "", 'map' => '']);
+        $update_data = array_intersect_key($new_data, ['event_id' => "", 'start_date' => "", 'start_time' => "", 'end_time' => "", 'mode' => "", 'about' => "", 'event_name' => "", 'longitude' => "", 'latitude' => "", 'map' => '','cover_photo'=>""]);
         $params=array_merge($update_data,$params);
-        var_dump($params);
+        
         $query = "UPDATE event SET `start_date` = :start_date, `start_time`= :start_time, `end_time`= :end_time, `mode` = :mode, `about`=:about,`cover_photo` = :cover_photo, `latlang`= IF (STRCMP(:map, 'false')=0 ,NULL,POINT(:latitude ,:longitude)) , `event_name` =:event_name WHERE `event_id`=:event_id ";
+ 
+
         Model::insert($query, $params);
     }
 
@@ -65,7 +68,7 @@ class Events extends Model
 
     public function query($args)
     {
-        $name = $city = $latitude = $longitude = $mode = $start_date = $org_uid = $distance = $order_type = $way = $status = $limit = NULL;
+        $name = $city = $latitude = $longitude = $mode = $start_date = $org_uid = $distance = $order_type = $way = $status = $limit = $donation_capacity= $volunteer_capacity=NULL;
         extract($args, EXTR_OVERWRITE);
         //var_dump($args);
         $params = array();
@@ -86,6 +89,8 @@ class Events extends Model
         $query_filter_organzation = ' org_uid =:org_uid AND ';
         $query_filter_status = ' status =:status AND ';
         $query_filter_name = ' event_name LIKE :name AND';
+        $query_filter_volunteer_capacity = ' volunteer_capacity IS NOT NULL AND';
+        $query_filter_donation_capacity = ' donation_capacity IS NOT NULL AND';
         $query_filter_last = ' 1=1 ';
         $query_filter_distance = ' distance=distance AND ';
         $query_filter_near = ' distance <= :distance AND ';
@@ -120,6 +125,14 @@ class Events extends Model
             $params["name"] = "%$name%";
         }
 
+        if($volunteer_capacity!= NULL){
+            $query = $query . $query_filter_volunteer_capacity;
+        }
+
+        if($donation_capacity!= NULL){
+            $query = $query . $query_filter_donation_capacity;
+        }
+
         if ($org_uid != NULL) {
             $query = $query . $query_filter_organzation;
             $params["org_uid"] = $org_uid;
@@ -133,8 +146,8 @@ class Events extends Model
         if ($order_type == 'volunteer_percent')
             $query = $query . ' volunteer_percent=volunteer_percent AND ';
 
-        if ($order_type == 'dotaion_percent')
-            $query = $query . ' dotaion_percent=dotaion_percent AND ';
+        if ($order_type == 'donation_percent')
+            $query = $query . ' donation_percent=donation_percent AND ';
 
         $query = $query . $query_filter_last . " HAVING ";
 

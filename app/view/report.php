@@ -54,9 +54,11 @@
             <canvas id="myChart3" style="width:100%;max-width:700px"></canvas>
         </div>
     </div>
+    <?php var_dump($events);  ?>
 </body>
 
 <script>
+  const data = <?=$events ?>;
   const donations = {
     "05 Jan": [200000, 300000, 400000],         
     "08 Jan": [800000, 500000, 900000],
@@ -70,39 +72,21 @@
 var myLineChart = new Chart('myChart', {
   type: 'line',
   data: {
-    labels: Object.keys(donations),
-    datasets: [{
-        label: "Event 1",
-        data: Object.values(donations).map(v => v[0]),
+    labels: Object.keys(data[Object.keys(data)[0]]),
+    datasets:  Object.keys(data).map((event,i)=>({
+        label: event,
+        data: Object.values(data[event][0]).map(n=>Number(n)),
         backgroundColor: 'rgba(0,0,255,1.0)',
         borderColor: 'rgba(0,0,255,0.1)',
         fill: false
-      },
-      {
-        label: "Event 2",
-        data: Object.values(donations).map(v => v[1]),
-        backgroundColor: 'rgb(233, 150, 122)',
-        borderColor: 'rgb(250, 235, 215)',
-        fill: false
-      },
-      {
-        label: "Event 3",
-        data: Object.values(donations).map(v => v[2]),
-        backgroundColor: 'rgb(218, 165, 32)',
-        borderColor: 'rgb(238, 232, 170)',
-        fill: false
-      }
-    ]
+      }) 
+  )
+    
   },
   options: {
     responsive: true,
     scales: {
       yAxes: [{
-        ticks: {
-            min: 100000,
-            max: 1000000,
-          stepSize: 100000
-        },
         scaleLabel: {
         display: true,
         labelString: 'Amount',

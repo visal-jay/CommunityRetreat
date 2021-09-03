@@ -23,6 +23,15 @@ class User extends Model
             return false;
     }
 
+    public function getUsername($uid){
+        if($result=(new Organisation)->getDetails($uid))
+            return $result["username"];
+        if($result=(new RegisteredUser)->getDetails($uid))
+            return $result["username"];
+        if($result=(new Admin)->getDetails($uid))
+            return $result["username"];
+    }
+    
     public function getForgotPasswordKey ($email){
         $encryption= new Encryption;
         $query = 'SELECT email,password FROM login where email = :email AND verified= 1';

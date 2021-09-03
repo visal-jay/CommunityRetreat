@@ -90,6 +90,9 @@
         overflow: hidden;
     }
 
+    .container-size{
+        width: 70%;
+    }
 
 
     textarea {
@@ -167,6 +170,10 @@
     }
 
         .container-size {
+            width: 90%;
+        }
+
+        .container-size1 {
             width: 90%;
         }
 
@@ -336,7 +343,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                         <div class="data">
                             <p class="margin-lg"><?= $about ?></p>
                         </div>
-                        <textarea name="about" value="<?= $about ?>" class="form form-ctrl margin-lg hidden" placeholder="Enter about us"></textarea>
+                        <textarea name="about" value="<?= $about ?>" class="form form-ctrl margin-lg hidden" placeholder="Enter about us"><?= $about ?></textarea>
                     </div>
 
                     <?php if ($organization || $moderator) { ?>
@@ -589,7 +596,7 @@ if (isset($_SESSION["user"]["user_type"])) {
             //document.getElementById('current').innerHTML = '<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';
         });
         map.setCenter(myLatlng);
-        map.setZoom(15)
+        map.setZoom(15);
         resizeMap();
     }
 </script>

@@ -204,7 +204,7 @@
         <?php } ?>
         <div class="photo-container">
             <div class="cover-place-holder cover border-round">
-                <img src="<?= $cover_pic ?>" alt="" class="photo-element" styl>
+                <img src="<?= $cover_pic ?>" alt="" class="photo-element" >
                 <?php if ($organization) { ?>
                     <div class="image-upload hidden form">
                         <label for="file-input">
@@ -215,13 +215,13 @@
                 <?php } ?>
             </div>
             <div class="profile-pic border-round">
-                <img src="/Public/assets/newphoto.jpeg" alt="" class="photo-element">
+                <img src="<?= $profile_pic ?>" alt="" class="photo-element">
                 <?php if ($organization) { ?>
                     <div class="image-upload hidden form">
-                        <label for="file-input">
+                        <label for="file-input-1">
                             <i class="fas fa-edit clr-white"></i>
                         </label>
-                        <input id="file-input" type="file" />
+                        <input id="file-input-1" name="profile-photo" type="file" />
                     </div>
                 <?php } ?>
             </div>

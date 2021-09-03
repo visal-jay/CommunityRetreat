@@ -98,7 +98,7 @@ class EventController
         $validate = new Validation;
         foreach ($_POST as $key => $value){
             $_POST[$key]=trim($_POST[$key]);
-            if($_POST[$key]=="")
+            if($_POST[$key]=="" || $_POST[$key]=="NULL")
                 unset ($_POST[$key]);
         }
 

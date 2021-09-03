@@ -202,7 +202,7 @@
     <div class="nav-secondary">
         <div class="nav-secondary-bar margin-lg">
             <?php $page = $_GET["page"] ?>
-            <a class="btn margin-side-md <?php if ($page == "about") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=about&&event_id=<?= $_GET["event_id"] ?> ">About</a>
+            <a class="btn margin-side-md <?php if ($page == "about") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=about&&event_id=<?= $_GET["event_id"] ?>">About</a>
             <a class="btn margin-side-md <?php if ($page == "gallery") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=gallery&&event_id=<?= $_GET["event_id"] ?>">Gallery</a>
             <a class="btn margin-side-md <?php if ($page == "forum") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=forum&&event_id=<?= $_GET["event_id"] ?>">Forum</a>
             <a class="btn margin-side-md <?php if ($page == "feeeback") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=feedback&&event_id=<?= $_GET["event_id"] ?>">Feedback</a>

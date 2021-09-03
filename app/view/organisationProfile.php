@@ -159,7 +159,7 @@
                                     <div class="update-form" id="account-number-updater">
                                         <div class="input-container">
                                             <label for="text" class="edit-coontainer">Enter new account number:</label>
-                                            <input type="text" id="usernameinput" placeholder="Enter new account number" name="account_number" onkeyup="checkAccountNumber(account_number)" ><br>
+                                            <input type="text" id="usernameinput" placeholder="Enter new account number" name="account_number" onkeyup="checkAccountNumber(this.value)" ><br>
                                             <p class="alert account-number-error"></p>
             
                                             <div class="intro-update-btn">

@@ -56,5 +56,16 @@ class RegisteredUser extends User
         $query = 'UPDATE login  JOIN registered_user ON login.uid= registered_user.uid SET login.password =:password where login.uid = :uid and verified=1 ';
         User::insert($query,$params); 
     }
+    function checkCurrentPassword($uid,$password){
+        $query= 'SELECT password FROM registered_user reg JOIN login ON reg.uid= login.uid WHERE reg.uid = :uid AND verified=1';
+        $params = ["uid"=> $uid];
+        $result= USER::select($query,$params);
+        if($result[0]['password']==$password){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     
 }

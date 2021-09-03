@@ -81,16 +81,6 @@ class User extends Model
         User::insert($query,$params);
     }
 
-    function checkCurrentPassword($uid,$password){
-        $query= 'SELECT password FROM registered_user reg JOIN login ON reg.uid= login.uid WHERE reg.uid = :uid AND verified=1';
-        $params = ["uid"=> $uid];
-        $result= USER::select($query,$params);
-        if($result[0]['password']==$password){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
+
 
 }

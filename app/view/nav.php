@@ -77,7 +77,11 @@
                 <?php } ?>
                 <div class="nav-drop-down-list hidden">
                     <div class="flex-col">
-                    <a href="/user/profile" class="nav-link margin-md" ><i class="far fa-user"></i>&nbsp; Profile</a>
+                    <?php if($organization) { ?>
+                        <a href="/organisation/organizationalAdminProfileView" class="nav-link margin-md" ><i class="far fa-user"></i>&nbsp; Profile</a>
+                    <?php } elseif($registered_user) { ?>
+                        <a href="/user/view" class="nav-link margin-md" ><i class="far fa-user"></i>&nbsp; Profile</a>
+                    <?php } ?>
                     <a href="/login/logout" class="nav-link margin-side-md" href=""><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</a>
                     </div>
                 </div>
@@ -96,11 +100,9 @@
     navigator.geolocation.getCurrentPosition((position) => {
         latitude = position.coords.latitude;
         longitude = position.coords.longitude;
-        console.log(latitude,"hello");
     });
 
     function nearme(){
-        console.log("shfkjsd");
         let link = "/search/view?distance=20";
         location.href=link;
     }
@@ -112,9 +114,7 @@
 
     document.addEventListener("click", (evt) => {
     let targetElement = evt.target;
-    console.log(targetElement);
     let navDropdownButton = document.getElementById('nav-drop');
-    console.log(navDropdownButton);
     let navDropdown=document.querySelector('.nav-drop-down-list');
     if (targetElement!=navDropdownButton)
         navDropdown.classList.add('hidden');

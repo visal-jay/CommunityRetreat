@@ -49,9 +49,9 @@ class Events extends Model
         }
 
         if (isset($data["longitude"]) || isset($data["latitude"]))
-            $data["map"] = "false";
-        else
             $data["map"] = "true";
+        else
+            $data["map"] = "false";
 
         $old_data = $this->getDetails($data["event_id"]);
         $new_data = array_merge($old_data, $data);
@@ -60,6 +60,7 @@ class Events extends Model
         
         $query = "UPDATE event SET `start_date` = :start_date, `start_time`= :start_time, `end_time`= :end_time, `mode` = :mode, `about`=:about,`cover_photo` = :cover_photo, `latlang`= IF (STRCMP(:map, 'false')=0 ,NULL,POINT(:latitude ,:longitude)) , `event_name` =:event_name WHERE `event_id`=:event_id ";
  
+     
 
         Model::insert($query, $params);
     }

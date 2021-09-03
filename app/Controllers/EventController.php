@@ -95,6 +95,8 @@ class EventController
     public function updateDetails()
     {
         Controller::accessCheck(["moderator", "organization"], $_POST["event_id"]);
+        var_dump($_POST);
+        
         $validate = new Validation;
         foreach ($_POST as $key => $value){
             $_POST[$key]=trim($_POST[$key]);

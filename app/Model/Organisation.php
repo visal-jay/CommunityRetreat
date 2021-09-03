@@ -54,18 +54,35 @@ class Organisation extends User{
 
 
     public function updateDetails($uid,$data){
+
+        $params= array();
         
-        //$data=array_merge(["username"=>'',"email"=>'',"contact_number"=>'',"longitude"=>'',"latitude"=>'',"profile_pic"=>'',"cover_pic"=>'',"about_us"=>''],$data);
+        if ($_FILES["profile-photo"]["size"]!=NULL){
+           $cover_pic = new Image($_SESSION["user"]["uid"],"profile/","profile-photo",true);
+           $params["profile_pic"] = $cover_pic->getURL();
+       }
+        
+        if ($_FILES["cover-photo"]["size"]!=NULL){
+            $cover_pic = new Image($_SESSION["user"]["uid"],"cover/","cover-photo",true);
+            $params["cover_pic"] = $cover_pic->getURL();
+        }
+
+        
         foreach (array_keys($data, NULL) as $key) {
             unset($array[$key]);
         }
         if(!$old_data=$this->getDetails($uid))
             return false;
-        $params= array_merge($old_data,$data);
+
+        $params=array_merge(array_merge($old_data,$data),$params);
         $params["uid"]=$uid;
+        
         unset($params["map"]);
-        $query = 'UPDATE organization SET username= :username, email= :email, contact_number = :contact_number , latlang=POINT(:latitude,:longitude) ,profile_pic= :profile_pic,cover_pic=:cover_pic,about_us=:about_us  WHERE uid = :uid';
-        User::insert($query,$params);       
+
+      
+        $query = 'UPDATE organization SET username= :username, email= :email, contact_number = :contact_number , latlang=POINT(:latitude,:longitude) ,profile_pic = :profile_pic,cover_pic = :cover_pic,about_us=:about_us  WHERE uid = :uid';
+        User::insert($query,$params);
+
     }
 
     public function getEvents($status="deleted"){
@@ -73,6 +90,8 @@ class Organisation extends User{
         //$params = ["uid" => $uid];
         //$result=User::select($query,$params);
     }
+
+   
 
     public function query($args){
         $org_username = NULL;
@@ -99,8 +118,8 @@ class Organisation extends User{
         if(count($result)==0)
             return false;
         return $result;
-
     }
+
     public function getAdminDetails($uid){
         $query = 'SELECT * FROM organization org JOIN login ON org.uid= login.uid WHERE org.uid = :uid AND verified=1';
         $params = ["uid" => $uid];
@@ -154,5 +173,6 @@ class Organisation extends User{
             return false;
         }
     }
+
 
 }

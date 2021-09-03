@@ -9,11 +9,16 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="stylesheet" href= "../Public/assets/style/profilestyle.css">
         <link rel="stylesheet" href= "../Public/assets/style/fontawesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <title>Registrationuser profile</title>
+        
+
     </head>
     <body>
         <?php 
             $_SESSION["uid"] = "REG0000022";
+
+            
             
         ?>
         
@@ -97,7 +102,7 @@
                                     <div class="update-form" id="usernameupdater">
                                         <div class="input-container">
                                             <label for="text" class="edit-coontainer">Enter new username:</label>
-                                            <input type="text" id="usernameinput" placeholder="Enter new username" name="username" ><br>
+                                            <input type="text" id="usernameinput"  placeholder="Enter new username"name="username" ><br>
             
                                             <div class="intro-update-btn">
                                                 <button type="submit" class="btn bg-green clr-white" onclick=" updateField('username','usernameupdater')">Update</button>
@@ -134,10 +139,11 @@
                                         
                                             <label for="text" class = "form-item label" >Enter new mobile:</label>
                             
-                                            <input type="text" placeholder = "Enter new mobile"  name="contact_number" pattern="[+]{1}[9]{1}[4]{1}[0-9]{9}" title="Phone number with +94 and remaing 9 digit with 0-9"><br>
+                                            <input type="text" placeholder = "Enter new mobile"  required name="contact_number" onkeyup="checkTelephone(this.value)"><br>
+                                            <p class="alert mobile-error"></p>
                                         
                                             <div class="intro-update-btn">
-                                                <button type= "submit" class="btn bg-green clr-white"  onclick=" updateField('mobile','mobileupdater')" >Update</button>
+                                                <button type= "submit" class="btn bg-green clr-white mobile-submit-btn"  onclick=" updateField('mobile','mobileupdater')" >Update</button>
                                                 <button type= "button" class="btn bg-red border-red clr-white" onclick=" showEddite('mobileupdater')">Cancel</button>
                                             </div>
                                         </div>
@@ -165,13 +171,15 @@
                                                 <i class="far fa-envelope fa-2x" id="envelope"></i>
                                                 <label for="envelope" id="envelope-label">Email</label>
                                             </div>
-                                            
+
                                             <div class="email">
                                                 <h3 id="email"><?= $email; ?></h3>
                                             </div>
+
                                             <div class="email-change-btn">
                                                 <button class="btn btn-clr" type="button" onclick=" showEddite('emailupdater')"><i class= "fas fa-pen fa-1x" id="edit-icon"></i></button>
                                             </div>
+                                            
                                         </div>
                                     
                                       <!--email update form-->
@@ -179,10 +187,11 @@
                                         <div class="update-form" id="emailupdater">
                                             <div class="input-container">
                                                 <label for="text"  >Enter new email:</label>
-                                                <input type= "text" placeholder = "Enter new email" id ="emailinput" name="email" ><br>
-                                            
+                                                <input type= "text" placeholder = "Enter new email"  name="email" required onkeyup="checkMail(this.value)"   /><br>                                                                                                                                             
+                                                <p class="alert email-error" ><?php if(isset($_GET['invaliderr'])){ echo $_GET['invaliderr'];} ?></p>
+                                                
                                                 <div class="intro-update-btn">
-                                                    <button type= "submit" class="btn bg-green clr-white"  onclick=" updateField('email','emailupdater')">Update</button>
+                                                    <button type= "submit" id="email-submit-btn"class="btn bg-green clr-white"  onclick=" updateField('email','emailupdater')" <?php if(isset($_GET['invaliderr'])){ echo "disabled"; } ?>>Update</button>
                                                     <button type="button" class="btn bg-red border-red clr-white" onclick=" showEddite('emailupdater')" >Cancel</button>
                                                 </div>
                                             </div>
@@ -198,35 +207,36 @@
                                             </div>
                                         
                                             <div class="password">
-                                                <input type= "password"    id="password"  value="<?= $password; ?>" disabled><br>
+                                                <input type= "password"    id="password"  value="************" disabled><br>
                                             </div>
                                             <div class="password-change-btn">
                                                     <button class="btn btn-clr" type="button" onclick="showEddite('passwordupdater')"><i class= "fas fa-pen fa-1x" id="edit-icon"></i></button>
                                             </div>
                                             
                                         </div>
+
                                         <!--password update form-->
                                       <form action="/RegisteredUser/updatePassword" method="post" id="edit-user-profile-form"   >       
                                         <div class="update-form"  id="passwordupdater">
                                             <div class="input-container">
                                             
                                                 <label for="password" class = "form-item label">Enter current password:</label>
-                                                <input type= "password"  placeholder = "Enter current password:" id="passwordinputold"   name="current_password" onkeyup="checkPassword(this.value)" ><br>
-                                                <p id="alert"></p>
+                                                <input type= "password"  placeholder = "Enter current password" id="passwordinputold"   name="current_password"  onkeyup="clearCurrentpasswordError()" ><br>
+                                                <p class="alert current-password-error"><?php if(isset($_GET['currentpassworderr'])){ echo $_GET['currentpassworderr'];} ?></p> 
                                         
                                                 <label for="password" class = "form-item label" >Enter new password: </label>
-                                                <input type= "password" placeholder = "Enter new password:" id = "passwordinputnew" name="new_password" onkeyup="checkPassword(this.value)"><br>
-                                                
+                                                <input type= "password" placeholder = "Enter new password" id = "new-password" name="new_password" onkeyup="checkPassword(this.value)"><br>
+                                                <p class="alert password-error"></p>
                                                 
                                         
                                                 <label for="password" class = "form-item label" >Confirm password:</label>
-                                                <input type= "password"  placeholder = "Enter current password:" id="passwordinput" name="password" >
-                                                <span id="alert"></span><br>
-                                                <p class="alert"><?php echo $_GET["newpassworderr"]; ?></p>
+                                                <input type= "password"  placeholder = "Enter confirm password" id="confirm-password" name="password" onkeyup="passwordMatch(this.value)"><br>
+                                                
+                                                <p class="green-alert confirm-password-error" style= "color: #16c79a; text-align:center;" ></p>
                                                 
                                             
                                                 <div class="intro-update-btn">
-                                                    <button type= "submit" class="btn bg-green clr-white"  onclick="passwordmatch('passwordinputnew','passwordinput','alert','passwordupdater')" >Update</button>
+                                                    <button type= "submit" class="btn bg-green clr-white password-submit-btn"  onclick="showEddite('passwordupdater')"<?php if(isset($_GET['currentpassworderr'])){ echo "disabled";} ?> >Update</button>
                                                     <button type= "button" class="btn bg-red border-red clr-white"  onclick="showEddite('passwordupdater')">Cancel</button>
                                                 </div>
                                             </div>
@@ -251,16 +261,46 @@
 
         </div>
 
-       
-     
-   
 
     <script src = "../Public/assets/js/app.js" ></script>
 
     <script>
-         function checkPassword(password) {
-                if (password.length == 0) {
-                    let email_errors = document.getElementById("alert");
+        <?php if (isset($_GET["invaliderr"])) echo "showEddite('emailupdater');" ?>
+        <?php if (isset($_GET["currentpassworderr"])) echo "showEddite('passwordupdater');" ?>
+        
+        
+        function clearCurrentpasswordError(){
+            let current_password_error = document.querySelector(".current-password-error");
+            current_password_error.innerHTML = "";
+            
+            
+        }
+
+        function checkTelephone(number) {
+                var err = "";
+                const pattern = /^[+]?[0-9]{10,11}$/;
+                if (!pattern.test(number)){
+                    var err = "Valid phone number required";
+                    document.querySelector('.mobile-submit-btn').disabled = true;
+                }
+                else{
+                    document.querySelector('.mobile-submit-btn').disabled = false;
+                }
+                let mobile_errors = document.querySelector(".mobile-error");
+
+
+                mobile_errors.innerText = err;
+            
+              
+                
+        }
+  
+        
+
+         function checkMail(email) {
+             
+                if (email.length == 0) {
+                    let email_errors = document.querySelector(".email-error");
                     for (let error of email_errors) {
                         error.innerHTML = "";
                     }
@@ -268,38 +308,56 @@
                 } else
 
                     $.ajax({
-                        url: "/RegisteredUser/checkPassword", //the page containing php script
-                        type: "post", //request type,
+                        url: "/RegisteredUser/checkEmailAvailable",
+                        type: "post", 
                         dataType: 'json',
                         data: {
-                           password: current_password
+                            email: email
                         },
                         success: function(result) {
-                            console.log(result);
+                            
                             if (result.taken == true) {
-                                var err = "password Doesn't match";
-                            } else
+                                var err = "Email already taken";
+                                document.getElementById('email-submit-btn').disabled = true;
+                            } else{
                                 var err = "";
-                            let errors = document.getElementById("alert");
-                            for (let error of errors) {
-                                error.innerHTML = err;
+                                document.getElementById('email-submit-btn').disabled = false;
                             }
+                                
+                            
+                        let email_error = document.querySelector(".email-error")
+                        email_error.innerHTML = err;
+                            
+                          
+                            
+                            
                         }
                     });
             }
+           
             function checkPassword(password) {
-                var err="";
+                var err = "";
                 const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-                if (!pattern.test(password)) 
+                if (!pattern.test(password)){
                     var err = "Strong password required<br> Combine least 8 of the following: uppercase letters,lowercase letters,numbers and symbols";
-                let password_errors = document.querySelectorAll(".alert");
+                    document.querySelector('.password-submit-btn').disabled = true;
+                    
+                }
+                else{
+                    document.querySelector('.password-submit-btn').disabled = false;
+                }
+                
+                let password_errors = document.querySelectorAll(".password-error");
                 for (let error of password_errors) {
                     error.innerHTML = err;
                 }
             }
+              
+            
         function showEddite(elementId){
             // alert()
             document.getElementById(elementId).classList.toggle("unhide");
+
         }
         function updateField(elementId,containerID){
             
@@ -307,19 +365,29 @@
             document.getElementById(containerID).classList.toggle("hide");
             
         }
-        function passwordmatch(elementId1,elementId2,spanId,containerID){
-           if(document.getElementById(elementId1).value != document.getElementById(elementId2).value){
-                let action = document.getElementById(spanId);
-                document.getElementById(containerID).appendChild(action);
-                document.getElementById(spanId).innerText ="Does not match!";
-                return 0;
+        function passwordMatch(confirm_password){
+
+            const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            let new_password =document.getElementById('new-password');
+            //let confirm_password = document.getElementById('confirm-password');
+            let alert = document.querySelector(".confirm-password-error");
+            
+            console.log(new_password.value);
+            console.log(confirm_password);
+           if(new_password.value == confirm_password && pattern.test(new_password.value)){
+                
+                alert.innerText ="Password matched";
+                document.querySelector('.password-submit-btn').disabled = false;
+                
+           }
+           else{
+                document.querySelector('.password-submit-btn').disabled = true;
+                alert.innerText = "";
+                
+
            }
           
-            document.getElementById(spanId).innertext = "";
-            document.getElementById('password').value = document.getElementById('passwordinput').value;
-            document.getElementById(containerID).classList.toggle("hide");
             
-
         }
        
     </script>

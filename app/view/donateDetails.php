@@ -119,7 +119,7 @@ input {
 
 @media screen and (max-width:768px) {
 
- 
+
 
     body {
         font-size: 13px;
@@ -198,6 +198,7 @@ input {
             </div>
 
             <div>
+                <?php foreach($incomes as $income){ ?>
                 <table id="mytable" class="center">
                     <col style="width:30%">
                     <col style="width:40%">
@@ -237,6 +238,7 @@ input {
                         </tr>
                     </tbody>
                 </table>
+                <?php } ?>
             </div>
             <div class="donation-details-btn">
                 <button class="btn btn-md btn-solid">Full donation details</button>

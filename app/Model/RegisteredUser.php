@@ -5,19 +5,19 @@
 class RegisteredUser extends User
 {
     public function getUserRoles($uid,$event_id){
-        $query = 'SELECT  moderator_flag,treasurer_flag FROM moderator_treasurer WHERE uid = :uid AND event_id =: event_id';
+        $query = 'SELECT  moderator_flag,treasurer_flag FROM moderator_treasurer WHERE uid = :uid AND event_id = :event_id';
         $params = ["uid" => $uid,"event_id"=>$event_id];
         $result=User::select($query,$params);
         $data=array();
-        if ($result[0]["moderator_flag"])
-            array_push($data,"moderator");
-        if ($result[0]["treasurer_flag"])
-            array_push($data,"treasurer");
-        
         if (count($data)==0)
             return false;
-        else
-            return $data;
+        else{
+            if ($result[0]["moderator_flag"])
+                array_push($data,"moderator");
+            if ($result[0]["treasurer_flag"])
+                array_push($data,"treasurer");
+        }
+        return $data;
     }
     public function getDetails($uid){
         $query = 'SELECT * FROM registered_user reg JOIN login ON reg.uid= login.uid WHERE reg.uid = :uid AND verified=1';
@@ -55,6 +55,17 @@ class RegisteredUser extends User
         $params = ["uid" => "$uid" ,"password"=> "$data[password]"];
         $query = 'UPDATE login  JOIN registered_user ON login.uid= registered_user.uid SET login.password =:password where login.uid = :uid and verified=1 ';
         User::insert($query,$params); 
+    }
+    function checkCurrentPassword($uid,$password){
+        $query= 'SELECT password FROM registered_user reg JOIN login ON reg.uid= login.uid WHERE reg.uid = :uid AND verified=1';
+        $params = ["uid"=> $uid];
+        $result= USER::select($query,$params);
+        if($result[0]['password']==$password){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     
 }

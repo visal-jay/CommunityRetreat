@@ -30,6 +30,7 @@
     }
 
     .grid {
+        width: 80%;
         display: grid;
         grid-gap: 10px;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -38,17 +39,18 @@
 
 
     figure {
-    background: #eeeeee;
-    margin: 0;
-    display: grid;
-    grid-template-rows: 1fr auto;
-    border-radius: 8px;
-    width: fit-content;
-    height: fit-content;
-    border: 1px solid #16c79a;
+        position: relative;
+        background: #eeeeee;
+        margin: 0;
+        display: grid;
+        grid-template-rows: 1fr auto;
+        border-radius: 8px;
+        width: fit-content;
+        height: fit-content;
+        border: 1px solid #16c79a;
     }
-    
-    p{
+
+    p {
         margin: 0.5rem;
     }
 
@@ -69,9 +71,22 @@
         width: 100%;
     }
 
-    .grid div:active {
-        width: 100%;
-        transform: scale(1.5, 1.5);
+    .delete-button {
+        background: white;
+        opacity: 0.5;
+        padding: 0.2rem;
+        position: absolute;
+        right: 11px;
+        top: 11px;
+        border-radius: 1px !important;
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .delete-button:hover {
+        opacity: 1;
+    }
+    .delete-button:active{
+        opacity: 1;
     }
 
     @media screen and (max-width:767px) {
@@ -94,19 +109,26 @@
     <div class="flex-col flex-center margin-side-lg">
         <h1>Gallery</h1>
         <button class="btn btn-solid margin-lg" onclick="addPhoto()">Add photo &nbsp; <i class="fas fa-plus"></i></button>
-        <div class="form flex-col flex-center">
+        <form class="form flex-col flex-center" action="/event/addPhoto?event_id=<?= $_GET["event_id"] ?>" method="post" enctype="multipart/form-data">
             <label for="myfile">Select a file:</label>
-            <input type="file" class="form-ctrl margin-md" id="myfile" name="myfile">
+            <input type="file" class="form-ctrl margin-md" id="myfile" name="photo">
             <button type="submit" class="btn ">Save</button>
-        </div>
+        </form>
 
         <div class="grid margin-lg">
-            <figure class="item bg-green">
-                <div class="content">
-                    <div class="gallery-container flex flex-center"><img src="/Public/assets/photo.jpeg" style="object-fit: cover;" alt=""></div>
-                    <p style="color:white;">Venodi Widanagamage</p>
-                </div>
-            </figure>
+            <?php foreach ($photos as $photo) { ?>
+                <figure class="item bg-green">
+                    <div class="content">
+                        <?php if ($photo["uid"] == $_SESSION["user"]["uid"]) { ?>
+                            <form class="delete-button" method="post" action ="/event/deletePhoto?event_id=<?= $_GET["event_id"]?>">
+                                <button type="submit" class="btn-icon" name = "photo" value="<?= $photo["image"] ?>" > <i class="far fa-trash-alt"></i></button>
+                            </form>
+                        <?php  } ?>
+                        <div class="gallery-container flex flex-center"><img src="<?= $photo["image"] ?>" style="object-fit: cover;" alt=""></div>
+                        <p style="color:white;">Venodi Widanagamage</p>
+                    </div>
+                </figure>
+            <?php } ?>
             <figure class="item bg-green">
                 <div class="content">
                     <div class="gallery-container flex flex-center"><img src="/Public/assets/login-image.jpg" style="object-fit: cover;" alt=""></div>
@@ -154,6 +176,7 @@
 </body>
 <script>
     function addPhoto() {
+        console.log("shiy");
         document.querySelector(".form").classList.toggle("show-form");
     }
 
@@ -174,16 +197,6 @@
 
     window.onload = resizeAllGridItems();
     window.addEventListener("resize", resizeAllGridItems);
-
-
-
-    document.querySelector(".side-nav .active").scrollIntoView({
-        behavior: 'auto',
-        block: 'center',
-        inline: 'center'
-    });
-
-    location.reload();
 </script>
 
 </html>

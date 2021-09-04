@@ -11,151 +11,187 @@
 </head>
 
 <style>
-table {
-    width: 100%;
-}
-
-table,
-th,
-td {
-    padding: 7px 10px 20px;
-}
-
-.donation-details-btn {
-    margin: 25px;
-}
-
-.initial-donation-enable-btn {
-    text-align: center;
-    top: 50%;
-    position: fixed;
-    width: 100%;
-}
-
-.blur {
-    filter: blur(5px);
-}
-
-.hide {
-    display: hide;
-}
-
-.form-ctrl {
-    margin-bottom: 0;
-}
-
-.scroll {
-    text-align: left;
-}
-
-.container-size {
-    width: 70%;
-    text-align: center;
-}
-
-.form {
-    width: 150px;
-    text-align: center;
-}
-
-.amount {
-    text-align: right;
-}
-
-
-* {
-    box-sizing: border-box;
-}
-
-
-/* Clear floats after the columns */
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.container {
-    /* max-width: -webkit-max-content; */
-    /* max-width: max-content; */
-    /* margin: 0 auto; */
-    max-width: 100%;
-    display: flex;
-    width: 31%;
-}
-
-.section {
-    flex: 1;
-}
-
-a {
-    display: block;
-    margin-block-start: 1.33em;
-    margin-block-end: 1.33em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    text-align: center;
-}
-
-input {
-    margin-block-start: 1.33em;
-    margin-block-end: 1.33em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-}
-
-.edit-btn,
-.close-btn,
-.save-btn {
-    margin-block-start: 1rem;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-}
-
-.secondary-donation-enable-disable-btn {
-    margin: 10px;
-}
-
-@media screen and (max-width:768px) {
-
- 
-
-    body {
-        font-size: 13px;
+    table {
+        width: 100%;
     }
 
-    #mytable .scroll {
-        overflow: scroll;
+    table,
+    th,
+    td {
+        padding: 7px 10px 20px;
+    }
+
+    .donation-details-btn {
+        margin: 25px;
+    }
+
+    .initial-donation-enable-btn {
+        text-align: center;
+        transform: translate(-50%, -50%);
+        top: 110%;
+        left: 50%;
+        position: absolute;
+
+        width: 100%;
+    }
+
+    .blur {
+        filter: blur(5px);
+    }
+
+    .hide {
+        display: hide;
+    }
+
+    .form-ctrl {
+        margin-bottom: 0;
+    }
+
+    .scroll {
+        text-align: left;
+    }
+
+    .container-size {
+        width: 70%;
+        text-align: center;
+    }
+
+    .form {
+        width: 150px;
+
+        text-align: center;
+    }
+
+    .amount {
+        text-align: right;
+    }
+
+
+
+
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .section {
+        flex: 1;
     }
 
     .edit-btn,
     .close-btn,
     .save-btn {
-        margin: 5px;
+        margin-block-start: 1rem;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
     }
 
-    .container-size {
-        width: 95%;
+    .form {
+        width: 60px;
+        height: 28px;
+        text-align: center;
     }
 
-    .initial-donation-enable-btn {
-        top: 37%;
+    .secondary-donation-enable-disable-btn {
+        margin: 10px;
     }
 
-    .container {
-        width: 65%;
-        margin: auto;
-    }
-
-    .card-container {
-        align-items: flex-start;
-        justify-content: left;
+    .popup .content {
+        position: fixed;
+        transform: scale(0);
+        z-index: 2;
+        text-align: center;
+        padding: 20px;
+        border-radius: 8px;
+        background: white;
+        box-shadow: 0px 0px 11px 2px rgba(0, 0, 0, 0.93);
+        z-index: 1;
+        left: 50%;
+        top: 50%;
+        display: flex;
         flex-direction: column;
-        height: fit-content;
+
     }
 
-}
+    .popup .btn-close {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        width: 30px;
+        height: 30px;
+        color: black;
+        font-size: 1.5rem;
+        padding: 2px 5px 7px 5px;
+
+    }
+
+    .popup.active .content {
+        transition: all 300ms ease-in-out;
+        transform: translate(-50%, -50%);
+    }
+
+    .blurred {
+        filter: blur(2px);
+        overflow: hidden;
+    }
+
+    .still {
+        overflow: hidden;
+    }
+
+    #qrcode {
+        margin: 1rem;
+    }
+
+    @media screen and (max-width:768px) {
+
+        table,
+        th,
+        td {
+            padding: 5px 8px 12px;
+        }
+
+        body {
+            font-size: 13px;
+        }
+
+        #mytable .scroll {
+            overflow: scroll;
+        }
+
+        .close-btn {
+            padding: 8px;
+        }
+
+        .save-btn {
+            padding: 8px;
+        }
+
+        .container-size {
+            width: 95%;
+        }
+
+        .initial-donation-enable-btn {
+            top: 80%;
+        }
+
+        .container {
+            width: 65%;
+            margin: auto;
+        }
+
+        .card-container {
+            align-items: flex-start;
+            justify-content: left;
+            flex-direction: column;
+            height: fit-content;
+        }
+
+    }
 </style>
 
 <body>

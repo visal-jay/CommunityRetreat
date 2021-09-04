@@ -147,8 +147,7 @@
         }
     }
 </style>
-<?php //include "nav.php" 
-?>
+<?php include "nav.php" ?>
 
 <body>
     <?php
@@ -179,13 +178,13 @@
 
     <div class="photo-container">
         <div class="cover-place-holder cover border-round">
-            <img src="/Public/assets/photo.jpeg" alt="" class="photo-element" styl>
-            <?php if ($organization || $moderator) { ?>
+            <img src="<?= $cover_photo ?>" alt="" class="photo-element" styl>
+            <?php if (($organization || $moderator) && ($_GET["page"]=="about") ){ ?>
                 <div class="image-upload hidden form">
                     <label for="file-input">
                         <i class="fas fa-edit clr-white"></i>
                     </label>
-                    <input id="file-input" type="file" />
+                    <input id="file-input" name="cover-photo" type="file" form="update-form" />
                 </div>
             <?php } ?>
         </div>
@@ -194,20 +193,22 @@
     <?php if ($organization || $moderator) { ?>
         <div class="flex-row flex-center margin-md">
             <h1 class="data"><?= $event_name ?></h1>
-            <input value="<?= $event_name ?>" type="text" name="event_name" class="form form-ctrl hidden" placeholder="Enter event name" required></input>
+            <?php if (($organization || $moderator) && ($_GET["page"]=="about") ){ ?>
+            <input value="<?= $event_name ?>" type="text" name="event_name" form="update-form" class="form form-ctrl hidden" placeholder="Enter event name" required></input>
+            <?php } ?>
         </div>
     <?php } ?>
 
     <div class="nav-secondary">
         <div class="nav-secondary-bar margin-lg">
             <?php $page = $_GET["page"] ?>
-            <a class="btn margin-side-md <?php if ($page == "about") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=about&&event_id=<?= $_GET["event_id"] ?> ">About</a>
+            <a class="btn margin-side-md <?php if ($page == "about") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=about&&event_id=<?= $_GET["event_id"] ?>">About</a>
             <a class="btn margin-side-md <?php if ($page == "gallery") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=gallery&&event_id=<?= $_GET["event_id"] ?>">Gallery</a>
-            <a class="btn margin-side-md <?php if ($page == "forum") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=forum&&event_id <?= $_GET["event_id"] ?>">Forum</a>
+            <a class="btn margin-side-md <?php if ($page == "forum") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=forum&&event_id=<?= $_GET["event_id"] ?>">Forum</a>
             <a class="btn margin-side-md <?php if ($page == "feeeback") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=feedback&&event_id=<?= $_GET["event_id"] ?>">Feedback</a>
             <?php if ($organization || $moderator) { ?>
                 <a class="btn margin-side-md <?php if ($page == "volunteers") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=volunteers&&event_id=<?= $_GET["event_id"] ?>">Volunteers</a>
-                <a class="btn margin-side-md <?php if ($page == "timeline") echo "nav-nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=timeline&&event_id=<?= $_GET["event_id"] ?>">Work Timeline</a>
+                <a class="btn margin-side-md <?php if ($page == "timeline") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=timeline&&event_id=<?= $_GET["event_id"] ?>">Work Timeline</a>
             <?php } ?>
             <?php if($organization || $treasurer){ ?>
             <a class="btn margin-side-md <?php if($page=="budget") echo "nav-active";?>" style=" margin-bottom:10px;" href="/event/view?page=budget&&event_id=<?= $_GET["event_id"]?>">Budget</a>
@@ -223,28 +224,20 @@
     if(isset($_GET["page"]) && $_GET["page"]=="about") require __DIR__ . "/aboutEvent.php";
     elseif(isset($_GET["page"]) && $_GET["page"]=="gallery") require __DIR__ .  "/eventGallery.php";
     elseif(isset($_GET["page"]) && $_GET["page"]=="forum") require __DIR__ . "/forum.php";
-    elseif(isset($_GET["page"]) && $_GET["page"]=="feedback") require __DIR__ . "/eventGallery.php";
+    elseif(isset($_GET["page"]) && $_GET["page"]=="feedback") require __DIR__ . "";
     elseif(isset($_GET["page"]) && $_GET["page"]=="budget") require __DIR__ . "/budgeting.php";
     elseif(isset($_GET["page"]) && $_GET["page"]=="userroles") require __DIR__ . "/roles.php";
     elseif(isset($_GET["page"]) && $_GET["page"]=="timeline") require __DIR__ . "/workTimeline.php";
     elseif(isset($_GET["page"]) && $_GET["page"]=="donations") require __DIR__ . "/donateDetails.php";
     elseif(isset($_GET["page"]) && $_GET["page"]=="volunteers") require __DIR__ . "/volunteer.php";
+    elseif(isset($_GET["page"]) && $_GET["page"]=="volunteers") require __DIR__ . "/timeline.php";
 
     ?>
 
 
 </body>
 <script>
-    function edit() {
-        var data = document.getElementsByClassName("data");
-        var form = document.getElementsByClassName("form");
-        for (var i = 0; i < data.length; i++) {
-            data[i].classList.toggle("hidden");
-        }
-        for (var i = 0; i < form.length; i++) {
-            form[i].classList.toggle("hidden");
-        }
-    }
+  
 
     function resizeProfile() {
         var coverHeight = (document.querySelector(".cover").offsetHeight);

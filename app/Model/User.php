@@ -23,6 +23,15 @@ class User extends Model
             return false;
     }
 
+    public function getUsername($uid){
+        if($result=(new Organisation)->getDetails($uid))
+            return $result["username"];
+        if($result=(new RegisteredUser)->getDetails($uid))
+            return $result["username"];
+        if($result=(new Admin)->getDetails($uid))
+            return $result["username"];
+    }
+    
     public function getForgotPasswordKey ($email){
         $encryption= new Encryption;
         $query = 'SELECT email,password FROM login where email = :email AND verified= 1';
@@ -81,16 +90,6 @@ class User extends Model
         User::insert($query,$params);
     }
 
-    function checkCurrentPassword($uid,$password){
-        $query= 'SELECT password FROM registered_user reg JOIN login ON reg.uid= login.uid WHERE reg.uid = :uid AND verified=1';
-        $params = ["uid"=> $uid];
-        $result= USER::select($query,$params);
-        if($result[0]['password']==$password){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
+
 
 }

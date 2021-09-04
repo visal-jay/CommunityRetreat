@@ -362,7 +362,7 @@
         correctLevel: QRCode.CorrectLevel.H,
     });
 
-    QR_CODE.makeCode("https://ggogle.com");
+    QR_CODE.makeCode("http//:<?= $ip ?>/event/volunteerValidate?event_id=<?= $_GET["event_id"] ?>");
 
     function printDiv() {
         var divContents = document.getElementById("qrcode").innerHTML;

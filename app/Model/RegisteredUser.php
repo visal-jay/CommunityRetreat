@@ -31,7 +31,7 @@ class RegisteredUser extends User
     }
     
     public function changeUsername($uid,$data){
-        
+        $_SESSION["user"]["username"]=$data;
         $params = ["uid" => $uid , "username"=> $data];
         $query = 'UPDATE registered_user SET username= :username   WHERE uid = :uid ' ;
         User::insert($query,$params);       
@@ -66,6 +66,40 @@ class RegisteredUser extends User
         else{
             return false;
         }
+    }
+
+    public function addRegisteredUser($data){
+        $db = Model::getDB();
+        $db->beginTransaction();
+
+        $insert_org_ql = 'INSERT INTO `registered_user` (`email`,`username`, `contact_number`) VALUES (:email,  :username, :contact_number)';
+        $stmt=$db->prepare($insert_org_ql);
+        $insertData=array_intersect_key($data,["email"=>'',"username"=>'',"contact_number"=>'']);
+        $stmt->execute($insertData);
+        $stmt->closeCursor();
+       
+        $last_insert_org_sql='SELECT uid FROM registered_user ORDER BY uid DESC LIMIT 1 ';
+        $stmt=$db->prepare($last_insert_org_sql);
+        $stmt->execute([]);
+        $data["uid"] = $stmt->fetchColumn();
+        $stmt->closeCursor();
+
+        $data["user_type"]="organization";
+        $insertOrgLoginSql = 'INSERT INTO `login` (`email`,`password`, `uid`, `user_type`) VALUES (:email,  :password, :uid, "registered user")';
+        $stmt=$db->prepare($insertOrgLoginSql);
+        $insertData=array_intersect_key($data,["email"=>'',"password"=>'',"uid"=>'']);
+        $stmt->execute($insertData);
+        
+        $db->commit();
+
+        $encryption=new Encryption;
+        $data["time"] = (int)shell_exec("date '+%s'");
+        $parameters = ["key" => $encryption->encrypt(array_intersect_key($data, ["email" => '', "password" => '',"time"=>'']), 'email verificaition')];
+
+        $mail=new Mail;
+        
+        $mail->verificationEmail($data["email"],"confirmationMail","localhost/signup/verifyemail?".http_build_query($parameters),'Signup');
+   
     }
     
 }

@@ -23,7 +23,7 @@ class LoginController
                 $key = $user->getForgotPasswordKey($_POST["email"]);
                 $mail = new Mail;
                 $mail->verificationEmail($_POST["email"], "forgotPasswordMail", "localhost/login/validateforgotpassword?" . http_build_query(["key" => $key]), 'Reset password');
-                // UI
+                
             }
         }
         Controller::redirect('/login/view');

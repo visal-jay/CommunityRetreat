@@ -203,8 +203,8 @@
                             </tr>
                             <tr>
                                 <td><?= $event["start_date"] ?></td>
-                                <td><?php if ($event["donation_status"]) { ?><i class="fas fa-check clr-green"></i><?php } else { ?><i class="fas fa-times clr-red"></i><?php } ?> </td>
                                 <td><?php if ($event["volunteer_status"]) { ?><i class="fas fa-check clr-green"></i><?php } else { ?><i class="fas fa-times clr-red"></i><?php } ?> </td>
+                                <td><?php if ($event["donation_status"]) { ?><i class="fas fa-check clr-green"></i><?php } else { ?><i class="fas fa-times clr-red"></i><?php } ?> </td>
                             </tr>
                         </table>
                         <div class="flex-row flex-center">

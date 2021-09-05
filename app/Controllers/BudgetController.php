@@ -9,6 +9,8 @@ class BudgetController
         $income_details=$budget->getIncomeDetails($_GET["event_id"]);
         $data["incomes"]=$income_details;
         $data["expenses"]=$expense_details;
+        $event_details=array_intersect_key((new Events)->getDetails($_GET["event_id"]),["event_name"=>'',"cover_photo"=>'']);
+        $data=array_merge($event_details,$data);
         View::render("eventPage",$data);
         
     } 

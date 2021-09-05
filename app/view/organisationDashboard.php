@@ -200,28 +200,28 @@
     ?>
 
     <?php if ($organization) { ?>
-        <form action="/organisation/update" method="post">
+        <form action="/organisation/update" method="post" enctype="multipart/form-data">
         <?php } ?>
         <div class="photo-container">
             <div class="cover-place-holder cover border-round">
-                <img src="/Public/assets/photo.jpeg" alt="" class="photo-element" styl>
+                <img src="<?= $cover_pic ?>" alt="" class="photo-element" >
                 <?php if ($organization) { ?>
                     <div class="image-upload hidden form">
                         <label for="file-input">
                             <i class="fas fa-edit clr-white"></i>
                         </label>
-                        <input id="file-input" type="file" />
+                        <input id="file-input" name="cover-photo" type="file" />
                     </div>
                 <?php } ?>
             </div>
             <div class="profile-pic border-round">
-                <img src="/Public/assets/newphoto.jpeg" alt="" class="photo-element">
+                <img src="<?= $profile_pic ?>" alt="" class="photo-element">
                 <?php if ($organization) { ?>
                     <div class="image-upload hidden form">
-                        <label for="file-input">
+                        <label for="file-input-1">
                             <i class="fas fa-edit clr-white"></i>
                         </label>
-                        <input id="file-input" type="file" />
+                        <input id="file-input-1" name="profile-photo" type="file" />
                     </div>
                 <?php } ?>
             </div>
@@ -245,11 +245,7 @@
                 </div>
                 <div class="flex-col">
                     <h2>Contact us</h2>
-                    <?php if ($organization) { ?>
-                        <input type="email" class="form form-ctrl hidden" placeholder=" Enter email" value="<?= $email ?>" required>
-                        <input type="tel" name="contact_number" class="form form-ctrl hidden" placeholder="Enter telephone number" value="<?= $contact_number ?>" pattern="^[+]?[0-9]{10,12}$" required>
-                    <?php } ?>
-                    <div class="data">
+                    <div>
                         <a href="mailto:<?= $email ?>"><?= $email ?> </a>
                         <p><?= $contact_number ?></p>
                     </div>
@@ -336,7 +332,6 @@
     console.log(latitude,longitude);
 
     function initMap() {
-        console.log("fuck");
         map = new google.maps.Map(document.getElementById("map"), {
             center: {
                 lat: -34.397,
@@ -360,7 +355,6 @@
 
 
     function showPosition(position) {
-        console.log(latitude,longitude);
         var myLatlng = new google.maps.LatLng(lat, long);
         
         marker = new google.maps.Marker({
@@ -372,7 +366,7 @@
         // To add the marker to the map, call setMap();
         marker.setMap(map);
         map.setCenter(myLatlng);
-        map.setZoom(10)
+        map.setZoom(10);
 
         google.maps.event.addListener(marker, 'dragend', function(evt) {
             document.getElementById('longitude').value = evt.latLng.lng().toFixed(3);

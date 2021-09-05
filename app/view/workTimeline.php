@@ -222,7 +222,6 @@
     }
 </style>
 
-<?php include "nav.php" ?>
 
 <body>
     <div id="background">

@@ -27,8 +27,11 @@ td {
 
 .initial-donation-enable-btn {
     text-align: center;
-    top: 50%;
-    position: fixed;
+    transform: translate(-50%, -50%);
+    top: 110%;
+    left: 50%;
+    position: absolute;
+
     width: 100%;
 }
 
@@ -55,6 +58,7 @@ td {
 
 .form {
     width: 150px;
+
     text-align: center;
 }
 
@@ -63,9 +67,7 @@ td {
 }
 
 
-* {
-    box-sizing: border-box;
-}
+
 
 
 /* Clear floats after the columns */
@@ -75,33 +77,8 @@ td {
     clear: both;
 }
 
-.container {
-    /* max-width: -webkit-max-content; */
-    /* max-width: max-content; */
-    /* margin: 0 auto; */
-    max-width: 100%;
-    display: flex;
-    width: 31%;
-}
-
 .section {
     flex: 1;
-}
-
-a {
-    display: block;
-    margin-block-start: 1.33em;
-    margin-block-end: 1.33em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    text-align: center;
-}
-
-input {
-    margin-block-start: 1.33em;
-    margin-block-end: 1.33em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
 }
 
 .edit-btn,
@@ -113,13 +90,69 @@ input {
     margin-inline-end: 0px;
 }
 
+.form {
+    width: 60px;
+    height: 28px;
+    text-align: center;
+}
+
 .secondary-donation-enable-disable-btn {
     margin: 10px;
 }
 
+.popup .content {
+    position: fixed;
+    transform: scale(0);
+    z-index: 2;
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0px 0px 11px 2px rgba(0, 0, 0, 0.93);
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.popup .btn-close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 30px;
+    height: 30px;
+    color: black;
+    font-size: 1.5rem;
+    padding: 2px 5px 7px 5px;
+
+}
+
+.popup.active .content {
+    transition: all 300ms ease-in-out;
+    transform: translate(-50%, -50%);
+}
+
+.blurred {
+    filter: blur(2px);
+    overflow: hidden;
+}
+
+.still {
+    overflow: hidden;
+}
+
+#qrcode {
+    margin: 1rem;
+}
+
 @media screen and (max-width:768px) {
 
-
+    table,
+    th,
+    td {
+        padding: 5px 8px 12px;
+    }
 
     body {
         font-size: 13px;
@@ -129,10 +162,12 @@ input {
         overflow: scroll;
     }
 
-    .edit-btn,
-    .close-btn,
+    .close-btn {
+        padding: 8px;
+    }
+
     .save-btn {
-        margin: 5px;
+        padding: 8px;
     }
 
     .container-size {
@@ -140,7 +175,7 @@ input {
     }
 
     .initial-donation-enable-btn {
-        top: 37%;
+        top: 80%;
     }
 
     .container {
@@ -198,7 +233,7 @@ input {
             </div>
 
             <div>
-                <?php foreach($incomes as $income){ ?>
+
                 <table id="mytable" class="center">
                     <col style="width:30%">
                     <col style="width:40%">
@@ -238,7 +273,7 @@ input {
                         </tr>
                     </tbody>
                 </table>
-                <?php } ?>
+
             </div>
             <div class="donation-details-btn">
                 <button class="btn btn-md btn-solid">Full donation details</button>

@@ -170,5 +170,22 @@ class OrganisationController
         echo json_encode(array("taken"=>(new User)->checkUserEmail($_POST["email"])));
     }
 
+    function getAvailableUserRoles(){
+        echo json_encode((new Organisation)->getAvailableUserRoles($_POST["name"]));
+    }
+
+    
+
+    function addUserRole(){
+        if (isset($_POST["uid"]) && isset($_POST["role"]) && isset($_GET["event_id"]))
+            (new Organisation)->addUserRole($_POST["uid"],$_POST["role"],$_GET["event_id"]);
+        Controller::redirect("/event/view",["page"=>'userroles',"event_id"=>$_GET["event_id"]]);
+    }
+
+    function deleteUserRole(){
+        if (isset($_POST["uid"]) && isset($_POST["role"]) && isset($_GET["event_id"]))
+            (new Organisation)->deleteUserRole($_POST["uid"],$_POST["role"],$_GET["event_id"]);
+        Controller::redirect("/event/view",["page"=>'userroles',"event_id"=>$_GET["event_id"]]);
+    }
                
 }

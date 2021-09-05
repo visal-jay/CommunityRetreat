@@ -90,7 +90,7 @@
         overflow: hidden;
     }
 
-    .container-size{
+    .container-size {
         width: 70%;
     }
 
@@ -163,11 +163,11 @@
         }
 
         #map {
-        position: relative;
-        height: 230px;
-        width: 230px;
-        border-radius: 8px;
-    }
+            position: relative;
+            height: 230px;
+            width: 230px;
+            border-radius: 8px;
+        }
 
         .container-size {
             width: 90%;
@@ -234,7 +234,7 @@ if (isset($_SESSION["user"]["user_type"])) {
     <div id="background">
         <div class="flex-col flex-center">
             <h1>About</h1>
-            <div class="content border-round container-size margin-md"  id="details" style="background-color: #eeeeee">
+            <div class="content border-round container-size margin-md" id="details" style="background-color: #eeeeee">
                 <?php if ($organization || $moderator) { ?>
                     <form action="/event/updateDetails?event_id=<?= $_GET["event_id"] ?>" method="post" id="update-form" enctype="multipart/form-data">
                     <?php } ?>
@@ -245,7 +245,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                             <?php if ($organization || $moderator) { ?>
                                 <div class="flex-row flex-center">
                                     <label class="form hidden" for="start_date">Event date</label>
-                                    <input type="date" value="<?= $start_date ?>" name="start_date" class="form form-ctrl margin-side-md hidden" data-placeholder="Event is on?" required></input>
+                                    <input type="date" id="start_date" value="<?= $start_date ?>" name="start_date" class="form form-ctrl margin-side-md hidden" data-placeholder="Event is on?" required></input>
                                 </div>
                             <?php } ?>
                         </div>
@@ -374,6 +374,7 @@ if (isset($_SESSION["user"]["user_type"])) {
             </div>
             <?php } ?>
 
+<<<<<<< HEAD
             <div class="flex-row flex-center content border-round container-size1">
                 <button class="btn data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
                 <button type="button" class="btn btn-solid bg-red border-red form margin-side-md hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
@@ -383,6 +384,18 @@ if (isset($_SESSION["user"]["user_type"])) {
                     <button id="publish-btn" class="btn margin-lg" onclick="publish(); togglePopup('publish'); blur_background('background'); stillBackground('id1')">Publish</button>
                 <?php } ?>
             </div>
+=======
+            <?php if ($moderator || $organization) { ?>
+                <div class="flex-row flex-center content border-round container-size1">
+                    <button class="btn data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
+                    <button type="button" class="btn btn-solid bg-red border-red form margin-side-md hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
+                    <button name="event_id" value="<?= $_GET["event_id"] ?>" form="update-form" type="submit" class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
+                    <?php if ($status == "added") { ?>
+                        <button id="publish-btn" class="btn margin-lg" onclick="togglePopup('publish'); blur_background('background'); stillBackground('id1')">Publish</button>
+                    <?php } ?>
+                </div>
+            <?php } ?>
+>>>>>>> 831ff5eca72583e9155e645360f274edde1f81a5
         </div>
     </div>
 
@@ -445,10 +458,20 @@ if (isset($_SESSION["user"]["user_type"])) {
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
 
 <script>
+<<<<<<< HEAD
 
     function publish(){
         setTimeout(function(){document.getElementById("update-form").submit()}, 2000);
     }
+=======
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+
+    today = yyyy+ '-' + mm + '-' + dd;
+    document.getElementById("start_date").setAttribute("min", today);
+>>>>>>> 831ff5eca72583e9155e645360f274edde1f81a5
 
     function edit() {
 
@@ -499,12 +522,12 @@ if (isset($_SESSION["user"]["user_type"])) {
 
     }
 
-    function resizeMap(){
-        console.log( document.getElementById("details").offsetWidth);
-        document.getElementById("map").style.width=parseInt(document.getElementById("details").offsetWidth)*0.7+"px";
+    function resizeMap() {
+        console.log(document.getElementById("details").offsetWidth);
+        document.getElementById("map").style.width = parseInt(document.getElementById("details").offsetWidth) * 0.7 + "px";
     }
     window.addEventListener("resize", resizeMap);
-    
+
 
     function animateProgressBar(el, width) {
 

@@ -37,7 +37,9 @@ class EventController
         Controller::redirect("/event/view",["event_id"=>$_GET["event_id"],"page"=>"gallery"]);
     }
     public function userroles($event_details){
-        View::render('eventPage',$event_details);
+        $data["user_roles"]=(new Organisation)->getUserRoles($_GET["event_id"]);
+        $data=array_merge($data,$event_details);
+        View::render('eventPage',$data);
     }
 
     public function gallery($event_details){
@@ -60,6 +62,7 @@ class EventController
 
     }
 
+   
     public function budget($event_details){
         (new BudgetController)->view($event_details);
     }
@@ -72,8 +75,8 @@ class EventController
         $ip = exec('ifconfig | grep "inet " | grep -v 127.0.0.1 | cut -d\  -f2');
         View::render("eventPage",array_merge($event_details,["ip"=>$ip]));
     }
-    public function volunteerValidate($event_details){
-        View::render("volunteerThank",$event_details);
+    public function volunteerValidate(){
+        View::render("volunteerThank");
     }
 
     public function timeline($event_details){
@@ -97,7 +100,7 @@ class EventController
     public function updateDetails()
     {
         $_POST["event_id"] = $_GET["event_id"];
-        Controller::accessCheck(["moderator", "organization"], $_POST["event_id"]);
+        Controller::accessCheck(["moderator", "organization","guest_user"], $_POST["event_id"]);
         var_dump($_POST);
         
         $validate = new Validation;
@@ -125,6 +128,6 @@ class EventController
 
     public function editAnnouncement(){
         $_POST["announcement_id"] = $_GET["announcement_id"];
-        
+
     }
 }

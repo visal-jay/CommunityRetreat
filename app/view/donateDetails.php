@@ -11,187 +11,186 @@
 </head>
 
 <style>
-    table {
-        width: 100%;
-    }
+table {
+    width: 100%;
+}
+
+table,
+th,
+td {
+    padding: 7px 10px 20px;
+}
+
+.donation-details-btn {
+    margin: 25px;
+}
+
+.initial-donation-enable-btn {
+    text-align: center;
+    transform: translate(-50%, -50%);
+    top: 110%;
+    left: 50%;
+    position: absolute;
+
+    width: 100%;
+}
+
+.blur {
+    filter: blur(5px);
+}
+
+.hide {
+    display: hide;
+}
+
+.form-ctrl {
+    margin-bottom: 0;
+}
+
+.scroll {
+    text-align: left;
+}
+
+.container-size {
+    width: 70%;
+    text-align: center;
+}
+
+.form {
+    width: 150px;
+
+    text-align: center;
+}
+
+.amount {
+    text-align: right;
+}
+
+
+
+
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.section {
+    flex: 1;
+}
+
+.edit-btn,
+.close-btn,
+.save-btn {
+    margin-block-start: 1rem;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.form {
+    width: 60px;
+    height: 28px;
+    text-align: center;
+}
+
+.secondary-donation-enable-disable-btn {
+    margin: 10px;
+}
+
+.popup .content {
+    position: fixed;
+    transform: scale(0);
+    z-index: 2;
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0px 0px 11px 2px rgba(0, 0, 0, 0.93);
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.popup .btn-close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 30px;
+    height: 30px;
+    color: black;
+    font-size: 1.5rem;
+    padding: 2px 5px 7px 5px;
+
+}
+
+.popup.active .content {
+    transition: all 300ms ease-in-out;
+    transform: translate(-50%, -50%);
+}
+
+.blurred {
+    filter: blur(2px);
+    overflow: hidden;
+}
+
+.still {
+    overflow: hidden;
+}
+
+#qrcode {
+    margin: 1rem;
+}
+
+@media screen and (max-width:768px) {
 
     table,
     th,
     td {
-        padding: 7px 10px 20px;
+        padding: 5px 8px 12px;
     }
 
-    .donation-details-btn {
-        margin: 25px;
+    body {
+        font-size: 13px;
     }
 
-    .initial-donation-enable-btn {
-        text-align: center;
-        transform: translate(-50%, -50%);
-        top: 110%;
-        left: 50%;
-        position: absolute;
-
-        width: 100%;
+    #mytable .scroll {
+        overflow: scroll;
     }
 
-    .blur {
-        filter: blur(5px);
+    .close-btn {
+        padding: 8px;
     }
 
-    .hide {
-        display: hide;
-    }
-
-    .form-ctrl {
-        margin-bottom: 0;
-    }
-
-    .scroll {
-        text-align: left;
+    .save-btn {
+        padding: 8px;
     }
 
     .container-size {
-        width: 70%;
-        text-align: center;
+        width: 95%;
     }
 
-    .form {
-        width: 150px;
-
-        text-align: center;
+    .initial-donation-enable-btn {
+        top: 80%;
     }
 
-    .amount {
-        text-align: right;
+    .container {
+        width: 65%;
+        margin: auto;
     }
 
-
-
-
-
-    /* Clear floats after the columns */
-    .row:after {
-        content: "";
-        display: table;
-        clear: both;
-    }
-
-    .section {
-        flex: 1;
-    }
-
-    .edit-btn,
-    .close-btn,
-    .save-btn {
-        margin-block-start: 1rem;
-        margin-block-end: 1em;
-        margin-inline-start: 0px;
-        margin-inline-end: 0px;
-    }
-
-    .form {
-        width: 60px;
-        height: 28px;
-        text-align: center;
-    }
-
-    .secondary-donation-enable-disable-btn {
-        margin: 10px;
-    }
-
-    .popup .content {
-        position: fixed;
-        transform: scale(0);
-        z-index: 2;
-        text-align: center;
-        padding: 20px;
-        border-radius: 8px;
-        background: white;
-        box-shadow: 0px 0px 11px 2px rgba(0, 0, 0, 0.93);
-        z-index: 1;
-        left: 50%;
-        top: 50%;
-        display: flex;
+    .card-container {
+        align-items: flex-start;
+        justify-content: left;
         flex-direction: column;
-
+        height: fit-content;
     }
 
-    .popup .btn-close {
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        width: 30px;
-        height: 30px;
-        color: black;
-        font-size: 1.5rem;
-        padding: 2px 5px 7px 5px;
-
-    }
-
-    .popup.active .content {
-        transition: all 300ms ease-in-out;
-        transform: translate(-50%, -50%);
-    }
-
-    .blurred {
-        filter: blur(2px);
-        overflow: hidden;
-    }
-
-    .still {
-        overflow: hidden;
-    }
-
-    #qrcode {
-        margin: 1rem;
-    }
-
-    @media screen and (max-width:768px) {
-
-        table,
-        th,
-        td {
-            padding: 5px 8px 12px;
-        }
-
-        body {
-            font-size: 13px;
-        }
-
-        #mytable .scroll {
-            overflow: scroll;
-        }
-
-        .close-btn {
-            padding: 8px;
-        }
-
-        .save-btn {
-            padding: 8px;
-        }
-
-        .container-size {
-            width: 95%;
-        }
-
-        .initial-donation-enable-btn {
-            top: 80%;
-        }
-
-        .container {
-            width: 65%;
-            margin: auto;
-        }
-
-        .card-container {
-            align-items: flex-start;
-            justify-content: left;
-            flex-direction: column;
-            height: fit-content;
-        }
-
-    }
+}
 </style>
 
 <body>
@@ -234,6 +233,7 @@
             </div>
 
             <div>
+
                 <table id="mytable" class="center">
                     <col style="width:30%">
                     <col style="width:40%">
@@ -273,6 +273,7 @@
                         </tr>
                     </tbody>
                 </table>
+
             </div>
             <div class="donation-details-btn">
                 <button class="btn btn-md btn-solid">Full donation details</button>

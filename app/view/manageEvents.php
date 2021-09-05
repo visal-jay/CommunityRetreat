@@ -25,10 +25,11 @@
         width: 80%;
     }
 
-    .event-link{
+    .event-link {
         text-decoration-color: none;
-        color:black;
+        color: black;
     }
+
     .form {
         min-width: 50%;
         overflow: hidden;
@@ -159,7 +160,7 @@
                 <div class="date" style="justify-content:space-evenly">
                     <div class="flex-col">
                         <label>Date</label>
-                        <input type="date" name="start_date" class="form-ctrl">
+                        <input id="start_date" type="date" name="start_date" class="form-ctrl">
                     </div>
                     <div class="flex-col">
                         <label>Starting time</label>
@@ -192,7 +193,9 @@
         <div class="events">
             <?php foreach ($events as $event) { ?>
                 <div class="card-container margin-md">
-                    <a class="event-link" href="/event/view?page=about&&event_id=<?= $event["event_id"] ?>"><h3 class="heading"><?= $event["event_name"] ?></h3></a>
+                    <a class="event-link" href="/event/view?page=about&&event_id=<?= $event["event_id"] ?>">
+                        <h3 class="heading"><?= $event["event_name"] ?></h3>
+                    </a>
                     <div class="event-card-details margin-md">
                         <table>
                             <tr>
@@ -229,6 +232,16 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
 
 <script>
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("start_date").setAttribute("min", today);
+
+    var today = new Date();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     function addEvent() {
         document.querySelector(".form").classList.toggle("show-form");
     }

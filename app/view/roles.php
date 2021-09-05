@@ -8,10 +8,17 @@
     <link rel="stylesheet" href="/Public/assets/newstyles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
     <title>User Roles</title>
 </head>
 
 <style>
+    img {
+        height: 30px;
+        width: 30px;
+    }
+
     .styled-table {
         border-collapse: collapse;
         margin: 25px 25px;
@@ -35,6 +42,29 @@
         flex-direction: row;
     }
 
+    .search-bar-role {
+        position: relative;
+    }
+
+    .search-bar-dropdown {
+        max-height: 100px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        background: white;
+        position: absolute;
+        top: 36px;
+        left: 4px;
+        width: 175px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    }
+
+    .search-bar-dropdown div{
+        padding: 0 3px;
+    }
+    .search-bar-dropdown div:hover {
+        background: grey;
+    }
+
     th,
     td {
         padding-right: 20px;
@@ -42,8 +72,21 @@
         padding-bottom: 4px;
     }
 
+    .drop-down-list {
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
     #del {
         padding-left: 30px;
+    }
+
+    hr {
+        margin: 5px;
+        color: gray;
+        background-color: gray;
     }
 
     @media screen and (max-width:767px) {
@@ -56,6 +99,13 @@
             width: 50%;
         }
 
+        .search-bar-dropdown {
+            background: white;
+            position: absolute;
+            top: 36px;
+            left: 4px;
+            width: 150px;
+        }
 
         .styled-table {
             width: 200px;
@@ -70,13 +120,14 @@
         <h1>User Roles</h1>
 
         <div>
-            <form class="flex-center flex-row-to-col" action="/action_page.html" style="height:fit-content">
+            <form autocomplete="off" class="flex-center flex-row-to-col" action="/organisation/addUserRole?event_id=<?= $_GET['event_id'] ?>" method="post" style="height:fit-content">
                 <div class="flex-row flex-center">
                     <div class="search-bar search-bar-role">
-                        <input type="search" class="form-ctrl" placeholder="Search User">
-                        <button type="" class="btn-icon clr-green "><i class=" fa fa-search"></i></button>
+                        <input autocomplete="off" type="search" id="user-search" class="form-ctrl" placeholder="Search User" onkeyup="getUsers()" required>
+                        <input type="text" id="user-id" class="hidden" name="uid">
+                        <div class="search-bar-dropdown"></div>
                     </div>
-                    <select class="form-ctrl" id="role" required>
+                    <select class="form-ctrl" id="role" required name="role">
                         <option value="" disabled selected>Select role</option>
                         <option value="Moderator">Moderator</option>
                         <option value="Treasurer">Treasurer</option>
@@ -96,33 +147,54 @@
                     <th>User Role</th>
                     <th></th>
                 </tr>
-                <tr>
-                    <td>Visal Jayathilake</td>
-                    <td>Admin</td>
-                    <td id="del"><i class="btn-icon far fa-trash-alt clr-red" onclick="del()"></i></td>
-                </tr>
-                <tr>
-                    <td>Pudara Semini</td>
-                    <td>Treasurer</td>
-                    <td id="del"><i class="btn-icon far fa-trash-alt clr-red" onclick="del()"></i></td>
-                </tr>
-                <tr>
-                    <td>Venodi Widanagamage</td>
-                    <td>Moderator</td>
-                    <td id="del"><i class="btn-icon far fa-trash-alt clr-red" onclick="del()"></i>
-                        <div class="flex-row flex-space" style="display: none; padding-top:1rem;">
-                            <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
-                            <i class="fas fa-check clr-green margin-side-md"></i>&nbsp;
-                            <i class="fas fa-times clr-red  margin-side-md" onclick="cancel()"></i>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Manuka Dewanarayana</td>
-                    <td>Registered User</td>
-                    <td id="del"><i class="btn-icon far fa-trash-alt clr-red" onclick="del()"></i></td>
-                </tr>
+                <?php foreach ($user_roles as $userrole) {
+                    if ($userrole["moderator_flag"] == 1) {
+                ?>
+                        <tr>
+                            <td><?= $userrole["username"] ?></td>
+                            <td><?= "Moderator" ?></td>
+                            <td id="del">
+                                <div onclick="del(event.target.parentNode)">
+                                    <i class="btn-icon far fa-trash-alt clr-red"></i>
+                                </div>
+                                <div class="hidden form">
+                                    <div class="flex-row flex-space">
+                                        <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
+                                        <i class="fas fa-check clr-green margin-side-md" onclick="deleteUserRoles('<?= $userrole['uid'] ?>','<?= 'moderator' ?>', '<?= $_GET['event_id'] ?>')"></i>&nbsp;
+                                        <i class="fas fa-times clr-red  margin-side-md" onclick="del(event.target.parentNode.parentNode.previousElementSibling)"></i>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php }
+                    if ($userrole["treasurer_flag"] == 1) {
+                    ?>
+                        <tr>
+                            <td><?= $userrole["username"] ?></td>
+                            <td><?= "Treasurer" ?></td>
+                            <td id="del">
+                                <div onclick="del(event.target.parentNode)">
+                                    <i class="btn-icon far fa-trash-alt clr-red"></i>
+                                </div>
+                                <div class="hidden form">
+                                    <div class="flex-row flex-space">
+                                        <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
+                                        <i class="fas fa-check clr-green margin-side-md" onclick="deleteUserRoles('<?= $userrole['uid'] ?>','<?= 'treasurer' ?>', '<?= $_GET['event_id'] ?>')"></i>&nbsp;
+                                        <i class="fas fa-times clr-red  margin-side-md" onclick="del(event.target.parentNode.parentNode.previousElementSibling)"></i>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                <?php }
+                } ?>
+
             </table>
+            <form method="post" action="/organisation/deleteUserRole?event_id=<?= $_GET["event_id"] ?>" id="delete-form">
+                <input type="text" class="hidden" name="uid" id="user-role-uid" required>
+                <input type="text" class="hidden" name="role" id="user-role" required>
+                <input type="text" class="hidden" name="event_id" id="user-role-event-id" required>
+            </form>
         </div>
     </div>
 </body>
@@ -132,15 +204,56 @@
         document.querySelector(".form").classList.toggle("show-form");
     }
 
-    function del() {
-        var data = document.getElementsByClassName("data");
-        var form = document.getElementsByClassName("form");
-        for (var i = 0; i < data.length; i++) {
-            data[i].classList.toggle("hidden");
-        }
-        for (var i = 0; i < form.length; i++) {
-            form[i].classList.toggle("hidden");
-        }
+    function del(event) {
+        event.nextElementSibling.classList.toggle("hidden");
+        event.classList.toggle("hidden");
+    }
+
+    function deleteUserRoles(uid, role, event_id) {
+
+        document.getElementById("user-role-uid").value = uid;
+        document.getElementById("user-role").value = role;
+        document.getElementById("user-role-event-id").value = event_id;
+        document.getElementById("delete-form").submit();
+    }
+
+    function createElementFromHTML(htmlString) {
+        var div = document.createElement('div');
+        div.innerHTML = htmlString.trim();
+        return div.firstChild;
+    }
+
+    function addUser(uid, username) {
+        console.log(uid, username);
+        document.querySelector(".search-bar-dropdown").innerHTML = "";
+        document.getElementById("user-search").value = username;
+        document.getElementById("user-id").value = uid;
+    }
+
+    function getUsers() {
+        var name = document.getElementById("user-search").value;
+        if (name.length != 0)
+            $.ajax({
+                url: "/organisation/getAvailableUserRoles", //the page containing php script
+                type: "post", //request type,
+                dataType: 'json',
+                data: {
+                    name: name
+                },
+                success: function(result) {
+                    console.log(result);
+                    let parent_container = document.querySelector(".search-bar-dropdown");
+                    parent_container.innerHTML = "";
+                    if (result.length != 0)
+                        result.forEach(evn => {
+                            let template = `<div class="drop-down-list" onclick="addUser('${evn.uid}','${evn.username}')"><img src="/Uploads/placeholder-image.jpg" alt=""><div class="margin-side-md">${evn.username}</div></div>`;
+                            parent_container.appendChild(createElementFromHTML(template));
+                            parent_container.appendChild(createElementFromHTML('<hr>'));
+                        });
+                }
+            });
+        else
+            document.querySelector(".search-bar-dropdown").innerHTML = "";
     }
 </script>
 

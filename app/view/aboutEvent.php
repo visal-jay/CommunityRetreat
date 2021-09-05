@@ -458,12 +458,11 @@ if (isset($_SESSION["user"]["user_type"])) {
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
 
 <script>
-<<<<<<< HEAD
 
     function publish(){
         setTimeout(function(){document.getElementById("update-form").submit()}, 2000);
     }
-=======
+    
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -471,7 +470,6 @@ if (isset($_SESSION["user"]["user_type"])) {
 
     today = yyyy+ '-' + mm + '-' + dd;
     document.getElementById("start_date").setAttribute("min", today);
->>>>>>> 831ff5eca72583e9155e645360f274edde1f81a5
 
     function edit() {
 

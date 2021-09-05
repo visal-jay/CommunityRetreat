@@ -28,7 +28,7 @@ class Events extends Model
 
     public function getDetails($event_id)
     {
-        $query = 'SELECT `event_id`, `event_name`, `org_uid`,`organisation_username`, ST_X(`latlang`) as latitude, ST_Y(`latlang`) as longitude, `start_date`, `start_time`, `end_time`, `about`, `mode`, `volunteer_capacity`, `donation_capacity`, `cover_photo`, `donation_status`, `volunteer_status`, `donations`, `volunteered`, `status`, TIMEDIFF(end_time, start_time) as duration  FROM event_details where event_id=:event_id ';
+        $query = 'SELECT `event_id`, `event_name`, `org_uid`,`organisation_username`, ST_X(`latlang`) as latitude, ST_Y(`latlang`) as longitude, `start_date`, `start_time`, `end_time`, `about`, `mode`, `volunteer_capacity`, `donation_capacity`, `cover_photo`, `donation_status`, `volunteer_status`, `donations`, `volunteered`, `status`, volunteer_percent, dotaion_percent, TIMEDIFF(end_time, start_time) as duration  FROM event_details where event_id=:event_id ';
         $params = ["event_id" => $event_id];
         $result = Model::select($query, $params);
 
@@ -55,10 +55,10 @@ class Events extends Model
 
         $old_data = $this->getDetails($data["event_id"]);
         $new_data = array_merge($old_data, $data);
-        $update_data = array_intersect_key($new_data, ['event_id' => "", 'start_date' => "", 'start_time' => "", 'end_time' => "", 'mode' => "", 'about' => "", 'event_name' => "", 'longitude' => "", 'latitude' => "", 'map' => '','cover_photo'=>""]);
+        $update_data = array_intersect_key($new_data, ['event_id' => "", 'start_date' => "", 'start_time' => "", 'end_time' => "", 'mode' => "", 'about' => "", 'event_name' => "", 'longitude' => "", 'latitude' => "", 'map' => '','cover_photo'=>"" ,'status'=>""]);
         $params=array_merge($update_data,$params);
         
-        $query = "UPDATE event SET `start_date` = :start_date, `start_time`= :start_time, `end_time`= :end_time, `mode` = :mode, `about`=:about,`cover_photo` = :cover_photo, `latlang`= IF (STRCMP(:map, 'false')=0 ,NULL,POINT(:latitude ,:longitude)) , `event_name` =:event_name WHERE `event_id`=:event_id ";
+        $query = "UPDATE event SET `start_date` = :start_date, `start_time`= :start_time, `end_time`= :end_time, `mode` = :mode, `about`=:about,`cover_photo` = :cover_photo, `status` = :status, `latlang`= IF (STRCMP(:map, 'false')=0 ,NULL,POINT(:latitude ,:longitude)) , `event_name` =:event_name WHERE `event_id`=:event_id ";
  
      
 

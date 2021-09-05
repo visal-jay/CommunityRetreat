@@ -81,7 +81,9 @@ class EventController
     }
 
     public function forum($event_details){
-        View::render("eventPage",$event_details);
+        $data["announcements"] = (new Announcement)->getAnnouncement($_GET["event_id"]);
+        $data = array_merge($data, $event_details);
+        View::render("eventPage",$data);
     }
 
     public function addEvent()
@@ -94,6 +96,7 @@ class EventController
 
     public function updateDetails()
     {
+        $_POST["event_id"] = $_GET["event_id"];
         Controller::accessCheck(["moderator", "organization"], $_POST["event_id"]);
         var_dump($_POST);
         
@@ -112,5 +115,16 @@ class EventController
     public function remove(){
         (new Events)->remove($_POST["event_id"]);
         Controller::redirect("/organisation/events");
+    }
+
+    public function addAnnouncement(){
+        $_POST["event_id"] = $_GET["event_id"];
+        (new Announcement)->addAnnouncement($_POST);
+        Controller::redirect("/event/view",["page"=>"forum","event_id"=> $_POST["event_id"]]);
+    }
+
+    public function editAnnouncement(){
+        $_POST["announcement_id"] = $_GET["announcement_id"];
+        
     }
 }

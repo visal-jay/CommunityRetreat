@@ -2,6 +2,7 @@
 
 class Events extends Model
 {
+    //add new event 
     public function addEvent($data)
     {
         session_start();
@@ -19,6 +20,7 @@ class Events extends Model
         Model::insert($query, $params);
     }
 
+    //remove an exsiting event
     public function remove($event_id)
     {
         $query = "UPDATE `event` SET status='deleted' WHERE event_id= :event_id";
@@ -26,6 +28,7 @@ class Events extends Model
         Model::insert($query, $params);
     }
 
+    //calling data from backend 
     public function getDetails($event_id)
     {
         $query = 'SELECT `event_id`, `event_name`, `org_uid`,`organisation_username`, ST_X(`latlang`) as latitude, ST_Y(`latlang`) as longitude, `start_date`, `start_time`, `end_time`, `about`, `mode`, `volunteer_capacity`, `donation_capacity`, `cover_photo`, `donation_status`, `volunteer_status`, `donations`, `volunteered`, `status`, volunteer_percent, donation_percent, TIMEDIFF(end_time, start_time) as duration  FROM event_details where event_id=:event_id ';
@@ -38,8 +41,10 @@ class Events extends Model
             return false;
     }
 
+    //update details of an already exsting event
     public function updateDetails($data)
     {
+        //...
         $params=array();
         if ($_FILES["cover-photo"]["size"]!=NULL) {
             $time= (int)shell_exec("date '+%s'");
@@ -53,14 +58,13 @@ class Events extends Model
         else
             $data["map"] = "false";
 
+        //updating date, start time, duration, mode, description, event name, location, cover photo & status???    
         $old_data = $this->getDetails($data["event_id"]);
         $new_data = array_merge($old_data, $data);
         $update_data = array_intersect_key($new_data, ['event_id' => "", 'start_date' => "", 'start_time' => "", 'end_time' => "", 'mode' => "", 'about' => "", 'event_name' => "", 'longitude' => "", 'latitude' => "", 'map' => '','cover_photo'=>"" ,'status'=>""]);
         $params=array_merge($update_data,$params);
         
         $query = "UPDATE event SET `start_date` = :start_date, `start_time`= :start_time, `end_time`= :end_time, `mode` = :mode, `about`=:about,`cover_photo` = :cover_photo, `status` = :status, `latlang`= IF (STRCMP(:map, 'false')=0 ,NULL,POINT(:latitude ,:longitude)) , `event_name` =:event_name WHERE `event_id`=:event_id ";
- 
-     
 
         Model::insert($query, $params);
     }
@@ -71,7 +75,6 @@ class Events extends Model
     {
         $name = $city = $latitude = $longitude = $mode = $start_date = $org_uid = $distance = $order_type = $way = $status = $limit = $donation_capacity= $volunteer_capacity=NULL;
         extract($args, EXTR_OVERWRITE);
-        //var_dump($args);
         $params = array();
 
         if ($city != NULL) {

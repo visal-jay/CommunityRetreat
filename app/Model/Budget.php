@@ -1,21 +1,21 @@
 <?php
 class Budget extends Model 
 {
-    public function getIncomeDetails($event_id){
+    public function getIncomeDetails($event_id){//get income details from backend to the UI
         $query = 'SELECT CONCAT("INC",`record_id`) as record_id, `time_stamp`, `event_id`, `uid`, `status`, `details`, `amount` FROM income where event_id=:event_id AND status = "current" ';
         $params = ["event_id" => $event_id];
         $result=Model::select($query,$params);
         return $result;
     }
 
-    public function getExpenseDetails($event_id){
+    public function getExpenseDetails($event_id){//get expense details from backend to the UI
         $query = 'SELECT CONCAT("EXP",`record_id`) as record_id, `time_stamp`, `event_id`, `uid`, `status`, `details`, `amount` FROM expense where event_id=:event_id AND status = "current" ';
         $params = ["event_id" => $event_id];
         $result=Model::select($query,$params);
        return $result;
     }
     
-	public function addIncome($data){
+	public function addIncome($data){//add incomes to the budget
         if(!isset($_SESSION)) session_start();
         $data["uid"] = $_SESSION["user"]["uid"] = "REG0000022"; //this has to be deleted       
         $query = 'INSERT INTO `income` (`details`, `amount`, `uid`, `event_id`) VALUES (:details,  :amount, :uid, :event_id)';
@@ -23,7 +23,7 @@ class Budget extends Model
         Model::insert($query,$params);     
     }
 
-    public function addExpense($data){
+    public function addExpense($data){//add expenses to the budget
         if(!isset($_SESSION)) session_start();
         $data["uid"] = $_SESSION["user"]["uid"] = "REG0000022";
         $query = 'INSERT INTO `expense` (`details`, `amount`, `uid`, `event_id`) VALUES (:details,  :amount, :uid, :event_id)';
@@ -31,7 +31,7 @@ class Budget extends Model
         Model::insert($query,$params);     
      }
 
-     public function updateIncome($data){
+     public function updateIncome($data){//update incomes by an insert query
         extract($data,EXTR_OVERWRITE);
         $record_id = str_replace("INC", "", $record_id);
         $db = Model::getDB();
@@ -61,7 +61,7 @@ class Budget extends Model
         $db->commit();
     }
 
-    public function updateExpense($data){
+    public function updateExpense($data){//update expenses by an insert query
         extract($data,EXTR_OVERWRITE);
         $record_id = str_replace("EXP", "", $record_id);
         $db = Model::getDB();
@@ -91,7 +91,7 @@ class Budget extends Model
         $db->commit();
     }
 
-    public function deleteIncome($data){
+    public function deleteIncome($data){//delete incomes with an insert query
         extract($data,EXTR_OVERWRITE);
         $record_id = str_replace("INC", "", $record_id);
         $db = Model::getDB();
@@ -122,7 +122,7 @@ class Budget extends Model
     }
     
 
-    public function deleteExpense($data){
+    public function deleteExpense($data){//delete expenses with an insert query
         
         extract($data,EXTR_OVERWRITE);
         $record_id = str_replace("EXP", "", $record_id);

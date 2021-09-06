@@ -288,6 +288,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     class="fas fa-chevron-down"></i></button>
         </div>
     </div>
+
     <div class="update-container">
         <div class="popup unblurred box" id="update-form">
             <form action="/budget/update" method="post" class="update-form">
@@ -309,10 +310,12 @@ if(isset($_SESSION ["user"] ["user_type"])){
     <script>
     function show(id) {
         document.getElementById(id).classList.toggle("height100");
+        //show the rest of the incomes and expenses byclicking the drop down button 
     }
 
     function show_hide(id) {
         document.getElementById(id).classList.toggle("hidden");
+        //show and hide the form where incomes and expenses can be added
     }
 
     function togglePopup(id, description = 0, amount = 0, record_id, event_id) {
@@ -323,14 +326,17 @@ if(isset($_SESSION ["user"] ["user_type"])){
         form.querySelector("#amount").setAttribute("value", amount);
         form.querySelector("#record_id").setAttribute("value", record_id);
         form.querySelector("#save").setAttribute("value", event_id);
+        //show the popup to update an income or an expense
     }
 
     function blur_background(id) {
         document.getElementById(id).classList.toggle("blurred")
+        //when popup is shown background is blurred
     }
 
     function stillBackground(id) {
         document.getElementById(id).classList.toggle("still");
+        //when popup is shown background is still
     }
 
     function change_button(id) {
@@ -341,6 +347,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
         } else {
             x.className = "fas fa-chevron-down";
         }
+        //when down button is clicked it changes to up button.
     }
     </script>
 </body>

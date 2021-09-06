@@ -58,17 +58,13 @@ td {
 
 .form {
     width: 150px;
-
     text-align: center;
+    height: 28px;
 }
 
 .amount {
     text-align: right;
 }
-
-
-
-
 
 /* Clear floats after the columns */
 .row:after {
@@ -88,12 +84,6 @@ td {
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
-}
-
-.form {
-    width: 60px;
-    height: 28px;
-    text-align: center;
 }
 
 .secondary-donation-enable-disable-btn {
@@ -193,8 +183,36 @@ td {
 }
 </style>
 
+
+<?php 
+if(!isset($moderator)) $moderator= false;
+if(!isset($treasurer)) $treasurer= false;
+$organization = $admin =$registered_user = $guest_user = false;
+
+if(isset($_SESSION ["user"] ["user_type"])){
+    if($_SESSION ["user"] ["user_type"] == "organization"){
+        $organization = true;
+    }
+    
+    if($_SESSION ["user"] ["user_type"] == "admin"){
+        $admin = true;
+    }
+
+    if($_SESSION ["user"] ["user_type"] == "registered_user"){
+        $registered_user = true;
+    }
+    
+}else{
+    $guest_user= true;
+}
+
+?>
+
+
 <body>
-    <div class="blur flex-center flex-col" id="background">
+
+    <div class="<?php if($donation_status==0 && count($donations)==0){ ?>blur <?php }?>flex-center flex-col"
+        id="background">
         <div class="container-size">
             <h1>Donation Details</h1>
 
@@ -204,12 +222,13 @@ td {
                 </div>
                 <div class="column section">
                     <div class="data">
-                        <a>100000</a>
+                        <a><?= $donation_capacity ?></a>
                     </div>
-                    <div>
-                        <input name="donation-capacity" type="number" value="100000" min="1000" max="10000000"
-                            class=" form form-ctrl hidden" />
-                    </div>
+                    <form action="/event/updateDonationCapacity?event_id=<?= $_GET["event_id"] ?>" method="post"
+                        id="donation-capacity">
+                        <input name="donation_capacity" type="number" value="<?= $donation_capacity ?>" min="1000"
+                            max="10000000" class=" form form-ctrl hidden" />
+                    </form>
                 </div>
             </div>
             <div>
@@ -220,18 +239,26 @@ td {
                         Close
                         &nbsp;&nbsp;
                         <i class="fas fa-times "></i></button>
-                    <button class=" btn btn-solid btn-md form hidden save-btn">Save &nbsp; <i
-                            class="fas fa-check "></i></button>
+                    <button class=" btn btn-solid btn-md form hidden save-btn" type="submit"
+                        form="donation-capacity">Save &nbsp; <i class="fas fa-check "></i></button>
                 </div>
             </div>
 
-
-            <div class="secondary-donation-enable-disable-btn">
-                <button class="btn btn-md btn-solid" id="enable-disable-btn"
-                    onclick="change_enable_disable_button('enable-disable-btn')">Disable
+            <?php if($donation_status==1){ ?>
+            <form action="/event/disableDonation?event_id=<?= $_GET["event_id"] ?>" method="post"
+                class=" secondary-donation-enable-disable-btn">
+                <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Disable
                     Donations</button>
-            </div>
+            </form>
+            <?php } ?>
 
+            <?php if($donation_status==0){ ?>
+            <form action="/event/enableDonation?event_id=<?= $_GET["event_id"] ?>" method="post"
+                class=" secondary-donation-enable-disable-btn">
+                <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Enable
+                    Donations</button>
+            </form>
+            <?php } ?>
             <div>
 
                 <table id="mytable" class="center">
@@ -246,31 +273,13 @@ td {
                         </tr>
                     </thead>
                     <tbody>
+                        <?php foreach($donations as $donation){ ?>
                         <tr>
-                            <td class="scroll">J.K.Sunil Wijayathilake</td>
-                            <td>2020.10.21</td>
-                            <td class="amount">rs.100000</td>
+                            <td class=" scroll"><?= $donation["username"] ?></td>
+                            <td><?= $donation["date"] ?></td>
+                            <td class="amount"><?= $donation["amount"] ?></td>
                         </tr>
-                        <tr>
-                            <td class="scroll">M.D.Nimal Karunarathne</td>
-                            <td>2020.10.25</td>
-                            <td class="amount">rs.150000</td>
-                        </tr>
-                        <tr>
-                            <td class="scroll">P.V.Shanthi Kumarasinghe</td>
-                            <td>2020.11.02</td>
-                            <td class="amount">rs.120000</td>
-                        </tr>
-                        <tr>
-                            <td class="scroll">H.N.Nihal Amarasiri</td>
-                            <td>2020.11.05</td>
-                            <td class="amount">rs.200000</td>
-                        </tr>
-                        <tr>
-                            <td class="scroll">R.S.Niluka Pathirana</td>
-                            <td>2020.11.10</td>
-                            <td class="amount">rs.100000</td>
-                        </tr>
+                        <?php } ?>
                     </tbody>
                 </table>
 
@@ -280,10 +289,12 @@ td {
             </div>
         </div>
     </div>
+    <?php if($donation_status==0 && count($donations)==0){ ?>
     <div class="initial-donation-enable-btn">
         <button class="btn btn-lg btn-solid" id="initial-donation-enable-btn" onclick="myFunction()">Enable
             Donations</button>
     </div>
+    <?php } ?>
 </body>
 
 <script>
@@ -291,10 +302,12 @@ function myFunction() {
     var element = document.getElementById("background");
     element.classList.remove("blur");
     document.getElementById("initial-donation-enable-btn").remove();
+    //blur class is removed when initial donation enable button s clicked
 }
 
 function hide(id) {
     document.getElementById(id).classList.toggle("hide");
+    //
 }
 
 function change_enable_disable_button(id) {
@@ -305,6 +318,8 @@ function change_enable_disable_button(id) {
     } else {
         x.innerHTML = "Disable Donations";
     }
+    //when enable donation button is clicked, it changes to disable donation button
+    //when disable donation button is clicked, it changes to enable donation button
 }
 
 function edit() {
@@ -316,15 +331,8 @@ function edit() {
     for (var i = 0; i < form.length; i++) {
         form[i].classList.toggle("hidden");
     }
+    //when edit button is clicked, it is hidden
 }
-
-/*function on() {
-document.getElementById("blur").style.display = "none";
-}*/
-
-/*function off() {
-    document.getElementById("blur").style.display = "block";
-}*/
 </script>
 
 </html>

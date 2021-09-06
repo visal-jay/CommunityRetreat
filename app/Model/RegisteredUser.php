@@ -85,7 +85,7 @@ class RegisteredUser extends User
         $stmt->closeCursor();
 
         $data["user_type"]="organization";
-        $insertOrgLoginSql = 'INSERT INTO `login` (`email`,`password`, `uid`, `user_type`) VALUES (:email,  :password, :uid, "registered user")';
+        $insertOrgLoginSql = 'INSERT INTO `login` (`email`,`password`, `uid`, `user_type`) VALUES (:email,  :password, :uid, "registered_user")';
         $stmt=$db->prepare($insertOrgLoginSql);
         $insertData=array_intersect_key($data,["email"=>'',"password"=>'',"uid"=>'']);
         $stmt->execute($insertData);

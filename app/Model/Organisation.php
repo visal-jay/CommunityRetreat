@@ -61,14 +61,17 @@ class Organisation extends User
     {
 
         $params = array();
+        $time= (int)shell_exec("date '+%s'");
 
         if ($_FILES["profile-photo"]["size"] != NULL) {
-            $cover_pic = new Image($_SESSION["user"]["uid"], "profile/", "profile-photo", true);
+            exec("rm -rf /Users/visaljayathilaka/code/group-project/Group-16/app/Uploads/profile/" . $_SESSION["user"]["uid"] . "*");
+            $cover_pic = new Image($_SESSION["user"]["uid"] . $time, "profile/", "profile-photo", true);
             $params["profile_pic"] = $cover_pic->getURL();
         }
 
         if ($_FILES["cover-photo"]["size"] != NULL) {
-            $cover_pic = new Image($_SESSION["user"]["uid"], "cover/", "cover-photo", true);
+            exec("rm -rf /Users/visaljayathilaka/code/group-project/Group-16/app/Uploads/cover/" . $_SESSION["user"]["uid"] . "*");
+            $cover_pic = new Image($_SESSION["user"]["uid"] . $time, "cover/", "cover-photo", true);
             $params["cover_pic"] = $cover_pic->getURL();
         }
 

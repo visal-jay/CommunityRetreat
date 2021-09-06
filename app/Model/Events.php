@@ -40,11 +40,11 @@ class Events extends Model
 
     public function updateDetails($data)
     {
-
         $params=array();
         if ($_FILES["cover-photo"]["size"]!=NULL) {
-            echo "why";
-            $cover_pic = new Image($data["event_id"], "event/cover/", "cover-photo", true);
+            $time= (int)shell_exec("date '+%s'");
+            exec("rm -rf /Users/visaljayathilaka/code/group-project/Group-16/app/Uploads/event/cover" . $data["event_id"] . "*");
+            $cover_pic = new Image($data["event_id"] . $time, "event/cover/", "cover-photo", true);
             $params["cover_photo"] = $cover_pic->getURL();
         }
 

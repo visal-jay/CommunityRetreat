@@ -15,6 +15,7 @@ class EventController
 
     public function about()
     {
+        $user_roles =Controller::accessCheck(["moderator","organization","guest_user","registered_user"], $_GET["event_id"]);
         $register_user = new RegisteredUser;
         $event = new Events;
         $organisation = new Organisation;
@@ -22,11 +23,9 @@ class EventController
             session_start();
         if ($event_details = $event->getDetails($_GET["event_id"])) {
             $data = $event_details;
-            if ($user_roles =Controller::accessCheck(["moderator","organization"], $_GET["event_id"]))
-                $data = array_merge($data, $user_roles);
             $data["volunteered"] = $data["volunteered"] == "" ? "0" :  $data["volunteered"];
             $data["donations"] = $data["donations"] == "" ? "0" :  $data["donations"];
-            View::render("eventPage", $data);
+            View::render("eventPage", $data,$user_roles);
         }
         else
             View::render("home");
@@ -43,17 +42,18 @@ class EventController
     }
 
     public function gallery($event_details){
+        $user_roles =Controller::accessCheck(["moderator","organization","guest_user","registered_user"], $_GET["event_id"]);
         if (!$data=(new Gallery)->getGallery(["event_id"=>$_GET["event_id"]]))
             $data=array();
         else
             for ($i = 0; $i < count($data); $i++) {
-                if($data[$i]["uid"]==$_SESSION["user"]["uid"]){
+                if(isset($_SESSION["user"]) && $data[$i]["uid"]==$_SESSION["user"]["uid"]){
                     $temp=$data[$i];
                     array_splice($data,$i,1);
                     array_unshift($data,$temp);
                 }
             }
-        View::render("eventPage",array_merge($event_details,["photos"=>$data]));
+        View::render("eventPage",array_merge($event_details,["photos"=>$data]),$user_roles);
     }
 
     public function deletePhoto(){
@@ -143,4 +143,19 @@ class EventController
         (new Events)->remove($_POST["event_id"]);
         Controller::redirect("/organisation/events");
     }
+<<<<<<< HEAD
 }
+=======
+
+    public function addAnnouncement(){
+        $_POST["event_id"] = $_GET["event_id"];
+        (new Announcement)->addAnnouncement($_POST);
+        Controller::redirect("/event/view",["page"=>"forum","event_id"=> $_POST["event_id"]]);
+    }
+
+    public function editAnnouncement(){
+        $_POST["announcement_id"] = $_GET["announcement_id"];
+
+    }
+}
+>>>>>>> 86fe1e0e53c1dbf199f1b371b4006d4ba5352a80

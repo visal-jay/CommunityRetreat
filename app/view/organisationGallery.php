@@ -203,16 +203,12 @@
     window.addEventListener("resize", resizeAllGridItems);
 
 
-    allItems = document.getElementsByClassName("item");
+    /* allItems = document.getElementsByClassName("item");
     for (x = 0; x < allItems.length; x++) {
         imagesLoaded(allItems[x], resizeInstance);
-    }
+    } */
 
-    document.querySelector(".side-nav .active").scrollIntoView({
-        behavior: 'auto',
-        block: 'center',
-        inline: 'center'
-    });
+    
 </script>
 
 </html>

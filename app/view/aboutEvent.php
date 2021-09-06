@@ -209,7 +209,7 @@
 
 <?php
 
-if (!isset($moderator)) $moderator = false;
+/* if (!isset($moderator)) $moderator = false;
 if (!isset($treasurer)) $treasurer = false;
 $organization = $admin = $registered_user = $guest_user = false;
 
@@ -225,7 +225,7 @@ if (isset($_SESSION["user"]["user_type"])) {
     }
 } else {
     $guest_user = true;
-}
+} */
 ?>
 
 
@@ -282,7 +282,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                         <div class="flex-row margin-lg ">
                             <i class="btn-icon icon-width fas fa-map-marker-alt clr-green margin-side-lg"></i>
                             <div class="flex-col form hidden">
-                                <div class="border-round <?php if (!isset($latitude) && !isset($longitude) && ($mode == "Virtual")) echo "form hidden" ?>" id="map"></div>
+                                <div class="border-round<?php if (!isset($latitude) && !isset($longitude) && ($mode == "Virtual")) echo "form hidden" ?>" id="map"></div>
                                 <div class="latlang" class="form hidden">
                                     <input class="hidden" name="longitude" id="longitude" value=NULL>
                                     <input class="hidden" name="latitude" id="latitude" value=NULL>
@@ -374,17 +374,6 @@ if (isset($_SESSION["user"]["user_type"])) {
             </div>
             <?php } ?>
 
-<<<<<<< HEAD
-            <div class="flex-row flex-center content border-round container-size1">
-                <button class="btn data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
-                <button type="button" class="btn btn-solid bg-red border-red form margin-side-md hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
-                <button name="event_id" value="<?= $_GET["event_id"] ?>" form="update-form" type="submit" class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
-                <?php if ($status == "added") { ?>
-                    <input type="text" value="published" name="status" form="update-form" class="hidden">
-                    <button id="publish-btn" class="btn margin-lg" onclick="publish(); togglePopup('publish'); blur_background('background'); stillBackground('id1')">Publish</button>
-                <?php } ?>
-            </div>
-=======
             <?php if ($moderator || $organization) { ?>
                 <div class="flex-row flex-center content border-round container-size1">
                     <button class="btn data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
@@ -395,7 +384,6 @@ if (isset($_SESSION["user"]["user_type"])) {
                     <?php } ?>
                 </div>
             <?php } ?>
->>>>>>> 831ff5eca72583e9155e645360f274edde1f81a5
         </div>
     </div>
 
@@ -458,6 +446,7 @@ if (isset($_SESSION["user"]["user_type"])) {
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
 
 <script>
+    <?php if($organization || $moderator) { ?>
 
     function publish(){
         setTimeout(function(){document.getElementById("update-form").submit()}, 2000);
@@ -470,6 +459,7 @@ if (isset($_SESSION["user"]["user_type"])) {
 
     today = yyyy+ '-' + mm + '-' + dd;
     document.getElementById("start_date").setAttribute("min", today);
+        
 
     function edit() {
 
@@ -491,6 +481,27 @@ if (isset($_SESSION["user"]["user_type"])) {
                 draggable: true
             });
     }
+
+
+    if (document.getElementById("mode").value == "Virtual") {
+        document.getElementById("map").style.opacity = "0.3";
+        document.getElementById("map").style.pointerEvents = "none";
+    }
+
+
+    function eventMode(event) {
+        if (event.target.value == "Physical" || event.target.value == "Physical & Virtual") {
+            document.getElementById("map").style.opacity = "1";
+            document.getElementById("map").style.pointerEvents = "unset";
+
+        } else {
+            document.getElementById("map").style.opacity = "0.3";
+            document.getElementById("map").style.pointerEvents = "none";
+        }
+    }
+
+
+    <?php } ?>
 
     <?php if (isset($_GET["volunteerErr"])) echo "edit();" ?>
 
@@ -553,23 +564,6 @@ if (isset($_SESSION["user"]["user_type"])) {
         animateProgressBar($(this).find("div"), $(this).data("width"))
     });
 
-
-    if (document.getElementById("mode").value == "Virtual") {
-        document.getElementById("map").style.opacity = "0.3";
-        document.getElementById("map").style.pointerEvents = "none";
-    }
-
-
-    function eventMode(event) {
-        if (event.target.value == "Physical" || event.target.value == "Physical & Virtual") {
-            document.getElementById("map").style.opacity = "1";
-            document.getElementById("map").style.pointerEvents = "unset";
-
-        } else {
-            document.getElementById("map").style.opacity = "0.3";
-            document.getElementById("map").style.pointerEvents = "none";
-        }
-    }
 
 
     let map;

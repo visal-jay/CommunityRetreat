@@ -319,7 +319,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width far fa-flag clr-green margin-side-lg"></i>
                             <div class="flex-row">
-                                <p class="head-margin">Event by <a href="/organisation/view?org_uid=<?= $org_uid ?>"><b><?= $organisation_username ?></b></a></p>
+                                <p class="head-margin">Event by <a href="/organisation/view?org_id=<?= $org_uid ?>"><b><?= $organisation_username ?></b></a></p>
                             </div>
                         </div>
                     </div>
@@ -354,22 +354,23 @@ if (isset($_SESSION["user"]["user_type"])) {
             </div>
 
             <?php if ($volunteer_status == 1) { ?>
-            <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d">
-                <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
-                <div class="progress" data-width="<?php if($volunteer_percent == NULL) echo "0"; else $volunteer_percent ?>%">
-                    <div class="volunteers-progress-bar"></div>
+                <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d">
+                    <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
+                    <div class="progress" data-width="<?php if ($volunteer_percent == NULL) echo "0"; else $volunteer_percent ?>%">
+                        <div class="volunteers-progress-bar"></div>
+                    </div>
+                    <button class="btn clr-green margin-md"><i class="fas fa-user-friends"></i>&nbsp;I want tovolunteer</button>
                 </div>
-                <button class="btn clr-green margin-md"><i class="fas fa-user-friends"></i>&nbsp;I want to volunteer</button>
             <?php } ?>
 
             <?php if ($donation_status == 1) { ?>
-            <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d; text-align:center">
-                <p style="color:white">Would you like to give value to your hard-earned money by contributing to this
-                    community service project?</p>
-                <div class="progress" data-width="<?php if($dotaion_percent == NULL) echo "0"; else $dotaion_percent ?>%">
-                    <div class="donaters-progress-bar"></div>
+                <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d; text-align:center">
+                    <p style="color:white">Would you like to give value to your hard-earned money by contributing to this community service project?</p>
+                    <div class="progress" data-width="<?php if ($dotaion_percent == NULL) echo "0";else $dotaion_percent ?>%">
+                        <div class="donaters-progress-bar"></div>
+                    </div>
+                    <button class="btn clr-green margin-md" onclick="togglePopup('form'); blur_background('background');stillBackground('id1')"><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
                 </div>
-                <button class="btn clr-green margin-md" onclick="togglePopup('form'); blur_background('background');stillBackground('id1')"><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
             <?php } ?>
 
             <?php if ($moderator || $organization) { ?>

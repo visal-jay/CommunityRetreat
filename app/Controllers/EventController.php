@@ -67,8 +67,32 @@ class EventController
         (new BudgetController)->view($event_details);
     }
 
-    public function donations($event_details){
-        View::render('eventPage',$event_details);
+    public function donations($event_details){//view the donations in the UI by sending the data from backend
+        $data=array_intersect_key((new Events)->getDetails($_GET["event_id"]),["donation_status"=>'', "donation_capacity"=>'']);      
+        $donation = new Donations();    
+        $donate_details = $donation->getDonateDetails($_GET["event_id"]);
+        $data["donations"]=$donate_details;
+        $data = array_merge($data, $event_details);
+        var_dump($data);
+        View::render('eventPage',$data);        
+    }
+
+    public function disableDonation(){//disable donations for an event
+        $donation = new Donations;
+        $donation->disableDonation($_GET["event_id"]);
+        Controller::redirect("/event/view",["event_id"=> $_GET["event_id"], "page" => "donations"]);
+    }
+
+    public function enableDonation(){//enable donations for an event
+        $donation = new Donations;
+        $donation->enableDonation($_GET["event_id"]);
+        Controller::redirect("/event/view",["event_id"=> $_GET["event_id"], "page" => "donations"]);
+    }
+
+    public function updateDonationCapacity(){//give a donation capacity for an event from the UI to store in backend
+        $donation = new Donations;
+        $donation->updateDonationCapacity($_GET["event_id"], $_POST["donation_capacity"]);
+        Controller::redirect("/event/view",["event_id"=> $_GET["event_id"], "page" => "donations"]);             
     }
 
     public function volunteers($event_details){
@@ -119,6 +143,9 @@ class EventController
         (new Events)->remove($_POST["event_id"]);
         Controller::redirect("/organisation/events");
     }
+<<<<<<< HEAD
+}
+=======
 
     public function addAnnouncement(){
         $_POST["event_id"] = $_GET["event_id"];
@@ -131,3 +158,4 @@ class EventController
 
     }
 }
+>>>>>>> 928338cb928fa57101f1b1b852f649d9d1d08878

@@ -28,7 +28,7 @@ class Events extends Model
 
     public function getDetails($event_id)
     {
-        $query = 'SELECT `event_id`, `event_name`, `org_uid`,`organisation_username`, ST_X(`latlang`) as latitude, ST_Y(`latlang`) as longitude, `start_date`, `start_time`, `end_time`, `about`, `mode`, `volunteer_capacity`, `donation_capacity`, `cover_photo`, `donation_status`, `volunteer_status`, `donations`, `volunteered`, `status`, volunteer_percent, dotaion_percent, TIMEDIFF(end_time, start_time) as duration  FROM event_details where event_id=:event_id ';
+        $query = 'SELECT `event_id`, `event_name`, `org_uid`,`organisation_username`, ST_X(`latlang`) as latitude, ST_Y(`latlang`) as longitude, `start_date`, `start_time`, `end_time`, `about`, `mode`, `volunteer_capacity`, `donation_capacity`, `cover_photo`, `donation_status`, `volunteer_status`, `donations`, `volunteered`, `status`, volunteer_percent, donation_percent, TIMEDIFF(end_time, start_time) as duration  FROM event_details where event_id=:event_id ';
         $params = ["event_id" => $event_id];
         $result = Model::select($query, $params);
 

@@ -26,7 +26,7 @@ class Controller
                     $data["treasurer"]=true;
             }
 
-            if($_SESSION["user"]["user_type"]=="organization" && in_array("organisation", $userroles) && $event_id!='-1'){
+            if($_SESSION["user"]["user_type"]=="organization" && in_array("organization", $userroles) && $event_id!='-1'){
                 $events = new Events;
                 $user_events = array();
                 if ($result = $events->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "published"]))

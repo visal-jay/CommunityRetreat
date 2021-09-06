@@ -493,6 +493,7 @@ if (isset($_SESSION["user"]["user_type"])) {
         if (event.target.value == "Physical" || event.target.value == "Physical & Virtual") {
             document.getElementById("map").style.opacity = "1";
             document.getElementById("map").style.pointerEvents = "unset";
+            document.getElementById("map").classList.remove("hidden");
 
         } else {
             document.getElementById("map").style.opacity = "0.3";

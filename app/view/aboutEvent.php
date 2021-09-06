@@ -236,7 +236,7 @@ if (isset($_SESSION["user"]["user_type"])) {
             <h1>About</h1>
             <div class="content border-round container-size margin-md" id="details" style="background-color: #eeeeee">
                 <?php if ($organization || $moderator) { ?>
-                    <form action="/event/updateDetails" method="post" id="update-form" enctype="multipart/form-data">
+                    <form action="/event/updateDetails?event_id=<?= $_GET["event_id"] ?>" method="post" id="update-form" enctype="multipart/form-data">
                     <?php } ?>
                     <div class="date-container">
                         <div class="flex-row margin-lg">
@@ -245,7 +245,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                             <?php if ($organization || $moderator) { ?>
                                 <div class="flex-row flex-center">
                                     <label class="form hidden" for="start_date">Event date</label>
-                                    <input type="date" id="start_date" value="<?= $start_date ?>" name="start_date" class="form form-ctrl margin-side-md hidden" data-placeholder="Event is on?" value="<?= $start_date ?>" required></input>
+                                    <input type="date" id="start_date" value="<?= $start_date ?>" name="start_date" class="form form-ctrl margin-side-md hidden" data-placeholder="Event is on?" required></input>
                                 </div>
                             <?php } ?>
                         </div>
@@ -298,8 +298,8 @@ if (isset($_SESSION["user"]["user_type"])) {
                             <?php if ($organization || $moderator) { ?>
                                 <div class="form hidden">
                                     <div class="flex-row flex-center">
-                                        <label class="form hidden margin-side-md" for="mode">Event mode</label>
-                                        <select name="mode" class="form-ctrl" id="mode" required onchange="eventMode(event);">
+                                        <label class="form hidden" for="mode">Event mode</label>
+                                        <select name="mode" class="form-ctrl margin-side-md" id="mode" required onchange="eventMode(event);">
                                             <option value="<?= $mode ?>" selected><?= $mode ?></option>
                                             <?php $options = ["Physical", "Virtual", "Physical & Virtual"];
                                             foreach ($options as $option) {
@@ -352,25 +352,27 @@ if (isset($_SESSION["user"]["user_type"])) {
 
             </div>
 
-
-
+            <?php if ($volunteer_status == 1) { ?>
             <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d">
                 <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
-                <div class="progress" data-width="100%">
+                <div class="progress" data-width="<?= $volunteer_percent ?>%">
                     <div class="volunteers-progress-bar"></div>
                 </div>
                 <button class="btn clr-green margin-md"><i class="fas fa-user-friends"></i>&nbsp;I want to
                     volunteer</button>
             </div>
+            <?php } ?>
 
+            <?php if ($donation_status == 1) { ?>
             <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d; text-align:center">
                 <p style="color:white">Would you like to give value to your hard-earned money by contributing to this
                     community service project?</p>
-                <div class="progress" data-width="10%">
+                <div class="progress" data-width="<?= $dotaion_percent ?>%">
                     <div class="donaters-progress-bar"></div>
                 </div>
                 <button class="btn clr-green margin-md" onclick="togglePopup('form'); blur_background('background');stillBackground('id1')"><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
             </div>
+            <?php } ?>
 
             <?php if ($moderator || $organization) { ?>
                 <div class="flex-row flex-center content border-round container-size1">
@@ -389,10 +391,6 @@ if (isset($_SESSION["user"]["user_type"])) {
         <div class="content">
             <div>
                 <h2>Event Published!</h2>
-            </div>
-
-            <div>
-                <button class="btn-icon btn-close" onclick="togglePopup('publish'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
             </div>
         </div>
     </div>
@@ -449,6 +447,11 @@ if (isset($_SESSION["user"]["user_type"])) {
 
 <script>
     <?php if($organization || $moderator) { ?>
+
+    function publish(){
+        setTimeout(function(){document.getElementById("update-form").submit()}, 2000);
+    }
+    
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0');

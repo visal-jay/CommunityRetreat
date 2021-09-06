@@ -143,9 +143,6 @@ class EventController
         (new Events)->remove($_POST["event_id"]);
         Controller::redirect("/organisation/events");
     }
-<<<<<<< HEAD
-}
-=======
 
     public function addAnnouncement(){
         $_POST["event_id"] = $_GET["event_id"];
@@ -158,4 +155,3 @@ class EventController
 
     }
 }
->>>>>>> 86fe1e0e53c1dbf199f1b371b4006d4ba5352a80

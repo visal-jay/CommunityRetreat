@@ -97,6 +97,7 @@
 
     textarea {
         height: 150px;
+        width: 800px;
         padding: 12px 20px;
         box-sizing: border-box;
         border: 2px solid #ccc;
@@ -318,7 +319,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width far fa-flag clr-green margin-side-lg"></i>
                             <div class="flex-row">
-                                <p class="head-margin">Event by <b><?= $organisation_username ?></b></p>
+                                <p class="head-margin">Event by <a href="/organisation/view?org_uid=<?= $org_uid ?>"><b><?= $organisation_username ?></b></a></p>
                             </div>
                         </div>
                     </div>
@@ -338,7 +339,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                     </div>
 
 
-                    <div class="textbox flex-col content border-round container-size margin-md" style="background-color: #eeeeee">
+                    <div class="textbox flex-col content border-round margin-md" style="background-color: #eeeeee">
                         <h3 class="margin-lg">Description</h3>
                         <div class="data">
                             <p class="margin-lg"><?= $about ?></p>
@@ -355,7 +356,7 @@ if (isset($_SESSION["user"]["user_type"])) {
             <?php if ($volunteer_status == 1) { ?>
             <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d">
                 <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
-                <div class="progress" data-width="<?= $volunteer_percent ?>%">
+                <div class="progress" data-width="<?php if($volunteer_percent == NULL) echo "0"; else $volunteer_percent ?>%">
                     <div class="volunteers-progress-bar"></div>
                 </div>
                 <button class="btn clr-green margin-md"><i class="fas fa-user-friends"></i>&nbsp;I want to
@@ -367,7 +368,7 @@ if (isset($_SESSION["user"]["user_type"])) {
             <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d; text-align:center">
                 <p style="color:white">Would you like to give value to your hard-earned money by contributing to this
                     community service project?</p>
-                <div class="progress" data-width="<?= $dotaion_percent ?>%">
+                <div class="progress" data-width="<?php if($dotaion_percent == NULL) echo "0"; else $dotaion_percent ?>%">
                     <div class="donaters-progress-bar"></div>
                 </div>
                 <button class="btn clr-green margin-md" onclick="togglePopup('form'); blur_background('background');stillBackground('id1')"><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>

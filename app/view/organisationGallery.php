@@ -84,7 +84,8 @@
     .delete-button:hover {
         opacity: 1;
     }
-    .delete-button:active{
+
+    .delete-button:active {
         opacity: 1;
     }
 
@@ -104,17 +105,20 @@
     }
 </style>
 
-<?php include "nav.php" ?>
+<?php if ($organization) include "nav.php" ?>
+
 
 <body>
     <div class="flex-col flex-center margin-side-lg">
         <h1>Gallery</h1>
-        <button class="btn btn-solid margin-lg" onclick="addPhoto()">Add photo &nbsp; <i class="fas fa-plus"></i></button>
-        <form class="form flex-col flex-center" action="/organisation/addPhoto" method="post" enctype="multipart/form-data">
-            <label for="myfile">Select a file:</label>
-            <input type="file" class="form-ctrl margin-md" id="myfile" name="photo">
-            <button type="submit" class="btn ">Save</button>
-        </form>
+        <?php if ($organization) { ?>
+            <button class="btn btn-solid margin-lg" onclick="addPhoto()">Add photo &nbsp; <i class="fas fa-plus"></i></button>
+            <form class="form flex-col flex-center" action="/organisation/addPhoto" method="post" enctype="multipart/form-data">
+                <label for="myfile">Select a file:</label>
+                <input type="file" class="form-ctrl margin-md" id="myfile" name="photo">
+                <button type="submit" class="btn ">Save</button>
+            </form>
+        <?php } ?>
 
 
         <div class="grid margin-lg">
@@ -207,8 +211,6 @@
     for (x = 0; x < allItems.length; x++) {
         imagesLoaded(allItems[x], resizeInstance);
     } */
-
-    
 </script>
 
 </html>

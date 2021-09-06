@@ -124,28 +124,10 @@
         }
     }
 </style>
-<?php include "nav.php" ?>
+<?php if($organization) include "nav.php" ?>
 
 <body>
-    <?php if (!isset($_SESSION)) session_start();
-    if (!isset($moderator)) $moderator = false;
-    if (!isset($treasurer)) $treasurer = false;
-    $organization = $admin = $registered_user = $guest_user = false;
-
-    if (isset($_SESSION["user"]["user_type"])) {
-        if ($_SESSION["user"]["user_type"] == "organization") {
-            $organization = true;
-        }
-        if ($_SESSION["user"]["user_type"] == "admin") {
-            $$admin = true;
-        }
-        if ($_SESSION["user"]["user_type"] == "registered_user") {
-            $registered_user = true;
-        }
-    } else {
-        $guest_user = true;
-    }
-    ?>
+ 
     <div class="flex-col flex-center margin-side-lg">
         <h1>Manage Events</h1>
         <?php if($organization) { ?>
@@ -211,6 +193,7 @@
                                 <td><?php if ($event["donation_status"]) { ?><i class="fas fa-check clr-green"></i><?php } else { ?><i class="fas fa-times clr-red"></i><?php } ?> </td>
                             </tr>
                         </table>
+                        <?php if ($organization) { ?>
                         <div class="flex-row flex-center">
                             <button class="btn btn-solid bg-red border-red" onclick="remove()">Remove</button>
                             <div class="flex-row flex-space " style="display: none; padding-top:1rem;">
@@ -222,6 +205,7 @@
                                 <i class="fas fa-times clr-red  margin-side-md" onclick="cancel()"></i>
                             </div>
                         </div>
+                        <?php } ?>
 
                     </div>
                 </div>

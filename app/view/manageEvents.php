@@ -148,7 +148,7 @@
     ?>
     <div class="flex-col flex-center margin-side-lg">
         <h1>Manage Events</h1>
-
+        <?php if($organization) { ?>
         <button class="btn btn-solid margin-lg" onclick="addEvent()">Add Event &nbsp; <i class="fas fa-plus"></i></button>
         <div class="form">
             <form class="form-item" method="post" action="/event/addEvent">
@@ -160,19 +160,19 @@
                 <div class="date" style="justify-content:space-evenly">
                     <div class="flex-col">
                         <label>Date</label>
-                        <input id="start_date" type="date" name="start_date" class="form-ctrl">
+                        <input id="start_date" type="date" name="start_date" class="form-ctrl" required>
                     </div>
                     <div class="flex-col">
                         <label>Starting time</label>
-                        <input type="time" name="start_time" class="form-ctrl">
+                        <input type="time" name="start_time" class="form-ctrl" required>
                     </div>
                     <div class="flex-col">
                         <label>Ending time</label>
-                        <input type="time" name="end_time" class="form-ctrl">
+                        <input type="time" name="end_time" class="form-ctrl" required>
                     </div>
                     <div class="flex-col">
                         <label>Mode of the event</label>
-                        <select class="form-ctrl" id="mode" name="mode" required onchange="eventMode(event);">
+                        <select class="form-ctrl" id="mode" name="mode" required onchange="eventMode(event);" required>
                             <option value="" disabled selected>Select the mode of the event</option>
                             <option value="Physical">Physical</option>
                             <option value="Virtual">Virtual</option>
@@ -190,6 +190,7 @@
                 <button type="submit" class="btn btn-solid margin-md">Add</button>
             </form>
         </div>
+        <?php } ?>
         <div class="events">
             <?php foreach ($events as $event) { ?>
                 <div class="card-container margin-md">
@@ -232,6 +233,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
 
 <script>
+<?php if($organization) { ?>
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -313,6 +315,7 @@
         map.setCenter(myLatlng);
         map.setZoom(15)
     }
+    <?php } ?>
 </script>
 
 </html>

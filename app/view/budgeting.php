@@ -193,7 +193,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
 <body>
     <div class="container flex-col flex-center" id="container">
         <h2 class="header margin-md">Income</h2>
-
+        <?php if($organization || $treasurer) { ?>
         <form action="/budget/addIncome?" method="post" class="form income-form">
 
             <div>
@@ -213,6 +213,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
                 </div>
             </div>
         </form>
+        <?php } ?>
         <div class="income-info" id="income-info">
             <?php foreach($incomes as $income){ ?>
             <div class=" card-container">
@@ -242,27 +243,28 @@ if(isset($_SESSION ["user"] ["user_type"])){
         </div>
 
         <h2 class="header margin-md">Expense</h2>
-
-        <form action="/budget/addExpense?" method="post" class="form expense-form">
-
-            <button class="btn btn-md btn-solid margin-md" type="button" name="button" id="btn" value="Add"
-                onclick="show_hide('expense-form') ">Add &nbsp;<i class="fas fa-plus"></i></button>
-            <div id="expense-form" style="margin-top: 20px;" class="hidden">
-                <div class="input form-item">Details
-                    <input class="form-ctrl" name="details" id="details" type="text" placeholder="Enter the details" />
+        
+        <?php if($organization || $treasurer) { ?>
+            <form action="/budget/addExpense?event_id=<?= $_GET["event_id"] ?>" method="post" class="form expense-form">
+                <button class="btn btn-md btn-solid margin-md" type="button" name="button" id="btn" value="Add"
+                    onclick="show_hide('expense-form') ">Add &nbsp;<i class="fas fa-plus"></i></button>
+                <div id="expense-form" style="margin-top: 20px;" class="hidden">
+                    <div class="input form-item">Details
+                        <input class="form-ctrl" name="details" id="details" type="text" placeholder="Enter the details" />
+                    </div>
+                    <div class="input form-item">Amount
+                        <input class="form-ctrl" name="amount" id="amount" type="text" placeholder="Enter the amount" />
+                    </div>
+                    <div class="form-action-buttons">
+                        <button class="btn btn-md" name="event_id" type="submit"
+                            value="<?= $_GET["event_id"] ?>">Submit</button>
+                    </div>
                 </div>
-                <div class="input form-item">Amount
-                    <input class="form-ctrl" name="amount" id="amount" type="text" placeholder="Enter the amount" />
-                </div>
-                <div class="form-action-buttons">
-                    <button class="btn btn-md" name="event_id" type="submit"
-                        value="<?= $_GET["event_id"] ?>">Submit</button>
-                </div>
-            </div>
-        </form>
+            </form>
+        <?php } ?>
 
         <div class="expense-info" id="expense-info">
-            <?php foreach($expenses as $expense){ ?>
+            <?php foreach($expenses as $expense) { ?>
             <div class="card-container">
                 <p><?= $expense["details"] ?></p>
                 <p><?= $expense["amount"] ?></p>

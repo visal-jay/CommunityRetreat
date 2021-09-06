@@ -3,6 +3,7 @@ class View
 {
     static function render($view_name,$args=[],$user_roles=[])
     {
+
         extract($args, EXTR_SKIP);
         extract($user_roles, EXTR_OVERWRITE);
         require "./view/$view_name.php";

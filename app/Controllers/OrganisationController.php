@@ -6,10 +6,16 @@ class OrganisationController
 {
     public function view($org_id = '')
     {
+        if($org_id!='')
+            $user_roles=Controller::accessCheck(["registered_user","guest_user"]);
+        else
+            $user_roles=Controller::accessCheck(["organization","registered_user","guest_user"]);
+
 
         $org_id = isset($_GET["org_id"]) ? $_GET["org_id"] : $org_id;
-        $data = (new Organisation)->getDetails($org_id);
-        View::render("organisationDashboard", $data);
+        if($data = (new Organisation)->getDetails($org_id))
+            View::render("organisationDashboard", $data,$user_roles);
+            
     }
 
     public function dashboard()

@@ -209,7 +209,7 @@
 
 <?php
 
-if (!isset($moderator)) $moderator = false;
+/* if (!isset($moderator)) $moderator = false;
 if (!isset($treasurer)) $treasurer = false;
 $organization = $admin = $registered_user = $guest_user = false;
 
@@ -225,7 +225,7 @@ if (isset($_SESSION["user"]["user_type"])) {
     }
 } else {
     $guest_user = true;
-}
+} */
 ?>
 
 
@@ -282,7 +282,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                         <div class="flex-row margin-lg ">
                             <i class="btn-icon icon-width fas fa-map-marker-alt clr-green margin-side-lg"></i>
                             <div class="flex-col form hidden">
-                                <div class="border-round <?php if (!isset($latitude) && !isset($longitude) && ($mode == "Virtual")) echo "form hidden" ?>" id="map"></div>
+                                <div class="border-round<?php if (!isset($latitude) && !isset($longitude) && ($mode == "Virtual")) echo "form hidden" ?>" id="map"></div>
                                 <div class="latlang" class="form hidden">
                                     <input class="hidden" name="longitude" id="longitude" value=NULL>
                                     <input class="hidden" name="latitude" id="latitude" value=NULL>
@@ -448,6 +448,7 @@ if (isset($_SESSION["user"]["user_type"])) {
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
 
 <script>
+    <?php if($organization || $moderator) { ?>
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -455,6 +456,7 @@ if (isset($_SESSION["user"]["user_type"])) {
 
     today = yyyy+ '-' + mm + '-' + dd;
     document.getElementById("start_date").setAttribute("min", today);
+        
 
     function edit() {
 
@@ -476,6 +478,27 @@ if (isset($_SESSION["user"]["user_type"])) {
                 draggable: true
             });
     }
+
+
+    if (document.getElementById("mode").value == "Virtual") {
+        document.getElementById("map").style.opacity = "0.3";
+        document.getElementById("map").style.pointerEvents = "none";
+    }
+
+
+    function eventMode(event) {
+        if (event.target.value == "Physical" || event.target.value == "Physical & Virtual") {
+            document.getElementById("map").style.opacity = "1";
+            document.getElementById("map").style.pointerEvents = "unset";
+
+        } else {
+            document.getElementById("map").style.opacity = "0.3";
+            document.getElementById("map").style.pointerEvents = "none";
+        }
+    }
+
+
+    <?php } ?>
 
     <?php if (isset($_GET["volunteerErr"])) echo "edit();" ?>
 
@@ -538,23 +561,6 @@ if (isset($_SESSION["user"]["user_type"])) {
         animateProgressBar($(this).find("div"), $(this).data("width"))
     });
 
-
-    if (document.getElementById("mode").value == "Virtual") {
-        document.getElementById("map").style.opacity = "0.3";
-        document.getElementById("map").style.pointerEvents = "none";
-    }
-
-
-    function eventMode(event) {
-        if (event.target.value == "Physical" || event.target.value == "Physical & Virtual") {
-            document.getElementById("map").style.opacity = "1";
-            document.getElementById("map").style.pointerEvents = "unset";
-
-        } else {
-            document.getElementById("map").style.opacity = "0.3";
-            document.getElementById("map").style.pointerEvents = "none";
-        }
-    }
 
 
     let map;

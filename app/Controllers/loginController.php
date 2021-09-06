@@ -73,7 +73,7 @@ class LoginController
 
             if ($user_type == "organization")
                 Controller::redirect("/organisation/dashboard");
-            elseif ($user_type == "registered user")
+            elseif ($user_type == "registered_user")
                 Controller::redirect("/user/home");
             elseif ($user_type == "admin")
                 Controller::redirect("/view/organisationDashboard.php");

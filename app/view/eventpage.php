@@ -150,31 +150,6 @@
 <?php include "nav.php" ?>
 
 <body>
-    <?php
-        if (!isset($moderator)) $moderator = false;
-        if (!isset($treasurer)) $treasurer = false;
-        $organization = $admin = $registered_user = $guest_user = false;
-
-        if (isset($_SESSION["user"]["user_type"])) {
-            if ($_SESSION["user"]["user_type"] == "organization") {
-                $organization = true;
-            }
-            if ($_SESSION["user"]["user_type"] == "admin") {
-                $$admin = true;
-            }
-            if ($_SESSION["user"]["user_type"] == "registered_user") {
-                $registered_user = true;
-            }
-        } else {
-            $guest_user = true;
-        }
-        if ($_SESSION["user"]["user_type"] == "registered_user") {
-            $registered_user = true;
-        }
-        else {
-        $guest_user = true;
-    }
-    ?>
 
     <div class="photo-container">
         <div class="cover-place-holder cover border-round">
@@ -190,14 +165,14 @@
         </div>
     </div>
 
-    <?php if ($organization || $moderator) { ?>
+   
         <div class="flex-row flex-center margin-md">
             <h1 class="data"><?= $event_name ?></h1>
             <?php if (($organization || $moderator) && ($_GET["page"]=="about") ){ ?>
             <input value="<?= $event_name ?>" type="text" name="event_name" form="update-form" class="form form-ctrl hidden" placeholder="Enter event name" required></input>
             <?php } ?>
         </div>
-    <?php } ?>
+
 
     <div class="nav-secondary">
         <div class="nav-secondary-bar margin-lg">

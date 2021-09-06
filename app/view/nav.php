@@ -64,7 +64,7 @@
                 <?php } ?>
 
                 <?php if($guest_user) { ?>
-                <a class="nav-link margin-side-md" href="/view/adoption_listing.php ">Home</a>
+                <a class="nav-link margin-side-md" href="/user/home">Home</a>
                 <?php } ?>
 
             </nav>
@@ -80,7 +80,7 @@
                     <?php if($organization) { ?>
                         <a href="/organisation/organizationalAdminProfileView" class="nav-link margin-md" ><i class="far fa-user"></i>&nbsp; Profile</a>
                     <?php } elseif($registered_user) { ?>
-                        <a href="/user/view" class="nav-link margin-md" ><i class="far fa-user"></i>&nbsp; Profile</a>
+                        <a href="/RegisteredUser/view" class="nav-link margin-md" ><i class="far fa-user"></i>&nbsp; Profile</a>
                     <?php } ?>
                     <a href="/login/logout" class="nav-link margin-side-md" href=""><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</a>
                     </div>

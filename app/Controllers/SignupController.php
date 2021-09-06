@@ -57,12 +57,15 @@ class SignupController
         $encyption = new Encryption;
         $data = $encyption->decrypt($key, 'email verificaition');
         $user = new User;
-        if ($user_details=$user->authenticate($data["email"], $data["password"],0)) {
-           $user->setVerification($user_details["uid"]);
-        } 
+        $time = (int)shell_exec("date '+%s'");
+        $user_details=$user->authenticate($data["email"], $data["password"],0);
+        
+        if($data["time"]>$time-86400 && $user_details) {
+            $user->setVerification($user_details["uid"]);
+            LoginController::validate($data["email"],$data["password"]);
+        }
         else
             Controller::redirect('/login/view');
-        LoginController::validate($data["email"],$data["password"]);
     }
 
     function checkEmailAvailable(){

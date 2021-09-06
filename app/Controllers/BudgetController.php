@@ -30,7 +30,7 @@ class BudgetController
              Controller::redirect("/event/view?page=budget&&event_id=" .$_POST["event_id"],["amountErr"=>"Inavlid amount"]);
 
         (new Budget)->addIncome($data);
-        Controller::redirect("/event/view?page=budget&&event_id=" .$_POST["event_id"]);
+        Controller::redirect("/event/view",["page"=>'budget',"event_id"=> $_POST["event_id"]]);
     }
 
     public function addExpense(){//add expenses to the budget

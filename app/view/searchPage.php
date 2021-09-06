@@ -250,7 +250,7 @@
         <search class="flex-row-to-col flex-center border-round">
             <form action="/search/view" class="flex-row-to-col flex-center">
                 <div class="search-bar" style="height:fit-content">
-                    <input type="search" class="form-ctrl clr-white" placeholder="Search" id="in-search">
+                    <input type="search" class="form-ctrl clr-white" placeholder="Search" id="in-search" onkeyup="range='';">
                     <button type="submit" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
                 </div>
                 <div><button type="button" class="btn btn-solid" id="near-me" onclick="nearme()"><i class="fas fa-map-marker-alt"></i>&nbsp;Near me</button></div>
@@ -370,6 +370,7 @@
                 start_date: date,
                 order_type: sort,
                 way: way,
+                status: 'published',
             },
             success: function(result) {
                 console.log(result);
@@ -403,8 +404,8 @@
 
     window.onload = search;
     //console.log()
-    document.getElementById("city").addEventListener('keyup', debounce(search, 500));
-    document.getElementById("in-search").addEventListener('keyup', debounce(search, 500));
+    document.getElementById("city").addEventListener('keyup', debounce(search, 100));
+    document.getElementById("in-search").addEventListener('keyup', debounce(search, 100));
 
 
     function choices() {

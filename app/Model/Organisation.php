@@ -29,7 +29,10 @@ class Organisation extends User
         $db->commit();
 
         $encryption = new Encryption;
-        $parameters = ["key" => $encryption->encrypt(array_intersect_key($data, ["email" => '', "password" => '']), 'email verificaition')];
+        $data["time"] = (int)shell_exec("date '+%s'");
+        
+        $parameters = ["key" => $encryption->encrypt(array_intersect_key($data, ["email" => '', "password" => '',"time"=>'']), 'email verificaition')];
+        
 
         $mail = new Mail;
 
@@ -234,7 +237,7 @@ class Organisation extends User
             return false;
     }
     public function changeUsername($uid,$data){
-        
+        $_SESSION["user"]["username"]=$data;
         $params = ["uid" => $uid , "username"=> $data];
         $query = 'UPDATE organization SET username= :username   WHERE uid = :uid ' ;
         User::insert($query,$params);       
@@ -277,5 +280,54 @@ class Organisation extends User
         }
     }
 
+    public function getAvailableUserRoles($name){
+        $query = 'SELECT username, uid,profile_pic FROM registered_user  WHERE username LIKE :name';
+        $params=["name"=>"%$name%"];
+        $result=User::select($query,$params);
+        return $result;
+    }
+
+    public function getUserRoles($event_id){
+        $query="SELECT moderator_treasurer.uid, moderator_treasurer.moderator_flag ,moderator_treasurer.treasurer_flag ,registered_user.username FROM  moderator_treasurer LEFT JOIN registered_user ON moderator_treasurer.uid = registered_user.uid WHERE moderator_treasurer.event_id= :event_id";
+        $params=["event_id"=>$event_id];
+        $result=User::select($query,$params);
+        return $result;
+    }
+
+    public function addUserRole($uid,$role,$event_id){
+        $query="SELECT uid FROM  moderator_treasurer WHERE event_id= :event_id AND uid= :uid";
+        $params=["event_id"=>$event_id, "uid"=>$uid];
+        if(count(User::select($query,$params))==1){
+            if($role="treasurer")
+                $query="UPDATE moderator_treasurer SET treasurer_flag = 1 WHERE event_id= :event_id AND uid= :uid";
+            else if($role="moderator")
+                $query="UPDATE moderator_treasurer SET moderator_flag = 1 WHERE event_id= :event_id AND uid= :uid";
+            User::insert($query,$params);
+        }
+        else{
+            $query ="INSERT INTO moderator_treasurer (uid,event_id,moderator_flag,treasurer_flag) VALUES (:uid, :event_id, IF (STRCMP(:role1, 'moderator')=0 ,1,0),IF (STRCMP(:role2, 'treasurer')=0 ,1,0))";
+            $params=["event_id"=>$event_id, "uid"=>$uid, "role1"=>$role, "role2"=>$role];
+            User::insert($query,$params);
+        }
+    }
+
+    public function deleteUserRole($uid,$role,$event_id){
+        
+
+        $query="SELECT uid FROM  moderator_treasurer WHERE event_id= :event_id AND uid= :uid AND treasurer_flag = 1 AND moderator_flag = 1";
+        $params=["event_id"=>$event_id, "uid"=>$uid];
+        if(count(User::select($query,$params))==1){
+            if($role="treasurer")
+                $query="UPDATE moderator_treasurer SET treasurer_flag = 0 WHERE event_id= :event_id AND uid= :uid";
+            else if($role="moderator")
+                $query="UPDATE moderator_treasurer SET moderator_flag = 0 WHERE event_id= :event_id AND uid= :uid";
+            User::insert($query,$params);
+        }
+        else{
+            $query ="DELETE FROM moderator_treasurer WHERE event_id= :event_id AND uid =:uid";
+            $params=["event_id"=>$event_id, "uid"=>$uid];
+            User::insert($query,$params);
+        }
+    }
 
 }

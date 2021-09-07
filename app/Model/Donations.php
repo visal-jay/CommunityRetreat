@@ -18,6 +18,7 @@ class Donations extends Model{
         $params = ["event_id" => $event_id];
         $result=Model::select($query,$params);
        return $result;
+       
     }
 
     public function disableDonation($event_id){//disable donations for an event
@@ -38,5 +39,14 @@ class Donations extends Model{
         $query = 'UPDATE event SET donation_capacity=:donation_capacity WHERE event_id =:event_id';
         $params = ["event_id" => $event_id, "donation_capacity" => $donation_capacity];
         Model::insert($query,$params);
+    }
+
+    public function getDonationSum($event_id){
+        $query= 'SELECT SUM(amount) as donation_sum FROM donation WHERE event_id =:event_id';
+        $params = ["event_id" => $event_id];
+        $result=Model::select($query,$params);
+        $result = ($result[0]["donation_sum"]==NULL)?0 : $result[0]["donation_sum"];
+       return $result;
+       
     }
 }

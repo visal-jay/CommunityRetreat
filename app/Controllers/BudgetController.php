@@ -9,14 +9,19 @@ class BudgetController
         $budget = new Budget();
         $expense_details=$budget->getExpenseDetails($_GET["event_id"]);
         $income_details=$budget->getIncomeDetails($_GET["event_id"]);
+        $income_sum = $budget->getIncomeSum($_GET["event_id"]);
+        $expense_sum = $budget->getExpenseSum($_GET["event_id"]);
+        $donate_sum = $budget->getDonationSum($_GET["event_id"]);
         
         $data["incomes"]=$income_details;
         $data["expenses"]=$expense_details;
+        $data["income_sum"]=$income_sum;
+        $data["expense_sum"]=$expense_sum;
+        $data["donation_sum"]=$donate_sum;
         
         $event_details=array_intersect_key((new Events)->getDetails($_GET["event_id"]),["event_name"=>'',"cover_photo"=>'']);
         $data=array_merge($event_details,$data);
         View::render("eventPage",$data);
-        
 
        
     } 

@@ -134,6 +134,27 @@ p {
     text-align: center;
 }
 
+.bold {
+    font-weight: 600;
+
+}
+
+.sum {
+    margin: 15px;
+    text-align: center;
+}
+
+.income-expenxe-balance-container {
+    border-color: #16c79a;
+    border-radius: 8px;
+    background-color: #eeeeee;
+    box-shadow: 2px 4px #ccbcbc;
+    padding: 5px;
+    text-align: center;
+    margin: 20px;
+    display: flex;
+    justify-content: space-evenly;
+}
 
 @media screen and (max-width:800px) {
 
@@ -192,6 +213,17 @@ if(isset($_SESSION ["user"] ["user_type"])){
 
 <body>
     <div class="container flex-col flex-center" id="container">
+        <div class="income-expenxe-balance-container">
+            <div class="bold sum">
+                Sum of Incomes : <?= $income_sum ?>
+            </div>
+            <div class="bold sum">
+                Sum of Expenses : <?= $expense_sum ?>
+            </div>
+            <div id="balance" class="bold sum">
+            </div>
+        </div>
+
         <h2 class="header margin-md">Income</h2>
 
         <form action="/budget/addIncome?" method="post" class="form income-form">
@@ -214,6 +246,10 @@ if(isset($_SESSION ["user"] ["user_type"])){
             </div>
         </form>
         <div class="income-info" id="income-info">
+            <div class=" card-container">
+                <p>Donations</p>
+                <p><?= $donation_sum ?></p>
+            </div>
             <?php foreach($incomes as $income){ ?>
             <div class=" card-container">
                 <p><?= $income["details"] ?></p>
@@ -308,6 +344,9 @@ if(isset($_SESSION ["user"] ["user_type"])){
 
 
     <script>
+    document.getElementById("balance").innerHTML = parseInt('<?= $income_sum ?>') - parseInt('<?= $expense_sum ?>');
+
+
     function show(id) {
         document.getElementById(id).classList.toggle("height100");
         //show the rest of the incomes and expenses byclicking the drop down button 

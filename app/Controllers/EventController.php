@@ -72,9 +72,11 @@ class EventController
         $donation = new Donations();    
         $donate_details = $donation->getDonateDetails($_GET["event_id"]);
         $data["donations"]=$donate_details;
+        $donate_sum = $donation->getDonationSum($_GET["event_id"]);
+        $data["donation_sum"]=$donate_sum;
         $data = array_merge($data, $event_details);
-        var_dump($data);
-        View::render('eventPage',$data);        
+        View::render('eventPage',$data); 
+               
     }
 
     public function disableDonation(){//disable donations for an event
@@ -89,7 +91,7 @@ class EventController
         Controller::redirect("/event/view",["event_id"=> $_GET["event_id"], "page" => "donations"]);
     }
 
-    public function updateDonationCapacity(){//give a donation capacity for an event from the UI to store in backend
+    public function updateDonationCapacity(){//update donation capacity
         $donation = new Donations;
         $donation->updateDonationCapacity($_GET["event_id"], $_POST["donation_capacity"]);
         Controller::redirect("/event/view",["event_id"=> $_GET["event_id"], "page" => "donations"]);             

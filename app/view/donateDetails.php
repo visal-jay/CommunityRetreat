@@ -136,6 +136,10 @@ td {
     margin: 1rem;
 }
 
+.bold {
+    font-weight: 700;
+}
+
 @media screen and (max-width:768px) {
 
     table,
@@ -205,7 +209,6 @@ if(isset($_SESSION ["user"] ["user_type"])){
 }else{
     $guest_user= true;
 }
-
 ?>
 
 
@@ -226,8 +229,8 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     </div>
                     <form action="/event/updateDonationCapacity?event_id=<?= $_GET["event_id"] ?>" method="post"
                         id="donation-capacity">
-                        <input name="donation_capacity" type="number" value="<?= $donation_capacity ?>" min="1000"
-                            max="10000000" class=" form form-ctrl hidden" />
+                        <input name="donation_capacity" type="number" value="<?= $donation_capacity ?>"
+                            min="<?= $donation_sum ?>" max="10000000" class=" form form-ctrl hidden" />
                     </form>
                 </div>
             </div>
@@ -283,7 +286,12 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     </tbody>
                 </table>
 
+                <hr>
+                <div class="bold">
+                    Sum of donations : <?= $donation_sum ?>
+                </div>
             </div>
+
             <div class="donation-details-btn">
                 <button class="btn btn-md btn-solid">Full donation details</button>
             </div>

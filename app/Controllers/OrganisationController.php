@@ -6,10 +6,15 @@ class OrganisationController
 {
     public function view($org_id = '')
     {
+        if($org_id!='')
+            $user_roles=Controller::accessCheck(["registered_user","guest_user"]);
+        else
+            $user_roles=Controller::accessCheck(["organization","registered_user","guest_user"]);
 
         $org_id = isset($_GET["org_id"]) ? $_GET["org_id"] : $org_id;
-        $data = (new Organisation)->getDetails($org_id);
-        View::render("organisationDashboard", $data);
+        if($data = (new Organisation)->getDetails($org_id))
+            View::render("organisationDashboard", $data,$user_roles);
+            
     }
 
     public function dashboard()
@@ -26,10 +31,17 @@ class OrganisationController
 
     public function gallery()
     {
-        if (!$data = (new Gallery)->getGallery(["uid" => $_SESSION["user"]["uid"]], true))
+        if(isset($_GET["org_id"]))
+            $user_roles=Controller::accessCheck(["registered_user","guest_user"]);
+        else
+            $user_roles=Controller::accessCheck(["organization","registered_user","guest_user"]);
+
+        $org_id = isset($_GET["org_id"]) ? $_GET["org_id"] : $_SESSION["user"]["uid"];
+
+        if (!$data = (new Gallery)->getGallery(["uid" => $org_id], true))
             $data = array();
 
-        View::render("organisationGallery", array_merge(["photos" => $data]));
+        View::render("organisationGallery", array_merge(["photos" => $data]),$user_roles);
     }
 
     public function deletePhoto()
@@ -49,20 +61,26 @@ class OrganisationController
 
     public function events()
     {
+        if(isset($_GET["org_id"]))
+            $user_roles=Controller::accessCheck(["registered_user","guest_user"]);
+        else
+            $user_roles=Controller::accessCheck(["organization","registered_user","guest_user"]);
+
+        $org_id = isset($_GET["org_id"]) ? $_GET["org_id"] : $_SESSION["user"]["uid"];
+
         $events = new Events;
         $data["events"] = array();
-        if ($result = $events->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "published"]))
+        if ($result = $events->query(["org_uid" => $org_id, "status" => "published"]))
             foreach ($result as $event)
                 array_push($data["events"], $event);
-        if ($result = $events->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "added"]))
+        if ($result = $events->query(["org_uid" => $org_id, "status" => "added"]))
             foreach ($result as $event)
                 array_push($data["events"], $event);
 
         usort($data["events"], function ($a, $b) {
             return $a['event_id'] <=> $b['event_id'];
         });
-
-        View::render("manageEvents", $data);
+        View::render("manageEvents", $data,$user_roles);
     }
 
     public function report()

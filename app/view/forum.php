@@ -172,9 +172,11 @@
 
 <body>
     <div id="background">
+        <?php if ($organization || $moderator) { ?>
         <div class="flex-col flex-center margin-side-lg">
             <button class="btn btn-solid btn-close margin-lg" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')">Add Announcement &nbsp; <i class="fas fa-plus"></i></button>
         </div>
+        <?php } ?>
         <div class="flex-col flex-center">
             <?php foreach ($announcements as $announcement) { ?>
                 <div class="card-container margin-md">
@@ -197,6 +199,7 @@
         </div>
     </div>
 
+    <?php if ($organization || $moderator) { ?>
     <div class="popup" id="form">
         <div class="content">
             <form action="/event/addAnnouncement?event_id=<?= $_GET["event_id"] ?>" method="post" class="form-container">
@@ -222,6 +225,7 @@
             </form>
         </div>
     </div>
+    <?php } ?>
 </body>
 
 <script>

@@ -14,7 +14,7 @@ class Announcement extends Model{
             $params = ["event_id"=> $event_id, "announcement_id"=> $announcement_id];
         }
         else{
-            $query = "SELECT `title`, `announcement`, `announcement_id`, date(time_stamp) AS date FROM announcement WHERE event_id= :event_id";
+            $query = "SELECT `title`, `announcement`, `announcement_id`, date(time_stamp) AS date FROM announcement WHERE event_id= :event_id ORDER BY time_stamp DESC";
             $params = ["event_id"=> $event_id];
         }
         $result = Model::select($query, $params);
@@ -28,16 +28,15 @@ class Announcement extends Model{
         $new_data = array_merge($old_data, $data);
         $update_data = array_intersect_key($new_data, ['announcement_id' => "", 'title' => "", 'announcement' => ""]);
         $params=array_merge($update_data,$params);
-        var_dump($params);
         $query = "UPDATE announcement SET `title` = :title, `announcement` = :announcement, time_stamp = CURRENT_TIMESTAMP WHERE `announcement_id`=:announcement_id ";
- 
         Model::insert($query, $params);
     }
 
-    public function deleteAnnouncement($event_id, $announcement_id=-1)
+    public function deleteAnnouncement($announcement_id)
     {
         $query = "DELETE FROM `announcement` WHERE announcement_id= :announcement_id";
-        $params = ["event_id" => $event_id];
+        $params = ["announcement_id" => $announcement_id];
+        var_dump($params);
         Model::insert($query, $params);
     }
 

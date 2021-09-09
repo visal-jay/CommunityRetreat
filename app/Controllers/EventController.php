@@ -161,6 +161,6 @@ class EventController
 
     public function deleteAnnouncement(){
         (new Announcement)->deleteAnnouncement($_POST["announcement_id"]);
-        Controller::redirect("/event/view",["page"=>"forum","event_id"=> $_POST["event_id"]]);
+        Controller::redirect("/event/view",["page"=>"forum","event_id"=> $_GET["event_id"]]);
     }
 }

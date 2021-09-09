@@ -190,7 +190,7 @@
                             <button class="btn clr-red border-red " onclick="remove()"><i class="far fa-trash-alt margin-side-md"></i>&nbsp;Remove</button>
                             <div class="flex-row flex-space" style="display: none;">
                                 <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
-                                <form method="post" action="/event/editAnnouncement?event_id=<?= $_GET["event_id"] ?>" class="flex-row flex-center">
+                                <form method="post" action="/event/deleteAnnouncement?event_id=<?= $_GET["event_id"] ?>" class="flex-row flex-center">
                                     <input name="announcement_id" class="hidden" value="<?= $announcement["announcement_id"] ?>">
                                     <button class="btn-icon flex-row flex-center"><i type="submit" class="fas fa-check clr-green margin-side-md"></i>&nbsp;</button>
                                 </form>

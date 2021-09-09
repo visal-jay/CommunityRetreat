@@ -153,7 +153,14 @@ class EventController
     }
 
     public function editAnnouncement(){
-        $_POST["announcement_id"] = $_GET["announcement_id"];
+        $_POST["event_id"] = $_GET["event_id"];
+        $announcement = new Announcement;
+        $announcement->editAnnouncement($_POST);
+        Controller::redirect("/event/view",["page"=>"forum","event_id"=> $_POST["event_id"]]);
+    }
 
+    public function deleteAnnouncement(){
+        (new Announcement)->deleteAnnouncement($_POST["announcement_id"]);
+        Controller::redirect("/event/view",["page"=>"forum","event_id"=> $_GET["event_id"]]);
     }
 }

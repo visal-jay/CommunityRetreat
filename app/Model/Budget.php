@@ -12,12 +12,13 @@ class Budget extends Model
         $query = 'SELECT CONCAT("EXP",`record_id`) as record_id, `time_stamp`, `event_id`, `uid`, `status`, `details`, `amount` FROM expense where event_id=:event_id AND status = "current" ';
         $params = ["event_id" => $event_id];
         $result=Model::select($query,$params);
+        
        return $result;
     }
     
 	public function addIncome($data){//add incomes to the budget
         if(!isset($_SESSION)) session_start();
-        $data["uid"] = $_SESSION["user"]["uid"] ; //this has to be deleted       
+        $data["uid"] = $_SESSION["user"]["uid"] ;       
         $query = 'INSERT INTO `income` (`details`, `amount`, `uid`, `event_id`) VALUES (:details,  :amount, :uid, :event_id)';
         $params=array_intersect_key($data,["details"=>'',"amount"=>'', "uid"=>'', "event_id"=>'']); 
         Model::insert($query,$params);     
@@ -28,6 +29,7 @@ class Budget extends Model
         $data["uid"] = $_SESSION["user"]["uid"] ;
         $query = 'INSERT INTO `expense` (`details`, `amount`, `uid`, `event_id`) VALUES (:details,  :amount, :uid, :event_id)';
         $params=array_intersect_key($data,["details"=>'',"amount"=>'', "uid"=>'', "event_id"=>'']);
+        var_dump($data);
         Model::insert($query,$params);     
      }
 

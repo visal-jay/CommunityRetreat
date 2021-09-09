@@ -37,9 +37,9 @@ class BudgetController
     }
 
     public function addExpense(){//add expenses to the budget
-        Controller::accessCheck(["organization","treasurer"]);
-        $data=array_merge($_GET, $_POST);    
         
+        $data=array_merge($_GET, $_POST);    
+        Controller::accessCheck(["organization","treasurer"]);
         $validate=new Validation;
         if(!$validate->currency($_POST["amount"]))
              Controller::redirect("/event/view?page=budget&&event_id=" .$_POST["event_id"],["amountErr"=>"Inavlid amount"]);

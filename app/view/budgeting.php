@@ -185,6 +185,24 @@ p {
         width: 80%;
         top: 40%;
     }
+
+    .income-info {
+        min-width: 0;
+    }
+
+    .expense-info {
+        min-width: 0;
+    }
+
+    .income-expenxe-balance-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sum {
+        margin: 5px;
+        justify-content: space-between;
+    }
 }
 </style>
 
@@ -214,11 +232,13 @@ if(isset($_SESSION ["user"] ["user_type"])){
 <body>
     <div class="container flex-col flex-center" id="container">
         <div class="income-expenxe-balance-container">
-            <div class="bold sum">
-                Sum of Incomes : <?= $income_sum ?>
+            <div class="bold sum flex-row">
+                <div>Sum of Incomes :</div>
+                <div><?= $income_sum ?></div>
             </div>
-            <div class="bold sum">
-                Sum of Expenses : <?= $expense_sum ?>
+            <div class="bold sum flex-row">
+                <div>Sum of Expenses :</div>
+                <div><?= $expense_sum ?></div>
             </div>
             <div id="balance" class="bold sum">
             </div>
@@ -250,6 +270,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
             <div class=" card-container">
                 <p>Donations</p>
                 <p><?= $donation_sum ?></p>
+                <div class="flex-row"></div>
             </div>
             <?php foreach($incomes as $income){ ?>
             <div class=" card-container">
@@ -272,31 +293,31 @@ if(isset($_SESSION ["user"] ["user_type"])){
 
         </div>
 
-        <div>
-            <button class="btn btn-solid btn-md read-more-btn"
-                onclick="show('income-info');change_button('income-down-btn')"><i id="income-down-btn"
+        <div id="income-show-hide-btn" onload="income_null('income-show-hide-btn')">
+            <button class=" btn btn-solid btn-md read-more-btn"
+                onclick="show('income-info');change_button('income-down-btn');"><i id=" income-down-btn"
                     class="fas fa-chevron-down"></i></button>
         </div>
 
         <h2 class="header margin-md">Expense</h2>
-        
+
         <?php if($organization || $treasurer) { ?>
-            <form action="/budget/addExpense?event_id=<?= $_GET["event_id"] ?>" method="post" class="form expense-form">
-                <button class="btn btn-md btn-solid margin-md" type="button" name="button" id="btn" value="Add"
-                    onclick="show_hide('expense-form') ">Add &nbsp;<i class="fas fa-plus"></i></button>
-                <div id="expense-form" style="margin-top: 20px;" class="hidden">
-                    <div class="input form-item">Details
-                        <input class="form-ctrl" name="details" id="details" type="text" placeholder="Enter the details" />
-                    </div>
-                    <div class="input form-item">Amount
-                        <input class="form-ctrl" name="amount" id="amount" type="text" placeholder="Enter the amount" />
-                    </div>
-                    <div class="form-action-buttons">
-                        <button class="btn btn-md" name="event_id" type="submit"
-                            value="<?= $_GET["event_id"] ?>">Submit</button>
-                    </div>
+        <form action="/budget/addExpense?" method="post" class="form expense-form">
+            <button class="btn btn-md btn-solid margin-md" type="button" name="button" id="btn" value="Add"
+                onclick="show_hide('expense-form') ">Add &nbsp;<i class="fas fa-plus"></i></button>
+            <div id="expense-form" style="margin-top: 20px;" class="hidden">
+                <div class="input form-item">Details
+                    <input class="form-ctrl" name="details" id="details" type="text" placeholder="Enter the details" />
                 </div>
-            </form>
+                <div class="input form-item">Amount
+                    <input class="form-ctrl" name="amount" id="amount" type="text" placeholder="Enter the amount" />
+                </div>
+                <div class="form-action-buttons">
+                    <button class="btn btn-md" name="event_id" type="submit"
+                        value="<?= $_GET["event_id"] ?>">Submit</button>
+                </div>
+            </div>
+        </form>
         <?php } ?>
 
         <div class="expense-info" id="expense-info">
@@ -320,9 +341,9 @@ if(isset($_SESSION ["user"] ["user_type"])){
             <?php } ?>
 
         </div>
-        <div>
-            <button class="btn btn-solid btn-md read-more-btn"
-                onclick="show('expense-info');change_button('expense-down-btn')"><i id="expense-down-btn"
+        <div id="expense-show-hide-btn" onload=alert(hello);>
+            <button class=" btn btn-solid btn-md read-more-btn"
+                onclick="show('expense-info');change_button('expense-down-btn');"><i id="expense-down-btn"
                     class="fas fa-chevron-down"></i></button>
         </div>
     </div>
@@ -346,10 +367,28 @@ if(isset($_SESSION ["user"] ["user_type"])){
 
 
     <script>
-    document.getElementById("balance").innerHTML = parseInt('<?= $income_sum ?>') - parseInt('<?= $expense_sum ?>');
+    document.getElementById("balance").innerHTML = "Balance : " +
+        String(parseInt('<?= $income_sum ?>') - parseInt('<?= $expense_sum ?>'));
 
+    function income_null(id) {
+        let income_sum = parseInt('<?= $income_sum ?>');
+        if (income_sum == 0) {
+            document.getElementById(id).classList.toggle("hidden");
+        }
+    }
 
-    function show(id) {
+    function expense_null(id) {
+        let expense_sum = parseInt('<?= $expense_sum ?>');
+        if (expense_sum == 0) {
+            document.getElementById(id).classList.toggle("hidden");
+        }
+    }
+
+    expense_null("expense-show-hide-btn");
+    income_null("income-show-hide-btn");
+
+    function
+    show(id) {
         document.getElementById(id).classList.toggle("height100");
         //show the rest of the incomes and expenses byclicking the drop down button 
     }

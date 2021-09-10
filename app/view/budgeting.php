@@ -240,7 +240,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
                 <div>Sum of Expenses :</div>
                 <div><?= $expense_sum ?></div>
             </div>
-            <div id="balance" class="bold sum">
+            <div id="balance" class="bold sum flex-row">
             </div>
         </div>
 
@@ -367,8 +367,8 @@ if(isset($_SESSION ["user"] ["user_type"])){
 
 
     <script>
-    document.getElementById("balance").innerHTML = "Balance : " +
-        String(parseInt('<?= $income_sum ?>') - parseInt('<?= $expense_sum ?>'));
+    document.getElementById("balance").innerHTML = "<div>Balance :</div><div>" +
+        String(parseInt('<?= $income_sum ?>') - parseInt('<?= $expense_sum ?>')) + "</div>";
 
     function income_null(id) {
         let income_sum = parseInt('<?= $income_sum ?>');

@@ -138,7 +138,23 @@ td {
 
 .bold {
     font-weight: 700;
+    align-items: center;
+    display: flex;
 }
+
+.donation-sum-container {
+    border-color: #16c79a;
+    border-radius: 8px;
+    background-color: #eeeeee;
+    box-shadow: 2px 4px #ccbcbc;
+    padding: 17px;
+    text-align: center;
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
 
 @media screen and (max-width:768px) {
 
@@ -148,15 +164,18 @@ td {
         padding: 5px 8px 12px;
     }
 
-    body {
-        font-size: 13px;
-    }
-
     #mytable .scroll {
         overflow: scroll;
     }
 
-    .close-btn {
+    .edit-btn,
+    .close-btn,
+    .save-btn {
+        font-size: 0.9rem;
+    }
+
+    .close-btn,
+    .save-btn {
         padding: 8px;
     }
 
@@ -165,7 +184,7 @@ td {
     }
 
     .container-size {
-        width: 95%;
+        width: 90%;
     }
 
     .initial-donation-enable-btn {
@@ -173,7 +192,7 @@ td {
     }
 
     .container {
-        width: 65%;
+        width: 0;
         margin: auto;
     }
 
@@ -184,6 +203,13 @@ td {
         height: fit-content;
     }
 
+    .donation-capacity-container {
+        display: contents;
+    }
+
+    .form {
+        width: fit-content;
+    }
 }
 </style>
 
@@ -219,7 +245,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
         <div class="container-size">
             <h1>Donation Details</h1>
 
-            <div class="row container">
+            <div class="row container donation-capacity-container">
                 <div class="column section">
                     <h4>Donation capacity</h4>
                 </div>
@@ -247,6 +273,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
                 </div>
             </div>
 
+
             <?php if($donation_status==1){ ?>
             <form action="/event/disableDonation?event_id=<?= $_GET["event_id"] ?>" method="post"
                 class=" secondary-donation-enable-disable-btn">
@@ -262,8 +289,13 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     Donations</button>
             </form>
             <?php } ?>
-            <div>
 
+            <div class="bold sum donation-sum-container">
+                <div>Sum of Donations:</div>
+                <div><?= $donation_sum ?></div>
+            </div>
+
+            <div>
                 <table id="mytable" class="center">
                     <col style="width:30%">
                     <col style="width:40%">
@@ -285,11 +317,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
                         <?php } ?>
                     </tbody>
                 </table>
-
                 <hr>
-                <div class="bold">
-                    Sum of donations : <?= $donation_sum ?>
-                </div>
             </div>
 
             <div class="donation-details-btn">

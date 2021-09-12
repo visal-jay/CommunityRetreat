@@ -28,7 +28,7 @@ class Announcement extends Model{
         $new_data = array_merge($old_data, $data);
         $update_data = array_intersect_key($new_data, ['announcement_id' => "", 'title' => "", 'announcement' => ""]);
         $params=array_merge($update_data,$params);
-        $query = "UPDATE announcement SET `title` = :title, `announcement` = :announcement, time_stamp = CURRENT_TIMESTAMP WHERE `announcement_id`=:announcement_id ";
+        $query = "UPDATE announcement SET `title` = :title, `announcement` = :announcement WHERE `announcement_id`=:announcement_id ";
         Model::insert($query, $params);
     }
 

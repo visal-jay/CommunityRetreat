@@ -187,7 +187,7 @@
 
                         <update class="margin-md">
                             <button class="btn margin-side-md" onclick="edit(); editForm('<?= $announcement['title'] ?>','<?= $announcement['announcement'] ?>','<?= $announcement['announcement_id'] ?>'); togglePopup('edit-form'); blur_background('background'); stillBackground('id1')"><i class="btn-icon far fa-edit margin-side-md"></i>&nbsp;Edit</button>
-                            <button class="btn clr-red border-red " onclick="remove()"><i class="far fa-trash-alt margin-side-md"></i>&nbsp;Remove</button>
+                            <button class="btn clr-red border-red " onclick="remove()" required style="font-family:Ubuntu, sans-serif,  FontAwesome"> &#xf2ed; &nbsp;Remove </button>
                             <div class="flex-row flex-space" style="display: none;">
                                 <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
                                 <form method="post" action="/event/deleteAnnouncement?event_id=<?= $_GET["event_id"] ?>" class="flex-row flex-center">
@@ -250,7 +250,7 @@
                     <button name="announcement_id" class="btn btn-solid margin-md" type="submit" id="edit-announcement-id">Save</button>
 
                     <div>
-                        <button class="btn-icon btn-close" onclick="togglePopup('edit-form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
+                        <button type="button" class="btn-icon btn-close" onclick="togglePopup('edit-form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
                     </div>
                 </form>
             </div>

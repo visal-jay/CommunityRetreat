@@ -39,7 +39,7 @@ for(let i=0 ; i<event_details.length ; i++ ){
          }
      ]);
 }
-git remote add https-//github.com/predator1999/Group-16.git
+
 
 
 // let calender_data2 = [
@@ -141,6 +141,8 @@ function popupLoad(index){
     
     }
     var popup = document.querySelector('.event-popup-container');
+    var body = document.querySelector('.body');
+    body.classList.toggle("overflow");
     popup.classList.toggle("pop-up-load");
 }
 
@@ -225,6 +227,8 @@ document.querySelector(".next").addEventListener('click',()=>{
 
 function popupHide(){
     var popup = document.querySelector('.event-popup-container');
+    var body = document.querySelector('.body');
+    body.classList.toggle("overflow");
     popup.classList.toggle("pop-up-load");
 }
 

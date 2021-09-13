@@ -7,13 +7,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../Public/assets/style/newstyles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-        <link rel="stylesheet" href= "../Public/assets/style/organisationprofilestyle.css">
+        <link rel="stylesheet" href= "../Public/assets/style/profilestyle.css">
         <link rel="stylesheet" href= "../Public/assets/style/fontawesome.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <title>Registrationuser profile</title>
+        <title>admin profile</title>
+        
+
     </head>
     <body>
-
+        
         
         <header class="header">
             <a class=" logo ">
@@ -47,15 +49,18 @@
         
             <div class="profilecontainer">
                   <div class="profilecontainer-top">
-                       
+                        <div class="profilepic-pic-div">
+                            <img src="../Public/assets/User-icon.png" id="dp" >
+                            <input type= "file" id="file" >
+                            <label for="file" id="uploadbtn">upload photo</label>
+        
+                        </div>
                         
                             <div class="aboutme-container">
                                 <div class="intro">
-                                    <h2  id="name"><?= $username ?></h2><br><br>
-                                    
-
+                                    <h2  id="name"><?= $username; ?></h2>
                                 </div>
-                               
+                                
                                 <a href="activityLog" class="view-activitylog-btn" role="button" ><i class="fa fa-history"></i>&nbsp&nbspActivity log</a>
                                 
                             </div>
@@ -79,7 +84,7 @@
                                         </div>
             
                                         <div class="username">
-                                            <h3 id="username"><?= $username ?></h3>
+                                            <h3 id="username"><?= $username?></h3>
             
                                         </div>
                                         <div class="username-change-btn">
@@ -88,11 +93,11 @@
                                     </div>
 
                                     <!--username update form-->
-                                <form action="/Organisation/updateUsername" method="post" id="edit-user-profile-form"   >   
+                                <form action="/Admin/updateUsername" method="post" id="edit-user-profile-form"   >   
                                     <div class="update-form" id="usernameupdater">
                                         <div class="input-container">
                                             <label for="text" class="edit-coontainer">Enter new username:</label>
-                                            <input type="text" id="usernameinput" placeholder="Enter new username" name="username" ><br>
+                                            <input type="text" id="usernameinput"  placeholder="Enter new username"name="username" ><br>
             
                                             <div class="intro-update-btn">
                                                 <button type="submit" class="btn bg-green clr-white" onclick=" updateField('username','usernameupdater')">Update</button>
@@ -103,8 +108,8 @@
                                 </form>                   
                                   
 
-
-                               
+                                   
+                              
 
                                     <div class="mobile-container">
                                         <div class="mobile-icon">
@@ -123,12 +128,13 @@
                                     </div>
 
                                      <!--mobile update form-->
-                                    <form action="/Organisation/updateContactNumber" method="post" id="edit-user-profile-form"   >   
+                                    <form action="/Admin/updateContactNumber" method="post" id="edit-user-profile-form"   >   
                                     <div class="update-form" id="mobileupdater">
                                         <div class="input-container">
                                         
                                             <label for="text" class = "form-item label" >Enter new mobile:</label>
-                                            <input type= "text"  placeholder = "Enter new mobile" id="mobileinput" name="contact_number"  onkeyup="checkTelephone(this.value)"><br>
+                            
+                                            <input type="text" placeholder = "Enter new mobile"  required name="contact_number" onkeyup="checkTelephone(this.value)"><br>
                                             <p class="alert mobile-error"></p>
                                         
                                             <div class="intro-update-btn">
@@ -138,37 +144,6 @@
                                         </div>
                                     </div>
                                     </form>
-                                                                                          
-                                    <div class="account-number-container">
-                                        <div class="account-number-icon">
-                                            <i class="fas fa-money-check-alt fa-2x clr-gray" id="user"></i>
-                                            <label id="user-label">Account No</label>
-                                        </div>
-            
-                                        <div class="account-number">
-                                            <h3 id="account-number"><?php if(isset($account_number)) echo $account_number; ?></h3>
-            
-                                        </div>
-                                        <div class="account-number-change-btn">
-                                            <button class="btn btn-clr" type="button" onclick="showEddite('account-number-updater')"><i class="fas fa-pen fa-1x" id="edit-icon"></i></button>
-                                        </div>
-                                    </div>
-
-                                    <!--accountnumber update form-->
-                                <form action="/Organisation/updateAccountNumber" method="post" id="edit-user-profile-form"   >   
-                                    <div class="update-form" id="account-number-updater">
-                                        <div class="input-container">
-                                            <label for="text" class="edit-coontainer">Enter new account number:</label>
-                                            <input type="text" id="usernameinput" placeholder="Enter new account number" name="account_number" onkeyup="checkAccountNumber(this.value)" ><br>
-                                            <p class="alert account-number-error"></p>
-            
-                                            <div class="intro-update-btn">
-                                                <button type="submit" class="btn bg-green clr-white account-number-submit-btn" onclick=" updateField('account-number','account-number-updater')">Update</button>
-                                                <button type="button" class="btn bg-red border-red clr-white" onclick="showEddite('account-number-updater')">Cancel</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form> 
 
                               
                                          
@@ -203,7 +178,7 @@
                                         </div>
                                     
                                       <!--email update form-->
-                                      <form action="/Organisation/updateEmail" method="post" id="edit-user-profile-form"   >                                          
+                                      <form action="/Admin/updateEmail" method="post" id="edit-user-profile-form"   >                                          
                                         <div class="update-form" id="emailupdater">
                                             <div class="input-container">
                                                 <label for="text"  >Enter new email:</label>
@@ -227,7 +202,7 @@
                                             </div>
                                         
                                             <div class="password">
-                                                <input type= "password"    id="password"  value="********" disabled><br>
+                                                <input type= "password"    id="password"  value="************" disabled><br>
                                             </div>
                                             <div class="password-change-btn">
                                                     <button class="btn btn-clr" type="button" onclick="showEddite('passwordupdater')"><i class= "fas fa-pen fa-1x" id="edit-icon"></i></button>
@@ -236,7 +211,7 @@
                                         </div>
 
                                         <!--password update form-->
-                                      <form action="/Organisation/updatePassword" method="post" id="edit-user-profile-form"   >       
+                                      <form action="/Admin/updatePassword" method="post" id="edit-user-profile-form"   >       
                                         <div class="update-form"  id="passwordupdater">
                                             <div class="input-container">
                                             
@@ -293,37 +268,29 @@
             let current_password_error = document.querySelector(".current-password-error");
             current_password_error.innerHTML = "";
             
+            
         }
+
         function checkTelephone(number) {
-            var err = "";
-            const pattern = /^[+]?[0-9]{10,11}$/;
-             if (!pattern.test(number)){
-                var err = "Valid phone number required";
-                document.querySelector('.mobile-submit-btn').disabled = true;
-            }
-            else{
-                document.querySelector('.mobile-submit-btn').disabled = false;
-            }
-            let mobile_errors = document.querySelector(".mobile-error");
+                var err = "";
+                const pattern = /^[+]?[0-9]{10,11}$/;
+                if (!pattern.test(number)){
+                    var err = "Valid phone number required";
+                    document.querySelector('.mobile-submit-btn').disabled = true;
+                }
+                else{
+                    document.querySelector('.mobile-submit-btn').disabled = false;
+                }
+                let mobile_errors = document.querySelector(".mobile-error");
 
 
-            mobile_errors.innerText = err;
+                mobile_errors.innerText = err;
+            
+              
+                
+        }
+  
         
-        }
-        function checkAccountNumber(account_number){
-            var err = "";
-            const pattern = /^[0-9]{8,18}$/;
-            if(!pattern.test(account_number)){
-                var err = "Valid account number required";
-                document.querySelector('.account-number-submit-btn').disabled = true;
-            }
-            else{
-                document.querySelector('.account-number-submit-btn').disabled = false;
-            }
-            let acc_errors = document.querySelector(".account-number-error");
-
-            acc_errors.innerText = err;
-        }
 
          function checkMail(email) {
              
@@ -336,7 +303,7 @@
                 } else
 
                     $.ajax({
-                        url: "/Organisation/checkEmailAvailable",
+                        url: "/Admin/checkEmailAvailable",
                         type: "post", 
                         dataType: 'json',
                         data: {
@@ -352,9 +319,9 @@
                                 document.getElementById('email-submit-btn').disabled = false;
                             }
                                 
-                            let errors = document.querySelector(".email-error");
-
-                                errors.innerHTML = err;
+                            
+                        let email_error = document.querySelector(".email-error")
+                        email_error.innerHTML = err;
                             
                           
                             
@@ -398,19 +365,19 @@
             const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
             let new_password =document.getElementById('new-password');
             let alert = document.getElementById("confirm-password-error");
-            
+          
+            console.log(new_password.value);
+            console.log(confirm_password);
            if(new_password.value == confirm_password && pattern.test(new_password.value)){
                 
                 alert.innerText ="Password matched";
                 document.querySelector('.password-submit-btn').disabled = false;
                 alert.style.color= "green";
-                
            }
            else{
                 document.querySelector('.password-submit-btn').disabled = true;
-                alert.innerText = "Still not matched with new passowrd";
+                alert.innerText = "Still not matched with current passowrd";
                 alert.style.color= "red";
-                
 
            }
           

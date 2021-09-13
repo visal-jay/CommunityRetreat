@@ -472,7 +472,7 @@ hr{
     box-sizing: border-box;
 }
 
-.password-edit-container input[type=password]:focus{
+.update-form input[type=password]:focus{
     box-shadow: 0px 0px 0px 1px #16c79a;
     border-color: #16c79a;
 }

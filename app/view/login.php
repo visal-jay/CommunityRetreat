@@ -262,7 +262,6 @@
                             email: email
                         },
                         success: function(result) {
-                            console.log(result);
                             if (result.taken == true) {
                                 var err = "Email already taken";
                             } else

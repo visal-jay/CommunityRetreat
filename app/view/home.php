@@ -250,6 +250,22 @@
     }
 </style>
 <?php include "nav.php" ?>
+<?php
+$organization = $admin = $registered_user = $guest_user = false;
+if (isset($_SESSION["user"]["user_type"])) {
+    if ($_SESSION["user"]["user_type"] == "organization") {
+        $organization = true;
+    }
+    if ($_SESSION["user"]["user_type"] == "admin") {
+        $$admin = true;
+    }
+    if ($_SESSION["user"]["user_type"] == "registered user") {
+        $registered_user = true;
+    }
+} else {
+    $guest_user = true;
+}
+?>
 
 <body>
     <div class="loader" onload="move();">
@@ -278,7 +294,7 @@
             </div>
         </search>
 
-
+        <?php if($guest_user) { ?>
         <div class="item flex-row-to-col flex-space">
             <register class="flex-col flex-center">
                 <img src="/Public/assets/volunteer.png" alt="">
@@ -297,6 +313,7 @@
                 </div>
             </register>
         </div>
+        <?php } ?>
 
         <div>
             <h2>Recently added</h2>
@@ -379,7 +396,7 @@
 
     async function donationEvents() {
         search({
-            sort: 'dotaion_percent',
+            sort: 'donation_percent',
             way: 'ASC',
             container: 'donation-events'
         });
@@ -431,7 +448,7 @@
                         let template = `
                     <figure class=" bg-green" onclick="location.href = '/event/view?page=about&&event_id=${evn.event_id}' ">
                         <div class="content">
-                            <div class="photo-container "><img src="/Public/assets/mountains.jfif" style="object-fit: cover;" alt="">
+                            <div class="photo-container "><img src="${evn.cover_photo}" style="object-fit: cover;" alt="">
                                 <div class="stats">
                                 <div>
                                     <span>Volunteered ${evn.volunteered==null ? 0 : Math.round(evn.volunteer_percent)}%</span>

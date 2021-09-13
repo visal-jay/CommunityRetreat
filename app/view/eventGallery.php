@@ -105,21 +105,25 @@
     }
 </style>
 
+
+
 <body>
     <div class="flex-col flex-center margin-side-lg">
         <h1>Gallery</h1>
+        <?php if($moderator || $organization || $registered_user) { ?>
         <button class="btn btn-solid margin-lg" onclick="addPhoto()">Add photo &nbsp; <i class="fas fa-plus"></i></button>
         <form class="form flex-col flex-center" action="/event/addPhoto?event_id=<?= $_GET["event_id"] ?>" method="post" enctype="multipart/form-data">
             <label for="myfile">Select a file:</label>
             <input type="file" class="form-ctrl margin-md" id="myfile" name="photo">
             <button type="submit" class="btn ">Save</button>
         </form>
+        <?php } ?>
 
         <div class="grid margin-lg">
             <?php foreach ($photos as $photo) { ?>
                 <figure class="item bg-green">
                     <div class="content">
-                        <?php if ($photo["uid"] == $_SESSION["user"]["uid"]) { ?>
+                        <?php if (isset($_SESSION["user"]) && $photo["uid"] == $_SESSION["user"]["uid"]) { ?>
                             <form class="delete-button" method="post" action ="/event/deletePhoto?event_id=<?= $_GET["event_id"]?>">
                                 <button type="submit" class="btn-icon" name = "photo" value="<?= $photo["image"] ?>" > <i class="far fa-trash-alt"></i></button>
                             </form>
@@ -129,48 +133,7 @@
                     </div>
                 </figure>
             <?php } ?>
-            <figure class="item bg-green">
-                <div class="content">
-                    <div class="gallery-container flex flex-center"><img src="/Public/assets/login-image.jpg" style="object-fit: cover;" alt=""></div>
-                    <p style="color:white;">Visal Jayathilake</p>
-                </div>
-            </figure>
-            <figure class="item bg-green">
-                <div class="content">
-                    <div class="gallery-container flex flex-center"><img src="/Public/assets/mountains.jfif" style="object-fit: cover;" alt=""></div>
-                    <p style="color:white;">Manuka Dewanarayana</p>
-                </div>
-            </figure>
-            <figure class="item bg-green">
-                <div class="content">
-                    <div class="gallery-container flex flex-center"><img src="/Public/assets/photo.jpeg" style="object-fit: cover;" alt=""></div>
-                    <p style="color:white;">Pudara Semini</p>
-                </div>
-            </figure>
-            <figure class="item bg-green">
-                <div class="content">
-                    <div class="gallery-container flex flex-center"><img src="/Public/assets/photo.jpeg" style="object-fit: cover;" alt=""></div>
-                    <p style="color:white;">Venodi Widanagamage</p>
-                </div>
-            </figure>
-            <figure class="item bg-green">
-                <div class="content">
-                    <div class="gallery-container flex flex-center"><img src="/Public/assets/login-image.jpg" style="object-fit: cover;" alt=""></div>
-                    <p style="color:white;">Visal Jayathilake</p>
-                </div>
-            </figure>
-            <figure class="item bg-green">
-                <div class="content">
-                    <div class="gallery-container flex flex-center"><img src="/Public/assets/mountains.jfif" style="object-fit: cover;" alt=""></div>
-                    <p style="color:white;">Manuka Dewanarayana</p>
-                </div>
-            </figure>
-            <figure class="item bg-green">
-                <div class="content">
-                    <div class="gallery-container flex flex-center"><img src="/Public/assets/photo.jpeg" style="object-fit: cover;" alt=""></div>
-                    <p style="color:white;">Pudara Semini</p>
-                </div>
-            </figure>
+    
         </div>
     </div>
 </body>

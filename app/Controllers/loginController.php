@@ -67,7 +67,6 @@ class LoginController
 
         if ($user_details = $user->authenticate($email, $password)) {
             $user_details["username"]=$user->getUsername($user_details["uid"]);
-            session_start();
             $_SESSION["user"] = array_intersect_key($user_details, ["uid" => '', "user_type" => '',"username"=>'']);
             $user_type = $user_details["user_type"];
 

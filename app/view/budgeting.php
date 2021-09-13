@@ -134,6 +134,27 @@ p {
     text-align: center;
 }
 
+.bold {
+    font-weight: 600;
+
+}
+
+.sum {
+    margin: 15px;
+    text-align: center;
+}
+
+.income-expenxe-balance-container {
+    border-color: #16c79a;
+    border-radius: 8px;
+    background-color: #eeeeee;
+    box-shadow: 2px 4px #ccbcbc;
+    padding: 5px;
+    text-align: center;
+    margin: 20px;
+    display: flex;
+    justify-content: space-evenly;
+}
 
 @media screen and (max-width:800px) {
 
@@ -164,6 +185,24 @@ p {
         width: 80%;
         top: 40%;
     }
+
+    .income-info {
+        min-width: 0;
+    }
+
+    .expense-info {
+        min-width: 0;
+    }
+
+    .income-expenxe-balance-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sum {
+        margin: 5px;
+        justify-content: space-between;
+    }
 }
 </style>
 
@@ -192,8 +231,21 @@ if(isset($_SESSION ["user"] ["user_type"])){
 
 <body>
     <div class="container flex-col flex-center" id="container">
-        <h2 class="header margin-md">Income</h2>
+        <div class="income-expenxe-balance-container">
+            <div class="bold sum flex-row">
+                <div>Sum of Incomes :</div>
+                <div><?= $income_sum ?></div>
+            </div>
+            <div class="bold sum flex-row">
+                <div>Sum of Expenses :</div>
+                <div><?= $expense_sum ?></div>
+            </div>
+            <div id="balance" class="bold sum flex-row">
+            </div>
+        </div>
 
+        <h2 class="header margin-md">Income</h2>
+        <?php if($organization || $treasurer) { ?>
         <form action="/budget/addIncome?" method="post" class="form income-form">
 
             <div>
@@ -213,7 +265,13 @@ if(isset($_SESSION ["user"] ["user_type"])){
                 </div>
             </div>
         </form>
+        <?php } ?>
         <div class="income-info" id="income-info">
+            <div class=" card-container">
+                <p>Donations</p>
+                <p><?= $donation_sum ?></p>
+                <div class="flex-row"></div>
+            </div>
             <?php foreach($incomes as $income){ ?>
             <div class=" card-container">
                 <p><?= $income["details"] ?></p>
@@ -235,16 +293,16 @@ if(isset($_SESSION ["user"] ["user_type"])){
 
         </div>
 
-        <div>
-            <button class="btn btn-solid btn-md read-more-btn"
-                onclick="show('income-info');change_button('income-down-btn')"><i id="income-down-btn"
+        <div id="income-show-hide-btn" onload="income_null('income-show-hide-btn')">
+            <button class=" btn btn-solid btn-md read-more-btn"
+                onclick="show('income-info');change_button('income-down-btn');"><i id=" income-down-btn"
                     class="fas fa-chevron-down"></i></button>
         </div>
 
         <h2 class="header margin-md">Expense</h2>
 
+        <?php if($organization || $treasurer) { ?>
         <form action="/budget/addExpense?" method="post" class="form expense-form">
-
             <button class="btn btn-md btn-solid margin-md" type="button" name="button" id="btn" value="Add"
                 onclick="show_hide('expense-form') ">Add &nbsp;<i class="fas fa-plus"></i></button>
             <div id="expense-form" style="margin-top: 20px;" class="hidden">
@@ -260,9 +318,10 @@ if(isset($_SESSION ["user"] ["user_type"])){
                 </div>
             </div>
         </form>
+        <?php } ?>
 
         <div class="expense-info" id="expense-info">
-            <?php foreach($expenses as $expense){ ?>
+            <?php foreach($expenses as $expense) { ?>
             <div class="card-container">
                 <p><?= $expense["details"] ?></p>
                 <p><?= $expense["amount"] ?></p>
@@ -282,12 +341,13 @@ if(isset($_SESSION ["user"] ["user_type"])){
             <?php } ?>
 
         </div>
-        <div>
-            <button class="btn btn-solid btn-md read-more-btn"
-                onclick="show('expense-info');change_button('expense-down-btn')"><i id="expense-down-btn"
+        <div id="expense-show-hide-btn" onload=alert(hello);>
+            <button class=" btn btn-solid btn-md read-more-btn"
+                onclick="show('expense-info');change_button('expense-down-btn');"><i id="expense-down-btn"
                     class="fas fa-chevron-down"></i></button>
         </div>
     </div>
+
     <div class="update-container">
         <div class="popup unblurred box" id="update-form">
             <form action="/budget/update" method="post" class="update-form">
@@ -307,12 +367,35 @@ if(isset($_SESSION ["user"] ["user_type"])){
 
 
     <script>
-    function show(id) {
+    document.getElementById("balance").innerHTML = "<div>Balance :</div><div>" +
+        String(parseInt('<?= $income_sum ?>') - parseInt('<?= $expense_sum ?>')) + "</div>";
+
+    function income_null(id) {
+        let income_sum = parseInt('<?= $income_sum ?>');
+        if (income_sum == 0) {
+            document.getElementById(id).classList.toggle("hidden");
+        }
+    }
+
+    function expense_null(id) {
+        let expense_sum = parseInt('<?= $expense_sum ?>');
+        if (expense_sum == 0) {
+            document.getElementById(id).classList.toggle("hidden");
+        }
+    }
+
+    expense_null("expense-show-hide-btn");
+    income_null("income-show-hide-btn");
+
+    function
+    show(id) {
         document.getElementById(id).classList.toggle("height100");
+        //show the rest of the incomes and expenses byclicking the drop down button 
     }
 
     function show_hide(id) {
         document.getElementById(id).classList.toggle("hidden");
+        //show and hide the form where incomes and expenses can be added
     }
 
     function togglePopup(id, description = 0, amount = 0, record_id, event_id) {
@@ -323,14 +406,17 @@ if(isset($_SESSION ["user"] ["user_type"])){
         form.querySelector("#amount").setAttribute("value", amount);
         form.querySelector("#record_id").setAttribute("value", record_id);
         form.querySelector("#save").setAttribute("value", event_id);
+        //show the popup to update an income or an expense
     }
 
     function blur_background(id) {
         document.getElementById(id).classList.toggle("blurred")
+        //when popup is shown background is blurred
     }
 
     function stillBackground(id) {
         document.getElementById(id).classList.toggle("still");
+        //when popup is shown background is still
     }
 
     function change_button(id) {
@@ -341,6 +427,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
         } else {
             x.className = "fas fa-chevron-down";
         }
+        //when down button is clicked it changes to up button.
     }
     </script>
 </body>

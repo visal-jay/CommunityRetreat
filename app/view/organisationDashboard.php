@@ -138,7 +138,7 @@
     }
 
 
-    .map-not{
+    .map-not {
         opacity: 0.5;
     }
 
@@ -151,6 +151,11 @@
         background-color: #f8f8f8;
         font-size: 16px;
         resize: none;
+    }
+
+    iframe{
+        width: 100%;
+        height: 100%;
     }
 
     @media screen and (max-width:767px) {
@@ -180,13 +185,13 @@
     <?php
     //$_SESSION["user"]["user_type"] = "organization";
 
-    if (!isset($moderator)) $moderator = false;
+   /*  if (!isset($moderator)) $moderator = false;
     if (!isset($treasurer)) $treasurer = false;
     $organization = $admin = $registered_user = $guest_user = false;
 
     if (isset($_SESSION["user"]["user_type"])) {
         if ($_SESSION["user"]["user_type"] == "organization") {
-            $organization = true;
+            $registered_user = true;
         }
         if ($_SESSION["user"]["user_type"] == "admin") {
             $$admin = true;
@@ -196,7 +201,7 @@
         }
     } else {
         $guest_user = true;
-    }
+    } */
     ?>
 
     <?php if ($organization) { ?>
@@ -204,7 +209,7 @@
         <?php } ?>
         <div class="photo-container">
             <div class="cover-place-holder cover border-round">
-                <img src="<?= $cover_pic ?>" alt="" class="photo-element" >
+                <img src="<?= $cover_pic ?>" alt="" class="photo-element">
                 <?php if ($organization) { ?>
                     <div class="image-upload hidden form">
                         <label for="file-input">
@@ -226,9 +231,21 @@
                 <?php } ?>
             </div>
         </div>
+        <?php if ($registered_user || $guest_user || $admin) { ?>
+            <div class="nav-secondary">
+                <div class="nav-secondary-bar margin-lg">
+                    <a class="btn margin-side-md active" style=" margin-bottom:10px;" onclick="page('about');event.target.classList.add('active');">About</a>
+                    <a class="btn margin-side-md" style=" margin-bottom:10px;" onclick="page('gallery');event.target.classList.add('active');">Gallery</a>
+                    <a class="btn margin-side-md" style=" margin-bottom:10px;" onclick="page('events');event.target.classList.add('active');">Events</a>
+                </div>
+            </div>
+            <iframe src="/organisation/gallery?org_id=<?= $_GET["org_id"] ?>" frameborder="0" id="gallery" class="hidden"></iframe>
+            <iframe src="/organisation/events?org_id=<?= $_GET["org_id"] ?>" frameborder="0" id="events" class="hidden"></iframe>
 
-        <div class="flex-col flex-center ">
-            <div class="info ">
+        <?php } ?>
+
+        <div class="flex-col flex-center" >
+            <div class="info" id="about">
                 <div class="flex-row flex-center">
                     <div class="data">
                         <h1><?= $username ?></h1>
@@ -245,11 +262,7 @@
                 </div>
                 <div class="flex-col">
                     <h2>Contact us</h2>
-                    <?php if ($organization) { ?>
-                        <input type="email" class="form form-ctrl hidden" placeholder=" Enter email" value="<?= $email ?>" required>
-                        <input type="tel" name="contact_number" class="form form-ctrl hidden" placeholder="Enter telephone number" value="<?= $contact_number ?>" pattern="^[+]?[0-9]{10,12}$" required>
-                    <?php } ?>
-                    <div class="data">
+                    <div>
                         <a href="mailto:<?= $email ?>"><?= $email ?> </a>
                         <p><?= $contact_number ?></p>
                     </div>
@@ -257,7 +270,7 @@
                 <?php if ($organization || (isset($map) && $map == true)) { ?>
                     <div class="flex-col flex-center margin-md">
                         <h2>Locate us</h2>
-                        <div id="map" class="border-round <?php if(!$map) echo "map-not";?> "></div>
+                        <div id="map" class="border-round <?php if (!$map) echo "map-not"; ?> "></div>
                         <div class="latlang" class="form hidden">
                             <input class="hidden" name="longitude" id="longitude" value="<?= $longitude ?>">
                             <input class="hidden" name="latitude" id="latitude" value="<?= $latitude ?>">
@@ -266,7 +279,7 @@
                 <?php } ?>
 
                 <?php if ($organization) { ?>
-                    <div class="flex-row flex-center" >
+                    <div class="flex-row flex-center">
                         <button type="button" class="btn btn-solid data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
                         <button type="button" class="btn btn-solid bg-red border-red margin-side-md form hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
                         <button type="submit" class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
@@ -276,7 +289,7 @@
         </div>
         <?php if ($organization) { ?>
         </form>
-        <?php } ?>
+    <?php } ?>
 
 
 
@@ -295,7 +308,8 @@
                 marker.setOptions({
                     draggable: false
                 });
-            if(!<?php if($map) echo 'true'; else echo 'false'; ?>)
+            if (!<?php if ($map) echo 'true';
+                    else echo 'false'; ?>)
                 document.getElementById('map').classList.toggle("map-not");
             var data = document.getElementsByClassName("data");
             var form = document.getElementsByClassName("form");
@@ -333,10 +347,9 @@
     var lat = "<?= $latitude ?>";
     var long = "<?= $longitude ?>";
 
-    console.log(latitude,longitude);
+    console.log(latitude, longitude);
 
     function initMap() {
-        console.log("fuck");
         map = new google.maps.Map(document.getElementById("map"), {
             center: {
                 lat: -34.397,
@@ -344,25 +357,24 @@
             },
             zoom: 6,
         });
-        if(lat!="" || long!="")
+        if (lat != "" || long != "")
             showPosition();
     }
-    
 
-    if(lat==="" && long==="" ){
+
+    if (lat === "" && long === "") {
         navigator.geolocation.getCurrentPosition((position) => {
             lat = position.coords.latitude;
             long = position.coords.longitude;
             showPosition();
         });
     }
-   
+
 
 
     function showPosition(position) {
-        console.log(latitude,longitude);
         var myLatlng = new google.maps.LatLng(lat, long);
-        
+
         marker = new google.maps.Marker({
             position: myLatlng,
             draggable: false,
@@ -372,13 +384,29 @@
         // To add the marker to the map, call setMap();
         marker.setMap(map);
         map.setCenter(myLatlng);
-        map.setZoom(10)
+        map.setZoom(10);
 
         google.maps.event.addListener(marker, 'dragend', function(evt) {
             document.getElementById('longitude').value = evt.latLng.lng().toFixed(3);
             document.getElementById('latitude').value = evt.latLng.lat().toFixed(3);
             //document.getElementById('current').innerHTML = '<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';
         });
+    }
+
+    function page(page) {
+        var children = document.querySelector(".nav-secondary-bar").children;
+        console.log(children);
+        for (i= 0; i < children.length; i++) {
+            children[i].classList.remove("active");
+        }
+        document.getElementById("about").classList.add("hidden");
+        document.getElementById("gallery").classList.add("hidden");
+        document.getElementById("events").classList.add("hidden");
+
+        
+        //document.getElementById(page).classList.add("active");
+        document.getElementById(page).classList.toggle("hidden");
+    
     }
 </script>
 

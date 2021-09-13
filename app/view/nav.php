@@ -16,7 +16,7 @@
     $organization=$admin=$registered_user=$guest_user=false;
     if(isset($_SESSION["user"]["user_type"])){
         if ($_SESSION["user"]["user_type"]=="organization") {$organization=true;}
-        if ($_SESSION["user"]["user_type"]=="admin") {$$admin=true;}
+        if ($_SESSION["user"]["user_type"]=="admin") {$admin=true;}
         if ($_SESSION["user"]["user_type"]=="registered user") {$registered_user=true;}
     }
     else {
@@ -48,7 +48,7 @@
                 <?php if($registered_user) { ?>
                 <a class="nav-link margin-side-md" href="/user/home">Home</a>
                 <a class="nav-link margin-side-md" href="/user/calendar">Calender</a>
-                <a class="nav-link margin-side-md" href="/user/administratored">Administratored</a>
+                <a class="nav-link margin-side-md" href="/user/administratored">Administrated</a>
                 <a class="nav-link margin-side-md" href="# "></a>
                 <?php } ?>
 
@@ -64,7 +64,7 @@
                 <?php } ?>
 
                 <?php if($guest_user) { ?>
-                <a class="nav-link margin-side-md" href="/view/adoption_listing.php ">Home</a>
+                <a class="nav-link margin-side-md" href="/user/home">Home</a>
                 <?php } ?>
 
             </nav>
@@ -77,7 +77,11 @@
                 <?php } ?>
                 <div class="nav-drop-down-list hidden">
                     <div class="flex-col">
-                    <a href="/user/profile" class="nav-link margin-md" ><i class="far fa-user"></i>&nbsp; Profile</a>
+                    <?php if($organization) { ?>
+                        <a href="/organisation/organizationalAdminProfileView" class="nav-link margin-md" ><i class="far fa-user"></i>&nbsp; Profile</a>
+                    <?php } elseif($registered_user) { ?>
+                        <a href="/RegisteredUser/view" class="nav-link margin-md" ><i class="far fa-user"></i>&nbsp; Profile</a>
+                    <?php } ?>
                     <a href="/login/logout" class="nav-link margin-side-md" href=""><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</a>
                     </div>
                 </div>
@@ -96,11 +100,9 @@
     navigator.geolocation.getCurrentPosition((position) => {
         latitude = position.coords.latitude;
         longitude = position.coords.longitude;
-        console.log(latitude,"hello");
     });
 
     function nearme(){
-        console.log("shfkjsd");
         let link = "/search/view?distance=20";
         location.href=link;
     }
@@ -112,9 +114,7 @@
 
     document.addEventListener("click", (evt) => {
     let targetElement = evt.target;
-    console.log(targetElement);
     let navDropdownButton = document.getElementById('nav-drop');
-    console.log(navDropdownButton);
     let navDropdown=document.querySelector('.nav-drop-down-list');
     if (targetElement!=navDropdownButton)
         navDropdown.classList.add('hidden');

@@ -55,7 +55,9 @@
 
     .event-card-details {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
     }
 
     .date {
@@ -131,9 +133,14 @@
         resize: none;
     }
 
+    .card-container {
+        width: 80%;
+    }
+
     @media screen and (max-width:800px) {
         .card-container {
             height: fit-content;
+            width: 80%;
         }
 
         .form {
@@ -155,23 +162,6 @@
             height: 300px;
         }
 
-        table tr>* {
-            display: block;
-        }
-
-        table tr {
-            display: table-cell;
-        }
-
-        table th {
-            padding: .5rem 0;
-            text-align: left;
-        }
-
-        td {
-            padding: .5rem 0;
-        }
-
         .event-card-details {
             flex-direction: column;
         }
@@ -182,58 +172,90 @@
 
 <body>
     <div id="background">
-        <div class="flex-col flex-center margin-side-lg">
-            <button class="btn btn-solid btn-close margin-lg" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')">Add Announcement &nbsp; <i class="fas fa-plus"></i></button>
-        </div>
+        <?php if ($organization || $moderator) { ?>
+            <div class="flex-col flex-center margin-side-lg">
+                <button class="btn btn-solid btn-close margin-lg" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')">Add Announcement &nbsp; <i class="fas fa-plus"></i></button>
+            </div>
+        <?php } ?>
+        <div class="flex-col flex-center">
+            <?php foreach ($announcements as $announcement) { ?>
+                <div class="card-container margin-md">
+                    <div class="event-card-details">
+                        <h3 class="margin-md"><?= $announcement["title"] ?></h3>
+                        <date class="margin-md"><?= $announcement["date"] ?></date>
+                        <description class="margin-md"><?= $announcement["announcement"] ?></description>
 
-        <div class="card-container margin-side-lg">
-            <div class="flex-col event-card-details">
-                <h3 class="margin-md">Announcement</h3>
-                <date class="margin-md">28.10.2021</date>
-                <description class="margin-md">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione nemo nostrum perspiciatis. Impedit, praesentium. Fuga ab numquam distinctio reprehenderit laudantium quae possimus, odio quisquam quia officia illo laborum eligendi ea?</description>
-                <update class="margin-md">
-                    <button class="btn margin-side-md" onclick="edit()"><i class="btn-icon far fa-edit margin-side-md"></i>&nbsp;&nbsp;Edit</button>
-                    <button class="btn clr-red border-red " onclick="remove()"><i class="far fa-trash-alt margin-side-md"></i>&nbsp;&nbsp;Remove</button>
-                    <div class="flex-row flex-space" style="display: none;">
-                        <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
-                        <i class="fas fa-check clr-green margin-side-md"></i>&nbsp;
-                        <i class="fas fa-times clr-red  margin-side-md" onclick="cancel()"></i>
+                        <update class="margin-md">
+                            <button class="btn margin-side-md" onclick="edit(); editForm('<?= $announcement['title'] ?>','<?= $announcement['announcement'] ?>','<?= $announcement['announcement_id'] ?>'); togglePopup('edit-form'); blur_background('background'); stillBackground('id1')"><i class="btn-icon far fa-edit margin-side-md"></i>&nbsp;Edit</button>
+                            <button class="btn clr-red border-red " onclick="remove()" required style="font-family:Ubuntu, sans-serif,  FontAwesome"> &#xf2ed; &nbsp;Remove </button>
+                            <div class="flex-row flex-space" style="display: none;">
+                                <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
+                                <form method="post" action="/event/deleteAnnouncement?event_id=<?= $_GET["event_id"] ?>" class="flex-row flex-center">
+                                    <input name="announcement_id" class="hidden" value="<?= $announcement["announcement_id"] ?>">
+                                    <button class="btn-icon flex-row flex-center"><i type="submit" class="fas fa-check clr-green margin-side-md"></i>&nbsp;</button>
+                                </form>
+                                <i class="btn-icon fas fa-times clr-red margin-side-md" onclick="cancel()"></i>
+                            </div>
+                        </update>
+
                     </div>
-                </update>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+
+    <?php if ($organization || $moderator) { ?>
+        <div class="popup" id="form">
+            <div class="content">
+                <form action="/event/addAnnouncement?event_id=<?= $_GET["event_id"] ?>" method="post" class="form-container">
+                    <div>
+                        <h3 class="margin-md">New Announcement</h3>
+                    </div>
+
+                    <div class="form-item">
+                        <label>Title</label>
+                        <input type="text" class="form-ctrl" placeholder="Enter Title" name="title" required>
+                    </div>
+
+                    <div class="form-item">
+                        <label>Announcement</label>
+                        <textarea name="announcement" class="form-ctrl" placeholder="Enter announcement" required></textarea>
+                    </div>
+
+                    <button class="btn btn-solid margin-md" type="submit">Post</button>
+
+                    <div>
+                        <button class="btn-icon btn-close" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
+    <?php } ?>
 
-    <div class="popup" id="form">
-        <div class="content">
-            <form action="/action_page.php" class="form-container">
-                <div>
-                    <h3 class="margin-md">New Announcement</h3>
-                </div>
+    <?php if ($organization || $moderator) { ?>
+        <div class="popup" id="edit-form">
+            <div class="content">
+                <form action="/event/editAnnouncement?event_id=<?= $_GET["event_id"] ?>" method="post" class="form-container">
 
-                <div class="form-item">
-                    <label>Title</label>
-                    <input type="text" required class="form-ctrl" placeholder="Enter Title">
-                </div>
+                    <div class="form-item">
+                        <label>Title</label>
+                        <input type="text" class="form-ctrl" placeholder="Enter Title" name="title" id="edit-title" required>
+                    </div>
 
-                <div class="form-item">
-                    <label>Date</label>
-                    <input type="date" required class="form-ctrl" data-placeholder="Enter Date">
-                </div>
+                    <div class="form-item">
+                        <label>Announcement</label>
+                        <textarea name="announcement" class="form-ctrl" placeholder="Enter announcement" id="edit-announcement" required></textarea>
+                    </div>
 
-                <div class="form-item">
-                    <label>Announcement</label>
-                    <textarea name="task" class="form form-ctrl" placeholder="Enter announcement" required>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae magni eveniet porro, ipsa mollitia dolores ipsam optio aliquam, debitis voluptatum accusamus cum perferendis, amet facere expedita nostrum laboriosam quas iste!</textarea>
-                </div>
+                    <button name="announcement_id" class="btn btn-solid margin-md" type="submit" id="edit-announcement-id">Save</button>
 
-                <button class="btn btn-solid margin-md" type="submit" disabled>Post</button>
-
-                <div>
-                    <button class="btn-icon btn-close" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
-                </div>
-            </form>
+                    <div>
+                        <button type="button" class="btn-icon btn-close" onclick="togglePopup('edit-form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
+    <?php } ?>
 </body>
 
 <script>
@@ -262,6 +284,12 @@
         for (var i = 0; i < form.length; i++) {
             form[i].classList.toggle("hidden");
         }
+    }
+
+    function editForm(title, announcement, announcement_id) {
+        document.getElementById("edit-title").value = title;
+        document.getElementById("edit-announcement").value = announcement;
+        document.getElementById("edit-announcement-id").value = announcement_id;
     }
 
     //check about the 'onclick' on text and the icon of the button

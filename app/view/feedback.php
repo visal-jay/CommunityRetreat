@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" id="id1">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Public/assets/newstyles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
+    <title>Forum</title>
+</head>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: "Ubuntu", sans-serif;
+        margin: 0 auto;
+        /* Center website */
+        max-width: 800px;
+        /* Max width */
+        padding: 20px;
+    }
+
+    .heading {
+        font-size: 25px;
+        margin-right: 25px;
+    }
+
+    .fa {
+        font-size: 25px;
+    }
+
+    .checked {
+        color: orange;
+    }
+
+    /* Three column layout */
+    .side {
+        float: left;
+        width: 15%;
+        margin-top: 10px;
+    }
+
+    .middle {
+        margin-top: 10px;
+        float: left;
+        width: 70%;
+    }
+
+    /* Place text to the right */
+    .right {
+        text-align: right;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    /* The bar container */
+    .bar-container {
+        width: 100%;
+        background-color: #f1f1f1;
+        text-align: center;
+        color: white;
+    }
+
+    /* Individual bars */
+    .bar-5 {
+        width: 60%;
+        height: 18px;
+        background-color: #04AA6D;
+    }
+
+    .bar-4 {
+        width: 30%;
+        height: 18px;
+        background-color: #2196F3;
+    }
+
+    .bar-3 {
+        width: 10%;
+        height: 18px;
+        background-color: #00bcd4;
+    }
+
+    .bar-2 {
+        width: 4%;
+        height: 18px;
+        background-color: #ff9800;
+    }
+
+    .bar-1 {
+        width: 15%;
+        height: 18px;
+        background-color: #f44336;
+    }
+
+    .rate {
+        float: left;
+        height: 46px;
+        padding: 0 10px;
+    }
+
+    .rate:not(:checked)>input {
+        position: absolute;
+        top: -9999px;
+    }
+
+    .rate:not(:checked)>label {
+        float: right;
+        overflow: hidden;
+        white-space: nowrap;
+        cursor: pointer;
+        font-size: 30px;
+        color: #ccc;
+        width: 0.9em;
+    }
+
+    .rate:not(:checked)>label:before {
+        font-family: "Font Awesome 5 Free";
+        content: "\f005";
+        display: inline-block;
+        padding-right: 3px;
+        vertical-align: middle;
+        font-weight: 900;
+        font-size: 1.5rem;
+    }
+
+    .rate>input:checked~label {
+        color: #ffc700;
+    }
+
+    .rate:not(:checked)>label:hover,
+    .rate:not(:checked)>label:hover~label {
+        color: orange;
+    }
+
+    .rate>input:checked+label:hover,
+    .rate>input:checked+label:hover~label,
+    .rate>input:checked~label:hover,
+    .rate>input:checked~label:hover~label,
+    .rate>label:hover~input:checked~label {
+        color: #c59b08;
+    }
+
+    .popup .btn-close {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        width: 30px;
+        height: 30px;
+        color: black;
+        font-size: 1.5rem;
+        padding: 2px 5px 7px 5px;
+    }
+
+    .popup.active .content {
+        transition: all 300ms ease-in-out;
+        transform: translate(-50%, -50%);
+    }
+
+    .blurred {
+        filter: blur(2px);
+        overflow: hidden;
+    }
+
+    .still {
+        overflow: hidden;
+    }
+
+    .popup .content {
+        position: fixed;
+        transform: scale(0);
+        width: 40%;
+        z-index: 2;
+        text-align: center;
+        padding: 20px;
+        border-radius: 8px;
+        background: white;
+        box-shadow: 0px 0px 11px 2px rgba(0, 0, 0, 0.93);
+        z-index: 1;
+        left: 50%;
+        top: 50%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* ::placeholder {
+        color: black;
+        opacity: 1;
+    } */
+
+    textarea {
+        min-height: 200px;
+        padding: 12px 20px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+        font-size: 16px;
+        resize: none;
+    }
+
+    .card-container {
+        width: 100%;
+    }
+
+    .event-card-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+    /* Responsive layout - make the columns stack on top of each other instead of next to each other */
+    @media (max-width: 400px) {
+
+        .progress {
+            width: 75%;
+        }
+
+        .side,
+        .middle {
+            width: 100%;
+        }
+
+        .right {
+            display: none;
+        }
+
+        .card-container {
+            height: fit-content;
+            width: 80%;
+        }
+
+        .event-card-details {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<body>
+    <div id="background">
+
+        <div class="flex-col flex-center margin-side-lg">
+            <button class="btn btn-solid btn-close margin-lg" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')">Give Feedback &nbsp; <i class="far fa-comment-dots"></i></button>
+        </div>
+
+        <span class="heading margin-md">User Rating</span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+        <p class="margin-md">4.1 average based on 254 reviews.</p>
+        <hr class="margin-lg" style="border:3px solid #f1f1f1">
+
+        <div class="container">
+            <span class="heading margin-md">Feedbacks</span>
+            <div class="flex-col flex-center card-container margin-md event-card-details">
+                <h3 class="margin-md">Name of the user</h3>
+                <date>time stamp</date>
+                <div class="margin-md">
+                    <span class="fas fa-star fa-sm checked"></span>
+                    <span class="fas fa-star fa-sm checked"></span>
+                    <span class="fas fa-star fa-sm checked"></span>
+                    <span class="fas fa-star fa-sm checked"></span>
+                    <span class="fas fa-star fa-sm"></span>
+                </div>
+                <description class="margin-md">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque, atque! Incidunt expedita similique ab iusto perferendis cum harum fugit. Dolor tempore tempora iste, distinctio repudiandae soluta sed quo excepturi itaque!</description>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="popup" id="form">
+        <div class="content">
+            <form action="/event/addFeedback?event_id= <php>" method="post" class="form-container">
+
+                <div class="form-item">
+                    <label>Tell us what you think about "event name" </label>
+                    <textarea name="feedback" class="form-ctrl" placeholder="Enter feedback" id="feedback" required></textarea>
+                </div>
+
+                <div class="flex-row flex-center">
+                    <label>Rate us!</label>
+                    <div class="rate">
+                        <input type="radio" id="star5" name="rate" value="5" />
+                        <label for="star5" title="text">5 stars</label>
+
+                        <input type="radio" id="star4" name="rate" value="4" />
+                        <label for="star4" title="text">4 stars</label>
+
+                        <input type="radio" id="star3" name="rate" value="3" />
+                        <label for="star3" title="text">3 stars</label>
+
+                        <input type="radio" id="star2" name="rate" value="2" />
+                        <label for="star2" title="text">2 stars</label>
+
+                        <input type="radio" id="star1" name="rate" value="1" />
+                        <label for="star1" title="text">1 star</label>
+                    </div>
+                </div>
+
+                <button class="btn btn-solid margin-md" type="submit">Submit</button>
+
+                <div>
+                    <button class="btn-icon btn-close" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    function togglePopup(id) {
+        document.getElementById(id).classList.toggle("active");
+    }
+
+    function blur_background(id) {
+        document.getElementById(id).classList.toggle("blurred")
+    }
+
+    function stillBackground(id) {
+        document.getElementById(id).classList.toggle("still");
+    }
+</script>
+
+</html>

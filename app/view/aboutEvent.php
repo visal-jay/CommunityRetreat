@@ -359,7 +359,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                     <div class="progress" data-width="<?php if ($volunteer_percent == NULL) echo "0"; else $volunteer_percent ?>%">
                         <div class="volunteers-progress-bar"></div>
                     </div>
-                    <button class="btn clr-green margin-md"><i class="fas fa-user-friends"></i>&nbsp;I want tovolunteer</button>
+                    <button class="btn clr-green margin-md"><i class="fas fa-user-friends"></i>&nbsp;I want to volunteer</button>
                 </div>
             <?php } ?>
 

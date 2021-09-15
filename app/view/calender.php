@@ -12,13 +12,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="../Public/assets/style/fontawesome.min.css">
     <link rel="stylesheet" href="../Public/assets/style/calenderstyle.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script defer src="../Public/assets/js/calender.js"></script>
-    <!---- <script defer src="../Public/assets/js/calenderdata.js"></script>-->
+    
 </head>
 
 <?php include "nav.php" ?>
 
-<body>
+<body class="body">
     <h1 id="topic">
         Calender
     </h1>
@@ -69,6 +70,6 @@
 
 
 </body>
-
+<?php include "footer.php"?>
 
 </html>

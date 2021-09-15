@@ -29,10 +29,7 @@ class Organisation extends User
         $db->commit();
 
         $encryption = new Encryption;
-        $data["time"] = (int)shell_exec("date '+%s'");
-        
-        $parameters = ["key" => $encryption->encrypt(array_intersect_key($data, ["email" => '', "password" => '',"time"=>'']), 'email verificaition')];
-        
+        $parameters = ["key" => $encryption->encrypt(array_intersect_key($data, ["email" => '', "password" => '']), 'email verificaition')];
 
         $mail = new Mail;
 
@@ -61,17 +58,14 @@ class Organisation extends User
     {
 
         $params = array();
-        $time= (int)shell_exec("date '+%s'");
 
         if ($_FILES["profile-photo"]["size"] != NULL) {
-            exec("rm -rf /Users/visaljayathilaka/code/group-project/Group-16/app/Uploads/profile/" . $_SESSION["user"]["uid"] . "*");
-            $cover_pic = new Image($_SESSION["user"]["uid"] . $time, "profile/", "profile-photo", true);
+            $cover_pic = new Image($_SESSION["user"]["uid"], "profile/", "profile-photo", true);
             $params["profile_pic"] = $cover_pic->getURL();
         }
 
         if ($_FILES["cover-photo"]["size"] != NULL) {
-            exec("rm -rf /Users/visaljayathilaka/code/group-project/Group-16/app/Uploads/cover/" . $_SESSION["user"]["uid"] . "*");
-            $cover_pic = new Image($_SESSION["user"]["uid"] . $time, "cover/", "cover-photo", true);
+            $cover_pic = new Image($_SESSION["user"]["uid"], "cover/", "cover-photo", true);
             $params["cover_pic"] = $cover_pic->getURL();
         }
 
@@ -129,208 +123,111 @@ class Organisation extends User
         return $result;
     }
 
-    public function donationReport()
+    public function getAdminDetails($uid)
     {
-        $event = new Events;
-        $donations = new Donations;
-        $data["events"] = array();
-        if ($result = $event->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "published", "donation_capacity" => true]))
-            foreach ($result as $event) {
-                if ($donation_details = $donations->getReport(["event_id" => $event["event_id"]])) {
-                    $start_date = $date = new DateTime($donation_details[0]["day"]);
-                    $end_date = new DateTime($donation_details[count($donation_details) - 1]["day"]);
-                    for ($i = $start_date; $i < $end_date; $i->add(new DateInterval('P1D')))
-                        $temp[$i->format('Y-m-d')] = 0;
-
-
-                    foreach ($donation_details as $donation_detail)
-                        $temp[$donation_detail["day"]] = $donation_detail["donation_sum"];
-
-                    $count = $i = 1;
-                    $sum = 0;
-                    $data["events"][$event["event_name"]] = array();
-                    foreach ($temp as $key => $value) {
-                        $sum += $value;
-                        if ($i == 7) {
-                            $data["events"][$event["event_name"]]["week $count"] = $sum;
-                            $sum = $i = 0;
-                            $count++;
-                        }
-                        $i++;
-                    }
-                    if (count($temp) % 7 != 0)
-                        $data["events"][$event["event_name"]]["week $count"] = $sum;
-
-                    unset($temp);
-                }
-            }
-        return json_encode($data["events"]);
-    }
-
-    public function donationPercentageReport()
-    {
-        $events = new Events;;
-        $data["events"] = array();
-        if ($result = $events->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "published", "donation_capacity" => true])) {
-            foreach ($result as $event)
-                $data["events"][$event["event_name"]] = $event["donation_percent"];
-        }
-
-        return json_encode($data["events"]);
-    }
-
-    public function volunteerReport()
-    {
-        $event = new Events;
-        $volunteers = new Volunteer;
-        $data["events"] = array();
-        if ($result = $event->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "published", "volunteer_capacity" => true]))
-            foreach ($result as $event) {
-                if ($volunteer_details = $volunteers->getReport(["event_id" => $event["event_id"]])) {
-                    $start_date = $date = new DateTime($volunteer_details[0]["day"]);
-                    $end_date = new DateTime($volunteer_details[count($volunteer_details) - 1]["day"]);
-                    for ($i = $start_date; $i < $end_date; $i->add(new DateInterval('P1D')))
-                        $temp[$i->format('Y-m-d')] = 0;
-
-
-                    foreach ($volunteer_details as $volunteer_detail)
-                        $temp[$volunteer_detail["day"]] = $volunteer_detail["volunteer_sum"];
-
-                    $count = $i = 1;
-                    $sum = 0;
-                    $data["events"][$event["event_name"]] = array();
-                    foreach ($temp as $key => $value) {
-                        $sum += $value;
-                        if ($i == 7) {
-                            $data["events"][$event["event_name"]]["week $count"] = $sum;
-                            $sum = $i = 0;
-                            $count++;
-                        }
-                        $i++;
-                    }
-                    if (count($temp) % 7 != 0)
-                        $data["events"][$event["event_name"]]["week $count"] = $sum;
-
-                    unset($temp);
-                }
-            }
-        return json_encode($data["events"]);
-    }
-
-    public function volunteerPercentageReport()
-    {
-        $events = new Events;;
-        $data["events"] = array();
-        if ($result = $events->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "published", "volunteer_capacity" => true])) {
-            foreach ($result as $event)
-                $data["events"][$event["event_name"]] = $event["volunteer_percent"];
-        }
-
-        return json_encode($data["events"]);
-    }
-
-    public function getAdminDetails($uid){
         $query = 'SELECT * FROM organization org JOIN login ON org.uid= login.uid WHERE org.uid = :uid AND verified=1';
         $params = ["uid" => $uid];
-        $result= User::select($query,$params);
-        if(count($result[0])>=1)
+        $result = User::select($query, $params);
+        if (count($result[0]) >= 1)
 
             return $result[0];
         else
             return false;
     }
-    public function changeUsername($uid,$data){
-        $_SESSION["user"]["username"]=$data;
-        $params = ["uid" => $uid , "username"=> $data];
-        $query = 'UPDATE organization SET username= :username   WHERE uid = :uid ' ;
-        User::insert($query,$params);       
-    }
-    public function changeContactNumber($uid,$data){
-        
-        $params = ["uid" => "$uid" ,"contact_number"=> "$data[contact_number]"];
-        $query = 'UPDATE organization SET  contact_number = :contact_number  WHERE uid = :uid ' ;
-        User::insert($query,$params);   
+    public function changeUsername($uid, $data)
+    {
 
+        $params = ["uid" => $uid, "username" => $data];
+        $query = 'UPDATE organization SET username= :username   WHERE uid = :uid ';
+        User::insert($query, $params);
     }
-    public function changeAccountNumber($uid,$data){
-        $params = ["uid"=>"$uid","account_number"=>"$data[account_number]"];
-        $query = 'UPDATE organization SET  account_number = :account_number  WHERE uid = :uid ' ;
-        User::insert($query,$params);   
+    public function changeContactNumber($uid, $data)
+    {
 
+        $params = ["uid" => "$uid", "contact_number" => "$data[contact_number]"];
+        $query = 'UPDATE organization SET  contact_number = :contact_number  WHERE uid = :uid ';
+        User::insert($query, $params);
     }
-    public function changeEmail($uid,$data){
-        
-        $params = ["uid" => "$uid" ,"email"=> "$data[email]"];
-        $query = 'UPDATE organization SET  email = :email  WHERE uid = :uid ' ;
-        User::insert($query,$params);   
-            
+    public function changeAccountNumber($uid, $data)
+    {
+        $params = ["uid" => "$uid", "account_number" => "$data[account_number]"];
+        $query = 'UPDATE organization SET  account_number = :account_number  WHERE uid = :uid ';
+        User::insert($query, $params);
     }
-    public function changePassword($uid,$data){
-        $params = ["uid" => "$uid" ,"password"=> "$data[password]"];
+    public function changeEmail($uid, $data)
+    {
+
+        $params = ["uid" => "$uid", "email" => "$data[email]"];
+        $query = 'UPDATE organization SET  email = :email  WHERE uid = :uid ';
+        User::insert($query, $params);
+    }
+    public function changePassword($uid, $data)
+    {
+        $params = ["uid" => "$uid", "password" => "$data[password]"];
         $query = 'UPDATE login  JOIN organization ON login.uid= organization.uid SET login.password =:password where login.uid = :uid and verified=1 ';
-        User::insert($query,$params); 
+        User::insert($query, $params);
     }
 
-    function checkCurrentPassword($uid,$password){
-        $query= 'SELECT password FROM organization org JOIN login ON org.uid= login.uid WHERE org.uid = :uid AND verified=1';
-        $params = ["uid"=> $uid];
-        $result= USER::select($query,$params);
-        if($result[0]['password']==$password){
+    function checkCurrentPassword($uid, $password)
+    {
+        $query = 'SELECT password FROM organization org JOIN login ON org.uid= login.uid WHERE org.uid = :uid AND verified=1';
+        $params = ["uid" => $uid];
+        $result = USER::select($query, $params);
+        if ($result[0]['password'] == $password) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
-
-    public function getAvailableUserRoles($name){
+    public function getAvailableUserRoles($name)
+    {
         $query = 'SELECT username, uid,profile_pic FROM registered_user  WHERE username LIKE :name';
-        $params=["name"=>"%$name%"];
-        $result=User::select($query,$params);
+        $params = ["name" => "%$name%"];
+        $result = User::select($query, $params);
         return $result;
     }
 
-    public function getUserRoles($event_id){
-        $query="SELECT moderator_treasurer.uid, moderator_treasurer.moderator_flag ,moderator_treasurer.treasurer_flag ,registered_user.username FROM  moderator_treasurer LEFT JOIN registered_user ON moderator_treasurer.uid = registered_user.uid WHERE moderator_treasurer.event_id= :event_id";
-        $params=["event_id"=>$event_id];
-        $result=User::select($query,$params);
+    public function getUserRoles($event_id)
+    {
+        $query = "SELECT moderator_treasurer.uid, moderator_treasurer.moderator_flag ,moderator_treasurer.treasurer_flag ,registered_user.username FROM  moderator_treasurer LEFT JOIN registered_user ON moderator_treasurer.uid = registered_user.uid WHERE moderator_treasurer.event_id= :event_id";
+        $params = ["event_id" => $event_id];
+        $result = User::select($query, $params);
         return $result;
     }
 
-    public function addUserRole($uid,$role,$event_id){
-        $query="SELECT uid FROM  moderator_treasurer WHERE event_id= :event_id AND uid= :uid";
-        $params=["event_id"=>$event_id, "uid"=>$uid];
-        if(count(User::select($query,$params))==1){
-            if($role="treasurer")
-                $query="UPDATE moderator_treasurer SET treasurer_flag = 1 WHERE event_id= :event_id AND uid= :uid";
-            else if($role="moderator")
-                $query="UPDATE moderator_treasurer SET moderator_flag = 1 WHERE event_id= :event_id AND uid= :uid";
-            User::insert($query,$params);
-        }
-        else{
-            $query ="INSERT INTO moderator_treasurer (uid,event_id,moderator_flag,treasurer_flag) VALUES (:uid, :event_id, IF (STRCMP(:role1, 'moderator')=0 ,1,0),IF (STRCMP(:role2, 'treasurer')=0 ,1,0))";
-            $params=["event_id"=>$event_id, "uid"=>$uid, "role1"=>$role, "role2"=>$role];
-            User::insert($query,$params);
-        }
-    }
-
-    public function deleteUserRole($uid,$role,$event_id){
-        
-
-        $query="SELECT uid FROM  moderator_treasurer WHERE event_id= :event_id AND uid= :uid AND treasurer_flag = 1 AND moderator_flag = 1";
-        $params=["event_id"=>$event_id, "uid"=>$uid];
-        if(count(User::select($query,$params))==1){
-            if($role="treasurer")
-                $query="UPDATE moderator_treasurer SET treasurer_flag = 0 WHERE event_id= :event_id AND uid= :uid";
-            else if($role="moderator")
-                $query="UPDATE moderator_treasurer SET moderator_flag = 0 WHERE event_id= :event_id AND uid= :uid";
-            User::insert($query,$params);
-        }
-        else{
-            $query ="DELETE FROM moderator_treasurer WHERE event_id= :event_id AND uid =:uid";
-            $params=["event_id"=>$event_id, "uid"=>$uid];
-            User::insert($query,$params);
+    public function addUserRole($uid, $role, $event_id)
+    {
+        $query = "SELECT uid FROM  moderator_treasurer WHERE event_id= :event_id AND uid= :uid";
+        $params = ["event_id" => $event_id, "uid" => $uid];
+        if (count(User::select($query, $params)) == 1) {
+            if ($role = "treasurer")
+                $query = "UPDATE moderator_treasurer SET treasurer_flag = 1 WHERE event_id= :event_id AND uid= :uid";
+            else if ($role = "moderator")
+                $query = "UPDATE moderator_treasurer SET moderator_flag = 1 WHERE event_id= :event_id AND uid= :uid";
+            User::insert($query, $params);
+        } else {
+            $query = "INSERT INTO moderator_treasurer (uid,event_id,moderator_flag,treasurer_flag) VALUES (:uid, :event_id, IF (STRCMP(:role1, 'moderator')=0 ,1,0),IF (STRCMP(:role2, 'treasurer')=0 ,1,0))";
+            $params = ["event_id" => $event_id, "uid" => $uid, "role1" => $role, "role2" => $role];
+            User::insert($query, $params);
         }
     }
 
+    public function deleteUserRole($uid, $role, $event_id)
+    {
+
+
+        $query = "SELECT uid FROM  moderator_treasurer WHERE event_id= :event_id AND uid= :uid AND treasurer_flag = 1 AND moderator_flag = 1";
+        $params = ["event_id" => $event_id, "uid" => $uid];
+        if (count(User::select($query, $params)) == 1) {
+            if ($role = "treasurer")
+                $query = "UPDATE moderator_treasurer SET treasurer_flag = 0 WHERE event_id= :event_id AND uid= :uid";
+            else if ($role = "moderator")
+                $query = "UPDATE moderator_treasurer SET moderator_flag = 0 WHERE event_id= :event_id AND uid= :uid";
+            User::insert($query, $params);
+        } else {
+            $query = "DELETE FROM moderator_treasurer WHERE event_id= :event_id AND uid =:uid";
+            $params = ["event_id" => $event_id, "uid" => $uid];
+            User::insert($query, $params);
+        }
+    }
 }

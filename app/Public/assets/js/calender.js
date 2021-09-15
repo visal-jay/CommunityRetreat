@@ -16,58 +16,83 @@ const months = [
     
 ];
 
+let calender_data2 = [];
 
-let calender_data2 = [
-    {
-        date: 7,
-        month: 7,
-        event :[
-            {
-                eventname : "Beach cleaning campaign", 
-                organization : "AIESEC in University of Colombo"
-            },
-            {
-                eventname : "Blood donation campaign",
-                organization : "GAVEL Club of University of Colombo"
-            }
+let event_details = renderEvents();
 
-        ]
-    },
-    {
-        date: 20,
-        month: 7,
-        event :[
-            {
-                eventname : "Dog Rescue", 
-                organization : "Bosath paramai organization"
-            },
+
+
+for(let i=0 ; i<event_details.length ; i++ ){
+
+     calender_data2.push( [
+         {
+             
+             date: event_details[i][0].day,
+             month: event_details[i][0].month,
+             event: [
+                 {
+                    event_id :  event_details[i][0].event_id,
+                     eventname:  event_details[i][0].event_name,
+                     organization:  event_details[i][0].organisation_username
+                 }
+             ]
+         }
+     ]);
+}
+
+
+
+// let calender_data2 = [
+//     {
+//         date: 12,
+//         month: 9,
+//         event :[
+//             {
+//                 eventname : "<?= $array[0][event_name]?>", 
+//                 organization : "AIESEC in University of Colombo"
+//             },
+//             {
+//                 eventname : "Blood donation campaign",
+//                 organization : "GAVEL Club of University of Colombo"
+//             }
+
+//         ]
+//     },
+//     {
+//         date: 20,
+//         month: 9,
+//         event :[
+//             {
+//                 eventname : "Hello", 
+//                 organization :" Leo club"
+//             },
            
-        ]
-    },
-    {
-        date: 26,
-        month: 7,
-        event :[
-            {
-                eventname : "Beach cleaning campaign", 
-                organization : "AIESEC in University of Colombo"
-            },
-            {
-                eventname : "Blood donation campaign",
-                organization : "GAVEL Club of University of Colombo"
-            },
-            {
-                eventname : "sramadana campaign",
-                organization : "Leo Club of Nilwala"
-            }
+//         ]
+//     },
+//     {
+//         date: 26,
+//         month: 9,
+//         event :[
+//             {
+//                 eventname : "Beach cleaning campaign", 
+//                 organization : "AIESEC in University of Colombo"
+//             },
+//             {
+//                 eventname : "Blood donation campaign",
+//                 organization : "GAVEL Club of University of Colombo"
+//             },
+//             {
+//                 eventname : "sramadana campaign",
+//                 organization : "Leo Club of Nilwala"
+//             }
 
 
-        ]
-    },
+//         ]
+//     },
    
 
 
-]
+// ]
 
 
 const date = new Date();
@@ -79,9 +104,10 @@ function popupLoad(index){
     document.querySelector('.event-items').innerHTML ="";
    
     
-    for(let eventIndex=0; eventIndex< calender_data2[index].event.length;eventIndex++){
+    for(let eventIndex=0; eventIndex< calender_data2[index][0].event.length;eventIndex++){
+
    
-        document.querySelector('.date-event-popup p').innerHTML =  months[calender_data2[index].month-1] + " " +calender_data2[index].date +" "+date.getFullYear();
+        document.querySelector('.date-event-popup p').innerHTML =  months[calender_data2[index][0].month-1] + " " +calender_data2[index][0].date +" "+date.getFullYear();
 
         let eventcontainer = document.createElement('div');
         eventcontainer.setAttribute("class","event-container");
@@ -100,13 +126,13 @@ function popupLoad(index){
 
         let Eventname = document.createElement('h4');
         let eventlink = document.createElement('a');
-        eventlink.setAttribute("href","event.php");
-        eventlink.innerHTML = calender_data2[index].event[eventIndex].eventname;
+        eventlink.setAttribute("href","/event/view?page=about&&event_id="+calender_data2[index][0].event[eventIndex].event_id);
+        eventlink.innerHTML = calender_data2[index][0].event[eventIndex].eventname;
         Eventname.appendChild(eventlink);
         eventdetailsdiv.appendChild(Eventname);
 
         let Organizationname = document.createElement('p5');
-        Organizationname.innerHTML = "Event By " + calender_data2[index].event[eventIndex].organization;
+        Organizationname.innerHTML = "Event By " + calender_data2[index][0].event[eventIndex].organization;
         eventdetailsdiv.appendChild(Organizationname);
 
         eventcontainer.appendChild(eventdetailsdiv);
@@ -115,8 +141,11 @@ function popupLoad(index){
     
     }
     var popup = document.querySelector('.event-popup-container');
+    var body = document.querySelector('.body');
+    body.classList.toggle("overflow");
     popup.classList.toggle("pop-up-load");
 }
+
 
 
 const renderCalender = ()=>{
@@ -151,10 +180,10 @@ const renderCalender = ()=>{
         days += '<div></div>';
     }
 
-
+    
     for( let i=1; i<=lastday;i++){
         
-        const index  = calender_data2.findIndex((day) => day.date == i&& date.getMonth()==day.month-1);
+        const index  = calender_data2[1].findIndex((day) => day.date == i&& date.getMonth()==day.month-1);
 
        
         if(( i=== new Date().getDate()&& date.getMonth() === new Date().getMonth())&& (index != -1)){
@@ -193,9 +222,43 @@ document.querySelector(".next").addEventListener('click',()=>{
 
 });
 
-renderCalender();
+
+
 
 function popupHide(){
     var popup = document.querySelector('.event-popup-container');
+    var body = document.querySelector('.body');
+    body.classList.toggle("overflow");
     popup.classList.toggle("pop-up-load");
 }
+
+function successCall(result){
+    var event_details = JSON.parse(result);
+    console.log(event_details);
+    return event_details;
+}
+
+renderCalender();
+
+function renderEvents(){
+
+     var event_details="";
+
+    $.ajax({
+        async:false,
+        url: "/Calendar/getCalendarDetails",
+        type: "post",
+        success : function(result){
+
+            event_details = JSON.parse(result);
+           
+       },
+
+    });
+    return event_details;
+
+}
+
+
+
+ 

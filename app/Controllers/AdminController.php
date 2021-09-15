@@ -10,7 +10,14 @@ class AdminController{
         $admin_details=$admin->getDetails($uid); 
         View::render('adminProfile',$admin_details);
     }
+    public function updateProfilePic(){
+        var_dump($_FILES['profile_pic']);
+        $admin=new Admin();
+        $uid=$_SESSION["user"]["uid"];
+        $data=["uid"=>$uid,"profile_pic"=>$_FILES['profile_pic']];
+        $admin->changeProfilePic($data); 
 
+    }
 
     public function updateUsername(){
 

@@ -17,13 +17,11 @@
   }
 
 .profilecontainer{
-    height: 100%;
+    min-height: max-content;
     width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
-  
-   
 
 }
 
@@ -528,4 +526,9 @@ hr{
 
         font-size: 0.7rem; 
     }
+}
+.footer {
+  
+    display: block;
+ 
 }

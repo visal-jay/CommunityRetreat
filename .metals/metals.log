@@ -188,3 +188,31 @@ INFO: Unsupported notification method: $/setTrace
 [0m2021.09.04 11:26:14 INFO  time: initialize in 0.49s[0m
 [0m2021.09.04 11:26:19 WARN  Build server is not auto-connectable.[0m
 [0m2021.09.04 11:26:19 WARN  no build tool detected in workspace 'C:\wamp64\www\CommunityRetreat\Group-16'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.09.12 21:31:02 INFO  Started: Metals version 0.10.6 in workspace 'C:\wamp64\www\CommunityRetreat\Group-16' for client Visual Studio Code 1.60.0.[0m
+[0m2021.09.12 21:31:03 INFO  time: initialize in 0.92s[0m
+[0m2021.09.12 21:31:08 WARN  Build server is not auto-connectable.[0m
+[0m2021.09.12 21:31:08 WARN  no build tool detected in workspace 'C:\wamp64\www\CommunityRetreat\Group-16'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+Sep 12, 2021 9:31:35 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+[0m2021.09.14 08:36:50 INFO  Started: Metals version 0.10.6 in workspace 'C:\wamp64\www\CommunityRetreat\Group-16' for client Visual Studio Code 1.60.0.[0m
+[0m2021.09.14 08:36:51 INFO  time: initialize in 0.71s[0m
+[0m2021.09.14 08:36:56 WARN  Build server is not auto-connectable.[0m
+[0m2021.09.14 08:36:56 WARN  no build tool detected in workspace 'C:\wamp64\www\CommunityRetreat\Group-16'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+Sep 14, 2021 11:03:46 AM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+[0m2021.09.14 22:05:38 INFO  Started: Metals version 0.10.6 in workspace 'C:\wamp64\www\CommunityRetreat\Group-16' for client Visual Studio Code 1.60.0.[0m
+[0m2021.09.14 22:05:38 INFO  time: initialize in 0.35s[0m
+[0m2021.09.14 22:05:45 WARN  Build server is not auto-connectable.[0m
+[0m2021.09.14 22:05:45 WARN  no build tool detected in workspace 'C:\wamp64\www\CommunityRetreat\Group-16'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.09.15 16:46:37 INFO  Started: Metals version 0.10.6 in workspace 'C:\wamp64\www\CommunityRetreat\Group-16' for client Visual Studio Code 1.60.0.[0m
+[0m2021.09.15 16:46:38 INFO  time: initialize in 0.49s[0m
+[0m2021.09.15 16:46:43 WARN  Build server is not auto-connectable.[0m
+[0m2021.09.15 16:46:43 WARN  no build tool detected in workspace 'C:\wamp64\www\CommunityRetreat\Group-16'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+Sep 15, 2021 8:44:34 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+[0m2021.09.15 22:19:35 INFO  Started: Metals version 0.10.6 in workspace 'C:\wamp64\www\CommunityRetreat\Group-16' for client Visual Studio Code 1.60.1.[0m
+[0m2021.09.15 22:19:35 INFO  time: initialize in 0.9s[0m
+[0m2021.09.15 22:19:41 WARN  Build server is not auto-connectable.[0m
+[0m2021.09.15 22:19:41 WARN  no build tool detected in workspace 'C:\wamp64\www\CommunityRetreat\Group-16'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+Sep 15, 2021 10:43:59 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace

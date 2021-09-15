@@ -97,6 +97,42 @@ class EventController
         Controller::redirect("/event/view",["event_id"=> $_GET["event_id"], "page" => "donations"]);             
     }
 
+    public function donationReport(){
+        $donation = new Donations;
+        $data["donations"]= $donation->donationReportGenerate($_GET["event_id"]);
+        $data["donations_graph"]=json_encode($donation->getReport(["event_id"=>$_GET["event_id"]])) ;
+        $data["event_name"]  = (new Events)->getDetails($_GET["event_id"])["event_name"];
+        View::render('donationsReport',$data); 
+    }
+
+    
+
+    public function BudgetReport(){
+        $budget = new Budget();
+        $income_report=$budget->IncomeReportGenerate($_GET["event_id"]);
+        $expense_report=$budget->ExpenseReportGenerate($_GET["event_id"]);
+        
+        $data["report"]=$expense_report;
+        array_push($data["report"], ...$income_report);
+        usort($data["report"], function($a, $b) {
+            return $a['date'] <=> $b['date'];
+        });
+        $data["income_report"]=$income_report;
+        $data["expense_report"]=$expense_report;
+        $current_report= array();
+foreach($data["report"] as $report){
+        if($report["status"]=='current'){
+            array_push($current_report, $report);
+        }}
+        $data["report"]=$current_report;
+        $data["income_sum"] = $budget->getIncomeSum($_GET["event_id"]);
+        $data["expense_sum"]  = $budget->getExpenseSum($_GET["event_id"]);
+        $data["event_name"]  = (new Events)->getDetails($_GET["event_id"])["event_name"];
+        View::render('budgetReport',$data);
+        
+    }
+
+
     public function volunteers($event_details){
         $ip = exec('ifconfig | grep "inet " | grep -v 127.0.0.1 | cut -d\  -f2');
         View::render("eventPage",array_merge($event_details,["ip"=>$ip]));

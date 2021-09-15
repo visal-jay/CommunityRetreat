@@ -245,27 +245,30 @@ if(isset($_SESSION ["user"] ["user_type"])){
         </div>
 
         <h2 class="header margin-md">Income</h2>
-        <?php if($organization || $treasurer) { ?>
-        <form action="/budget/addIncome?" method="post" class="form income-form">
+        <div><?php if($organization || $treasurer) { ?>
+            <form action="/budget/addIncome?" method="post" class="form income-form">
 
-            <div>
-                <button class="btn btn-md btn-solid margin-md" type="button" id="button" value="Add"
-                    onclick="show_hide('income-form')">Add &nbsp;<i class="fas fa-plus"></i></button>
-            </div>
-            <div id="income-form" class="hidden" style="margin-top: 20px;">
-                <div class="input form-item">Details
-                    <input class="form-ctrl" name="details" id=" details" type="text" placeholder="Enter the details" />
+                <div>
+                    <button class="btn btn-md btn-solid margin-md" type="button" id="button" value="Add"
+                        onclick="show_hide('income-form')">Add &nbsp;<i class="fas fa-plus"></i></button>
                 </div>
-                <div class="input form-item">Amount
-                    <input class="form-ctrl" name="amount" id="amount" type="text" placeholder="Enter the amount" />
+                <div id="income-form" class="hidden" style="margin-top: 20px;">
+                    <div class="input form-item">Details
+                        <input class="form-ctrl" name="details" id=" details" type="text"
+                            placeholder="Enter the details" />
+                    </div>
+                    <div class="input form-item">Amount
+                        <input class="form-ctrl" name="amount" id="amount" type="text" placeholder="Enter the amount" />
+                    </div>
+                    <div class="form-action-buttons">
+                        <button class="btn btn-md" name="event_id" type="submit"
+                            value="<?= $_GET["event_id"] ?>">Submit</button>
+                    </div>
                 </div>
-                <div class="form-action-buttons">
-                    <button class="btn btn-md" name="event_id" type="submit"
-                        value="<?= $_GET["event_id"] ?>">Submit</button>
-                </div>
-            </div>
-        </form>
-        <?php } ?>
+            </form>
+            <?php } ?>
+        </div>
+
         <div class="income-info" id="income-info">
             <div class=" card-container">
                 <p>Donations</p>

@@ -49,12 +49,12 @@
         
             <div class="profilecontainer">
                   <div class="profilecontainer-top">
-                        <div class="profilepic-pic-div">
-                            <img src="../Public/assets/User-icon.png" id="dp" >
+                        <form action="/Admin/updateProflePic" method="post" class="profilepic-pic-div">
+                            <img src="<?= $profile_pic ?>" id="dp" >
                             <input type= "file" id="file" >
                             <label for="file" id="uploadbtn">upload photo</label>
         
-                        </div>
+                        </form>
                         
                             <div class="aboutme-container">
                                 <div class="intro">
@@ -257,7 +257,7 @@
         </div>
 
 
-    <script src = "../Public/assets/js/app.js" ></script>
+    <script src = "../Public/assets/js/adminProfilePic.js" ></script>
 
     <script>
         <?php if (isset($_GET["invaliderr"])) echo "showEddite('emailupdater');" ?>

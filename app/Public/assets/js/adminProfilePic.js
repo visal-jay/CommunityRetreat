@@ -14,7 +14,10 @@ dp.addEventListener('mouseleave',function()
 });
 
 file.addEventListener('change', function(){
+
     const choosedfile = this.files[0];
+    var form_data = new FormData();                  
+    form_data.append('profile_pic', choosedfile);
 
     if(choosedfile){
 
@@ -24,6 +27,15 @@ file.addEventListener('change', function(){
            img.setAttribute('src',reader.result);
         });
 
-        reader.readAsDataURL(choosedfile);
+     reader.readAsDataURL(choosedfile);
+     $.ajax({
+       
+        url: "/Admin/updateProfilePic",
+        type: "POST",
+        data: form_data,
+        processData: false,
+        contentType: false,
+    });
+        
     }
 });

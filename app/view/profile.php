@@ -14,13 +14,8 @@
         
 
     </head>
-    <body>
-        <?php 
-            $_SESSION["uid"] = "REG0000022";
-
-            
-            
-        ?>
+    <body class="body">
+ 
         
         <header class="header">
             <a class=" logo ">
@@ -54,12 +49,12 @@
             <!-- profile container division -->
             <div class="profilecontainer">
                   <div class="profilecontainer-top">
-                        <div class="profilepic-pic-div">
-                            <img src="../Public/assets/User-icon.png" id="dp" >
-                            <input type= "file" id="file" name= "profile-pic">
+                        <form action="/RegisteredUser/updateProfilePic" method="post" class="profilepic-pic-div">
+                            <img src="<?= $profile_pic?>"  id="dp" >
+                            <input type= "file" id="file" name= "profile_pic">
                             <label for="file" id="uploadbtn">upload photo</label>
         
-                        </div>
+                        </form>
                         
                             <div class="aboutme-container">
                                 <div class="intro">
@@ -260,9 +255,13 @@
    
 
         </div>
+        
+            <?php include "footer.php";?>
 
 
-    <script src = "../Public/assets/js/app.js" ></script>
+        
+
+    <script src = "../Public/assets/js/reguserProfilePic.js" ></script>
 
     <script>
         <?php if (isset($_GET["invaliderr"])) echo "showEddite('emailupdater');" ?>
@@ -394,5 +393,8 @@
         }
        
     </script>
+    
     </body>
+
+   
 </html>

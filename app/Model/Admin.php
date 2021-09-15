@@ -12,6 +12,18 @@ class Admin extends User{
         else
             return false;
     }
+    public function changeProfilePic($data){
+
+        if($data['profile_pic']['size']!==NULL){
+            $time= (int)shell_exec("date '+%s'");
+            // exec("rm -rf /Users/visaljayathilaka/code/group-project/Group-16/app/Uploads/event/cover" . $data["event_id"] . "*");
+            $cover_pic = new Image($data['uid'].$time,"profile/","profile_pic",true);
+            $params =["profile_pic"=>  $cover_pic->getURL(),"uid"=>$data['uid']];  
+        }
+        $query = 'UPDATE admin SET profile_pic= :profile_pic   WHERE uid = :uid ';
+        User::insert($query,$params);  
+
+    }
     public function changeUsername($uid,$data){
         
         $params = ["uid" => $uid , "username"=> $data];

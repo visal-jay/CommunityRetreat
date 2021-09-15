@@ -10,9 +10,9 @@
         <link rel="stylesheet" href= "../Public/assets/style/organisationprofilestyle.css">
         <link rel="stylesheet" href= "../Public/assets/style/fontawesome.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <title>Registrationuser profile</title>
+        <title>organization profile</title>
     </head>
-    <body>
+    <body class="body">
 
         
         <header class="header">
@@ -280,7 +280,7 @@
    
 
         </div>
-
+        <?php include "footer.php"?>
 
     <script src = "../Public/assets/js/app.js" ></script>
 

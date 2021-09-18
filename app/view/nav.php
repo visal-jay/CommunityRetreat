@@ -56,7 +56,7 @@
                 <a class="nav-link margin-side-md" href="/organisation/dashboard ">Home</a>
                 <a class="nav-link margin-side-md" href="/organisation/events">Events</a>
                 <a class="nav-link margin-side-md" href="/organisation/gallery">Gallery</a>
-                <a class="nav-link margin-side-md" href="/organisation/report">Statics</a>
+                <a class="nav-link margin-side-md" href="/organisation/report">Statistics</a>
                 <?php } ?>
 
                 <?php if($admin) { ?>

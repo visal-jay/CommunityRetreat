@@ -104,7 +104,6 @@
     @media (max-width:1000px) {
         .ctx {
             grid-gap: 1rem;
-
         }
 
         .ctx div img {
@@ -129,97 +128,109 @@
 
 <body>
     <div class="container">
-
-        <div class="ctx">
+        <div class="ctx" <?php if (isset($_GET["mail"])) { ?>style="top:50%" <?php } ?>>
             <div><img src="/Public/assets/login-image.jpg" /></div>
-            <div class="container-form">
-                <div class="switcher">
-                    <div class="switch-btn <?php if ($_GET["login"]) echo "shown"; ?>" onclick="switchf('login-form','signup-form')">Login</div>
-                    <div class="switch-btn <?php if ($_GET["signup"]) echo "shown"; ?>" onclick="switchf('signup-form','login-form')">Sign Up</div>
+            <?php if (isset($_GET["mail"])) { ?>
+                <div class="flex-col flex-center">
+                    <i class="far fa-envelope fa-5x margin-md"></i>
+                    <h2 class="flex-row flex-center margin-side-md">Check your email</h2>
+                    <?php if (isset($_GET["forgot_password"])) { ?>
+                        <h4 class="flex-row flex-center">we have sent a password recover instructions to your email</h4>
+                    <?php } ?>
+                    <?php if (isset($_GET["signup_mail"])) { ?>
+                        <h4 class="flex-row flex-center">we have sent an email verification to your email</h4>
+                    <?php } ?>
                 </div>
-                <form action="/Login/validate" method="post" id="login-form" class="form <?php if ($_GET["login"]) echo "shown"; ?>">
-                    <div class="form-item">
-                        <label>Username</label>
-                        <input name="email" class="form-ctrl" placeholder="&#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" />
+            <?php } else { ?>
+                <div class="container-form">
+                    <div class="switcher">
+                        <div class="switch-btn <?php if ($_GET["login"]) echo "shown"; ?>" onclick="switchf('login-form','signup-form')">Login</div>
+                        <div class="switch-btn <?php if ($_GET["signup"]) echo "shown"; ?>" onclick="switchf('signup-form','login-form')">Sign Up</div>
                     </div>
-                    <div class="form-item">
-                        <label>Password</label>
-                        <input type="password" name="password" class="form-ctrl" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
-                    </div>
-                    <p class="error" style="margin:0px"><?php echo $_GET["loginErr"]; ?></p>
-                    <a onclick="switchf('forgot-form','login-form')">Forgot your password?</a>
-                    <button type="submit" class="btn btn-solid margin-md">Login</button>
-                </form>
-                <form action="/Login/forgotPassword" method="post" id="forgot-form" class="form">
-                    <div class="form-item">
-                        <h4>No worries!<br>Enter your registered mail and we will send you a reset</h4>
-                        <label>Enter your email</label>
-                        <input name="email" class="form-ctrl" placeholder="&#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" />
-                    </div>
-                    <button type="submit" class="btn btn-solid margin-md">Reset</button>
-                </form>
-                <div id="signup-form" class="form <?php if ($_GET["signup"]) echo "shown"; ?>">
-                    <div style="max-width: 800px;margin: 0 auto;position:relative">
-                        <div class="switcher">
-                            <div class="switch-btn <?php if ($_GET["signupUser"]) echo "shown"; ?>" onclick="switchf('signup-form-user','signup-form-organisation')">
-                                User
-                            </div>
-                            <div class="switch-btn <?php if ($_GET["signupOrg"]) echo "shown"; ?>" onclick="switchf('signup-form-organisation','signup-form-user')">
-                                Organization
-                            </div>
+                    <form action="/Login/validate" method="post" id="login-form" class="form <?php if ($_GET["login"]) echo "shown"; ?>">
+                        <div class="form-item">
+                            <label>Username</label>
+                            <input name="email" class="form-ctrl" placeholder="&#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" />
                         </div>
-                        <form action="/Signup/validate" method="post" id="signup-form-user" class="form <?php if ($_GET["signupUser"]) echo "shown"; ?>">
-                            <div class="form-item">
-                                <label>Username</label>
-                                <input type="text" name="username" class="form-ctrl" placeholder=" &#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
-                                <p class="error email-error" style="margin:0px"><?php echo $_GET["emailErr"]; ?></p>
+                        <div class="form-item">
+                            <label>Password</label>
+                            <input type="password" name="password" class="form-ctrl" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
+                        </div>
+                        <p class="error" style="margin:0px"><?php echo $_GET["loginErr"]; ?></p>
+                        <a onclick="switchf('forgot-form','login-form')">Forgot your password?</a>
+                        <button type="submit" class="btn btn-solid margin-md">Login</button>
+                    </form>
+                    <form action="/Login/forgotPassword" method="post" id="forgot-form" class="form">
+                        <div class="form-item">
+                            <h4>No worries!<br>Enter your registered mail and we will send you a reset</h4>
+                            <label>Enter your email</label>
+                            <input name="email" class="form-ctrl" placeholder="&#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" />
+                        </div>
+                        <button type="submit" class="btn btn-solid margin-md">Reset</button>
+                    </form>
+                    <div id="signup-form" class="form <?php if ($_GET["signup"]) echo "shown"; ?>">
+                        <div style="max-width: 800px;margin: 0 auto;position:relative">
+                            <div class="switcher">
+                                <div class="switch-btn <?php if ($_GET["signupUser"]) echo "shown"; ?>" onclick="switchf('signup-form-user','signup-form-organisation')">
+                                    User
+                                </div>
+                                <div class="switch-btn <?php if ($_GET["signupOrg"]) echo "shown"; ?>" onclick="switchf('signup-form-organisation','signup-form-user')">
+                                    Organization
+                                </div>
                             </div>
-                            <div class="form-item">
-                                <label>Email</label>
-                                <input type="text" name="email" class="form-ctrl" onkeyup="checkMail(this.value)" placeholder=" &#xf0e0; &nbsp; Enter Email" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
-                                <p class="error email-error" style="margin:0px"><?php echo $_GET["emailErr"]; ?></p>
-                            </div>
-                            <div class="form-item">
-                                <label>Telephone</label>
-                                <input type="text" name="contact_number" class="form-ctrl" onkeyup="checkTelephone(this.value)" placeholder="&#xf879; &nbsp; Enter phone number" required style="font-family:Arial, FontAwesome" />
-                                <p class="error telephone-error" style="margin:0px"><?php echo $_GET["telephoneErr"]; ?></p>
-                            </div>
-                            <div class="form-item">
-                                <label>Password</label>
-                                <input type="password" name="password" onkeyup="checkPassword(this.value)" class="form-ctrl" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
-                                <p class="error password-error" style="margin:0px"><?php echo $_GET["passwordErr"]; ?></p>
-                            </div>
-                            
-                            <button name="signupUser" type="submit" class="btn btn-solid margin-md" value="registered-user">Sign Up</button>
-                        </form>
-                        <form action="/Signup/validate" method="post" id="signup-form-organisation" class="form <?php if ($_GET["signupOrg"]) echo "shown"; ?>">
-                            <div class="form-item">
-                                <label>Organization name</label>
-                                <input type="text" name="username" class="form-ctrl" placeholder=" &#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
-                                <p class="error email-error" style="margin:0px"><?php echo $_GET["emailErr"]; ?></p>
-                            </div>
-                            <div class="form-item">
-                                <label>Email</label>
-                                <input type="text" name="email" class="form-ctrl" onkeyup="checkMail(this.value)" placeholder=" &#xf0e0; &nbsp; Enter Email" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
-                                <p class="error email-error" style="margin:0px"><?php echo $_GET["emailErr"]; ?></p>
-                            </div>
-                            <div class="form-item">
-                                <label>Telephone</label>
-                                <input type="text" name="contact_number" class="form-ctrl" onkeyup="checkTelephone(this.value)" placeholder="&#xf879; &nbsp; Enter phone number" required style="font-family:Arial, FontAwesome" />
-                                <p class="error telephone-error" style="margin:0px"><?php echo $_GET["telephoneErr"]; ?></p>
-                            </div>
-                            <div class="form-item">
-                                <label>Password</label>
-                                <input name="password" type="password" onkeyup="checkPassword(this.value)" class="form-ctrl" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
-                                <p class="error password-error" style="margin:0px"><?php echo $_GET["passwordErr"]; ?></p>
-                            </div>
-                            <button type="submit" class="btn btn-solid margin-md" value="organization" name="signupOrg">Sign Up</button>
-                        </form>
-                    </div>
-                </div>
+                            <form action="/Signup/validate" method="post" id="signup-form-user" class="form <?php if ($_GET["signupUser"]) echo "shown"; ?>">
+                                <div class="form-item">
+                                    <label>Username</label>
+                                    <input type="text" name="username" class="form-ctrl" placeholder=" &#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
+                                </div>
+                                <div class="form-item">
+                                    <label>Email</label>
+                                    <input type="text" name="email" class="form-ctrl" onkeyup="checkMail(this.value)" placeholder=" &#xf0e0; &nbsp; Enter Email" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
+                                    <p class="error email-error" style="margin:0px"><?php echo $_GET["emailErr"]; ?></p>
+                                </div>
+                                <div class="form-item">
+                                    <label>Telephone</label>
+                                    <input type="text" name="contact_number" class="form-ctrl" onkeyup="checkTelephone(this.value)" placeholder="&#xf879; &nbsp; Enter phone number" required style="font-family:Arial, FontAwesome" />
+                                    <p class="error telephone-error" style="margin:0px"><?php echo $_GET["telephoneErr"]; ?></p>
+                                </div>
+                                <div class="form-item">
+                                    <label>Password</label>
+                                    <input type="password" name="password" onkeyup="checkPassword(this.value)" class="form-ctrl" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
+                                    <p class="error password-error" style="margin:0px"><?php echo $_GET["passwordErr"]; ?></p>
+                                </div>
 
-            </div>
+                                <button name="signupUser" type="submit" class="btn btn-solid margin-md" value="registered-user">Sign Up</button>
+                            </form>
+                            <form action="/Signup/validate" method="post" id="signup-form-organisation" class="form <?php if ($_GET["signupOrg"]) echo "shown"; ?>">
+                                <div class="form-item">
+                                    <label>Organization name</label>
+                                    <input type="text" name="username" class="form-ctrl" placeholder=" &#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
+                                </div>
+                                <div class="form-item">
+                                    <label>Email</label>
+                                    <input type="text" name="email" class="form-ctrl" onkeyup="checkMail(this.value)" placeholder=" &#xf0e0; &nbsp; Enter Email" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
+                                    <p class="error email-error" style="margin:0px"><?php echo $_GET["emailErr"]; ?></p>
+                                </div>
+                                <div class="form-item">
+                                    <label>Telephone</label>
+                                    <input type="text" name="contact_number" class="form-ctrl" onkeyup="checkTelephone(this.value)" placeholder="&#xf879; &nbsp; Enter phone number" required style="font-family:Arial, FontAwesome" />
+                                    <p class="error telephone-error" style="margin:0px"><?php echo $_GET["telephoneErr"]; ?></p>
+                                </div>
+                                <div class="form-item">
+                                    <label>Password</label>
+                                    <input name="password" type="password" onkeyup="checkPassword(this.value)" class="form-ctrl" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
+                                    <p class="error password-error" style="margin:0px"><?php echo $_GET["passwordErr"]; ?></p>
+                                </div>
+                                <button type="submit" class="btn btn-solid margin-md" value="organization" name="signupOrg">Sign Up</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            <?php } ?>
         </div>
+
+
         <script>
             function switchf(id1, id2) {
                 var forgot_form = document.getElementById("forgot-form");

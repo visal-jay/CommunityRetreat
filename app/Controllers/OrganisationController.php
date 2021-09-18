@@ -31,12 +31,14 @@ class OrganisationController
 
     public function gallery()
     {
-        if(isset($_GET["org_id"]))
+        if(isset($_GET["org_id"])){
             $user_roles=Controller::accessCheck(["registered_user","guest_user"]);
-        else
-            $user_roles=Controller::accessCheck(["organization","registered_user","guest_user"]);
-
-        $org_id = isset($_GET["org_id"]) ? $_GET["org_id"] : $_SESSION["user"]["uid"];
+            $org_id=$_GET["org_id"];
+            }        
+        else{
+                $user_roles=Controller::accessCheck(["organization"]);
+                $org_id = $_SESSION["user"]["uid"];
+            }
 
         if (!$data = (new Gallery)->getGallery(["uid" => $org_id], true))
             $data = array();

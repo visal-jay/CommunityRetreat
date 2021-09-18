@@ -12,10 +12,17 @@ class User extends Model
             return false;
     }
 
-    public function authenticate($email,$password,$verified=1)
+    public function authenticate($email,$password,$verified=1,$reset_password=0)
     {
-        $query = 'SELECT uid,user_type,COUNT(*) as count FROM login where email = :email AND password = :password AND verified= :verified';
-        $params = ["email" => $email,"password"=>$password,"verified"=>$verified];
+        if ($reset_password==1){
+            $query = 'SELECT uid,user_type,COUNT(*) as count FROM login where email = :email AND password = :password AND verified= :verified AND reset_password = :reset_password';
+            $params = ["email" => $email,"password"=>$password,"verified"=>$verified,"reset_password"=>$reset_password];
+        }
+        else{
+            $query = 'SELECT uid,user_type,COUNT(*) as count FROM login where email = :email AND password = :password AND verified= :verified';
+            $params = ["email" => $email,"password"=>$password,"verified"=>$verified];
+        }
+
         $result=User::select($query,$params);
         if ($result[0]["count"]== 1)
             return $result[0];
@@ -37,6 +44,10 @@ class User extends Model
         $query = 'SELECT email,password FROM login where email = :email AND verified= 1';
         $params = ["email" => $email];
         $result=User::select($query,$params);
+
+        $query = 'UPDATE login SET reset_password=1 WHERE email = :email AND verified= 1';
+        User::insert($query,$params);
+
         $time= (int)shell_exec("date '+%s'");
         return $encryption->encrypt(array_merge($result[0],["time"=>$time]),'reset password');
     }
@@ -85,7 +96,7 @@ class User extends Model
     }
 
     function resetPassword($email,$password){
-        $query = 'UPDATE login SET password= :password  WHERE email = :email';
+        $query = 'UPDATE login SET password= :password,reset_password=0 WHERE email = :email';
         $params = ["email" => $email,"password"=>$password];
         User::insert($query,$params);
     }

@@ -46,6 +46,7 @@ class Controller
         if(array_search(true,$data))
             return $data;
 
+
         Controller::redirect('/login/view');
     }
 }

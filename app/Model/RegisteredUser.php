@@ -23,8 +23,8 @@ class RegisteredUser extends User
         $query = 'SELECT * FROM registered_user reg JOIN login ON reg.uid= login.uid WHERE reg.uid = :uid AND verified=1';
         $params = ["uid" => $uid];
         $result= User::select($query,$params);
-        if(count($result[0])>=1)
-
+        //var_dump($result);
+        if(count($result)==1)
             return $result[0];
         else
             return false;

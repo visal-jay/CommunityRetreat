@@ -573,6 +573,7 @@ if (isset($_SESSION["user"]["user_type"])) {
     var marker;
 
     function initMap() {
+        resizeMap();
         map = new google.maps.Map(document.getElementById("map"), {
             center: {
                 lat: -34.397,
@@ -613,14 +614,12 @@ if (isset($_SESSION["user"]["user_type"])) {
         marker.setMap(map);
 
         google.maps.event.addListener(marker, 'dragend', function(evt) {
-            console.log("bisa");
             document.getElementById('longitude').value = evt.latLng.lng().toFixed(3);
             document.getElementById('latitude').value = evt.latLng.lat().toFixed(3);
             //document.getElementById('current').innerHTML = '<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';
         });
         map.setCenter(myLatlng);
         map.setZoom(15);
-        resizeMap();
     }
 </script>
 

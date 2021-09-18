@@ -27,6 +27,22 @@
     }
 
 
+
+    .home-events {
+        border-radius: 8px;
+        min-height: max-content;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 3rem;
+        
+        padding: 2rem 1rem;
+        margin: 1rem 0 2rem 0;
+    }
+
+    .home-events img {
+        width: 400px;
+    }
+
     register {
         margin: 1rem 1rem;
         background-color: #EEEEEE;
@@ -40,6 +56,7 @@
         background-color: #0A1931;
         padding: 2rem;
         box-sizing: border-box;
+        margin: 2rem 0;
     }
 
     input[type=search] {
@@ -63,7 +80,7 @@
     }
 
     .homepage {
-        margin: 0 auto;
+        margin: 0 auto 50px auto;
         width: 80%;
     }
 
@@ -87,8 +104,8 @@
     #donation-events,
     #volunteer-events {
         overflow-x: scroll;
-        width: 100%;
         padding-bottom: 1rem;
+        min-height: 300px;
     }
 
     #myVideo {
@@ -108,15 +125,21 @@
         width: 150px;
     }
 
+    .heading {
+        position: absolute;
+        top: 40px;
+    }
+
     figure {
         min-height: 100px;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
-        border-radius: 8px;
+        border-radius: 3px;
         margin: 0 1rem;
-        width: 200px;
-        min-width: 200px;
+        min-width: 250px;
+        width: 250px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
     }
 
     figure .content {
@@ -135,6 +158,15 @@
         justify-content: center;
     }
 
+    figure .about {
+        font-size: smaller;
+        white-space: normal;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 6;
+        -webkit-box-orient: vertical;
+    }
+
     .photo-container {
         position: relative;
     }
@@ -145,7 +177,6 @@
     }
 
     figure>img {
-
         grid-row: 1 / -1;
         grid-column: 1;
     }
@@ -155,7 +186,7 @@
     .photo-container img {
         aspect-ratio: 4/2;
         width: 100%;
-        border-radius: 8px;
+        border-radius: 3px;
     }
 
     ::-webkit-scrollbar {
@@ -192,7 +223,7 @@
         background-color: #ddd;
         border-radius: 8px;
         overflow: hidden;
-        height: 1rem;
+        height: 10px;
     }
 
     #myBar {
@@ -215,8 +246,45 @@
         margin: 2rem;
     }
 
+    p {
+        margin: 0;
+    }
+
+    figure p,
+    h1,
+    h2,
+    h3 {
+        font-family: Roboto, Arial, sans-serif;
+    }
+
+    #map {
+        width: 450px;
+        height: 400px;
+    }
 
     @media screen and (max-width:767px) {
+        .grid-row-1{
+            grid-row: 1;
+        }
+
+        .grid-row-2{
+            grid-row: 2;
+        }
+
+        .heading {
+            position: absolute;
+            top: 10px;
+        }
+
+        .home-events img {
+            width: 200px;
+        }
+
+        .home-events {
+            grid-template-columns: 1fr;
+            grid-gap: 1rem;
+        }
+
         figure {
             width: 170px;
         }
@@ -224,10 +292,16 @@
         register {
             margin: 1rem 0;
             width: auto;
+            box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
         }
 
         .item img {
             width: 100px;
+        }
+
+        #map {
+            width: 250px;
+            height: 250px;
         }
 
         h1 {
@@ -275,67 +349,89 @@ if (isset($_SESSION["user"]["user_type"])) {
         </div>
     </div>
     <div class="homepage flex-col flex-center hidden" style="display:none">
-        <div class="flex-col flex-center ">
+        <div class="flex-col flex-center" style="position:relative;">
             <video autoplay muted loop id="myVideo">
                 <source src="/Public/assets/volunteer.mp4#t=61,65" type=video/mp4>
             </video>
+            <div class="heading">
+                <h1>Let's join CommunityRetreat</h1>
+            </div>
         </div>
-        <div>
-            <h1>Let's join CommunityRetreat</h1>
-        </div>
+
         <search class="flex-col flex-center border-round">
             <h1 class="clr-white">Let's find what you like</h1>
             <div class="flex-row-to-col flex-center">
-                <form action="/action_page.html" class="search-bar" style="height:fit-content">
-                    <input type="search" class="form-ctrl" placeholder="Search">
+                <form action="/search/view" method="get" class="search-bar" style="height:fit-content">
+                    <input style="color:white" type="search" name="search" class="form-ctrl" placeholder="Search">
                     <button type="" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
                 </form>
                 <button class="btn btn-solid" id="near-me" onclick="nearme()"><i class="fas fa-map-marker-alt"></i>&nbsp;Near me</button>
             </div>
         </search>
 
-        <?php if($guest_user) { ?>
-        <div class="item flex-row-to-col flex-space">
-            <register class="flex-col flex-center">
-                <img src="/Public/assets/volunteer.png" alt="">
-                <div class="flex-col flex-center">
-                    <h3>Register as an User</h3>
-                    <p style="text-align: center">By registering as an user you will be eligible to VOLUNTEER for events proudly. <br> You will be able to push yourself more and DONATE generously. </p>
-                    <div><a href="/login/view?signup=true&&signupUser=true">Sign up as a volunteer <i class="fas fa-long-arrow-alt-right"></i></a></div>
-                </div>
-            </register>
-            <register class="flex-col flex-center">
-                <img src="/Public/assets/organisation.png" alt="">
-                <div class="flex-col flex-center">
-                    <h3>Register as an Organisation</h3>
-                    <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
-                    <div><a href="/login/view?signup=true&&signupOrg=true">Sign up as a organisation <i class="fas fa-long-arrow-alt-right"></i></a></div>
-                </div>
-            </register>
-        </div>
+        <?php if ($guest_user) { ?>
+            <div class="item flex-row-to-col flex-space">
+                <register class="flex-col flex-center">
+                    <img src="/Public/assets/volunteer.png" alt="">
+                    <div class="flex-col flex-center">
+                        <h3>Register as an User</h3>
+                        <p style="text-align: center">By registering as an user you will be eligible to VOLUNTEER for events proudly. <br> You will be able to push yourself more and DONATE generously. </p>
+                        <div><a href="/login/view?signup=true&&signupUser=true">Sign up as a volunteer <i class="fas fa-long-arrow-alt-right"></i></a></div>
+                    </div>
+                </register>
+                <register class="flex-col flex-center">
+                    <img src="/Public/assets/organisation.png" alt="">
+                    <div class="flex-col flex-center">
+                        <h3>Register as an Organisation</h3>
+                        <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
+                        <div><a href="/login/view?signup=true&&signupOrg=true">Sign up as a organisation <i class="fas fa-long-arrow-alt-right"></i></a></div>
+                    </div>
+                </register>
+            </div>
         <?php } ?>
 
-        <div>
-            <h2>Recently added</h2>
+        <div class="home-events">
+            <div class="flex-col flex-center">
+                <img src="/Public/assets/sample-1.svg" alt="">
+                <h2>Recently added</h2>
+                <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
+            </div>
             <div class="flex-row margin-lg" id='recent-events'></div>
         </div>
-        <div>
-            <h2>Near me</h2>
-            <div class="flex-row margin-lg" id='near-events'></div>
-        </div>
-        <div>
-            <h2>Need your donations</h2>
-            <div class="flex-row margin-lg" id='donation-events'></div>
-        </div>
-        <div>
-            <h2>Need your engagement</h2>
-            <div class="flex-row margin-lg" id='volunteer-events'></div>
+
+        <div class="home-events">
+            <div id="map" class="margin-side-md grid-row-2"></div>
+            <div class="flex-col flex-center grid-row-1">
+                <img src="/Public/assets/sample-2.svg" alt="">
+                <h2>Near you</h2>
+                <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
+            </div>
         </div>
 
+        <div class="home-events">
+            <div class="flex-col flex-center">
+                <img src="/Public/assets/sample-3.svg" alt="">
+                <h2>Need your donations</h2>
+                <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
+            </div>
+            <div class="flex-row margin-lg" id='donation-events'></div>
+        </div>
+
+        <div class="home-events">
+            <div class="flex-row margin-lg grid-row-2" id='volunteer-events'></div>
+
+            <div class="flex-col flex-center grid-row-1">
+                <img src="/Public/assets/sample-4.svg" alt="">
+                <h2>Need your engagement</h2>
+                <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
+            </div>
+        </div>
     </div>
 
 
 </body>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
+
 <script>
     function showPage() {
         document.getElementsByClassName("loader")[0].style.display = "none";
@@ -376,13 +472,6 @@ if (isset($_SESSION["user"]["user_type"])) {
                 navigator.geolocation.getCurrentPosition(resolve, reject);
             }
         );
-    }
-
-    async function nearmeEvents() {
-        search({
-            range: 20,
-            container: 'near-events'
-        });
     }
 
     async function recentlyAdded() {
@@ -429,7 +518,7 @@ if (isset($_SESSION["user"]["user_type"])) {
             type: "post", //request type,
             dataType: 'json',
             data: {
-                status: 'added',
+                status: 'published',
                 latitude: latitude,
                 longitude: longitude,
                 distance: range,
@@ -441,14 +530,15 @@ if (isset($_SESSION["user"]["user_type"])) {
                 console.log(result);
                 let parent_container = document.getElementById(container);
                 //parent_container.innerHTML = "";
-                if (result.length == 0)
-                    parent_container.parentElement.remove();
-                else
+                if (result.length == 0) {
+                    let empty = '<figure class="border-round flex-row flex-center" ><h2 style="text-align: center;white-space: break-spaces;">Looks like there are no such events</h2></figure>'
+                    parent_container.appendChild(createElementFromHTML(empty));
+                } else
                     result.forEach(evn => {
                         let template = `
-                    <figure class=" bg-green" onclick="location.href = '/event/view?page=about&&event_id=${evn.event_id}' ">
+                    <figure onclick="location.href = '/event/view?page=about&&event_id=${evn.event_id}' ">
                         <div class="content">
-                            <div class="photo-container "><img src="${evn.cover_photo}" style="object-fit: cover;" alt="">
+                            <div class="photo-container"><img src="${evn.cover_photo}" style="object-fit: cover;" alt="">
                                 <div class="stats">
                                 <div>
                                     <span>Volunteered ${evn.volunteered==null ? 0 : Math.round(evn.volunteer_percent)}%</span>
@@ -459,7 +549,32 @@ if (isset($_SESSION["user"]["user_type"])) {
                                     </div>
                                 </div>
                             </div>
-                            <p class="margin-md" style="color:white;">${evn.event_name}</p>
+                            <p class="margin-md" style="margin-bottom:0;"><b>${evn.event_name}</b></p>
+                            <p class="margin-md about" style="margin-top:0">${evn.start_date}</p>
+                            <div class="flex-col margin-side-md" >
+                                <div class ="flex-row" style="justify-content:space-between;align-items:center;">
+                                <p>Donations</p>
+                                <p>${evn.donation_status==0 ? '<i class="fas fa-times fa-xs clr-red margin-side-md"></i>' : '<i class="fas fa-check fa-xs clr-green margin-side-md"></i>'}</p>
+                                </div>
+                                <div class ="flex-row" style="justify-content:space-between;align-items:center;">
+                                <div style="display:flex;align-items:center;position:relative;width:100%;"><div style="border-radius:6px;position:absolute;width:${(evn.donation_percent==null || evn.donation_percent<5) ? 5 : Math.round(evn.donation_percent)}%;background-color:#FFB319;height:6px;"></div></div>
+                                <p>${evn.donation_percent==null ? 0 : Math.round(evn.donation_percent)}%</p>
+
+                                </div>
+                            </div>
+                            <div class="flex-col margin-side-md">
+                                <div class ="flex-row" style="justify-content:space-between;align-items:center;">
+                                <p>Volunteered</p>
+                                <p>${evn.volunteer_status==0 ? '<i class="fas fa-times fa-xs clr-red margin-side-md"></i>' : '<i class="fas fa-check fa-xs clr-green margin-side-md"></i>'}</p>
+                                </div>
+                                <div class ="flex-row" style="justify-content:space-between;align-items:center;">
+                                <div style="display:flex;align-items:center;position:relative;width:100%;"><div style="border-radius:6px;position:absolute;width:${(evn.volunteer_percent==null || evn.volunteer_percent<5) ? 5 : Math.round(evn.volunteer_percent)}%;background-color:#8236CB;height:6px;"></div></div>
+                                <p>${evn.volunteer_percent==null ? 0 : Math.round(evn.volunteer_percent)}%</p>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="margin-md about">${evn.about}</p>
+                            </div>
                         </div>
                     </figure>
                     `;
@@ -472,9 +587,128 @@ if (isset($_SESSION["user"]["user_type"])) {
     }
 
     recentlyAdded();
-    nearmeEvents();
     volunteerEvents();
     donationEvents();
+
+    var map;
+    async function initMap() {
+        const position = await getCoordinates();
+        let latitude = position.coords.latitude;
+        let longitude = position.coords.longitude;
+        const current_location = {
+            lat: latitude,
+            lng: longitude
+        };
+        map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 12,
+            center: current_location,
+        });
+
+        var custom_marker = {
+            url: '/Public/assets/street-view-solid.svg',
+            size: new google.maps.Size(100, 100),
+            // The origin for this image is (0, 0).
+            origin: new google.maps.Point(0, 0),
+            // The anchor for this image is the base of the flagpole at (0, 32).
+            anchor: new google.maps.Point(0, 0),
+        }
+        new google.maps.Marker({
+            position: current_location,
+            draggable: false,
+            map,
+            title: "Your location",
+            icon: custom_marker
+        });
+
+        Nearsearch(latitude,longitude);
+    }
+
+    async function Nearsearch(latitude,longitude) {
+
+        $.ajax({
+            url: "/search/searchAll", //the page containing php script
+            type: "post", //request type,
+            dataType: 'json',
+            data: {
+                status: 'published',
+                latitude: latitude,
+                longitude: longitude,
+                distance: 20,
+                limit: 10
+            },
+            success: function(result) {
+
+                if (result.length == 0)
+                    return;
+                else
+                    result.forEach(evn => {
+                        let template = `
+                    <figure onclick="location.href = '/event/view?page=about&&event_id=${evn.event_id}' ">
+                        <div class="content">
+                            <div class="photo-container "><img src="${evn.cover_photo}" style="object-fit: cover;" alt="">
+                                <div class="stats">
+                                <div>
+                                    <span>Volunteered ${evn.volunteered==null ? 0 : Math.round(evn.volunteer_percent)}%</span>
+                                    <br>
+                                    <span>Donations ${evn.dotaion_percent==null ? 0 : Math.round(evn.dotaion_percent)}%</span>
+                                    <br>
+                                    <span>Distance ${evn.distance==null ? "- " : Math.round(evn.distance)} KM</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="margin-md" style="margin-bottom:0;"><b>${evn.event_name}</b></p>
+                            <p class="margin-md about" style="margin-top:0">${evn.start_date}</p>
+                            <div class="flex-col margin-side-md" >
+                                <div class ="flex-row" style="justify-content:space-between;align-items:center;">
+                                <p>Donations</p>
+                                <p>${evn.donation_status==0 ? '<i class="fas fa-times fa-xs clr-red margin-side-md"></i>' : '<i class="fas fa-check fa-xs clr-green margin-side-md"></i>'}</p>
+                                </div>
+                                <div class ="flex-row" style="justify-content:space-between;align-items:center;">
+                                <div style="display:flex;align-items:center;position:relative;width:100%;"><div style="border-radius:6px;position:absolute;width:${(evn.donation_percent==null || evn.donation_percent<5) ? 5 : Math.round(evn.donation_percent)}%;background-color:#FFB319;height:6px;"></div></div>
+                                <p>${evn.donation_percent==null ? 0 : Math.round(evn.donation_percent)}%</p>
+
+                                </div>
+                            </div>
+                            <div class="flex-col margin-side-md">
+                                <div class ="flex-row" style="justify-content:space-between;align-items:center;">
+                                <p>Volunteered</p>
+                                <p>${evn.volunteer_status==0 ? '<i class="fas fa-times fa-xs clr-red margin-side-md"></i>' : '<i class="fas fa-check fa-xs clr-green margin-side-md"></i>'}</p>
+                                </div>
+                                <div class ="flex-row" style="justify-content:space-between;align-items:center;">
+                                <div style="display:flex;align-items:center;position:relative;width:100%;"><div style="border-radius:6px;position:absolute;width:${(evn.volunteer_percent==null || evn.volunteer_percent<5) ? 5 : Math.round(evn.volunteer_percent)}%;background-color:#8236CB;height:6px;"></div></div>
+                                <p>${evn.volunteer_percent==null ? 0 : Math.round(evn.volunteer_percent)}%</p>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="margin-md about">${evn.about}</p>
+                            </div>
+                        </div>
+                    </figure>
+                    `;
+                        const infowindow = new google.maps.InfoWindow({
+                            content: template,
+                        });
+
+                        let pos = {
+                            lat: evn.latitude,
+                            lng: evn.longitude
+                        }
+                        let marker = new google.maps.Marker({
+                            position: pos,
+                            map,
+                            title: evn.event_name,
+                        });
+                        marker.addListener("click", () => {
+                            infowindow.open({
+                                anchor: marker,
+                                map,
+                                shouldFocus: false,
+                            });
+                        });
+                    });
+            }
+        });
+    }
 </script>
 
 </html>

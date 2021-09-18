@@ -1,7 +1,7 @@
 RewriteEngine On
 RewriteBase /
 
-<FilesMatch "\.(html|htm|js|css|php|png|jpg|jpeg|)$">
+<FilesMatch "\.(html|htm|js|css|php)$">
   FileETag None
   <IfModule mod_headers.c>
     Header unset ETag

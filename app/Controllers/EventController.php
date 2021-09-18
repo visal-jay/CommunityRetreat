@@ -36,7 +36,7 @@ class EventController
         Controller::redirect("/event/view",["event_id"=>$_GET["event_id"],"page"=>"gallery"]);
     }
     public function userroles($event_details){
-        $data["user_roles"]=(new Organisation)->getUserRoles($_GET["event_id"]);
+        $data["users"]=(new Organisation)->getUserRoles($_GET["event_id"]);
         $data=array_merge($data,$event_details);
         View::render('eventPage',$data);
     }

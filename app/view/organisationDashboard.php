@@ -239,8 +239,8 @@
                     <a class="btn margin-side-md" style=" margin-bottom:10px;" onclick="page('events');event.target.classList.add('active');">Events</a>
                 </div>
             </div>
-            <iframe src="/organisation/gallery" frameborder="0" id="gallery" class="hidden"></iframe>
-            <iframe src="/organisation/events" frameborder="0" id="events" class="hidden"></iframe>
+            <iframe src="/organisation/gallery?org_id=<?= $_GET["org_id"] ?>" frameborder="0" id="gallery" class="hidden"></iframe>
+            <iframe src="/organisation/events?org_id=<?= $_GET["org_id"] ?>" frameborder="0" id="events" class="hidden"></iframe>
 
         <?php } ?>
 

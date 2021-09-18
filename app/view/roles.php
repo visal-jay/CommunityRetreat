@@ -113,7 +113,6 @@
     }
 </style>
 
-
 <body>
 
     <div class="flex-col flex-center">
@@ -147,7 +146,7 @@
                     <th>User Role</th>
                     <th></th>
                 </tr>
-                <?php foreach ($user_roles as $userrole) {
+                <?php foreach ($users as $userrole) {
                     if ($userrole["moderator_flag"] == 1) {
                 ?>
                         <tr>

@@ -106,9 +106,10 @@ class Organisation extends User
         $org_username = NULL;
         extract($args, EXTR_OVERWRITE);
 
+        $params=array();
         $query_select_primary = "SELECT uid ";
         $query_table = 'FROM organization WHERE ';
-        $query_filter_organization_name = ' username LIKE  "%:org_username%" AND ';
+        $query_filter_organization_name = ' username LIKE  :org_username AND ';
         $query_filter_last = ' 1=1 ';
 
         $query = $query_select_primary;
@@ -117,11 +118,10 @@ class Organisation extends User
 
         if ($org_username != NULL) {
             $query = $query . $query_filter_organization_name;
-            $params["org_username"] = $org_username;
+            $params["org_username"] = "%$org_username%";
         }
 
         $query = $query . $query_filter_last;
-
         $result = Model::select($query, $params);
 
         if (count($result) == 0)

@@ -47,6 +47,8 @@ class SignupController
         elseif(isset($_POST["signupUser"])){
             $registered_user->addRegisteredUser($_POST);
         }
+
+        Controller::redirect('/login/view',["signup_mail"=>true,"mail"=>true]);
     }
 
     function verifyEmail()

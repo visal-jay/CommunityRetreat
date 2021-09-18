@@ -23,7 +23,7 @@ h3 {
 
 table {
     width: 100%;
-    background: #e2dfdf;
+    background: #ececec;
     text-align: center;
     margin: 20px;
 
@@ -35,7 +35,6 @@ th,
 td {
 
     border-collapse: collapse;
-    border: solid #c7b4b4 2px;
 }
 
 th,
@@ -52,6 +51,34 @@ td {
 .date-time-container {
     display: flex;
     font-size: 12px;
+}
+
+.color-container {
+
+    border-radius: 8px;
+    width: 15%;
+    margin: 20px;
+    padding: 10px;
+}
+
+.right {
+    text-align: right;
+}
+
+.scroll {
+    overflow: scroll;
+}
+
+
+@media screen and (max-width:800px) {
+    .table {
+        width: 100%;
+        text-align: center;
+    }
+
+    .container {
+        width: 100%;
+    }
 }
 </style>
 
@@ -103,43 +130,53 @@ if(isset($_SESSION ["user"] ["user_type"])){
                 <tr>
                     <th>Date</th>
                     <th>Description</th>
-                    <th>Income</th>
-                    <th>Expense</th>
+                    <th class="right">Income</th>
+                    <th class="right">Expense</th>
                 </tr>
                 <?php foreach($report as $report) { ?>
                 <tr>
                     <td><?= $report["date"] ?></td>
-                    <td><?= $report["details"] ?></td>
-                    <td><?php if(substr($report["record_id"],0,3)==="INC"){ echo $report["amount"];} ?>
+                    <td class="scroll"><?= $report["details"] ?></td>
+                    <td class="right"><?php if(substr($report["record_id"],0,3)==="INC"){ echo $report["amount"];} ?>
                     </td>
-                    <td><?php if(substr($report["record_id"],0,3)==="EXP"){ echo $report["amount"];} ?></td>
+                    <td class="right"><?php if(substr($report["record_id"],0,3)==="EXP"){ echo $report["amount"];} ?>
+                    </td>
                 </tr>
                 <?php } ?>
                 <tr>
                     <td><b>Total</b></td>
                     <td></td>
-                    <td><b><?= $income_sum ?></b></td>
-                    <td><b><?= $expense_sum ?></b></td>
+                    <td class="right"><b><?= $income_sum ?></b></td>
+                    <td class="right"><b><?= $expense_sum ?></b></td>
                 </tr>
             </table>
         </div>
         <div class="container">
+            <div style="display: flex; text-align:center; justify-content: center;">
+                <div class="color-container" style="background-color: #01937C;"><b>Current</b></div>
+                <div class="color-container" style="background-color: #FF0000;"><b>Deleted</b></div>
+                <div class="color-container" style="background-color: #FAFF00;"><b>Updated</b></div>
+            </div>
+
+
+        </div>
+        <div class=" container">
             <h2>Income</h2>
             <table>
                 <tr>
                     <th>Date</th>
                     <th>Description</th>
-                    <th>Income</th>
-                    <th>Edited by</th>
+                    <th class="right">Income</th>
+                    <th class="right">Edited by</th>
                 </tr>
                 <?php foreach($income_report as $income_report) { ?>
 
                 <tr
-                    style="background-color: <?php if($income_report["status"]=="current") echo '#29BB89'; elseif ($income_report["status"]=="deleted") echo '#FF2442'; elseif ($income_report["status"]=="updated") echo '#FFE268'; ?>">
+                    style="background-color: <?php if($income_report["status"]=="current") echo '#01937C'; elseif ($income_report["status"]=="deleted") echo '#FF0000'; elseif ($income_report["status"]=="updated") echo '#FAFF00'; ?>">
                     <td><?= $income_report["date"] ?></td>
-                    <td><?= $income_report["details"] ?></td>
-                    <td><?= $income_report["amount"] ?></td>
-                    <td><?= $income_report["username"] ?></td>
+                    <td class="scroll"><?= $income_report["details"] ?></td>
+                    <td class="right"><?= $income_report["amount"] ?></td>
+                    <td class="right"><?= $income_report["username"] ?></td>
                 </tr>
                 <?php if($income_report["status"]=="deleted") echo '<tr style="background-color: white; height:30px;"></tr>'; ?>
                 <?php } ?>
@@ -151,16 +188,16 @@ if(isset($_SESSION ["user"] ["user_type"])){
                 <tr>
                     <th>Date</th>
                     <th>Description</th>
-                    <th>Expense</th>
-                    <th>Edited by</th>
+                    <th class="right">Expense</th>
+                    <th class="right">Edited by</th>
                 </tr>
                 <?php foreach($expense_report as $expense_report) { ?>
                 <tr
-                    style="background-color: <?php if($expense_report["status"]=="current") echo '#29BB89'; elseif ($expense_report["status"]=="deleted") echo '#FF2442'; elseif ($expense_report["status"]=="updated") echo '#FFE268'; ?>">
+                    style="background-color: <?php if($expense_report["status"]=="current") echo '#01937C'; elseif ($expense_report["status"]=="deleted") echo '#FF0000'; elseif ($expense_report["status"]=="updated") echo '#FAFF00'; ?>">
                     <td><?= $expense_report["date"] ?></td>
-                    <td><?= $expense_report["details"] ?></td>
-                    <td><?= $expense_report["amount"] ?></td>
-                    <td><?= $expense_report["username"] ?></td>
+                    <td class="scroll"><?= $expense_report["details"] ?></td>
+                    <td class="right"><?= $expense_report["amount"] ?></td>
+                    <td class="right"><?= $expense_report["username"] ?></td>
                 </tr>
                 <?php if($expense_report["status"]=="deleted") echo '<tr style="background-color: white; height:30px;"></tr>'; ?>
                 <?php } ?>

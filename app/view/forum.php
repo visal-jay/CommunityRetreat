@@ -171,13 +171,13 @@
 
 
 <body>
-    <div id="background">
+    <div id="background" style="width: 100%;">
         <?php if ($organization || $moderator) { ?>
             <div class="flex-col flex-center margin-side-lg">
                 <button class="btn btn-solid btn-close margin-lg" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')">Add Announcement &nbsp; <i class="fas fa-plus"></i></button>
             </div>
         <?php } ?>
-        <div class="flex-col flex-center">
+        <div class="flex-col flex-center" style="width: 100%;">
             <?php foreach ($announcements as $announcement) { ?>
                 <div class="card-container margin-md">
                     <div class="event-card-details">

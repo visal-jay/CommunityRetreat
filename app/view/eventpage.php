@@ -199,7 +199,7 @@
     if(isset($_GET["page"]) && $_GET["page"]=="about") require __DIR__ . "/aboutEvent.php";
     elseif(isset($_GET["page"]) && $_GET["page"]=="gallery") require __DIR__ .  "/eventGallery.php";
     elseif(isset($_GET["page"]) && $_GET["page"]=="forum") require __DIR__ . "/forum.php";
-    elseif(isset($_GET["page"]) && $_GET["page"]=="feedback") require __DIR__ . "";
+    elseif(isset($_GET["page"]) && $_GET["page"]=="feedback") require __DIR__ . "/feedback.php";
     elseif(isset($_GET["page"]) && $_GET["page"]=="budget") require __DIR__ . "/budgeting.php";
     elseif(isset($_GET["page"]) && $_GET["page"]=="userroles") require __DIR__ . "/roles.php";
     elseif(isset($_GET["page"]) && $_GET["page"]=="timeline") require __DIR__ . "/workTimeline.php";

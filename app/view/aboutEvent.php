@@ -356,7 +356,8 @@ if (isset($_SESSION["user"]["user_type"])) {
             <?php if ($volunteer_status == 1) { ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d">
                     <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
-                    <div class="progress" data-width="<?php if ($volunteer_percent == NULL) echo "0"; else $volunteer_percent ?>%">
+                    <div class="progress" data-width="<?php if ($volunteer_percent == NULL) echo "0";
+                                                        else $volunteer_percent ?>%">
                         <div class="volunteers-progress-bar"></div>
                     </div>
                     <button class="btn clr-green margin-md"><i class="fas fa-user-friends"></i>&nbsp;I want to volunteer</button>
@@ -366,7 +367,8 @@ if (isset($_SESSION["user"]["user_type"])) {
             <?php if ($donation_status == 1) { ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d; text-align:center">
                     <p style="color:white">Would you like to give value to your hard-earned money by contributing to this community service project?</p>
-                    <div class="progress" data-width="<?php if ($dotaion_percent == NULL) echo "0";else $dotaion_percent ?>%">
+                    <div class="progress" data-width="<?php if ($dotaion_percent == NULL) echo "0";
+                                                        else $dotaion_percent ?>%">
                         <div class="donaters-progress-bar"></div>
                     </div>
                     <button class="btn clr-green margin-md" onclick="togglePopup('form'); blur_background('background');stillBackground('id1')"><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
@@ -442,7 +444,7 @@ if (isset($_SESSION["user"]["user_type"])) {
 
 </body>
 
-<?php include "footer.php"?>
+<?php include "footer.php" ?>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
 
@@ -450,7 +452,7 @@ if (isset($_SESSION["user"]["user_type"])) {
     <?php if ($organization || $moderator) { ?>
 
         function publish() {
-            document.getElementById("publish-input").name= "status";
+            document.getElementById("publish-input").name = "status";
             setTimeout(function() {
                 document.getElementById("update-form").submit()
             }, 2000);

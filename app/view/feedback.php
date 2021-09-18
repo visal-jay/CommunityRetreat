@@ -9,25 +9,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
-    <title>Forum</title>
+    <title>Feedback</title>
 </head>
 
 <style>
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
-
-    body {
-        font-family: "Ubuntu", sans-serif;
-        margin: 0 auto;
-        /* Center website */
-        max-width: 800px;
-        /* Max width */
-        padding: 20px;
-    }
-
     .heading {
         font-size: 25px;
         margin-right: 25px;
@@ -211,8 +196,16 @@
         resize: none;
     }
 
-    .card-container {
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
         width: 100%;
+    }
+
+    .card-container {
+        width: 80%;
     }
 
     .event-card-details {
@@ -253,75 +246,85 @@
 <body>
     <div id="background">
 
-        <div class="flex-col flex-center margin-side-lg">
-            <button class="btn btn-solid btn-close margin-lg" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')">Give Feedback &nbsp; <i class="far fa-comment-dots"></i></button>
-        </div>
+        <?php if ($registered_user) { ?>
+            <div class="flex-col flex-center margin-side-lg">
+                <button class="btn btn-solid btn-close margin-lg" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')">Give Feedback &nbsp; <i class="far fa-comment-dots"></i></button>
+            </div>
+        <?php } ?>
 
         <span class="heading margin-md">User Rating</span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star"></span>
-        <p class="margin-md">4.1 average based on 254 reviews.</p>
+        <?php for ($i = 1; $i < 6; $i++) {
+            if ($i <= $avg_rate) { ?>
+                <span class="fas fa-star fa-sm checked"></span>
+            <?php } else { ?>
+                <span class="fas fa-star fa-sm"></span>
+        <?php }
+        } ?>
+        <p class="margin-md"><?= $avg_rate ?> average based on <?= $total ?> reviews.</p>
         <hr class="margin-lg" style="border:3px solid #f1f1f1">
 
-        <div class="container">
-            <span class="heading margin-md">Feedbacks</span>
-            <div class="flex-col flex-center card-container margin-md event-card-details">
-                <h3 class="margin-md">Name of the user</h3>
-                <date>time stamp</date>
-                <div class="margin-md">
-                    <span class="fas fa-star fa-sm checked"></span>
-                    <span class="fas fa-star fa-sm checked"></span>
-                    <span class="fas fa-star fa-sm checked"></span>
-                    <span class="fas fa-star fa-sm checked"></span>
-                    <span class="fas fa-star fa-sm"></span>
+        <?php foreach ($feedbacks as $feedback) { ?>
+            <div class="card-container margin-md">
+                <span class="heading margin-md">Feedbacks</span>
+                <div class="flex-col flex-center margin-md event-card-details">
+                    <h3 class="margin-md"><?= $feedback["username"] ?></h3>
+                    <date><?= $feedback["time_stamp"] ?></date>
+                    <div class="margin-md">
+                        <?php for ($i = 1; $i < 6; $i++) {
+                            if ($i <= $feedback["rate"]) { ?>
+                                <span class="fas fa-star fa-sm checked"></span>
+                            <?php } else { ?>
+                                <span class="fas fa-star fa-sm"></span>
+                        <?php }
+                        } ?>
+                    </div>
+                    <description class="margin-md"><?= $feedback["feedback"] ?></description>
                 </div>
-                <description class="margin-md">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque, atque! Incidunt expedita similique ab iusto perferendis cum harum fugit. Dolor tempore tempora iste, distinctio repudiandae soluta sed quo excepturi itaque!</description>
+            </div>
+        <?php } ?>
+
+    </div>
+
+    <?php if ($registered_user) { ?>
+        <div class="popup" id="form">
+            <div class="content">
+                <form action="/event/addFeedback?event_id= <?= $_GET["event_id"] ?>" method="post" class="form-container">
+
+                    <div class="form-item">
+                        <label>Tell us what you think about "event name" </label>
+                        <textarea name="feedback" class="form-ctrl" placeholder="Enter feedback" id="feedback" required></textarea>
+                    </div>
+
+                    <div class="flex-row flex-center">
+                        <label>Rate us!</label>
+                        <div class="rate">
+                            <input type="radio" id="star5" name="rate" value="5" />
+                            <label for="star5" title="text">5 stars</label>
+
+                            <input type="radio" id="star4" name="rate" value="4" />
+                            <label for="star4" title="text">4 stars</label>
+
+                            <input type="radio" id="star3" name="rate" value="3" />
+                            <label for="star3" title="text">3 stars</label>
+
+                            <input type="radio" id="star2" name="rate" value="2" />
+                            <label for="star2" title="text">2 stars</label>
+
+                            <input type="radio" id="star1" name="rate" value="1" />
+                            <label for="star1" title="text">1 star</label>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-solid margin-md" type="submit">Submit</button>
+
+                    <div>
+                        <button class="btn-icon btn-close" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
+                    </div>
+
+                </form>
             </div>
         </div>
-
-    </div>
-
-    <div class="popup" id="form">
-        <div class="content">
-            <form action="/event/addFeedback?event_id= <php>" method="post" class="form-container">
-
-                <div class="form-item">
-                    <label>Tell us what you think about "event name" </label>
-                    <textarea name="feedback" class="form-ctrl" placeholder="Enter feedback" id="feedback" required></textarea>
-                </div>
-
-                <div class="flex-row flex-center">
-                    <label>Rate us!</label>
-                    <div class="rate">
-                        <input type="radio" id="star5" name="rate" value="5" />
-                        <label for="star5" title="text">5 stars</label>
-
-                        <input type="radio" id="star4" name="rate" value="4" />
-                        <label for="star4" title="text">4 stars</label>
-
-                        <input type="radio" id="star3" name="rate" value="3" />
-                        <label for="star3" title="text">3 stars</label>
-
-                        <input type="radio" id="star2" name="rate" value="2" />
-                        <label for="star2" title="text">2 stars</label>
-
-                        <input type="radio" id="star1" name="rate" value="1" />
-                        <label for="star1" title="text">1 star</label>
-                    </div>
-                </div>
-
-                <button class="btn btn-solid margin-md" type="submit">Submit</button>
-
-                <div>
-                    <button class="btn-icon btn-close" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
-                </div>
-
-            </form>
-        </div>
-    </div>
+    <?php } ?>
 
 </body>
 

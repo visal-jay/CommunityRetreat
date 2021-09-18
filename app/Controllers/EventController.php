@@ -139,9 +139,10 @@ class EventController
     }
 
     public function forum($event_details){
+        $user_roles= Controller::accessCheck(["organization", "registered user", "moderator", "guest_user"], $_GET["event_id"]);
         $data["announcements"] = (new Announcement)->getAnnouncement($_GET["event_id"]);
         $data = array_merge($data, $event_details);
-        View::render("eventPage",$data);
+        View::render("eventPage",$data, $user_roles);
     }
 
     public function addEvent()
@@ -193,7 +194,21 @@ class EventController
         Controller::redirect("/event/view",["page"=>"forum","event_id"=> $_GET["event_id"]]);
     }
 
-    public function addFeedback(){
-        var_dump($_POST);
+    public function feedback($event_details){  
+        $feedback = new Feedback;
+        $user_roles=Controller::accessCheck(["registered user","organization","moderator"]);   
+        $data = array();
+        $data["feedbacks"] = $feedback->getFeedback($_GET["event_id"]);
+        $data = array_merge($data, $event_details);
+        $data = array_merge($data, $feedback->totalFeedback($_GET["event_id"]));
+        View::render('eventPage',$data,$user_roles); 
     }
+
+    public function addFeedback(){
+        $_POST["event_id"] = $_GET["event_id"];
+        $_POST["uid"] = $_SESSION["user"]["uid"];
+        (new Feedback)->addFeedback($_POST);
+        Controller::redirect("/event/view",["page"=>"feedback","event_id"=> $_POST["event_id"]]);
+    }
+
 }

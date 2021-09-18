@@ -56,12 +56,19 @@ class OrganisationController
 
     public function events()
     {
-        $event = new Events;
+        if(isset($_GET["org_id"]))
+            $user_roles=Controller::accessCheck(["registered_user","guest_user"]);
+        else
+            $user_roles=Controller::accessCheck(["organization","registered_user","guest_user"]);
+
+        $org_id = isset($_GET["org_id"]) ? $_GET["org_id"] : $_SESSION["user"]["uid"];
+
+        $events = new Events;
         $data["events"] = array();
-        if ($result = $event->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "published"]))
+        if ($result = $events->query(["org_uid" => $org_id, "status" => "published"]))
             foreach ($result as $event)
                 array_push($data["events"], $event);
-        if ($result = $event->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "added"]))
+        if ($result = $events->query(["org_uid" => $org_id, "status" => "added"]))
             foreach ($result as $event)
                 array_push($data["events"], $event);
 
@@ -69,8 +76,9 @@ class OrganisationController
             return $a['event_id'] <=> $b['event_id'];
         });
 
-        View::render("manageEvents", $data);
+        View::render("manageEvents", $data,$user_roles);
     }
+
 
     public function report()
     {

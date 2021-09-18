@@ -429,7 +429,7 @@ if (isset($_SESSION["user"]["user_type"])) {
             type: "post", //request type,
             dataType: 'json',
             data: {
-                status: 'added',
+                status: 'published',
                 latitude: latitude,
                 longitude: longitude,
                 distance: range,

@@ -3,7 +3,6 @@
     class CalendarController{
 
         public function view(){
-         
             View::render("calender");
             
         }

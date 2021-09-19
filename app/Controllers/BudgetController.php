@@ -4,7 +4,7 @@ class BudgetController
 {
     public function view(){//view the incomes and expenses in the UI by sending the data from backend
         
-        //Controller::accessCheck(["organization","treasurer"],$_GET["event_id"]);
+        Controller::accessCheck(["organization","treasurer"],$_GET["event_id"]);
         $user_roles=Controller::accessCheck(["organization","moderator,treasurer"],$_GET["event_id"]);
         $budget = new Budget();
         $expense_details=$budget->getExpenseDetails($_GET["event_id"]);
@@ -22,6 +22,7 @@ class BudgetController
         $event_details=array_intersect_key((new Events)->getDetails($_GET["event_id"]),["event_name"=>'',"cover_photo"=>'']);
         $data=array_merge($event_details,$data);
         View::render("eventPage",$data,$user_roles);
+        //View::render("budgetReport",$data);
     } 
      
 	public function addIncome(){//add incomes to the budget
@@ -73,5 +74,15 @@ class BudgetController
         Controller::redirect("/event/view",["page"=>'budget',"event_id"=> $_POST["event_id"]]);
 
     }
+    
+    /*public function BudgetReportGenerate(){
+        $budget = new Budget();
+        $income_details=$budget->BudgetReportGenerate($_GET["event_id"]);
+        $expense_details=$budget->BudgetReportGenerate($_GET["event_id"]);
+        $data["incomes"]=$income_details;
+        $data["expenses"]=$expense_details;
+        View::render('budgetReport',$data); 
+    }
+    */
 }
 ?>

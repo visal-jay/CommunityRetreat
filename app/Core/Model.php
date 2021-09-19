@@ -32,7 +32,6 @@ class Model
     {
         $db = Model::getDB();
         $stmt = $db->prepare($query);
-        var_dump($stmt);
         $stmt->execute($params);
     }
     

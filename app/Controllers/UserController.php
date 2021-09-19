@@ -2,15 +2,18 @@
 
 class UserController{
     public function home(){
-        View::render("home");
+        $user_roles=Controller::accessCheck(["registered_user","guest_user"]);
+        View::render("home",[],$user_roles);
     }
 
     public function calendar(){
-        View::render("calender");
+        $user_roles=Controller::accessCheck(["registered_user"]);
+        View::render("calender",[],$user_roles);
     }
 
     public function administratored(){
-        View::render("adminstration");
+        $user_roles=Controller::accessCheck(["registered_user"]);
+        View::render("adminstration",[],$user_roles);
     }
 
     public function profile(){

@@ -181,5 +181,20 @@ class Budget extends Model
        return $result;
        
     }
+
+    public function IncomeReportGenerate($event_id){
+        $query = 'SELECT CONCAT("INC",`record_id`) as record_id, income.amount, income.details, income.status, date(time_stamp) as date, registered_user.username FROM income INNER JOIN registered_user ON income.uid=registered_user.uid WHERE  event_id =:event_id UNION SELECT CONCAT("INC",`record_id`) as record_id, income.amount, income.details, income.status, date(time_stamp) as date, organization.username FROM income INNER JOIN organization ON income.uid=organization.uid WHERE  event_id =:event_id_1';       
+        $params = ["event_id" => $event_id, "event_id_1" => $event_id];
+        $result=Model::select($query,$params);
+       return $result;
+    }
+
+    public function ExpenseReportGenerate($event_id){
+        $query = 'SELECT CONCAT("EXP",`record_id`) as record_id, expense.amount, expense.details, expense.status, date(time_stamp) as date, registered_user.username FROM expense INNER JOIN registered_user ON expense.uid=registered_user.uid WHERE event_id =:event_id UNION SELECT CONCAT("EXP",`record_id`) as record_id, expense.amount, expense.details, expense.status, date(time_stamp) as date, organization.username FROM expense INNER JOIN organization ON expense.uid=organization.uid WHERE event_id =:event_id_1 ';       
+        $params = ["event_id" => $event_id, "event_id_1" => $event_id];
+        $result=Model::select($query,$params);
+       return $result;
+    }
 	
+   
 }

@@ -180,7 +180,7 @@
             <a class="btn margin-side-md <?php if ($page == "about") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=about&&event_id=<?= $_GET["event_id"] ?>">About</a>
             <a class="btn margin-side-md <?php if ($page == "gallery") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=gallery&&event_id=<?= $_GET["event_id"] ?>">Gallery</a>
             <a class="btn margin-side-md <?php if ($page == "forum") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=forum&&event_id=<?= $_GET["event_id"] ?>">Forum</a>
-            <a class="btn margin-side-md <?php if ($page == "feeeback") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=feedback&&event_id=<?= $_GET["event_id"] ?>">Feedback</a>
+            <a class="btn margin-side-md <?php if ($page == "feedback") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=feedback&&event_id=<?= $_GET["event_id"] ?>">Feedback</a>
             <?php if ($organization || $moderator) { ?>
                 <a class="btn margin-side-md <?php if ($page == "volunteers") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=volunteers&&event_id=<?= $_GET["event_id"] ?>">Volunteers</a>
                 <a class="btn margin-side-md <?php if ($page == "timeline") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=timeline&&event_id=<?= $_GET["event_id"] ?>">Work Timeline</a>
@@ -199,7 +199,7 @@
     if(isset($_GET["page"]) && $_GET["page"]=="about") require __DIR__ . "/aboutEvent.php";
     elseif(isset($_GET["page"]) && $_GET["page"]=="gallery") require __DIR__ .  "/eventGallery.php";
     elseif(isset($_GET["page"]) && $_GET["page"]=="forum") require __DIR__ . "/forum.php";
-    elseif(isset($_GET["page"]) && $_GET["page"]=="feedback") require __DIR__ . "";
+    elseif(isset($_GET["page"]) && $_GET["page"]=="feedback") require __DIR__ . "/feedback.php";
     elseif(isset($_GET["page"]) && $_GET["page"]=="budget") require __DIR__ . "/budgeting.php";
     elseif(isset($_GET["page"]) && $_GET["page"]=="userroles") require __DIR__ . "/roles.php";
     elseif(isset($_GET["page"]) && $_GET["page"]=="timeline") require __DIR__ . "/workTimeline.php";

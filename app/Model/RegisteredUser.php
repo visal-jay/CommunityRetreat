@@ -23,8 +23,8 @@ class RegisteredUser extends User
         $query = 'SELECT * FROM registered_user reg JOIN login ON reg.uid= login.uid WHERE reg.uid = :uid AND verified=1';
         $params = ["uid" => $uid];
         $result= User::select($query,$params);
-        if(count($result[0])>=1)
-
+        //var_dump($result);
+        if(count($result)==1)
             return $result[0];
         else
             return false;
@@ -108,7 +108,6 @@ class RegisteredUser extends User
         $encryption=new Encryption;
         $data["time"] = (int)shell_exec("date '+%s'");
         $parameters = ["key" => $encryption->encrypt(array_intersect_key($data, ["email" => '', "password" => '',"time"=>'']), 'email verificaition')];
-
         $mail=new Mail;
         
         $mail->verificationEmail($data["email"],"confirmationMail","localhost/signup/verifyemail?".http_build_query($parameters),'Signup');

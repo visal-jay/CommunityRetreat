@@ -47,6 +47,8 @@ class SignupController
         elseif(isset($_POST["signupUser"])){
             $registered_user->addRegisteredUser($_POST);
         }
+
+        Controller::redirect('/login/view',["signup_mail"=>true,"mail"=>true]);
     }
 
     function verifyEmail()
@@ -59,7 +61,6 @@ class SignupController
         $user = new User;
         $time = (int)shell_exec("date '+%s'");
         $user_details=$user->authenticate($data["email"], $data["password"],0);
-        
         if($data["time"]>$time-86400 && $user_details) {
             $user->setVerification($user_details["uid"]);
             LoginController::validate($data["email"],$data["password"]);

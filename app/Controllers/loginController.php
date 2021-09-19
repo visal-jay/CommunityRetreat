@@ -7,12 +7,13 @@ class LoginController
 
     function view()
     {
+        $user_roles=Controller::accessCheck(["guest_user"]);
         $_GET["signup"] = isset($_GET["signup"]) ? true : false;
         $_GET["login"] = $_GET["signup"] == true ? false : true;
         $_GET["signupOrg"] = isset($_GET["signupOrg"]) ? true : false;
         $_GET["signupUser"] = $_GET["signupOrg"] == true ? false : true;
         $_GET = array_merge(["passwordErr" => '', "emailErr" => '', "loginErr" => '',"telephoneErr"=>''], $_GET);
-        View::render("login");
+        View::render("login",[],$user_roles);
     }
 
     function forgotPassword()
@@ -23,10 +24,10 @@ class LoginController
                 $key = $user->getForgotPasswordKey($_POST["email"]);
                 $mail = new Mail;
                 $mail->verificationEmail($_POST["email"], "forgotPasswordMail", "localhost/login/validateforgotpassword?" . http_build_query(["key" => $key]), 'Reset password');
-                
+
             }
         }
-        Controller::redirect('/login/view');
+        Controller::redirect('/login/view',["forgot_password"=>true,"mail"=>true]);
     }
 
     function validateForgotPassword()
@@ -38,7 +39,7 @@ class LoginController
         $data = $encyption->decrypt($key, 'reset password');
         $time = (int)shell_exec("date '+%s'");
         $user = new User;
-        $user_details = $user->authenticate($data["email"], $data["password"]);
+        $user_details = $user->authenticate($data["email"], $data["password"],1,1);
         if ($user_details && $data["time"] > $time - 3600) {
             View::render("resetPassword",["key"=>$key]);
         } else
@@ -72,7 +73,7 @@ class LoginController
 
             if ($user_type == "organization")
                 Controller::redirect("/organisation/dashboard");
-            elseif ($user_type == "registered user")
+            elseif ($user_type == "registered_user")
                 Controller::redirect("/user/home");
             elseif ($user_type == "admin")
                 Controller::redirect("/view/organisationDashboard.php");

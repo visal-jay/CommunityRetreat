@@ -31,10 +31,10 @@ class BudgetController
         Controller::accessCheck(["organization","treasurer"]);
         $validate=new Validation;
         if(!$validate->currency($_POST["amount"]))
-             Controller::redirect("/event/view?page=budget&&event_id=" .$_POST["event_id"],["amountErr"=>"Inavlid amount"]);
+             Controller::redirect("/Event/view?page=budget&&event_id=" .$_POST["event_id"],["amountErr"=>"Inavlid amount"]);
 
         (new Budget)->addIncome($data);
-        Controller::redirect("/event/view",["page"=>'budget',"event_id"=> $_POST["event_id"]]);
+        Controller::redirect("/Event/view",["page"=>'budget',"event_id"=> $_POST["event_id"]]);
     }
 
     public function addExpense(){//add expenses to the budget
@@ -43,23 +43,23 @@ class BudgetController
         Controller::accessCheck(["organization","treasurer"]);
         $validate=new Validation;
         if(!$validate->currency($_POST["amount"]))
-             Controller::redirect("/event/view?page=budget&&event_id=" .$_POST["event_id"],["amountErr"=>"Inavlid amount"]);
+             Controller::redirect("/Event/view?page=budget&&event_id=" .$_POST["event_id"],["amountErr"=>"Inavlid amount"]);
      
         (new Budget)->addExpense($data);
-        Controller::redirect("/event/view",["page"=>'budget',"event_id"=> $_POST["event_id"]]);
+        Controller::redirect("/Event/view",["page"=>'budget',"event_id"=> $_POST["event_id"]]);
     }
 	
     public function update(){//update incomes and expenses
         $budget = new Budget();   
         $validate=new Validation;
         if(!$validate->currency($_POST["amount"]))
-             Controller::redirect("/event/view?page=budget&&event_id=" .$_POST["event_id"],["amountErr"=>"Inavlid amount"]);
+             Controller::redirect("/Event/view?page=budget&&event_id=" .$_POST["event_id"],["amountErr"=>"Inavlid amount"]);
         if (strpos($_POST["record_id"], 'INC') !== false) {
           $budget->updateIncome($_POST); 
         }else if(strpos($_POST["record_id"], 'EXP') !== false){
             $budget->updateExpense($_POST); 
         }
-        Controller::redirect("/event/view",["page"=>'budget',"event_id"=> $_POST["event_id"]]);
+        Controller::redirect("/Event/view",["page"=>'budget',"event_id"=> $_POST["event_id"]]);
      
     }
 
@@ -71,7 +71,7 @@ class BudgetController
         else if(strpos($_POST["record_id"], 'EXP') !== false){
             $budget->deleteExpense($_POST); 
         }
-        Controller::redirect("/event/view",["page"=>'budget',"event_id"=> $_POST["event_id"]]);
+        Controller::redirect("/Event/view",["page"=>'budget',"event_id"=> $_POST["event_id"]]);
 
     }
     

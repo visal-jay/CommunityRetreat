@@ -38,7 +38,7 @@
         left: 0;
         right: 0;
         margin: auto;
-        max-height: 300px;
+        max-height: 340px;
         min-height: 100px;
         background-color: gray;
         overflow: hidden;
@@ -153,12 +153,15 @@
         resize: none;
     }
 
-    iframe{
+    iframe {
         width: 100%;
         height: 100%;
     }
 
-    @media screen and (max-width:767px) {
+    @media screen and (max-width:800px) {
+        .cover-place-holder {
+            min-width: 80%;
+        }
         h1 {
             font-size: 1.5rem;
         }
@@ -182,30 +185,9 @@
 <?php include "nav.php"; ?>
 
 <body>
-    <?php
-    //$_SESSION["user"]["user_type"] = "organization";
-
-   /*  if (!isset($moderator)) $moderator = false;
-    if (!isset($treasurer)) $treasurer = false;
-    $organization = $admin = $registered_user = $guest_user = false;
-
-    if (isset($_SESSION["user"]["user_type"])) {
-        if ($_SESSION["user"]["user_type"] == "organization") {
-            $registered_user = true;
-        }
-        if ($_SESSION["user"]["user_type"] == "admin") {
-            $$admin = true;
-        }
-        if ($_SESSION["user"]["user_type"] == "registered_user") {
-            $registered_user = true;
-        }
-    } else {
-        $guest_user = true;
-    } */
-    ?>
 
     <?php if ($organization) { ?>
-        <form action="/organisation/update" method="post" enctype="multipart/form-data">
+        <form action="/Organisation/update" method="post" enctype="multipart/form-data">
         <?php } ?>
         <div class="photo-container">
             <div class="cover-place-holder cover border-round">
@@ -244,7 +226,7 @@
 
         <?php } ?>
 
-        <div class="flex-col flex-center" >
+        <div class="flex-col flex-center">
             <div class="info" id="about">
                 <div class="flex-row flex-center">
                     <div class="data">
@@ -325,6 +307,14 @@
     <?php } ?>
 
     function resizeProfile() {
+        if (CSS.supports("( aspect-ratio: 1/1 )") == false) {
+            document.querySelector(".cover-place-holder").style.width = (document.querySelector(".photo-container").offsetWidth)*0.6 + "px";
+            var cover_width = (document.querySelector(".cover").offsetWidth);
+            document.querySelector(".cover-place-holder").style.height = parseInt(cover_width) * 2 / 5 + "px";
+            console.log(document.querySelector(".profile-pic").style.height);
+            document.querySelector(".profile-pic").style.height = document.querySelector(".profile-pic").offsetWidth + "px";
+        }
+
         var coverHeight = (document.querySelector(".cover").offsetHeight);
         document.querySelector(".profile-pic").style.top = coverHeight + "px";
         var profileHeight = (document.querySelector(".profile-pic").offsetHeight);
@@ -398,17 +388,17 @@
     function page(page) {
         var children = document.querySelector(".nav-secondary-bar").children;
         console.log(children);
-        for (i= 0; i < children.length; i++) {
+        for (i = 0; i < children.length; i++) {
             children[i].classList.remove("active");
         }
         document.getElementById("about").classList.add("hidden");
         document.getElementById("gallery").classList.add("hidden");
         document.getElementById("events").classList.add("hidden");
 
-        
+
         //document.getElementById(page).classList.add("active");
         document.getElementById(page).classList.toggle("hidden");
-    
+
     }
 </script>
 

@@ -24,7 +24,7 @@
 </body>
 <script>
      setTimeout(function(){
-            window.location.href = '/event/view?page=about&&event_id=<?= $_GET["event_id"] ?>';
+            window.location.href = '/Event/view?page=about&&event_id=<?= $_GET["event_id"] ?>';
          }, 5000);
 </script>
 </html>

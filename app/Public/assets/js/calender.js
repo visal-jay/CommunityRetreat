@@ -246,7 +246,7 @@ function renderEvents(){
 
     $.ajax({
         async:false,
-        url: "/Calendar/getCalendarDetails",
+        url: "ajax/Calendar/getCalendarDetails",
         type: "post",
         success : function(result){
 

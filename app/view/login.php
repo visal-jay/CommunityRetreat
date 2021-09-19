@@ -266,7 +266,7 @@
                 } else
 
                     $.ajax({
-                        url: "/Signup/checkEmailAvailable", //the page containing php script
+                        url: "ajax/Signup/checkEmailAvailable", //the page containing php script
                         type: "post", //request type,
                         dataType: 'json',
                         data: {

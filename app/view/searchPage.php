@@ -394,7 +394,7 @@
         
 
         $.ajax({
-            url: "/Search/searchAll", //the page containing php script
+            url: "ajax/Search/searchAll", //the page containing php script
             type: "post", //request type,
             dataType: 'json',
             data: {
@@ -466,7 +466,7 @@
 
     function orgSearch(name) {
         $.ajax({
-            url: "/Search/searchOrganisation", //the page containing php script
+            url: "ajax/Search/searchOrganisation", //the page containing php script
             type: "post", //request type,
             dataType: 'json',
             data: {
@@ -560,7 +560,7 @@
         var way = document.getElementById("way").value == "Sort" ? "" : document.getElementById("way").value;
         hideMarkers();
         $.ajax({
-            url: "/Search/searchAll", //the page containing php script
+            url: "ajax/Search/searchAll", //the page containing php script
             type: "post", //request type,
             dataType: 'json',
             data: {

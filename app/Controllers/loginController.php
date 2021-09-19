@@ -12,11 +12,11 @@ class LoginController
             if ($user_type == "organization")
                 Controller::redirect("/Organisation/dashboard");
             elseif ($user_type == "registered_user")
-                Controller::redirect("/user/home");
+                Controller::redirect("/User/home");
             elseif ($user_type == "admin")
                 Controller::redirect("/view/organisationDashboard.php");
         }
-        
+
         $user_roles=Controller::accessCheck(["guest_user"]);
         $_GET["signup"] = isset($_GET["signup"]) ? true : false;
         $_GET["login"] = $_GET["signup"] == true ? false : true;
@@ -37,13 +37,13 @@ class LoginController
 
             }
         }
-        Controller::redirect('/login/view',["forgot_password"=>true,"mail"=>true]);
+        Controller::redirect('/Login/view',["forgot_password"=>true,"mail"=>true]);
     }
 
     function validateForgotPassword()
     {
         if(!isset($_GET["key"]))
-            Controller::redirect('/login/view');
+            Controller::redirect('/Login/view');
         $key = $_GET["key"];
         $encyption = new Encryption;
         $data = $encyption->decrypt($key, 'reset password');
@@ -53,13 +53,13 @@ class LoginController
         if ($user_details && $data["time"] > $time - 3600) {
             View::render("resetPassword",["key"=>$key]);
         } else
-            Controller::redirect('/login/view');
+            Controller::redirect('/Login/view');
     }
 
     function resetPassword()
     {
         if(!isset($_GET["key"]))
-            Controller::redirect('/login/view');
+            Controller::redirect('/Login/view');
         $key = $_GET["key"];
         $encyption = new Encryption;
         $data = $encyption->decrypt($key, 'reset password');
@@ -84,7 +84,7 @@ class LoginController
             if ($user_type == "organization")
                 Controller::redirect("/Organisation/dashboard");
             elseif ($user_type == "registered_user")
-                Controller::redirect("/user/home");
+                Controller::redirect("/User/home");
             elseif ($user_type == "admin")
                 Controller::redirect("/view/organisationDashboard.php");
         } 
@@ -94,7 +94,7 @@ class LoginController
     public function logout(){
         if(!isset($_SESSION)) session_start();
         session_destroy();
-        Controller::redirect('/login/view');
+        Controller::redirect('/Login/view');
     }
 
     private function loginFailed($email)

@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/Public/assets/newstyles.css">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="/Libararies/qrcode/qrcode.js"></script>
+    <script src="/Libararies/qrcode/qrcode.min.js"></script>
     <title>Details of Volunteers</title>
 </head>
 
@@ -213,28 +216,6 @@
     }
 </style>
 
-
-<?php
-if (!isset($moderator)) $moderator = false;
-if (!isset($treasurer)) $treasurer = false;
-$organization = $admin = $registered_user = $guest_user = false;
-
-if (isset($_SESSION["user"]["user_type"])) {
-    if ($_SESSION["user"]["user_type"] == "organization") {
-        $organization = true;
-    }
-
-    if ($_SESSION["user"]["user_type"] == "admin") {
-        $admin = true;
-    }
-
-    if ($_SESSION["user"]["user_type"] == "registered_user") {
-        $registered_user = true;
-    }
-} else {
-    $guest_user = true;
-}
-?>
 
 
 <body>

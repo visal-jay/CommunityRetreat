@@ -171,13 +171,13 @@
 
 
 <body>
-    <div id="background">
+    <div id="background" style="width: 100%;">
         <?php if ($organization || $moderator) { ?>
             <div class="flex-col flex-center margin-side-lg">
                 <button class="btn btn-solid btn-close margin-lg" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')">Add Announcement &nbsp; <i class="fas fa-plus"></i></button>
             </div>
         <?php } ?>
-        <div class="flex-col flex-center">
+        <div class="flex-col flex-center" style="width: 100%;">
             <?php foreach ($announcements as $announcement) { ?>
                 <div class="card-container margin-md">
                     <div class="event-card-details">
@@ -190,7 +190,7 @@
                             <button class="btn clr-red border-red " onclick="remove()" required style="font-family:Ubuntu, sans-serif,  FontAwesome"> &#xf2ed; &nbsp;Remove </button>
                             <div class="flex-row flex-space" style="display: none;">
                                 <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
-                                <form method="post" action="/event/deleteAnnouncement?event_id=<?= $_GET["event_id"] ?>" class="flex-row flex-center">
+                                <form method="post" action="/Event/deleteAnnouncement?event_id=<?= $_GET["event_id"] ?>" class="flex-row flex-center">
                                     <input name="announcement_id" class="hidden" value="<?= $announcement["announcement_id"] ?>">
                                     <button class="btn-icon flex-row flex-center"><i type="submit" class="fas fa-check clr-green margin-side-md"></i>&nbsp;</button>
                                 </form>
@@ -207,7 +207,7 @@
     <?php if ($organization || $moderator) { ?>
         <div class="popup" id="form">
             <div class="content">
-                <form action="/event/addAnnouncement?event_id=<?= $_GET["event_id"] ?>" method="post" class="form-container">
+                <form action="/Event/addAnnouncement?event_id=<?= $_GET["event_id"] ?>" method="post" class="form-container">
                     <div>
                         <h3 class="margin-md">New Announcement</h3>
                     </div>
@@ -235,7 +235,7 @@
     <?php if ($organization || $moderator) { ?>
         <div class="popup" id="edit-form">
             <div class="content">
-                <form action="/event/editAnnouncement?event_id=<?= $_GET["event_id"] ?>" method="post" class="form-container">
+                <form action="/Event/editAnnouncement?event_id=<?= $_GET["event_id"] ?>" method="post" class="form-container">
 
                     <div class="form-item">
                         <label>Title</label>

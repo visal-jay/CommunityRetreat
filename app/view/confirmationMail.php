@@ -49,16 +49,16 @@
                                 <td style="border:none;border-radius:3px;color:white;padding:15px 19px" align="center" valign="middle" bgcolor="#16c79a">
                                   <a href="<?= $url ?>" style="text-decoration:none;line-height:100%;background:#16c79a;color:white;font-family:Ubuntu,Helvetica,Arial,sans-serif;font-size:15px;font-weight:normal;text-transform:none;margin:0px">
                                     Verify email
-                                  </a><
-                                /td>
+                                  </a>
+                                  </td>
                               </tr>
                             </tbody>
                           </table>
                         </td>
                       </tr>
                       <tr>
-                        <td style="word-break:break-word;font-size:0px;padding:30px 0px">
-                          <p style="font-size:1px;margin:0px auto;border-top:1px solid #dcddde;width:100%"></p>
+                        <td style="word-break:break-word;font-size:0px;padding:30px 0px"  align="center">
+                          <p style="font-size:15px;margin:0px auto;border-top:1px solid #dcddde;padding:5px;width:100%;color:#4f545c;font-family:Ubuntu,Helvetica,Arial,sans-serif;">This link will expire after 24 hours</p>
                         </td>
                       </tr>
                     </tbody>

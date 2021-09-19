@@ -112,7 +112,7 @@
         <h1>Gallery</h1>
         <?php if($moderator || $organization || $registered_user) { ?>
         <button class="btn btn-solid margin-lg" onclick="addPhoto()">Add photo &nbsp; <i class="fas fa-plus"></i></button>
-        <form class="form flex-col flex-center" action="/event/addPhoto?event_id=<?= $_GET["event_id"] ?>" method="post" enctype="multipart/form-data">
+        <form class="form flex-col flex-center" action="/Event/addPhoto?event_id=<?= $_GET["event_id"] ?>" method="post" enctype="multipart/form-data">
             <label for="myfile">Select a file:</label>
             <input type="file" class="form-ctrl margin-md" id="myfile" name="photo">
             <button type="submit" class="btn ">Save</button>
@@ -124,7 +124,7 @@
                 <figure class="item bg-green">
                     <div class="content">
                         <?php if (isset($_SESSION["user"]) && $photo["uid"] == $_SESSION["user"]["uid"]) { ?>
-                            <form class="delete-button" method="post" action ="/event/deletePhoto?event_id=<?= $_GET["event_id"]?>">
+                            <form class="delete-button" method="post" action ="/Event/deletePhoto?event_id=<?= $_GET["event_id"]?>">
                                 <button type="submit" class="btn-icon" name = "photo" value="<?= $photo["image"] ?>" > <i class="far fa-trash-alt"></i></button>
                             </form>
                         <?php  } ?>

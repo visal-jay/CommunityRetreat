@@ -273,7 +273,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
             <div class=" card-container">
                 <p>Donations</p>
                 <p><?= $donation_sum ?></p>
-                <div class="flex-row"></div>
+                <div class="flex-row" style="width:155px"></div>
             </div>
             <?php foreach($incomes as $income){ ?>
             <div class=" card-container">

@@ -36,7 +36,7 @@ class SignupController
                 $data["signupUser"] = true;
             elseif (isset($_POST["signupOrg"]))
                 $data["signupOrg"] = true;
-            Controller::redirect("/login/view", $data);
+            Controller::redirect("/Login/view", $data);
         }
 
         if (isset($_POST["signupOrg"])) {
@@ -47,25 +47,26 @@ class SignupController
         elseif(isset($_POST["signupUser"])){
             $registered_user->addRegisteredUser($_POST);
         }
+
+        Controller::redirect("/Login/view",["signup_mail"=>true,"mail"=>true]);
     }
 
     function verifyEmail()
     {
         if(!isset($_GET["key"]))
-            Controller::redirect('/login/view');
+            Controller::redirect("/Login/view");
         $key = $_GET["key"];
         $encyption = new Encryption;
         $data = $encyption->decrypt($key, 'email verificaition');
         $user = new User;
         $time = (int)shell_exec("date '+%s'");
         $user_details=$user->authenticate($data["email"], $data["password"],0);
-        
         if($data["time"]>$time-86400 && $user_details) {
             $user->setVerification($user_details["uid"]);
             LoginController::validate($data["email"],$data["password"]);
         }
         else
-            Controller::redirect('/login/view');
+            Controller::redirect("/Login/view");
     }
 
     function checkEmailAvailable(){

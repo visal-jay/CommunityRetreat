@@ -3,8 +3,8 @@
 class SearchController {
 
     function view() {
-        
-        View::render("searchPage");
+        $user_roles=Controller::accessCheck(["guest_user","registered_user"]);
+        View::render("searchPage",[],$user_roles);
     }
 
     public function searchAll(){
@@ -32,6 +32,29 @@ class SearchController {
                 //var_dump($event_details);
 
         echo json_encode($event_details,JSON_INVALID_UTF8_IGNORE);
+    }
+    
+    public function searchOrganisation()
+    {
+        foreach ($_POST as $key => $value){
+            $_POST[$key]=trim($_POST[$key]);
+            if($_POST[$key]=="")
+                unset ($_POST[$key]);
+        }
+
+        $org_model= new Organisation;
+        $organisations=$org_model->query($_POST);
+
+        $organisation_details=array();
+        if($organisations!=false)
+            foreach($organisations as $organisation){
+                if($org = $org_model->getDetails($organisation["uid"])){
+                $details=array_merge($org,$organisation);
+                array_push($organisation_details,$details);
+                }
+            }   
+
+        echo json_encode($organisation_details,JSON_INVALID_UTF8_IGNORE);
     }
 
 }

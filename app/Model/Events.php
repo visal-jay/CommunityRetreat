@@ -107,9 +107,6 @@ class Events extends Model
             $params["latitude"] = $latitude;
             $params["longitude"] = $longitude;
             $params["latitude2"] = $latitude;
-            if ($distance == NULL && $city != NULL)
-                $distance = 10;
-            //$query=$query . " distance =distance AND ";
         } else
             $query = $query . $query_table;
 
@@ -120,8 +117,18 @@ class Events extends Model
 
 
         if ($start_date != NULL) {
-            $query = $query . $query_filter_date;
-            $params["start_date"] = $start_date;
+            $date_query="(";
+            $dates=explode(",",$start_date);
+            for($i=0;$i<count($dates);$i++){
+                $date_query=$date_query." start_date= :start_date$i";
+                if($i+1<count($dates))
+                    $date_query=$date_query." OR ";
+                $params["start_date$i"]=$dates[$i];
+            }
+            $date_query=$date_query." ) AND ";
+            $query=$query.$date_query;
+            /* $query = $query . $query_filter_date;
+            $params["start_date"] = $start_date; */
         }
 
         if ($name != NULL) {
@@ -155,9 +162,9 @@ class Events extends Model
 
         $query = $query . $query_filter_last . " HAVING ";
 
-        if ($longitude != NULL && $latitude != NULL && $order_type == "distance") {
+        /* if ($longitude != NULL && $latitude != NULL && $order_type == "distance") {
             $query = $query . $query_filter_distance;
-        }
+        } */
 
         if ($longitude != NULL && $latitude != NULL && $distance != NULL) {
             $query = $query . $query_filter_near;
@@ -183,7 +190,7 @@ class Events extends Model
             $params["limit"] = $limit;
         }
 
-        /*  var_dump($query);
+        /* var_dump($query);
         var_dump($params); */
         $result = Model::select($query, $params);
 

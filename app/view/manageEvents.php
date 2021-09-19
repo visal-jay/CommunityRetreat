@@ -133,7 +133,7 @@
         <?php if($organization) { ?>
         <button class="btn btn-solid margin-lg" onclick="addEvent()">Add Event &nbsp; <i class="fas fa-plus"></i></button>
         <div class="form">
-            <form class="form-item" method="post" action="/event/addEvent">
+            <form class="form-item" method="post" action="/Event/addEvent">
                 <label>Event name</label>
                 <input type="text" name="event_name" class="form-ctrl" placeholder=" Enter Event Name" required style="font-family:Arial, FontAwesome" />
                 <label>Description</label>
@@ -176,7 +176,7 @@
         <div class="events">
             <?php foreach ($events as $event) { ?>
                 <div class="card-container margin-md">
-                    <a class="event-link" href="/event/view?page=about&&event_id=<?= $event["event_id"] ?>">
+                    <a class="event-link" href="/Event/view?page=about&&event_id=<?= $event["event_id"] ?>">
                         <h3 class="heading"><?= $event["event_name"] ?></h3>
                     </a>
                     <div class="event-card-details margin-md">
@@ -198,7 +198,7 @@
                             <button class="btn btn-solid bg-red border-red" onclick="remove()">Remove</button>
                             <div class="flex-row flex-space " style="display: none; padding-top:1rem;">
                                 <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
-                                <form method="post" action="/event/remove" class="flex-row flex-center">
+                                <form method="post" action="/Event/remove" class="flex-row flex-center">
                                     <input name="event_id" class="hidden" value="<?= $event["event_id"] ?>">
                                     <button class="btn-icon flex-row flex-center"><i type="submit" class="fas fa-check clr-green margin-side-md"></i>&nbsp;</button>
                                 </form>

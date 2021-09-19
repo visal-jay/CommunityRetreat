@@ -290,7 +290,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
 
             <div class="bold sum donation-sum-container">
                 <div>Sum of Donations:</div>
-                <div><?= $donation_sum ?></div>
+                <div> <?php echo 'Rs. ' .number_format($donation_sum, 3) ?> </div>
             </div>
 
             <div>
@@ -310,7 +310,8 @@ if(isset($_SESSION ["user"] ["user_type"])){
                         <tr>
                             <td class=" scroll"><?= $donation["username"] ?></td>
                             <td><?= $donation["date"] ?></td>
-                            <td class="amount"><?= $donation["amount"] ?></td>
+                            <td class="amount">
+                                <?php echo 'Rs. ' .number_format($donation["amount"], 3)?></td>
                         </tr>
                         <?php } ?>
                     </tbody>

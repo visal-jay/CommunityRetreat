@@ -141,6 +141,13 @@ new Chart("myChart", {
                     max: 1000
                 }
             }],
+            xAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Month',
+                },
+
+            }]
         }
     }
 });
@@ -180,6 +187,13 @@ new Chart("myChart1", {
                     max: 20
                 }
             }],
+            xAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Month',
+                },
+
+            }]
         }
     }
 });

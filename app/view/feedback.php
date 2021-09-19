@@ -197,7 +197,6 @@
     }
 
     .container {
-        display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
@@ -263,25 +262,29 @@
         <p class="margin-md"><?= $avg_rate ?> average based on <?= $total ?> reviews.</p>
         <hr class="margin-lg" style="border:3px solid #f1f1f1">
 
-        <?php foreach ($feedbacks as $feedback) { ?>
-            <div class="card-container margin-md">
-                <span class="heading margin-md">Feedbacks</span>
-                <div class="flex-col flex-center margin-md event-card-details">
-                    <h3 class="margin-md"><?= $feedback["username"] ?></h3>
-                    <date><?= $feedback["time_stamp"] ?></date>
-                    <div class="margin-md">
-                        <?php for ($i = 1; $i < 6; $i++) {
-                            if ($i <= $feedback["rate"]) { ?>
-                                <span class="fas fa-star fa-sm checked"></span>
-                            <?php } else { ?>
-                                <span class="fas fa-star fa-sm"></span>
-                        <?php }
-                        } ?>
+        <div>
+            <span class="heading margin-md">Feedbacks</span>
+            <?php foreach ($feedbacks as $feedback) { ?>
+                <div class="flex-col flex-center" style="width: 100%;">
+                <div class="card-container margin-md">
+                    <div class="flex-col flex-center margin-md event-card-details">
+                        <h3 class="margin-md"><?= $feedback["username"] ?></h3>
+                        <date><?= $feedback["time_stamp"] ?></date>
+                        <div class="margin-md">
+                            <?php for ($i = 1; $i < 6; $i++) {
+                                if ($i <= $feedback["rate"]) { ?>
+                                    <span class="fas fa-star fa-sm checked"></span>
+                                <?php } else { ?>
+                                    <span class="fas fa-star fa-sm"></span>
+                            <?php }
+                            } ?>
+                        </div>
+                        <description class="margin-md"><?= $feedback["feedback"] ?></description>
                     </div>
-                    <description class="margin-md"><?= $feedback["feedback"] ?></description>
                 </div>
-            </div>
-        <?php } ?>
+                </div>
+            <?php } ?>
+        </div>
 
     </div>
 

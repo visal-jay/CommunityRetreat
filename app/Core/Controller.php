@@ -34,7 +34,7 @@ class Controller
                     foreach ($result as $event)
                         array_push($user_events, $event["event_id"]);
                 if (!in_array($event_id,$user_events))
-                    Controller::redirect("/organisation/events");
+                    Controller::redirect("/Organisation/events");
             }
         }
         elseif(in_array("guest_user", $userroles))

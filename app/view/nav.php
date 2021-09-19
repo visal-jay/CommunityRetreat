@@ -90,12 +90,12 @@
     });
 
     function nearme() {
-        let link = "/search/view?distance=20";
+        let link = "/Search/view?distance=20";
         location.href = link;
     }
 
     function navSearch() {
-        let link = "/search/view?" + "search=" + document.getElementById('nav-search').value;
+        let link = "/Search/view?" + "search=" + document.getElementById('nav-search').value;
         location.href = link;
     }
 

@@ -208,28 +208,6 @@
     }
 </style>
 
-<?php
-
-/* if (!isset($moderator)) $moderator = false;
-if (!isset($treasurer)) $treasurer = false;
-$organization = $admin = $registered_user = $guest_user = false;
-
-if (isset($_SESSION["user"]["user_type"])) {
-    if ($_SESSION["user"]["user_type"] == "organization") {
-        $organization = true;
-    }
-    if ($_SESSION["user"]["user_type"] == "admin") {
-        $$admin = true;
-    }
-    if ($_SESSION["user"]["user_type"] == "registered_user") {
-        $registered_user = true;
-    }
-} else {
-    $guest_user = true;
-} */
-?>
-
-
 
 <body>
     <div id="background">
@@ -356,17 +334,17 @@ if (isset($_SESSION["user"]["user_type"])) {
             <?php if ($volunteer_status == 1) { ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d">
                     <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
-                    <div class="progress" data-width="<?php if ($volunteer_percent == NULL) echo "0"; else $volunteer_percent ?>%">
+                    <div class="progress" data-width="<?php if ($volunteer_percent == NULL) echo "0";else $volunteer_percent ?>%">
                         <div class="volunteers-progress-bar"></div>
                     </div>
-                    <button class="btn clr-green margin-md"><i class="fas fa-user-friends"></i>&nbsp;I want tovolunteer</button>
+                    <button class="btn clr-green margin-md"><i class="fas fa-user-friends"></i>&nbsp;I want to volunteer</button>
                 </div>
             <?php } ?>
 
             <?php if ($donation_status == 1) { ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d; text-align:center">
                     <p style="color:white">Would you like to give value to your hard-earned money by contributing to this community service project?</p>
-                    <div class="progress" data-width="<?php if ($dotaion_percent == NULL) echo "0";else $dotaion_percent ?>%">
+                    <div class="progress" data-width="<?php if ($donation_percent == NULL) echo "0";else $dotaion_percent ?>%">
                         <div class="donaters-progress-bar"></div>
                     </div>
                     <button class="btn clr-green margin-md" onclick="togglePopup('form'); blur_background('background');stillBackground('id1')"><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
@@ -379,8 +357,8 @@ if (isset($_SESSION["user"]["user_type"])) {
                     <button type="button" class="btn btn-solid bg-red border-red form margin-side-md hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
                     <button name="event_id" value="<?= $_GET["event_id"] ?>" form="update-form" type="submit" class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
                     <?php if ($status == "added") { ?>
-                        <input type="text" value="published" name="status" form="update-form" class="hidden">
-                        <button id="publish-btn" class="btn margin-lg" onclick="publish(); togglePopup('publish'); blur_background('background'); stillBackground('id1')">Publish</button>
+                        <input type="text" value="published" form="update-form" class="hidden" id="publish-input">
+                        <button type="button" id="publish-btn" class="btn margin-lg" onclick="publish(); togglePopup('publish'); blur_background('background'); stillBackground('id1')">Publish</button>
                     <?php } ?>
                 </div>
             <?php } ?>
@@ -442,6 +420,7 @@ if (isset($_SESSION["user"]["user_type"])) {
 
 </body>
 
+<?php include "footer.php" ?>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
 
@@ -449,6 +428,7 @@ if (isset($_SESSION["user"]["user_type"])) {
     <?php if ($organization || $moderator) { ?>
 
         function publish() {
+            document.getElementById("publish-input").name = "status";
             setTimeout(function() {
                 document.getElementById("update-form").submit()
             }, 2000);

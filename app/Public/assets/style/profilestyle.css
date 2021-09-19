@@ -17,13 +17,11 @@
   }
 
 .profilecontainer{
-    height: 100%;
+    min-height: max-content;
     width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
-  
-   
 
 }
 
@@ -435,7 +433,7 @@ hr{
     box-sizing: border-box;
 }
 
-.password-edit-container input[type=password]:focus{
+.update-form input[type=password]:focus{
     box-shadow: 0px 0px 0px 1px #16c79a;
     border-color: #16c79a;
 }
@@ -459,6 +457,9 @@ hr{
     font-size: 15px;
     color: red;
     text-align: center;
+}
+.green-alert{
+    color: rgb(0, 255, 76);
 }
 @media screen and (max-width: 600px) {
     .profilecontainer{
@@ -525,4 +526,9 @@ hr{
 
         font-size: 0.7rem; 
     }
+}
+.footer {
+  
+    display: block;
+ 
 }

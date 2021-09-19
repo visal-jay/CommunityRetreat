@@ -182,6 +182,9 @@
         </div>
     </div>
 </body>
+
+<?php include "footer.php"?>
+
 <script>
     function addPhoto() {
         document.querySelector(".form").classList.toggle("show-form");

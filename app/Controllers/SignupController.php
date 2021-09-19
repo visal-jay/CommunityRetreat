@@ -61,7 +61,6 @@ class SignupController
         $user = new User;
         $time = (int)shell_exec("date '+%s'");
         $user_details=$user->authenticate($data["email"], $data["password"],0);
-        
         if($data["time"]>$time-86400 && $user_details) {
             $user->setVerification($user_details["uid"]);
             LoginController::validate($data["email"],$data["password"]);

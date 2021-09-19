@@ -3,8 +3,8 @@
 class SearchController {
 
     function view() {
-        
-        View::render("searchPage");
+        $user_roles=Controller::accessCheck(["guest_user"]);
+        View::render("searchPage",[],$user_roles);
     }
 
     public function searchAll(){

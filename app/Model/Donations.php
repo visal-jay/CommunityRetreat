@@ -2,6 +2,7 @@
 
 class Donations extends Model{
 
+    
     public function getReport($data){
         $query="SELECT SUM(amount) as donation_sum ,date_format(time_stamp,'%x-%m-%d') as day FROM donation WHERE event_id = :event_id GROUP BY day ORDER BY day ASC";
         $params=["event_id"=>$data["event_id"]];
@@ -18,6 +19,7 @@ class Donations extends Model{
         $params = ["event_id" => $event_id];
         $result=Model::select($query,$params);
        return $result;
+       
     }
 
     public function disableDonation($event_id){//disable donations for an event
@@ -38,5 +40,21 @@ class Donations extends Model{
         $query = 'UPDATE event SET donation_capacity=:donation_capacity WHERE event_id =:event_id';
         $params = ["event_id" => $event_id, "donation_capacity" => $donation_capacity];
         Model::insert($query,$params);
+    }
+
+    public function getDonationSum($event_id){
+        $query= 'SELECT SUM(amount) as donation_sum FROM donation WHERE event_id =:event_id';
+        $params = ["event_id" => $event_id];
+        $result=Model::select($query,$params);
+        $result = ($result[0]["donation_sum"]==NULL)?0 : $result[0]["donation_sum"];
+       return $result;
+       
+    }
+
+    public function donationReportGenerate($event_id){
+        $query = 'SELECT donation.amount, donation.contact_no, date(time_stamp) as date, registered_user.username FROM donation LEFT JOIN registered_user ON donation.uid=registered_user.uid WHERE event_id =:event_id'; 
+        $params = ["event_id" => $event_id];
+        $result=Model::select($query,$params);
+       return $result;
     }
 }

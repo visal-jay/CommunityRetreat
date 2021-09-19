@@ -7,12 +7,13 @@ class LoginController
 
     function view()
     {
+        $user_roles=Controller::accessCheck(["guest_user"]);
         $_GET["signup"] = isset($_GET["signup"]) ? true : false;
         $_GET["login"] = $_GET["signup"] == true ? false : true;
         $_GET["signupOrg"] = isset($_GET["signupOrg"]) ? true : false;
         $_GET["signupUser"] = $_GET["signupOrg"] == true ? false : true;
         $_GET = array_merge(["passwordErr" => '', "emailErr" => '', "loginErr" => '',"telephoneErr"=>''], $_GET);
-        View::render("login");
+        View::render("login",[],$user_roles);
     }
 
     function forgotPassword()

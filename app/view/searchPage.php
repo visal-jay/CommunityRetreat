@@ -133,7 +133,6 @@
         width: 100%;
         justify-content: center;
         gap: 2rem;
-        z-index: -1;
     }
 
     figure {
@@ -341,6 +340,7 @@
     function calendarShow(){
         document.getElementById('search-input-calendar').classList.toggle('hidden');
         document.getElementById("map-container").classList.toggle('map-index');
+        document.querySelector('.grid').classList.toggle('map-index');
     }
     const debounce = (func, delay) => {
         let debounceTimer

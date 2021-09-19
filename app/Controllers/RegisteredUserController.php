@@ -3,12 +3,20 @@
 class RegisteredUserController {
 
     public function view(){
+            $user_roles=Controller::accessCheck(["registered_user"]);
             $registered_user=new RegisteredUser();
-            if(!isset($_SESSION)) 
-                session_start();
             $uid=$_SESSION["user"]["uid"];
             $reguser_details=$registered_user->getDetails($uid); 
-            View::render('profile',$reguser_details);
+            View::render('profile',$reguser_details,$user_roles);
+    }
+
+    public function updateProfilePic(){
+        var_dump($_FILES['profile_pic']);
+        $registered_user=new RegisteredUser();
+        $uid=$_SESSION["user"]["uid"];
+        $data=["uid"=>$uid,"profile_pic"=>$_FILES['profile_pic']];
+        $registered_user->changeProfilePic($data); 
+
     }
 
     public function updateUsername(){

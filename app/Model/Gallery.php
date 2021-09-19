@@ -4,7 +4,7 @@ class Gallery extends Model{
 
     public function getGallery($data,$organisation=false){
         if($organisation)
-            $query ="SELECT * FROM organisation_gallery WHERE uid = :uid";
+            $query ="SELECT * FROM organization_gallery WHERE uid = :uid";
         else
             $query ="SELECT * FROM add_photo WHERE event_id = :event_id";
 

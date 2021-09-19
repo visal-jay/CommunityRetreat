@@ -16,16 +16,20 @@
 
 </head>
 
-<body>
-    <?php include "nav.php" ?>
+<body class="body">
+
+<?php include "nav.php" ?>
+
+
+    <!-- profile container division -->
     <div class="profilecontainer">
         <div class="profilecontainer-top">
-            <div class="profilepic-pic-div">
-                <img src="../Public/assets/User-icon.png" id="dp">
-                <input type="file" id="file">
+            <form action="/RegisteredUser/updateProfilePic" method="post" class="profilepic-pic-div">
+                <img src="<?= $profile_pic ?>" id="dp">
+                <input type="file" id="file" name="profile_pic">
                 <label for="file" id="uploadbtn">upload photo</label>
 
-            </div>
+            </form>
 
             <div class="aboutme-container">
                 <div class="intro">
@@ -37,17 +41,10 @@
             </div>
 
 
-
-
-
             <div class="details-settings">
                 <h2>Details</h2>
                 <hr>
-
                 <div class="details">
-
-
-
                     <div class="username-container">
                         <div class="username-icon">
                             <i class="fa fa-user-circle fa-2x clr-gray" id="user"></i>
@@ -204,7 +201,7 @@
                                 <label for="password" class="form-item label">Confirm password:</label>
                                 <input type="password" placeholder="Enter confirm password" id="confirm-password" name="password" onkeyup="passwordMatch(this.value)"><br>
 
-                                <p class="green-alert confirm-password-error" style="color: #16c79a; text-align:center;"></p>
+                                <p class="alert" id="confirm-password-error"></p>
 
 
                                 <div class="intro-update-btn">
@@ -235,8 +232,12 @@
 
     </div>
 
+    <?php include "footer.php"; ?>
 
-    <script src="../Public/assets/js/app.js"></script>
+
+
+
+    <script src="../Public/assets/js/reguserProfilePic.js"></script>
 
     <script>
         <?php if (isset($_GET["invaliderr"])) echo "showEddite('emailupdater');" ?>
@@ -343,19 +344,22 @@
 
             const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
             let new_password = document.getElementById('new-password');
-            //let confirm_password = document.getElementById('confirm-password');
-            let alert = document.querySelector(".confirm-password-error");
+            let alert = document.getElementById("confirm-password-error");
 
             console.log(new_password.value);
             console.log(confirm_password);
             if (new_password.value == confirm_password && pattern.test(new_password.value)) {
 
                 alert.innerText = "Password matched";
+                alert.style.color = "green";
                 document.querySelector('.password-submit-btn').disabled = false;
 
             } else {
-                document.querySelector('.password-submit-btn').disabled = true;
-                alert.innerText = "";
+                document.querySelector('.password-submit-btn ').disabled = true;
+                alert.innerText = "Still not matched with new passowrd";
+                alert.style.color = "red";
+
+
 
 
             }
@@ -363,6 +367,8 @@
 
         }
     </script>
+
 </body>
+
 
 </html>

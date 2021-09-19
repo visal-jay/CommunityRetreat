@@ -29,6 +29,19 @@ class RegisteredUser extends User
         else
             return false;
     }
+
+    public function changeProfilePic($data){
+
+        if($data['profile_pic']['size']!==NULL){
+            $time= (int)shell_exec("date '+%s'");
+            // exec("rm -rf /Users/visaljayathilaka/code/group-project/Group-16/app/Uploads/event/cover" . $data["event_id"] . "*");
+            $cover_pic = new Image($data['uid'].$time,"profile/","profile_pic",true);
+            $params =["profile_pic"=>  $cover_pic->getURL(),"uid"=>$data['uid']];  
+        }
+        $query = 'UPDATE registered_user SET profile_pic= :profile_pic   WHERE uid = :uid ';
+        User::insert($query,$params);  
+
+    }
     
     public function changeUsername($uid,$data){
         $_SESSION["user"]["username"]=$data;
@@ -95,7 +108,6 @@ class RegisteredUser extends User
         $encryption=new Encryption;
         $data["time"] = (int)shell_exec("date '+%s'");
         $parameters = ["key" => $encryption->encrypt(array_intersect_key($data, ["email" => '', "password" => '',"time"=>'']), 'email verificaition')];
-
         $mail=new Mail;
         
         $mail->verificationEmail($data["email"],"confirmationMail","localhost/signup/verifyemail?".http_build_query($parameters),'Signup');

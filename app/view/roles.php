@@ -232,7 +232,7 @@
         var name = document.getElementById("user-search").value;
         if (name.length != 0)
             $.ajax({
-                url: "ajax/Organisation/getAvailableUserRoles", //the page containing php script
+                url: "/Organisation/getAvailableUserRoles", //the page containing php script
                 type: "post", //request type,
                 dataType: 'json',
                 data: {

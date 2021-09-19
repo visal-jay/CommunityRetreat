@@ -315,7 +315,7 @@
             } else
 
                 $.ajax({
-                    url: "ajax/Organisation/checkEmailAvailable",
+                    url: "/Organisation/checkEmailAvailable",
                     type: "post",
                     dataType: 'json',
                     data: {

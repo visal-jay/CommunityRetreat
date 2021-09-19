@@ -514,7 +514,7 @@ if (isset($_SESSION["user"]["user_type"])) {
         let longitude = position.coords.longitude;
 
         $.ajax({
-            url: "ajax/Search/searchAll", //the page containing php script
+            url: "/Search/searchAll", //the page containing php script
             type: "post", //request type,
             dataType: 'json',
             data: {
@@ -626,7 +626,7 @@ if (isset($_SESSION["user"]["user_type"])) {
     async function Nearsearch(latitude,longitude) {
 
         $.ajax({
-            url: "ajax/Search/searchAll", //the page containing php script
+            url: "/Search/searchAll", //the page containing php script
             type: "post", //request type,
             dataType: 'json',
             data: {

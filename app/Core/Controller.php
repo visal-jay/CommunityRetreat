@@ -12,8 +12,6 @@ class Controller
 
         $data=["admin"=>false,"organization"=>false,"moderator"=>false,"treasurer"=>false,"registered_user"=>false,"guest_user"=>false];
 
-        if(!isset($_SESSION))
-            session_start();
         if (isset($_SESSION["user"]["user_type"])){
             if (in_array($_SESSION["user"]["user_type"], $userroles))
                 $data[$_SESSION["user"]["user_type"]]=true;
@@ -39,13 +37,11 @@ class Controller
                     Controller::redirect("/organisation/events");
             }
         }
-
-        if(in_array("guest_user", $userroles))
+        elseif(in_array("guest_user", $userroles))
             $data["guest_user"]=true;
-
         if(array_search(true,$data))
             return $data;
         else
-            Controller::redirect('/login/view');
+            Controller::redirect('/Login/view');
     }
 }

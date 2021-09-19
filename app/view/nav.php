@@ -26,24 +26,24 @@
                 <button type="button" class="btn btn-solid" id="near-me" onclick="nearme()"><i class="fas fa-map-marker-alt"></i>&nbsp;Near me</button>
             <?php } ?>
             <?php if (!$organization) { ?>
-                <form action="/search/view" method="get" class="search-bar nav-search-bar" style="height:fit-content">
+                <form action="/Search/view" method="get" class="search-bar nav-search-bar" style="height:fit-content">
                     <input name="search" type="search" id="nav-search" class="form-ctrl" placeholder="Search">
                     <button type="" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
                 </form>
             <?php } ?>
 
             <?php if ($registered_user) { ?>
-                <a class="nav-link margin-side-md" href="/user/home">Home</a>
-                <a class="nav-link margin-side-md" href="/user/calendar">Calender</a>
-                <a class="nav-link margin-side-md" href="/user/administratored">Administrated</a>
+                <a class="nav-link margin-side-md" href="/User/home">Home</a>
+                <a class="nav-link margin-side-md" href="/User/calendar">Calender</a>
+                <a class="nav-link margin-side-md" href="/User/administratored">Administrated</a>
                 <a class="nav-link margin-side-md" href="# "></a>
             <?php } ?>
 
             <?php if ($organization) { ?>
-                <a class="nav-link margin-side-md" href="/organisation/dashboard ">Home</a>
-                <a class="nav-link margin-side-md" href="/organisation/events">Events</a>
-                <a class="nav-link margin-side-md" href="/organisation/gallery">Gallery</a>
-                <a class="nav-link margin-side-md" href="/organisation/report">Statistics</a>
+                <a class="nav-link margin-side-md" href="/Organisation/dashboard ">Home</a>
+                <a class="nav-link margin-side-md" href="/Organisation/events">Events</a>
+                <a class="nav-link margin-side-md" href="/Organisation/gallery">Gallery</a>
+                <a class="nav-link margin-side-md" href="/Organisation/report">Statistics</a>
             <?php } ?>
 
             <?php if ($admin) { ?>
@@ -51,7 +51,7 @@
             <?php } ?>
 
             <?php if ($guest_user && !$organization && !$registered_user && !$admin) { ?>
-                <a class="nav-link margin-side-md" href="/user/home">Home</a>
+                <a class="nav-link margin-side-md" href="/User/home">Home</a>
             <?php } ?>
 
         </nav>
@@ -60,16 +60,16 @@
             <?php if (isset($_SESSION["user"]["username"])) { ?>
                 <a class="btn btn-solid" id="nav-drop" style="font-size:1rem" onclick="document.querySelector('.nav-drop-down-list').classList.toggle('hidden')"><i class="fa fa-user "> </i> &nbsp; <?= $_SESSION["user"]["username"] ?> &nbsp; <i class="fas fa-chevron-down"></i></a>
             <?php } else { ?>
-                <a class="btn btn-solid" href="/login/view" style="font-size:1rem "><i class="fa fa-user "> </i> &nbsp; Sign In </a>
+                <a class="btn btn-solid" href="/Login/view" style="font-size:1rem "><i class="fa fa-user "> </i> &nbsp; Sign In </a>
             <?php } ?>
             <div class="nav-drop-down-list hidden">
                 <div class="flex-col">
                     <?php if ($organization) { ?>
-                        <a href="/organisation/organizationalAdminProfileView" class="nav-link margin-md"><i class="far fa-user"></i>&nbsp; Profile</a>
+                        <a href="/Organisation/organizationalAdminProfileView" class="nav-link margin-md"><i class="far fa-user"></i>&nbsp; Profile</a>
                     <?php } elseif ($registered_user) { ?>
                         <a href="/RegisteredUser/view" class="nav-link margin-md"><i class="far fa-user"></i>&nbsp; Profile</a>
                     <?php } ?>
-                    <a href="/login/logout" class="nav-link margin-side-md" href=""><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</a>
+                    <a href="/Login/logout" class="nav-link margin-side-md" ><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</a>
                 </div>
             </div>
         </div>

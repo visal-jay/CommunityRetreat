@@ -361,7 +361,7 @@ if (isset($_SESSION["user"]["user_type"])) {
         <search class="flex-col flex-center border-round">
             <h1 class="clr-white">Let's find what you like</h1>
             <div class="flex-row-to-col flex-center">
-                <form action="/search/view" method="get" class="search-bar" style="height:fit-content">
+                <form action="/Search/view" method="get" class="search-bar" style="height:fit-content">
                     <input style="color:white" type="search" name="search" class="form-ctrl" placeholder="Search">
                     <button type="" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
                 </form>
@@ -376,7 +376,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                     <div class="flex-col flex-center">
                         <h3>Register as an User</h3>
                         <p style="text-align: center">By registering as an user you will be eligible to VOLUNTEER for events proudly. <br> You will be able to push yourself more and DONATE generously. </p>
-                        <div><a href="/login/view?signup=true&&signupUser=true">Sign up as a volunteer <i class="fas fa-long-arrow-alt-right"></i></a></div>
+                        <div><a href="/Login/view?signup=true&&signupUser=true">Sign up as a volunteer <i class="fas fa-long-arrow-alt-right"></i></a></div>
                     </div>
                 </register>
                 <register class="flex-col flex-center">
@@ -384,7 +384,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                     <div class="flex-col flex-center">
                         <h3>Register as an Organisation</h3>
                         <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
-                        <div><a href="/login/view?signup=true&&signupOrg=true">Sign up as a organisation <i class="fas fa-long-arrow-alt-right"></i></a></div>
+                        <div><a href="/Login/view?signup=true&&signupOrg=true">Sign up as a organisation <i class="fas fa-long-arrow-alt-right"></i></a></div>
                     </div>
                 </register>
             </div>
@@ -514,7 +514,7 @@ if (isset($_SESSION["user"]["user_type"])) {
         let longitude = position.coords.longitude;
 
         $.ajax({
-            url: "/search/searchAll", //the page containing php script
+            url: "/Search/searchAll", //the page containing php script
             type: "post", //request type,
             dataType: 'json',
             data: {
@@ -580,7 +580,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                     `;
                         parent_container.appendChild(createElementFromHTML(template));
                     });
-                let more = '<figure class="border-round flex-row flex-center" ><a href="/search/view" style="text-decoration:none;color:black" ><h2 style="text-align: center;">Search more <br><i class="fas fa-search"></i></h2></a></figure>'
+                let more = '<figure class="border-round flex-row flex-center" ><a href="/Search/view" style="text-decoration:none;color:black" ><h2 style="text-align: center;">Search more <br><i class="fas fa-search"></i></h2></a></figure>'
                 parent_container.appendChild(createElementFromHTML(more));
             }
         });
@@ -626,7 +626,7 @@ if (isset($_SESSION["user"]["user_type"])) {
     async function Nearsearch(latitude,longitude) {
 
         $.ajax({
-            url: "/search/searchAll", //the page containing php script
+            url: "/Search/searchAll", //the page containing php script
             type: "post", //request type,
             dataType: 'json',
             data: {

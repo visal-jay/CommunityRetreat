@@ -251,7 +251,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                     <div class="data">
                         <a><?= $volunteer_capacity ?></a>
                     </div>
-                    <form action="/event/updateVolunteerCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" id="volunteer-capacity">
+                    <form action="/Event/updateVolunteerCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" id="volunteer-capacity">
                         <input name="volunteer_capacity" type="number" value="<?= $volunteer_capacity ?>" min="<?= $volunteer_sum ?>" max="10000000" class=" form form-ctrl hidden" />
                     </form>
                 </div>
@@ -266,13 +266,13 @@ if (isset($_SESSION["user"]["user_type"])) {
 
 
             <?php if ($volunteer_status == 1) { ?>
-                <form action="/event/disableVolunteer?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-donation-enable-disable-btn">
+                <form action="/Event/disableVolunteer?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-donation-enable-disable-btn">
                     <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Disable Volunteering</button>
                 </form>
             <?php } ?>
 
             <?php if ($volunteer_status == 0) { ?>
-                <form action="/event/enableVolunteer?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-volunteer-enable-disable-btn">
+                <form action="/Event/enableVolunteer?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-volunteer-enable-disable-btn">
                     <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Enable Volunteering</button>
                 </form>
             <?php } ?>

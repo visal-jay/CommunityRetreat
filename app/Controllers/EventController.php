@@ -33,7 +33,7 @@ class EventController
 
     public function addPhoto(){
         (new Gallery)->addPhoto(["event_id"=>$_GET["event_id"]]);
-        Controller::redirect("/event/view",["event_id"=>$_GET["event_id"],"page"=>"gallery"]);
+        Controller::redirect("/Event/view",["event_id"=>$_GET["event_id"],"page"=>"gallery"]);
     }
     public function userroles($event_details){
         $user_roles=Controller::accessCheck(["organization"]);
@@ -59,7 +59,7 @@ class EventController
 
     public function deletePhoto(){
         (new Gallery)->deletePhoto(["image"=>$_POST["photo"]]);
-        Controller::redirect("/event/view",["event_id"=>$_GET["event_id"],"page"=>"gallery"]);
+        Controller::redirect("/Event/view",["event_id"=>$_GET["event_id"],"page"=>"gallery"]);
 
     }
 
@@ -84,19 +84,19 @@ class EventController
     public function disableDonation(){//disable donations for an event
         $donation = new Donations;
         $donation->disableDonation($_GET["event_id"]);
-        Controller::redirect("/event/view",["event_id"=> $_GET["event_id"], "page" => "donations"]);
+        Controller::redirect("/Event/view",["event_id"=> $_GET["event_id"], "page" => "donations"]);
     }
 
     public function enableDonation(){//enable donations for an event
         $donation = new Donations;
         $donation->enableDonation($_GET["event_id"]);
-        Controller::redirect("/event/view",["event_id"=> $_GET["event_id"], "page" => "donations"]);
+        Controller::redirect("/Event/view",["event_id"=> $_GET["event_id"], "page" => "donations"]);
     }
 
     public function updateDonationCapacity(){//update donation capacity
         $donation = new Donations;
         $donation->updateDonationCapacity($_GET["event_id"], $_POST["donation_capacity"]);
-        Controller::redirect("/event/view",["event_id"=> $_GET["event_id"], "page" => "donations"]);             
+        Controller::redirect("/Event/view",["event_id"=> $_GET["event_id"], "page" => "donations"]);             
     }
 
     public function donationReport(){
@@ -139,19 +139,19 @@ foreach($data["report"] as $report){
     public function disableVolunteer(){//disable donations for an event
         $volunteer = new Volunteer;
         $volunteer->disableVolunteer($_GET["event_id"]);
-        Controller::redirect("/event/view",["event_id"=> $_GET["event_id"], "page" => "volunteers"]);
+        Controller::redirect("/Event/view",["event_id"=> $_GET["event_id"], "page" => "volunteers"]);
     }
 
     public function enableVolunteer(){//enable volunteering for an event
         $volunteer = new Volunteer;
         $volunteer->enableVolunteer($_GET["event_id"]);
-        Controller::redirect("/event/view",["event_id"=> $_GET["event_id"], "page" => "volunteers"]);
+        Controller::redirect("/Event/view",["event_id"=> $_GET["event_id"], "page" => "volunteers"]);
     }
 
     public function updateVolunteerCapacity(){//update volunteering capacity
         $volunteer = new Volunteer;
         $volunteer->updateVolunteerCapacity($_GET["event_id"], $_POST["volunteer_capacity"]);
-        Controller::redirect("/event/view",["event_id"=> $_GET["event_id"], "page" => "volunteers"]);             
+        Controller::redirect("/Event/view",["event_id"=> $_GET["event_id"], "page" => "volunteers"]);             
     }
 
     public function volunteers($event_details){
@@ -188,7 +188,7 @@ foreach($data["report"] as $report){
         $validate = new Validation;
         var_dump($_POST);
         (new Events)->addEvent($_POST);
-        Controller::redirect("/organisation/events");
+        Controller::redirect("/Organisation/events");
     }
 
     public function updateDetails()
@@ -206,30 +206,30 @@ foreach($data["report"] as $report){
 
         $events = new Events;
         $events->updateDetails($_POST);
-        Controller::redirect("/event/view",["page"=>"about","event_id"=> $_POST["event_id"]]);
+        Controller::redirect("/Event/view",["page"=>"about","event_id"=> $_POST["event_id"]]);
     }
 
     public function remove(){
         (new Events)->remove($_POST["event_id"]);
-        Controller::redirect("/organisation/events");
+        Controller::redirect("/Organisation/events");
     }
 
     public function addAnnouncement(){
         $_POST["event_id"] = $_GET["event_id"];
         (new Announcement)->addAnnouncement($_POST);
-        Controller::redirect("/event/view",["page"=>"forum","event_id"=> $_POST["event_id"]]);
+        Controller::redirect("/Event/view",["page"=>"forum","event_id"=> $_POST["event_id"]]);
     }
 
     public function editAnnouncement(){
         $_POST["event_id"] = $_GET["event_id"];
         $announcement = new Announcement;
         $announcement->editAnnouncement($_POST);
-        Controller::redirect("/event/view",["page"=>"forum","event_id"=> $_POST["event_id"]]);
+        Controller::redirect("/Event/view",["page"=>"forum","event_id"=> $_POST["event_id"]]);
     }
 
     public function deleteAnnouncement(){
         (new Announcement)->deleteAnnouncement($_POST["announcement_id"]);
-        Controller::redirect("/event/view",["page"=>"forum","event_id"=> $_GET["event_id"]]);
+        Controller::redirect("/Event/view",["page"=>"forum","event_id"=> $_GET["event_id"]]);
     }
 
     public function feedback($event_details){  
@@ -246,7 +246,7 @@ foreach($data["report"] as $report){
         $_POST["event_id"] = $_GET["event_id"];
         $_POST["uid"] = $_SESSION["user"]["uid"];
         (new Feedback)->addFeedback($_POST);
-        Controller::redirect("/event/view",["page"=>"feedback","event_id"=> $_POST["event_id"]]);
+        Controller::redirect("/Event/view",["page"=>"feedback","event_id"=> $_POST["event_id"]]);
     }
 
 }

@@ -177,20 +177,20 @@
     <div class="nav-secondary">
         <div class="nav-secondary-bar margin-lg">
             <?php $page = $_GET["page"] ?>
-            <a class="btn margin-side-md <?php if ($page == "about") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=about&&event_id=<?= $_GET["event_id"] ?>">About</a>
-            <a class="btn margin-side-md <?php if ($page == "gallery") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=gallery&&event_id=<?= $_GET["event_id"] ?>">Gallery</a>
-            <a class="btn margin-side-md <?php if ($page == "forum") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=forum&&event_id=<?= $_GET["event_id"] ?>">Forum</a>
-            <a class="btn margin-side-md <?php if ($page == "feedback") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=feedback&&event_id=<?= $_GET["event_id"] ?>">Feedback</a>
+            <a class="btn margin-side-md <?php if ($page == "about") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=about&&event_id=<?= $_GET["event_id"] ?>">About</a>
+            <a class="btn margin-side-md <?php if ($page == "gallery") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=gallery&&event_id=<?= $_GET["event_id"] ?>">Gallery</a>
+            <a class="btn margin-side-md <?php if ($page == "forum") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=forum&&event_id=<?= $_GET["event_id"] ?>">Forum</a>
+            <a class="btn margin-side-md <?php if ($page == "feedback") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=feedback&&event_id=<?= $_GET["event_id"] ?>">Feedback</a>
             <?php if ($organization || $moderator) { ?>
-                <a class="btn margin-side-md <?php if ($page == "volunteers") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=volunteers&&event_id=<?= $_GET["event_id"] ?>">Volunteers</a>
-                <a class="btn margin-side-md <?php if ($page == "timeline") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/event/view?page=timeline&&event_id=<?= $_GET["event_id"] ?>">Work Timeline</a>
+                <a class="btn margin-side-md <?php if ($page == "volunteers") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=volunteers&&event_id=<?= $_GET["event_id"] ?>">Volunteers</a>
+                <a class="btn margin-side-md <?php if ($page == "timeline") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=timeline&&event_id=<?= $_GET["event_id"] ?>">Work Timeline</a>
             <?php } ?>
             <?php if($organization || $treasurer){ ?>
-            <a class="btn margin-side-md <?php if($page=="budget") echo "nav-active";?>" style=" margin-bottom:10px;" href="/event/view?page=budget&&event_id=<?= $_GET["event_id"]?>">Budget</a>
-            <a class="btn margin-side-md <?php if($page=="donations") echo "nav-active";?>" style=" margin-bottom:10px;" href="/event/view?page=donations&&event_id=<?= $_GET["event_id"]?>">Donations</a>
+            <a class="btn margin-side-md <?php if($page=="budget") echo "nav-active";?>" style=" margin-bottom:10px;" href="/Event/view?page=budget&&event_id=<?= $_GET["event_id"]?>">Budget</a>
+            <a class="btn margin-side-md <?php if($page=="donations") echo "nav-active";?>" style=" margin-bottom:10px;" href="/Event/view?page=donations&&event_id=<?= $_GET["event_id"]?>">Donations</a>
             <?php } ?>
             <?php if($organization){ ?>
-            <a class="btn margin-side-md <?php if($page=="userroles") echo "nav-active";?>" style=" margin-bottom:10px;" href="/event/view?page=userroles&&event_id=<?= $_GET["event_id"]?>">User Roles</a>
+            <a class="btn margin-side-md <?php if($page=="userroles") echo "nav-active";?>" style=" margin-bottom:10px;" href="/Event/view?page=userroles&&event_id=<?= $_GET["event_id"]?>">User Roles</a>
             <?php } ?>
         </div>
     </div>
@@ -215,9 +215,10 @@
   
 
     function resizeProfile() {
-        var coverHeight = (document.querySelector(".cover").offsetHeight);
-        console.log(coverHeight);
-        document.querySelector(".photo-container").style.height = parseInt(coverHeight) + "px";
+        var cover_height = (document.querySelector(".cover").offsetHeight);
+        //var cover_width =(document.querySelector(".cover").offsetwidth);
+        //document.document.querySelector(".cover").style.height= parseInt(cover_width)*2/7 + "px";
+        document.querySelector(".photo-container").style.height = parseInt(cover_height) + "px";
     }
 
 

@@ -215,7 +215,7 @@
             <h1>About</h1>
             <div class="content border-round container-size margin-md" id="details" style="background-color: #eeeeee">
                 <?php if ($organization || $moderator) { ?>
-                    <form action="/event/updateDetails?event_id=<?= $_GET["event_id"] ?>" method="post" id="update-form" enctype="multipart/form-data">
+                    <form action="/Event/updateDetails?event_id=<?= $_GET["event_id"] ?>" method="post" id="update-form" enctype="multipart/form-data">
                     <?php } ?>
                     <div class="date-container">
                         <div class="flex-row margin-lg">
@@ -297,7 +297,7 @@
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width far fa-flag clr-green margin-side-lg"></i>
                             <div class="flex-row">
-                                <p class="head-margin">Event by <a href="/organisation/view?org_id=<?= $org_uid ?>"><b><?= $organisation_username ?></b></a></p>
+                                <p class="head-margin">Event by <a href="/Organisation/view?org_id=<?= $org_uid ?>"><b><?= $organisation_username ?></b></a></p>
                             </div>
                         </div>
                     </div>

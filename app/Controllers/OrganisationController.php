@@ -19,7 +19,7 @@ class OrganisationController
     public function addPhoto()
     {
         (new Gallery)->addPhoto([], true);
-        Controller::redirect("/organisation/gallery");
+        Controller::redirect("/Organisation/gallery");
     }
 
 
@@ -43,7 +43,7 @@ class OrganisationController
     public function deletePhoto()
     {
         (new Gallery)->deletePhoto(["image" => $_POST["photo"]], true);
-        Controller::redirect("/organisation/gallery");
+        Controller::redirect("/Organisation/gallery");
     }
 
     public function update()
@@ -241,13 +241,13 @@ class OrganisationController
     function addUserRole(){
         if (isset($_POST["uid"]) && isset($_POST["role"]) && isset($_GET["event_id"]))
             (new Organisation)->addUserRole($_POST["uid"],$_POST["role"],$_GET["event_id"]);
-        Controller::redirect("/event/view",["page"=>'userroles',"event_id"=>$_GET["event_id"]]);
+        Controller::redirect("/Event/view",["page"=>'userroles',"event_id"=>$_GET["event_id"]]);
     }
 
     function deleteUserRole(){
         if (isset($_POST["uid"]) && isset($_POST["role"]) && isset($_GET["event_id"]))
             (new Organisation)->deleteUserRole($_POST["uid"],$_POST["role"],$_GET["event_id"]);
-        Controller::redirect("/event/view",["page"=>'userroles',"event_id"=>$_GET["event_id"]]);
+        Controller::redirect("/Event/view",["page"=>'userroles',"event_id"=>$_GET["event_id"]]);
     }
 
                

@@ -223,7 +223,7 @@
 
         .grid {
             grid-gap: 10px;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fill, 250px);
         }
 
         .choice-menu {
@@ -268,7 +268,7 @@
     <div class="homepage flex-col flex-center">
         <h1>Search to your choice</h1>
         <search class="flex-row-to-col flex-center border-round">
-            <form action="/search/view" class="flex-row-to-col flex-center">
+            <form action="/Search/view" class="flex-row-to-col flex-center">
                 <div class="search-bar" style="height:fit-content">
                     <input type="search" class="form-ctrl clr-white" placeholder="Search" id="in-search" onkeyup="range='';">
                     <button type="submit" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
@@ -394,7 +394,7 @@
         
 
         $.ajax({
-            url: "/search/searchAll", //the page containing php script
+            url: "/Search/searchAll", //the page containing php script
             type: "post", //request type,
             dataType: 'json',
             data: {
@@ -466,7 +466,7 @@
 
     function orgSearch(name) {
         $.ajax({
-            url: "/search/searchOrganisation", //the page containing php script
+            url: "/Search/searchOrganisation", //the page containing php script
             type: "post", //request type,
             dataType: 'json',
             data: {
@@ -560,7 +560,7 @@
         var way = document.getElementById("way").value == "Sort" ? "" : document.getElementById("way").value;
         hideMarkers();
         $.ajax({
-            url: "/search/searchAll", //the page containing php script
+            url: "/Search/searchAll", //the page containing php script
             type: "post", //request type,
             dataType: 'json',
             data: {

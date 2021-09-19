@@ -288,7 +288,7 @@
     <?php if ($registered_user) { ?>
         <div class="popup" id="form">
             <div class="content">
-                <form action="/event/addFeedback?event_id= <?= $_GET["event_id"] ?>" method="post" class="form-container">
+                <form action="/Event/addFeedback?event_id= <?= $_GET["event_id"] ?>" method="post" class="form-container">
 
                     <div class="form-item">
                         <label>Tell us what you think about "event name" </label>

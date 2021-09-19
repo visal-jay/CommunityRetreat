@@ -7,6 +7,16 @@ class LoginController
 
     function view()
     {
+        if(isset($_SESSION["user"])){
+            $user_type = $_SESSION["user"]["user_type"];
+            if ($user_type == "organization")
+                Controller::redirect("/Organisation/dashboard");
+            elseif ($user_type == "registered_user")
+                Controller::redirect("/user/home");
+            elseif ($user_type == "admin")
+                Controller::redirect("/view/organisationDashboard.php");
+        }
+        
         $user_roles=Controller::accessCheck(["guest_user"]);
         $_GET["signup"] = isset($_GET["signup"]) ? true : false;
         $_GET["login"] = $_GET["signup"] == true ? false : true;
@@ -54,7 +64,7 @@ class LoginController
         $encyption = new Encryption;
         $data = $encyption->decrypt($key, 'reset password');
         (new User)->resetPassword($data["email"],$_POST["password"]);
-        Controller::redirect("/login/view");
+        Controller::redirect("/Login/view");
     }
 
     public static function validate($email = '', $password = '')
@@ -64,7 +74,7 @@ class LoginController
 
         $user = new User;
         if (($user->checkLoginAcess($email)))
-            Controller::redirect("/login/view", ["loginErr" => 'You are currently locked out<br>Try again later', "loginDenied" => true,"login"=>true]);
+            Controller::redirect("/Login/view", ["loginErr" => 'You are currently locked out<br>Try again later', "loginDenied" => true,"login"=>true]);
 
         if ($user_details = $user->authenticate($email, $password)) {
             $user_details["username"]=$user->getUsername($user_details["uid"]);
@@ -72,7 +82,7 @@ class LoginController
             $user_type = $user_details["user_type"];
 
             if ($user_type == "organization")
-                Controller::redirect("/organisation/dashboard");
+                Controller::redirect("/Organisation/dashboard");
             elseif ($user_type == "registered_user")
                 Controller::redirect("/user/home");
             elseif ($user_type == "admin")
@@ -96,10 +106,10 @@ class LoginController
         if ($failed_login_details = $user->getFailedlogin($email))
             extract($failed_login_details, EXTR_SKIP);
         else
-            Controller::redirect("/login/view", ["loginErr" => 'Incorrect username or password',"login"=> true]);
+            Controller::redirect("/Login/view", ["loginErr" => 'Incorrect username or password',"login"=> true]);
 
         if (($failed_login_count >= $bad_login_limit) && ($time - $first_failed_login < $lockout_time)) {
-            Controller::redirect("/login/view", ["loginErr" => 'You are currently locked out<br>Try again later', "loginDenied" => true,"login"=> true]);
+            Controller::redirect("/Login/view", ["loginErr" => 'You are currently locked out<br>Try again later', "loginDenied" => true,"login"=> true]);
         } else {
             if ($time - $first_failed_login > $lockout_time) {
                 $first_failed_login = $time;
@@ -108,7 +118,7 @@ class LoginController
                 $failed_login_count++;
             }
             $user->updateFailedLogin($email, $failed_login_count, $first_failed_login);
-            Controller::redirect("/login/view", ["loginErr" => 'Incorrect username or password']);
+            Controller::redirect("/Login/view", ["loginErr" => 'Incorrect username or password']);
         }
     }
 }

@@ -57,9 +57,7 @@ td {
 }
 
 .form {
-    width: 150px;
     text-align: center;
-    height: 28px;
 }
 
 .amount {
@@ -253,7 +251,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     <div class="data">
                         <a><?= $donation_capacity ?></a>
                     </div>
-                    <form action="/event/updateDonationCapacity?event_id=<?= $_GET["event_id"] ?>" method="post"
+                    <form action="/Event/updateDonationCapacity?event_id=<?= $_GET["event_id"] ?>" method="post"
                         id="donation-capacity">
                         <input name="donation_capacity" type="number" value="<?= $donation_capacity ?>"
                             min="<?= $donation_sum ?>" max="10000000" class=" form form-ctrl hidden" />
@@ -261,21 +259,21 @@ if(isset($_SESSION ["user"] ["user_type"])){
                 </div>
             </div>
             <div>
-                <button class="btn btn-solid btn-md data edit-btn" onclick="edit()">Edit
+                <button class="btn btn-solid data edit-btn" onclick="edit()">Edit
                     &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
                 <div class="flex-row-to-col">
-                    <button class=" btn btn-solid btn-md bg-red border-red form hidden close-btn" onclick="edit()">
+                    <button class=" btn btn-solid bg-red border-red form hidden close-btn" onclick="edit()">
                         Close
                         &nbsp;&nbsp;
                         <i class="fas fa-times "></i></button>
-                    <button class=" btn btn-solid btn-md form hidden save-btn" type="submit"
-                        form="donation-capacity">Save &nbsp; <i class="fas fa-check "></i></button>
+                    <button class=" btn btn-solid form hidden save-btn" type="submit" form="donation-capacity">Save
+                        &nbsp; <i class="fas fa-check "></i></button>
                 </div>
             </div>
 
 
             <?php if($donation_status==1){ ?>
-            <form action="/event/disableDonation?event_id=<?= $_GET["event_id"] ?>" method="post"
+            <form action="/Event/disableDonation?event_id=<?= $_GET["event_id"] ?>" method="post"
                 class=" secondary-donation-enable-disable-btn">
                 <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Disable
                     Donations</button>
@@ -283,7 +281,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
             <?php } ?>
 
             <?php if($donation_status==0){ ?>
-            <form action="/event/enableDonation?event_id=<?= $_GET["event_id"] ?>" method="post"
+            <form action="/Event/enableDonation?event_id=<?= $_GET["event_id"] ?>" method="post"
                 class=" secondary-donation-enable-disable-btn">
                 <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Enable
                     Donations</button>
@@ -292,7 +290,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
 
             <div class="bold sum donation-sum-container">
                 <div>Sum of Donations:</div>
-                <div><?= $donation_sum ?></div>
+                <div> <?php echo 'Rs. ' .number_format($donation_sum, 3) ?> </div>
             </div>
 
             <div>
@@ -312,7 +310,8 @@ if(isset($_SESSION ["user"] ["user_type"])){
                         <tr>
                             <td class=" scroll"><?= $donation["username"] ?></td>
                             <td><?= $donation["date"] ?></td>
-                            <td class="amount"><?= $donation["amount"] ?></td>
+                            <td class="amount">
+                                <?php echo 'Rs. ' .number_format($donation["amount"], 3)?></td>
                         </tr>
                         <?php } ?>
                     </tbody>
@@ -327,7 +326,8 @@ if(isset($_SESSION ["user"] ["user_type"])){
     </div>
     <?php if($donation_status==0 && count($donations)==0){ ?>
     <div class="initial-donation-enable-btn">
-        <button class="btn btn-lg btn-solid" id="initial-donation-enable-btn" onclick="myFunction()">Enable
+        <button onclick="window.location.href='/Event/enableDonation?event_id=<?= $_GET['event_id'] ?>'"
+            class=" btn btn-lg btn-solid" id="initial-donation-enable-btn" onclick="myFunction()">Enable
             Donations</button>
     </div>
     <?php } ?>
@@ -335,7 +335,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
 
 <script>
 function myFunction() {
-    var element = document.getElementById("background");
+    var element = document.getElementById(" background");
     element.classList.remove("blur");
     document.getElementById("initial-donation-enable-btn").remove();
     //blur class is removed when initial donation enable button s clicked
@@ -343,25 +343,25 @@ function myFunction() {
 
 function hide(id) {
     document.getElementById(id).classList.toggle("hide");
-    //
 }
 
 function change_enable_disable_button(id) {
     var x = document.getElementById(id);
-    x.classList.toggle("enable")
+    x.classList.toggle("enable");
     if (x.classList.contains("enable")) {
         x.innerHTML = "Enable Donations";
     } else {
         x.innerHTML = "Disable Donations";
     }
     //when enable donation button is clicked, it changes to disable donation button
-    //when disable donation button is clicked, it changes to enable donation button
+    //when disable donation button is clicked, it changes to enable donation button 
 }
 
 function edit() {
     var data = document.getElementsByClassName("data");
     var form = document.getElementsByClassName("form");
-    for (var i = 0; i < data.length; i++) {
+    for (var
+            i = 0; i < data.length; i++) {
         data[i].classList.toggle("hidden");
     }
     for (var i = 0; i < form.length; i++) {

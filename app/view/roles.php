@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/Public/assets/newstyles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
     <title>User Roles</title>
 </head>
@@ -112,14 +112,13 @@
         }
     }
 </style>
-
 <body>
 
     <div class="flex-col flex-center">
         <h1>User Roles</h1>
 
         <div>
-            <form autocomplete="off" class="flex-center flex-row-to-col" action="/organisation/addUserRole?event_id=<?= $_GET['event_id'] ?>" method="post" style="height:fit-content">
+            <form autocomplete="off" class="flex-center flex-row-to-col" action="/Organisation/addUserRole?event_id=<?= $_GET['event_id'] ?>" method="post" style="height:fit-content">
                 <div class="flex-row flex-center">
                     <div class="search-bar search-bar-role">
                         <input autocomplete="off" type="search" id="user-search" class="form-ctrl" placeholder="Search User" onkeyup="getUsers()" required>
@@ -189,7 +188,7 @@
                 } ?>
 
             </table>
-            <form method="post" action="/organisation/deleteUserRole?event_id=<?= $_GET["event_id"] ?>" id="delete-form">
+            <form method="post" action="/Organisation/deleteUserRole?event_id=<?= $_GET["event_id"] ?>" id="delete-form">
                 <input type="text" class="hidden" name="uid" id="user-role-uid" required>
                 <input type="text" class="hidden" name="role" id="user-role" required>
                 <input type="text" class="hidden" name="event_id" id="user-role-event-id" required>
@@ -233,7 +232,7 @@
         var name = document.getElementById("user-search").value;
         if (name.length != 0)
             $.ajax({
-                url: "/organisation/getAvailableUserRoles", //the page containing php script
+                url: "/Organisation/getAvailableUserRoles", //the page containing php script
                 type: "post", //request type,
                 dataType: 'json',
                 data: {

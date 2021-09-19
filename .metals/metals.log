@@ -230,3 +230,17 @@ INFO: Unsupported notification method: $/setTrace
 [0m2021.09.17 18:20:13 INFO  time: initialize in 0.47s[0m
 [0m2021.09.17 18:20:18 WARN  Build server is not auto-connectable.[0m
 [0m2021.09.17 18:20:18 WARN  no build tool detected in workspace 'C:\wamp64\www\CommunityRetreat\Group-16'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.09.18 21:36:58 INFO  Started: Metals version 0.10.7 in workspace 'C:\wamp64\www\CommunityRetreat\Group-16' for client Visual Studio Code 1.60.1.[0m
+[0m2021.09.18 21:36:59 INFO  time: initialize in 0.87s[0m
+[0m2021.09.18 21:37:05 WARN  Build server is not auto-connectable.[0m
+[0m2021.09.18 21:37:05 WARN  no build tool detected in workspace 'C:\wamp64\www\CommunityRetreat\Group-16'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.09.19 11:11:30 INFO  Started: Metals version 0.10.7 in workspace 'C:\wamp64\www\CommunityRetreat\Group-16' for client Visual Studio Code 1.60.1.[0m
+[0m2021.09.19 11:11:31 INFO  time: initialize in 1.07s[0m
+[0m2021.09.19 11:11:37 WARN  Build server is not auto-connectable.[0m
+[0m2021.09.19 11:11:37 WARN  no build tool detected in workspace 'C:\wamp64\www\CommunityRetreat\Group-16'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+Sep 19, 2021 11:22:30 AM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+[0m2021.09.19 14:07:14 INFO  Started: Metals version 0.10.7 in workspace 'C:\wamp64\www\CommunityRetreat\Group-16' for client Visual Studio Code 1.60.1.[0m
+[0m2021.09.19 14:07:15 INFO  time: initialize in 0.66s[0m
+[0m2021.09.19 14:07:20 WARN  Build server is not auto-connectable.[0m
+[0m2021.09.19 14:07:20 WARN  no build tool detected in workspace 'C:\wamp64\www\CommunityRetreat\Group-16'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m

@@ -1,19 +1,14 @@
 <?php
-
-//session_start();
-
-
-
 //use Defuse\Crypto\File;
 
 class OrganisationController
 {
     public function view($org_id = '')
     {
-
+        $user_roles=Controller::accessCheck(["organization"]);
         $org_id = isset($_GET["org_id"]) ? $_GET["org_id"] : $org_id;
         $data = (new Organisation)->getDetails($org_id);
-        View::render("organisationDashboard", $data);
+        View::render("organisationDashboard", $data,$user_roles);
     }
 
     public function dashboard()
@@ -30,10 +25,19 @@ class OrganisationController
 
     public function gallery()
     {
-        if (!$data = (new Gallery)->getGallery(["uid" => $_SESSION["user"]["uid"]], true))
+        if(isset($_GET["org_id"])){
+            $user_roles=Controller::accessCheck(["registered_user","guest_user"]);
+            $org_id=$_GET["org_id"];
+            }        
+        else{
+                $user_roles=Controller::accessCheck(["organization"]);
+                $org_id = $_SESSION["user"]["uid"];
+            }
+
+        if (!$data = (new Gallery)->getGallery(["uid" => $org_id], true))
             $data = array();
 
-        View::render("organisationGallery", array_merge(["photos" => $data]));
+        View::render("organisationGallery", array_merge(["photos" => $data]),$user_roles);
     }
 
     public function deletePhoto()
@@ -45,11 +49,6 @@ class OrganisationController
     public function update()
     {
         Controller::accessCheck(["organization"]);
-        $validate = new Validation();
-        if (!$validate->telephone($_POST["contact_number"]))
-            $error = ["telephone" => "Wrong telephone number", "error" => true];
-        if (isset($error))
-            Controller::redirect("/organisation/dashboard", $error);
         (new Organisation)->updateDetails($_SESSION["user"]["uid"], $_POST);
         Controller::redirect("/Organisation/dashboard");
     }
@@ -82,9 +81,10 @@ class OrganisationController
 
     public function report()
     {
+        $user_roles=Controller::accessCheck(["organization"]);
         $event = new Events;
         $donations = new Donations;
-        $data["events"] = array();
+        $data["donation"]=json_encode([]);
         if ($result = $event->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "published" ,"donation_capacity"=>true]))
             foreach ($result as $event){
                 if ($donation_details = $donations->getReport(["event_id" => $event["event_id"]])) {
@@ -133,20 +133,15 @@ class OrganisationController
                         
                     unset($temp);
                 }
-               $data["events"][$event["event_name"]]["donations_percent"]=$event["donation_percent"];
+                $data["events"][$event["event_name"]]["donations_percent"]=$event["donation_percent"];
                 $data["events"]= json_encode($data["events"]);
-
-
             }
-            
-
-       View::render("report",$data);
+        View::render("report",$data,$user_roles);
     }
 
 
     public function organizationalAdminProfileView(){
         $organisation_admin=new Organisation();
-        $_SESSION["user"]["uid"]='ORG0000024';
         $uid=$_SESSION["user"]["uid"];
         $org_admin_details=$organisation_admin-> getAdminDetails($uid); 
         View::render('organisationProfile',$org_admin_details);
@@ -155,7 +150,6 @@ class OrganisationController
     public function updateUsername(){
 
         $organisation_admin= new Organisation();
-        $_SESSION["user"]["uid"]='ORG0000024';
         $uid=$_SESSION["user"]["uid"];
         $organisation_admin->changeUsername($uid,$_POST['username']);
         Controller::redirect("/Organisation/organizationalAdminProfileView");
@@ -165,7 +159,6 @@ class OrganisationController
 
         $validate = new Validation();
         $organisation_admin = new Organisation();
-        $_SESSION["user"]["uid"]='ORG0000024';
         $uid=$_SESSION["user"]["uid"];
         $data = [ "contact_number"=> $_POST['contact_number']];
         if (!$validate->telephone($_POST["contact_number"])){
@@ -188,7 +181,6 @@ class OrganisationController
         $organisation_admin = new Organisation();
         $user = new User();
         $validate =new Validation();
-        $_SESSION["user"]["uid"]='ORG0000024';
         $uid=$_SESSION["user"]["uid"];
         $data = ["email"=>$_POST['email']];
         if(!$validate->email($_POST["email"])){
@@ -209,7 +201,6 @@ class OrganisationController
         $organisation_admin = new Organisation();
         $user = new User();
         $validate =new Validation();
-        $_SESSION["user"]["uid"]='ORG0000024';
         $uid=$_SESSION["user"]["uid"];
         $data = ["uid"=>$_POST['uid'],"password"=>$_POST['password']];
         if(!$organisation_admin->checkCurrentPassword($uid,$_POST['current_password'])){
@@ -230,7 +221,6 @@ class OrganisationController
     public function updateAccountNumber(){
         $organisation_admin = new Organisation();
         $validate =new Validation();
-        $_SESSION["user"]["uid"]='ORG0000024';
         $uid=$_SESSION["user"]["uid"];
         $data=["uid"=>$uid,"account_number"=>$_POST['account_number']];
         if($validate-> bankaccount($_POST['account_number'])){
@@ -242,6 +232,22 @@ class OrganisationController
     function checkEmailAvailable(){
         if((new Validation)->email($_POST["email"]));
         echo json_encode(array("taken"=>(new User)->checkUserEmail($_POST["email"])));
+    }
+
+    function getAvailableUserRoles(){
+        echo json_encode((new Organisation)->getAvailableUserRoles($_POST["name"]));
+    }
+
+    function addUserRole(){
+        if (isset($_POST["uid"]) && isset($_POST["role"]) && isset($_GET["event_id"]))
+            (new Organisation)->addUserRole($_POST["uid"],$_POST["role"],$_GET["event_id"]);
+        Controller::redirect("/event/view",["page"=>'userroles',"event_id"=>$_GET["event_id"]]);
+    }
+
+    function deleteUserRole(){
+        if (isset($_POST["uid"]) && isset($_POST["role"]) && isset($_GET["event_id"]))
+            (new Organisation)->deleteUserRole($_POST["uid"],$_POST["role"],$_GET["event_id"]);
+        Controller::redirect("/event/view",["page"=>'userroles',"event_id"=>$_GET["event_id"]]);
     }
 
                

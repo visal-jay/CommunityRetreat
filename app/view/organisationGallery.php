@@ -125,7 +125,7 @@
             <?php foreach ($photos as $photo) { ?>
                 <figure class="item bg-green">
                     <div class="content">
-                        <?php if ($photo["uid"] == $_SESSION["user"]["uid"]) { ?>
+                        <?php if (!$guest_user && $photo["uid"] == $_SESSION["user"]["uid"]) { ?>
                             <form class="delete-button" method="post" action="/organisation/deletePhoto">
                                 <button type="submit" class="btn-icon" name="photo" value="<?= $photo["image"] ?>"> <i class="far fa-trash-alt"></i></button>
                             </form>

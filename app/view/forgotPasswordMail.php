@@ -54,8 +54,8 @@
                         </td>
                       </tr>
                       <tr>
-                        <td style="word-break:break-word;font-size:0px;padding:30px 0px">
-                          <p style="font-size:1px;margin:0px auto;border-top:1px solid #dcddde;width:100%"></p>
+                      <td style="word-break:break-word;font-size:0px;padding:30px 0px"  align="center">
+                          <p style="font-size:15px;margin:0px auto;border-top:1px solid #dcddde;padding:5px;width:100%;color:#4f545c;font-family:Ubuntu,Helvetica,Arial,sans-serif;">This link will expire after 60 minutes</p>
                         </td>
                       </tr>
                     </tbody>

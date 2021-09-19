@@ -11,7 +11,7 @@ class RegisteredUserController {
     }
 
     public function updateProfilePic(){
-        var_dump($_FILES['profile_pic']);
+        
         $registered_user=new RegisteredUser();
         $uid=$_SESSION["user"]["uid"];
         $data=["uid"=>$uid,"profile_pic"=>$_FILES['profile_pic']];

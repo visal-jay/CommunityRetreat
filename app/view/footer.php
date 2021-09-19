@@ -185,23 +185,13 @@
 
 
 <body>
-    <?php 
-    $organization=$admin=$registered_user=$guest_user=false;
-    if(isset($_SESSION["user"]["user_type"])){
-        if ($_SESSION["user"]["user_type"]=="organization") {$organization=true;}
-        if ($_SESSION["user"]["user_type"]=="admin") {$$admin=true;}
-        if ($_SESSION["user"]["user_type"]=="registered user") {$registered_user=true;}
-    }
-    else {
-        $guest_user=true;
-    }
-    ?>
+
     <div class="feedback-container">
-    <form action="/Systemfeedback/getFeedback" method="post" class="feedback-form"> 
+    <form action="/Systemfeedback/getSystemFeedbacks" method="post" class="feedback-form"> 
        
                 <h2>Send us some feedback !</h2>
                 <p>Do you have a suggestion or found some bug? Let us know in the field below.</p>
-               <textarea cols="40" rows="8" placeholder= "Describe here" class="form-ctrl" style="resize:none;"></textarea>
+               <textarea cols="40" rows="8" placeholder= "Describe here" class="form-ctrl" style="resize:none;" name="feedback"></textarea>
                <div class="confirm-buttons">
                    
                     <button   type="submit" class= "btn bg-green clr-white border-green">Submit</button>

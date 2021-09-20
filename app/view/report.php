@@ -16,7 +16,7 @@
   .background {
     align-items: center;
     justify-content: center;
-    height: 100%;
+    min-height: max-content;
     width: 100%;
   }
 
@@ -210,5 +210,5 @@
     }
   });
 </script>
-
+<?php include "footer.php"?>
 </html>

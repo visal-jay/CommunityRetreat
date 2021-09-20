@@ -332,6 +332,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
     <?php } ?>
 </body>
 
+
 <script>
 function myFunction() {
     var element = document.getElementById(" background");

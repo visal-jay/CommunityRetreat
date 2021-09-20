@@ -201,6 +201,7 @@
     </form>
     </div>
     <footer class="main-footer">
+    <?php if (!$admin) { ?>
         <div class="footer-content-container">
             <div class="content">
                 <p class="footer-content">About Us</p>
@@ -215,6 +216,7 @@
                 <p class="footer-content">Terms & conditions</p>
             </div>
         </div>
+        <?php }?>
         <div class= "copyright">
                 <p style="color:gray; margin: 1.5rem 0;"><i class="far fa-copyright"></i>&nbsp2021 Community Retreat, All Right Reserved.</p>
         </div>

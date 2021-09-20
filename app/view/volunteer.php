@@ -313,6 +313,7 @@
     <?php } ?>
 </body>
 
+
 <script>
     function myFunction() {
         var element = document.getElementById("background");

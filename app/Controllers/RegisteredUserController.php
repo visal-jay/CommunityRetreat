@@ -96,8 +96,8 @@ class RegisteredUserController {
     }
 
     public function activityLog(){
-
-        View::render('history');
+        $user_roles=Controller::accessCheck(["registered_user"]);
+        View::render('history',$user_roles);
     }
 
 

@@ -14,7 +14,7 @@ class LoginController
             elseif ($user_type == "registered_user")
                 Controller::redirect("/User/home");
             elseif ($user_type == "admin")
-                Controller::redirect("/view/organisationDashboard.php");
+                Controller::redirect("/Admin/dashboard");
         }
 
         $user_roles=Controller::accessCheck(["guest_user"]);

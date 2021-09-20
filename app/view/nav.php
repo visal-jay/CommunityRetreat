@@ -36,6 +36,7 @@
                 <a class="nav-link margin-side-md" href="/User/home">Home</a>
                 <a class="nav-link margin-side-md" href="/User/calendar">Calender</a>
                 <a class="nav-link margin-side-md" href="/User/administratored">Administrated</a>
+                <a class="nav-link margin-side-md" href="/User/Notifications">Notifications</a>
                 <a class="nav-link margin-side-md" href="# "></a>
             <?php } ?>
 
@@ -47,7 +48,9 @@
             <?php } ?>
 
             <?php if ($admin) { ?>
-                <a class="nav-link margin-side-md" href="/view/adoption_listing.php ">complaints</a>
+                <a class="nav-link margin-side-md" href="/Admin/dashboard ">Home</a>
+                <a class="nav-link margin-side-md" href="/User/complaint ">complaints</a>
+                <a class="nav-link margin-side-md" href="/User/systemFeedback ">System Feedback</a>
             <?php } ?>
 
             <?php if ($guest_user && !$organization && !$registered_user && !$admin) { ?>
@@ -68,6 +71,9 @@
                         <a href="/Organisation/organizationalAdminProfileView" class="nav-link margin-md"><i class="far fa-user"></i>&nbsp; Profile</a>
                     <?php } elseif ($registered_user) { ?>
                         <a href="/RegisteredUser/view" class="nav-link margin-md"><i class="far fa-user"></i>&nbsp; Profile</a>
+                    <?php ?>
+                    <?php }elseif ($admin) { ?>
+                        <a href="/Admin/view" class="nav-link margin-md"><i class="far fa-user"></i>&nbsp; Profile</a>
                     <?php } ?>
                     <a href="/Login/logout" class="nav-link margin-side-md" ><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</a>
                 </div>

@@ -1,14 +1,18 @@
 <?php
 class AdminController{
+    public function dashboard(){
+        $user_roles = Controller::accessCheck(["admin"]);
+        View::render('adminPage',$user_roles);
+    }
 
     public function view(){
+        $user_roles = Controller::accessCheck(["admin"]);
         $admin=new Admin();
         if(!isset($_SESSION)) 
             session_start();
-        $_SESSION["user"]["uid"]='ADM0000031';
         $uid=$_SESSION["user"]["uid"];
         $admin_details=$admin->getDetails($uid); 
-        View::render('adminProfile',$admin_details);
+        View::render('adminProfile',$admin_details,$user_roles);
     }
     public function updateProfilePic(){
         var_dump($_FILES['profile_pic']);
@@ -22,7 +26,6 @@ class AdminController{
     public function updateUsername(){
 
         $admin=new Admin();
-        $_SESSION["user"]["uid"]='ADM0000031';
         $uid=$_SESSION["user"]["uid"];
         $admin->changeUsername($uid,$_POST['username']);
         Controller::redirect("/Admin/view");
@@ -33,7 +36,6 @@ class AdminController{
 
         $validate = new Validation();
         $admin = new Admin();
-        $_SESSION["user"]["uid"]='ADM0000031';
         $uid=$_SESSION["user"]["uid"];
         $data = [ "contact_number"=> $_POST['contact_number']];
         if (!$validate->telephone($_POST["contact_number"])){
@@ -55,7 +57,6 @@ class AdminController{
         $admin = new Admin();
         $user = new User();
         $validate =new Validation();
-        $_SESSION["user"]["uid"]='ADM0000031';
         $uid=$_SESSION["user"]["uid"];
         $data = ["email"=>$_POST['email']];
         if(!$validate->email($_POST["email"])){
@@ -76,7 +77,6 @@ class AdminController{
         $admin = new Admin();
         $user = new User();
         $validate =new Validation();
-        $_SESSION["user"]["uid"]='ADM0000031';
         $uid=$_SESSION["user"]["uid"];
         $data = ["uid"=>$_POST['uid'],"password"=>$_POST['password']];
         if(!$admin->checkCurrentPassword($uid,$_POST['current_password'])){
@@ -103,6 +103,7 @@ class AdminController{
 
         View::render('history');
     }
+    
 
     
 }

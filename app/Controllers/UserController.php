@@ -15,8 +15,20 @@ class UserController{
         $user_roles=Controller::accessCheck(["registered_user"]);
         View::render("adminstration",[],$user_roles);
     }
+    public function notifications(){
+        $user_roles=Controller::accessCheck(["registered_user"]);
+        View::render("notification",[],$user_roles);
+    }
 
     public function profile(){
         (new RegisteredUserController)->view();
+    }
+    public function complaint(){
+        $user_roles=Controller::accessCheck(["admin"]);
+        View::render("admin",[],$user_roles);
+    }
+    public function systemFeedback(){
+        $user_roles=Controller::accessCheck(["admin"]);
+        View::render("systemFeedback",[],$user_roles);
     }
 }

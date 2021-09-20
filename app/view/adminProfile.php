@@ -15,7 +15,7 @@
 
 
 </head>
-
+<?php if($admin) include "nav.php"?>
 <body>
     <div class="profilecontainer">
         <div class="profilecontainer-top">
@@ -362,5 +362,7 @@
         }
     </script>
 </body>
+
+<?php include "footer.php"?>
 
 </html>

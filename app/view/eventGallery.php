@@ -137,6 +137,7 @@
         </div>
     </div>
 </body>
+
 <script>
     function addPhoto() {
         console.log("shiy");

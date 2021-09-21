@@ -161,7 +161,7 @@ p {
     p {
         margin: 0;
         white-space: nowrap;
-        overflow: scroll;
+        /*overflow: scroll;*/
         padding: 10px;
     }
 

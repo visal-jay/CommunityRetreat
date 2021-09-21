@@ -253,7 +253,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     <div class="data">
                         <a><?= $donation_capacity ?></a>
                     </div>
-                    <form action="/Event/updateDonationCapacity?event_id=<?= $_GET["event_id"] ?>" method="post"
+                    <form action="/Donations/updateDonationCapacity?event_id=<?= $_GET["event_id"] ?>" method="post"
                         id="donation-capacity">
                         <input name="donation_capacity" type="number" value="<?= $donation_capacity ?>"
                             min="<?= $donation_sum ?>" max="10000000" class=" form form-ctrl hidden" />
@@ -275,7 +275,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
 
 
             <?php if($donation_status==1){ ?>
-            <form action="/Event/disableDonation?event_id=<?= $_GET["event_id"] ?>" method="post"
+            <form action="/Donations/disableDonation?event_id=<?= $_GET["event_id"] ?>" method="post"
                 class=" secondary-donation-enable-disable-btn">
                 <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Disable
                     Donations</button>
@@ -283,7 +283,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
             <?php } ?>
 
             <?php if($donation_status==0){ ?>
-            <form action="/Event/enableDonation?event_id=<?= $_GET["event_id"] ?>" method="post"
+            <form action="/Donations/enableDonation?event_id=<?= $_GET["event_id"] ?>" method="post"
                 class=" secondary-donation-enable-disable-btn">
                 <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Enable
                     Donations</button>

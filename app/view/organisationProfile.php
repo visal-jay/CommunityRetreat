@@ -59,7 +59,7 @@
                     </div>
 
                     <!--username update form-->
-                    <form action="/Organisation/updateUsername" method="post" id="edit-user-profile-form">
+                    <form action="/User/updateUsername" method="post" id="edit-user-profile-form">
                         <div class="update-form" id="usernameupdater">
                             <div class="input-container">
                                 <label for="text" class="edit-coontainer">Enter new username:</label>
@@ -94,7 +94,7 @@
                     </div>
 
                     <!--mobile update form-->
-                    <form action="/Organisation/updateContactNumber" method="post" id="edit-user-profile-form">
+                    <form action="/User/updateContactNumber" method="post" id="edit-user-profile-form">
                         <div class="update-form" id="mobileupdater">
                             <div class="input-container">
 
@@ -174,7 +174,7 @@
                     </div>
 
                     <!--email update form-->
-                    <form action="/Organisation/updateEmail" method="post" id="edit-user-profile-form">
+                    <form action="/User/updateEmail" method="post" id="edit-user-profile-form">
                         <div class="update-form" id="emailupdater">
                             <div class="input-container">
                                 <label for="text">Enter new email:</label>
@@ -211,7 +211,7 @@
                     </div>
 
                     <!--password update form-->
-                    <form action="/Organisation/updatePassword" method="post" id="edit-user-profile-form">
+                    <form action="/User/updatePassword" method="post" id="edit-user-profile-form">
                         <div class="update-form" id="passwordupdater">
                             <div class="input-container">
 
@@ -315,7 +315,7 @@
             } else
 
                 $.ajax({
-                    url: "/Organisation/checkEmailAvailable",
+                    url: "/User/checkEmailAvailable",
                     type: "post",
                     dataType: 'json',
                     data: {

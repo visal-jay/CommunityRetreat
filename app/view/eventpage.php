@@ -211,6 +211,9 @@
 
 
 </body>
+
+<?php include "footer.php" ?>
+
 <script>
   
 

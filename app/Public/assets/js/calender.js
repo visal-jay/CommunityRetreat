@@ -16,83 +16,83 @@ const months = [
     
 ];
 
-let calender_data2 = [];
+// let calender_data2 = [];
 
-let event_details = renderEvents();
+// let event_details = renderEvents();
 
 
 
-for(let i=0 ; i<event_details.length ; i++ ){
+// for(let i=0 ; i<event_details.length ; i++ ){
 
-     calender_data2.push( [
-         {
+//      calender_data2.push( [
+//          {
              
-             date: event_details[i][0].day,
-             month: event_details[i][0].month,
-             event: [
-                 {
-                    event_id :  event_details[i][0].event_id,
-                     eventname:  event_details[i][0].event_name,
-                     organization:  event_details[i][0].organisation_username
-                 }
-             ]
-         }
-     ]);
-}
+//              date: event_details[i][0].day,
+//              month: event_details[i][0].month,
+//              event: [
+//                  {
+//                     event_id :  event_details[i][0].event_id,
+//                      eventname:  event_details[i][0].event_name,
+//                      organization:  event_details[i][0].organisation_username
+//                  }
+//              ]
+//          }
+//      ]);
+// }
 
 
 
-// let calender_data2 = [
-//     {
-//         date: 12,
-//         month: 9,
-//         event :[
-//             {
-//                 eventname : "<?= $array[0][event_name]?>", 
-//                 organization : "AIESEC in University of Colombo"
-//             },
-//             {
-//                 eventname : "Blood donation campaign",
-//                 organization : "GAVEL Club of University of Colombo"
-//             }
+let calender_data2 = [
+    {
+        date: 12,
+        month: 9,
+        event :[
+            {
+                eventname : "<?= $array[0][event_name]?>", 
+                organization : "AIESEC in University of Colombo"
+            },
+            {
+                eventname : "Blood donation campaign",
+                organization : "GAVEL Club of University of Colombo"
+            }
 
-//         ]
-//     },
-//     {
-//         date: 20,
-//         month: 9,
-//         event :[
-//             {
-//                 eventname : "Hello", 
-//                 organization :" Leo club"
-//             },
+        ]
+    },
+    {
+        date: 25,
+        month: 9,
+        event :[
+            {
+                eventname : "Hello", 
+                organization :" Leo club"
+            },
            
-//         ]
-//     },
-//     {
-//         date: 26,
-//         month: 9,
-//         event :[
-//             {
-//                 eventname : "Beach cleaning campaign", 
-//                 organization : "AIESEC in University of Colombo"
-//             },
-//             {
-//                 eventname : "Blood donation campaign",
-//                 organization : "GAVEL Club of University of Colombo"
-//             },
-//             {
-//                 eventname : "sramadana campaign",
-//                 organization : "Leo Club of Nilwala"
-//             }
+        ]
+    },
+    {
+        date: 2,
+        month: 9,
+        event :[
+            {
+                eventname : "Beach cleaning campaign", 
+                organization : "AIESEC in University of Colombo"
+            },
+            {
+                eventname : "Blood donation campaign",
+                organization : "GAVEL Club of University of Colombo"
+            },
+            {
+                eventname : "sramadana campaign",
+                organization : "Leo Club of Nilwala"
+            }
 
 
-//         ]
-//     },
+        ]
+    },
    
 
 
-// ]
+]
 
 
 const date = new Date();
@@ -183,7 +183,7 @@ const renderCalender = ()=>{
     
     for( let i=1; i<=lastday;i++){
         
-        const index  = calender_data2[1].findIndex((day) => day.date == i&& date.getMonth()==day.month-1);
+        const index  = calender_data2.findIndex((day) => day.date == i&& date.getMonth()==day.month-1);
 
        
         if(( i=== new Date().getDate()&& date.getMonth() === new Date().getMonth())&& (index != -1)){

@@ -1,3 +1,4 @@
+<?php if (!isset($_SESSION)) session_start(); ?>
 <!DOCTYPE html>
 <html lang="en" id="id1">
 
@@ -45,72 +46,62 @@ h1 {
     padding: 20px;
     margin: 20px;
 }
+.system-details-cards-container{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    padding: 5rem 0 5rem;
+    
+}
+.system-details-cards{
+    display: flex;
+    height: 300px;
+    width: 250px;
+    justify-content: space-between;
+    flex-direction: column;
+    text-align: center;
+
+}
 </style>
-
+<?php  include "nav.php" ?>
 <body>
-    <header class="header">
-        <div style="width: 20%;"><a class=" logo ">
-                <img src="/Public/assets/visal logo.png ">
-            </a>
-        </div>
-    </header>
-
-    <h1>Admin</h1>
-    <div style="display: flex;justify-content: center;flex-direction: column;">
-        <div style="text-align:center">
-            <search class="flex-row-to-col flex-center border-round">
-                <form action="" class="flex-row-to-col flex-center" style="display: flex;">
-                    <div class="search-bar" style="height:fit-content">
-                        <input type="search" class="form-ctrl clr-white" placeholder="Search">
-                        <button type="submit" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
-                    </div>
-
-                </form>
-            </search>
-        </div>
-
-        <div class="nav-secondary" style=" text-align:center">
-            <div class="nav-secondary-bar margin-lg" style="text-align: center;">
-                <a class="btn margin-side-md" style=" margin-bottom:10px;" href="">Complaints</a>
-                <a class="btn margin-side-md" style=" margin-bottom:10px;" href="">System Feedbacks</a>
+    <div class="system-details-cards-container">
+            <div class="system-details-cards">
+                <div>
+                    <img src="/Public/assets/org.png"style=" width: 200px; height: 200px;">
+                </div>  
+                    
+                    <h3>Total Number of Organizations</h3>
+                    <h2>20</h2>
+      
             </div>
-        </div>
-    </div>
+            <div  class="system-details-cards">
+                <div>
+                    <img src="/Public/assets/user.png"style=" width: 200px; height: 200px;">
+                </div>
+                    <h3>Total Number of Registered users</h3>
+                    <h2>130</h2>
+            </div>
 
+      </div>
 
     <div class="container">
 
-
-        <div class="card-container">
-            <div class="" style="font-size: 18px; display: flex; justify-content: space-between;">
-                <div style="display: flex; align-items: center;"><b>Total number of Organizations:</b></div>
-                <div><input type="text"
-                        style="border:none; margin:10px; font-weight: bold; font-size: 18px; text-align:center" name=""
-                        id="" value="17">
-                </div>
-            </div>
-        </div>
-        <div class="card-container">
-            <div class="" style="font-size: 18px; display: flex; justify-content: space-between;">
-                <div style="display: flex; align-items: center;"><b>Total number of Registered Users:</b></div>
-                <div><input type="text"
-                        style="border:none; margin:10px; font-weight: bold; font-size: 18px; text-align:center"
-                        class="bold" name="" id="" value="700"></div>
-            </div>
+      
+        <div class="center" style="text-align: center;display: flex; justify-content: center;">
+            <canvas id="myChart1" style="max-width:800px; margin: 50px;"></canvas>
         </div>
         <div class="center" style="text-align: center;display: flex; justify-content: center;">
             <canvas id="myChart" style="max-width:800px; margin: 50px;"></canvas>
         </div>
-        <div class="center" style="text-align: center;display: flex; justify-content: center;">
-            <canvas id="myChart1" style="max-width:800px; margin: 50px;"></canvas>
-        </div>
+      
     </div>
 </body>
-
+<?php include "footer.php" ?>
 <script>
-var xValues = ["Jan 2020", "Feb 2020", "Mar 2020", "Apr 2020", "May 2020", "Jun 2020", "Jul 2020", "Aug 2020",
-    "Sep 2020", "Oct 2020",
-    "Nov 2020", "Dec 2020"
+var xValues = ["Jan 2021", "Feb 2021", "Mar 2021", "Apr 2021", "May 2021", "Jun 2021", "Jul 2021", "Aug 2021",
+    "Sep 2021", "Oct 2021",
+    "Nov 2021", "Dec 2021"
 ];
 var yValues = [730, 810, 850, 920, 950, 980, 300, 510, 400, 500, 200, 700];
 
@@ -154,9 +145,9 @@ new Chart("myChart", {
 </script>
 
 <script>
-var xValues = ["Jan 2020", "Feb 2020", "Mar 2020", "Apr 2020", "May 2020", "Jun 2020", "Jul 2020", "Aug 2020",
-    "Sep 2020", "Oct 2020",
-    "Nov 2020", "Dec 2020"
+var xValues = ["Jan 2021", "Feb 2021", "Mar 2021", "Apr 2021", "May 2021", "Jun 2021", "Jul 2021", "Aug 2021",
+    "Sep 2021", "Oct 2021",
+    "Nov 2021", "Dec 2021"
 ];
 var yValues = [10, 15, 11, 12, 13, 18, 20, 14, 11, 19, 10, 17];
 
@@ -180,7 +171,7 @@ new Chart("myChart1", {
             yAxes: [{
                 scaleLabel: {
                     display: true,
-                    labelString: 'Registered users',
+                    labelString: 'Organizations',
                 },
                 ticks: {
                     min: 10,

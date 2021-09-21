@@ -141,10 +141,11 @@ class OrganisationController
 
 
     public function organizationalAdminProfileView(){
+        $user_roles=Controller::accessCheck(["organization"]);
         $organisation_admin=new Organisation();
         $uid=$_SESSION["user"]["uid"];
         $org_admin_details=$organisation_admin-> getAdminDetails($uid); 
-        View::render('organisationProfile',$org_admin_details);
+        View::render('organisationProfile',$org_admin_details,$user_roles);
 
     }
     public function updateUsername(){

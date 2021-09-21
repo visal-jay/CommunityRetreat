@@ -16,7 +16,7 @@ h3 {
 .background {
     align-items: center;
     justify-content: center;
-    height: 100%;
+    min-height: max-content;
     width: 100%;
 }
 
@@ -209,5 +209,5 @@ new Chart("myChart3", {
     }
 });
 </script>
-
+<?php include "footer.php"?>
 </html>

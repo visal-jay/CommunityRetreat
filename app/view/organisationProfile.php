@@ -13,9 +13,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>organization profile</title>
 </head>
-
+<?php if ($organization) include "nav.php" ?>
 <body class="body">
-<?php include "nav.php" ?>
+
     <div class="profilecontainer">
         <div class="profilecontainer-top">
 

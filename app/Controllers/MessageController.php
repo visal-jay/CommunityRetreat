@@ -5,17 +5,15 @@ class MessageController
 
     public function getMessages()
     {
-        echo json_encode((new Message)->getMessages($_SESSION["user"]["uid"], $_POST["uid"]));
+        $user=isset($_GET["event_id"]) ? "EVN" . $_GET["event_id"] : $_SESSION["user"]["uid"];
+        echo json_encode((new Message)->getMessages($user, $_POST["uid"]));
     }
 
     public function getChatList()
     {
-        //$_SESSION["user"]["uid"]="REG0000046";
         $message=new Message;
-        $results = $message->getChatList($_SESSION["user"]["uid"]);
-        //$results = $message->getChatList("REG0000046");
-        //var_dump($results);
-        //exit();
+        $chat_holder=isset($_GET["event_id"]) ? "EVN" . $_GET["event_id"] : $_SESSION["user"]["uid"];
+        $results = $message->getChatList($chat_holder);
         $data = array();
 
         foreach ($results as $result) {
@@ -37,11 +35,12 @@ class MessageController
                     $user=$result;
             }
             elseif ($user_type == "EVN"){
-                $user=substr($result, 2);
-                array_push($data, ["uid" => $result, "username" => ((new Events)->getDetails($user))["event_name"]]);
+                $user=substr($result, 3);
+                $event_details=(new Events)->getDetails($user);
+                array_push($data, ["uid" => $result, "username" => $event_details["event_name"],"photo" => $event_details["cover_photo"]]);
             }
             if(count($data)>0){
-                $data[count($data)-1] = array_merge($data[count($data)-1],($message->getLastMessage($_SESSION["user"]["uid"],$user))[0]);
+                $data[count($data)-1] = array_merge($data[count($data)-1],($message->getLastMessage($chat_holder,$result))[0]);
                 //var_dump($data);
             }
         }
@@ -50,6 +49,18 @@ class MessageController
 
 
     public function sendMessage(){
-        (new Message)->insertMessage($_SESSION["user"]["uid"],$_POST["reciever"],$_POST["message"]);
+        $user=isset($_GET["event_id"]) ? "EVN" . $_GET["event_id"] : $_SESSION["user"]["uid"];
+        (new Message)->insertMessage($user,$_POST["reciever"],$_POST["message"]);
+    }
+
+    public function newChat(){
+        $data=array();
+        $user_type = substr($_GET['new_chat_id'], 0, 3);
+        $user=substr($_GET['new_chat_id'], 3);
+        if ($user_type == "EVN"){
+            $event_details=(new Events)->getDetails($user);
+            array_push($data, ["uid" => $_GET['new_chat_id'], "username" => $event_details["event_name"],"photo" => $event_details["cover_photo"]]);
+        }
+        echo json_encode($data);
     }
 }

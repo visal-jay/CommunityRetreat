@@ -74,6 +74,32 @@ class BudgetController
         Controller::redirect("/Event/view",["page"=>'budget',"event_id"=> $_POST["event_id"]]);
 
     }
+
+    public function BudgetReport()
+    {
+        $budget = new Budget();
+        $income_report = $budget->IncomeReportGenerate($_GET["event_id"]);
+        $expense_report = $budget->ExpenseReportGenerate($_GET["event_id"]);
+
+        $data["report"] = $expense_report;
+        array_push($data["report"], ...$income_report);
+        usort($data["report"], function ($a, $b) {
+            return $a['date'] <=> $b['date'];
+        });
+        $data["income_report"] = $income_report;
+        $data["expense_report"] = $expense_report;
+        $current_report = array();
+        foreach ($data["report"] as $report) {
+            if ($report["status"] == 'current') {
+                array_push($current_report, $report);
+            }
+        }
+        $data["report"] = $current_report;
+        $data["income_sum"] = $budget->getIncomeSum($_GET["event_id"]);
+        $data["expense_sum"]  = $budget->getExpenseSum($_GET["event_id"]);
+        $data["event_name"]  = (new Events)->getDetails($_GET["event_id"])["event_name"];
+        View::render('budgetReport', $data);
+    }
     
     /*public function BudgetReportGenerate(){
         $budget = new Budget();

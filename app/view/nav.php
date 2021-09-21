@@ -34,20 +34,20 @@
 
             <?php if ($registered_user) { ?>
                 <a class="nav-link margin-side-md" href="/User/home">Home</a>
-                <a class="nav-link margin-side-md" href="/User/calendar">Calender</a>
-                <a class="nav-link margin-side-md" href="/User/administratored">Administrated</a>
-                <a class="nav-link margin-side-md" href="# "></a>
+                <a class="nav-link margin-side-md" href="/RegisteredUser/calendar">Calender</a>
+                <a class="nav-link margin-side-md" href="/RegisteredUser/administratored">Administrated</a>
+                <a class="nav-link margin-side-md" href="/RegisteredUser/chatApp">Chats</a>
             <?php } ?>
 
             <?php if ($organization) { ?>
-                <a class="nav-link margin-side-md" href="/Organisation/dashboard ">Home</a>
+                <a class="nav-link margin-side-md" href="/User/home">Home</a>
                 <a class="nav-link margin-side-md" href="/Organisation/events">Events</a>
                 <a class="nav-link margin-side-md" href="/Organisation/gallery">Gallery</a>
                 <a class="nav-link margin-side-md" href="/Organisation/report">Statistics</a>
             <?php } ?>
 
             <?php if ($admin) { ?>
-                <a class="nav-link margin-side-md" href="/view/adoption_listing.php ">complaints</a>
+                <a class="nav-link margin-side-md" href="/User/home">Home</a>
             <?php } ?>
 
             <?php if ($guest_user && !$organization && !$registered_user && !$admin) { ?>
@@ -65,9 +65,9 @@
             <div class="nav-drop-down-list hidden">
                 <div class="flex-col">
                     <?php if ($organization) { ?>
-                        <a href="/Organisation/organizationalAdminProfileView" class="nav-link margin-md"><i class="far fa-user"></i>&nbsp; Profile</a>
+                        <a href="/Organisation/profile" class="nav-link margin-md"><i class="far fa-user"></i>&nbsp; Profile</a>
                     <?php } elseif ($registered_user) { ?>
-                        <a href="/RegisteredUser/view" class="nav-link margin-md"><i class="far fa-user"></i>&nbsp; Profile</a>
+                        <a href="/RegisteredUser/profile" class="nav-link margin-md"><i class="far fa-user"></i>&nbsp; Profile</a>
                     <?php } ?>
                     <a href="/Login/logout" class="nav-link margin-side-md" ><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</a>
                 </div>

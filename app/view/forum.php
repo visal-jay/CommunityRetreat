@@ -123,14 +123,12 @@
     }
 
     textarea {
-        min-height: 200px;
+        min-height: 400px;
         padding: 12px 20px;
-        box-sizing: border-box;
         border: 2px solid #ccc;
         border-radius: 4px;
         background-color: #f8f8f8;
         font-size: 16px;
-        resize: none;
     }
 
     .card-container {
@@ -186,11 +184,11 @@
                         <description class="margin-md"><?= $announcement["announcement"] ?></description>
 
                         <update class="margin-md">
-                            <button class="btn margin-side-md" onclick="edit(); editForm('<?= $announcement['title'] ?>','<?= $announcement['announcement'] ?>','<?= $announcement['announcement_id'] ?>'); togglePopup('edit-form'); blur_background('background'); stillBackground('id1')"><i class="btn-icon far fa-edit margin-side-md"></i>&nbsp;Edit</button>
-                            <button class="btn clr-red border-red " onclick="remove()" required style="font-family:Ubuntu, sans-serif,  FontAwesome"> &#xf2ed; &nbsp;Remove </button>
+                            <button class="btn btn-small margin-side-md" onclick="edit(); editForm('<?= $announcement['title'] ?>','<?= $announcement['announcement'] ?>','<?= $announcement['announcement_id'] ?>'); togglePopup('edit-form'); blur_background('background'); stillBackground('id1');"> <i class="btn-icon far fa-edit margin-side-md"></i>&nbsp;Edit</button>
+                            <button class="btn btn-small clr-red border-red " onclick="remove()" required style="font-family:Ubuntu, sans-serif,  FontAwesome"> &#xf2ed; &nbsp;Remove </button>
                             <div class="flex-row flex-space" style="display: none;">
                                 <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
-                                <form method="post" action="/Event/deleteAnnouncement?event_id=<?= $_GET["event_id"] ?>" class="flex-row flex-center">
+                                <form method="post" action="/Forum/deleteAnnouncement?event_id=<?= $_GET["event_id"] ?>" class="flex-row flex-center">
                                     <input name="announcement_id" class="hidden" value="<?= $announcement["announcement_id"] ?>">
                                     <button class="btn-icon flex-row flex-center"><i type="submit" class="fas fa-check clr-green margin-side-md"></i>&nbsp;</button>
                                 </form>
@@ -207,7 +205,7 @@
     <?php if ($organization || $moderator) { ?>
         <div class="popup" id="form">
             <div class="content">
-                <form action="/Event/addAnnouncement?event_id=<?= $_GET["event_id"] ?>" method="post" class="form-container">
+                <form action="/Forum/addAnnouncement?event_id=<?= $_GET["event_id"] ?>" method="post" class="form-container">
                     <div>
                         <h3 class="margin-md">New Announcement</h3>
                     </div>
@@ -219,7 +217,7 @@
 
                     <div class="form-item">
                         <label>Announcement</label>
-                        <textarea name="announcement" class="form-ctrl" placeholder="Enter announcement" required></textarea>
+                        <textarea name="announcement" id="editor" class="form-ctrl" placeholder="Enter announcement"></textarea>
                     </div>
 
                     <button class="btn btn-solid margin-md" type="submit">Post</button>
@@ -235,7 +233,7 @@
     <?php if ($organization || $moderator) { ?>
         <div class="popup" id="edit-form">
             <div class="content">
-                <form action="/Event/editAnnouncement?event_id=<?= $_GET["event_id"] ?>" method="post" class="form-container">
+                <form action="/Forum/editAnnouncement?event_id=<?= $_GET["event_id"] ?>" method="post" class="form-container">
 
                     <div class="form-item">
                         <label>Title</label>
@@ -257,7 +255,25 @@
         </div>
     <?php } ?>
 </body>
-
+<script src="/Libararies/ckeditor5-29.2.0/packages/ckeditor5-build-classic/build/ckeditor.js"></script>
+<script>
+    ClassicEditor
+    .create( document.querySelector( '#editor' ), {
+        toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList' ],
+        viewportTopOffset: 30,
+    shouldNotGroupWhenFull: true,
+        heading: {
+            options: [
+                { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
+            ]
+        }
+    } )
+    .catch( error => {
+        console.log( error );
+    } );
+</script>
 <script>
     function togglePopup(id) {
         document.getElementById(id).classList.toggle("active");

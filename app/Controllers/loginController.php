@@ -7,15 +7,8 @@ class LoginController
 
     function view()
     {
-        if(isset($_SESSION["user"])){
-            $user_type = $_SESSION["user"]["user_type"];
-            if ($user_type == "organization")
-                Controller::redirect("/Organisation/dashboard");
-            elseif ($user_type == "registered_user")
-                Controller::redirect("/User/home");
-            elseif ($user_type == "admin")
-                Controller::redirect("/view/organisationDashboard.php");
-        }
+        if(isset($_SESSION["user"]))
+            Controller::redirect("/User/home");
 
         $user_roles=Controller::accessCheck(["guest_user"]);
         $_GET["signup"] = isset($_GET["signup"]) ? true : false;
@@ -79,14 +72,7 @@ class LoginController
         if ($user_details = $user->authenticate($email, $password)) {
             $user_details["username"]=$user->getUsername($user_details["uid"]);
             $_SESSION["user"] = array_intersect_key($user_details, ["uid" => '', "user_type" => '',"username"=>'']);
-            $user_type = $user_details["user_type"];
-
-            if ($user_type == "organization")
-                Controller::redirect("/Organisation/dashboard");
-            elseif ($user_type == "registered_user")
-                Controller::redirect("/User/home");
-            elseif ($user_type == "admin")
-                Controller::redirect("/view/organisationDashboard.php");
+            Controller::redirect("/User/home");
         } 
         else (new LoginController)->loginFailed($email);
     }

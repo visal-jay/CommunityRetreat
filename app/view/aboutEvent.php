@@ -315,7 +315,7 @@
                             <h4 class="head-margin"><?= $donations ?> people donated</h4>
                         </div>
                     </div>
-
+                    <button class="btn btn-solid" onclick="window.location.href='/RegisteredUser/chatApp?new_chat_id=<?= 'EVN'.$_GET['event_id']?>'">Chat with us</button>
 
                     <div class="textbox flex-col content border-round margin-md" style="background-color: #eeeeee">
                         <h3 class="margin-lg">Description</h3>
@@ -330,7 +330,6 @@
                 <?php } ?>
 
             </div>
-
             <?php if ($volunteer_status == 1) { ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d">
                     <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
@@ -344,7 +343,7 @@
             <?php if ($donation_status == 1) { ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d; text-align:center">
                     <p style="color:white">Would you like to give value to your hard-earned money by contributing to this community service project?</p>
-                    <div class="progress" data-width="<?php if ($donation_percent == NULL) echo "0";else $dotaion_percent ?>%">
+                    <div class="progress" data-width="<?php if ($donation_percent==NULL) echo "0";else echo $donation_percent ?>%">
                         <div class="donaters-progress-bar"></div>
                     </div>
                     <button class="btn clr-green margin-md" onclick="togglePopup('form'); blur_background('background');stillBackground('id1')"><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>

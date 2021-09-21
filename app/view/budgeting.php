@@ -206,39 +206,17 @@ p {
 }
 </style>
 
-<?php 
-if(!isset($moderator)) $moderator= false;
-if(!isset($treasurer)) $treasurer= false;
-$organization = $admin =$registered_user = $guest_user = false;
-
-if(isset($_SESSION ["user"] ["user_type"])){
-    if($_SESSION ["user"] ["user_type"] == "organization"){
-        $organization = true;
-    }
-    
-    if($_SESSION ["user"] ["user_type"] == "admin"){
-        $admin = true;
-    }
-
-    if($_SESSION ["user"] ["user_type"] == "registered_user"){
-        $registered_user = true;
-    }
-    
-}else{
-    $guest_user= true;
-}
-?>
 
 <body>
     <div class="container flex-col flex-center" id="container">
         <div class="income-expenxe-balance-container">
             <div class="bold sum flex-row">
                 <div>Sum of Incomes :</div>
-                <div><?php echo 'Rs. '.number_format($income_sum, 3) ?></div>
+                <div><?php echo 'Rs. '.number_format($income_sum, 2) ?></div>
             </div>
             <div class="bold sum flex-row">
                 <div>Sum of Expenses :</div>
-                <div><?php echo 'Rs. '.number_format($expense_sum, 3) ?></div>
+                <div><?php echo 'Rs. '.number_format($expense_sum, 2) ?></div>
             </div>
             <div id="balance" class="bold sum flex-row">
             </div>

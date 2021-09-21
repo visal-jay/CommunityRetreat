@@ -10,16 +10,19 @@
     padding:50px 0px 20px 0px;
     color: #16c79a;
 }
+
 .notifications-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    top: 0%;
+    margin: auto;
+    min-height: 100%;
+    width: 100%;
 }
+
 .notifications-form{
     width: 80%;
     display:flex;
     flex-direction: column;
-    justify-content: center;
+    margin: auto;
     align-items: center;
     background-color: #eeeeee;
     border-radius: 10px;
@@ -27,7 +30,7 @@
 
 }
 .notificationbar{
-    width:80%;
+    width:50%;
     display: flex;
     flex-direction: row;
     justify-content: center;

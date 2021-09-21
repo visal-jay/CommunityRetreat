@@ -88,6 +88,7 @@
         color: gray;
         background-color: gray;
     }
+  
 
     @media screen and (max-width:767px) {
 
@@ -196,6 +197,8 @@
         </div>
     </div>
 </body>
+
+
 
 <script>
     function add() {

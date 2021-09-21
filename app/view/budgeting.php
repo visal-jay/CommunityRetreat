@@ -161,7 +161,7 @@ p {
     p {
         margin: 0;
         white-space: nowrap;
-        overflow: scroll;
+        /*overflow: scroll;*/
         padding: 10px;
     }
 
@@ -234,11 +234,11 @@ if(isset($_SESSION ["user"] ["user_type"])){
         <div class="income-expenxe-balance-container">
             <div class="bold sum flex-row">
                 <div>Sum of Incomes :</div>
-                <div><?= $income_sum ?></div>
+                <div><?php echo 'Rs. '.number_format($income_sum, 3) ?></div>
             </div>
             <div class="bold sum flex-row">
                 <div>Sum of Expenses :</div>
-                <div><?= $expense_sum ?></div>
+                <div><?php echo 'Rs. '.number_format($expense_sum, 3) ?></div>
             </div>
             <div id="balance" class="bold sum flex-row">
             </div>
@@ -278,11 +278,11 @@ if(isset($_SESSION ["user"] ["user_type"])){
             <?php foreach($incomes as $income){ ?>
             <div class=" card-container">
                 <p><?= $income["details"] ?></p>
-                <p><?= $income["amount"] ?></p>
+                <p><?php echo 'Rs. '.number_format($income["amount"], 3) ?></p>
                 <div class="flex-row">
                     <div>
                         <button class="btn btn-solid update-delete-btn "
-                            onclick="togglePopup('update-form','<?= $income['details'] ?>', '<?= $income['amount'] ?>', '<?= $income['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
+                            onclick="togglePopup('update-form','<?= $income['details'] ?>', '<?echo 'Rs. '.number_format($income['amount'], 3)?>', '<?= $income['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
                     </div>
                     <form action="/Budget/delete?" method="post">
                         <input type="text" class="hidden" name="record_id" value="<?= $income['record_id'] ?>">
@@ -327,11 +327,11 @@ if(isset($_SESSION ["user"] ["user_type"])){
             <?php foreach($expenses as $expense) { ?>
             <div class="card-container">
                 <p><?= $expense["details"] ?></p>
-                <p><?= $expense["amount"] ?></p>
+                <p><?php echo 'Rs. '.number_format($expense["amount"], 3) ?></p>
                 <div class="flex-row">
                     <div>
                         <button class="btn btn-solid update-delete-btn "
-                            onclick="togglePopup('update-form','<?= $expense['details'] ?>', '<?= $expense['amount'] ?>', '<?= $expense['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
+                            onclick="togglePopup('update-form','<?= $expense['details'] ?>', '<?php echo 'Rs. '.number_format($expense['amount'], 3) ?>', '<?= $expense['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
                     </div>
                     <form action="/Budget/delete?" method="post">
                         <input type="text" class="hidden" name="record_id" value="<?= $expense['record_id'] ?>">

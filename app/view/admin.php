@@ -50,8 +50,7 @@
         height: 700px;
         transition: height, 0.3s linear;
     }
-
-
+ 
     .event-card-details {
         display: flex;
         flex-direction: row;
@@ -79,23 +78,75 @@
     ::-webkit-scrollbar-thumb:hover {
         background: #16c79a;
     }
+
     
 </style>
-<?php include "nav.php" ?>
+<?php if($admin) include "nav.php" ?>
 
 <body>
-    <div class="flex-col flex-center margin-side-lg">
+    <div class="flex-col flex-center margin-side-lg " >
         <h1>Complaints</h1>
-        <div class="margin-side-lg card-container">
+        <div class="margin-side-lg card-container" style="margin-top: 2rem;">
             <div class="event-card-details flex-col">
                 <div class="margin-side-md">
-                    <h3>Organisatione name</h3>
+                    <h3>Embark</h3>
                 </div>
                 <div class="margin-side-md">
-                    <h4>By: Username</h4>
+                    <h4>By: Venodi widanagamage</h4>
                 </div>
                 <div class="margin-side-md">
-                    <h4>Date: 2018.09.20</h4>
+                    <h4>Date: 2021.08.20</h4>
+                </div>
+                <div class="margin-side-md">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptatem numquam laboriosam quaerat nisi repellat, nam temporibus molestias maxime eum iste velit officia deserunt recusandae voluptatum molestiae nihil ipsam et.</p>
+                </div>
+                <div class="flex-col flex-center margin-md"><button class="btn ">Viewed</button></div>
+            </div>
+        </div>
+        <div class="margin-side-lg card-container" style="margin-top: 2rem;">
+            <div class="event-card-details flex-col">
+                <div class="margin-side-md">
+                    <h3>Aiesec</h3>
+                </div>
+                <div class="margin-side-md">
+                    <h4>By: Sasheen samarajeewa</h4>
+                </div>
+                <div class="margin-side-md">
+                    <h4>Date: 2021.08.12</h4>
+                </div>
+                <div class="margin-side-md">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptatem numquam laboriosam quaerat nisi repellat, nam temporibus molestias maxime eum iste velit officia deserunt recusandae voluptatum molestiae nihil ipsam et.</p>
+                </div>
+                <div class="flex-col flex-center margin-md"><button class="btn ">Viewed</button></div>
+            </div>
+        </div>
+        <div class="margin-side-lg card-container " style="margin-top: 2rem;">
+            <div class="event-card-details flex-col">
+                <div class="margin-side-md">
+                    <h3>Leo Club</h3>
+                </div>
+                <div class="margin-side-md">
+                    <h4>By: Nirmal ilamgamge</h4>
+                </div>
+                <div class="margin-side-md">
+                    <h4>Date: 2021.08.10</h4>
+                </div>
+                <div class="margin-side-md">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptatem numquam laboriosam quaerat nisi repellat, nam temporibus molestias maxime eum iste velit officia deserunt recusandae voluptatum molestiae nihil ipsam et.</p>
+                </div>
+                <div class="flex-col flex-center margin-md"><button class="btn ">Viewed</button></div>
+            </div>
+        </div>
+        <div class="margin-side-lg card-container" style="margin-top: 2rem;">
+            <div class="event-card-details flex-col">
+                <div class="margin-side-md">
+                    <h3>RevolUX</h3>
+                </div>
+                <div class="margin-side-md">
+                    <h4>By: Venodi widanagamage</h4>
+                </div>
+                <div class="margin-side-md">
+                    <h4>Date: 2021.08.2</h4>
                 </div>
                 <div class="margin-side-md">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptatem numquam laboriosam quaerat nisi repellat, nam temporibus molestias maxime eum iste velit officia deserunt recusandae voluptatum molestiae nihil ipsam et.</p>
@@ -104,8 +155,9 @@
             </div>
         </div>
     </div>
+    
 </body>
-
+<?php include "footer.php"?>
 <script>
     function addEvent() {
         document.querySelector(".form").classList.toggle("show-form");

@@ -430,6 +430,7 @@ if (isset($_SESSION["user"]["user_type"])) {
 
 
 </body>
+
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
 
 <script>

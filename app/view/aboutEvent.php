@@ -334,6 +334,7 @@
                 <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d">
                     <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
                     <div class="progress" data-width="<?php if ($volunteer_percent == NULL) echo "0";else $volunteer_percent ?>%">
+                   
                         <div class="volunteers-progress-bar"></div>
                     </div>
                     <button class="btn clr-green margin-md"><i class="fas fa-user-friends"></i>&nbsp;I want to volunteer</button>
@@ -419,7 +420,7 @@
 
 </body>
 
-<?php include "footer.php" ?>
+
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
 

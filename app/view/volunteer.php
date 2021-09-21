@@ -308,10 +308,11 @@
     </div>
     <?php if ($volunteer_status == 0 && count($volunteers) == 0) { ?>
         <div class="initial-donation-enable-btn">
-            <button class="btn btn-lg btn-solid" id="initial-volunteer-enable-btn" onclick="myFunction()">Enable Volunteers</button>
+            <button onclick="window.location.href='/Event/enableVolunteering?event_id=<?= $_GET['event_id'] ?>'" class="btn btn-lg btn-solid" id="initial-volunteer-enable-btn" onclick="myFunction()">Enable Volunteers</button>
         </div>
     <?php } ?>
 </body>
+
 
 <script>
     function myFunction() {

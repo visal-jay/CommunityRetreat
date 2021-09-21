@@ -339,7 +339,7 @@ header .logo img {
   margin-bottom: 0.5rem;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
   .more-btn {
     display: block;
   }

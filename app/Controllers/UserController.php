@@ -31,6 +31,10 @@ class UserController{
             $controller="RegisteredUser";
         return $controller;
     }
+    public function notifications(){
+        $user_roles=Controller::accessCheck(["registered_user"]);
+        View::render("notification",[],$user_roles);
+    }
 
      public function updatePassword(){
         $controller=$this->getController();
@@ -111,4 +115,12 @@ class UserController{
         echo json_encode(array("taken"=>(new User)->checkUserEmail($_POST["email"])));
     }
 
+    public function complaint(){
+        $user_roles=Controller::accessCheck(["admin"]);
+        View::render("admin",[],$user_roles);
+    }
+    public function systemFeedback(){
+        $user_roles=Controller::accessCheck(["admin"]);
+        View::render("systemFeedback",[],$user_roles);
+    }
 }

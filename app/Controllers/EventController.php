@@ -76,9 +76,6 @@ class EventController
     }
 
 
-
-    
-
     public function volunteers($event_details)
     {
         (new VolunteerController)->view($event_details);

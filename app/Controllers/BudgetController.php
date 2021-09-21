@@ -72,7 +72,6 @@ class BudgetController
             $budget->deleteExpense($_POST); 
         }
         Controller::redirect("/Event/view",["page"=>'budget',"event_id"=> $_POST["event_id"]]);
-
     }
 
     public function BudgetReport()

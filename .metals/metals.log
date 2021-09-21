@@ -244,3 +244,11 @@ INFO: Unsupported notification method: $/setTrace
 [0m2021.09.19 14:07:15 INFO  time: initialize in 0.66s[0m
 [0m2021.09.19 14:07:20 WARN  Build server is not auto-connectable.[0m
 [0m2021.09.19 14:07:20 WARN  no build tool detected in workspace 'C:\wamp64\www\CommunityRetreat\Group-16'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.09.20 14:44:47 INFO  Started: Metals version 0.10.7 in workspace 'C:\wamp64\www\CommunityRetreat\Group-16' for client Visual Studio Code 1.60.1.[0m
+[0m2021.09.20 14:44:50 INFO  time: initialize in 2.77s[0m
+[0m2021.09.20 14:44:56 WARN  Build server is not auto-connectable.[0m
+[0m2021.09.20 14:44:56 WARN  no build tool detected in workspace 'C:\wamp64\www\CommunityRetreat\Group-16'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.09.21 10:12:49 INFO  Started: Metals version 0.10.7 in workspace 'C:\wamp64\www\CommunityRetreat\Group-16' for client Visual Studio Code 1.60.1.[0m
+[0m2021.09.21 10:12:50 INFO  time: initialize in 0.64s[0m
+[0m2021.09.21 10:12:55 WARN  Build server is not auto-connectable.[0m
+[0m2021.09.21 10:12:55 WARN  no build tool detected in workspace 'C:\wamp64\www\CommunityRetreat\Group-16'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m

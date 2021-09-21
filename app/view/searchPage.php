@@ -211,7 +211,7 @@
         height: 400px;
     }
 
-    .map-index{
+    .map-index {
         z-index: -1;
     }
 
@@ -287,9 +287,9 @@
                 <button type="button" class="btn btn-solid margin-md" onclick="document.getElementById('map-container').classList.toggle('hidden');resizeMap();">Search by location</button>
                 <div class="flex-row flex-center margin-md">
                     <label>Date: &nbsp; </label>
-                    <input type="text" id="calendar-input"  class="hidden" value="" onchange="search();">
+                    <input type="text" id="calendar-input" class="hidden" value="" onchange="search();">
                     <div style="position: relative;">
-                        <button type="button" class="btn" onclick="calendarShow();" style="border: 1px solid #ccc;color:black">year-month-date &nbsp;<i class="far fa-calendar-alt"></i></button>
+                        <button type="button" class="btn" id="calendar-button" onclick="calendarShow();" style="border: 1px solid #ccc;color:black">year-month-date &nbsp;<i class="far fa-calendar-alt"></i></button>
                         <div style="position: absolute; top:40px; left:-50px;" class="hidden" id="search-input-calendar">
                             <?php include "calendarInput.php" ?>
                         </div>
@@ -338,8 +338,14 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
 <script>
+    document.addEventListener("click", (evt) => {
+        let calendar=document.querySelector("#search-input-calendar");
+        let calendar_button =document.getElementById("calendar-button");
+        if (calendar!==evt.target && !calendar.contains(evt.target) && !calendar.classList.contains("hidden") && evt.target!=calendar_button)
+            calendarShow();
+    });
 
-    function calendarShow(){
+    function calendarShow() {
         document.getElementById('search-input-calendar').classList.toggle('hidden');
         document.getElementById("map-container").classList.toggle('map-index');
         document.querySelector('.grid').classList.toggle('map-index');
@@ -378,22 +384,23 @@
         );
     }
 
-    async function search() {
+    async function search(latitude = "", longitude = "", range = "") {
 
-        const position = await getCoordinates();
-        let latitude = position.coords.latitude;
-        let longitude = position.coords.longitude;
+        if (latitude == "" || longitude == "") {
+            const position = await getCoordinates();
+            latitude = position.coords.latitude;
+            longitude = position.coords.longitude;
+        }
 
         var name = document.getElementById("in-search").value;
-        var mode = (document.getElementById("mode").value);
-        var range = range;
+        var mode = document.getElementById("mode").value;
         var date = document.getElementById("calendar-input").value;
         var sort = document.getElementById("sort").value == "Sort by" ? "" : document.getElementById("sort").value;
         var way = document.getElementById("way").value == "Sort" ? "" : document.getElementById("way").value;
 
 
         let parent_container = document.querySelector('events');
-        
+
 
         $.ajax({
             url: "/Search/searchAll", //the page containing php script
@@ -412,6 +419,7 @@
             },
             success: function(result) {
                 parent_container.innerHTML = "";
+                hideMarkers();
                 result.forEach(evn => {
                     let template = `
                     <figure onclick="location.href = '/event/view?page=about&&event_id=${evn.event_id}' ">
@@ -458,10 +466,34 @@
                     </figure>
                     `;
                     parent_container.appendChild(createElementFromHTML(template));
+                    if (evn.longitude != null || evn.latitude != null) {
+
+                        const infowindow = new google.maps.InfoWindow({
+                            content: template,
+                        });
+                        let pos = {
+                            lat: evn.latitude,
+                            lng: evn.longitude
+                        }
+                        let marker = new google.maps.Marker({
+                            position: pos,
+                            map,
+                            title: evn.event_name,
+                        });
+
+                        markers.push(marker);
+
+                        marker.addListener("click", () => {
+                            infowindow.open({
+                                anchor: marker,
+                                map,
+                                shouldFocus: false,
+                            });
+                        });
+                    }
                 });
             }
         });
-        Nearsearch(latitude, longitude);
         if (!(range || mode || date || sort || way))
             orgSearch(name);
     }
@@ -498,27 +530,15 @@
         });
     }
 
-    window.onload = search;
     document.getElementById("in-search").addEventListener('keyup', debounce(search, 100));
-
 
     function choices() {
         document.getElementsByTagName("choices")[0].classList.toggle("show-choices");
     }
 
-
-
-    function getCoordinates() {
-        return new Promise(
-            function(resolve, reject) {
-                navigator.geolocation.getCurrentPosition(resolve, reject);
-            }
-        );
-    }
-
-
     var map;
     var markers = [];
+
     async function initMap() {
         const position = await getCoordinates();
         let latitude = position.coords.latitude;
@@ -550,106 +570,9 @@
 
         map.addListener("center_changed", () => {
             let latlang = map.getCenter();
-            Nearsearch(latlang.lat(), latlang.lng());
+            search(latlang.lat(), latlang.lng());
         });
-        Nearsearch(latitude, longitude);
-    }
-
-    async function Nearsearch(latitude, longitude) {
-        var range = 1000;
-        var date = document.getElementById("calendar-input").value;
-        var sort = document.getElementById("sort").value == "Sort by" ? "" : document.getElementById("sort").value;
-        var way = document.getElementById("way").value == "Sort" ? "" : document.getElementById("way").value;
-        hideMarkers();
-        $.ajax({
-            url: "/Search/searchAll", //the page containing php script
-            type: "post", //request type,
-            dataType: 'json',
-            data: {
-                latitude: latitude,
-                longitude: longitude,
-                distance: range,
-                start_date: date,
-                order_type: sort,
-                way: way,
-                status: 'published',
-            },
-            success: function(result) {
-
-                if (result.length == 0)
-                    return;
-                else
-                    result.forEach(evn => {
-                        let template = `
-                    <figure onclick="location.href = '/event/view?page=about&&event_id=${evn.event_id}' ">
-                        <div class="content">
-                            <div class="photo-container"><img src="${evn.cover_photo}" style="object-fit: cover;" alt="">
-                                <div class="stats">
-                                <div>
-                                    <span>Volunteered ${evn.volunteered==null ? 0 : Math.round(evn.volunteer_percent)}%</span>
-                                    <br>
-                                    <span>Donations ${evn.dotaion_percent==null ? 0 : Math.round(evn.dotaion_percent)}%</span>
-                                    <br>
-                                    <span>Distance ${evn.distance==null ? "- " : Math.round(evn.distance)} KM</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="margin-md" style="margin-bottom:0;color:white;padding:4px;background-color:#F67280;border-radius:15px;text-align:center;font-size:0.85em;">Event</p>
-                            <p class="margin-md" style="margin-bottom:0;"><b>${evn.event_name}</b></p>
-                            <p class="margin-md about" style="margin-top:0">${evn.start_date}</p>
-                            <div class="flex-col margin-side-md" >
-                                <div class ="flex-row" style="justify-content:space-between;align-items:center;">
-                                <p>Donations</p>
-                                <p>${evn.donation_status==0 ? '<i class="fas fa-times fa-xs clr-red margin-side-md"></i>' : '<i class="fas fa-check fa-xs clr-green margin-side-md"></i>'}</p>
-                                </div>
-                                <div class ="flex-row" style="justify-content:space-between;align-items:center;">
-                                <div style="display:flex;align-items:center;position:relative;width:100%;"><div style="border-radius:6px;position:absolute;width:${(evn.donation_percent==null || evn.donation_percent<5) ? 5 : Math.round(evn.donation_percent)}%;background-color:#FFB319;height:6px;"></div></div>
-                                <p>${evn.donation_percent==null ? 0 : Math.round(evn.donation_percent)}%</p>
-
-                                </div>
-                            </div>
-                            <div class="flex-col margin-side-md">
-                                <div class ="flex-row" style="justify-content:space-between;align-items:center;">
-                                <p>Volunteered</p>
-                                <p>${evn.volunteer_status==0 ? '<i class="fas fa-times fa-xs clr-red margin-side-md"></i>' : '<i class="fas fa-check fa-xs clr-green margin-side-md"></i>'}</p>
-                                </div>
-                                <div class ="flex-row" style="justify-content:space-between;align-items:center;">
-                                <div style="display:flex;align-items:center;position:relative;width:100%;"><div style="border-radius:6px;position:absolute;width:${(evn.volunteer_percent==null || evn.volunteer_percent<5) ? 5 : Math.round(evn.volunteer_percent)}%;background-color:#8236CB;height:6px;"></div></div>
-                                <p>${evn.volunteer_percent==null ? 0 : Math.round(evn.volunteer_percent)}%</p>
-                                </div>
-                            </div>
-                            <div>
-                                <p class="margin-md about">${evn.about}</p>
-                            </div>
-                        </div>
-                    </figure>
-                    `;
-                        const infowindow = new google.maps.InfoWindow({
-                            content: template,
-                        });
-
-                        let pos = {
-                            lat: evn.latitude,
-                            lng: evn.longitude
-                        }
-                        let marker = new google.maps.Marker({
-                            position: pos,
-                            map,
-                            title: evn.event_name,
-                        });
-
-                        markers.push(marker);
-
-                        marker.addListener("click", () => {
-                            infowindow.open({
-                                anchor: marker,
-                                map,
-                                shouldFocus: false,
-                            });
-                        });
-                    });
-            }
-        });
+        search(latitude, longitude);
     }
 
     function hideMarkers() {
@@ -671,6 +594,8 @@
         document.getElementById("map").style.width = parseInt(document.getElementById("map-container").offsetWidth) + "px";
     }
     window.addEventListener("resize", resizeMap);
+    window.onload=resizeMap;
+
 </script>
 
 

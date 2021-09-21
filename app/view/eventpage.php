@@ -184,6 +184,7 @@
             <?php if ($organization || $moderator) { ?>
                 <a class="btn margin-side-md <?php if ($page == "volunteers") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=volunteers&&event_id=<?= $_GET["event_id"] ?>">Volunteers</a>
                 <a class="btn margin-side-md <?php if ($page == "timeline") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=timeline&&event_id=<?= $_GET["event_id"] ?>">Work Timeline</a>
+                <a class="btn margin-side-md <?php if ($page == "chat") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=chat&&event_id=<?= $_GET["event_id"] ?>">Chat</a>
             <?php } ?>
             <?php if($organization || $treasurer){ ?>
             <a class="btn margin-side-md <?php if($page=="budget") echo "nav-active";?>" style=" margin-bottom:10px;" href="/Event/view?page=budget&&event_id=<?= $_GET["event_id"]?>">Budget</a>
@@ -205,7 +206,7 @@
     elseif(isset($_GET["page"]) && $_GET["page"]=="timeline") require __DIR__ . "/workTimeline.php";
     elseif(isset($_GET["page"]) && $_GET["page"]=="donations") require __DIR__ . "/donateDetails.php";
     elseif(isset($_GET["page"]) && $_GET["page"]=="volunteers") require __DIR__ . "/volunteer.php";
-    elseif(isset($_GET["page"]) && $_GET["page"]=="volunteers") require __DIR__ . "/timeline.php";
+    elseif(isset($_GET["page"]) && $_GET["page"]=="chat") require __DIR__ . "/chat/chatApp.php";
 
     ?>
 

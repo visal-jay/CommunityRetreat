@@ -41,7 +41,7 @@
             <?php } ?>
 
             <?php if ($organization) { ?>
-                <a class="nav-link margin-side-md" href="/Organisation/dashboard ">Home</a>
+                <a class="nav-link margin-side-md" href="/User/home">Home</a>
                 <a class="nav-link margin-side-md" href="/Organisation/events">Events</a>
                 <a class="nav-link margin-side-md" href="/Organisation/gallery">Gallery</a>
                 <a class="nav-link margin-side-md" href="/Organisation/report">Statistics</a>
@@ -68,7 +68,7 @@
             <div class="nav-drop-down-list hidden">
                 <div class="flex-col">
                     <?php if ($organization) { ?>
-                        <a href="/Organisation/organizationalAdminProfileView" class="nav-link margin-md"><i class="far fa-user"></i>&nbsp; Profile</a>
+                        <a href="/Organisation/profile" class="nav-link margin-md"><i class="far fa-user"></i>&nbsp; Profile</a>
                     <?php } elseif ($registered_user) { ?>
                         <a href="/RegisteredUser/view" class="nav-link margin-md"><i class="far fa-user"></i>&nbsp; Profile</a>
                     <?php ?>

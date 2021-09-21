@@ -22,7 +22,7 @@ class Gallery extends Model{
         $db->beginTransaction();
 
         if($organisation)
-            $query= " SELECT image_id from organisation_gallery ORDER BY image_id DESC LIMIT 1";
+            $query= " SELECT image_id from organization_gallery ORDER BY image_id DESC LIMIT 1";
         else
             $query= " SELECT image_id from add_photo ORDER BY image_id DESC LIMIT 1";
 
@@ -48,7 +48,7 @@ class Gallery extends Model{
         }
 
         if($organisation){
-            $query="INSERT INTO `organisation_gallery` (`image_id`, `uid`, `image`) VALUES (:image_id, :uid , :image)";
+            $query="INSERT INTO `organization_gallery` (`image_id`, `uid`, `image`) VALUES (:image_id, :uid , :image)";
             $params=array_merge(["uid"=>$_SESSION["user"]["uid"] ],$params);
         }
         else{

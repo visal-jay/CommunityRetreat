@@ -229,4 +229,104 @@ class Organisation extends User
             User::insert($query, $params);
         }
     }
+
+    public function donationReport()
+    {
+        $event = new Events;
+        $donations = new Donations;
+        $data["events"] = array();
+        if ($result = $event->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "published", "donation_capacity" => true]))
+            foreach ($result as $event) {
+                if ($donation_details = $donations->getReport(["event_id" => $event["event_id"]])) {
+                    $start_date = $date = new DateTime($donation_details[0]["day"]);
+                    $end_date = new DateTime($donation_details[count($donation_details) - 1]["day"]);
+                    for ($i = $start_date; $i < $end_date; $i->add(new DateInterval('P1D')))
+                        $temp[$i->format('Y-m-d')] = 0;
+
+
+                    foreach ($donation_details as $donation_detail)
+                        $temp[$donation_detail["day"]] = $donation_detail["donation_sum"];
+
+                    $count = $i = 1;
+                    $sum = 0;
+                    $data["events"][$event["event_name"]] = array();
+                    foreach ($temp as $key => $value) {
+                        $sum += $value;
+                        if ($i == 7) {
+                            $data["events"][$event["event_name"]]["week $count"] = $sum;
+                            $sum = $i = 0;
+                            $count++;
+                        }
+                        $i++;
+                    }
+                    if (count($temp) % 7 != 0)
+                        $data["events"][$event["event_name"]]["week $count"] = $sum;
+
+                    unset($temp);
+                }
+            }
+        return json_encode($data["events"]);
+    }
+
+    public function donationPercentageReport()
+    {
+        $events = new Events;;
+        $data["events"] = array();
+        if ($result = $events->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "published", "donation_capacity" => true])) {
+            foreach ($result as $event)
+                $data["events"][$event["event_name"]] = $event["donation_percent"];
+        }
+
+        return json_encode($data["events"]);
+    }
+
+    public function volunteerReport()
+    {
+        $event = new Events;
+        $volunteers = new Volunteer;
+        $data["events"] = array();
+        if ($result = $event->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "published", "volunteer_capacity" => true]))
+            foreach ($result as $event) {
+                if ($volunteer_details = $volunteers->getReport(["event_id" => $event["event_id"]])) {
+                    $start_date = $date = new DateTime($volunteer_details[0]["day"]);
+                    $end_date = new DateTime($volunteer_details[count($volunteer_details) - 1]["day"]);
+                    for ($i = $start_date; $i < $end_date; $i->add(new DateInterval('P1D')))
+                        $temp[$i->format('Y-m-d')] = 0;
+
+
+                    foreach ($volunteer_details as $volunteer_detail)
+                        $temp[$volunteer_detail["day"]] = $volunteer_detail["volunteer_sum"];
+
+                    $count = $i = 1;
+                    $sum = 0;
+                    $data["events"][$event["event_name"]] = array();
+                    foreach ($temp as $key => $value) {
+                        $sum += $value;
+                        if ($i == 7) {
+                            $data["events"][$event["event_name"]]["week $count"] = $sum;
+                            $sum = $i = 0;
+                            $count++;
+                        }
+                        $i++;
+                    }
+                    if (count($temp) % 7 != 0)
+                        $data["events"][$event["event_name"]]["week $count"] = $sum;
+
+                    unset($temp);
+                }
+            }
+        return json_encode($data["events"]);
+    }
+
+    public function volunteerPercentageReport()
+    {
+        $events = new Events;;
+        $data["events"] = array();
+        if ($result = $events->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "published", "volunteer_capacity" => true])) {
+            foreach ($result as $event)
+                $data["events"][$event["event_name"]] = $event["volunteer_percent"];
+        }
+
+        return json_encode($data["events"]);
+    }
 }

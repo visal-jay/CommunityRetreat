@@ -35,7 +35,7 @@ class Events extends Model
         $params = ["event_id" => $event_id];
         $result = Model::select($query, $params);
 
-        if (count($result[0]) >= 1)
+        if (count($result) >= 1)
             return $result[0];
         else
             return false;

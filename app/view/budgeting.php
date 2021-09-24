@@ -206,28 +206,6 @@ p {
 }
 </style>
 
-<?php 
-if(!isset($moderator)) $moderator= false;
-if(!isset($treasurer)) $treasurer= false;
-$organization = $admin =$registered_user = $guest_user = false;
-
-if(isset($_SESSION ["user"] ["user_type"])){
-    if($_SESSION ["user"] ["user_type"] == "organization"){
-        $organization = true;
-    }
-    
-    if($_SESSION ["user"] ["user_type"] == "admin"){
-        $admin = true;
-    }
-
-    if($_SESSION ["user"] ["user_type"] == "registered_user"){
-        $registered_user = true;
-    }
-    
-}else{
-    $guest_user= true;
-}
-?>
 
 <body>
     <div class="container flex-col flex-center" id="container">

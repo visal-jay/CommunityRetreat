@@ -16,83 +16,52 @@ const months = [
     
 ];
 
-// let calender_data2 = [];
-
-// let event_details = renderEvents();
 
 
+let event_details = renderEvents();
 
-// for(let i=0 ; i<event_details.length ; i++ ){
+let calender_data2=[];
 
-//      calender_data2.push( [
-//          {
-             
-//              date: event_details[i][0].day,
-//              month: event_details[i][0].month,
-//              event: [
-//                  {
-//                     event_id :  event_details[i][0].event_id,
-//                      eventname:  event_details[i][0].event_name,
-//                      organization:  event_details[i][0].organisation_username
-//                  }
-//              ]
-//          }
-//      ]);
-// }
+for(let i=0 ; i<event_details.length ; i++ ){
 
+    let same_date_event = calender_data2.filter(date => { 
+        console.log(date.date +  "==" + event_details[i][0].day + "&&" + date.month  +  "==" + event_details[i][0].month);
+        return date.date == event_details[i][0].day && date.month == event_details[i][0].month});
+    console.log(same_date_event);
+    if(same_date_event.length > 0){
 
+        let item_index = calender_data2.findIndex(date => {return date.date == event_details[i][0].day && date.month == event_details[i][0].month});
+        console.log(item_index);
+        calender_data2[item_index].event.push
+           ( {
+                event_id: event_details[i][0].event_id,
+                eventname: event_details[i][0].event_name,
+                organization: event_details[i][0].organisation_username
+            });
 
-let calender_data2 = [
-    {
-        date: 12,
-        month: 9,
-        event :[
-            {
-                eventname : "<?= $array[0][event_name]?>", 
-                organization : "AIESEC in University of Colombo"
-            },
-            {
-                eventname : "Blood donation campaign",
-                organization : "GAVEL Club of University of Colombo"
-            }
+    }
+    else{
+        let item = 
+        {
+            
+            date: event_details[i][0].day,
+            month: event_details[i][0].month,
+            event: [
+                {
+                    event_id: event_details[i][0].event_id,
+                    eventname: event_details[i][0].event_name,
+                    organization: event_details[i][0].organisation_username
+                }
+            ]
+        }
+        calender_data2.push(item);
+    }
 
-        ]
-    },
-    {
-        date: 25,
-        month: 9,
-        event :[
-            {
-                eventname : "Hello", 
-                organization :" Leo club"
-            },
-           
-        ]
-    },
-    {
-        date: 2,
-        month: 9,
-        event :[
-            {
-                eventname : "Beach cleaning campaign", 
-                organization : "AIESEC in University of Colombo"
-            },
-            {
-                eventname : "Blood donation campaign",
-                organization : "GAVEL Club of University of Colombo"
-            },
-            {
-                eventname : "sramadana campaign",
-                organization : "Leo Club of Nilwala"
-            }
+}
+console.log(calender_data2);
 
 
-        ]
-    },
-   
 
-
-]
 
 
 const date = new Date();
@@ -103,11 +72,11 @@ function popupLoad(index){
 
     document.querySelector('.event-items').innerHTML ="";
    
-    
-    for(let eventIndex=0; eventIndex< calender_data2[index][0].event.length;eventIndex++){
-
    
-        document.querySelector('.date-event-popup p').innerHTML =  months[calender_data2[index][0].month-1] + " " +calender_data2[index][0].date +" "+date.getFullYear();
+    for(let eventIndex=0; eventIndex< calender_data2[index].event.length;eventIndex++){
+
+       
+        document.querySelector('.date-event-popup p').innerHTML =  months[calender_data2[index].month-1] + " " +calender_data2[index].date +" "+date.getFullYear();
 
         let eventcontainer = document.createElement('div');
         eventcontainer.setAttribute("class","event-container");
@@ -126,13 +95,13 @@ function popupLoad(index){
 
         let Eventname = document.createElement('h4');
         let eventlink = document.createElement('a');
-        eventlink.setAttribute("href","/event/view?page=about&&event_id="+calender_data2[index][0].event[eventIndex].event_id);
-        eventlink.innerHTML = calender_data2[index][0].event[eventIndex].eventname;
+        eventlink.setAttribute("href","/event/view?page=about&&event_id="+calender_data2[index].event[eventIndex].event_id);
+        eventlink.innerHTML = calender_data2[index].event[eventIndex].eventname;
         Eventname.appendChild(eventlink);
         eventdetailsdiv.appendChild(Eventname);
 
         let Organizationname = document.createElement('p5');
-        Organizationname.innerHTML = "Event By " + calender_data2[index][0].event[eventIndex].organization;
+        Organizationname.innerHTML = "Event By " + calender_data2[index].event[eventIndex].organization;
         eventdetailsdiv.appendChild(Organizationname);
 
         eventcontainer.appendChild(eventdetailsdiv);
@@ -234,7 +203,7 @@ function popupHide(){
 
 function successCall(result){
     var event_details = JSON.parse(result);
-    console.log(event_details);
+    
     return event_details;
 }
 
@@ -243,13 +212,13 @@ renderCalender();
 function renderEvents(){
 
      var event_details="";
-
+   
     $.ajax({
         async:false,
-        url: "/Calendar/getCalendarDetails",
+        url: "/RegisteredUser/getCalendarDetails",
         type: "post",
         success : function(result){
-
+            console.log(result);
             event_details = JSON.parse(result);
            
        },

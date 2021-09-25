@@ -9,4 +9,18 @@ class Systemfeedback extends Model{
         Model::insert($query,$params); 
 
     }
+    public function renderSystemFeedbacks(){
+
+        $query = "SELECT * FROM system_feedback ORDER BY date DESC";
+        $params = [];
+        $results = Model::select($query,$params);
+        return $results;
+
+    }
+    public function changeFeedbackState($data){
+        
+        $query = "UPDATE system_feedback SET viewed = 1 WHERE feedback_id =:feedback_id";
+        $params = ["feedback_id"=>$data['feedback_id']];
+        Model::insert($query,$params);
+    }
 }

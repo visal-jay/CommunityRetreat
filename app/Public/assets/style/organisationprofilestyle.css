@@ -386,13 +386,14 @@ hr{
 }
 
 .account-number{
-    word-break: break-all;
+    /* word-break: break-all; */
     font-weight: normal;
     margin: auto;
     position: relative;
 }
 .account-number h3{
     font-weight: normal;
+    text-align: center;
 }
 .account-number-change-btn{
     display: flex;

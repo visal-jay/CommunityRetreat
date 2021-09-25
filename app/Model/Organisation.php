@@ -149,8 +149,8 @@ class Organisation extends User
     }
     public function changeAccountNumber($uid, $data)
     {
-        $params = ["uid" => "$uid", "account_number" => "$data[account_number]"];
-        $query = 'UPDATE organization SET  account_number = :account_number  WHERE uid = :uid ';
+        $params = ["uid" => "$uid","bank_name"=>$data['bank_name'], "account_number" => "$data[account_number]"];
+        $query = 'UPDATE organization SET bank_name = :bank_name , account_number = :account_number  WHERE uid = :uid ';
         User::insert($query, $params);
     }
     public function changeEmail($uid, $data)

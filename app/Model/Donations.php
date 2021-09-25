@@ -57,4 +57,17 @@ class Donations extends Model{
         $result=Model::select($query,$params);
        return $result;
     }
+
+    public function donationRefund($event_id){
+        $query = "UPDATE event SET donation_status='refunded' WHERE event_id =:event_id";
+        $params = ["event_id" => $event_id];
+        Model::insert($query,$params);
+    }
+
+    public function donationCredit(){
+        $query = "UPDATE donation SET donation_status='credited' WHERE event_id IN (SELECT event_id FROM event WHERE end_date < cast((now()) as date))";
+        $params = [];
+        Model::insert($query,$params);
+    }
+    
 }

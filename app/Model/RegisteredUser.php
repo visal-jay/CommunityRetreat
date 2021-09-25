@@ -83,7 +83,7 @@ class RegisteredUser extends User
     public function getCalendarDetails($uid){
         $event_details =[];
         $params =["uid"=>"$uid"];
-        $query = "SELECT event_id FROM calender WHERE uid = :uid";
+        $query = "SELECT event_id FROM volunteer WHERE uid = :uid";
         $result = Model::select($query,$params);
         $event_details = array();
         for($i=0;$i<count($result);$i++) {

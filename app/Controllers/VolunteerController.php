@@ -38,6 +38,7 @@ class VolunteerController{
 
     public function volunteerValidate()
     {
+        Controller::accessCheck(["registered_user"]);
         View::render("volunteerThank");
     }
 }

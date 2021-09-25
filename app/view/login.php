@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/Public/assets/newstyles.css">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
     <title>Document</title>
 </head>
 <style>
@@ -60,8 +61,14 @@
         padding: 1rem 0;
     }
 
-    .container-form {
+    .container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
 
+    .container-form {
         position: relative;
         margin: 1rem;
         border: 1px solid transparent;
@@ -73,16 +80,11 @@
     }
 
     .ctx {
-        position: absolute;
-        top: 60%;
-        left: 50%;
-        transform: translate(-50%, -50%);
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-gap: 4rem;
         max-width: 800px;
         margin: 0 auto;
-
     }
 
     .ctx div img {
@@ -112,6 +114,10 @@
     }
 
     @media (max-width:800px) {
+        .container{
+            margin: 2rem auto !important;
+        }
+
         .ctx {
             grid-template-columns: 1fr;
             justify-items: center
@@ -129,10 +135,16 @@
 <body>
     <div class="container">
         <div class="ctx" <?php if (isset($_GET["mail"])) { ?>style="top:50%" <?php } ?>>
-            <div><img src="/Public/assets/login-image.jpg" /></div>
+            <div>
+                <video class="border-round" autoplay muted loop style="height:320px">
+                    <source src="/Public/assets/login-video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <!--  <img src="/Public/assets/login-image.jpg" /> -->
+            </div>
             <?php if (isset($_GET["mail"])) { ?>
-                <div class="flex-col flex-center">
-                    <i class="far fa-envelope fa-5x margin-md"></i>
+                <div class="flex-col flex-center margin-md">
+                    <img src="/Public/assets/mail-gif.gif" alt="" style="height:200px">
                     <h2 class="flex-row flex-center margin-side-md">Check your email</h2>
                     <?php if (isset($_GET["forgot_password"])) { ?>
                         <h4 class="flex-row flex-center">we have sent a password recover instructions to your email</h4>
@@ -147,7 +159,7 @@
                         <div class="switch-btn <?php if ($_GET["login"]) echo "shown"; ?>" onclick="switchf('login-form','signup-form')">Login</div>
                         <div class="switch-btn <?php if ($_GET["signup"]) echo "shown"; ?>" onclick="switchf('signup-form','login-form')">Sign Up</div>
                     </div>
-                    <form action="/Login/validate" method="post" id="login-form" class="form <?php if ($_GET["login"]) echo "shown"; ?>">
+                    <form action="/Login/validate?<?php if(isset($redirect)) echo "redirect=$redirect" ;?>" method="post" id="login-form" class="form <?php if ($_GET["login"]) echo "shown"; ?>">
                         <div class="form-item">
                             <label>Username</label>
                             <input name="email" class="form-ctrl" placeholder="&#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" />
@@ -229,88 +241,85 @@
                 </div>
             <?php } ?>
         </div>
-
-
-        <script>
-            function switchf(id1, id2) {
-                var forgot_form = document.getElementById("forgot-form");
-                if (forgot_form.classList.contains("shown")) {
-                    if (id1 == 'login-form')
-                        id2 = 'forgot-form';
-                    else if (id1 == 'signup-form') {
-                        forgot_form.classList.remove("shown");
-                        for (const e of event.target.parentElement.children) {
-                            e.classList.toggle("shown");
-                        }
-                    }
-                } else
-                    for (const e of event.target.parentElement.children) {
-                        e.classList.toggle("shown");
-                    }
-
-                let errors = document.querySelectorAll(".error");
-                for (let error of errors) {
-                    error.innerHTML = "";
-                }
-                document.querySelector("#" + id1).classList.add("shown");
-                document.querySelector("#" + id2).classList.remove("shown");
-            }
-
-            function checkMail(email) {
-                if (email.length == 0) {
-                    let email_errors = document.querySelectorAll(".email-error");
-                    for (let error of email_errors) {
-                        error.innerHTML = "";
-                    }
-                    return;
-                } else
-
-                    $.ajax({
-                        url: "/Signup/checkEmailAvailable", //the page containing php script
-                        type: "post", //request type,
-                        dataType: 'json',
-                        data: {
-                            email: email
-                        },
-                        success: function(result) {
-                            if (result.taken == true) {
-                                var err = "Email already taken";
-                            } else
-                                var err = "";
-                            let errors = document.querySelectorAll(".email-error");
-                            for (let error of errors) {
-                                error.innerHTML = err;
-                            }
-                        }
-                    });
-            }
-
-            function checkPassword(password) {
-                var err = "";
-                const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-                if (!pattern.test(password))
-                    var err = "Strong password required<br> Combine least 8 of the following: uppercase letters,lowercase letters,numbers and symbols";
-                let password_errors = document.querySelectorAll(".password-error");
-                for (let error of password_errors) {
-                    error.innerHTML = err;
-                }
-            }
-
-            function checkTelephone(number) {
-                var err = "";
-                const pattern = /^[+]?[0-9]{10,11}$/;
-                if (!pattern.test(number))
-                    var err = "Valid phone number required";
-                let telephone_errors = document.querySelectorAll(".telephone-error");
-                for (let error of telephone_errors) {
-                    error.innerHTML = err;
-                }
-            }
-        </script>
-
-
     </div>
 </body>
+<script src="/Public/assets/js/input_validation.js"></script>
+<script>
+    function switchf(id1, id2) {
+        var forgot_form = document.getElementById("forgot-form");
+        if (forgot_form.classList.contains("shown")) {
+            if (id1 == 'login-form')
+                id2 = 'forgot-form';
+            else if (id1 == 'signup-form') {
+                forgot_form.classList.remove("shown");
+                for (const e of event.target.parentElement.children) {
+                    e.classList.toggle("shown");
+                }
+            }
+        } else
+            for (const e of event.target.parentElement.children) {
+                e.classList.toggle("shown");
+            }
+
+        let errors = document.querySelectorAll(".error");
+        for (let error of errors) {
+            error.innerHTML = "";
+        }
+        document.querySelector("#" + id1).classList.add("shown");
+        document.querySelector("#" + id2).classList.remove("shown");
+    }
+
+    function checkMail(email) {
+        if (email.length == 0) {
+            let email_errors = document.querySelectorAll(".email-error");
+            for (let error of email_errors) {
+                error.innerHTML = "";
+            }
+            return;
+        } else
+
+            $.ajax({
+                url: "/Signup/checkEmailAvailable", //the page containing php script
+                type: "post", //request type,
+                dataType: 'json',
+                data: {
+                    email: email
+                },
+                success: function(result) {
+                    if (result.taken == true) {
+                        var err = "Email already taken";
+                    } else
+                        var err = "";
+                    let errors = document.querySelectorAll(".email-error");
+                    for (let error of errors) {
+                        error.innerHTML = err;
+                    }
+                }
+            });
+    }
+
+    function checkPassword(password) {
+        var err = "";
+        const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!pattern.test(password))
+            var err = "Strong password required<br> Combine least 8 of the following: uppercase letters,lowercase letters,numbers and symbols";
+        let password_errors = document.querySelectorAll(".password-error");
+        for (let error of password_errors) {
+            error.innerHTML = err;
+        }
+    }
+
+    function checkTelephone(number) {
+        var err = "";
+        const pattern = /^[+]?[0-9]{10,11}$/;
+        if (!pattern.test(number))
+            var err = "Valid phone number required";
+        let telephone_errors = document.querySelectorAll(".telephone-error");
+        for (let error of telephone_errors) {
+            error.innerHTML = err;
+        }
+    }
+</script>
 
 
 </html>

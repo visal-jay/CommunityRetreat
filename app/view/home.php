@@ -35,7 +35,7 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-gap: 3rem;
-        
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
         padding: 2rem 1rem;
         margin: 1rem 0 2rem 0;
     }
@@ -109,7 +109,7 @@
         min-height: 300px;
     }
 
-    #myVideo {
+    video {
         object-fit: fill;
         border-radius: 8px;
         width: 100%;
@@ -255,7 +255,7 @@
     h1,
     h2,
     h3 {
-        font-family: Roboto, Arial, sans-serif;
+        font-family: Roboto, Arial, sans-serif, FontAwesome;
     }
 
     #map {
@@ -264,11 +264,11 @@
     }
 
     @media screen and (max-width:767px) {
-        .grid-row-1{
+        .grid-row-1 {
             grid-row: 1;
         }
 
-        .grid-row-2{
+        .grid-row-2 {
             grid-row: 2;
         }
 
@@ -369,6 +369,24 @@ if (isset($_SESSION["user"]["user_type"])) {
                 <button class="btn btn-solid" id="near-me" onclick="nearme()"><i class="fas fa-map-marker-alt"></i>&nbsp;Near me</button>
             </div>
         </search>
+
+        <div class="home-events">
+            <div class="flex-row flex-center">
+                <video class="border-round" autoplay muted loop>
+                    <source src="/Public/assets/covid.mp4" type="video/mp4">
+                </video>
+            </div>
+
+
+            <div class="flex-col flex-center grid-row-1">
+                <h1>Be safe and spread <span class="clr-red">&#xf004;</span><br>Not COVID</h1>
+                <div>
+                    <img src="/Public/assets/covid-1.svg" style="width:100px" alt="">
+                    <img src="/Public/assets/covid-2.svg" style="width:50px" alt="">
+                </div>
+                <p class="margin-md felx-row flex-center">Follow health and saftey protocols<br>and engage in your community</p>
+            </div>
+        </div>
 
         <?php if ($guest_user) { ?>
             <div class="item flex-row-to-col flex-space">
@@ -622,10 +640,10 @@ if (isset($_SESSION["user"]["user_type"])) {
             icon: custom_marker
         });
 
-        Nearsearch(latitude,longitude);
+        Nearsearch(latitude, longitude);
     }
 
-    async function Nearsearch(latitude,longitude) {
+    async function Nearsearch(latitude, longitude) {
 
         $.ajax({
             url: "/Search/searchAll", //the page containing php script
@@ -711,6 +729,42 @@ if (isset($_SESSION["user"]["user_type"])) {
             }
         });
     }
+
+
+    var videos = document.getElementsByTagName("video");
+
+    function checkScroll() {
+        var fraction = 0.8; // Play when 80% of the player is visible.
+
+        for (var i = 0; i < videos.length; i++) {
+
+            var video = videos[i];
+
+            var x = video.offsetLeft,
+                y = video.offsetTop,
+                w = video.offsetWidth,
+                h = video.offsetHeight,
+                r = x + w, //right
+                b = y + h, //bottom
+                visibleX, visibleY, visible;
+
+            visibleX = Math.max(0, Math.min(w, window.pageXOffset + window.innerWidth - x, r - window.pageXOffset));
+            visibleY = Math.max(0, Math.min(h, window.pageYOffset + window.innerHeight - y, b - window.pageYOffset));
+
+            visible = visibleX * visibleY / (w * h);
+
+            if (visible > fraction) {
+                video.play();
+            } else {
+                video.pause();
+            }
+
+        }
+
+    }
+
+    window.addEventListener('scroll', checkScroll, false);
+    window.addEventListener('resize', checkScroll, false);
 </script>
 
 </html>

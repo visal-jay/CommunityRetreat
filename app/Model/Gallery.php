@@ -6,7 +6,7 @@ class Gallery extends Model{
         if($organisation)
             $query ="SELECT * FROM organization_gallery WHERE uid = :uid";
         else
-            $query ="SELECT * FROM add_photo WHERE event_id = :event_id";
+            $query =" SELECT * FROM (SELECT photo.* , reg.username FROM add_photo photo INNER JOIN registered_user reg ON reg.uid=photo.uid  UNION SELECT photo.* , org.username FROM add_photo photo INNER JOIN organization org ON org.uid=photo.uid) sub WHERE event_id = :event_id ";
 
         $params = $data;
         $result=Model::select($query,$params);
@@ -18,13 +18,14 @@ class Gallery extends Model{
     }
 
     public function addPhoto($data=[],$organisation=false){
+        
         $db = Model::getDB();
         $db->beginTransaction();
 
         if($organisation)
             $query= " SELECT image_id from organization_gallery ORDER BY image_id DESC LIMIT 1";
         else
-            $query= " SELECT image_id from add_photo ORDER BY image_id DESC LIMIT 1";
+            $query= "SELECT image_id from add_photo ORDER BY image_id DESC LIMIT 1";
 
         $params=array();
         $stmt=$db->prepare($query);

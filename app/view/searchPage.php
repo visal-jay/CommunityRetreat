@@ -124,6 +124,7 @@
     .homepage {
         margin: 0 auto;
         width: 80%;
+        min-height: 100%;
     }
 
     .grid {
@@ -265,8 +266,8 @@
 <?php include "nav.php" ?>
 
 <body>
-    <div class="homepage flex-col flex-center">
-        <!-- in page search bar start -->
+
+    <div class="homepage flex-col">
         <h1>Search to your choice</h1>
         <search class="flex-row-to-col flex-center border-round">
             <form action="/Search/view" class="flex-row-to-col flex-center">

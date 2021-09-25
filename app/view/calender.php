@@ -21,7 +21,7 @@
 
 <body class="body">
     <h1 id="topic">
-        Calender
+        Calendar
     </h1>
     <div class="calender-container">
         <div class="calender">

@@ -256,7 +256,6 @@
                         </div>
                     </div>
 
-                    <!-- Visal meka balanna input class="form"-->
                     <div class="venue-container">
                         <div class="flex-row margin-lg ">
                             <i class="btn-icon icon-width fas fa-map-marker-alt clr-green margin-side-lg"></i>

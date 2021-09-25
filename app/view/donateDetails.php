@@ -11,17 +11,17 @@
 </head>
 
 <style>
-table {
-    width: 100%;
-}
-
 table,
 th,
 td {
     padding: 7px 10px 20px;
 }
 
-.donation-details-btn {
+.table {
+    width: 100%;
+}
+
+.full-donation-details-btn {
     margin: 25px;
 }
 
@@ -31,7 +31,6 @@ td {
     top: 110%;
     left: 50%;
     position: absolute;
-
     width: 100%;
 }
 
@@ -39,15 +38,11 @@ td {
     filter: blur(5px);
 }
 
-.hide {
-    display: hide;
-}
-
 .form-ctrl {
     margin-bottom: 0;
 }
 
-.scroll {
+.overflow {
     text-align: left;
 }
 
@@ -62,13 +57,6 @@ td {
 
 .amount {
     text-align: right;
-}
-
-/* Clear floats after the columns */
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
 }
 
 .section {
@@ -88,50 +76,9 @@ td {
     margin: 10px;
 }
 
-.popup .content {
-    position: fixed;
-    transform: scale(0);
-    z-index: 2;
-    text-align: center;
-    padding: 20px;
-    border-radius: 8px;
-    background: white;
-    box-shadow: 0px 0px 11px 2px rgba(0, 0, 0, 0.93);
-    z-index: 1;
-    left: 50%;
-    top: 50%;
-    display: flex;
-    flex-direction: column;
-}
-
-.popup .btn-close {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    width: 30px;
-    height: 30px;
-    color: black;
-    font-size: 1.5rem;
-    padding: 2px 5px 7px 5px;
-
-}
-
-.popup.active .content {
-    transition: all 300ms ease-in-out;
-    transform: translate(-50%, -50%);
-}
-
-.blurred {
-    filter: blur(2px);
-    overflow: hidden;
-}
 
 .still {
     overflow: hidden;
-}
-
-#qrcode {
-    margin: 1rem;
 }
 
 .bold {
@@ -152,8 +99,6 @@ td {
     justify-content: space-between;
 }
 
-
-
 @media screen and (max-width:768px) {
 
     table,
@@ -162,7 +107,7 @@ td {
         padding: 5px 8px 12px;
     }
 
-    #mytable .scroll {
+    #table .overflow {
         overflow: scroll;
     }
 
@@ -170,14 +115,6 @@ td {
     .close-btn,
     .save-btn {
         font-size: 0.9rem;
-    }
-
-    .close-btn,
-    .save-btn {
-        padding: 8px;
-    }
-
-    .save-btn {
         padding: 8px;
     }
 
@@ -192,13 +129,6 @@ td {
     .container {
         width: 0;
         margin: auto;
-    }
-
-    .card-container {
-        align-items: flex-start;
-        justify-content: left;
-        flex-direction: column;
-        height: fit-content;
     }
 
     .donation-capacity-container {
@@ -249,10 +179,12 @@ if(isset($_SESSION ["user"] ["user_type"])){
                 </div>
                 <div class="column section">
                     <div class="data">
+                        <!--Display the donation capacity-->
                         <a><?= $donation_capacity ?></a>
                     </div>
                     <form action="/Donations/updateDonationCapacity?event_id=<?= $_GET["event_id"] ?>" method="post"
                         id="donation-capacity">
+                        <!--enter the donation capacity and save it in the database-->
                         <input name="donation_capacity" type="number" value="<?= $donation_capacity ?>"
                             min="<?= $donation_sum ?>" max="10000000" class=" form form-ctrl hidden" />
                     </form>
@@ -287,20 +219,23 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     Donations</button>
             </form>
             <?php } ?>
+            <!--enable or disable donations-->
 
             <div class="bold sum donation-sum-container">
+                <!--Display the sum of donation-->
                 <div>Sum of Donations:</div>
                 <div> <?php echo 'Rs. ' .number_format($donation_sum, 3) ?> </div>
             </div>
 
             <div>
-                <table id="mytable" class="center">
+                <!--Display all the donations-->
+                <table id="table" class="center table">
                     <col style="width:30%">
                     <col style="width:40%">
                     <col style="width:30%">
                     <thead>
                         <tr class="headers">
-                            <th class="scroll">Name</th>
+                            <th class="overflow">Name</th>
                             <th>Date</th>
                             <th class="amount">Amount</th>
                         </tr>
@@ -308,7 +243,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     <tbody>
                         <?php foreach($donations as $donation){ ?>
                         <tr>
-                            <td class=" scroll"><?= $donation["username"] ?></td>
+                            <td class="overflow"><?= $donation["username"] ?></td>
                             <td><?= $donation["date"] ?></td>
                             <td class="amount">
                                 <?php echo 'Rs. ' .number_format($donation["amount"], 3)?></td>
@@ -319,31 +254,31 @@ if(isset($_SESSION ["user"] ["user_type"])){
                 <hr>
             </div>
 
-            <div class="donation-details-btn">
-                <button class="btn btn-md btn-solid">Full donation details</button>
+            <div class="full-donation-details-btn">
+                <!--Display the full donation details-->
+                <button class="btn btn-md btn-solid"
+                    onclick="window.location.href=' /Donations/donationReport?event_id=<?= $_GET['event_id'] ?>'">Full
+                    donation details</button>
             </div>
         </div>
     </div>
     <?php if($donation_status==0 && count($donations)==0){ ?>
-    <div class="initial-donation-enable-btn">
-        <button onclick="window.location.href='/Event/enableDonation?event_id=<?= $_GET['event_id'] ?>'"
-            class=" btn btn-lg btn-solid" id="initial-donation-enable-btn" onclick="myFunction()">Enable
+    <div class=" initial-donation-enable-btn">
+        <button onclick="window.location.href=' /Donations/enableDonation?event_id=<?= $_GET['event_id'] ?>'"
+            class=" btn btn-lg btn-solid" id="initial-donation-enable-btn" onclick="blur_background()">Enable
             Donations</button>
+        <!--initally enable the donations-->
     </div>
     <?php } ?>
 </body>
 
 
 <script>
-function myFunction() {
-    var element = document.getElementById(" background");
+function blur_background() {
+    var element = document.getElementById("background");
     element.classList.remove("blur");
     document.getElementById("initial-donation-enable-btn").remove();
     //blur class is removed when initial donation enable button s clicked
-}
-
-function hide(id) {
-    document.getElementById(id).classList.toggle("hide");
 }
 
 function change_enable_disable_button(id) {

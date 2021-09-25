@@ -58,8 +58,6 @@
     border: none;
     box-shadow: none;
     padding: 0px;
-    margin-bottom: 15px;
-    margin-top: 15px;
 }
 
 .btn {
@@ -271,17 +269,20 @@
 
         <div class="income-expenxe-balance-container">
 
-            <div class="bold sum flex-row"><!--display the sum of incomes-->
+            <div class="bold sum flex-row">
+                <!--display the sum of incomes-->
                 <div>Sum of Incomes :</div>
                 <div><?php echo 'Rs. '.number_format($income_sum, 2) ?></div>
             </div>
 
-            <div class="bold sum flex-row"><!--display the sum of expenses-->
+            <div class="bold sum flex-row">
+                <!--display the sum of expenses-->
                 <div>Sum of Expenses :</div>
                 <div><?php echo 'Rs. '.number_format($expense_sum, 2) ?></div>
             </div>
 
-            <div id="balance" class="bold sum flex-row"><!--display the balance-->
+            <div id="balance" class="bold sum flex-row">
+                <!--display the balance-->
             </div>
 
         </div>
@@ -289,7 +290,8 @@
         <h2 class="header margin-md">Income</h2>
         <div class="income-expense-add-container">
 
-            <?php if($organization || $treasurer) { ?><!--Add incomes to the database-->
+            <?php if($organization || $treasurer) { ?>
+            <!--Add incomes to the database-->
             <form action="/Budget/addIncome?" method="post" class="form income-form">
 
                 <div>
@@ -321,7 +323,8 @@
 
         <div class="income-info" id="income-info">
 
-            <div class=" card-container"><!--Display the donation sum from the database-->
+            <div class=" card-container">
+                <!--Display the donation sum from the database-->
                 <p class="details-overflow">Donations</p>
                 <p class="amount-field"><?php echo 'Rs. '.number_format($donation_sum, 2)?></p>
                 <div class="flex-row btn-field"></div>
@@ -329,17 +332,20 @@
 
             <?php foreach($incomes as $income){ ?>
 
-            <div class=" card-container"><!--Display all the incomes from the database-->
+            <div class=" card-container">
+                <!--Display all the incomes from the database-->
                 <p class="details-overflow"><?= $income["details"] ?></p>
                 <p class="amount-field"><?php echo 'Rs. '.number_format($income["amount"], 2) ?></p>
                 <div class="flex-row btn-field">
 
-                    <div><!--Update the income and save it in database-->
+                    <div>
+                        <!--Update the income and save it in database-->
                         <button class="btn btn-solid update-save-btn "
-                            onclick="togglePopup('update-form','<?= $income['details'] ?>', '<?php echo 'Rs. '.number_format($income['amount'], 2)?>', '<?= $income['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
+                            onclick="togglePopup('update-form','<?= $income['details'] ?>', '<?= $income['amount']?>', '<?= $income['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
                     </div>
 
-                    <form action="/Budget/delete?" method="post"><!--Delete the income and save it in database-->
+                    <form action="/Budget/delete?" method="post">
+                        <!--Delete the income and save it in database-->
                         <input type="text" class="hidden" name="record_id" value="<?= $income['record_id'] ?>">
                         <button class="btn bg-red clr-white delete-cancel-btn" name="event_id" type="submit"
                             value=<?= $_GET['event_id'] ?>>
@@ -353,7 +359,8 @@
 
         </div>
 
-        <div id="income-show-hide-btn" class="income-expense-show-hide-btn"><!--Show all the hidden incomes-->
+        <div id="income-show-hide-btn" class="income-expense-show-hide-btn">
+            <!--Show all the hidden incomes-->
             <button class=" btn btn-solid btn-md read-more-btn"
                 onclick="show('income-info');change_button('income-down-btn');"><i id="income-down-btn"
                     class="fas fa-chevron-down"></i></button>
@@ -361,7 +368,8 @@
 
         <h2 class="header margin-md">Expense</h2>
 
-        <div class="income-expense-add-container"><!--Add expenses to the database-->
+        <div class="income-expense-add-container">
+            <!--Add expenses to the database-->
             <?php if($organization || $treasurer) { ?>
             <form action="/Budget/addExpense?" method="post" class="form expense-form">
 
@@ -393,16 +401,19 @@
         <div class="expense-info" id="expense-info">
             <?php foreach($expenses as $expense) { ?>
 
-            <div class="card-container"><!--Display the expenses from the database-->
+            <div class="card-container">
+                <!--Display the expenses from the database-->
                 <p class="details-overflow"><?= $expense["details"] ?></p>
                 <p class="amount-field"><?php echo 'Rs. '.number_format($expense["amount"], 2) ?></p>
 
                 <div class="flex-row btn-field">
-                    <div><!--Update the expense and save it in database-->
+                    <div>
+                        <!--Update the expense and save it in database-->
                         <button class="btn btn-solid update-save-btn "
-                            onclick="togglePopup('update-form','<?= $expense['details'] ?>', '<?php echo 'Rs. '.number_format($expense['amount'], 2) ?>', '<?= $expense['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
+                            onclick="togglePopup('update-form','<?= $expense['details'] ?>', '<?= $expense['amount'] ?>', '<?= $expense['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
                     </div>
-                    <form action="/Budget/delete?" method="post"><!--Delete the expense and save it in database-->
+                    <form action="/Budget/delete?" method="post">
+                        <!--Delete the expense and save it in database-->
                         <input type="text" class="hidden" name="record_id" value="<?= $expense['record_id'] ?>">
                         <button class="btn bg-red clr-white delete-cancel-btn" name="event_id" type="submit"
                             value=<?= $_GET['event_id'] ?>>
@@ -414,7 +425,8 @@
             <?php } ?>
         </div>
 
-        <div id="expense-show-hide-btn" class="income-expense-show-hide-btn" ><!--Show all the hidden expenses-->
+        <div id="expense-show-hide-btn" class="income-expense-show-hide-btn">
+            <!--Show all the hidden expenses-->
             <button class=" btn btn-solid btn-md read-more-btn"
                 onclick="show('expense-info');change_button('expense-down-btn');"><i id="expense-down-btn"
                     class="fas fa-chevron-down"></i></button>
@@ -447,10 +459,11 @@
 
 
     <script>
-
     //Calculate the balance of incomes and expenses
-    document.getElementById("balance").innerHTML = "<div>Balance :</div><div>" +
-        String(parseInt('<?= $income_sum  ?>') - parseInt('<?= $expense_sum ?>')) + "</div>";
+    document.getElementById("balance").innerHTML = "<div>Balance :</div><div> Rs. " +
+        (parseInt('<?= $income_sum  ?>') - parseInt('<?= $expense_sum ?>')).toString().replace(
+            /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","); +
+    "</div>";
 
     function income_null(id) {
         let income_sum = parseInt('<?= $income_sum ?>');

@@ -35,7 +35,7 @@ class DonationsController{
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "donations"]);
     }
 
-    public function donationReport()
+    public function donationReport()//Generate the report of all the donations
     {
         $donation = new Donations;
         $data["donations"] = $donation->donationReportGenerate($_GET["event_id"]);
@@ -44,14 +44,13 @@ class DonationsController{
         View::render('donationsReport', $data);
     }
 
-    public function donationRefund(){
+    public function donationRefund(){//change the status in database when donations are refunded
         $donation = new Donations;
         $donation->donationRefund($_GET["event_id"]);
-        
-        
+               
     }
 
-    public function donationCredit(){
+    public function donationCredit(){//change the status in database when donations are credited to organizations account
         $donation = new Donations;
         $donation->donationCredit($_GET["event_id"]);
         

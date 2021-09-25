@@ -77,7 +77,6 @@
     }
 
     .popup.active .content {
-        transition: all 300ms ease-in-out;
         transform: translate(-50%, -50%);
     }
 
@@ -121,21 +120,74 @@
         color: black;
         opacity: 1;
     }
-
-    textarea {
+    .announcement-textarea{
         min-height: 400px;
         padding: 12px 20px;
         border: 2px solid #ccc;
         border-radius: 4px;
         background-color: #f8f8f8;
         font-size: 16px;
+        resize:none;
+        padding: 0.3em 0.5em;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        background: transparent;
+        border-radius: 6px;
+        font-family: inherit;
+        margin-bottom: 0.8rem;
+    }
+    .announcement-textarea:focus{
+        box-shadow: 0px 0px 0px 1px #16c79a;
+        border-color: #16c79a;
     }
 
     .card-container {
         width: 80%;
     }
 
+    description {
+        width: 80%;
+    }
+
+    .ck-editor__editable_inline {
+        min-height: 300px !important;
+    }
+
+    date{
+        font-size: 0.8rem;
+    }
+
+    
+    table {
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+        border-radius: 4px;
+    }
+
+    td {
+        text-align: center;
+        padding: 1rem 0;
+    }
+
+    table,
+    th,
+    td {
+        border: 1px solid black;
+    }
     @media screen and (max-width:800px) {
+        .ck-editor__editable_inline {
+            min-height: 200px !important;
+        }
+
+        .popup .content {
+            width: 80%;
+        }
+
+        description {
+            width: 90%;
+        }
+
         .card-container {
             height: fit-content;
             width: 80%;
@@ -178,13 +230,13 @@
         <div class="flex-col flex-center" style="width: 100%;">
             <?php foreach ($announcements as $announcement) { ?>
                 <div class="card-container margin-md">
-                    <div class="event-card-details">
+                    <div class="event-card-details" id="<?= $announcement["announcement_id"] ?>">
                         <h3 class="margin-md"><?= $announcement["title"] ?></h3>
-                        <date class="margin-md"><?= $announcement["date"] ?></date>
-                        <description class="margin-md"><?= $announcement["announcement"] ?></description>
+                        <date><?= $announcement["date"] ?></date>
+                        <description class="margin-md description"><?= $announcement["announcement"] ?></description>
 
                         <update class="margin-md">
-                            <button class="btn btn-small margin-side-md" onclick="edit(); editForm('<?= $announcement['title'] ?>','<?= $announcement['announcement'] ?>','<?= $announcement['announcement_id'] ?>'); togglePopup('edit-form'); blur_background('background'); stillBackground('id1');"> <i class="btn-icon far fa-edit margin-side-md"></i>&nbsp;Edit</button>
+                            <button class="btn btn-small margin-side-md" onclick="edit(); editForm('<?= $announcement['title'] ?>','<?= $announcement['announcement_id'] ?>'); togglePopup('edit-form'); blur_background('background'); stillBackground('id1');"> <i class="btn-icon far fa-edit margin-side-md"></i>&nbsp;Edit</button>
                             <button class="btn btn-small clr-red border-red " onclick="remove()" required style="font-family:Ubuntu, sans-serif,  FontAwesome"> &#xf2ed; &nbsp;Remove </button>
                             <div class="flex-row flex-space" style="display: none;">
                                 <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
@@ -242,7 +294,7 @@
 
                     <div class="form-item">
                         <label>Announcement</label>
-                        <textarea name="announcement" class="form-ctrl" placeholder="Enter announcement" id="edit-announcement" required></textarea>
+                        <textarea name="announcement" class="announcement-textarea" placeholder="Enter announcement" id="edit-announcement" required></textarea>
                     </div>
 
                     <button name="announcement_id" class="btn btn-solid margin-md" type="submit" id="edit-announcement-id">Save</button>
@@ -255,26 +307,103 @@
         </div>
     <?php } ?>
 </body>
+<style>
+
+</style>
 <script src="/Libararies/ckeditor5-29.2.0/packages/ckeditor5-build-classic/build/ckeditor.js"></script>
 <script>
+    let editor_obj;
     ClassicEditor
-    .create( document.querySelector( '#editor' ), {
-        toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList' ],
-        viewportTopOffset: 30,
-    shouldNotGroupWhenFull: true,
-        heading: {
-            options: [
-                { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-                { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
-                { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
-            ]
-        }
-    } )
-    .catch( error => {
-        console.log( error );
-    } );
-</script>
-<script>
+        .create(document.querySelector('#editor'), {
+            toolbar: {
+                items: [
+                    'heading', '|',
+                    'alignment', '|',
+                    'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+                    'link', '|',
+                    'bulletedList', 'numberedList', 'todoList', // break point
+                    'code', 'codeBlock', '|',
+                    'insertTable', '|',
+                    'outdent', 'indent', '|',
+                    'blockQuote', '|',
+                    'undo', 'redo'
+                ],
+                shouldNotGroupWhenFull: true
+            },
+            heading: {
+                options: [{
+                        model: 'paragraph',
+                        title: 'Paragraph',
+                        class: 'ck-heading_paragraph'
+                    },
+                    {
+                        model: 'heading1',
+                        view: 'h2',
+                        title: 'Heading 1',
+                        class: 'ck-heading_heading1'
+                    },
+                    {
+                        model: 'heading2',
+                        view: 'h3',
+                        title: 'Heading 2',
+                        class: 'ck-heading_heading2'
+                    }
+                ]
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+    ClassicEditor
+        .create(document.querySelector('#edit-announcement'), {
+            toolbar: {
+                items: [
+                    'heading', '|',
+                    'alignment', '|',
+                    'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+                    'link', '|',
+                    'bulletedList', 'numberedList', 'todoList', // break point
+                    'code', 'codeBlock', '|',
+                    'insertTable', '|',
+                    'outdent', 'indent', '|',
+                    'blockQuote', '|',
+                    'undo', 'redo'
+                ],
+                shouldNotGroupWhenFull: true
+            },
+            heading: {
+                options: [{
+                        model: 'paragraph',
+                        title: 'Paragraph',
+                        class: 'ck-heading_paragraph'
+                    },
+                    {
+                        model: 'heading1',
+                        view: 'h2',
+                        title: 'Heading 1',
+                        class: 'ck-heading_heading1'
+                    },
+                    {
+                        model: 'heading2',
+                        view: 'h3',
+                        title: 'Heading 2',
+                        class: 'ck-heading_heading2'
+                    }
+                ]
+            },
+            height: 600,
+        })
+        .then(editor => {
+            editor_obj = editor;
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+    console.log(editor);
+
+
     function togglePopup(id) {
         document.getElementById(id).classList.toggle("active");
     }
@@ -302,9 +431,9 @@
         }
     }
 
-    function editForm(title, announcement, announcement_id) {
+    function editForm(title, announcement_id) {
         document.getElementById("edit-title").value = title;
-        document.getElementById("edit-announcement").value = announcement;
+        editor_obj.setData(document.getElementById(announcement_id).querySelector(".description").innerHTML)
         document.getElementById("edit-announcement-id").value = announcement_id;
     }
 

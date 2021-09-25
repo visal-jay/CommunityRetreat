@@ -10,6 +10,12 @@
     <title>Document</title>
 </head>
 <style>
+    .main-container{
+       
+        min-height: 100%;
+        align-items: center;
+
+    }
     textarea {
         height: 150px;
         padding: 12px 20px;
@@ -38,7 +44,7 @@
     }
 
     .show-form {
-        height: 750px;
+        height: 800px;
         transition: height, 0.3s linear;
     }
 
@@ -124,35 +130,42 @@
         }
     }
 </style>
-<?php if($organization) include "nav.php" ?>
+<?php if ($organization) include "nav.php" ?>
 
 <body>
  
-    <div class="flex-col flex-center margin-side-lg">
+    <div class="flex-col main-container margin-side-lg">
         <h1>Manage Events</h1>
-        <?php if($organization) { ?>
-        <button class="btn btn-solid margin-lg" onclick="addEvent()">Add Event &nbsp; <i class="fas fa-plus"></i></button>
-        <div class="form">
-            <form class="form-item" method="post" action="/Event/addEvent">
-                <label>Event name</label>
-                <input type="text" name="event_name" class="form-ctrl" placeholder=" Enter Event Name" required style="font-family:Arial, FontAwesome" />
-                <label>Description</label>
-                <textarea name="about" class="form-ctrl"></textarea>
+        <?php if ($organization) { ?>
+            <button class="btn btn-solid margin-lg" onclick="addEvent()">Add Event &nbsp; <i class="fas fa-plus"></i></button>
+            <div class="form">
+                <form class="form-item" method="post" action="/Event/addEvent">
+                    <label>Event name</label>
+                    <input type="text" name="event_name" class="form-ctrl" placeholder=" Enter Event Name" required style="font-family:Arial, FontAwesome" />
+                    <label>Description</label>
+                    <textarea name="about" class="form-ctrl"></textarea>
 
-                <div class="date" style="justify-content:space-evenly">
-                    <div class="flex-col">
-                        <label>Date</label>
-                        <input id="start_date" type="date" name="start_date" class="form-ctrl" required>
+                    <div class="date" style="justify-content:space-evenly">
+                        <div class="flex-col">
+                            <label>Start date</label>
+                            <input id="start_date" type="date" name="start_date" class="form-ctrl" required>
+                        </div>
+                        <div class="flex-col">
+                            <label>End date</label>
+                            <input id="end_date" type="date" name="end_date" class="form-ctrl" required>
+                        </div>
+                        <div class="flex-row flex-center">
+                            <div class="flex-col">
+                                <label>Starting time</label>
+                                <input type="time" name="start_time" class="form-ctrl" required>
+                            </div>
+                            <div class="flex-col margin-side-md">
+                                <label>Ending time</label>
+                                <input type="time" name="end_time" class="form-ctrl" required>
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex-col">
-                        <label>Starting time</label>
-                        <input type="time" name="start_time" class="form-ctrl" required>
-                    </div>
-                    <div class="flex-col">
-                        <label>Ending time</label>
-                        <input type="time" name="end_time" class="form-ctrl" required>
-                    </div>
-                    <div class="flex-col">
+                    <div class="flex-col flex-center">
                         <label>Mode of the event</label>
                         <select class="form-ctrl" id="mode" name="mode" required onchange="eventMode(event);" required>
                             <option value="" disabled selected>Select the mode of the event</option>
@@ -161,17 +174,16 @@
                             <option value="Physical & Virtual">Physical & Virtual</option>
                         </select>
                     </div>
-                </div>
-                <div class="flex-col flex-center">
-                    <div class="border-round" id="map"></div>
-                    <div class="latlang" class="form hidden">
-                        <input class="hidden" name="longitude" id="longitude" value=NULL>
-                        <input class="hidden" name="latitude" id="latitude" value=NULL>
+                    <div class="flex-col flex-center">
+                        <div class="border-round" id="map"></div>
+                        <div class="latlang" class="form hidden">
+                            <input class="hidden" name="longitude" id="longitude" value=NULL>
+                            <input class="hidden" name="latitude" id="latitude" value=NULL>
+                        </div>
                     </div>
-                </div>
-                <button type="submit" class="btn btn-solid margin-md">Add</button>
-            </form>
-        </div>
+                    <button type="submit" class="btn btn-solid margin-md">Add</button>
+                </form>
+            </div>
         <?php } ?>
         <div class="events">
             <?php foreach ($events as $event) { ?>
@@ -194,17 +206,17 @@
                             </tr>
                         </table>
                         <?php if ($organization) { ?>
-                        <div class="flex-row flex-center">
-                            <button class="btn btn-solid bg-red border-red" onclick="remove()">Remove</button>
-                            <div class="flex-row flex-space " style="display: none; padding-top:1rem;">
-                                <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
-                                <form method="post" action="/Event/remove" class="flex-row flex-center">
-                                    <input name="event_id" class="hidden" value="<?= $event["event_id"] ?>">
-                                    <button class="btn-icon flex-row flex-center"><i type="submit" class="fas fa-check clr-green margin-side-md"></i>&nbsp;</button>
-                                </form>
-                                <i class="fas fa-times clr-red  margin-side-md" onclick="cancel()"></i>
+                            <div class="flex-row flex-center">
+                                <button class="btn btn-solid bg-red border-red" onclick="remove()">Remove</button>
+                                <div class="flex-row flex-space " style="display: none; padding-top:1rem;">
+                                    <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
+                                    <form method="post" action="/Event/remove" class="flex-row flex-center">
+                                        <input name="event_id" class="hidden" value="<?= $event["event_id"] ?>">
+                                        <button class="btn-icon flex-row flex-center"><i type="submit" class="fas fa-check clr-green margin-side-md"></i>&nbsp;</button>
+                                    </form>
+                                    <i class="fas fa-times clr-red  margin-side-md" onclick="cancel()"></i>
+                                </div>
                             </div>
-                        </div>
                         <?php } ?>
 
                     </div>
@@ -218,88 +230,91 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
 
 <script>
-<?php if($organization) { ?>
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0');
-    var yyyy = today.getFullYear();
+    <?php if ($organization) { ?>
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
 
-    today = yyyy + '-' + mm + '-' + dd;
-    document.getElementById("start_date").setAttribute("min", today);
+        today = yyyy + '-' + mm + '-' + dd;
+        document.getElementById("start_date").setAttribute("min", today);
+        document.getElementById("end_date").setAttribute("min", today);
+        
 
-    var today = new Date();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    function addEvent() {
-        document.querySelector(".form").classList.toggle("show-form");
-    }
+        var today = new Date();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
-    function eventMode(event) {
-        if (event.target.selectedIndex == 1 || event.target.selectedIndex == 3) {
-            document.getElementById("map").style.opacity = "1";
-            document.getElementById("map").style.pointerEvents = "unset";
-
-        } else {
-            document.getElementById("map").style.opacity = "0.3";
-            document.getElementById("map").style.pointerEvents = "none";
+        function addEvent() {
+            document.querySelector(".form").classList.toggle("show-form");
         }
-    }
 
-    function remove() {
-        event.target.style.display = "none";
-        event.target.nextElementSibling.style.display = "flex";
-    }
+        function eventMode(event) {
+            if (event.target.selectedIndex == 1 || event.target.selectedIndex == 3) {
+                document.getElementById("map").style.opacity = "1";
+                document.getElementById("map").style.pointerEvents = "unset";
 
-    function cancel() {
-        var cancel = event.target.parentNode;
-        cancel.style.display = "none";
-        cancel.previousElementSibling.style.display = "block";
-
-    }
-
-    let map;
-    var marker;
-
-    function initMap() {
-        map = new google.maps.Map(document.getElementById("map"), {
-            center: {
-                lat: -34.397,
-                lng: 150.644
-            },
-            zoom: 8,
-        });
-        getLocation();
-    }
-
-    function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-        } else {
-            x.innerHTML = "Geolocation is not supported by this browser.";
+            } else {
+                document.getElementById("map").style.opacity = "0.3";
+                document.getElementById("map").style.pointerEvents = "none";
+            }
         }
-    }
+
+        function remove() {
+            event.target.style.display = "none";
+            event.target.nextElementSibling.style.display = "flex";
+        }
+
+        function cancel() {
+            var cancel = event.target.parentNode;
+            cancel.style.display = "none";
+            cancel.previousElementSibling.style.display = "block";
+
+        }
+
+        let map;
+        var marker;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: {
+                    lat: -34.397,
+                    lng: 150.644
+                },
+                zoom: 8,
+            });
+            getLocation();
+        }
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
 
 
-    function showPosition(position) {
-        console.log(position);
-        var myLatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        function showPosition(position) {
+            console.log(position);
+            var myLatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-        marker = new google.maps.Marker({
-            position: myLatlng,
-            draggable: true,
-            title: "Event location"
-        });
+            marker = new google.maps.Marker({
+                position: myLatlng,
+                draggable: true,
+                title: "Event location"
+            });
 
-        // To add the marker to the map, call setMap();
-        marker.setMap(map);
+            // To add the marker to the map, call setMap();
+            marker.setMap(map);
 
-        google.maps.event.addListener(marker, 'dragend', function(evt) {
-            document.getElementById('longitude').value = evt.latLng.lng().toFixed(3);
-            document.getElementById('latitude').value = evt.latLng.lat().toFixed(3);
-            //document.getElementById('current').innerHTML = '<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';
-        });
-        map.setCenter(myLatlng);
-        map.setZoom(15)
-    }
+            google.maps.event.addListener(marker, 'dragend', function(evt) {
+                document.getElementById('longitude').value = evt.latLng.lng().toFixed(3);
+                document.getElementById('latitude').value = evt.latLng.lat().toFixed(3);
+                //document.getElementById('current').innerHTML = '<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';
+            });
+            map.setCenter(myLatlng);
+            map.setZoom(15)
+        }
     <?php } ?>
 </script>
 

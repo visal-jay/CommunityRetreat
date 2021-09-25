@@ -5,15 +5,14 @@ class Events extends Model
     //add new event 
     public function addEvent($data)
     {
-        session_start();
         $data["org_uid"] = $_SESSION["user"]["uid"];
         if ($data["longitude"] == "NULL" || $data["latitude"] == "NULL")
             $data["map"] = "false";
         else
             $data["map"] = "true";
 
-        $query = "INSERT INTO `event` (`event_name`, `org_uid`, `latlang`, `start_date`,`start_time`,`end_time`, `about`,`mode`) VALUES (:event_name,  :org_uid, IF (STRCMP(:map, 'false')=0 ,NULL,POINT(:latitude ,:longitude)),:start_date,:start_time, :end_time , :about ,:mode)";
-        $params = array_intersect_key($data, ["event_name" => '', "org_uid" => '', "latitude" => '', "longitude" => '', "start_date" => '', "start_time" => '', "end_time" => '', "about" => '', "mode" => '', "map" => '']);
+        $query = "INSERT INTO `event` (`event_name`, `org_uid`, `latlang`, `start_date`,`end_date`,`start_time`,`end_time`, `about`,`mode`) VALUES (:event_name,  :org_uid, IF (STRCMP(:map, 'false')=0 ,NULL,POINT(:latitude ,:longitude)),:start_date,:start_time, :end_time , :about ,:mode)";
+        $params = array_intersect_key($data, ["event_name" => '', "org_uid" => '', "latitude" => '', "longitude" => '', "start_date" => '',"end_date"=>'', "start_time" => '', "end_time" => '', "about" => '', "mode" => '', "map" => '']);
 
         var_dump($data);
 
@@ -193,7 +192,6 @@ class Events extends Model
         /* var_dump($query);
         var_dump($params); */
         $result = Model::select($query, $params);
-
 
         if (count($result) == 0)
             return false;

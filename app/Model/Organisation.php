@@ -149,8 +149,8 @@ class Organisation extends User
     }
     public function changeAccountNumber($uid, $data)
     {
-        $params = ["uid" => "$uid", "account_number" => "$data[account_number]"];
-        $query = 'UPDATE organization SET  account_number = :account_number  WHERE uid = :uid ';
+        $params = ["uid" => "$uid","bank_name"=>$data['bank_name'], "account_number" => "$data[account_number]"];
+        $query = 'UPDATE organization SET bank_name = :bank_name , account_number = :account_number  WHERE uid = :uid ';
         User::insert($query, $params);
     }
     public function changeEmail($uid, $data)
@@ -235,7 +235,7 @@ class Organisation extends User
         $event = new Events;
         $donations = new Donations;
         $data["events"] = array();
-        if ($result = $event->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "published", "donation_capacity" => true]))
+        if ($result = $event->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "published", "donation_status" => true])){
             foreach ($result as $event) {
                 if ($donation_details = $donations->getReport(["event_id" => $event["event_id"]])) {
                     $start_date = $date = new DateTime($donation_details[0]["day"]);
@@ -265,6 +265,7 @@ class Organisation extends User
                     unset($temp);
                 }
             }
+        }
         return json_encode($data["events"]);
     }
 

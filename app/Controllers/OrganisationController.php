@@ -48,6 +48,10 @@ class OrganisationController
 
     public function update()
     {
+        Controller::validateForm(["about_us", "longitude","latitude"]);
+ /*        var_dump($_POST);
+        var_dump($_GET);
+        exit(); */
         Controller::accessCheck(["organization"]);
         (new Organisation)->updateDetails($_SESSION["user"]["uid"], $_POST);
         Controller::redirect("/Organisation/dashboard");
@@ -110,12 +114,12 @@ class OrganisationController
         $organisation_admin = new Organisation();
         $validate =new Validation();
         $uid=$_SESSION["user"]["uid"];
-        $data=["uid"=>$uid,"account_number"=>$_POST['account_number']];
+        $data=["uid"=>$uid,"bank_name"=>$_POST['bank_name'],"account_number"=>$_POST['account_number']];
         if($validate-> bankaccount($_POST['account_number'])){
           $organisation_admin->changeAccountNumber($uid,$data);
           Controller::redirect("/Organisation/profile");
         }
-
+        
     }
     
 

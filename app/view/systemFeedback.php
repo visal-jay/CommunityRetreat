@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/Public/assets/newstyles.css">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Document</title>
 </head>
 <style>
@@ -18,56 +19,62 @@
     height:max-content;
     margin: auto;
   }
-    
+
 </style>
+
 
 <?php if($admin) include "nav.php" ?>
 
 <body>
+
+
 <h1 style="text-align:center;">System feedbacks</h1>
-<div class="system-feedback-container">
+<div class="system-feedback-container" id="feedback-container">
     
-        <div class="flex-col flex-center margin-md card-container">
-                <div class="card-head" style="text-align: center; ">
-                    <h3>USER ID: REG0000045</h3>
-                    <h4>Sep 30 2021</h4>
-                </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptatem numquam laboriosam quaerat nisi repellat, nam temporibus molestias maxime eum iste velit officia deserunt recusandae voluptatum molestiae nihil ipsam et.</p>
-                <div class="flex-col flex-center margin-md"><button class="btn bg-green clr-white">Viewed</button></div>
-                        
-        </div>
-        <div class="flex-col flex-center margin-md card-container">
-                <div class="card-head" style="text-align: center; ">
-                    <h3>USER ID: REG0000035</h3>
-                    <h4>Sep 28 2021</h4>
-                </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptatem numquam laboriosam quaerat nisi repellat, nam temporibus molestias maxime eum iste velit officia deserunt recusandae voluptatum molestiae nihil ipsam et.</p>
-                <div class="flex-col flex-center margin-md"><button class="btn bg-green clr-white">Viewed</button></div>
-                        
-        </div>
-        <div class="flex-col flex-center margin-md card-container">
-                <div class="card-head" style="text-align: center; ">
-                    <h3>USER ID: ORG0000041</h3>
-                    <h4>Aug 25 2021</h4>
-                </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptatem numquam laboriosam quaerat nisi repellat, nam temporibus molestias maxime eum iste velit officia deserunt recusandae voluptatum molestiae nihil ipsam et.</p>
-                <div class="flex-col flex-center margin-md"><button class="btn bg-green clr-white">Viewed</button></div>
-                        
-        </div>
-        <div class="flex-col flex-center margin-md card-container">
-                <div class="card-head" style="text-align: center; ">
-                    <h3>USER ID: ORG0000049</h3>
-                    <h4>Jul 20 2021</h4>
-                </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptatem numquam laboriosam quaerat nisi repellat, nam temporibus molestias maxime eum iste velit officia deserunt recusandae voluptatum molestiae nihil ipsam et.</p>
-                <div class="flex-col flex-center margin-md"><button class="btn bg-green clr-white">Viewed</button></div>
-                        
-        </div>
+
+ 
 </div>
    
 </body>
 <?php include "footer.php"?>
 <script>
+ 
+
+        $.ajax({
+        async: false,
+        url: "/Admin/viewFeedbacks",
+        type: "post",
+        success : function(feedbacks){
+            let results = document.getElementById("feedback-container");
+            if (feedbacks !== null)   JSON.parse(feedbacks).forEach(s => {
+                console.log(feedbacks);
+                    results.innerHTML +=
+                `<div class="flex-col flex-center margin-md card-container">
+                    <div class="card-head" style="text-align: center; ">
+                        <h3> ${s.uid}</h3>
+                        <p style="margin-top:-12px;">${s.date}<p>
+                    </div>
+                    <p>${s.feedback}</p>
+                    <div  id="${s.feedback_id}"class="flex-center margin-md"><button onClick="viewBtn('${s.feedback_id}')" class="btn bg-green clr-white " id="view-btn" >View</button></div>
+                            
+                </div>`;
+            });    
+         }
+
+        });
+        function viewBtn(id){
+            // var data = new FormData();
+            // data.append("feedback_id", id);
+            // $.ajax({
+            // url: "/Admin/feedbackViewed",
+            // type: "post",
+            // data: {
+            //           data
+            //         },
+         
+            // });
+            document.getElementById(id).innerHTML = `<h4 class="clr-green"><i class="fa fa-check clr-green"></i>&nbspViewed</h4>`;
+        }
 
 </script>
 

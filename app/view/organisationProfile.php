@@ -117,7 +117,7 @@
                         </div>
 
                         <div class="account-number">
-                            <h3 id="account-number"><?php if (isset($account_number)) echo $account_number; ?></h3>
+                            <h3 id="account-number"><?php if (isset($account_number)) echo $bank_name," - ",$account_number; ?></h3>
 
                         </div>
                         <div class="account-number-change-btn">
@@ -129,8 +129,10 @@
                     <form action="/Organisation/updateAccountNumber" method="post" id="edit-user-profile-form">
                         <div class="update-form" id="account-number-updater">
                             <div class="input-container">
+                            <label for="text" class="edit-coontainer">Enter bank name:</label>
+                                <input type="text" id="usernameinput" placeholder="Enter bank name" name="bank_name" required><br>
                                 <label for="text" class="edit-coontainer">Enter new account number:</label>
-                                <input type="text" id="usernameinput" placeholder="Enter new account number" name="account_number" onkeyup="checkAccountNumber(this.value)"><br>
+                                <input type="text" id="usernameinput" placeholder="Enter new account number" name="account_number" onkeyup="checkAccountNumber(this.value)" required><br>
                                 <p class="alert account-number-error"></p>
 
                                 <div class="intro-update-btn">
@@ -292,7 +294,7 @@
 
         function checkAccountNumber(account_number) {
             var err = "";
-            const pattern = /^[0-9]{8,18}$/;
+            const pattern = /^[0-9]{10,18}$/;
             if (!pattern.test(account_number)) {
                 var err = "Valid account number required";
                 document.querySelector('.account-number-submit-btn').disabled = true;

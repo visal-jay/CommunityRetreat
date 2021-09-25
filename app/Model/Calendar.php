@@ -14,9 +14,9 @@
                 $event_result = Model::select($get_event_query,  $event_params);
                 array_push($event_details,$event_result);
             }
-            
   
                 return $event_details;
+
 
 
         }

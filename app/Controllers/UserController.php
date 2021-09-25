@@ -2,7 +2,7 @@
 
 class UserController{
     public function home(){
-        $user_roles=Controller::accessCheck(["admin","organization","regsitered_user","guest_user"]);
+        $user_roles=Controller::accessCheck(["admin","organization","registered_user","guest_user"]);
         if($user_roles["admin"])
             Controller::redirect("/Admin/dashboard");
         else if($user_roles["organization"])
@@ -12,7 +12,7 @@ class UserController{
     }
 
     public function profile(){
-        $user_roles=Controller::accessCheck(["admin","organization","regsitered_user"]);
+        $user_roles=Controller::accessCheck(["admin","organization","registered_user"]);
         if($user_roles["admin"])
             Controller::redirect("/Admin/profile");
         else if($user_roles["organization"])
@@ -22,7 +22,7 @@ class UserController{
     }
 
     public function getController(){
-        $user_roles=Controller::accessCheck(["admin","organization","regsitered_user"]);
+        $user_roles=Controller::accessCheck(["admin","organization","registered_user"]);
         if($user_roles["admin"])
             $controller="Admin";
         else if($user_roles["organization"])
@@ -53,7 +53,7 @@ class UserController{
         }
         else{
             $user->changePassword($uid,$data);
-            Controller::redirect("/$controller/view");
+            Controller::redirect("/$controller/profile");
         }       
     }
 

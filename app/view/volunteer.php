@@ -416,7 +416,7 @@
         correctLevel: QRCode.CorrectLevel.H,
     });
 
-    QR_CODE.makeCode("http//:<?= $ip ?>/event/volunteerValidate?event_id=<?= $_GET["event_id"] ?>");
+    QR_CODE.makeCode("http://<?= $ip ?>/Volunteer/volunteerValidate?event_id=<?= $_GET["event_id"] ?>");
 
     function printDiv() {
         var divContents = document.getElementById("qrcode").innerHTML;

@@ -266,6 +266,7 @@
 <?php include "nav.php" ?>
 
 <body>
+
     <div class="homepage flex-col">
         <h1>Search to your choice</h1>
         <search class="flex-row-to-col flex-center border-round">
@@ -278,7 +279,9 @@
 
             </form>
         </search>
+        <!-- in page search bar end -->
 
+        <!-- choice menu start -->
         <div class="choice-menu margin-md">
             <button class="btn-icon" onclick="choices()"><i class="fas fa-sliders-h" style="font-size:1.5em"></i></button>
         </div>
@@ -324,33 +327,44 @@
             </div>
         </choices>
 
+        <!-- choice menu end -->
+
+        <!-- map start -->
         <div id="map-container" class="margin-md hidden" style="width: 100%;text-align:center;">
             <i class="fas fa-times margin-md" style="cursor: pointer; float:right;" onclick="document.getElementById('map-container').classList.toggle('hidden');"></i>
             <div id="map"></div>
         </div>
+        <!-- map end -->
 
+        <!-- search result event grids start -->
         <events class="grid">
         </events>
+        <!-- search result event grids end -->
+
     </div>
 
 </body>
 
-<?php include "footer.php"?>
+<?php include "footer.php" ?>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
 <script>
+    /* input calendar hide out of the calendar div*/
     document.addEventListener("click", (evt) => {
-        let calendar=document.querySelector("#search-input-calendar");
-        let calendar_button =document.getElementById("calendar-button");
-        if (calendar!==evt.target && !calendar.contains(evt.target) && !calendar.classList.contains("hidden") && evt.target!=calendar_button)
+        let calendar = document.querySelector("#search-input-calendar");
+        let calendar_button = document.getElementById("calendar-button");
+        if (calendar !== evt.target && !calendar.contains(evt.target) && !calendar.classList.contains("hidden") && evt.target != calendar_button)
             calendarShow();
     });
 
+    /* input calendar show-hide */
     function calendarShow() {
         document.getElementById('search-input-calendar').classList.toggle('hidden');
         document.getElementById("map-container").classList.toggle('map-index');
         document.querySelector('.grid').classList.toggle('map-index');
     }
+
+    /* input debouncer */
     const debounce = (func, delay) => {
         let debounceTimer
         return function() {
@@ -362,21 +376,16 @@
         }
     }
 
+    /* element create dynamically */
     function createElementFromHTML(htmlString) {
         var div = document.createElement('div');
         div.innerHTML = htmlString.trim();
         return div.firstChild;
     }
 
-    let params = new URLSearchParams(location.search);
-    var range = params.get("distance");
-    document.getElementById("in-search").value = params.get("search");
 
-    if (range) {
-        document.getElementById("map-container").classList.toggle("hidden");
-        resizeMap();
-    }
 
+    /* get user coordinates */
     function getCoordinates() {
         return new Promise(
             function(resolve, reject) {
@@ -385,6 +394,7 @@
         );
     }
 
+    /* event search ajax */
     async function search(latitude = "", longitude = "", range = "") {
 
         if (latitude == "" || longitude == "") {
@@ -402,7 +412,7 @@
 
         let parent_container = document.querySelector('events');
 
-
+        console.log(range);
         $.ajax({
             url: "/Search/searchAll", //the page containing php script
             type: "post", //request type,
@@ -467,6 +477,9 @@
                     </figure>
                     `;
                     parent_container.appendChild(createElementFromHTML(template));
+
+                    /* if search has a longitude and latitude  display them on map*/
+
                     if (evn.longitude != null || evn.latitude != null) {
 
                         const infowindow = new google.maps.InfoWindow({
@@ -499,6 +512,7 @@
             orgSearch(name);
     }
 
+    /* orgnaiztion search ajax */
     function orgSearch(name) {
         $.ajax({
             url: "/Search/searchOrganisation", //the page containing php script
@@ -531,12 +545,21 @@
         });
     }
 
+    /* listen to search input text */
     document.getElementById("in-search").addEventListener('keyup', debounce(search, 100));
 
+    /* toggle choice bar */
     function choices() {
         document.getElementsByTagName("choices")[0].classList.toggle("show-choices");
     }
 
+    /* check url query parameters */
+    let params = new URLSearchParams(location.search);
+    let range = params.get("distance");
+    document.getElementById("in-search").value = params.get("search");
+
+
+    /* map initilzation */
     var map;
     var markers = [];
 
@@ -571,9 +594,18 @@
 
         map.addListener("center_changed", () => {
             let latlang = map.getCenter();
-            search(latlang.lat(), latlang.lng());
+            search(latlang.lat(), latlang.lng(), 20);
         });
-        search(latitude, longitude);
+
+        if (range) {
+            document.getElementById("map-container").classList.toggle("hidden");
+            resizeMap();
+            search(latitude, longitude, 20);
+
+        } else {
+            search(latitude, longitude);
+
+        }
     }
 
     function hideMarkers() {
@@ -594,9 +626,9 @@
     function resizeMap() {
         document.getElementById("map").style.width = parseInt(document.getElementById("map-container").offsetWidth) + "px";
     }
-    window.addEventListener("resize", resizeMap);
-    window.onload=resizeMap;
 
+    window.addEventListener("resize", resizeMap);
+    window.onload = resizeMap;
 </script>
 
 

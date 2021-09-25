@@ -112,6 +112,7 @@
         <h1>Gallery</h1>
         <?php if($moderator || $organization || $registered_user) { ?>
         <button class="btn btn-solid margin-lg" onclick="addPhoto()">Add photo &nbsp; <i class="fas fa-plus"></i></button>
+        <p class="clr-red"><?php if(isset($_GET["error"])) echo $_GET["error"]; ?></p>
         <form class="form flex-col flex-center" action="/Event/addPhoto?event_id=<?= $_GET["event_id"] ?>" method="post" enctype="multipart/form-data">
             <label for="myfile">Select a file:</label>
             <input type="file" class="form-ctrl margin-md" id="myfile" name="photo">
@@ -129,7 +130,7 @@
                             </form>
                         <?php  } ?>
                         <div class="gallery-container flex flex-center"><img src="<?= $photo["image"] ?>" style="object-fit: cover;" alt=""></div>
-                        <p style="color:white;">Venodi Widanagamage</p>
+                        <p style="color:white;"><?= $photo["username"] ?></p>
                     </div>
                 </figure>
             <?php } ?>

@@ -24,22 +24,22 @@ class Image
         }
 
         if (file_exists($this->file_path) && $overwrite==false) {
-            throw new  Exception("Sorry, file already exists.");
+            throw new  Exception("Sorry, file already exists");
         }
 
-        if ($_FILES[$upload_name]["size"] > 10000000) {
-            throw new  Exception("Sorry, your file is too large.");
+        if ($_FILES[$upload_name]["size"] > 5242880) {
+            throw new  Exception("Sorry, your file is too large");
         }
 
         if (!in_array(trim(strtolower($file_ext)), array("jpg", "png", "jpeg", "gif"))) {
-            throw new  Exception("Sorry, only JPG, JPEG, PNG & GIF files are allowed.");
+            throw new  Exception("Sorry, only JPG, JPEG, PNG & GIF files are allowed");
         }
 
         if (move_uploaded_file($_FILES[$upload_name]["tmp_name"], $this->file_path)) {
             // File has been successfully uploaded and moved
         } else {
             // file move has failed
-            throw new  Exception("Sorry, there was an error uploading your file.");
+            throw new  Exception("Sorry, there was an error uploading your file");
         }
     }
 

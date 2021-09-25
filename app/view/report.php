@@ -90,7 +90,11 @@ var myLineChart = new Chart('myChart', {
                     display: true,
                     labelString: 'Amount',
                 },
-            }]
+            }],
+            
+            x: {
+                beginAtZero: true,
+            }
         }
     }
 });

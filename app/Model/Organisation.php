@@ -235,7 +235,7 @@ class Organisation extends User
         $event = new Events;
         $donations = new Donations;
         $data["events"] = array();
-        if ($result = $event->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "published", "donation_capacity" => true]))
+        if ($result = $event->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "published", "donation_status" => true])){
             foreach ($result as $event) {
                 if ($donation_details = $donations->getReport(["event_id" => $event["event_id"]])) {
                     $start_date = $date = new DateTime($donation_details[0]["day"]);
@@ -265,6 +265,7 @@ class Organisation extends User
                     unset($temp);
                 }
             }
+        }
         return json_encode($data["events"]);
     }
 

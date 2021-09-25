@@ -7,6 +7,7 @@ class LoginController
 
     function view()
     {
+        /* if user is logged in redirect to respective home */
         if(isset($_SESSION["user"]))
             Controller::redirect("/User/home");
 
@@ -16,9 +17,17 @@ class LoginController
         $_GET["signupOrg"] = isset($_GET["signupOrg"]) ? true : false;
         $_GET["signupUser"] = $_GET["signupOrg"] == true ? false : true;
         $_GET = array_merge(["passwordErr" => '', "emailErr" => '', "loginErr" => '',"telephoneErr"=>''], $_GET);
-        View::render("login",[],$user_roles);
+
+        $data=array();
+        if(isset($_GET["redirect"]))
+            $data=["redirect"=>$_GET["redirect"]];
+        else if (isset($_SERVER['HTTP_REFERER']))
+            $data=["redirect"=>$_SERVER['HTTP_REFERER']];
+            
+        View::render("login",$data,$user_roles);
     }
 
+    /* send key to reset the password */
     function forgotPassword()
     {
         if (isset($_POST["email"])) {
@@ -27,12 +36,15 @@ class LoginController
                 $key = $user->getForgotPasswordKey($_POST["email"]);
                 $mail = new Mail;
                 $mail->verificationEmail($_POST["email"], "forgotPasswordMail", "localhost/login/validateforgotpassword?" . http_build_query(["key" => $key]), 'Reset password');
-
             }
+            Controller::redirect('/Login/view',["forgot_password"=>true,"mail"=>true]);
         }
-        Controller::redirect('/Login/view',["forgot_password"=>true,"mail"=>true]);
+        else{
+            Controller::redirect("Login/view");
+        }
     }
 
+    /* validate the forgot password key and reedirecting to restting password */
     function validateForgotPassword()
     {
         if(!isset($_GET["key"]))
@@ -49,6 +61,7 @@ class LoginController
             Controller::redirect('/Login/view');
     }
 
+    /* reset password and redirecting to login page */
     function resetPassword()
     {
         if(!isset($_GET["key"]))
@@ -60,6 +73,7 @@ class LoginController
         Controller::redirect("/Login/view");
     }
 
+    /* validate login */
     public static function validate($email = '', $password = '')
     {
         if (isset($_POST["email"]) and isset($_POST["password"]))
@@ -72,11 +86,16 @@ class LoginController
         if ($user_details = $user->authenticate($email, $password)) {
             $user_details["username"]=$user->getUsername($user_details["uid"]);
             $_SESSION["user"] = array_intersect_key($user_details, ["uid" => '', "user_type" => '',"username"=>'']);
-            Controller::redirect("/User/home");
+            if(isset($_GET["redirect"]))
+                Controller::redirect($_GET["redirect"]);
+            else
+                Controller::redirect("/User/home");
         } 
         else (new LoginController)->loginFailed($email);
     }
 
+
+    /* logout and destroy session */
     public function logout(){
         if(!isset($_SESSION)) session_start();
         session_destroy();
@@ -85,6 +104,7 @@ class LoginController
 
     private function loginFailed($email)
     {
+        /* after 5 bad logins account is locked for 10 minutes */
         $bad_login_limit = 5;
         $lockout_time = 600;
         $user = new User;

@@ -10,7 +10,7 @@ class Controller
 
     public static function validateForm($post=[],$get=[]){
         if(!(array_intersect(array_keys($_POST),$post)==$post && array_intersect(array_keys($_GET),$get)==$get))
-            Controller::redirect(isset($_SERVER['http_referer']) ? $_SERVER['http_referer'] :"");
+            Controller::redirect(isset($_SERVER['http_referer']) ? $_SERVER['http_referer'] :"/");
         else
             return true;
     }

@@ -22,8 +22,23 @@ class AdminController{
         $user_roles=Controller::accessCheck(["admin"]);
         View::render("admin",[],$user_roles);
     }
-    public function systemFeedback(){
+    public function systemFeedbacks(){
         $user_roles=Controller::accessCheck(["admin"]);
         View::render("systemFeedback",[],$user_roles);
+    }
+
+    public function viewFeedbacks(){
+      
+        $systemFeedback=new Systemfeedback();
+        $systemFeedbacks= $systemFeedback->renderSystemFeedbacks();
+        echo json_encode($systemFeedbacks);
+        
+    }
+    public function feedbackViewed(){
+
+        $systemFeedback=new Systemfeedback();
+        $data=["feedback_id"=>$_POST['feedback_id']];
+        $systemFeedback->changeFeedbackState($data);
+        Controller::redirect("systemFeedbacks");
     }
 }

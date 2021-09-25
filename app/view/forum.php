@@ -120,14 +120,25 @@
         color: black;
         opacity: 1;
     }
-
-    textarea {
+    .announcement-textarea{
         min-height: 400px;
         padding: 12px 20px;
         border: 2px solid #ccc;
         border-radius: 4px;
         background-color: #f8f8f8;
         font-size: 16px;
+        resize:none;
+        padding: 0.3em 0.5em;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        background: transparent;
+        border-radius: 6px;
+        font-family: inherit;
+        margin-bottom: 0.8rem;
+    }
+    .announcement-textarea:focus{
+        box-shadow: 0px 0px 0px 1px #16c79a;
+        border-color: #16c79a;
     }
 
     .card-container {
@@ -283,7 +294,7 @@
 
                     <div class="form-item">
                         <label>Announcement</label>
-                        <textarea name="announcement" class="form-ctrl" placeholder="Enter announcement" id="edit-announcement" required></textarea>
+                        <textarea name="announcement" class="announcement-textarea" placeholder="Enter announcement" id="edit-announcement" required></textarea>
                     </div>
 
                     <button name="announcement_id" class="btn btn-solid margin-md" type="submit" id="edit-announcement-id">Save</button>

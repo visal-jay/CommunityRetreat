@@ -10,134 +10,142 @@
     <title>Event Page</title>
 </head>
 <style>
-    .photo-container {
-        height: 55%;
-        text-align: center;
-        position: relative;
-        padding: 2rem 2rem 0rem 2rem;
-    }
+.photo-container {
+    height: 55%;
+    text-align: center;
+    position: relative;
+    padding: 2rem 2rem 0rem 2rem;
+}
 
-    .profile-pic {
-        max-width: 10%;
-        min-width: 60px;
-        aspect-ratio: 1/1;
-        background-color: gray;
-        border: 1px solid white;
-        position: absolute;
-        overflow: hidden;
-        top: 20px;
-        left: 0;
-        right: 0;
-        margin: auto
-    }
+.profile-pic {
+    max-width: 10%;
+    min-width: 60px;
+    aspect-ratio: 1/1;
+    background-color: gray;
+    border: 1px solid white;
+    position: absolute;
+    overflow: hidden;
+    top: 20px;
+    left: 0;
+    right: 0;
+    margin: auto
+}
 
 
-    .cover-place-holder {
-        vertical-align: center;
-        position: absolute;
-        left: 0;
-        right: 0;
-        margin: auto;
-        max-height: 300px;
-        min-height: 100px;
-        background-color: gray;
-        overflow: hidden;
-        aspect-ratio: 4/1.2;
-        max-width: 80%;
-    }
+.cover-place-holder {
+    vertical-align: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    max-height: 300px;
+    min-height: 100px;
+    background-color: gray;
+    overflow: hidden;
+    aspect-ratio: 4/1.2;
+    max-width: 80%;
+}
 
-    .photo-element {
-        object-fit: cover;
-        height: 100%;
-        width: 100%;
-    }
+.photo-element {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
 
-    .nav-secondary {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+.nav-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    }
+}
 
-    .nav-secondary-bar {
+.nav-secondary-bar {
 
-        display: flex;
-        align-items: center;
-        overflow: auto;
+    display: flex;
+    align-items: center;
+    overflow: auto;
 
-    }
+}
 
-    .nav-active {
-        background-color: #16c79a !important;
-        color: white !important;
-    }
+.nav-active {
+    background-color: #16c79a !important;
+    color: white !important;
+}
 
-    .image-upload {
-        position: absolute;
-        bottom: 11px;
-        right: 11px;
-    }
+.image-upload {
+    position: absolute;
+    bottom: 11px;
+    right: 11px;
+}
 
-    .image-upload>input {
-        display: none;
+.image-upload>input {
+    display: none;
 
-    }
+}
 
-    /* Designing for scroll-bar */
-    ::-webkit-scrollbar {
-        width: 2px;
-        height: 8px;
-        margin: 2rem;
-    }
+/* Designing for scroll-bar */
+::-webkit-scrollbar {
+    width: 2px;
+    height: 8px;
+    margin: 2rem;
+}
 
-    /* Track */
-    /*     ::-webkit-scrollbar-track {
+/* Track */
+/*     ::-webkit-scrollbar-track {
         background: gainsboro;
         border-radius: 5px;
         padding: 10px;
         margin: 1rem;
     } */
 
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-        background: #16c79a;
-        border-radius: 5px;
-        border: 1 px solid #16c79a;
-        margin: 1rem;
-        height: 1px;
-        width: 10px;
-    }
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #16c79a;
+    border-radius: 5px;
+    border: 1 px solid #16c79a;
+    margin: 1rem;
+    height: 1px;
+    width: 10px;
+}
 
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-        background: #16c79a;
-    }
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #16c79a;
+}
 
-  
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+td {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.event-card-details {
+    display: flex;
+    flex-direction: row;
+}
+
+h1,
+h2 {
+    margin: 0px;
+}
+
+.info {
+    text-align: center;
+}
+
+@media screen and (max-width:767px) {
+    h1 {
+        font-size: 1.5rem;
+    }
 
     .event-card-details {
-        display: flex;
-        flex-direction: row;
+        flex-direction: column;
     }
-
-    h1,
-    h2 {
-        margin: 0px;
-    }
-
-    .info {
-        text-align: center;
-    }
-
-    @media screen and (max-width:767px) {
-        h1 {
-            font-size: 1.5rem;
-        }
-
-        .event-card-details {
-            flex-direction: column;
-        }
-    }
+}
 </style>
 <?php include "nav.php" ?>
 
@@ -169,14 +177,25 @@
     <div class="nav-secondary">
         <div class="nav-secondary-bar margin-lg">
             <?php $page = $_GET["page"] ?>
-            <a class="btn margin-side-md <?php if ($page == "about") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=about&&event_id=<?= $_GET["event_id"] ?>">About</a>
-            <a class="btn margin-side-md <?php if ($page == "gallery") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=gallery&&event_id=<?= $_GET["event_id"] ?>">Gallery</a>
-            <a class="btn margin-side-md <?php if ($page == "forum") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=forum&&event_id=<?= $_GET["event_id"] ?>">Forum</a>
-            <a class="btn margin-side-md <?php if ($page == "feedback") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=feedback&&event_id=<?= $_GET["event_id"] ?>">Feedback</a>
+            <a class="btn margin-side-md <?php if ($page == "about") echo "nav-active"; ?>" style=" margin-bottom:10px;"
+                href="/Event/view?page=about&&event_id=<?= $_GET["event_id"] ?>">About</a>
+            <a class="btn margin-side-md <?php if ($page == "gallery") echo "nav-active"; ?>"
+                style=" margin-bottom:10px;"
+                href="/Event/view?page=gallery&&event_id=<?= $_GET["event_id"] ?>">Gallery</a>
+            <a class="btn margin-side-md <?php if ($page == "forum") echo "nav-active"; ?>" style=" margin-bottom:10px;"
+                href="/Event/view?page=forum&&event_id=<?= $_GET["event_id"] ?>">Forum</a>
+            <a class="btn margin-side-md <?php if ($page == "feedback") echo "nav-active"; ?>"
+                style=" margin-bottom:10px;"
+                href="/Event/view?page=feedback&&event_id=<?= $_GET["event_id"] ?>">Feedback</a>
             <?php if ($organization || $moderator) { ?>
-                <a class="btn margin-side-md <?php if ($page == "volunteers") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=volunteers&&event_id=<?= $_GET["event_id"] ?>">Volunteers</a>
-                <a class="btn margin-side-md <?php if ($page == "timeline") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=timeline&&event_id=<?= $_GET["event_id"] ?>">Work Timeline</a>
-                <a class="btn margin-side-md <?php if ($page == "chat") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=chat&&event_id=<?= $_GET["event_id"] ?>">Chat</a>
+            <a class="btn margin-side-md <?php if ($page == "volunteers") echo "nav-active"; ?>"
+                style=" margin-bottom:10px;"
+                href="/Event/view?page=volunteers&&event_id=<?= $_GET["event_id"] ?>">Volunteers</a>
+            <a class="btn margin-side-md <?php if ($page == "timeline") echo "nav-active"; ?>"
+                style=" margin-bottom:10px;" href="/Event/view?page=timeline&&event_id=<?= $_GET["event_id"] ?>">Work
+                Timeline</a>
+            <a class="btn margin-side-md <?php if ($page == "chat") echo "nav-active"; ?>" style=" margin-bottom:10px;"
+                href="/Event/view?page=chat&&event_id=<?= $_GET["event_id"] ?>">Chat</a>
             <?php } ?>
             <?php if ($organization || $treasurer) { ?>
                 <a class="btn margin-side-md <?php if ($page == "budget") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=budget&&event_id=<?= $_GET["event_id"] ?>">Budget</a>

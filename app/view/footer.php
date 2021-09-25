@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/Public/assets/newstyles.css">
+    <!-- <link rel="stylesheet" href="/Public/assets/newstyles.css"> -->
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
 
     <style>
@@ -67,6 +67,22 @@
             position: absolute;
             background-color: white;
         }
+        .feedback-textarea{
+
+            resize:none;
+            padding: 0.3em 0.5em;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            background: transparent;
+            border-radius: 6px;
+            font-family: inherit;
+            margin-bottom: 0.8rem;
+        }
+        .feedback-textarea:focus{
+            box-shadow: 0px 0px 0px 1px #16c79a;
+            border-color: #16c79a;
+        }
+
         .confirm-buttons{
             width: 80%;
             display: flex;
@@ -84,6 +100,7 @@
             width: 100%;
             height: 100%;
         }
+
         @media screen and (max-width: 1000px){
             .footer-content-container{
                 width: 60%;
@@ -140,7 +157,7 @@
             .footer-content{
                 width: 100%
             }
-            .content{
+            .main-footer-content{
                 padding: 0.1rem;
             }
             .feedback-form{
@@ -191,7 +208,7 @@
        
                 <h2>Send us some feedback !</h2>
                 <p>Do you have a suggestion or found some bug? Let us know in the field below.</p>
-               <textarea cols="40" rows="8" placeholder= "Describe here" class="form-ctrl" style="resize:none;" name="feedback"></textarea>
+               <textarea cols="40" rows="8" placeholder= "Describe here" class="feedback-textarea"  name="feedback" required></textarea>
                <div class="confirm-buttons">
                    
                     <button   type="submit" class= "btn bg-green clr-white border-green">Submit</button>
@@ -203,16 +220,16 @@
     <footer class="main-footer">
     <?php if (!$admin) { ?>
         <div class="footer-content-container">
-            <div class="content">
+            <div class="footer-main-content">
                 <p class="footer-content">About Us</p>
             </div>
-            <div class="content">
+            <div class="footer-main-content">
                 <p class="footer-content" onclick="popup()">Feedback Us</p>
             </div>
-            <div class="content">
+            <div class="footer-main-content">
                 <p class="footer-content">Contact Us</p>
             </div>
-            <div class="content">
+            <div class="footer-main-content">
                 <p class="footer-content">Terms & conditions</p>
             </div>
         </div>
@@ -220,7 +237,7 @@
         <div class= "copyright">
                 <p style="color:gray; margin: 1.5rem 0;"><i class="far fa-copyright"></i>&nbsp2021 Community Retreat, All Right Reserved.</p>
         </div>
-        <a class=" logo ">
+        <a class="logo ">
             <img src="/Public/assets/visal logo.png ">
         </a>
         
@@ -233,7 +250,7 @@
   
   function popup(){
         let feedback_form = document.querySelector(".feedback-container");
-        let body =document.querySelector(".body");
+        let body =document.getElementsByTagName("body")[0];
         body.classList.toggle("overflow");
         feedback_form.classList.toggle("unhide");
   }

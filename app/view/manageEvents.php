@@ -10,6 +10,12 @@
     <title>Document</title>
 </head>
 <style>
+    .main-container{
+       
+        min-height: 100%;
+        align-items: center;
+
+    }
     textarea {
         height: 150px;
         padding: 12px 20px;
@@ -127,8 +133,8 @@
 <?php if ($organization) include "nav.php" ?>
 
 <body>
-
-    <div class="flex-col flex-center margin-side-lg">
+ 
+    <div class="flex-col main-container margin-side-lg">
         <h1>Manage Events</h1>
         <?php if ($organization) { ?>
             <button class="btn btn-solid margin-lg" onclick="addEvent()">Add Event &nbsp; <i class="fas fa-plus"></i></button>

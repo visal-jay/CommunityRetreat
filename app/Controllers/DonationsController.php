@@ -43,4 +43,17 @@ class DonationsController{
         $data["event_name"]  = (new Events)->getDetails($_GET["event_id"])["event_name"];
         View::render('donationsReport', $data);
     }
+
+    public function donationRefund(){
+        $donation = new Donations;
+        $donation->donationRefund($_GET["event_id"]);
+        
+        
+    }
+
+    public function donationCredit(){
+        $donation = new Donations;
+        $donation->donationCredit($_GET["event_id"]);
+        
+    }
 }

@@ -13,7 +13,6 @@ class UserController{
 
     public function profile(){
         $user_roles=Controller::accessCheck(["admin","organization","registered_user"]);
-       
         if($user_roles["admin"])
             Controller::redirect("/Admin/profile");
         else if($user_roles["organization"])
@@ -54,7 +53,7 @@ class UserController{
         }
         else{
             $user->changePassword($uid,$data);
-            Controller::redirect("/$controller/view");
+            Controller::redirect("/$controller/profile");
         }       
     }
 

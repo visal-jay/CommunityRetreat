@@ -23,7 +23,7 @@
     <!-- profile container division -->
     <div class="profilecontainer">
         <div class="profilecontainer-top">
-            <form action="/RegisteredUser/updateProfilePic" method="post" class="profilepic-pic-div">
+            <form action="/User/updateProfilePic" method="post" class="profilepic-pic-div">
                 <img src="<?= $profile_pic ?>" id="dp">
                 <input type="file" id="file" name="profile_pic">
                 <label for="file" id="uploadbtn">upload photo</label>
@@ -60,7 +60,7 @@
                     </div>
 
                     <!--username update form-->
-                    <form action="/RegisteredUser/updateUsername" method="post" id="edit-user-profile-form">
+                    <form action="/User/updateUsername" method="post" id="edit-user-profile-form">
                         <div class="update-form" id="usernameupdater">
                             <div class="input-container">
                                 <label for="text" class="edit-coontainer">Enter new username:</label>
@@ -95,7 +95,7 @@
                     </div>
 
                     <!--mobile update form-->
-                    <form action="/RegisteredUser/updateContactNumber" method="post" id="edit-user-profile-form">
+                    <form action="/User/updateContactNumber" method="post" id="edit-user-profile-form">
                         <div class="update-form" id="mobileupdater">
                             <div class="input-container">
 
@@ -145,7 +145,7 @@
                     </div>
 
                     <!--email update form-->
-                    <form action="/RegisteredUser/updateEmail" method="post" id="edit-user-profile-form">
+                    <form action="/User/updateEmail" method="post" id="edit-user-profile-form">
                         <div class="update-form" id="emailupdater">
                             <div class="input-container">
                                 <label for="text">Enter new email:</label>
@@ -182,7 +182,7 @@
                     </div>
 
                     <!--password update form-->
-                    <form action="/RegisteredUser/updatePassword" method="post" id="edit-user-profile-form">
+                    <form action="/User/updatePassword" method="post" id="edit-user-profile-form">
                         <div class="update-form" id="passwordupdater">
                             <div class="input-container">
 
@@ -281,7 +281,7 @@
             } else
 
                 $.ajax({
-                    url: "/RegisteredUser/checkEmailAvailable",
+                    url: "/User/checkEmailAvailable",
                     type: "post",
                     dataType: 'json',
                     data: {

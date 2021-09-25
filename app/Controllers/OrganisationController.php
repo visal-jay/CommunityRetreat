@@ -114,7 +114,7 @@ class OrganisationController
         $organisation_admin = new Organisation();
         $validate =new Validation();
         $uid=$_SESSION["user"]["uid"];
-        $data=["uid"=>$uid,"account_number"=>$_POST['account_number']];
+        $data=["uid"=>$uid,"bank_name"=>$_POST['bank_name'],"account_number"=>$_POST['account_number']];
         if($validate-> bankaccount($_POST['account_number'])){
           $organisation_admin->changeAccountNumber($uid,$data);
           Controller::redirect("/Organisation/profile");

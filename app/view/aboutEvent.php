@@ -95,17 +95,26 @@
     }
 
 
-    textarea {
+
+    .about-textarea{
         height: 150px;
         width: 800px;
         padding: 12px 20px;
         box-sizing: border-box;
         border: 2px solid #ccc;
-        border-radius: 4px;
-        background-color: #f8f8f8;
+        border-radius: 6px;
+        background: transparent;
         font-size: 16px;
-        resize: none;
+        resize:none;    
+        font-size: 1rem;
+        font-family: inherit;
+        margin-bottom: 0.8rem;
     }
+    .about-textarea:focus{
+        box-shadow: 0px 0px 0px 1px #16c79a;
+        border-color: #16c79a;
+    }
+
 
     .form-ctrl {
         margin-bottom: 0px;
@@ -256,7 +265,6 @@
                         </div>
                     </div>
 
-                    <!-- Visal meka balanna input class="form"-->
                     <div class="venue-container">
                         <div class="flex-row margin-lg ">
                             <i class="btn-icon icon-width fas fa-map-marker-alt clr-green margin-side-lg"></i>
@@ -322,7 +330,7 @@
                         <div class="data">
                             <p class="margin-lg"><?= $about ?></p>
                         </div>
-                        <textarea name="about" value="<?= $about ?>" class="form form-ctrl margin-lg hidden" placeholder="Enter about us"><?= $about ?></textarea>
+                        <textarea name="about" value="<?= $about ?>" class="form about-textarea margin-lg hidden" placeholder="Enter about us"><?= $about ?></textarea>
                     </div>
 
                     <?php if ($organization || $moderator) { ?>

@@ -19,7 +19,7 @@
 <body>
     <div class="profilecontainer">
         <div class="profilecontainer-top">
-            <form action="/Admin/updateProflePic" method="post" class="profilepic-pic-div">
+            <form action="/User/updateProflePic" method="post" class="profilepic-pic-div">
                 <img src="<?= $profile_pic ?>" id="dp">
                 <input type="file" id="file">
                 <label for="file" id="uploadbtn">upload photo</label>
@@ -63,7 +63,7 @@
                     </div>
 
                     <!--username update form-->
-                    <form action="/Admin/updateUsername" method="post" id="edit-user-profile-form">
+                    <form action="/User/updateUsername" method="post" id="edit-user-profile-form">
                         <div class="update-form" id="usernameupdater">
                             <div class="input-container">
                                 <label for="text" class="edit-coontainer">Enter new username:</label>
@@ -98,7 +98,7 @@
                     </div>
 
                     <!--mobile update form-->
-                    <form action="/Admin/updateContactNumber" method="post" id="edit-user-profile-form">
+                    <form action="/User/updateContactNumber" method="post" id="edit-user-profile-form">
                         <div class="update-form" id="mobileupdater">
                             <div class="input-container">
 
@@ -148,7 +148,7 @@
                     </div>
 
                     <!--email update form-->
-                    <form action="/Admin/updateEmail" method="post" id="edit-user-profile-form">
+                    <form action="/User/updateEmail" method="post" id="edit-user-profile-form">
                         <div class="update-form" id="emailupdater">
                             <div class="input-container">
                                 <label for="text">Enter new email:</label>
@@ -185,7 +185,7 @@
                     </div>
 
                     <!--password update form-->
-                    <form action="/Admin/updatePassword" method="post" id="edit-user-profile-form">
+                    <form action="/User/updatePassword" method="post" id="edit-user-profile-form">
                         <div class="update-form" id="passwordupdater">
                             <div class="input-container">
 

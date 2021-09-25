@@ -49,8 +49,8 @@
 
             <?php if ($admin) { ?>
                 <a class="nav-link margin-side-md" href="/Admin/dashboard ">Home</a>
-                <a class="nav-link margin-side-md" href="/User/complaint ">complaints</a>
-                <a class="nav-link margin-side-md" href="/User/systemFeedback ">System Feedback</a>
+                <a class="nav-link margin-side-md" href="/Admin/complaint ">complaints</a>
+                <a class="nav-link margin-side-md" href="/Admin/systemFeedbacks ">System Feedback</a>
             <?php } ?>
 
             <?php if ($guest_user && !$organization && !$registered_user && !$admin) { ?>

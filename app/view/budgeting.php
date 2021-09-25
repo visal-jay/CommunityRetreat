@@ -46,7 +46,7 @@
     display: block;
 }
 
-.card-container {
+.budget-card-container {
     display: flex;
     flex-direction: row;
     border: none;
@@ -81,7 +81,7 @@
     margin-bottom: 15px;
 }
 
-p {
+.detail-paragraph{
     margin: 1rem;
     width: 350px;
 }
@@ -158,14 +158,14 @@ p {
 
 @media screen and (max-width:800px) {
 
-    p {
+    .detail-paragraph{
         margin: 0;
         white-space: nowrap;
         /*overflow: scroll;*/
         padding: 10px;
     }
 
-    .card-container {
+    .budget-card-container {
         align-items: flex-start;
         justify-content: left;
         height: fit-content;
@@ -248,15 +248,15 @@ p {
         </div>
 
         <div class="income-info" id="income-info">
-            <div class=" card-container">
-                <p>Donations</p>
-                <p><?= $donation_sum ?></p>
+            <div class="budget-card-container">
+                <p class="detail-paragraph">Donations</p>
+                <p class="detail-paragraph"><?= $donation_sum ?></p>
                 <div class="flex-row" style="width:155px"></div>
             </div>
             <?php foreach($incomes as $income){ ?>
-            <div class=" card-container">
-                <p><?= $income["details"] ?></p>
-                <p><?php echo 'Rs. '.number_format($income["amount"], 3) ?></p>
+            <div class="budget-card-container">
+                <p class="detail-paragraph"><?= $income["details"] ?></p>
+                <p class="detail-paragraph"><?php echo 'Rs. '.number_format($income["amount"], 3) ?></p>
                 <div class="flex-row">
                     <div>
                         <button class="btn btn-solid update-delete-btn "
@@ -303,9 +303,9 @@ p {
 
         <div class="expense-info" id="expense-info">
             <?php foreach($expenses as $expense) { ?>
-            <div class="card-container">
-                <p><?= $expense["details"] ?></p>
-                <p><?php echo 'Rs. '.number_format($expense["amount"], 3) ?></p>
+            <div class="budget-card-container">
+                <p class="detail-paragraph"><?= $expense["details"] ?></p>
+                <p class="detail-paragraph"><?php echo 'Rs. '.number_format($expense["amount"], 3) ?></p>
                 <div class="flex-row">
                     <div>
                         <button class="btn btn-solid update-delete-btn "

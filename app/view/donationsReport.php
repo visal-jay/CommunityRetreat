@@ -118,7 +118,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
                 <tr>
                     <td><?= $donation["date"] ?></td>
                     <td><?= $donation["username"] ?></td>
-                    <td><?php echo 'Rs. '.number_format($donation["amount"], 3) ?></td>
+                    <td><?php echo 'Rs. '.number_format($donation["amount"], 2) ?></td>
                     <td><?= $donation["contact_no"] ?></td>
                 </tr>
                 <?php } ?>

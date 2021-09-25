@@ -232,7 +232,7 @@
                     <div class="data">
                         <a><?= $volunteer_capacity ?></a>
                     </div>
-                    <form action="/Event/updateVolunteerCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" id="volunteer-capacity">
+                    <form action="/Volunteer/updateVolunteerCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" id="volunteer-capacity">
                         <input name="volunteer_capacity" type="number" value="<?= $volunteer_capacity ?>" min="<?= $volunteer_sum ?>" max="10000000" class=" form form-ctrl hidden" />
                     </form>
                 </div>
@@ -247,13 +247,13 @@
 
 
             <?php if ($volunteer_status == 1) { ?>
-                <form action="/Event/disableVolunteer?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-donation-enable-disable-btn">
+                <form action="/Volunteer/disableVolunteer?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-donation-enable-disable-btn">
                     <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Disable Volunteering</button>
                 </form>
             <?php } ?>
 
             <?php if ($volunteer_status == 0) { ?>
-                <form action="/Event/enableVolunteer?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-volunteer-enable-disable-btn">
+                <form action="/Volunteer/enableVolunteer?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-volunteer-enable-disable-btn">
                     <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Enable Volunteering</button>
                 </form>
             <?php } ?>
@@ -308,7 +308,7 @@
     </div>
     <?php if ($volunteer_status == 0 && count($volunteers) == 0) { ?>
         <div class="initial-donation-enable-btn">
-            <button onclick="window.location.href='/Event/enableVolunteering?event_id=<?= $_GET['event_id'] ?>'" class="btn btn-lg btn-solid" id="initial-volunteer-enable-btn" onclick="myFunction()">Enable Volunteers</button>
+            <button onclick="window.location.href='/Volunteer/enableVolunteer?event_id=<?= $_GET['event_id'] ?>'" class="btn btn-lg btn-solid" id="initial-volunteer-enable-btn" onclick="myFunction()">Enable Volunteers</button>
         </div>
     <?php } ?>
 </body>

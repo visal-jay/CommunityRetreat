@@ -49,9 +49,6 @@ class OrganisationController
     public function update()
     {
         Controller::validateForm(["about_us", "longitude","latitude"]);
- /*        var_dump($_POST);
-        var_dump($_GET);
-        exit(); */
         Controller::accessCheck(["organization"]);
         (new Organisation)->updateDetails($_SESSION["user"]["uid"], $_POST);
         Controller::redirect("/Organisation/dashboard");

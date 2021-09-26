@@ -23,12 +23,12 @@
     <!-- profile container division -->
     <div class="profilecontainer">
         <div class="profilecontainer-top">
-            <form action="/User/updateProfilePic" method="post" class="profilepic-pic-div">
+            <div  class="profilepic-pic-div">
                 <img src="<?= $profile_pic ?>" id="dp">
                 <input type="file" id="file" name="profile_pic">
                 <label for="file" id="uploadbtn">upload photo</label>
 
-            </form>
+            </div>
 
             <div class="aboutme-container">
                 <div class="intro">
@@ -149,7 +149,7 @@
                         <div class="update-form" id="emailupdater">
                             <div class="input-container">
                                 <label for="text">Enter new email:</label>
-                                <input type="text" placeholder="Enter new email" name="email" required onkeyup="checkMail(this.value)" /><br>
+                                <input type="text" class= "form-ctrl" placeholder="Enter new email" name="email" required onkeyup="checkMail(this.value)" /><br>
                                 <p class="alert email-error"><?php if (isset($_GET['invaliderr'])) {
                                                                     echo $_GET['invaliderr'];
                                                                 } ?></p>
@@ -237,6 +237,7 @@
 
 
     <script src="../Public/assets/js/reguserProfilePic.js"></script>
+    <script src="/Public/assets/js/input_validation.js"></script>
 
     <script>
         <?php if (isset($_GET["invaliderr"])) echo "showEddite('emailupdater');" ?>

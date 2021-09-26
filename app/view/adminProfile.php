@@ -280,7 +280,7 @@
             } else
 
                 $.ajax({
-                    url: "/Admin/checkEmailAvailable",
+                    url: "/User/checkEmailAvailable",
                     type: "post",
                     dataType: 'json',
                     data: {

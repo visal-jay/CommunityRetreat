@@ -69,6 +69,7 @@ async function validateField(input) {
 }
 
 function ValidationMessages(input) {
+
 	let timer;
 	input.addEventListener("keyup", (event) => {
 		clearTimeout(timer);

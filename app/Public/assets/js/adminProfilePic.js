@@ -30,7 +30,7 @@ file.addEventListener('change', function(){
      reader.readAsDataURL(choosedfile);
      $.ajax({
        
-        url: "/Admin/updateProfilePic",
+        url: "/User/updateProfilePic",
         type: "POST",
         data: form_data,
         processData: false,

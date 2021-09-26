@@ -38,6 +38,7 @@ class UserController{
     }
 
     public function updatePassword(){
+        Controller::validateForm(["current_password", "new_password","password"]);
         $controller=$this->getController();
         $user = new $controller();
         $validate =new Validation();
@@ -58,6 +59,7 @@ class UserController{
     }
 
     public function updateProfilePic(){
+        // Controller::validateForm(["profile_pic"]);
         Controller::accessCheck(["admin","registered_user"]);
         $controller=$this->getController();
         $user=new $controller();
@@ -67,6 +69,7 @@ class UserController{
     }
 
     public function updateUsername(){
+        Controller::validateForm(["username"]);
         $controller=$this->getController();
         $user = new $controller();
         $uid=$_SESSION["user"]["uid"];
@@ -75,6 +78,7 @@ class UserController{
     }
 
     public function updateContactNumber(){
+        Controller::validateForm(["contact_number"]);
         $controller=$this->getController();
         $validate = new Validation();
         $user = new $controller();
@@ -93,6 +97,7 @@ class UserController{
     }
 
     public function updateEmail(){
+        Controller::validateForm(["email"]);
         $controller=$this->getController();
         $user = new $controller();
         $validate =new Validation();
@@ -113,6 +118,7 @@ class UserController{
     }
 
     function checkEmailAvailable(){
+        Controller::validateForm(["email"]);
         if((new Validation)->email($_POST["email"]));
         echo json_encode(array("taken"=>(new User)->checkUserEmail($_POST["email"])));
     }

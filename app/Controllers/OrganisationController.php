@@ -111,6 +111,7 @@ class OrganisationController
 
     
     public function updateAccountNumber(){
+        Controller::validateForm(["bank_name","account_number"]);
         $organisation_admin = new Organisation();
         $validate =new Validation();
         $uid=$_SESSION["user"]["uid"];

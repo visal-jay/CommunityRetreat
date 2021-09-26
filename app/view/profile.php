@@ -23,12 +23,12 @@
     <!-- profile container division -->
     <div class="profilecontainer">
         <div class="profilecontainer-top">
-            <form action="/User/updateProfilePic" method="post" class="profilepic-pic-div">
+            <div  class="profilepic-pic-div">
                 <img src="<?= $profile_pic ?>" id="dp">
                 <input type="file" id="file" name="profile_pic">
                 <label for="file" id="uploadbtn">upload photo</label>
 
-            </form>
+            </div>
 
             <div class="aboutme-container">
                 <div class="intro">

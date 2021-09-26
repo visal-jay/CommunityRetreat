@@ -230,6 +230,9 @@ if(isset($_SESSION ["user"] ["user_type"])){
 </body>
 
 <script>
-var dt = new Date();
-document.getElementById('date-time').innerHTML = dt;
+
+    /*get date and time*/
+    var dt = new Date();
+    document.getElementById('date-time').innerHTML = dt;
+    
 </script>

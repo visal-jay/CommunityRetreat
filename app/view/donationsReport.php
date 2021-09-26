@@ -129,7 +129,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
 </body>
 
 <script>
-//send data to the graph
+/*send data to the graph*/
 const data = <?= $donations_graph ?>;
 console.log(data);
 const backgroundColor = ['#6F69AC', '#FEC260', '#93B5C6', '#FA8072']
@@ -182,6 +182,9 @@ var myLineChart = new Chart('myChart', {
 </script>
 
 <script>
-var dt = new Date();
-document.getElementById('date-time').innerHTML = dt;
+
+    /*get date and time*/
+    var dt = new Date();
+    document.getElementById('date-time').innerHTML = dt;
+    
 </script>

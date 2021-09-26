@@ -81,7 +81,7 @@
     margin-bottom: 15px;
 }
 
-.detail-paragraph{
+.detail-paragraph {
     margin: 1rem;
     width: 350px;
 }
@@ -158,7 +158,7 @@
 
 @media screen and (max-width:800px) {
 
-    .detail-paragraph{
+    .detail-paragraph {
         margin: 0;
         white-space: nowrap;
         /*overflow: scroll;*/

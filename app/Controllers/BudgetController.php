@@ -73,7 +73,7 @@ class BudgetController
         Controller::redirect("/Event/view",["page"=>'budget',"event_id"=> $_POST["event_id"]]);
     }
 
-    public function BudgetReport()
+    public function BudgetReport()//generate the report of all the incomes and expenses
     {
         $budget = new Budget();
         $income_report = $budget->IncomeReportGenerate($_GET["event_id"]);
@@ -99,14 +99,5 @@ class BudgetController
         View::render('budgetReport', $data);
     }
     
-    /*public function BudgetReportGenerate(){
-        $budget = new Budget();
-        $income_details=$budget->BudgetReportGenerate($_GET["event_id"]);
-        $expense_details=$budget->BudgetReportGenerate($_GET["event_id"]);
-        $data["incomes"]=$income_details;
-        $data["expenses"]=$expense_details;
-        View::render('budgetReport',$data); 
-    }
-    */
 }
 ?>

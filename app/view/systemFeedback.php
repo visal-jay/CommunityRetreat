@@ -55,7 +55,7 @@
                         <p style="margin-top:-12px;">${s.date}<p>
                     </div>
                     <p>${s.feedback}</p>
-                    <div  id="${s.feedback_id}"class="flex-center margin-md"><button onClick="viewBtn('${s.feedback_id}')" class="btn bg-green clr-white " id="view-btn" >View</button></div>
+                    <div  id="${s.feedback_id}"class="flex-center margin-md"><button  onClick="viewBtn('${s.feedback_id}')" class="btn bg-green clr-white " id="view-btn" >View</button></div>
                             
                 </div>`;
             });    
@@ -63,16 +63,16 @@
 
         });
         function viewBtn(id){
-            // var data = new FormData();
-            // data.append("feedback_id", id);
-            // $.ajax({
-            // url: "/Admin/feedbackViewed",
-            // type: "post",
-            // data: {
-            //           data
-            //         },
+            var data = new FormData();
+            data.append("feedback_id", id);
+            $.ajax({
+            url: "/Admin/feedbackViewed",
+            type: "post",
+            data: {
+                      data: data
+                    },
          
-            // });
+            });
             document.getElementById(id).innerHTML = `<h4 class="clr-green"><i class="fa fa-check clr-green"></i>&nbspViewed</h4>`;
         }
 

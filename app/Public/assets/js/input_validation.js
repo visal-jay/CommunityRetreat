@@ -28,12 +28,12 @@ function addErrorMsg(input, msg) {
 function clearErrorMsg(input) {
 	let msg = input.previousElementSibling;
 	if (msg) {
-	
 		if (msg.classList.contains("input-error"))
 			msg.remove();
 	}
 	input.style.borderColor = null;
 }
+
 
 async function validateField(input) {
 	clearErrorMsg(input);

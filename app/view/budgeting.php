@@ -19,7 +19,6 @@
         filter: blur(0px);
         min-height: 150px;
         min-width: 800px;
-        box-shadow: 5px 5px 15px 5px #f3f3f3;
         margin-left: 200px;
         margin-right: 200px;
         padding: 10px;
@@ -34,7 +33,6 @@
         filter: blur(0px);
         min-height: 150px;
         min-width: 800px;
-        box-shadow: 5px 5px 15px 5px #f3f3f3;
         margin-left: 200px;
         margin-right: 200px;
         padding: 10px;
@@ -192,6 +190,10 @@
         text-align: center;
     }
 
+    .full-budget-details-btn{
+        margin: 25px;
+    }
+
     @media screen and (max-width:800px) {
 
         .income-info {
@@ -301,6 +303,13 @@
             </div>
         </div>
 
+        <div class="full-budget-details-btn" style="text-align:center;">
+                <!--Display the full budget details-->
+                <button class="btn btn-md btn-solid"
+                    onclick="window.location.href=' /Budget/budgetReport?event_id=<?= $_GET['event_id'] ?>'">Full
+                    Budget details</button>
+            </div>
+
         <h2 class="header margin-md">Income</h2>
 
         <div class="income-expense-add-container">
@@ -383,12 +392,14 @@
 
                     <div id="expense-form" class="hidden income-expense-form-inside">
 
-                        <div class="input form-item">Details
-                            <input class="form-ctrl" name="details" id="details" type="text" placeholder="Enter the details" />
+                        <div class="input form-item">
+                        <label>Details</label>
+                            <input class="form-ctrl" name="details" id="details" type="text" placeholder="Enter the details" required/>
                         </div>
 
-                        <div class="input form-item">Amount
-                            <input class="form-ctrl" name="amount" id="amount" type="text" placeholder="Enter the amount" />
+                        <div class="input form-item">
+                            <label>Amount</label>
+                            <input class="form-ctrl" name="amount" id="amount" type="number" placeholder="Enter the amount" required/>
                         </div>
 
                         <div class="form-action-buttons">
@@ -436,10 +447,14 @@
         <div class="popup unblurred box" id="update-form">
             <form action="/Budget/update" method="post" class="update-form">
 
-                <div class="input form-item">Details <input class="form-ctrl" name="details" id="details" type="text" />
+                <div class="input form-item">
+                <label>Details</label>
+                <input class="form-ctrl" name="details" id="details" type="text" required/>
                 </div>
 
-                <div class="input form-item">Amount <input class="form-ctrl" name="amount" id="amount" type="text" />
+                <div class="input form-item">
+                    <label>Amount</label>
+                <input class="form-ctrl" name="amount" id="amount" type="number" required/>
                 </div>
 
                 <input type="text" class="hidden" name="record_id" id="record_id">

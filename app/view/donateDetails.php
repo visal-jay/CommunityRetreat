@@ -186,7 +186,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
                         id="donation-capacity">
                         <!--enter the donation capacity and save it in the database-->
                         <input name="donation_capacity" type="number" value="<?= $donation_capacity ?>"
-                            min="<?= $donation_sum ?>" max="10000000" class=" form form-ctrl hidden" />
+                            min="<?= $donation_sum ?>" max="10000000" class=" form form-ctrl hidden" required/>
                     </form>
                 </div>
             </div>
@@ -260,6 +260,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     onclick="window.location.href=' /Donations/donationReport?event_id=<?= $_GET['event_id'] ?>'">Full
                     donation details</button>
             </div>
+
         </div>
     </div>
     <?php if($donation_status==0 && count($donations)==0){ ?>
@@ -273,6 +274,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
 </body>
 
 <script src="/Public/assets/js/input_validation.js"></script>
+
 <script>
 function blur_background() {
     var element = document.getElementById("background");

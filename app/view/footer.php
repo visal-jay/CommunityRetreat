@@ -19,6 +19,7 @@
             justify-content:center;
             align-items: center;
             flex-direction: column;
+            margin-top: 20px;
             
         }
         .footer-content-container{

@@ -98,9 +98,11 @@
         text-align: center;
     }
 
-    .error {
+    .input-error {
         margin: 0;
         padding: 0;
+        font-size: 0.7rem;
+        color: red;
     }
 
     @media (max-width:1000px) {
@@ -168,7 +170,8 @@
                             <label>Password</label>
                             <input type="password" name="password" class="form-ctrl" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
                         </div>
-                        <p class="error" style="margin:0px"><?php echo $_GET["loginErr"]; ?></p>
+                        <span class="input-error"><?php if(isset($_GET["loginErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp".$_GET['loginErr'] ; ?></span>
+                        <br>
                         <a onclick="switchf('forgot-form','login-form')">Forgot your password?</a>
                         <button type="submit" class="btn btn-solid margin-md">Login</button>
                     </form>
@@ -193,22 +196,22 @@
                             <form action="/Signup/validate" method="post" id="signup-form-user" class="form <?php if ($_GET["signupUser"]) echo "shown"; ?>">
                                 <div class="form-item">
                                     <label>Username</label>
-                                    <input type="text" name="username" class="form-ctrl" placeholder=" &#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
+                                    <input type="text" name="username" class="form-ctrl" placeholder=" &#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" maxlength="10"/>
                                 </div>
                                 <div class="form-item">
                                     <label>Email</label>
-                                    <input type="text" name="email" class="form-ctrl" onkeyup="checkMail(this.value)" placeholder=" &#xf0e0; &nbsp; Enter Email" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
-                                    <p class="error email-error" style="margin:0px"><?php echo $_GET["emailErr"]; ?></p>
+                                    <span class="input-error email-error error"><?php if(isset($_GET["emailErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp".$_GET['emailErr'] ; ?></span>
+                                    <input type="email" name="email" class="form-ctrl"  placeholder=" &#xf0e0; &nbsp; Enter Email" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
                                 </div>
                                 <div class="form-item">
                                     <label>Telephone</label>
-                                    <input type="text" name="contact_number" class="form-ctrl" onkeyup="checkTelephone(this.value)" placeholder="&#xf879; &nbsp; Enter phone number" required style="font-family:Arial, FontAwesome" />
-                                    <p class="error telephone-error" style="margin:0px"><?php echo $_GET["telephoneErr"]; ?></p>
+                                    <span class="input-error telephone-error"><?php if(isset($_GET["telephoneErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp".$_GET['telephoneErr'] ; ?></span>
+                                    <input type="tel" name="contact_number" class="form-ctrl"  placeholder="&#xf879; &nbsp; Enter phone number" required style="font-family:Arial, FontAwesome" />
                                 </div>
                                 <div class="form-item">
                                     <label>Password</label>
-                                    <input type="password" name="password" onkeyup="checkPassword(this.value)" class="form-ctrl" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
-                                    <p class="error password-error" style="margin:0px"><?php echo $_GET["passwordErr"]; ?></p>
+                                    <span class="input-error password-error error"><?php if(isset($_GET["passwordErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp".$_GET['passwordErr'] ; ?></span>
+                                    <input type="password" class="password-error form-ctrl" name="password"  placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
                                 </div>
 
                                 <button name="signupUser" type="submit" class="btn btn-solid margin-md" value="registered-user">Sign Up</button>
@@ -216,22 +219,22 @@
                             <form action="/Signup/validate" method="post" id="signup-form-organisation" class="form <?php if ($_GET["signupOrg"]) echo "shown"; ?>">
                                 <div class="form-item">
                                     <label>Organization name</label>
-                                    <input type="text" name="username" class="form-ctrl" placeholder=" &#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
+                                    <input type="text" name="username" class="form-ctrl" placeholder=" &#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" maxlength="10"/>
                                 </div>
                                 <div class="form-item">
                                     <label>Email</label>
-                                    <input type="text" name="email" class="form-ctrl" onkeyup="checkMail(this.value)" placeholder=" &#xf0e0; &nbsp; Enter Email" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
-                                    <p class="error email-error" style="margin:0px"><?php echo $_GET["emailErr"]; ?></p>
+                                    <span class="input-error email-error error"><?php if(isset($_GET["emailErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp".$_GET['emailErr'] ; ?></span>
+                                    <input type="email" name="email" class="form-ctrl" onkeyup="checkMail(this.value)" placeholder=" &#xf0e0; &nbsp; Enter Email" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
                                 </div>
                                 <div class="form-item">
                                     <label>Telephone</label>
-                                    <input type="text" name="contact_number" class="form-ctrl" onkeyup="checkTelephone(this.value)" placeholder="&#xf879; &nbsp; Enter phone number" required style="font-family:Arial, FontAwesome" />
-                                    <p class="error telephone-error" style="margin:0px"><?php echo $_GET["telephoneErr"]; ?></p>
+                                    <span class="input-error telephone-error"><?php if(isset($_GET["telephoneErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp".$_GET['telephoneErr'] ; ?></span>
+                                    <input type="text" name="contact_number" class="form-ctrl"  placeholder="&#xf879; &nbsp; Enter phone number" required style="font-family:Arial, FontAwesome" />
                                 </div>
                                 <div class="form-item">
                                     <label>Password</label>
-                                    <input name="password" type="password" onkeyup="checkPassword(this.value)" class="form-ctrl" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
-                                    <p class="error password-error" style="margin:0px"><?php echo $_GET["passwordErr"]; ?></p>
+                                    <span class="input-error password-error error"><?php if(isset($_GET["passwordErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp".$_GET['passwordErr'] ; ?></span>
+                                    <input name="password" type="password"  class="form-ctrl" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
                                 </div>
                                 <button type="submit" class="btn btn-solid margin-md" value="organization" name="signupOrg">Sign Up</button>
                             </form>
@@ -269,56 +272,7 @@
         document.querySelector("#" + id2).classList.remove("shown");
     }
 
-    function checkMail(email) {
-        if (email.length == 0) {
-            let email_errors = document.querySelectorAll(".email-error");
-            for (let error of email_errors) {
-                error.innerHTML = "";
-            }
-            return;
-        } else
 
-            $.ajax({
-                url: "/Signup/checkEmailAvailable", //the page containing php script
-                type: "post", //request type,
-                dataType: 'json',
-                data: {
-                    email: email
-                },
-                success: function(result) {
-                    if (result.taken == true) {
-                        var err = "Email already taken";
-                    } else
-                        var err = "";
-                    let errors = document.querySelectorAll(".email-error");
-                    for (let error of errors) {
-                        error.innerHTML = err;
-                    }
-                }
-            });
-    }
-
-    function checkPassword(password) {
-        var err = "";
-        const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        if (!pattern.test(password))
-            var err = "Strong password required<br> Combine least 8 of the following: uppercase letters,lowercase letters,numbers and symbols";
-        let password_errors = document.querySelectorAll(".password-error");
-        for (let error of password_errors) {
-            error.innerHTML = err;
-        }
-    }
-
-    function checkTelephone(number) {
-        var err = "";
-        const pattern = /^[+]?[0-9]{10,11}$/;
-        if (!pattern.test(number))
-            var err = "Valid phone number required";
-        let telephone_errors = document.querySelectorAll(".telephone-error");
-        for (let error of telephone_errors) {
-            error.innerHTML = err;
-        }
-    }
 </script>
 
 

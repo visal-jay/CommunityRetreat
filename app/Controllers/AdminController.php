@@ -12,11 +12,12 @@ class AdminController{
         $admin_details=$admin->getDetails($uid); 
         View::render('adminProfile',$admin_details,$user_roles);
     }
-
-    public function activityLog()
-    {
-        View::render('history');
+    public function activityLog(){
+        $user_roles=Controller::accessCheck(["admin"]);
+        View::render('history',$user_roles);
     }
+
+    
 
     public function complaint(){
         $user_roles=Controller::accessCheck(["admin"]);

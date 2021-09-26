@@ -26,7 +26,6 @@ class BudgetController
     } 
      
 	public function addIncome(){//add incomes to the budget
-        
         $data=array_merge($_GET, $_POST);
         Controller::accessCheck(["organization","treasurer"]);
         $validate=new Validation;

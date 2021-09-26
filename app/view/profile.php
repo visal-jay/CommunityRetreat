@@ -149,7 +149,7 @@
                         <div class="update-form" id="emailupdater">
                             <div class="input-container">
                                 <label for="text">Enter new email:</label>
-                                <input type="text" placeholder="Enter new email" name="email" required onkeyup="checkMail(this.value)" /><br>
+                                <input type="text" class= "form-ctrl" placeholder="Enter new email" name="email" required onkeyup="checkMail(this.value)" /><br>
                                 <p class="alert email-error"><?php if (isset($_GET['invaliderr'])) {
                                                                     echo $_GET['invaliderr'];
                                                                 } ?></p>
@@ -237,6 +237,7 @@
 
 
     <script src="../Public/assets/js/reguserProfilePic.js"></script>
+    <script src="/Public/assets/js/input_validation.js"></script>
 
     <script>
         <?php if (isset($_GET["invaliderr"])) echo "showEddite('emailupdater');" ?>

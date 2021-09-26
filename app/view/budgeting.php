@@ -318,11 +318,11 @@
 
                     <div class="input form-item">Details
                         <input class="form-ctrl" name="details" id=" details" type="text"
-                            placeholder="Enter the details" />
+                            placeholder="Enter the details" required/>
                     </div>
 
                     <div class="input form-item">Amount
-                        <input class="form-ctrl" name="amount" id="amount" type="text" placeholder="Enter the amount" />
+                        <input class="form-ctrl" name="amount" id="amount" type="text" placeholder="Enter the amount" required />
                     </div>
 
                     <div class="form-action-buttons">
@@ -465,7 +465,7 @@
         </div>
     </div>
 
-
+    <script src="/Public/assets/js/input_validation.js"></script>
     <script>
 
         /*Calculate the balance of incomes and expenses*/

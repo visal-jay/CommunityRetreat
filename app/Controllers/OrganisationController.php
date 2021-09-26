@@ -120,6 +120,10 @@ class OrganisationController
         
     }
     
+    function getAvailableUserRoles(){
+        echo json_encode((new Organisation)->getAvailableUserRoles($_POST["name"]));
+    }
+
 
     function addUserRole(){
         if (isset($_POST["uid"]) && isset($_POST["role"]) && isset($_GET["event_id"]))

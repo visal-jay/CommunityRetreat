@@ -272,7 +272,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
     <?php } ?>
 </body>
 
-
+<script src="/Public/assets/js/input_validation.js"></script>
 <script>
 function blur_background() {
     var element = document.getElementById("background");

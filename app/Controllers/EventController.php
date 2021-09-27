@@ -137,4 +137,7 @@ class EventController
         $user_roles = Controller::accessCheck(["organization", "moderator"]);
         View::render("eventPage",$event_details,$user_roles);
     }
+
+
+            
 }

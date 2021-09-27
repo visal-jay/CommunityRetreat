@@ -59,7 +59,7 @@ td {
 }
 
 .overflow {
-    overflow: auto;
+    width: 40%;
 }
 
 @media screen and (max-width:800px) {
@@ -146,10 +146,10 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     <td><?= $report["date"] ?></td>
                     <td class="overflow"><?= $report["details"] ?></td>
                     <td class="right">
-                        <?php if(substr($report["record_id"],0,3)==="INC"){echo 'Rs. '.number_format($report["amount"], 3);} ?>
+                        <?php if(substr($report["record_id"],0,3)==="INC"){echo 'Rs. '.number_format($report["amount"], 2);} ?>
                     </td>
                     <td class="right">
-                        <?php if(substr($report["record_id"],0,3)==="EXP"){echo 'Rs. '.number_format($report["amount"], 3);} ?>
+                        <?php if(substr($report["record_id"],0,3)==="EXP"){echo 'Rs. '.number_format($report["amount"], 2);} ?>
                     </td>
                 </tr>
 
@@ -158,8 +158,8 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     <!--Display the total of incomes and total of expenses-->
                     <td><b>Total</b></td>
                     <td></td>
-                    <td class="right"><b><?php echo 'Rs. '.number_format($income_sum, 3) ?></b></td>
-                    <td class="right"><b><?php echo 'Rs. '.number_format($expense_sum, 3) ?></b></td>
+                    <td class="right"><b><?php echo 'Rs. '.number_format($income_sum, 2) ?></b></td>
+                    <td class="right"><b><?php echo 'Rs. '.number_format($expense_sum, 2) ?></b></td>
                 </tr>
             </table>
         </div>
@@ -191,7 +191,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     style="background-color: <?php if($income_report["status"]=="current") echo '#01937C'; elseif ($income_report["status"]=="deleted") echo '#FF0000'; elseif ($income_report["status"]=="updated") echo '#FAFF00'; ?>">
                     <td><?= $income_report["date"] ?></td>
                     <td class="overflow"><?= $income_report["details"] ?></td>
-                    <td class="right"><?php echo 'Rs. '.number_format($income_report["amount"], 3); ?></td>
+                    <td class="right"><?php if($income_report["status"]=="deleted") echo " "; else echo 'Rs. '.number_format($income_report["amount"], 2); ?></td>
                     <td class="right"><?= $income_report["username"] ?></td>
                 </tr>
                 <?php if($income_report["status"]=="deleted") echo '<tr style="background-color: white; height:30px;"></tr>'; ?>
@@ -218,7 +218,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     style="background-color: <?php if($expense_report["status"]=="current") echo '#01937C'; elseif ($expense_report["status"]=="deleted") echo '#FF0000'; elseif ($expense_report["status"]=="updated") echo '#FAFF00'; ?>">
                     <td><?= $expense_report["date"] ?></td>
                     <td class="overflow"><?= $expense_report["details"] ?></td>
-                    <td class="right"><?php echo 'Rs. '.number_format($expense_report["amount"], 3); ?></td>
+                    <td class="right"><?php if($expense_report["status"]=="deleted") echo " "; else echo 'Rs. '.number_format($expense_report["amount"], 2); ?></td>
                     <td class="right"><?= $expense_report["username"] ?></td>
                 </tr>
                 <?php if($expense_report["status"]=="deleted") echo '<tr style="background-color: white; height:30px;"></tr>'; ?>

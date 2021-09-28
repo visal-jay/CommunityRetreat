@@ -44,4 +44,15 @@ class Volunteer extends Model{
         $result = ($result[0]["volunteer_sum"]==NULL)?0 : $result[0]["volunteer_sum"];
        return $result; 
     }
+
+    public function addVolunteerDetails($event_id,$volunteer_dates){
+
+        foreach($volunteer_dates as $volunteer_date){
+            
+            $query ='INSERT INTO `volunteer`(`uid`,`event_id`,`volunteer_date`) VALUES (:uid,:event_id,:volunteer_date)';
+            $params = ['uid' => $_SESSION['user']['uid'] , 'event_id' => $event_id , 'volunteer_date' => $volunteer_date ];
+            Model::insert($query,$params);
+        }
+
+    }
 }

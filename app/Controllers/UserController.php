@@ -72,8 +72,10 @@ class UserController{
         Controller::validateForm(["username"]);
         $controller=$this->getController();
         $user = new $controller();
+        $User = new User();
         $uid=$_SESSION["user"]["uid"];
         $user->changeUsername($uid,$_POST['username']);
+        $User->addActivity("Username Changed",-1);
         Controller::redirect("/$controller/profile");
     }
 
@@ -115,6 +117,13 @@ class UserController{
         else
             $user->changeEmail($uid,$data);
             Controller::redirect("/$controller/profile");
+    }
+
+    function addActivity($activity,$event_id=-1){
+
+        $user = new User();
+        $user->insertActivity($activity,$event_id);
+
     }
 
     function checkEmailAvailable(){

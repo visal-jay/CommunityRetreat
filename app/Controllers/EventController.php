@@ -100,13 +100,13 @@ class EventController
         $validate = new Validation;
         var_dump($_POST);
         (new Events)->addEvent($_POST);
+        exit();
         Controller::redirect("/Organisation/events");
     }
 
     public function updateDetails()
     {
-        $_POST["event_id"] = $_GET["event_id"];
-        Controller::accessCheck(["moderator", "organization", "guest_user"], $_POST["event_id"]);
+        Controller::accessCheck(["moderator", "organization", "guest_user","registered_user"], $_POST["event_id"]);
         var_dump($_POST);
 
         $validate = new Validation;
@@ -137,4 +137,7 @@ class EventController
         $user_roles = Controller::accessCheck(["organization", "moderator"]);
         View::render("eventPage",$event_details,$user_roles);
     }
+
+
+            
 }

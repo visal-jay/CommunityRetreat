@@ -49,9 +49,6 @@ class OrganisationController
     public function update()
     {
         Controller::validateForm(["about_us", "longitude","latitude"]);
- /*        var_dump($_POST);
-        var_dump($_GET);
-        exit(); */
         Controller::accessCheck(["organization"]);
         (new Organisation)->updateDetails($_SESSION["user"]["uid"], $_POST);
         Controller::redirect("/Organisation/dashboard");
@@ -111,6 +108,7 @@ class OrganisationController
 
     
     public function updateAccountNumber(){
+        Controller::validateForm(["bank_name","account_number"]);
         $organisation_admin = new Organisation();
         $validate =new Validation();
         $uid=$_SESSION["user"]["uid"];
@@ -122,6 +120,10 @@ class OrganisationController
         
     }
     
+    function getAvailableUserRoles(){
+        echo json_encode((new Organisation)->getAvailableUserRoles($_POST["name"]));
+    }
+
 
     function addUserRole(){
         if (isset($_POST["uid"]) && isset($_POST["role"]) && isset($_GET["event_id"]))

@@ -1,4 +1,4 @@
-<?php if(!isset($_SESSION)) session_start(); ?>
+<?php if (!isset($_SESSION)) session_start(); ?>
 <!DOCTYPE html>
 <html lang="en" id="id1">
 
@@ -12,404 +12,529 @@
 </head>
 
 <style>
-.income-info {
-    max-height: 200px;
-    overflow: hidden;
-    transition: all .5s ease-in-out;
-    box-shadow: inset 0px 0px 30px 0px white;
-    filter: blur(0px);
-    position: relative;
-    min-height: 150px;
-    min-width: 800px;
-}
-
-.expense-info {
-    max-height: 200px;
-    overflow: hidden;
-    transition: all .5s ease-in-out;
-    box-shadow: inset 0px 0px 30px 0px white;
-    filter: blur(0px);
-    position: relative;
-    min-height: 150px;
-    min-width: 800px;
-}
-
-.height100 {
-    max-height: fit-content;
-    height: fit-content;
-}
-
-.container {
-    border-radius: 5px;
-    background-color: white;
-    padding: 0 20px;
-    display: block;
-}
-
-.budget-card-container {
-    display: flex;
-    flex-direction: row;
-    border: none;
-    box-shadow: none;
-    padding: 0px;
-    margin-bottom: 15px;
-    margin-top: 15px;
-}
-
-.btn {
-    margin: 5px;
-}
-
-.update-delete-btn {
-    font-size: 1.1 rem;
-}
-
-.header {
-    justify-content: center;
-}
-
-.read-more-btn {
-    cursor: pointer;
-}
-
-.del {
-    border-color: #DA0037;
-}
-
-.form-action-buttons {
-    margin-left: auto;
-    margin-bottom: 15px;
-}
-
-.detail-paragraph{
-    margin: 1rem;
-    width: 350px;
-}
-
-.income-form {
-    width: 50%;
-}
-
-.expense-form {
-    width: 50%;
-}
-
-.update-form {
-    width: 100%;
-}
-
-.popup {
-    position: fixed;
-    transform: scale(0);
-    z-index: 2;
-    width: 300px;
-    text-align: center;
-    padding: 20px;
-    border-radius: 8px;
-    background: white;
-    box-shadow: 0px 0px 11px 2px rgb(0 0 0 / 93%);
-    display: none;
-    top: 50%;
-    left: 50%;
-    width: 50%;
-
-}
-
-.popup.active {
-    transition: all 300ms ease-in-out;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: row;
-}
-
-.blurred {
-    filter: blur(2px);
-}
-
-.still {
-    overflow: hidden;
-}
-
-.center {
-    text-align: center;
-}
-
-.bold {
-    font-weight: 600;
-
-}
-
-.sum {
-    margin: 15px;
-    text-align: center;
-}
-
-.income-expenxe-balance-container {
-    border-color: #16c79a;
-    border-radius: 8px;
-    background-color: #eeeeee;
-    box-shadow: 2px 4px #ccbcbc;
-    padding: 5px;
-    text-align: center;
-    margin: 20px;
-    display: flex;
-    justify-content: space-evenly;
-}
-
-@media screen and (max-width:800px) {
-
-    .detail-paragraph{
-        margin: 0;
-        white-space: nowrap;
-        /*overflow: scroll;*/
+    .income-info {
+        max-height: 200px;
+        overflow: hidden;
+        transition: all .5s ease-in-out;
+        filter: blur(0px);
+        min-height: 150px;
+        min-width: 800px;
+        margin-left: 200px;
+        margin-right: 200px;
         padding: 10px;
+        background-color: white;
+        border-radius: 10px;
     }
 
-    .budget-card-container {
-        align-items: flex-start;
-        justify-content: left;
+    .expense-info {
+        max-height: 200px;
+        overflow: hidden;
+        transition: all .5s ease-in-out;
+        filter: blur(0px);
+        min-height: 150px;
+        min-width: 800px;
+        margin-left: 200px;
+        margin-right: 200px;
+        padding: 10px;
+        background-color: white;
+        border-radius: 10px;
+    }
+
+    .height100 {
+        max-height: fit-content;
         height: fit-content;
     }
 
-    .update-delete-btn {
-        font-size: 0.8rem;
+    .container {
+        padding: 0 20px;
+        display: block;
     }
 
-    .form {
+    .budget-card-container {
+        display: flex;
+        flex-direction: row;
+        border: none;
+        box-shadow: none;
+        padding: 0px;
+    }
+
+    .btn {
+        margin: 5px;
+    }
+
+    .submit-btn {
+        font-size: 0.9rem;
+    }
+
+    .update-save-btn {
+        font-size: 0.9rem;
+    }
+
+    .delete-cancel-btn {
+        border-color: #DA0037;
+        font-size: 0.9rem;
+    }
+
+    .header {
+        justify-content: center;
+    }
+
+    .read-more-btn {
+        cursor: pointer;
+        font-size: 1rem;
+        margin-top: 10px;
+    }
+
+    .income-expense-form-inside {
+        margin: 20px;
+        box-shadow: 5px 5px 15px 5px #cccccc;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .income-form {
+        width: 60%;
+    }
+
+    .expense-form {
+        width: 60%;
+    }
+
+    .update-form {
         width: 100%;
     }
 
     .popup {
-        left: 50%;
         position: fixed;
-        width: 80%;
-        top: 40%;
+        transform: scale(0);
+        z-index: 2;
+        width: 300px;
+        text-align: center;
+        padding: 20px;
+        border-radius: 8px;
+        background: white;
+        box-shadow: 0px 0px 11px 2px rgb(0 0 0 / 93%);
+        display: none;
+        top: 50%;
+        left: 50%;
+        width: 50%;
+
     }
 
-    .income-info {
-        min-width: 0;
-    }
-
-    .expense-info {
-        min-width: 0;
-    }
-
-    .income-expenxe-balance-container {
+    .popup.active {
+        transition: all 300ms ease-in-out;
+        transform: translate(-50%, -50%);
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+    }
+
+    .blurred {
+        filter: blur(2px);
+    }
+
+    .still {
+        overflow: hidden;
+    }
+
+    .bold {
+        font-weight: 600;
     }
 
     .sum {
-        margin: 5px;
-        justify-content: space-between;
+        margin: 15px;
+        text-align: center;
     }
-}
+
+    .details-overflow {
+        overflow: auto;
+        width: 40%;
+        margin: 5px;
+        padding: 5px;
+        display: flex;
+        align-content: stretch;
+        align-items: center;
+    }
+
+    .amount-field {
+        width: 20%;
+        text-align: right;
+        display: flex;
+        align-items: center;
+    }
+
+    .btn-field {
+        width: 40%;
+        margin: 5px;
+        padding: 5px;
+        justify-content: end;
+    }
+
+    .income-expenxe-balance-container {
+        border-color: #16c79a;
+        border-radius: 8px;
+        background-color: #eeeeee;
+        box-shadow: 2px 4px #ccbcbc;
+        padding: 5px;
+        text-align: center;
+        margin-left: 200px;
+        margin-right: 200px;
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .income-expense-add-container {
+        text-align: -webkit-center;
+    }
+
+    .income-expense-show-hide-btn {
+        text-align: center;
+    }
+
+    .full-budget-details-btn{
+        margin: 25px;
+    }
+
+    @media screen and (max-width:800px) {
+
+        .income-info {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .expense-info {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .budget-card-container {
+            align-items: flex-start;
+            justify-content: left;
+            height: fit-content;
+        }
+
+        .update-save-btn {
+            font-size: 0.75rem;
+        }
+
+        .delete-cancel-btn {
+            border-color: #DA0037;
+            font-size: 0.75rem;
+        }
+
+        .btn-field {
+            width: 50%;
+            margin: 2px;
+            padding: 2px;
+            justify-content: center;
+            white-space: nowrap;
+
+        }
+
+        .amount-field {
+            width: 20%;
+            text-align: right;
+            overflow: auto;
+            white-space: nowrap;
+            margin: 4px;
+            padding: 2px;
+        }
+
+        .details-overflow {
+            overflow: auto;
+            width: 30%;
+            margin: 4px;
+            padding: 2px;
+            white-space: nowrap;
+        }
+
+        .form {
+            width: 100%;
+        }
+
+        .popup {
+            left: 50%;
+            position: fixed;
+            width: 80%;
+            top: 40%;
+        }
+
+        .income-info {
+            min-width: 0;
+        }
+
+        .expense-info {
+            min-width: 0;
+        }
+
+        .income-expenxe-balance-container {
+            display: flex;
+            flex-direction: column;
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .sum {
+            margin: 5px;
+            justify-content: space-between;
+        }
+    }
 </style>
 
 
 <body>
     <div class="container flex-col flex-center" id="container">
+
         <div class="income-expenxe-balance-container">
+
             <div class="bold sum flex-row">
+                <!--display the sum of incomes-->
                 <div>Sum of Incomes :</div>
-                <div><?php echo 'Rs. '.number_format($income_sum, 2) ?></div>
+                <div><?php echo 'Rs. ' . number_format($income_sum, 2) ?></div>
             </div>
+
             <div class="bold sum flex-row">
+                <!--display the sum of expenses-->
                 <div>Sum of Expenses :</div>
-                <div><?php echo 'Rs. '.number_format($expense_sum, 2) ?></div>
+                <div><?php echo 'Rs. ' . number_format($expense_sum, 2) ?></div>
             </div>
+
             <div id="balance" class="bold sum flex-row">
+                <!--display the balance-->
             </div>
         </div>
 
-        <h2 class="header margin-md">Income</h2>
-        <div><?php if($organization || $treasurer) { ?>
-            <form action="/Budget/addIncome?" method="post" class="form income-form">
+        <div class="full-budget-details-btn" style="text-align:center;">
+                <!--Display the full budget details-->
+                <button class="btn btn-md btn-solid"
+                    onclick="window.location.href=' /Budget/budgetReport?event_id=<?= $_GET['event_id'] ?>'">Full
+                    Budget details</button>
+            </div>
 
-                <div>
-                    <button class="btn btn-md btn-solid margin-md" type="button" id="button" value="Add"
-                        onclick="show_hide('income-form')">Add &nbsp;<i class="fas fa-plus"></i></button>
-                </div>
-                <div id="income-form" class="hidden" style="margin-top: 20px;">
-                    <div class="input form-item">Details
-                        <input class="form-ctrl" name="details" id=" details" type="text"
-                            placeholder="Enter the details" />
+        <h2 class="header margin-md">Income</h2>
+
+        <div class="income-expense-add-container">
+
+            <?php if ($organization || $treasurer) { ?>
+                <!--Add incomes to the database-->
+                <form action="/Budget/addIncome?" method="post" class="form income-form">
+
+                    <div>
+                        <button class="btn btn-md btn-solid margin-md" type="button" id="button" value="Add" onclick="show_hide('income-form')">Add &nbsp;<i class="fas fa-plus"></i></button>
                     </div>
-                    <div class="input form-item">Amount
-                        <input class="form-ctrl" name="amount" id="amount" type="text" placeholder="Enter the amount" />
+
+                    <div id="income-form" class="hidden income-expense-form-inside">
+
+                        <div class="input form-item">
+                            <label>Details</label>
+                            <input class="form-ctrl" name="details" id=" details" type="text" placeholder="Enter the details" required/>
+                        </div>
+
+                        <div class="input form-item">
+                            <label>Amount</label>
+                            <input class="form-ctrl" name="amount" id="amount" type="number" placeholder="Enter the amount" required/>
+                        </div>
+
+                        <div class="form-action-buttons">
+                            <button class="btn btn-md" name="event_id" type="submit" value="<?= $_GET["event_id"] ?>">Submit</button>
+                        </div>
+
                     </div>
-                    <div class="form-action-buttons">
-                        <button class="btn btn-md" name="event_id" type="submit"
-                            value="<?= $_GET["event_id"] ?>">Submit</button>
-                    </div>
-                </div>
-            </form>
+                </form>
             <?php } ?>
+
         </div>
 
         <div class="income-info" id="income-info">
-            <div class="budget-card-container">
-                <p class="detail-paragraph">Donations</p>
-                <p class="detail-paragraph"><?= $donation_sum ?></p>
-                <div class="flex-row" style="width:155px"></div>
-            </div>
-            <?php foreach($incomes as $income){ ?>
-            <div class="budget-card-container">
-                <p class="detail-paragraph"><?= $income["details"] ?></p>
-                <p class="detail-paragraph"><?php echo 'Rs. '.number_format($income["amount"], 3) ?></p>
-                <div class="flex-row">
-                    <div>
-                        <button class="btn btn-solid update-delete-btn "
-                            onclick="togglePopup('update-form','<?= $income['details'] ?>', '<?echo 'Rs. '.number_format($income['amount'], 3)?>', '<?= $income['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
-                    </div>
-                    <form action="/Budget/delete?" method="post">
-                        <input type="text" class="hidden" name="record_id" value="<?= $income['record_id'] ?>">
-                        <button class="btn bg-red update-delete-btn  clr-white del" name="event_id" type="submit"
-                            value=<?= $_GET['event_id'] ?>>
-                            Delete</button>
-                    </form>
-                </div>
-            </div>
-            <?php } ?>
 
+            <div class="budget-card-container">
+                <!--Display the donation sum from the database-->
+                <p class="details-overflow">Donations</p>
+                <p class="amount-field"><?php echo 'Rs. ' . number_format($donation_sum, 2) ?></p>
+                <div class="flex-row btn-field"></div>
+            </div>
+
+            <?php foreach ($incomes as $income) { ?>
+
+                <div class="budget-card-container">
+                    <!--Display all the incomes from the database-->
+                    <p class="details-overflow"><?= $income["details"] ?></p>
+                    <p class="amount-field"><?php echo 'Rs. ' . number_format($income["amount"], 2) ?></p>
+                    <div class="flex-row btn-field">
+                        <div>
+                            <!--Update the income and save it in database-->
+                            <button class="btn btn-solid update-save-btn " onclick="togglePopup('update-form','<?= $income['details'] ?>', '<?= $income['amount'] ?>', '<?= $income['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
+                        </div>
+
+                        <form action="/Budget/delete?" method="post">
+                            <!--Delete the income and save it in database-->
+                            <input type="text" class="hidden" name="record_id" value="<?= $income['record_id'] ?>">
+                            <button class="btn bg-red clr-white delete-cancel-btn" name="event_id" type="submit" value=<?= $_GET['event_id'] ?>>
+                                Delete</button>
+                        </form>
+                    </div>
+                </div>
+            <?php } ?>
         </div>
 
-        <div id="income-show-hide-btn" onload="income_null('income-show-hide-btn')">
-            <button class=" btn btn-solid btn-md read-more-btn"
-                onclick="show('income-info');change_button('income-down-btn');"><i id=" income-down-btn"
-                    class="fas fa-chevron-down"></i></button>
+        <div id="income-show-hide-btn" class="income-expense-show-hide-btn">
+            <!--Show all the hidden incomes-->
+            <button class=" btn btn-solid btn-md read-more-btn" onclick="show('income-info');change_button('income-down-btn');"><i id="income-down-btn" class="fas fa-chevron-down"></i></button>
         </div>
 
         <h2 class="header margin-md">Expense</h2>
 
-        <?php if($organization || $treasurer) { ?>
-        <form action="/Budget/addExpense?" method="post" class="form expense-form">
-            <button class="btn btn-md btn-solid margin-md" type="button" name="button" id="btn" value="Add"
-                onclick="show_hide('expense-form') ">Add &nbsp;<i class="fas fa-plus"></i></button>
-            <div id="expense-form" style="margin-top: 20px;" class="hidden">
-                <div class="input form-item">Details
-                    <input class="form-ctrl" name="details" id="details" type="text" placeholder="Enter the details" />
-                </div>
-                <div class="input form-item">Amount
-                    <input class="form-ctrl" name="amount" id="amount" type="text" placeholder="Enter the amount" />
-                </div>
-                <div class="form-action-buttons">
-                    <button class="btn btn-md" name="event_id" type="submit"
-                        value="<?= $_GET["event_id"] ?>">Submit</button>
-                </div>
-            </div>
-        </form>
-        <?php } ?>
+        <div class="income-expense-add-container">
+            <!--Add expenses to the database-->
+            <?php if ($organization || $treasurer) { ?>
+                <form action="/Budget/addExpense?" method="post" class="form expense-form">
+
+                    <button class="btn btn-md btn-solid margin-md" type="button" name="button" id="btn" value="Add" onclick="show_hide('expense-form') ">Add &nbsp;<i class="fas fa-plus"></i></button>
+
+                    <div id="expense-form" class="hidden income-expense-form-inside">
+
+                        <div class="input form-item">
+                        <label>Details</label>
+                            <input class="form-ctrl" name="details" id="details" type="text" placeholder="Enter the details" required/>
+                        </div>
+
+                        <div class="input form-item">
+                            <label>Amount</label>
+                            <input class="form-ctrl" name="amount" id="amount" type="number" placeholder="Enter the amount" required/>
+                        </div>
+
+                        <div class="form-action-buttons">
+                            <button class="btn btn-md submit-btn" name="event_id" type="submit" value="<?= $_GET["event_id"] ?>">Submit</button>
+                        </div>
+
+                    </div>
+                </form>
+            <?php } ?>
+        </div>
 
         <div class="expense-info" id="expense-info">
-            <?php foreach($expenses as $expense) { ?>
-            <div class="budget-card-container">
-                <p class="detail-paragraph"><?= $expense["details"] ?></p>
-                <p class="detail-paragraph"><?php echo 'Rs. '.number_format($expense["amount"], 3) ?></p>
-                <div class="flex-row">
-                    <div>
-                        <button class="btn btn-solid update-delete-btn "
-                            onclick="togglePopup('update-form','<?= $expense['details'] ?>', '<?php echo 'Rs. '.number_format($expense['amount'], 3) ?>', '<?= $expense['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
-                    </div>
-                    <form action="/Budget/delete?" method="post">
-                        <input type="text" class="hidden" name="record_id" value="<?= $expense['record_id'] ?>">
-                        <button class="btn bg-red update-delete-btn  clr-white del" name="event_id" type="submit"
-                            value=<?= $_GET['event_id'] ?>>
-                            Delete</button>
-                    </form>
-                </div>
-            </div>
-            <?php } ?>
+            <?php foreach ($expenses as $expense) { ?>
 
+                <div class="budget-card-container">
+                    <!--Display the expenses from the database-->
+                    <p class="details-overflow"><?= $expense["details"] ?></p>
+                    <p class="amount-field"><?php echo 'Rs. ' . number_format($expense["amount"], 2) ?></p>
+
+                    <div class="flex-row btn-field">
+                        <div>
+                            <!--Update the expense and save it in database-->
+                            <button class="btn btn-solid update-save-btn " onclick="togglePopup('update-form','<?= $expense['details'] ?>', '<?= $expense['amount'] ?>', '<?= $expense['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
+                        </div>
+                        <form action="/Budget/delete?" method="post">
+                            <!--Delete the expense and save it in database-->
+                            <input type="text" class="hidden" name="record_id" value="<?= $expense['record_id'] ?>">
+                            <button class="btn bg-red clr-white delete-cancel-btn" name="event_id" type="submit" value=<?= $_GET['event_id'] ?>>
+                                Delete</button>
+                        </form>
+                    </div>
+                </div>
+            <?php } ?>
         </div>
-        <div id="expense-show-hide-btn" onload=alert(hello);>
-            <button class=" btn btn-solid btn-md read-more-btn"
-                onclick="show('expense-info');change_button('expense-down-btn');"><i id="expense-down-btn"
-                    class="fas fa-chevron-down"></i></button>
+
+        <div id="expense-show-hide-btn" class="income-expense-show-hide-btn">
+            <!--Show all the hidden expenses-->
+            <button class="btn btn-solid btn-md read-more-btn" onclick="show('expense-info');change_button('expense-down-btn');"><i id="expense-down-btn" class="fas fa-chevron-down"></i></button>
         </div>
+
     </div>
 
     <div class="update-container">
+
         <div class="popup unblurred box" id="update-form">
             <form action="/Budget/update" method="post" class="update-form">
-                <div class="input form-item">Details <input class="form-ctrl" name="details" id="details" type="text" />
+
+                <div class="input form-item">
+                <label>Details</label>
+                <input class="form-ctrl" name="details" id="details" type="text" required/>
                 </div>
-                <div class="input form-item">Amount <input class="form-ctrl" name="amount" id="amount" type="text" />
+
+                <div class="input form-item">
+                    <label>Amount</label>
+                <input class="form-ctrl" name="amount" id="amount" type="number" required/>
                 </div>
+
                 <input type="text" class="hidden" name="record_id" id="record_id">
+
                 <div class="flex-row-to-col">
-                    <button type="submit" id="save" name="event_id" class=" btn btn-solid save-btn">Save</button>
-                    <button type="button" class="btn bg-red clr-white del"
-                        onclick="togglePopup('update-form');blur_background('container');stillBackground('id1')">Cancel</button>
+                    <button type="submit" id="save" name="event_id" class="btn btn-solid update-save-btn">Save</button>
+                    <button type="button" class="btn bg-red clr-white delete-cancel-btn" onclick="togglePopup('update-form');blur_background('container');stillBackground('id1')">Cancel</button>
                 </div>
+
             </form>
         </div>
     </div>
 
-
+<script src="/Public/assets/js/input_validation.js"></script>
     <script>
-    document.getElementById("balance").innerHTML = "<div>Balance :</div><div>" +
-        String(parseInt('<?= $income_sum ?>') - parseInt('<?= $expense_sum ?>')) + "</div>";
+        /*Calculate the balance of incomes and expenses*/
+        document.getElementById("balance").innerHTML = "<div>Balance :</div><div> Rs. " +
+            (parseInt('<?= $income_sum  ?>') - parseInt('<?= $expense_sum ?>')).toString().replace(
+                /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","); +
+        "</div>";
 
-    function income_null(id) {
-        let income_sum = parseInt('<?= $income_sum ?>');
-        if (income_sum == 0) {
+
+        function income_null(id) {
+            let income_sum = parseInt('<?= $income_sum ?>');
+            if (income_sum == 0) {
+                document.getElementById(id).classList.toggle("hidden");
+            }
+        }
+
+        function expense_null(id) {
+            let expense_sum = parseInt('<?= $expense_sum ?>');
+            if (expense_sum == 0) {
+                document.getElementById(id).classList.toggle("hidden");
+            }
+        }
+
+        expense_null("expense-show-hide-btn");
+        income_null("income-show-hide-btn");
+
+        function show(id) {
+            document.getElementById(id).classList.toggle("height100");
+            /*show the rest of the incomes and expenses byclicking the drop down button*/
+        }
+
+        function show_hide(id) {
             document.getElementById(id).classList.toggle("hidden");
+            /*show and hide the form where incomes and expenses can be added*/
         }
-    }
 
-    function expense_null(id) {
-        let expense_sum = parseInt('<?= $expense_sum ?>');
-        if (expense_sum == 0) {
-            document.getElementById(id).classList.toggle("hidden");
+        function togglePopup(id, description = 0, amount = 0, record_id, event_id) {
+            var form = document.getElementById(id);
+            console.log(record_id);
+            form.classList.toggle("active");
+            form.querySelector("#details").setAttribute("value", description);
+            form.querySelector("#amount").setAttribute("value", amount);
+            form.querySelector("#record_id").setAttribute("value", record_id);
+            form.querySelector("#save").setAttribute("value", event_id);
+            /*show the popup to update an income or an expense*/
         }
-    }
 
-    expense_null("expense-show-hide-btn");
-    income_null("income-show-hide-btn");
-
-    function
-    show(id) {
-        document.getElementById(id).classList.toggle("height100");
-        //show the rest of the incomes and expenses byclicking the drop down button 
-    }
-
-    function show_hide(id) {
-        document.getElementById(id).classList.toggle("hidden");
-        //show and hide the form where incomes and expenses can be added
-    }
-
-    function togglePopup(id, description = 0, amount = 0, record_id, event_id) {
-        var form = document.getElementById(id);
-        console.log(record_id);
-        form.classList.toggle("active");
-        form.querySelector("#details").setAttribute("value", description);
-        form.querySelector("#amount").setAttribute("value", amount);
-        form.querySelector("#record_id").setAttribute("value", record_id);
-        form.querySelector("#save").setAttribute("value", event_id);
-        //show the popup to update an income or an expense
-    }
-
-    function blur_background(id) {
-        document.getElementById(id).classList.toggle("blurred")
-        //when popup is shown background is blurred
-    }
-
-    function stillBackground(id) {
-        document.getElementById(id).classList.toggle("still");
-        //when popup is shown background is still
-    }
-
-    function change_button(id) {
-        var x = document.getElementById(id)
-
-        if (x.className == "fas fa-chevron-down") {
-            x.className = "fas fa-chevron-up";
-        } else {
-            x.className = "fas fa-chevron-down";
+        function blur_background(id) {
+            document.getElementById(id).classList.toggle("blurred")
+            /*when popup is shown background is blurred*/
         }
-        //when down button is clicked it changes to up button.
-    }
+
+        function stillBackground(id) {
+            document.getElementById(id).classList.toggle("still");
+            //when popup is shown background is still
+        }
+
+        function change_button(id) {
+            var x = document.getElementById(id)
+
+            if (x.className == "fas fa-chevron-down") {
+                x.className = "fas fa-chevron-up";
+            } else {
+                x.className = "fas fa-chevron-down";
+            }
+            /*when down button is clicked it changes to up button.*/
+        }
     </script>
 </body>
 

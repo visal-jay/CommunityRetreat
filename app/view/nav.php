@@ -34,8 +34,8 @@
 
             <?php if ($registered_user) { ?>
                 <a class="nav-link margin-side-md" href="/User/home">Home</a>
-                <a class="nav-link margin-side-md" href="/RegisteredUser/calendar">Calender</a>
-                <a class="nav-link margin-side-md" href="/RegisteredUser/administratored">Administratored</a>
+                <a class="nav-link margin-side-md" href="/RegisteredUser/calendar">Calendar</a>
+                <a class="nav-link margin-side-md" href="/RegisteredUser/administratored">Administrated</a>
                 <a class="nav-link margin-side-md" href="/User/Notifications">Notifications</a>
                 <a class="nav-link margin-side-md" href="# "></a>
             <?php } ?>

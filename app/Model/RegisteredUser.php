@@ -4,6 +4,7 @@
 
 class RegisteredUser extends User
 {
+    //Function for get user roles(Moderator/Treasurer)
     public function getUserRoles($uid,$event_id){
         $query = 'SELECT  moderator_flag,treasurer_flag FROM moderator_treasurer WHERE uid = :uid AND event_id = :event_id';
         $params = ["uid" => $uid,"event_id"=>$event_id];
@@ -12,37 +13,41 @@ class RegisteredUser extends User
         if (count($data)==0)
             return false;
         else{
-            if ($result[0]["moderator_flag"])
+            if ($result[0]["moderator_flag"])   //If moderator
                 array_push($data,"moderator");
-            if ($result[0]["treasurer_flag"])
+            if ($result[0]["treasurer_flag"])   //If treasurer
                 array_push($data,"treasurer");
         }
         return $data;
     }
+
+    //Get reg user details
     public function getDetails($uid){
         $query = 'SELECT * FROM registered_user reg JOIN login ON reg.uid= login.uid WHERE reg.uid = :uid AND verified=1';
         $params = ["uid" => $uid];
         $result= User::select($query,$params);
         //var_dump($result);
-        if(count($result)==1)
+        if(count($result)==1)   //If data exists
             return $result[0];
         else
             return false;
     }
 
+    // Reg user profile pic change function
     public function changeProfilePic($data){
 
         if($data['profile_pic']['size']!==NULL){
-            $time= (int)shell_exec("date '+%s'");
+            $time= (int)shell_exec("date '+%s'"); //Get current time
             // exec("rm -rf /Users/visaljayathilaka/code/group-project/Group-16/app/Uploads/event/cover" . $data["event_id"] . "*");
-            $cover_pic = new Image($data['uid'].$time,"profile/","profile_pic",true);
-            $params =["profile_pic"=>  $cover_pic->getURL(),"uid"=>$data['uid']];  
+            $cover_pic = new Image($data['uid'].$time,"profile/","profile_pic",true); //Create Image object 
+            $params =["profile_pic"=>  $cover_pic->getURL(),"uid"=>$data['uid']];  //Call getURL function
         }
         $query = 'UPDATE registered_user SET profile_pic= :profile_pic   WHERE uid = :uid ';
         User::insert($query,$params);  
 
     }
     
+    //Username change function
     public function changeUsername($uid,$data){
         $_SESSION["user"]["username"]=$data;
         $params = ["uid" => $uid , "username"=> $data];
@@ -50,6 +55,7 @@ class RegisteredUser extends User
         User::insert($query,$params);       
     }
 
+    //Contact number change function
     public function changeContactNumber($uid,$data){
         
         $params = ["uid" => "$uid" ,"contact_number"=> "$data[contact_number]"];
@@ -57,6 +63,8 @@ class RegisteredUser extends User
         User::insert($query,$params);   
 
     }
+
+    //Email change function
     public function changeEmail($uid,$data){
         
         $params = ["uid" => "$uid" ,"email"=> "$data[email]"];
@@ -64,32 +72,38 @@ class RegisteredUser extends User
         User::insert($query,$params);   
             
     }
+
+    //Password change function
     public function changePassword($uid,$data){
         $params = ["uid" => "$uid" ,"password"=> "$data[password]"];
         $query = 'UPDATE login  JOIN registered_user ON login.uid= registered_user.uid SET login.password =:password where login.uid = :uid and verified=1 ';
         User::insert($query,$params); 
     }
+
+    //Check current passward with current password given by user
     function checkCurrentPassword($uid,$password){
         $query= 'SELECT password FROM registered_user reg JOIN login ON reg.uid= login.uid WHERE reg.uid = :uid AND verified=1';
         $params = ["uid"=> $uid];
         $result= USER::select($query,$params);
-        if($result[0]['password']==$password){
+        if($result[0]['password']==$password){ //If current passward with current password given by user
             return true;
         }
         else{
             return false;
         }
     }
+
+    //Get calendar details
     public function getCalendarDetails($uid){
         $event_details =[];
         $params =["uid"=>"$uid"];
-        $query = "SELECT event_id FROM calender WHERE uid = :uid";
+        $query = "SELECT event_id FROM volunteer WHERE uid = :uid"; //Get event_id's of volunteered events
         $result = Model::select($query,$params);
         $event_details = array();
         for($i=0;$i<count($result);$i++) {
 
             $event_params = ["event_id" =>  $result[$i]['event_id']];
-            $get_event_query = 'SELECT event_id, event_name,organisation_username ,MONTH(start_date) AS month, DAY(start_date) AS day FROM event_details where event_id=:event_id AND status= "published" ';
+            $get_event_query = 'SELECT event_id, event_name,organisation_username ,MONTH(start_date) AS month, DAY(start_date) AS day FROM event_details where event_id=:event_id AND status= "published" '; //Get event details from event view
             $event_result = Model::select($get_event_query,  $event_params);
             array_push($event_details,$event_result);
         }

@@ -3,6 +3,7 @@
 class SystemfeedbackController{
 
     public function getSystemFeedbacks(){
+        Controller::validateForm(["feedback"]);
         $user_roles=Controller::accessCheck(["admin","organization","registered_user"]);
         $feedback = new Systemfeedback();
         $uid = $_SESSION["user"]["uid"];

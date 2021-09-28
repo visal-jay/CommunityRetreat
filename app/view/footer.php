@@ -19,6 +19,7 @@
             justify-content:center;
             align-items: center;
             flex-direction: column;
+            margin-top: 20px;
             
         }
         .footer-content-container{
@@ -204,36 +205,39 @@
 <body>
 
     <div class="feedback-container">
-    <form action="/Systemfeedback/getSystemFeedbacks" method="post" class="feedback-form"> 
-       
-                <h2>Send us some feedback !</h2>
-                <p>Do you have a suggestion or found some bug? Let us know in the field below.</p>
-               <textarea cols="40" rows="8" placeholder= "Describe here" class="feedback-textarea"  name="feedback" required></textarea>
-               <div class="confirm-buttons">
-                   
-                    <button   type="submit" class= "btn bg-green clr-white border-green">Submit</button>
-                    <button type="button" onclick="popup()" class= "btn bg-red clr-white border-red">Cancel</button>
-               </div>
-      
-    </form>
+
+        <!-- Feedback form -->
+        <form action="/Systemfeedback/getSystemFeedbacks" method="post" class="feedback-form"> 
+        
+                    <h2>Send us some feedback !</h2>
+                    <p>Do you have a suggestion or found some bug? Let us know in the field below.</p>
+                <textarea cols="40" rows="8" placeholder= "Describe here" class="feedback-textarea form-ctrl"  name="feedback" required></textarea>
+                <div class="confirm-buttons">
+                    
+                        <button   type="submit" class= "btn bg-green clr-white border-green">Submit</button>
+                        <button type="button" onclick="popup()" class= "btn bg-red clr-white border-red">Cancel</button>
+                </div>
+        
+        </form>
     </div>
+
     <footer class="main-footer">
-    <?php if (!$admin) { ?>
-        <div class="footer-content-container">
-            <div class="footer-main-content">
-                <p class="footer-content">About Us</p>
+        <?php if (!$admin) { ?>
+            <div class="footer-content-container">
+                <div class="footer-main-content">
+                    <p class="footer-content">About Us</p>
+                </div>
+                <div class="footer-main-content">
+                    <p class="footer-content" onclick="popup()">Feedback Us</p>
+                </div>
+                <div class="footer-main-content">
+                    <p class="footer-content">Contact Us</p>
+                </div>
+                <div class="footer-main-content">
+                    <p class="footer-content">Terms & conditions</p>
+                </div>
             </div>
-            <div class="footer-main-content">
-                <p class="footer-content" onclick="popup()">Feedback Us</p>
-            </div>
-            <div class="footer-main-content">
-                <p class="footer-content">Contact Us</p>
-            </div>
-            <div class="footer-main-content">
-                <p class="footer-content">Terms & conditions</p>
-            </div>
-        </div>
-        <?php }?>
+            <?php }?>
         <div class= "copyright">
                 <p style="color:gray; margin: 1.5rem 0;"><i class="far fa-copyright"></i>&nbsp2021 Community Retreat, All Right Reserved.</p>
         </div>
@@ -258,5 +262,6 @@
 
 
 </script>
+<script src="/Public/assets/js/input_validation.js"></script>
 
 </html>

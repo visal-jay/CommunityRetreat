@@ -199,7 +199,7 @@ h2 {
             <?php } ?>
             <?php if ($organization || $treasurer) { ?>
                 <a class="btn margin-side-md <?php if ($page == "budget") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=budget&&event_id=<?= $_GET["event_id"] ?>">Budget</a>
-                <a class="btn margin-side-md <?php if ($page == "donations") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=donations&&event_id=<?= $_GET["event_id"] ?>">Donations</a>
+                <a class="btn margin-side-md <?php if ($page == "donations") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?event_id=<?= $_GET["event_id"] ?>&&page=donations">Donations</a>
             <?php } ?>
             <?php if ($organization) { ?>
                 <a class="btn margin-side-md <?php if ($page == "userroles") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=userroles&&event_id=<?= $_GET["event_id"] ?>">User Roles</a>
@@ -224,8 +224,7 @@ h2 {
 
 </body>
 
-<?php //include "footer.php" 
-?>
+<?php include "footer.php" ?>
 
 <script>
     function resizeProfile() {

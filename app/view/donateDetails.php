@@ -11,148 +11,93 @@
 </head>
 
 <style>
-table {
-    width: 100%;
-}
+    table,
+    th,
+    td {
+        padding: 7px 10px 20px;
+    }
 
-table,
-th,
-td {
-    padding: 7px 10px 20px;
-}
+    .table {
+        width: 100%;
+    }
 
-.donation-details-btn {
-    margin: 25px;
-}
+    .full-donation-details-btn {
+        margin: 25px;
+    }
 
-.initial-donation-enable-btn {
-    text-align: center;
-    transform: translate(-50%, -50%);
-    top: 110%;
-    left: 50%;
-    position: absolute;
+    .initial-donation-enable-btn {
+        text-align: center;
+        transform: translate(-50%, -50%);
+        top: 110%;
+        left: 50%;
+        position: absolute;
+        width: 100%;
+    }
 
-    width: 100%;
-}
+    .blur {
+        filter: blur(5px);
+    }
 
-.blur {
-    filter: blur(5px);
-}
+    .form-ctrl {
+        margin-bottom: 0;
+    }
 
-.hide {
-    display: hide;
-}
+    .overflow {
+        text-align: left;
+    }
 
-.form-ctrl {
-    margin-bottom: 0;
-}
+    .container-size {
+        width: 70%;
+        text-align: center;
+    }
 
-.scroll {
-    text-align: left;
-}
+    .form {
+        text-align: center;
+    }
 
-.container-size {
-    width: 70%;
-    text-align: center;
-}
+    .amount {
+        text-align: right;
+    }
 
-.form {
-    text-align: center;
-}
+    .section {
+        flex: 1;
+    }
 
-.amount {
-    text-align: right;
-}
+    .edit-btn,
+    .close-btn,
+    .save-btn {
+        margin-block-start: 1rem;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+    }
 
-/* Clear floats after the columns */
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.section {
-    flex: 1;
-}
-
-.edit-btn,
-.close-btn,
-.save-btn {
-    margin-block-start: 1rem;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-}
-
-.secondary-donation-enable-disable-btn {
-    margin: 10px;
-}
-
-.popup .content {
-    position: fixed;
-    transform: scale(0);
-    z-index: 2;
-    text-align: center;
-    padding: 20px;
-    border-radius: 8px;
-    background: white;
-    box-shadow: 0px 0px 11px 2px rgba(0, 0, 0, 0.93);
-    z-index: 1;
-    left: 50%;
-    top: 50%;
-    display: flex;
-    flex-direction: column;
-}
-
-.popup .btn-close {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    width: 30px;
-    height: 30px;
-    color: black;
-    font-size: 1.5rem;
-    padding: 2px 5px 7px 5px;
-
-}
-
-.popup.active .content {
-    transition: all 300ms ease-in-out;
-    transform: translate(-50%, -50%);
-}
-
-.blurred {
-    filter: blur(2px);
-    overflow: hidden;
-}
-
-.still {
-    overflow: hidden;
-}
-
-#qrcode {
-    margin: 1rem;
-}
-
-.bold {
-    font-weight: 700;
-    align-items: center;
-    display: flex;
-}
-
-.donation-sum-container {
-    border-color: #16c79a;
-    border-radius: 8px;
-    background-color: #eeeeee;
-    box-shadow: 2px 4px #ccbcbc;
-    padding: 17px;
-    text-align: center;
-    margin: 20px;
-    display: flex;
-    justify-content: space-between;
-}
+    .secondary-donation-enable-disable-btn {
+        margin: 10px;
+    }
 
 
+    .still {
+        overflow: hidden;
+    }
+
+    .bold {
+        font-weight: 700;
+        align-items: center;
+        display: flex;
+    }
+
+    .donation-sum-container {
+        border-color: #16c79a;
+        border-radius: 8px;
+        background-color: #eeeeee;
+        box-shadow: 2px 4px #ccbcbc;
+        padding: 17px;
+        text-align: center;
+        margin: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
 
 @media screen and (max-width:768px) {
 
@@ -162,7 +107,7 @@ td {
         padding: 5px 8px 12px;
     }
 
-    #mytable .scroll {
+    #table .overflow {
         overflow: scroll;
     }
 
@@ -170,14 +115,6 @@ td {
     .close-btn,
     .save-btn {
         font-size: 0.9rem;
-    }
-
-    .close-btn,
-    .save-btn {
-        padding: 8px;
-    }
-
-    .save-btn {
         padding: 8px;
     }
 
@@ -192,13 +129,6 @@ td {
     .container {
         width: 0;
         margin: auto;
-    }
-
-    .card-container {
-        align-items: flex-start;
-        justify-content: left;
-        flex-direction: column;
-        height: fit-content;
     }
 
     .donation-capacity-container {
@@ -249,12 +179,15 @@ if(isset($_SESSION ["user"] ["user_type"])){
                 </div>
                 <div class="column section">
                     <div class="data">
+                        <!--Display the donation capacity-->
                         <a><?= $donation_capacity ?></a>
                     </div>
-                    <form action="/Donations/updateDonationCapacity?event_id=<?= $_GET["event_id"] ?>" method="post"
+                    <form action="/Donations/updateDonationCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" class="flex-col flex-center"
                         id="donation-capacity">
+                        <!--enter the donation capacity and save it in the database-->
+                        <label for="" class="hidden"> </label>
                         <input name="donation_capacity" type="number" value="<?= $donation_capacity ?>"
-                            min="<?= $donation_sum ?>" max="10000000" class=" form form-ctrl hidden" />
+                            min="<?= $donation_sum ?>" max="10000000" class=" form form-ctrl hidden" required/>
                     </form>
                 </div>
             </div>
@@ -287,20 +220,23 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     Donations</button>
             </form>
             <?php } ?>
+            <!--enable or disable donations-->
 
             <div class="bold sum donation-sum-container">
+                <!--Display the sum of donation-->
                 <div>Sum of Donations:</div>
-                <div> <?php echo 'Rs. ' .number_format($donation_sum, 3) ?> </div>
+                <div> <?php echo 'Rs. ' .number_format($donation_sum, 2) ?> </div>
             </div>
 
             <div>
-                <table id="mytable" class="center">
+                <!--Display all the donations-->
+                <table id="table" class="center table">
                     <col style="width:30%">
                     <col style="width:40%">
                     <col style="width:30%">
                     <thead>
                         <tr class="headers">
-                            <th class="scroll">Name</th>
+                            <th class="overflow">Name</th>
                             <th>Date</th>
                             <th class="amount">Amount</th>
                         </tr>
@@ -308,10 +244,10 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     <tbody>
                         <?php foreach($donations as $donation){ ?>
                         <tr>
-                            <td class=" scroll"><?= $donation["username"] ?></td>
+                            <td class="overflow"><?= $donation["username"] ?></td>
                             <td><?= $donation["date"] ?></td>
                             <td class="amount">
-                                <?php echo 'Rs. ' .number_format($donation["amount"], 3)?></td>
+                                <?php echo 'Rs. ' .number_format($donation["amount"], 2)?></td>
                         </tr>
                         <?php } ?>
                     </tbody>
@@ -319,31 +255,33 @@ if(isset($_SESSION ["user"] ["user_type"])){
                 <hr>
             </div>
 
-            <div class="donation-details-btn">
-                <button class="btn btn-md btn-solid">Full donation details</button>
+            <div class="full-donation-details-btn">
+                <!--Display the full donation details-->
+                <button class="btn btn-md btn-solid"
+                    onclick="window.location.href=' /Donations/donationReport?event_id=<?= $_GET['event_id'] ?>'">Full
+                    donation details</button>
             </div>
+
         </div>
     </div>
     <?php if($donation_status==0 && count($donations)==0){ ?>
-    <div class="initial-donation-enable-btn">
-        <button onclick="window.location.href='/Event/enableDonation?event_id=<?= $_GET['event_id'] ?>'"
-            class=" btn btn-lg btn-solid" id="initial-donation-enable-btn" onclick="myFunction()">Enable
+    <div class=" initial-donation-enable-btn">
+        <button onclick="window.location.href=' /Donations/enableDonation?event_id=<?= $_GET['event_id'] ?>'"
+            class=" btn btn-lg btn-solid" id="initial-donation-enable-btn" onclick="blur_background()">Enable
             Donations</button>
+        <!--initally enable the donations-->
     </div>
     <?php } ?>
 </body>
 
+<script src="/Public/assets/js/input_validation.js"></script>
 
 <script>
-function myFunction() {
-    var element = document.getElementById(" background");
+function blur_background() {
+    var element = document.getElementById("background");
     element.classList.remove("blur");
     document.getElementById("initial-donation-enable-btn").remove();
-    //blur class is removed when initial donation enable button s clicked
-}
-
-function hide(id) {
-    document.getElementById(id).classList.toggle("hide");
+    /*blur class is removed when initial donation enable button s clicked*/
 }
 
 function change_enable_disable_button(id) {
@@ -354,8 +292,8 @@ function change_enable_disable_button(id) {
     } else {
         x.innerHTML = "Disable Donations";
     }
-    //when enable donation button is clicked, it changes to disable donation button
-    //when disable donation button is clicked, it changes to enable donation button 
+    /*when enable donation button is clicked, it changes to disable donation button*/
+    /*when disable donation button is clicked, it changes to enable donation button*/ 
 }
 
 function edit() {
@@ -368,7 +306,7 @@ function edit() {
     for (var i = 0; i < form.length; i++) {
         form[i].classList.toggle("hidden");
     }
-    //when edit button is clicked, it is hidden
+    /*when edit button is clicked, it is hidden*/
 }
 </script>
 

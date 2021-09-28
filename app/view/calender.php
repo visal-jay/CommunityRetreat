@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="../Public/assets/style/fontawesome.min.css">
     <link rel="stylesheet" href="../Public/assets/style/calenderstyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Script for render calendar  -->
     <script defer src="../Public/assets/js/calender.js"></script>
     
 </head>

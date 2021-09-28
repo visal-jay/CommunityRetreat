@@ -17,6 +17,9 @@ class VolunteerController{
     }
     public function disableVolunteer()
     { //disable donations for an event
+        Controller::validateForm([],["event_id"]);
+        Controller::accessCheck(["moderator","organization"]);
+        (new User)->addActivity("Disable volunteer",$_GET['event_id']);
         $volunteer = new Volunteer;
         $volunteer->disableVolunteer($_GET["event_id"]);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "volunteers"]);
@@ -31,6 +34,7 @@ class VolunteerController{
 
     public function updateVolunteerCapacity()
     { //update volunteering capacity
+        ( new User)->addActivity("Update volunteer capacity",$_GET['event_id']);
         $volunteer = new Volunteer;
         $volunteer->updateVolunteerCapacity($_GET["event_id"], $_POST["volunteer_capacity"]);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "volunteers"]);
@@ -41,4 +45,26 @@ class VolunteerController{
         Controller::accessCheck(["registered_user"]);
         View::render("volunteerThank");
     }
+
+    public function VolunteerEvent(){
+        $volunteer = new Volunteer();
+        $volunteer_dates = $_POST['volunteer_date'];
+        $event_id = $_GET['event_id'];
+        $volunteer->addVolunteerDetails($event_id,$volunteer_dates);
+        Controller::redirect("/Event/view", ["page" => "about", "event_id" => $event_id ,"volunteered" => 1]);
+    }
+
+
+    public function volunteerReport()
+    {
+        Controller::validateForm([], ["url", "event_id"]);
+        Controller::accessCheck(["organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
+        $volunteer = new Volunteer;
+        $data["volunteers"] = $volunteer->getVolunteerDetails($_GET["event_id"]);
+        $data["volunteer_graph"] = json_encode($volunteer->getReport(["event_id" => $_GET["event_id"]]));
+        $data["event_name"]  = (new Events)->getDetails($_GET["event_id"])["event_name"];
+        View::render('volunteerReport', $data);/*send all the data to volunteerReport page*/
+    }
+
 }
+

@@ -266,21 +266,24 @@
             <div>
                 <table id="mytable" class="center">
                     <col style="width:30%">
-                    <col style="width:40%">
                     <col style="width:30%">
+                    <col style="width:20%">
+                    <col style="width:20%">
                     <thead>
                         <tr class="headers">
-                            <th class="scroll">Name</th>
+                            <th>Name</th>
                             <th>Email</th>
-                            <th class="amount">Contact Number</th>
+                            <th>Contact Number</th>
+                            <th>Participation</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($volunteers as $volunteer) { ?>
                             <tr>
                                 <td class=" scroll"><?= $volunteer["username"] ?></td>
-                                <td><?= $volunteer["email"] ?></td>
-                                <td class="amount"><?= $volunteer["contact_number"] ?></td>
+                                <td class="scroll"><?= $volunteer["email"] ?></td>
+                                <td><?= $volunteer["contact_number"] ?></td>
+                                <td><?php if($volunteer["participate"]== 1){echo '<i class="fas fa-check" style="color:green" ></i>';} else {echo '<i class="fas fa-times" style="color:red"></i>';} ?></td>
                             </tr>
                         <?php } ?>
                     </tbody>
@@ -289,7 +292,7 @@
             </div>
 
             <div class="donation-details-btn">
-                <button class="btn btn-md btn-solid">Full details of volunteers</button>
+                <button class="btn btn-md btn-solid" onclick="window.location.href=' /Volunteer/volunteerReport?event_id=<?= $_GET['event_id'] ?>'">Full details of volunteers</button>
             </div>
             <div class="donation-details-btn popup">
                 <button class="btn btn-md btn-solid" onclick="togglePopup('publish'); blur_background('background'); stillBackground('id1')">Generate QR</button>

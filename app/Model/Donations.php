@@ -69,5 +69,14 @@ class Donations extends Model{
         $params = [];
         Model::insert($query,$params);
     }
+
+    public function pay($data){
+        if(!isset($_SESSION)) session_start();
+        $data["uid"] = $_SESSION["user"]["uid"] ;  
+        $query = "INSERT INTO donation (uid, amount, contact_no, event_id) 
+        SELECT donation.uid, donation.amount, donation.contact_no, donation.address, donation.event_id FROM registered_user INNER JOIN donation ON  donation.uid = registered_user.uid";
+        $params=array_intersect_key($data,["uid"=>'',"amount"=>'', "contact_no"=>'', "event_id"=>'' ]); 
+        Model::insert($query,$params);
+    }
     
 }

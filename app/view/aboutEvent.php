@@ -172,9 +172,16 @@
         border-radius: 8px;
     }
 
+    
+
+ 
     @media screen and (max-width:800px) {
         .progress {
             width: 75%;
+        }
+
+        .margin-lg{
+            margin: 10px 0px;
         }
 
         #map {
@@ -218,6 +225,7 @@
         .flex-row-to-col {
             flex-direction: column;
         }
+        
 
     }
 </style>
@@ -234,11 +242,17 @@
                     <div class="date-container">
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width far fa-calendar-alt clr-green margin-side-lg"></i>
-                            <h4 class="head-margin data"><?= $start_date ?></h4>
+                            <h4 class="head-margin data"><?= $start_date ?> - <?= $end_date ?></h4>
                             <?php if ($organization || $moderator) { ?>
-                                <div class="flex-row flex-center">
-                                    <label class="form hidden" for="start_date">Event date</label>
-                                    <input type="date" id="start_date" value="<?= $start_date ?>" name="start_date" class="form form-ctrl margin-side-md hidden" data-placeholder="Event is on?" required></input>
+                                <div class="flex-row-to-col flex-center">
+                                    <div class="flex-col">
+                                        <label class="form hidden" for="start_date">Event starts on</label>
+                                        <input type="date" id="start_date" value="<?= $start_date ?>" name="start_date" class="form form-ctrl margin-side-md hidden" data-placeholder="Event starts on?" required></input>
+                                    </div>
+                                    <div class="flex-col">
+                                        <label class="form hidden" for="end_date">Event ends on</label>
+                                        <input type="date" id="end_date" value="<?= $end_date ?>" name="end_date" class="form form-ctrl margin-side-md hidden" data-placeholder="Event ends on?" required></input>
+                                    </div>
                                 </div>
                             <?php } ?>
                         </div>
@@ -328,7 +342,6 @@
                             <h4 class="head-margin"><?= $donations ?> people donated</h4>
                         </div>
                     </div>
-                    <button class="btn btn-solid" onclick="window.location.href='/RegisteredUser/chatApp?new_chat_id=<?= 'EVN' . $_GET['event_id'] ?>'">Chat with us</button>
 
                     <div class="textbox flex-col content border-round margin-md" style="background-color: #eeeeee">
                         <h3 class="margin-lg">Description</h3>
@@ -351,7 +364,10 @@
 
                         <div class="volunteers-progress-bar"></div>
                     </div>
-                    <button class="btn clr-green margin-md"><i class="fas fa-user-friends"></i>&nbsp;I want to volunteer</button>
+                    <div id="volunteer-btn">
+                            <button class="btn clr-green margin-md"  onclick="togglePopup('volunteer-form'); blur_background('background');stillBackground('id1')"><i class="fas fa-user-friends" ></i>&nbsp;I want to volunteer</button>  
+                    </div>
+                    
                 </div>
             <?php } ?>
 
@@ -379,9 +395,13 @@
 
 
             </div>
+            <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #84d1bd; text-align:center">
+                <button class="btn btn-solid margin-md" onclick="window.location.href='/RegisteredUser/chatApp?new_chat_id=<?= 'EVN' . $_GET['event_id'] ?>'">Chat with us</button>
+            </div>
+
             <?php if ($moderator || $organization) { ?>
                 <div class="flex-row flex-center content border-round container-size1">
-                    <button class="btn data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
+                    <button class="btn data margin-lg" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
                     <button type="button" class="btn btn-solid bg-red border-red form margin-side-md hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
                     <button name="event_id" value="<?= $_GET["event_id"] ?>" form="update-form" type="submit" class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
                     <?php if ($status == "added") { ?>
@@ -400,6 +420,51 @@
             </div>
         </div>
     </div>
+    <div class="popup" id="volunteer-form">
+        <div class="content">
+            <div>
+                <h3>What are the days you would like to volunteer ?</h3>
+            </div>
+            <form action = "/Volunteer/volunteerEvent?event_id=<?= $_GET["event_id"] ?>" method="post">
+                <button type="button"class="btn-icon btn-close" onclick="togglePopup('volunteer-form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
+                <?php
+                    $event_days = [] ;
+
+                    $startDate = new DateTime($start_date);
+                    $interval = new DateInterval('P1D');
+                    $realEnd = new DateTime($end_date);
+                    $realEnd->add($interval);
+                  
+                    
+                    if($start_date == $end_date){
+                       
+                        echo "<div class='flex-row flex-center'><h3>".$start_date."</h3>
+                        <input type='checkbox'  name='volunteer_date[]' value='$start_date' checked='checked' disabled>
+                        </div> ";
+
+                    }
+                    else{
+                       
+                        $period = new DatePeriod( $startDate , $interval, $realEnd);
+                        foreach($period as $date) {                 
+                            $event_days = $date->format('Y-m-d'); 
+                            echo "<div class='flex-row flex-center'><h3>".$event_days."</h3>
+                            <input type='checkbox'  name='volunteer_date[]' value='$event_days'>
+                            </div>";
+                        }
+                    }
+                    
+                    
+                  
+                   
+                  
+                ?>
+                <button class="btn btn-solid margin-md" type="submit" id="volunteer-btn" onClick="swithtoUnvolunteer()" >Volunteer</button>
+            </form>
+           
+        </div>
+
+    </div>
 
     <div class="popup" id="form">
         <div class="content">
@@ -409,31 +474,11 @@
             <div>
                 <button class="btn-icon btn-close" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
             </div>
-            <form action="/action_page.php" class="form-container">
-
-                <div class="form-item">
-                    <label>Name</label>
-                    <input type="text" required class="form-ctrl" placeholder="Enter Your Name">
-                </div>
-
-                <div class="form-item">
-                    <label>Address</label>
-                    <input type="text" required class="form-ctrl" placeholder="Enter Your Address">
-                </div>
-
-                <div class="form-item">
-                    <label>Contact Number</label>
-                    <input type="tel" pattern="^[+]?[0-9]{10,12}$" required class="form-ctrl" placeholder="Enter Your Contact Number">
-                </div>
+            <form action="/Donations/pay" class="form-container" method="post">
 
                 <div class="form-item">
                     <label>Amount</label>
-                    <input type="number" min="1000" step="10" required class="form-ctrl" placeholder="Enter The Amount(LKR)">
-                </div>
-
-                <div class="form-item">
-                    <label>Credit card number</label>
-                    <input type="tel" inputmode="numeric" class="form-ctrl" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx">
+                    <input type="number" name="amount" id="amount" min="1000" step="10" required class="form-ctrl" placeholder="Enter The Amount(LKR)">
                 </div>
 
                 <div onload="disableSubmit()">
@@ -441,7 +486,7 @@
                     Terms & Coditions
                 </div>
 
-                <button class="btn btn-solid margin-md" type="submit" id="donate-btn" disabled>Donate</button>
+                <button class="btn btn-solid margin-md" type="submit" id="donate-btn"  onclick="window.location.href=' /Donations/pay?event_id=<?= $_GET['event_id'] ?>'" disabled>Donate</button>
             </form>
         </div>
     </div>
@@ -469,6 +514,10 @@
 
         today = yyyy + '-' + mm + '-' + dd;
         document.getElementById("start_date").setAttribute("min", today);
+        document.getElementById("end_date").setAttribute("min", "<?= $start_date ?>");
+        document.getElementById("start_date").addEventListener("change",()=>{
+            document.getElementById("end_date").setAttribute("min",document.getElementById("start_date").value);
+        });
 
 
         function edit() {
@@ -629,6 +678,8 @@
         map.setCenter(myLatlng);
         map.setZoom(15);
     }
+
+  
 </script>
 
 </html>

@@ -100,6 +100,18 @@ class User extends Model
         $params = ["email" => $email,"password"=>$password];
         User::insert($query,$params);
     }
+    function insertActivity($activity,$event_id){
+
+        if($event_id==-1){
+            $query =  "INSERT INTO `activity_log` (`event_id`, `uid`,`time_stamp`, `activity`) VALUES (NULL, :uid,  CURRENT_TIMESTAMP,:activity)"; 
+            $params = ['uid'=>$_SESSION['user']['uid'],'activity'=>$activity];
+        }
+        else{
+            $query =  "INSERT INTO `activity_log` (`event_id`, `uid`,`time_stamp`, `activity`) VALUES (NULL, :uid,  CURRENT_TIMESTAMP,:activity)"; 
+            $params =['event_id'=>$event_id,'uid'=>$_SESSION['user']['uid'],'activity'=>$activity];
+        }
+        User::insert($query,$params);
+    }
 
 
 

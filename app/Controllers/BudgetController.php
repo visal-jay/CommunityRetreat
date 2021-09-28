@@ -3,7 +3,8 @@
 class BudgetController
 {
     public function view(){/*view the incomes and expenses in the UI by sending the data from backend*/
-        
+
+        Controller::validateForm([], ["url", "page", "event_id"]);
         Controller::accessCheck(["organization","treasurer"],$_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
         $user_roles=Controller::accessCheck(["organization","moderator,treasurer"],$_GET["event_id"]);
         $budget = new Budget();
@@ -26,7 +27,8 @@ class BudgetController
     } 
      
 	public function addIncome(){/*add incomes to the budget*/
-        
+
+        Controller::validateForm(["details", "amount", "event_id"], ["url"]);
         $data=array_merge($_GET, $_POST);
         Controller::accessCheck(["organization","treasurer"]);/*check whether organization or treasurer accessed it.*/
         $validate=new Validation;
@@ -38,7 +40,8 @@ class BudgetController
     }
 
     public function addExpense(){/*add expenses to the budget*/
-        
+
+        Controller::validateForm(["details", "amount", "event_id"], ["url"]);
         $data=array_merge($_GET, $_POST);    
         Controller::accessCheck(["organization","treasurer"]);/*check whether organization or treasurer accessed it.*/
         $validate=new Validation;
@@ -50,6 +53,9 @@ class BudgetController
     }
 	
     public function update(){/*update incomes and expenses*/
+
+        Controller::validateForm(["details", "amount", "record_id", "event_id"], ["url"]);
+        Controller::accessCheck(["organization","treasurer"]);/*check whether organization or treasurer accessed it.*/
         $budget = new Budget();   
         $validate=new Validation;
         if(!$validate->currency($_POST["amount"]))/*find whether updated amount is valid*/
@@ -64,6 +70,9 @@ class BudgetController
     }
 
     public function delete(){/*delete incomes and expenses*/
+
+        Controller::validateForm(["record_id", "event_id"], ["url"]);
+        Controller::accessCheck(["organization","treasurer"]);/*check whether organization or treasurer accessed it.*/
         $budget = new Budget();
         if (strpos($_POST["record_id"], 'INC') !== false) {
           $budget->deleteIncome($_POST);               
@@ -76,6 +85,8 @@ class BudgetController
 
     public function BudgetReport()/*generate the report of all the incomes and expenses*/
     {
+        Controller::validateForm([], ["url", "event_id"]);
+        Controller::accessCheck(["organization","treasurer"]);/*check whether organization or treasurer accessed it.*/
         $budget = new Budget();
         $income_report = $budget->IncomeReportGenerate($_GET["event_id"]);
         $expense_report = $budget->ExpenseReportGenerate($_GET["event_id"]);

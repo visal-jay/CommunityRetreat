@@ -72,7 +72,7 @@ class Events extends Model
 
     public function query($args)
     {
-        $name = $city = $latitude = $longitude = $mode = $start_date = $org_uid = $distance = $order_type = $way = $status = $limit = $donation_capacity= $volunteer_capacity=NULL;
+        $name = $city = $latitude = $longitude = $mode = $start_date = $org_uid = $distance = $order_type = $way = $status = $limit = $donation_capacity= $volunteer_capacity=$volunteer_status=$donation_status=NULL;
         extract($args, EXTR_OVERWRITE);
         $params = array();
 
@@ -92,6 +92,8 @@ class Events extends Model
         $query_filter_organzation = ' org_uid =:org_uid AND ';
         $query_filter_status = ' status =:status AND ';
         $query_filter_name = ' event_name LIKE :name AND';
+        $query_filter_volunteer_status = ' volunteer_status = :volunteer_status AND';
+        $query_filter_donations_status = ' donation_status = :donation_status AND';
         $query_filter_volunteer_capacity = ' volunteer_capacity IS NOT NULL AND';
         $query_filter_donation_capacity = ' donation_capacity IS NOT NULL AND';
         $query_filter_last = ' 1=1 ';
@@ -134,6 +136,17 @@ class Events extends Model
             $query = $query . $query_filter_name;
             $params["name"] = "%$name%";
         }
+
+        if($volunteer_status!= NULL){
+            $query = $query . $query_filter_volunteer_status;
+            $params["volunteer_status"] = $volunteer_status;
+        }
+        
+        if($donation_status!= NULL){
+            $query = $query . $query_filter_donation_status;
+            $params["donation_status"] = $donation_status;
+        }
+        
 
         if($volunteer_capacity!= NULL){
             $query = $query . $query_filter_volunteer_capacity;

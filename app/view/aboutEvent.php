@@ -7,6 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/Public/assets/newstyles.css">
+    <link rel="me" href="https://twitter.com/twitterdev">
+    <link rel="canonical" href="/web/tweet-button">
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -96,7 +99,7 @@
 
 
 
-    .about-textarea{
+    .about-textarea {
         height: 150px;
         width: 800px;
         padding: 12px 20px;
@@ -105,12 +108,13 @@
         border-radius: 6px;
         background: transparent;
         font-size: 16px;
-        resize:none;    
+        resize: none;
         font-size: 1rem;
         font-family: inherit;
         margin-bottom: 0.8rem;
     }
-    .about-textarea:focus{
+
+    .about-textarea:focus {
         box-shadow: 0px 0px 0px 1px #16c79a;
         border-color: #16c79a;
     }
@@ -161,6 +165,7 @@
     }
 
     #map {
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
         position: relative;
         height: 350px;
         width: 600px;
@@ -323,7 +328,7 @@
                             <h4 class="head-margin"><?= $donations ?> people donated</h4>
                         </div>
                     </div>
-                    <button class="btn btn-solid" onclick="window.location.href='/RegisteredUser/chatApp?new_chat_id=<?= 'EVN'.$_GET['event_id']?>'">Chat with us</button>
+                    <button class="btn btn-solid" onclick="window.location.href='/RegisteredUser/chatApp?new_chat_id=<?= 'EVN' . $_GET['event_id'] ?>'">Chat with us</button>
 
                     <div class="textbox flex-col content border-round margin-md" style="background-color: #eeeeee">
                         <h3 class="margin-lg">Description</h3>
@@ -341,8 +346,9 @@
             <?php if ($volunteer_status == 1) { ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d">
                     <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
-                    <div class="progress" data-width="<?php if ($volunteer_percent == NULL) echo "0";else $volunteer_percent ?>%">
-                   
+                    <div class="progress" data-width="<?php if ($volunteer_percent == NULL) echo "0";
+                                                        else $volunteer_percent ?>%">
+
                         <div class="volunteers-progress-bar"></div>
                     </div>
                     <button class="btn clr-green margin-md"><i class="fas fa-user-friends"></i>&nbsp;I want to volunteer</button>
@@ -352,13 +358,27 @@
             <?php if ($donation_status == 1) { ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d; text-align:center">
                     <p style="color:white">Would you like to give value to your hard-earned money by contributing to this community service project?</p>
-                    <div class="progress" data-width="<?php if ($donation_percent==NULL) echo "0";else echo $donation_percent ?>%">
+                    <div class="progress" data-width="<?php if ($donation_percent == NULL) echo "0";
+                                                        else echo $donation_percent ?>%">
                         <div class="donaters-progress-bar"></div>
                     </div>
                     <button class="btn clr-green margin-md" onclick="togglePopup('form'); blur_background('background');stillBackground('id1')"><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
                 </div>
             <?php } ?>
 
+            <div class="flex-row flex-center margin-lg">
+                <div class="margin-md">
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>     </div>
+                <div class="margin-md" style="margin-bottom: 12px;">
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <div id="fb-root"></div>
+                    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v12.0" nonce="xqUnsUm7"></script>
+
+                    <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+                </div>
+
+
+            </div>
             <?php if ($moderator || $organization) { ?>
                 <div class="flex-row flex-center content border-round container-size1">
                     <button class="btn data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>

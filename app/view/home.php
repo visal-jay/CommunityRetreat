@@ -507,6 +507,7 @@ if (isset($_SESSION["user"]["user_type"])) {
         search({
             sort: 'donation_percent',
             way: 'ASC',
+            donation_status : 1,
             container: 'donation-events'
         });
     }
@@ -515,6 +516,7 @@ if (isset($_SESSION["user"]["user_type"])) {
         search({
             sort: 'volunteer_percent',
             way: 'ASC',
+            volunteer_status: 1,
             container: 'volunteer-events'
         });
     }
@@ -525,8 +527,10 @@ if (isset($_SESSION["user"]["user_type"])) {
         range = '',
         sort = '',
         way = '',
+        volunteer_status='',
+        donation_status='',
         limit = 10,
-        container = ''
+        container = '',
     } = {}) {
 
         const position = await getCoordinates();
@@ -542,6 +546,8 @@ if (isset($_SESSION["user"]["user_type"])) {
                 latitude: latitude,
                 longitude: longitude,
                 distance: range,
+                volunteer_status: volunteer_status,
+                donation_status : donation_status,
                 order_type: sort,
                 way: way,
                 limit: limit

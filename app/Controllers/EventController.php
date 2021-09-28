@@ -32,7 +32,7 @@ class EventController
     public function addPhoto()
     {
         (new Gallery)->addPhoto(["event_id" => $_GET["event_id"]]);
-        Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "gallery"]);
+        echo json_encode("");
     }
     public function userroles($event_details)
     {

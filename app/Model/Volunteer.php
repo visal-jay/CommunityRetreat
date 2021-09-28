@@ -1,19 +1,8 @@
 <?php 
 
 class Volunteer extends Model{
-    public function getReport($data){
-        $query="SELECT COUNT(event_id) as volunteer_sum ,date_format(date,'%x-%m-%d') as day FROM volunteer WHERE event_id = :event_id GROUP BY day ORDER BY day ASC";
-        $params=["event_id"=>$data["event_id"]];
-        $result=Model::select($query,$params);
-
-        if (count($result)==0)
-            return false;
-        else
-            return $result;
-    }
-
     public function getVolunteerDetails($event_id){//get volunteer details from backend to UI
-        $query = 'SELECT registered_user.username, registered_user.contact_number, registered_user.email FROM volunteer LEFT JOIN registered_user ON volunteer.uid=registered_user.uid WHERE event_id =:event_id'; 
+        $query = "SELECT registered_user.username, registered_user.contact_number, registered_user.email, volunteer.participate,  date_format(volunteer.date,'%x-%m-%d') as date FROM volunteer LEFT JOIN registered_user ON volunteer.uid=registered_user.uid WHERE event_id =:event_id"; 
         $params = ["event_id" => $event_id];
         $result=Model::select($query,$params);
        return $result;
@@ -45,6 +34,7 @@ class Volunteer extends Model{
        return $result; 
     }
 
+
     public function addVolunteerDetails($event_id,$volunteer_dates){
 
         foreach($volunteer_dates as $volunteer_date){
@@ -53,6 +43,17 @@ class Volunteer extends Model{
             $params = ['uid' => $_SESSION['user']['uid'] , 'event_id' => $event_id , 'volunteer_date' => $volunteer_date ];
             Model::insert($query,$params);
         }
+
+
+    public function getReport($data){
+        $query="SELECT COUNT(event_id) as volunteer_sum ,date_format(date,'%x-%m-%d') as day FROM volunteer WHERE event_id = :event_id GROUP BY day ORDER BY day ASC";
+        $params=["event_id"=>$data["event_id"]];
+        $result=Model::select($query,$params);
+
+        if (count($result)==0)
+            return false;
+        else
+            return $result;
 
     }
 }

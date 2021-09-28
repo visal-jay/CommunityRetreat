@@ -11,93 +11,93 @@
 </head>
 
 <style>
-table,
-th,
-td {
-    padding: 7px 10px 20px;
-}
+    table,
+    th,
+    td {
+        padding: 7px 10px 20px;
+    }
 
-.table {
-    width: 100%;
-}
+    .table {
+        width: 100%;
+    }
 
-.full-donation-details-btn {
-    margin: 25px;
-}
+    .full-donation-details-btn {
+        margin: 25px;
+    }
 
-.initial-donation-enable-btn {
-    text-align: center;
-    transform: translate(-50%, -50%);
-    top: 110%;
-    left: 50%;
-    position: absolute;
-    width: 100%;
-}
+    .initial-donation-enable-btn {
+        text-align: center;
+        transform: translate(-50%, -50%);
+        top: 110%;
+        left: 50%;
+        position: absolute;
+        width: 100%;
+    }
 
-.blur {
-    filter: blur(5px);
-}
+    .blur {
+        filter: blur(5px);
+    }
 
-.form-ctrl {
-    margin-bottom: 0;
-}
+    .form-ctrl {
+        margin-bottom: 0;
+    }
 
-.overflow {
-    text-align: left;
-}
+    .overflow {
+        text-align: left;
+    }
 
-.container-size {
-    width: 70%;
-    text-align: center;
-}
+    .container-size {
+        width: 70%;
+        text-align: center;
+    }
 
-.form {
-    text-align: center;
-}
+    .form {
+        text-align: center;
+    }
 
-.amount {
-    text-align: right;
-}
+    .amount {
+        text-align: right;
+    }
 
-.section {
-    flex: 1;
-}
+    .section {
+        flex: 1;
+    }
 
-.edit-btn,
-.close-btn,
-.save-btn {
-    margin-block-start: 1rem;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-}
+    .edit-btn,
+    .close-btn,
+    .save-btn {
+        margin-block-start: 1rem;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+    }
 
-.secondary-donation-enable-disable-btn {
-    margin: 10px;
-}
+    .secondary-donation-enable-disable-btn {
+        margin: 10px;
+    }
 
 
-.still {
-    overflow: hidden;
-}
+    .still {
+        overflow: hidden;
+    }
 
-.bold {
-    font-weight: 700;
-    align-items: center;
-    display: flex;
-}
+    .bold {
+        font-weight: 700;
+        align-items: center;
+        display: flex;
+    }
 
-.donation-sum-container {
-    border-color: #16c79a;
-    border-radius: 8px;
-    background-color: #eeeeee;
-    box-shadow: 2px 4px #ccbcbc;
-    padding: 17px;
-    text-align: center;
-    margin: 20px;
-    display: flex;
-    justify-content: space-between;
-}
+    .donation-sum-container {
+        border-color: #16c79a;
+        border-radius: 8px;
+        background-color: #eeeeee;
+        box-shadow: 2px 4px #ccbcbc;
+        padding: 17px;
+        text-align: center;
+        margin: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
 
 @media screen and (max-width:768px) {
 
@@ -182,11 +182,12 @@ if(isset($_SESSION ["user"] ["user_type"])){
                         <!--Display the donation capacity-->
                         <a><?= $donation_capacity ?></a>
                     </div>
-                    <form action="/Donations/updateDonationCapacity?event_id=<?= $_GET["event_id"] ?>" method="post"
+                    <form action="/Donations/updateDonationCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" class="flex-col flex-center"
                         id="donation-capacity">
                         <!--enter the donation capacity and save it in the database-->
+                        <label for="" class="hidden"> </label>
                         <input name="donation_capacity" type="number" value="<?= $donation_capacity ?>"
-                            min="<?= $donation_sum ?>" max="10000000" class=" form form-ctrl hidden" />
+                            min="<?= $donation_sum ?>" max="10000000" class=" form form-ctrl hidden" required/>
                     </form>
                 </div>
             </div>
@@ -224,7 +225,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
             <div class="bold sum donation-sum-container">
                 <!--Display the sum of donation-->
                 <div>Sum of Donations:</div>
-                <div> <?php echo 'Rs. ' .number_format($donation_sum, 3) ?> </div>
+                <div> <?php echo 'Rs. ' .number_format($donation_sum, 2) ?> </div>
             </div>
 
             <div>
@@ -246,7 +247,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
                             <td class="overflow"><?= $donation["username"] ?></td>
                             <td><?= $donation["date"] ?></td>
                             <td class="amount">
-                                <?php echo 'Rs. ' .number_format($donation["amount"], 3)?></td>
+                                <?php echo 'Rs. ' .number_format($donation["amount"], 2)?></td>
                         </tr>
                         <?php } ?>
                     </tbody>
@@ -260,6 +261,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     onclick="window.location.href=' /Donations/donationReport?event_id=<?= $_GET['event_id'] ?>'">Full
                     donation details</button>
             </div>
+
         </div>
     </div>
     <?php if($donation_status==0 && count($donations)==0){ ?>
@@ -272,13 +274,14 @@ if(isset($_SESSION ["user"] ["user_type"])){
     <?php } ?>
 </body>
 
+<script src="/Public/assets/js/input_validation.js"></script>
 
 <script>
 function blur_background() {
     var element = document.getElementById("background");
     element.classList.remove("blur");
     document.getElementById("initial-donation-enable-btn").remove();
-    //blur class is removed when initial donation enable button s clicked
+    /*blur class is removed when initial donation enable button s clicked*/
 }
 
 function change_enable_disable_button(id) {
@@ -289,8 +292,8 @@ function change_enable_disable_button(id) {
     } else {
         x.innerHTML = "Disable Donations";
     }
-    //when enable donation button is clicked, it changes to disable donation button
-    //when disable donation button is clicked, it changes to enable donation button 
+    /*when enable donation button is clicked, it changes to disable donation button*/
+    /*when disable donation button is clicked, it changes to enable donation button*/ 
 }
 
 function edit() {
@@ -303,7 +306,7 @@ function edit() {
     for (var i = 0; i < form.length; i++) {
         form[i].classList.toggle("hidden");
     }
-    //when edit button is clicked, it is hidden
+    /*when edit button is clicked, it is hidden*/
 }
 </script>
 

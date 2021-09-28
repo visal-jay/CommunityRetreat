@@ -59,6 +59,13 @@
         color: white;
     }
 
+    #background {
+        width: 80%;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+    }
+
     /* Individual bars */
     .bar-5 {
         width: 60%;
@@ -214,6 +221,10 @@
         align-items: center;
     }
 
+    .opacity-reduce {
+        opacity: 0.5;
+    }
+
 
     /* Responsive layout - make the columns stack on top of each other instead of next to each other */
     @media (max-width: 400px) {
@@ -243,92 +254,105 @@
 </style>
 
 <body>
-    <div id="background">
+    <div class="flex-col flex-center">
+        <div id="background">
 
-        <?php if ($registered_user) { ?>
-            <div class="flex-col flex-center margin-side-lg">
-                <button class="btn btn-solid btn-close margin-lg" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')">Give Feedback &nbsp; <i class="far fa-comment-dots"></i></button>
-            </div>
-        <?php } ?>
-
-        <span class="heading margin-md">User Rating</span>
-        <?php for ($i = 1; $i < 6; $i++) {
-            if ($i <= $avg_rate) { ?>
-                <span class="fas fa-star fa-sm checked"></span>
-            <?php } else { ?>
-                <span class="fas fa-star fa-sm"></span>
-        <?php }
-        } ?>
-        <p class="margin-md"><?= $avg_rate ?> average based on <?= $total ?> reviews.</p>
-        <hr class="margin-lg" style="border:3px solid #f1f1f1">
-
-        <div>
-            <span class="heading margin-md">Feedbacks</span>
-            <?php foreach ($feedbacks as $feedback) { ?>
-                <div class="flex-col flex-center" style="width: 100%;">
-                <div class="card-container margin-md">
-                    <div class="flex-col flex-center margin-md event-card-details">
-                        <h3 class="margin-md"><?= $feedback["username"] ?></h3>
-                        <date><?= $feedback["time_stamp"] ?></date>
-                        <div class="margin-md">
-                            <?php for ($i = 1; $i < 6; $i++) {
-                                if ($i <= $feedback["rate"]) { ?>
-                                    <span class="fas fa-star fa-sm checked"></span>
-                                <?php } else { ?>
-                                    <span class="fas fa-star fa-sm"></span>
-                            <?php }
-                            } ?>
-                        </div>
-                        <description class="margin-md"><?= $feedback["feedback"] ?></description>
-                    </div>
-                </div>
+            <?php if ($registered_user) { ?>
+                <div class="flex-col flex-center margin-side-lg">
+                    <button class="btn btn-solid btn-close margin-lg" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')">Give Feedback &nbsp; <i class="far fa-comment-dots"></i></button>
                 </div>
             <?php } ?>
-        </div>
 
-    </div>
-
-    <?php if ($registered_user) { ?>
-        <div class="popup" id="form">
-            <div class="content">
-                <form action="/Event/addFeedback?event_id= <?= $_GET["event_id"] ?>" method="post" class="form-container">
-
-                    <div class="form-item">
-                        <label>Tell us what you think about "event name" </label>
-                        <textarea name="feedback" class="form-ctrl" placeholder="Enter feedback" id="feedback" required></textarea>
-                    </div>
-
-                    <div class="flex-row flex-center">
-                        <label>Rate us!</label>
-                        <div class="rate">
-                            <input type="radio" id="star5" name="rate" value="5" />
-                            <label for="star5" title="text">5 stars</label>
-
-                            <input type="radio" id="star4" name="rate" value="4" />
-                            <label for="star4" title="text">4 stars</label>
-
-                            <input type="radio" id="star3" name="rate" value="3" />
-                            <label for="star3" title="text">3 stars</label>
-
-                            <input type="radio" id="star2" name="rate" value="2" />
-                            <label for="star2" title="text">2 stars</label>
-
-                            <input type="radio" id="star1" name="rate" value="1" />
-                            <label for="star1" title="text">1 star</label>
-                        </div>
-                    </div>
-
-                    <button class="btn btn-solid margin-md" type="submit">Submit</button>
-
-                    <div>
-                        <button class="btn-icon btn-close" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
-                    </div>
-
-                </form>
+            <div>
+                <span class="heading margin-md">User Rating</span>
+                <?php for ($i = 1; $i < 6; $i++) {
+                    if ($i <= $avg_rate) { ?>
+                        <span class="fas fa-star fa-sm checked"></span>
+                    <?php } else { ?>
+                        <span class="fas fa-star fa-sm"></span>
+                <?php }
+                } ?>
+                <p class="margin-md"><?= $avg_rate ?> average based on <?= $total ?> reviews.</p>
             </div>
-        </div>
-    <?php } ?>
+            <hr class="margin-lg" style="border:3px solid #f1f1f1">
 
+
+            <div>
+                <span class="heading margin-md">Feedbacks</span>
+                <div class="flex-col flex-center" style="width: 100%;">
+                    <?php foreach ($feedbacks as $feedback) { ?>
+
+                        <div class="card-container margin-md <?php if ($feedback["status"] == 'hide') echo 'opacity-reduce' ?>">
+                            <div class="flex-col flex-center margin-md event-card-details">
+                                <h3 class="margin-md"><?= $feedback["username"] ?></h3>
+                                <date><?= $feedback["time_stamp"] ?></date>
+                                <div class="margin-md">
+                                    <?php for ($i = 1; $i < 6; $i++) {
+                                        if ($i <= $feedback["rate"]) { ?>
+                                            <span class="fas fa-star fa-sm checked"></span>
+                                        <?php } else { ?>
+                                            <span class="fas fa-star fa-sm"></span>
+                                    <?php }
+                                    } ?>
+                                </div>
+                                <description class="margin-md"><?= $feedback["feedback"] ?></description>
+                                <button class="btn flex-col margin-md" onclick="window.location.href='/Feedback/statusToggle?event_id=<?= $_GET['event_id'] ?>&&feedback_id=<?= $feedback['feedback_id'] ?>'">
+                                    <?php if ($feedback["status"] == 'show') { ?>
+                                        <i class="far fa-eye-slash"></i>
+                                    <? } else { ?>
+                                        <i class="far fa-eye"></i>
+                                    <? } ?>
+                                </button>
+                            </div>
+                        </div>
+
+                    <?php } ?>
+                </div>
+            </div>
+
+        </div>
+
+        <?php if ($registered_user) { ?>
+            <div class="popup" id="form">
+                <div class="content">
+                    <form action="/Feedback/addFeedback?event_id= <?= $_GET["event_id"] ?>" method="post" class="form-container">
+
+                        <div class="form-item">
+                            <label>Tell us what you think about "event name" </label>
+                            <textarea name="feedback" class="form-ctrl" placeholder="Enter feedback" id="feedback" required></textarea>
+                        </div>
+
+                        <div class="flex-row flex-center">
+                            <label>Rate us!</label>
+                            <div class="rate">
+                                <input type="radio" id="star5" name="rate" value="5" />
+                                <label for="star5" title="text">5 stars</label>
+
+                                <input type="radio" id="star4" name="rate" value="4" />
+                                <label for="star4" title="text">4 stars</label>
+
+                                <input type="radio" id="star3" name="rate" value="3" />
+                                <label for="star3" title="text">3 stars</label>
+
+                                <input type="radio" id="star2" name="rate" value="2" />
+                                <label for="star2" title="text">2 stars</label>
+
+                                <input type="radio" id="star1" name="rate" value="1" />
+                                <label for="star1" title="text">1 star</label>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-solid margin-md" type="submit">Submit</button>
+
+                        <div>
+                            <button class="btn-icon btn-close" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
 </body>
 
 <script>

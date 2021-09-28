@@ -55,6 +55,10 @@ td {
 .logo-container {
     width: 20%;
 }
+
+.amount{
+    text-align: right;
+}
 </style>
 
 <?php 
@@ -111,14 +115,14 @@ if(isset($_SESSION ["user"] ["user_type"])){
                 <tr>
                     <th>Date</th>
                     <th>Donor</th>
-                    <th>Amount</th>
+                    <th class="amount">Amount</th>
                     <th>Contact no</th>
                 </tr>
                 <?php foreach($donations as $donation) { ?>
                 <tr>
                     <td><?= $donation["date"] ?></td>
                     <td><?= $donation["username"] ?></td>
-                    <td><?php echo 'Rs. '.number_format($donation["amount"], 2) ?></td>
+                    <td class="amount"><?php echo 'Rs. '.number_format($donation["amount"], 2) ?></td>
                     <td><?= $donation["contact_no"] ?></td>
                 </tr>
                 <?php } ?>
@@ -129,7 +133,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
 </body>
 
 <script>
-//send data to the graph
+/*send data to the graph*/
 const data = <?= $donations_graph ?>;
 console.log(data);
 const backgroundColor = ['#6F69AC', '#FEC260', '#93B5C6', '#FA8072']
@@ -182,6 +186,9 @@ var myLineChart = new Chart('myChart', {
 </script>
 
 <script>
-var dt = new Date();
-document.getElementById('date-time').innerHTML = dt;
+
+    /*get date and time*/
+    var dt = new Date();
+    document.getElementById('date-time').innerHTML = dt;
+    
 </script>

@@ -34,6 +34,7 @@ class EventController
         (new Gallery)->addPhoto(["event_id" => $_GET["event_id"]]);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "gallery"]);
     }
+    
     public function userroles($event_details)
     {
         $user_roles = Controller::accessCheck(["organization"]);
@@ -89,10 +90,7 @@ class EventController
 
     public function forum($event_details)
     {
-        $user_roles = Controller::accessCheck(["organization", "registered_user", "moderator", "guest_user"], $_GET["event_id"]);
-        $data["announcements"] = (new Announcement)->getAnnouncement($_GET["event_id"]);
-        $data = array_merge($data, $event_details);
-        View::render("eventPage", $data, $user_roles);
+        (new ForumController)->view($event_details);
     }
 
     public function addEvent()

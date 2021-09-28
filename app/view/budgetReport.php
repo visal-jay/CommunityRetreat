@@ -249,5 +249,6 @@ if(isset($_SESSION ["user"] ["user_type"])){
     /*Calculate the balance of incomes and expenses*/
     document.getElementById("balance").innerHTML = "<div><b>Rs. " +
             (parseInt('<?= $income_sum  ?>') - parseInt('<?= $expense_sum ?>')).toString().replace(
-                /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","); + "ghvg </b></div>";
+                /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","); +
+        "</b></div>";
 </script>

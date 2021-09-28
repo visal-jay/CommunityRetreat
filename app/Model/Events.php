@@ -15,6 +15,8 @@ class Events extends Model
         $params = array_intersect_key($data, ["event_name" => '', "org_uid" => '', "latitude" => '', "longitude" => '', "start_date" => '',"end_date"=>'', "start_time" => '', "end_time" => '', "about" => '', "mode" => '', "map" => '']);
 
         var_dump($data);
+        var_dump($params);
+        var_dump($query);
 
         Model::insert($query, $params);
     }

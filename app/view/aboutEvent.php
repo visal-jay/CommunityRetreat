@@ -96,7 +96,7 @@
 
 
 
-    .about-textarea{
+    .about-textarea {
         height: 150px;
         width: 800px;
         padding: 12px 20px;
@@ -105,12 +105,13 @@
         border-radius: 6px;
         background: transparent;
         font-size: 16px;
-        resize:none;    
+        resize: none;
         font-size: 1rem;
         font-family: inherit;
         margin-bottom: 0.8rem;
     }
-    .about-textarea:focus{
+
+    .about-textarea:focus {
         box-shadow: 0px 0px 0px 1px #16c79a;
         border-color: #16c79a;
     }
@@ -360,13 +361,13 @@
                 </div>
             <?php } ?>
 
-            <div>
-                <button class="btn btn-solid" onclick="window.location.href='/RegisteredUser/chatApp?new_chat_id=<?= 'EVN' . $_GET['event_id'] ?>'">Chat with us</button>
+            <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #84d1bd; text-align:center">
+                <button class="btn btn-solid margin-md" onclick="window.location.href='/RegisteredUser/chatApp?new_chat_id=<?= 'EVN' . $_GET['event_id'] ?>'">Chat with us</button>
             </div>
 
             <?php if ($moderator || $organization) { ?>
                 <div class="flex-row flex-center content border-round container-size1">
-                    <button class="btn data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
+                    <button class="btn data margin-lg" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
                     <button type="button" class="btn btn-solid bg-red border-red form margin-side-md hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
                     <button name="event_id" value="<?= $_GET["event_id"] ?>" form="update-form" type="submit" class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
                     <?php if ($status == "added") { ?>

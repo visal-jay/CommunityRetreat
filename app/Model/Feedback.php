@@ -8,13 +8,17 @@ class Feedback extends Model{
         Model::insert($query, $params);
     }
 
-    public function getFeedback($event_id, $feedback_id=-1){
+    public function getFeedback($event_id=-1, $feedback_id=-1, $status=NULL){
         if($feedback_id != -1){
-            $query = "SELECT `feedback_id`, `feedback`, `time_stamp`, `rate`, event_feedback.uid, registered_user.username FROM event_feedback LEFT JOIN registered_user ON event_feedback.uid=registered_user.uid WHERE event_id= :event_id AND feedback_id= :feedback_id";
-            $params = ["event_id"=> $event_id, "feedback_id"=> $feedback_id];
+            $query = "SELECT `feedback_id`, `feedback`, `time_stamp`, `rate`, event_feedback.uid, event_feedback.status, registered_user.username FROM event_feedback LEFT JOIN registered_user ON event_feedback.uid=registered_user.uid WHERE feedback_id= :feedback_id";
+            $params = ["feedback_id"=> $feedback_id];
+        }
+        else if($event_id != -1 && $status != NULL){
+            $query = "SELECT `feedback_id`, `feedback`, `time_stamp`, `rate`, event_feedback.uid, event_feedback.status, registered_user.username FROM event_feedback LEFT JOIN registered_user ON event_feedback.uid=registered_user.uid WHERE event_id= :event_id AND status = :status ORDER BY time_stamp DESC";
+            $params = ["event_id"=> $event_id, "status"=> $status];
         }
         else{
-            $query = "SELECT `feedback_id`, `feedback`, `time_stamp`, `rate`, event_feedback.uid, registered_user.username FROM event_feedback LEFT JOIN registered_user ON event_feedback.uid=registered_user.uid WHERE event_id= :event_id ORDER BY time_stamp DESC";
+            $query = "SELECT `feedback_id`, `feedback`, `time_stamp`, `rate`, event_feedback.uid, event_feedback.status, registered_user.username FROM event_feedback LEFT JOIN registered_user ON event_feedback.uid=registered_user.uid WHERE event_id= :event_id ORDER BY time_stamp DESC";
             $params = ["event_id"=> $event_id];
         }
         $result = Model::select($query, $params);
@@ -28,6 +32,19 @@ class Feedback extends Model{
         $result[0]["avg_rate"] = $result[0]["avg_rate"]==NULL?0: $result[0]["avg_rate"];
         $result[0]["total"] = $result[0]["total"]==NULL?0: $result[0]["total"];
         return $result[0];
+    }
+
+    public function statusToggle($feedback_id){
+        $result= $this->getFeedback(-1,$feedback_id);
+        if ($result[0]["status"]== "show"){
+            $query = "UPDATE event_feedback SET status='hide' WHERE feedback_id= :feedback_id";
+        }
+        else {
+            $query = "UPDATE event_feedback SET status='show' WHERE feedback_id= :feedback_id";
+        }
+        
+        $params = ["feedback_id" => $feedback_id];
+        Model::insert($query, $params);
     }
 
 }

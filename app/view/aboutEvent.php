@@ -168,6 +168,9 @@
         border-radius: 8px;
     }
 
+    
+
+ 
     @media screen and (max-width:800px) {
         .progress {
             width: 75%;
@@ -218,6 +221,7 @@
         .flex-row-to-col {
             flex-direction: column;
         }
+        
 
     }
 </style>
@@ -356,7 +360,10 @@
 
                         <div class="volunteers-progress-bar"></div>
                     </div>
-                    <button class="btn clr-green margin-md"><i class="fas fa-user-friends"></i>&nbsp;I want to volunteer</button>
+                    <div id="volunteer-btn">
+                            <button class="btn clr-green margin-md"  onclick="togglePopup('volunteer-form'); blur_background('background');stillBackground('id1')"><i class="fas fa-user-friends" ></i>&nbsp;I want to volunteer</button>  
+                    </div>
+                    
                 </div>
             <?php } ?>
 
@@ -395,6 +402,51 @@
                 <h2>Event Published!</h2>
             </div>
         </div>
+    </div>
+    <div class="popup" id="volunteer-form">
+        <div class="content">
+            <div>
+                <h3>What are the days you would like to volunteer ?</h3>
+            </div>
+            <form action = "/Volunteer/volunteerEvent?event_id=<?= $_GET["event_id"] ?>" method="post">
+                <button type="button"class="btn-icon btn-close" onclick="togglePopup('volunteer-form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
+                <?php
+                    $event_days = [] ;
+
+                    $startDate = new DateTime($start_date);
+                    $interval = new DateInterval('P1D');
+                    $realEnd = new DateTime($end_date);
+                    $realEnd->add($interval);
+                  
+                    
+                    if($start_date == $end_date){
+                       
+                        echo "<div class='flex-row flex-center'><h3>".$start_date."</h3>
+                        <input type='checkbox'  name='volunteer_date[]' value='$start_date' checked='checked' disabled>
+                        </div> ";
+
+                    }
+                    else{
+                       
+                        $period = new DatePeriod( $startDate , $interval, $realEnd);
+                        foreach($period as $date) {                 
+                            $event_days = $date->format('Y-m-d'); 
+                            echo "<div class='flex-row flex-center'><h3>".$event_days."</h3>
+                            <input type='checkbox'  name='volunteer_date[]' value='$event_days'>
+                            </div>";
+                        }
+                    }
+                    
+                    
+                  
+                   
+                  
+                ?>
+                <button class="btn btn-solid margin-md" type="submit" id="volunteer-btn" onClick="swithtoUnvolunteer()" >Volunteer</button>
+            </form>
+           
+        </div>
+
     </div>
 
     <div class="popup" id="form">
@@ -609,6 +661,8 @@
         map.setCenter(myLatlng);
         map.setZoom(15);
     }
+
+  
 </script>
 
 </html>

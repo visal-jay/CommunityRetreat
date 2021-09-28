@@ -138,6 +138,4 @@ class EventController
         View::render("eventPage",$event_details,$user_roles);
     }
 
-
-            
 }

@@ -34,6 +34,17 @@ class Volunteer extends Model{
        return $result; 
     }
 
+
+    public function addVolunteerDetails($event_id,$volunteer_dates){
+
+        foreach($volunteer_dates as $volunteer_date){
+            
+            $query ='INSERT INTO `volunteer`(`uid`,`event_id`,`volunteer_date`) VALUES (:uid,:event_id,:volunteer_date)';
+            $params = ['uid' => $_SESSION['user']['uid'] , 'event_id' => $event_id , 'volunteer_date' => $volunteer_date ];
+            Model::insert($query,$params);
+        }
+
+
     public function getReport($data){
         $query="SELECT COUNT(event_id) as volunteer_sum ,date_format(date,'%x-%m-%d') as day FROM volunteer WHERE event_id = :event_id GROUP BY day ORDER BY day ASC";
         $params=["event_id"=>$data["event_id"]];
@@ -43,5 +54,6 @@ class Volunteer extends Model{
             return false;
         else
             return $result;
+
     }
 }

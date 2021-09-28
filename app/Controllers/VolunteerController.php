@@ -59,6 +59,7 @@ class VolunteerController{
     {
         Controller::validateForm([], ["url", "event_id"]);
         Controller::accessCheck(["organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
+        
         $volunteer = new Volunteer;
         $data["volunteers"] = $volunteer->getVolunteerDetails($_GET["event_id"]);
         $data["volunteer_graph"] = json_encode($volunteer->getReport(["event_id" => $_GET["event_id"]]));

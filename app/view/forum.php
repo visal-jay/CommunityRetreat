@@ -296,7 +296,7 @@
 
                     <div class="form-item">
                         <label>Announcement</label>
-                        <textarea name="announcement" class="announcement-textarea" placeholder="Enter announcement" id="edit-announcement"></textarea>
+                        <textarea name="announcement" class="announcement-textarea" placeholder="Enter announcement" id="edit-announcement" ></textarea>
                     </div>
 
                     <button name="announcement_id" class="btn btn-solid margin-md" type="submit" id="edit-announcement-id">Save</button>

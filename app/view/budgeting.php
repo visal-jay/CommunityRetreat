@@ -158,8 +158,7 @@
     .amount-field {
         width: 20%;
         text-align: right;
-        display: flex;
-        align-items: center;
+        margin-right: 45px;
     }
 
     .btn-field {
@@ -204,12 +203,6 @@
         .expense-info {
             margin-left: 0;
             margin-right: 0;
-        }
-
-        .budget-card-container {
-            align-items: flex-start;
-            justify-content: left;
-            height: fit-content;
         }
 
         .update-save-btn {
@@ -349,7 +342,7 @@
             <div class="budget-card-container">
                 <!--Display the donation sum from the database-->
                 <p class="details-overflow">Donations</p>
-                <p class="amount-field"><?php echo 'Rs. ' . number_format($donation_sum, 2) ?></p>
+                <div class="amount-field"><p><?php echo 'Rs. ' . number_format($donation_sum, 2) ?></p></div>
                 <div class="flex-row btn-field"></div>
             </div>
 
@@ -473,8 +466,7 @@
         /*Calculate the balance of incomes and expenses*/
         document.getElementById("balance").innerHTML = "<div>Balance :</div><div> Rs. " +
             (parseInt('<?= $income_sum  ?>') - parseInt('<?= $expense_sum ?>')).toString().replace(
-                /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","); +
-        "</div>";
+                /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","); + "uihui" + "</div>";
 
 
         function income_null(id) {

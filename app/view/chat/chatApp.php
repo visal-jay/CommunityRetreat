@@ -126,7 +126,7 @@
         min-width: 80%;
     }
 
-    .active-chat{
+    .active-chat {
         box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 
     }
@@ -156,6 +156,9 @@
     <div style="width: 100%;" class="flex-col flex-center">
         <div class="flex-row flex-center chat-app">
             <div class="chatlist">
+                <div class="chat-user-card flex-row chat-list-empty">
+                    <h2>There are no chats for you</h2>
+                </div>
             </div>
             <div class="chat-preview flex-col flex-center">
                 <img src="/Public/assets/chat-preview.gif" alt="">
@@ -277,7 +280,7 @@
     async function chatList() {
         let parent_container = document.querySelector('.chatlist');
         var chat_body = "";
-        var chat_open=false;
+        var chat_open = false;
         $.ajax({
             url: "/Message/getchatList<?php if (isset($_GET['event_id'])) echo ("?event_id=" . $_GET['event_id']); ?>",
             type: "post", //request type,
@@ -289,13 +292,16 @@
                             chat_list = chat_list.filter((e) => {
                                 return e[0] != usr.uid
                             });
-                            let chat_container=document.getElementById(usr.uid);
+                            let chat_container = document.getElementById(usr.uid);
                             if (chat_container.classList.contains("active-chat"))
-                                chat_open=true;
+                                chat_open = true;
                             chat_container.remove();
                         }
-
                         chat_list.push([usr.uid, usr.time_stamp]);
+
+                        if (chat_list.length != 0) {
+                            document.querySelector(".chat-list-empty").classList.add("hidden");
+                        }
                         let template = `
                         <div class="chat-user-card flex-row ${chat_open==true?'active-chat':''}" id="${usr.uid}" onclick="getChatMessages('${usr.uid}');">
                             <div>
@@ -329,6 +335,7 @@
                 });
             }
         });
+
     }
 
     async function sendMessage() {

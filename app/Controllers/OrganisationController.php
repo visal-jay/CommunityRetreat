@@ -19,7 +19,8 @@ class OrganisationController
     public function addPhoto()
     {
         (new Gallery)->addPhoto([], true);
-        Controller::redirect("/Organisation/gallery");
+        echo json_encode("");
+        //Controller::redirect("/Organisation/gallery");
     }
 
 
@@ -124,7 +125,6 @@ class OrganisationController
         echo json_encode((new Organisation)->getAvailableUserRoles($_POST["name"]));
     }
 
-
     function addUserRole(){
         if (isset($_POST["uid"]) && isset($_POST["role"]) && isset($_GET["event_id"]))
             (new Organisation)->addUserRole($_POST["uid"],$_POST["role"],$_GET["event_id"]);
@@ -137,5 +137,10 @@ class OrganisationController
         Controller::redirect("/Event/view",["page"=>'userroles',"event_id"=>$_GET["event_id"]]);
     }
 
+    function test(){
+        var_dump($_POST);
+        var_dump($_GET);
+        var_dump($_FILES);
+    }
                
 }

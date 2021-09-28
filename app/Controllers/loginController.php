@@ -17,13 +17,13 @@ class LoginController
         $_GET["signupOrg"] = isset($_GET["signupOrg"]) ? true : false;
         $_GET["signupUser"] = $_GET["signupOrg"] == true ? false : true;
 
-        $data=array();
+       
         if(isset($_GET["redirect"]))
-            $data=["redirect"=>$_GET["redirect"]];
+            $_SESSION["redirect"] = $_GET["redirect"];
         else if (isset($_SERVER['HTTP_REFERER']))
-            $data=["redirect"=>$_SERVER['HTTP_REFERER']];
+            $_SESSION["redirect"] = $_SERVER['HTTP_REFERER'];
             
-        View::render("login",$data,$user_roles);
+        View::render("login",[],$user_roles);
     }
 
     /* send key to reset the password */
@@ -85,8 +85,11 @@ class LoginController
         if ($user_details = $user->authenticate($email, $password)) {
             $user_details["username"]=$user->getUsername($user_details["uid"]);
             $_SESSION["user"] = array_intersect_key($user_details, ["uid" => '', "user_type" => '',"username"=>'']);
-            if(isset($_GET["redirect"]))
-                Controller::redirect($_GET["redirect"]);
+            if(isset($_SESSION["redirect"])){
+                $redirect =$_SESSION["redirect"] ;
+                unset($_SESSION["redirect"]);
+                Controller::redirect($redirect);
+            }
             else
                 Controller::redirect("/User/home");
         } 

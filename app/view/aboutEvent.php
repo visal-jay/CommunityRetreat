@@ -389,31 +389,11 @@
             <div>
                 <button class="btn-icon btn-close" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
             </div>
-            <form action="/action_page.php" class="form-container">
-
-                <div class="form-item">
-                    <label>Name</label>
-                    <input type="text" required class="form-ctrl" placeholder="Enter Your Name">
-                </div>
-
-                <div class="form-item">
-                    <label>Address</label>
-                    <input type="text" required class="form-ctrl" placeholder="Enter Your Address">
-                </div>
-
-                <div class="form-item">
-                    <label>Contact Number</label>
-                    <input type="tel" pattern="^[+]?[0-9]{10,12}$" required class="form-ctrl" placeholder="Enter Your Contact Number">
-                </div>
+            <form action="/Donations/pay" class="form-container" method="post">
 
                 <div class="form-item">
                     <label>Amount</label>
-                    <input type="number" min="1000" step="10" required class="form-ctrl" placeholder="Enter The Amount(LKR)">
-                </div>
-
-                <div class="form-item">
-                    <label>Credit card number</label>
-                    <input type="tel" inputmode="numeric" class="form-ctrl" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx">
+                    <input type="number" name="amount" id="amount" min="1000" step="10" required class="form-ctrl" placeholder="Enter The Amount(LKR)">
                 </div>
 
                 <div onload="disableSubmit()">
@@ -421,7 +401,7 @@
                     Terms & Coditions
                 </div>
 
-                <button class="btn btn-solid margin-md" type="submit" id="donate-btn" disabled>Donate</button>
+                <button class="btn btn-solid margin-md" type="submit" id="donate-btn"  onclick="window.location.href=' /Donations/pay?event_id=<?= $_GET['event_id'] ?>'" disabled>Donate</button>
             </form>
         </div>
     </div>

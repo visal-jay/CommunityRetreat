@@ -79,6 +79,14 @@ class DonationsController{
     }
 
     public function pay(){
+
+        
+        $validate=new Validation;
+        if(!$validate->currency($_POST["amount"]))/*find whether amount is valid*/
+             Controller::redirect("/Event/view?page=budget&&event_id=" .$_POST["event_id"],["amountErr"=>"Inavlid amount"]);
+
+        
+        $_SESSION["user"]["payment"]= $_POST["amount"];
         require __DIR__."/../Libararies/stripe-php-master/init.php";
         
         \Stripe\Stripe::setApiKey('sk_test_51JdYJ6JhZDUPzRAXbJg3k221yQ9pgNLhCFYz2ifKf6FPXszolkCJdx6N4tvg5CBvz5bSOVw3OnBZnAV7WFYnR2Ne00yji9wY0R');
@@ -87,17 +95,32 @@ class DonationsController{
 
         $checkout_session = \Stripe\Checkout\Session::create([
             'line_items' => [[
-                'price' => 'price_1JeMF8JhZDUPzRAXf8dXeI5D',
+                'price_data' => [
+                    "currency" => "lkr",
+                    "product_data" => [
+                        "name" => "Donation"
+                    ],
+                    "unit_amount" => $_POST["amount"]
+                ],
                 'quantity' => 1,
+
               ]],
         'payment_method_types' => [
             'card',
         ],
         'mode' => 'payment',
-        'success_url' => $YOUR_DOMAIN . '/success.html',
+        'success_url' => $YOUR_DOMAIN . '/Donations/donationAccept',
         'cancel_url' => $YOUR_DOMAIN . '/cancel.html',
         ]);
 
-        Controller::redirect($checkout_session->url);
+        //Controller::redirect($checkout_session->url);
+        header("Location: $checkout_session->url", true,  302);
+        exit();
+
+    }
+
+    public function donationAccept()
+    {
+        (new Donations)->pay($data);
     }
 }

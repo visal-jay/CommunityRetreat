@@ -161,6 +161,14 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     <td class="right"><b><?php echo 'Rs. '.number_format($income_sum, 2) ?></b></td>
                     <td class="right"><b><?php echo 'Rs. '.number_format($expense_sum, 2) ?></b></td>
                 </tr>
+
+                <tr>
+                    <!--Display the differance of incomes and total of expenses-->
+                    <td><b>Balance</b></td>
+                    <td></td>
+                    <td></td>
+                    <td class="right" id="balance"></td>
+                </tr>
             </table>
         </div>
 
@@ -235,4 +243,11 @@ if(isset($_SESSION ["user"] ["user_type"])){
     var dt = new Date();
     document.getElementById('date-time').innerHTML = dt;
     
+</script>
+
+<script>
+    /*Calculate the balance of incomes and expenses*/
+    document.getElementById("balance").innerHTML = "<div><b>Rs. " +
+            (parseInt('<?= $income_sum  ?>') - parseInt('<?= $expense_sum ?>')).toString().replace(
+                /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","); + "ghvg </b></div>";
 </script>

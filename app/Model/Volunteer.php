@@ -43,6 +43,7 @@ class Volunteer extends Model{
             $params = ['uid' => $_SESSION['user']['uid'] , 'event_id' => $event_id , 'volunteer_date' => $volunteer_date ];
             Model::insert($query,$params);
         }
+    }
 
 
     public function getReport($data){

@@ -66,9 +66,6 @@ td {
     
 }
 
-.volunteer-date-field{
-    
-}
 </style>
 
 <?php 
@@ -179,8 +176,19 @@ var myLineChart = new Chart('myChart', {
             yAxes: [{
                 scaleLabel: {
                     display: true,
-                    labelString: 'volunteers',
+                    labelString: 'Volunteers',
+                    precision: 0,
                 },
+                ticks: {
+                 beginAtZero: true,
+                 userCallback: function(label, index, labels) {
+                     // when the floored value is the same as the value we have a whole number
+                     if (Math.floor(label) === label) {
+                         return label;
+                     }
+
+                 },
+             }
             }],
             xAxes: [{
                 scaleLabel: {

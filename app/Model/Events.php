@@ -11,10 +11,12 @@ class Events extends Model
         else
             $data["map"] = "true";
 
-        $query = "INSERT INTO `event` (`event_name`, `org_uid`, `latlang`, `start_date`,`end_date`,`start_time`,`end_time`, `about`,`mode`) VALUES (:event_name,  :org_uid, IF (STRCMP(:map, 'false')=0 ,NULL,POINT(:latitude ,:longitude)),:start_date,:start_time, :end_time , :about ,:mode)";
+        $query = "INSERT INTO `event` (`event_name`, `org_uid`, `latlang`, `start_date`,`end_date`,`start_time`,`end_time`, `about`,`mode`) VALUES (:event_name,  :org_uid, IF (STRCMP(:map, 'false')=0 ,NULL,POINT(:latitude ,:longitude)),:start_date, :end_date, :start_time, :end_time , :about ,:mode)";
         $params = array_intersect_key($data, ["event_name" => '', "org_uid" => '', "latitude" => '', "longitude" => '', "start_date" => '',"end_date"=>'', "start_time" => '', "end_time" => '', "about" => '', "mode" => '', "map" => '']);
 
         var_dump($data);
+        var_dump($params);
+        var_dump($query);
 
         Model::insert($query, $params);
     }

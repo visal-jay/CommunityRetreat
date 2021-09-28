@@ -388,7 +388,7 @@
                     <button type="button" class="btn btn-solid bg-red border-red form margin-side-md hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
                     <button name="event_id" value="<?= $_GET["event_id"] ?>" form="update-form" type="submit" class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
                     <?php if ($status == "added") { ?>
-                        <input type="text" value="published" form="update-form" class="hidden" id="publish-input">
+                        <input type="text" name="status" value="published" form="update-form" class="hidden" id="publish-input">
                         <button type="button" id="publish-btn" class="btn margin-lg" onclick="publish(); togglePopup('publish'); blur_background('background'); stillBackground('id1')">Publish</button>
                     <?php } ?>
                 </div>

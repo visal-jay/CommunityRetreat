@@ -98,9 +98,9 @@ class EventController
     public function addEvent()
     {
         $validate = new Validation;
-        var_dump($_POST);
+        
         (new Events)->addEvent($_POST);
-        exit();
+        
         Controller::redirect("/Organisation/events");
     }
 

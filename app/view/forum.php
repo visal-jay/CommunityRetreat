@@ -235,6 +235,7 @@
                         <date><?= $announcement["date"] ?></date>
                         <description class="margin-md description"><?= $announcement["announcement"] ?></description>
 
+                        <?php if ($organization || $moderator) { ?>
                         <update class="margin-md">
                             <button class="btn btn-small margin-side-md" onclick="edit(); editForm('<?= $announcement['title'] ?>','<?= $announcement['announcement_id'] ?>'); togglePopup('edit-form'); blur_background('background'); stillBackground('id1');"> <i class="btn-icon far fa-edit margin-side-md"></i>&nbsp;Edit</button>
                             <button class="btn btn-small clr-red border-red " onclick="remove()" required style="font-family:Ubuntu, sans-serif,  FontAwesome"> &#xf2ed; &nbsp;Remove </button>
@@ -247,6 +248,7 @@
                                 <i class="btn-icon fas fa-times clr-red margin-side-md" onclick="cancel()"></i>
                             </div>
                         </update>
+                        <?php } ?>
 
                     </div>
                 </div>

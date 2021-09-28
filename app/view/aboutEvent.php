@@ -173,6 +173,10 @@
             width: 75%;
         }
 
+        .margin-lg{
+            margin: 10px 0px;
+        }
+
         #map {
             position: relative;
             height: 230px;
@@ -230,11 +234,17 @@
                     <div class="date-container">
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width far fa-calendar-alt clr-green margin-side-lg"></i>
-                            <h4 class="head-margin data"><?= $start_date ?></h4>
+                            <h4 class="head-margin data"><?= $start_date ?> - <?= $end_date ?></h4>
                             <?php if ($organization || $moderator) { ?>
-                                <div class="flex-row flex-center">
-                                    <label class="form hidden" for="start_date">Event date</label>
-                                    <input type="date" id="start_date" value="<?= $start_date ?>" name="start_date" class="form form-ctrl margin-side-md hidden" data-placeholder="Event is on?" required></input>
+                                <div class="flex-row-to-col flex-center">
+                                    <div class="flex-col">
+                                        <label class="form hidden" for="start_date">Event starts on</label>
+                                        <input type="date" id="start_date" value="<?= $start_date ?>" name="start_date" class="form form-ctrl margin-side-md hidden" data-placeholder="Event starts on?" required></input>
+                                    </div>
+                                    <div class="flex-col">
+                                        <label class="form hidden" for="end_date">Event ends on</label>
+                                        <input type="date" id="end_date" value="<?= $end_date ?>" name="end_date" class="form form-ctrl margin-side-md hidden" data-placeholder="Event ends on?" required></input>
+                                    </div>
                                 </div>
                             <?php } ?>
                         </div>
@@ -455,6 +465,10 @@
 
         today = yyyy + '-' + mm + '-' + dd;
         document.getElementById("start_date").setAttribute("min", today);
+        document.getElementById("end_date").setAttribute("min", "<?= $start_date ?>");
+        document.getElementById("start_date").addEventListener("change",()=>{
+            document.getElementById("end_date").setAttribute("min",document.getElementById("start_date").value);
+        });
 
 
         function edit() {

@@ -44,7 +44,8 @@ class Volunteer extends Model{
             Model::insert($query,$params);
         }
 
-
+    }
+    
     public function getReport($data){
         $query="SELECT COUNT(event_id) as volunteer_sum ,date_format(date,'%x-%m-%d') as day FROM volunteer WHERE event_id = :event_id GROUP BY day ORDER BY day ASC";
         $params=["event_id"=>$data["event_id"]];

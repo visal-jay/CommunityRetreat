@@ -106,8 +106,7 @@ class EventController
 
     public function updateDetails()
     {
-        Controller::accessCheck(["moderator", "organization", "guest_user","registered_user"], $_POST["event_id"]);
-        var_dump($_POST);
+        Controller::accessCheck(["moderator", "organization", "guest_user","registered_user"], $_GET["event_id"]);
 
         $validate = new Validation;
         foreach ($_POST as $key => $value) {
@@ -115,10 +114,10 @@ class EventController
             if ($_POST[$key] == "" || $_POST[$key] == "NULL")
                 unset($_POST[$key]);
         }
-
+        
         $events = new Events;
-        $events->updateDetails($_POST);
-        Controller::redirect("/Event/view", ["page" => "about", "event_id" => $_POST["event_id"]]);
+        $events->updateDetails(array_merge($_POST,$_GET));
+        Controller::redirect("/Event/view", ["page" => "about", "event_id" => $_GET["event_id"]]);
     }
 
     public function remove()

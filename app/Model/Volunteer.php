@@ -25,6 +25,12 @@ class Volunteer extends Model{
         $params = ["event_id" => $event_id, "volunteer_capacity" => $volunteer_capacity];
         Model::insert($query,$params);
     }
+    public function getVolunteeredDates($event_id){
+        $params = ["uid" => $_SESSION['user']['uid'] , "event_id"=>$event_id];
+        $query = 'SELECT volunteer_date FROM volunteer WHERE uid = :uid AND event_id = :event_id';
+        $result = Model::select($query,$params);
+        return $result;
+    }
 
     public function getVolunteerSum($event_id){
         $query= 'SELECT COUNT(*) as volunteer_sum FROM volunteer WHERE event_id =:event_id';
@@ -35,18 +41,54 @@ class Volunteer extends Model{
     }
 
 
-    public function addVolunteerDetails($event_id,$volunteer_dates){
+    public function addVolunteerDetails($event_id,$volunteer_dates=NULL){
+        
+        $current_volunteered_dates = (new Volunteer)->getVolunteeredDates($event_id);
 
-        foreach($volunteer_dates as $volunteer_date){
-            
-            $query ='INSERT INTO `volunteer`(`uid`,`event_id`,`volunteer_date`) VALUES (:uid,:event_id,:volunteer_date)';
-            $params = ['uid' => $_SESSION['user']['uid'] , 'event_id' => $event_id , 'volunteer_date' => $volunteer_date ];
-            Model::insert($query,$params);
+        
+
+        if($volunteer_dates==NULL){
+            $delete_query = "DELETE FROM  volunteer WHERE uid = :uid AND event_id = :event_id";
+            $delete_params = ['uid' => $_SESSION['user']['uid'] , 'event_id' => $event_id ];
+            Model::insert( $delete_query,$delete_params);
+            return "Unvolunteered from an event";
         }
+
+        else{
+            if(count($current_volunteered_dates)>0){
+                $delete_query = "DELETE FROM  volunteer WHERE uid = :uid AND event_id = :event_id";
+                $delete_params = ['uid' => $_SESSION['user']['uid'] , 'event_id' => $event_id ,];
+                Model::insert( $delete_query,$delete_params);
+                foreach($volunteer_dates as $volunteer_date){
+            
+                    $query='INSERT INTO `volunteer`(`uid`,`event_id`,`volunteer_date`) VALUES (:uid,:event_id,:volunteer_date)';
+                    $params= ['uid' => $_SESSION['user']['uid'] , 'event_id' => $event_id , 'volunteer_date' => $volunteer_date ];
+                    Model::insert($query,$params);
+                }
+                return "volunteered for an event";
+  
+               
+
+
+            }
+            else{
+
+                foreach($volunteer_dates as $volunteer_date){
+            
+                    $query ='INSERT INTO `volunteer`(`uid`,`event_id`,`volunteer_date`) VALUES (:uid,:event_id,:volunteer_date)';
+                    $params = ['uid' => $_SESSION['user']['uid'] , 'event_id' => $event_id , 'volunteer_date' => $volunteer_date ];
+                    Model::insert($query,$params);
+                    
+                }  
+                return "volunteered for an event";
+
+            }
+
+        }
+
+        
     }
 
-    }
-    
     public function getReport($data){
         $query="SELECT COUNT(event_id) as volunteer_sum ,date_format(date,'%x-%m-%d') as day FROM volunteer WHERE event_id = :event_id GROUP BY day ORDER BY day ASC";
         $params=["event_id"=>$data["event_id"]];

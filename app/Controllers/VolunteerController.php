@@ -34,7 +34,9 @@ class VolunteerController{
 
     public function updateVolunteerCapacity()
     { //update volunteering capacity
-        (new UserController)->addActivity("Update volunteer capacity",$_GET['event_id']);
+
+        ( new UserController)->addActivity("Update volunteer capacity",$_GET['event_id']);
+
         $volunteer = new Volunteer;
         $volunteer->updateVolunteerCapacity($_GET["event_id"], $_POST["volunteer_capacity"]);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "volunteers"]);
@@ -47,11 +49,19 @@ class VolunteerController{
     }
 
     public function VolunteerEvent(){
+        if(isset($_POST['volunteer_date'])){
+            Controller::validateForm(["volunteer_date"],["event_id"]);
+            $volunteer_dates = $_POST['volunteer_date'];  
+        }
+        else{
+            $volunteer_dates =[];
+        }
         $volunteer = new Volunteer();
-        $volunteer_dates = $_POST['volunteer_date'];
         $event_id = $_GET['event_id'];
         $volunteer->addVolunteerDetails($event_id,$volunteer_dates);
-        Controller::redirect("/Event/view", ["page" => "about", "event_id" => $event_id ,"volunteered" => 1]);
+        $description = $volunteer->addVolunteerDetails($event_id,$volunteer_dates);
+        (new UserController)->addActivity($description,$event_id);
+        Controller::redirect("/Event/view", ["page" => "about", "event_id" => $event_id ]);
     }
 
 

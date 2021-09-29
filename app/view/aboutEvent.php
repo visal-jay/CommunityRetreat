@@ -431,34 +431,23 @@
             <form action="/Volunteer/volunteerEvent?event_id=<?= $_GET["event_id"] ?>" method="post">
                 <button type="button" class="btn-icon btn-close" onclick="togglePopup('volunteer-form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
                 <?php
-                $event_days = [];
+                    $event_days = [];
 
-                $startDate = new DateTime($start_date);
-                $interval = new DateInterval('P1D');
-                $realEnd = new DateTime($end_date);
-                $realEnd->add($interval);
-
-
-                if ($start_date == $end_date) {
-
-                    echo "<div class='flex-row flex-center'><h3>" . $start_date . "</h3>
-                        <input type='checkbox'  name='volunteer_date[]' value='$start_date' checked='checked' disabled>
-                        </div> ";
-                } else {
-
-                    $period = new DatePeriod($startDate, $interval, $realEnd);
-                    foreach ($period as $date) {
-                        $event_days = $date->format('Y-m-d');
-                        echo "<div class='flex-row flex-center'><h3>" . $event_days . "</h3>
-                            <input type='checkbox'  name='volunteer_date[]' value='$event_days'>
-                            </div>";
+                    $startDate = new DateTime($start_date);
+                    $interval = new DateInterval('P1D');
+                    $realEnd = new DateTime($end_date);
+                    $realEnd->add($interval);
+                  
+                       
+                    $period = new DatePeriod( $startDate , $interval, $realEnd);
+                    foreach($period as $date) {                 
+                        $event_days = $date->format('Y-m-d'); 
+                        echo "<div class='flex-row flex-center'><h3>".$event_days."</h3>
+                        <input type='checkbox'  name='volunteer_date[]' value='$event_days'"; for($i=0;$i<count($volunteer_date);$i++){foreach($volunteer_date[$i] as $volunteered_date){ if($event_days==$volunteered_date){ echo 'checked';}}}; 
+                        echo"></div>";
                     }
-                }
-
-
-
-
-
+   
+                  
                 ?>
                 <button class="btn btn-solid margin-md" type="submit" id="volunteer-btn" onClick="swithtoUnvolunteer()">Volunteer</button>
             </form>
@@ -491,9 +480,9 @@
             </form>
         </div>
     </div>
-
+   
+ 
 </body>
-
 
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>

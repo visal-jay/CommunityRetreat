@@ -29,8 +29,10 @@ class BudgetController
 	public function addIncome(){/*add incomes to the budget*/
 
         Controller::validateForm(["details", "amount", "event_id"], ["url"]);
-        $data=array_merge($_GET, $_POST);
         Controller::accessCheck(["organization","treasurer"]);/*check whether organization or treasurer accessed it.*/
+        //(new UserController)->addActivity("Add Income", $_GET["event_id"]);
+
+        $data=array_merge($_GET, $_POST);
         $validate=new Validation;
         if(!$validate->currency($_POST["amount"]))/*find whether amount is valid*/
              Controller::redirect("/Event/view?page=budget&&event_id=" .$_POST["event_id"],["amountErr"=>"Inavlid amount"]);
@@ -42,8 +44,10 @@ class BudgetController
     public function addExpense(){/*add expenses to the budget*/
 
         Controller::validateForm(["details", "amount", "event_id"], ["url"]);
-        $data=array_merge($_GET, $_POST);    
         Controller::accessCheck(["organization","treasurer"]);/*check whether organization or treasurer accessed it.*/
+        //(new UserController)->addActivity("Add Expense", $_GET["event_id"]);
+
+        $data=array_merge($_GET, $_POST);    
         $validate=new Validation;
         if(!$validate->currency($_POST["amount"]))/*find whether amount is valid*/
              Controller::redirect("/Event/view?page=budget&&event_id=" .$_POST["event_id"],["amountErr"=>"Inavlid amount"]);
@@ -56,6 +60,8 @@ class BudgetController
 
         Controller::validateForm(["details", "amount", "record_id", "event_id"], ["url"]);
         Controller::accessCheck(["organization","treasurer"]);/*check whether organization or treasurer accessed it.*/
+        //(new UserController)->addActivity("Update Budget", $_GET["event_id"]);
+
         $budget = new Budget();   
         $validate=new Validation;
         if(!$validate->currency($_POST["amount"]))/*find whether updated amount is valid*/
@@ -73,6 +79,8 @@ class BudgetController
 
         Controller::validateForm(["record_id", "event_id"], ["url"]);
         Controller::accessCheck(["organization","treasurer"]);/*check whether organization or treasurer accessed it.*/
+        //(new UserController)->addActivity("Delete Budget", $_GET["event_id"]);
+
         $budget = new Budget();
         if (strpos($_POST["record_id"], 'INC') !== false) {
           $budget->deleteIncome($_POST);               
@@ -87,6 +95,7 @@ class BudgetController
     {
         Controller::validateForm([], ["url", "event_id"]);
         Controller::accessCheck(["organization","treasurer"]);/*check whether organization or treasurer accessed it.*/
+
         $budget = new Budget();
         $income_report = $budget->IncomeReportGenerate($_GET["event_id"]);
         $expense_report = $budget->ExpenseReportGenerate($_GET["event_id"]);

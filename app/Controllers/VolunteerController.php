@@ -34,7 +34,9 @@ class VolunteerController{
 
     public function updateVolunteerCapacity()
     { //update volunteering capacity
+
         ( new UserController)->addActivity("Update volunteer capacity",$_GET['event_id']);
+
         $volunteer = new Volunteer;
         $volunteer->updateVolunteerCapacity($_GET["event_id"], $_POST["volunteer_capacity"]);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "volunteers"]);
@@ -64,6 +66,7 @@ class VolunteerController{
     {
         Controller::validateForm([], ["url", "event_id"]);
         Controller::accessCheck(["organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
+        
         $volunteer = new Volunteer;
         $data["volunteers"] = $volunteer->getVolunteerDetails($_GET["event_id"]);
         $data["volunteer_graph"] = json_encode($volunteer->getReport(["event_id" => $_GET["event_id"]]));

@@ -183,7 +183,6 @@
 
     figure:hover .stats {
         display: flex;
-
     }
 
     figure img {

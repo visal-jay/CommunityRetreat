@@ -51,6 +51,7 @@ class Volunteer extends Model{
             $delete_params = ['uid' => $_SESSION['user']['uid'] , 'event_id' => $event_id ,];
             Model::insert( $delete_query,$delete_params);
         }
+
         else{
             if(count($current_volunteered_dates)==0){
   
@@ -80,6 +81,7 @@ class Volunteer extends Model{
 
         
     }
+
     public function getReport($data){
         $query="SELECT COUNT(event_id) as volunteer_sum ,date_format(date,'%x-%m-%d') as day FROM volunteer WHERE event_id = :event_id GROUP BY day ORDER BY day ASC";
         $params=["event_id"=>$data["event_id"]];

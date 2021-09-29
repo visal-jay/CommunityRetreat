@@ -172,15 +172,15 @@
         border-radius: 8px;
     }
 
-    
 
- 
+
+
     @media screen and (max-width:800px) {
         .progress {
             width: 75%;
         }
 
-        .margin-lg{
+        .margin-lg {
             margin: 10px 0px;
         }
 
@@ -225,7 +225,7 @@
         .flex-row-to-col {
             flex-direction: column;
         }
-        
+
 
     }
 </style>
@@ -242,7 +242,7 @@
                     <div class="date-container">
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width far fa-calendar-alt clr-green margin-side-lg"></i>
-                            <h4 class="head-margin data"><?= $start_date ?> - <?= $end_date ?></h4>
+                            <h4 class="head-margin data">Starts on  <?= $start_date ?><br>Ends on  <?= $end_date ?></h4>
                             <?php if ($organization || $moderator) { ?>
                                 <div class="flex-row-to-col flex-center">
                                     <div class="flex-col">
@@ -261,7 +261,7 @@
                     <div class="time-container">
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width far fa-clock clr-green margin-side-lg"></i>
-                            <h4 class="head-margin data"><?= $start_time ?></h4>
+                            <h4 class="head-margin data">At  <?= $start_time ?></h4>
                             <?php if ($organization || $moderator) { ?>
                                 <div class="flex-row-to-col flex-center">
                                     <div class="flex-row">
@@ -280,7 +280,7 @@
                     <div class="time-container">
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width fas fa-hourglass-start clr-green margin-side-lg"></i>
-                            <h4 class="head-margin"><?= $duration ?></h4>
+                            <h4 class="head-margin">Duration  <?= $duration ?></h4>
                         </div>
                     </div>
 
@@ -365,9 +365,9 @@
                         <div class="volunteers-progress-bar"></div>
                     </div>
                     <div id="volunteer-btn">
-                            <button class="btn clr-green margin-md"  onclick="togglePopup('volunteer-form'); blur_background('background');stillBackground('id1')"><i class="fas fa-user-friends" ></i>&nbsp;I want to volunteer</button>  
+                        <button class="btn clr-green margin-md" onclick="togglePopup('volunteer-form'); blur_background('background');stillBackground('id1')"><i class="fas fa-user-friends"></i>&nbsp;I want to volunteer</button>
                     </div>
-                    
+
                 </div>
             <?php } ?>
 
@@ -384,7 +384,9 @@
 
             <div class="flex-row flex-center margin-lg">
                 <div class="margin-md">
-                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>     </div>
+                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-show-count="false">Tweet</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
                 <div class="margin-md" style="margin-bottom: 12px;">
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                     <div id="fb-root"></div>
@@ -395,7 +397,8 @@
 
 
             </div>
-            <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #84d1bd; text-align:center">
+            <div class="flex-col flex-center content border-round container-size1 margin-md" style="text-align:center">
+                <img src="/Public/assets/chat.gif" alt="">
                 <button class="btn btn-solid margin-md" onclick="window.location.href='/RegisteredUser/chatApp?new_chat_id=<?= 'EVN' . $_GET['event_id'] ?>'">Chat with us</button>
             </div>
 
@@ -425,43 +428,41 @@
             <div>
                 <h3>What are the days you would like to volunteer ?</h3>
             </div>
-            <form action = "/Volunteer/volunteerEvent?event_id=<?= $_GET["event_id"] ?>" method="post">
-                <button type="button"class="btn-icon btn-close" onclick="togglePopup('volunteer-form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
+            <form action="/Volunteer/volunteerEvent?event_id=<?= $_GET["event_id"] ?>" method="post">
+                <button type="button" class="btn-icon btn-close" onclick="togglePopup('volunteer-form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
                 <?php
-                    $event_days = [] ;
+                $event_days = [];
 
-                    $startDate = new DateTime($start_date);
-                    $interval = new DateInterval('P1D');
-                    $realEnd = new DateTime($end_date);
-                    $realEnd->add($interval);
-                  
-                    
-                    if($start_date == $end_date){
-                       
-                        echo "<div class='flex-row flex-center'><h3>".$start_date."</h3>
+                $startDate = new DateTime($start_date);
+                $interval = new DateInterval('P1D');
+                $realEnd = new DateTime($end_date);
+                $realEnd->add($interval);
+
+
+                if ($start_date == $end_date) {
+
+                    echo "<div class='flex-row flex-center'><h3>" . $start_date . "</h3>
                         <input type='checkbox'  name='volunteer_date[]' value='$start_date' checked='checked' disabled>
                         </div> ";
+                } else {
 
-                    }
-                    else{
-                       
-                        $period = new DatePeriod( $startDate , $interval, $realEnd);
-                        foreach($period as $date) {                 
-                            $event_days = $date->format('Y-m-d'); 
-                            echo "<div class='flex-row flex-center'><h3>".$event_days."</h3>
+                    $period = new DatePeriod($startDate, $interval, $realEnd);
+                    foreach ($period as $date) {
+                        $event_days = $date->format('Y-m-d');
+                        echo "<div class='flex-row flex-center'><h3>" . $event_days . "</h3>
                             <input type='checkbox'  name='volunteer_date[]' value='$event_days'>
                             </div>";
-                        }
                     }
-                    
-                    
-                  
-                   
-                  
+                }
+
+
+
+
+
                 ?>
-                <button class="btn btn-solid margin-md" type="submit" id="volunteer-btn" onClick="swithtoUnvolunteer()" >Volunteer</button>
+                <button class="btn btn-solid margin-md" type="submit" id="volunteer-btn" onClick="swithtoUnvolunteer()">Volunteer</button>
             </form>
-           
+
         </div>
 
     </div>
@@ -486,7 +487,7 @@
                     Terms & Coditions
                 </div>
 
-                <button class="btn btn-solid margin-md" type="submit" id="donate-btn"  onclick="window.location.href=' /Donations/pay?event_id=<?= $_GET['event_id'] ?>'" disabled>Donate</button>
+                <button class="btn btn-solid margin-md" type="submit" id="donate-btn" onclick="window.location.href=' /Donations/pay?event_id=<?= $_GET['event_id'] ?>'" disabled>Donate</button>
             </form>
         </div>
     </div>
@@ -515,8 +516,8 @@
         today = yyyy + '-' + mm + '-' + dd;
         document.getElementById("start_date").setAttribute("min", today);
         document.getElementById("end_date").setAttribute("min", "<?= $start_date ?>");
-        document.getElementById("start_date").addEventListener("change",()=>{
-            document.getElementById("end_date").setAttribute("min",document.getElementById("start_date").value);
+        document.getElementById("start_date").addEventListener("change", () => {
+            document.getElementById("end_date").setAttribute("min", document.getElementById("start_date").value);
         });
 
 
@@ -678,8 +679,6 @@
         map.setCenter(myLatlng);
         map.setZoom(15);
     }
-
-  
 </script>
 
 </html>

@@ -84,8 +84,7 @@ class EventController
 
     public function timeline($event_details)
     {
-        $user_roles = Controller::accessCheck(["moderator", "organization"]);
-        View::render("eventPage", $event_details, $user_roles);
+        (new WorkTimelineController)->view($event_details);
     }
 
     public function forum($event_details)

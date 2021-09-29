@@ -2,9 +2,6 @@
 
 class DonationsController{
     public function view($event_details){
-       
-        
-
         /*view the donations in the UI by sending the data from backend*/
 
         Controller::validateForm([], ["url", "event_id", "page"]);
@@ -25,6 +22,8 @@ class DonationsController{
 
         Controller::validateForm([], ["url", "event_id"]);
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
+        //(new UserController)->addActivity("Disable donations", $_GET["event_id"]);
+
         $donation = new Donations;
         $donation->disableDonation($_GET["event_id"]);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "donations"]);/*redirect to event page after disabling donation.*/
@@ -35,6 +34,8 @@ class DonationsController{
 
         Controller::validateForm([], ["url", "event_id"]);
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
+        //(new UserController)->addActivity("Enable donations", $_GET["event_id"]);
+
         $donation = new Donations;
         $donation = new Donations;
         $donation->enableDonation($_GET["event_id"]);
@@ -46,6 +47,8 @@ class DonationsController{
 
         Controller::validateForm(["donation_capacity"], ["url", "event_id"]);
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
+        //(new UserController)->addActivity("Update donation capacity", $_GET["event_id"]);
+
         $donation = new Donations;
         $donation->updateDonationCapacity($_GET["event_id"], $_POST["donation_capacity"]);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "donations"]);/*redirect to event page after updating donation capacity.*/
@@ -55,6 +58,7 @@ class DonationsController{
     {
         Controller::validateForm([], ["url", "event_id"]);
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
+        
         $donation = new Donations;
         $data["donations"] = $donation->donationReportGenerate($_GET["event_id"]);
         $data["donations_graph"] = json_encode($donation->getReport(["event_id" => $_GET["event_id"]]));
@@ -65,6 +69,8 @@ class DonationsController{
     public function donationRefund(){/*change the status in database when donations are refunded*/
 
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
+        //(new UserController)->addActivity("Redund Donations", $_GET["event_id"]);
+
         $donation = new Donations;
         $donation->donationRefund($_GET["event_id"]);
                
@@ -73,6 +79,8 @@ class DonationsController{
     public function donationCredit(){/*change the status in database when donations are credited to organizations account*/
 
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
+        //(new UserController)->addActivity("Credit Donations", $_GET["event_id"]);
+
         $donation = new Donations;
         $donation->donationCredit($_GET["event_id"]);
         
@@ -80,6 +88,9 @@ class DonationsController{
 
     public function pay(){
 
+        Controller::validateForm(["donation_capacity"], ["url", "event_id"]);
+        Controller::accessCheck(["registered_user"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
+        //(new UserController)->addActivity("Donate", $_GET["event_id"]);
         
         $validate=new Validation;
         if(!$validate->currency($_POST["amount"]))/*find whether amount is valid*/
@@ -121,6 +132,6 @@ class DonationsController{
 
     public function donationAccept()
     {
-        (new Donations)->pay($data);
+        (new DonationsController)->pay();
     }
 }

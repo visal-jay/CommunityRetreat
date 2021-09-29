@@ -279,9 +279,8 @@
 
             <div>
                 <span class="heading margin-md">Feedbacks</span>
-                <div class="flex-col flex-center" style="width: 100%;">
+                <div class="flex-col flex-center" style="min-height:200px; width: 100%;">
                     <?php foreach ($feedbacks as $feedback) { ?>
-
                         <div class="card-container margin-md <?php if ($feedback["status"] == 'hide') echo 'opacity-reduce' ?>">
                             <div class="flex-col flex-center margin-md event-card-details">
                                 <h3 class="margin-md"><?= $feedback["username"] ?></h3>
@@ -296,13 +295,15 @@
                                     } ?>
                                 </div>
                                 <description class="margin-md"><?= $feedback["feedback"] ?></description>
-                                <button class="btn flex-col margin-md" onclick="window.location.href='/Feedback/statusToggle?event_id=<?= $_GET['event_id'] ?>&&feedback_id=<?= $feedback['feedback_id'] ?>'">
-                                    <?php if ($feedback["status"] == 'show') { ?>
-                                        <i class="far fa-eye-slash"></i>
-                                    <? } else { ?>
-                                        <i class="far fa-eye"></i>
-                                    <? } ?>
-                                </button>
+                                <?php if ($organization || $moderator) { ?>
+                                    <button class="btn flex-col margin-md" onclick="window.location.href='/Feedback/statusToggle?event_id=<?= $_GET['event_id'] ?>&&feedback_id=<?= $feedback['feedback_id'] ?>'">
+                                        <?php if ($feedback["status"] == 'show') { ?>
+                                            <i class="far fa-eye-slash"></i>
+                                        <? } else { ?>
+                                            <i class="far fa-eye"></i>
+                                        <? } ?>
+                                    </button>
+                                <?php } ?>
                             </div>
                         </div>
 

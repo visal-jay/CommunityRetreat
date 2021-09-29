@@ -7,6 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/Public/assets/newstyles.css">
+    <link rel="me" href="https://twitter.com/twitterdev">
+    <link rel="canonical" href="/web/tweet-button">
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -162,6 +165,7 @@
     }
 
     #map {
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
         position: relative;
         height: 350px;
         width: 600px;
@@ -378,6 +382,19 @@
                 </div>
             <?php } ?>
 
+            <div class="flex-row flex-center margin-lg">
+                <div class="margin-md">
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>     </div>
+                <div class="margin-md" style="margin-bottom: 12px;">
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <div id="fb-root"></div>
+                    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v12.0" nonce="xqUnsUm7"></script>
+
+                    <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+                </div>
+
+
+            </div>
             <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #84d1bd; text-align:center">
                 <button class="btn btn-solid margin-md" onclick="window.location.href='/RegisteredUser/chatApp?new_chat_id=<?= 'EVN' . $_GET['event_id'] ?>'">Chat with us</button>
             </div>
@@ -388,7 +405,7 @@
                     <button type="button" class="btn btn-solid bg-red border-red form margin-side-md hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
                     <button name="event_id" value="<?= $_GET["event_id"] ?>" form="update-form" type="submit" class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
                     <?php if ($status == "added") { ?>
-                        <input type="text" value="published" form="update-form" class="hidden" id="publish-input">
+                        <input type="text" name="status" value="published" form="update-form" class="hidden" id="publish-input">
                         <button type="button" id="publish-btn" class="btn margin-lg" onclick="publish(); togglePopup('publish'); blur_background('background'); stillBackground('id1')">Publish</button>
                     <?php } ?>
                 </div>

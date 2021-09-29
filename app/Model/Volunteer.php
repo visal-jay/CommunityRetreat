@@ -42,38 +42,45 @@ class Volunteer extends Model{
 
 
     public function addVolunteerDetails($event_id,$volunteer_dates=NULL){
-
+        
         $current_volunteered_dates = (new Volunteer)->getVolunteeredDates($event_id);
+
         
 
         if($volunteer_dates==NULL){
             $delete_query = "DELETE FROM  volunteer WHERE uid = :uid AND event_id = :event_id";
-            $delete_params = ['uid' => $_SESSION['user']['uid'] , 'event_id' => $event_id ,];
+            $delete_params = ['uid' => $_SESSION['user']['uid'] , 'event_id' => $event_id ];
             Model::insert( $delete_query,$delete_params);
+            return "Unvolunteered from an event";
         }
 
         else{
-            if(count($current_volunteered_dates)==0){
-  
-                foreach($volunteer_dates as $volunteer_date){
-            
-                    $query ='INSERT INTO `volunteer`(`uid`,`event_id`,`volunteer_date`) VALUES (:uid,:event_id,:volunteer_date)';
-                    $params = ['uid' => $_SESSION['user']['uid'] , 'event_id' => $event_id , 'volunteer_date' => $volunteer_date ];
-                    Model::insert($query,$params);
-                }
-
-
-            }
-            else{
+            if(count($current_volunteered_dates)>0){
                 $delete_query = "DELETE FROM  volunteer WHERE uid = :uid AND event_id = :event_id";
                 $delete_params = ['uid' => $_SESSION['user']['uid'] , 'event_id' => $event_id ,];
                 Model::insert( $delete_query,$delete_params);
                 foreach($volunteer_dates as $volunteer_date){
             
+                    $query='INSERT INTO `volunteer`(`uid`,`event_id`,`volunteer_date`) VALUES (:uid,:event_id,:volunteer_date)';
+                    $params= ['uid' => $_SESSION['user']['uid'] , 'event_id' => $event_id , 'volunteer_date' => $volunteer_date ];
+                    Model::insert($query,$params);
+                }
+                return "volunteered for an event";
+  
+               
+
+
+            }
+            else{
+
+                foreach($volunteer_dates as $volunteer_date){
+            
                     $query ='INSERT INTO `volunteer`(`uid`,`event_id`,`volunteer_date`) VALUES (:uid,:event_id,:volunteer_date)';
                     $params = ['uid' => $_SESSION['user']['uid'] , 'event_id' => $event_id , 'volunteer_date' => $volunteer_date ];
                     Model::insert($query,$params);
-                }
+                    
+                }  
+                return "volunteered for an event";
 
             }
 

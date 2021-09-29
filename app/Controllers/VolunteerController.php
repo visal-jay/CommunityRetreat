@@ -50,6 +50,7 @@ class VolunteerController{
 
     public function VolunteerEvent(){
         if(isset($_POST['volunteer_date'])){
+            Controller::validateForm(["volunteer_date"],["event_id"]);
             $volunteer_dates = $_POST['volunteer_date'];  
         }
         else{
@@ -58,6 +59,8 @@ class VolunteerController{
         $volunteer = new Volunteer();
         $event_id = $_GET['event_id'];
         $volunteer->addVolunteerDetails($event_id,$volunteer_dates);
+        $description = $volunteer->addVolunteerDetails($event_id,$volunteer_dates);
+        (new UserController)->addActivity($description,$event_id);
         Controller::redirect("/Event/view", ["page" => "about", "event_id" => $event_id ]);
     }
 

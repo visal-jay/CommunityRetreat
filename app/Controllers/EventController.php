@@ -15,15 +15,14 @@ class EventController
     public function about()
     {
         $user_roles = Controller::accessCheck(["moderator", "organization", "guest_user", "registered_user"], $_GET["event_id"]);
-        $register_user = new RegisteredUser;
         $event = new Events;
-        $organisation = new Organisation;
         if (!isset($_SESSION))
             session_start();
         if ($event_details = $event->getDetails($_GET["event_id"])) {
             $data = $event_details;
             $data["volunteered"] = $data["volunteered"] == "" ? "0" :  $data["volunteered"];
             $data["donations"] = $data["donations"] == "" ? "0" :  $data["donations"];
+            $data["volunteer_date"] = (new Volunteer)->getVolunteeredDates($_GET["event_id"]);
             View::render("eventPage", $data, $user_roles);
         } else
             View::render("home");

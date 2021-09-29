@@ -72,7 +72,7 @@ class UserController{
         Controller::validateForm(["username"]);
         $controller=$this->getController();
         $user = new $controller();
-        $User = new User();
+        $User = new UserController();
         $uid=$_SESSION["user"]["uid"];
         $user->changeUsername($uid,$_POST['username']);
         $User->addActivity("Username Changed",-1);

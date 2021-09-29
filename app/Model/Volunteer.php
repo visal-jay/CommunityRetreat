@@ -42,7 +42,7 @@ class Volunteer extends Model{
 
 
     public function addVolunteerDetails($event_id,$volunteer_dates=NULL){
-
+        
         $current_volunteered_dates = (new Volunteer)->getVolunteeredDates($event_id);
         
 

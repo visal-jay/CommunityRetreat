@@ -5,7 +5,7 @@ class OrganisationController
 {
     public function view($org_id = '')
     {
-        $user_roles=Controller::accessCheck(["organization"]);
+        $user_roles=Controller::accessCheck(["organization","registered_user","guest_user"]);
         $org_id = isset($_GET["org_id"]) ? $_GET["org_id"] : $org_id;
         $data = (new Organisation)->getDetails($org_id);
         View::render("organisationDashboard", $data,$user_roles);
@@ -18,6 +18,7 @@ class OrganisationController
 
     public function addPhoto()
     {
+        (new UserController)->addActivity("Add photo to gallery");
         (new Gallery)->addPhoto([], true);
         echo json_encode("");
         //Controller::redirect("/Organisation/gallery");
@@ -43,6 +44,7 @@ class OrganisationController
 
     public function deletePhoto()
     {
+        (new UserController)->addActivity("Delete photo from gallery");
         (new Gallery)->deletePhoto(["image" => $_POST["photo"]], true);
         Controller::redirect("/Organisation/gallery");
     }
@@ -51,6 +53,7 @@ class OrganisationController
     {
         Controller::validateForm(["about_us", "longitude","latitude"]);
         Controller::accessCheck(["organization"]);
+        (new UserController)->addActivity("Dahsboard details updated");
         (new Organisation)->updateDetails($_SESSION["user"]["uid"], $_POST);
         Controller::redirect("/Organisation/dashboard");
     }
@@ -110,6 +113,9 @@ class OrganisationController
     
     public function updateAccountNumber(){
         Controller::validateForm(["bank_name","account_number"]);
+        Controller::accessCheck(["organization"]);
+        (new UserController)->addActivity("Bank details updated");
+        
         $organisation_admin = new Organisation();
         $validate =new Validation();
         $uid=$_SESSION["user"]["uid"];
@@ -126,14 +132,21 @@ class OrganisationController
     }
 
     function addUserRole(){
-        if (isset($_POST["uid"]) && isset($_POST["role"]) && isset($_GET["event_id"]))
-            (new Organisation)->addUserRole($_POST["uid"],$_POST["role"],$_GET["event_id"]);
+        Controller::validateForm(["role","uid"],["event_id"]);
+        Controller::accessCheck(["organization"]);
+        (new UserController)->addActivity("User role added",$_GET["event_id"]);
+
+    
+        (new Organisation)->addUserRole($_POST["uid"],$_POST["role"],$_GET["event_id"]);
         Controller::redirect("/Event/view",["page"=>'userroles',"event_id"=>$_GET["event_id"]]);
     }
 
     function deleteUserRole(){
-        if (isset($_POST["uid"]) && isset($_POST["role"]) && isset($_GET["event_id"]))
-            (new Organisation)->deleteUserRole($_POST["uid"],$_POST["role"],$_GET["event_id"]);
+        Controller::validateForm(["role","uid"],["event_id"]);
+        Controller::accessCheck(["organization"]);
+        (new UserController)->addActivity("User role deleted",$_GET["event_id"]);
+
+        (new Organisation)->deleteUserRole($_POST["uid"],$_POST["role"],$_GET["event_id"]);
         Controller::redirect("/Event/view",["page"=>'userroles',"event_id"=>$_GET["event_id"]]);
     }
 

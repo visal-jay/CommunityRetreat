@@ -120,14 +120,15 @@
         color: black;
         opacity: 1;
     }
-    .announcement-textarea{
+
+    .announcement-textarea {
         min-height: 400px;
         padding: 12px 20px;
         border: 2px solid #ccc;
         border-radius: 4px;
         background-color: #f8f8f8;
         font-size: 16px;
-        resize:none;
+        resize: none;
         padding: 0.3em 0.5em;
         border: 1px solid #ccc;
         font-size: 1rem;
@@ -136,7 +137,8 @@
         font-family: inherit;
         margin-bottom: 0.8rem;
     }
-    .announcement-textarea:focus{
+
+    .announcement-textarea:focus {
         box-shadow: 0px 0px 0px 1px #16c79a;
         border-color: #16c79a;
     }
@@ -153,11 +155,11 @@
         min-height: 300px !important;
     }
 
-    date{
+    date {
         font-size: 0.8rem;
     }
 
-    
+
     table {
         width: 100%;
         table-layout: fixed;
@@ -175,6 +177,7 @@
     td {
         border: 1px solid black;
     }
+
     @media screen and (max-width:800px) {
         .ck-editor__editable_inline {
             min-height: 200px !important;
@@ -224,7 +227,7 @@
     <div id="background" style="width: 100%;">
         <?php if ($organization || $moderator) { ?>
             <div class="flex-col flex-center margin-side-lg">
-                <button class="btn btn-solid btn-close margin-lg" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')">Add Announcement &nbsp; <i class="fas fa-plus"></i></button>
+                <button class="btn btn-solid btn-close margin-lg" onclick="togglePopup('form-div'); blur_background('background'); stillBackground('id1')">Add Announcement &nbsp; <i class="fas fa-plus"></i></button>
             </div>
         <?php } ?>
         <div class="flex-col flex-center" style="width: 100%;">
@@ -236,18 +239,18 @@
                         <description class="margin-md description"><?= $announcement["announcement"] ?></description>
 
                         <?php if ($organization || $moderator) { ?>
-                        <update class="margin-md">
-                            <button class="btn btn-small margin-side-md" onclick="edit(); editForm('<?= $announcement['title'] ?>','<?= $announcement['announcement_id'] ?>'); togglePopup('edit-form'); blur_background('background'); stillBackground('id1');"> <i class="btn-icon far fa-edit margin-side-md"></i>&nbsp;Edit</button>
-                            <button class="btn btn-small clr-red border-red " onclick="remove()" required style="font-family:Ubuntu, sans-serif,  FontAwesome"> &#xf2ed; &nbsp;Remove </button>
-                            <div class="flex-row flex-space" style="display: none;">
-                                <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
-                                <form method="post" action="/Forum/deleteAnnouncement?event_id=<?= $_GET["event_id"] ?>" class="flex-row flex-center">
-                                    <input name="announcement_id" class="hidden" value="<?= $announcement["announcement_id"] ?>">
-                                    <button class="btn-icon flex-row flex-center"><i type="submit" class="fas fa-check clr-green margin-side-md"></i>&nbsp;</button>
-                                </form>
-                                <i class="btn-icon fas fa-times clr-red margin-side-md" onclick="cancel()"></i>
-                            </div>
-                        </update>
+                            <update class="margin-md">
+                                <button class="btn btn-small margin-side-md" onclick="edit(); editForm('<?= $announcement['title'] ?>','<?= $announcement['announcement_id'] ?>'); togglePopup('edit-div'); blur_background('background'); stillBackground('id1');"> <i class="btn-icon far fa-edit margin-side-md"></i>&nbsp;Edit</button>
+                                <button class="btn btn-small clr-red border-red " onclick="remove()" required style="font-family:Ubuntu, sans-serif,  FontAwesome"> &#xf2ed; &nbsp;Remove </button>
+                                <div class="flex-row flex-space" style="display: none;">
+                                    <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
+                                    <form method="post" action="/Forum/deleteAnnouncement?event_id=<?= $_GET["event_id"] ?>" class="flex-row flex-center">
+                                        <input name="announcement_id" class="hidden" value="<?= $announcement["announcement_id"] ?>">
+                                        <button class="btn-icon flex-row flex-center"><i type="submit" class="fas fa-check clr-green margin-side-md"></i>&nbsp;</button>
+                                    </form>
+                                    <i class="btn-icon fas fa-times clr-red margin-side-md" onclick="cancel()"></i>
+                                </div>
+                            </update>
                         <?php } ?>
 
                     </div>
@@ -257,9 +260,9 @@
     </div>
 
     <?php if ($organization || $moderator) { ?>
-        <div class="popup" id="form">
+        <div class="popup" id="form-div">
             <div class="content">
-                <form action="/Forum/addAnnouncement?event_id=<?= $_GET["event_id"] ?>" method="post" class="form-container">
+                <form action="/Forum/addAnnouncement?event_id=<?= $_GET["event_id"] ?>" method="post" id="add-form" class="form-container">
                     <div>
                         <h3 class="margin-md">New Announcement</h3>
                     </div>
@@ -277,7 +280,7 @@
                     <button class="btn btn-solid margin-md" type="submit">Post</button>
 
                     <div>
-                        <button class="btn-icon btn-close" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
+                        <button class="btn-icon btn-close" onclick="togglePopup('form-div'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
                     </div>
                 </form>
             </div>
@@ -285,9 +288,9 @@
     <?php } ?>
 
     <?php if ($organization || $moderator) { ?>
-        <div class="popup" id="edit-form">
+        <div class="popup" id="edit-div">
             <div class="content">
-                <form action="/Forum/editAnnouncement?event_id=<?= $_GET["event_id"] ?>" method="post" class="form-container">
+                <form action="/Forum/editAnnouncement?event_id=<?= $_GET["event_id"] ?>" method="post" id="update-form" class="form-container">
 
                     <div class="form-item">
                         <label>Title</label>
@@ -296,13 +299,13 @@
 
                     <div class="form-item">
                         <label>Announcement</label>
-                        <textarea name="announcement" class="announcement-textarea" placeholder="Enter announcement" id="edit-announcement" ></textarea>
+                        <textarea name="announcement" class="announcement-textarea" placeholder="Enter announcement" id="edit-announcement"></textarea>
                     </div>
 
                     <button name="announcement_id" class="btn btn-solid margin-md" type="submit" id="edit-announcement-id">Save</button>
 
                     <div>
-                        <button type="button" class="btn-icon btn-close" onclick="togglePopup('edit-form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
+                        <button type="button" class="btn-icon btn-close" onclick="togglePopup('edit-div'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
                     </div>
                 </form>
             </div>
@@ -314,7 +317,8 @@
 </style>
 <script src="/Libararies/ckeditor5-29.2.0/packages/ckeditor5-build-classic/build/ckeditor.js"></script>
 <script>
-    let editor_obj;
+    let editor_obj_update;
+    let editor_obj_add;
     ClassicEditor
         .create(document.querySelector('#editor'), {
             toolbar: {
@@ -353,9 +357,13 @@
                 ]
             }
         })
+        .then(editor => {
+            editor_obj_add = editor;
+        })
         .catch(error => {
             console.log(error);
         });
+
 
     ClassicEditor
         .create(document.querySelector('#edit-announcement'), {
@@ -397,14 +405,37 @@
             height: 600,
         })
         .then(editor => {
-            editor_obj = editor;
+            editor_obj_update = editor;
         })
         .catch(error => {
             console.log(error);
         });
 
-    console.log(editor);
+    document.getElementById("add-form").addEventListener("submit", () => {
+        if (editor_obj_add.getData() == "") {
+            let span = document.createElement("span");
+            document.getElementById("editor").insertAdjacentElement("beforebegin", span);
+            let msg = "Please fill in this field";
+            span.innerHTML = "<i class='fas fa-exclamation-circle'></i> &nbsp" + msg;
+            span.style.color = "red";
+            span.style.fontSize = "0.7rem";
+            input.style.borderColor = "red";
+            event.preventDefault();
+        }
+    });
 
+    document.getElementById("update-form").addEventListener("submit", () => {
+        if (editor_obj_update.getData() == "")
+        let span = document.createElement("span");
+            document.getElementById("edit-announcement").insertAdjacentElement("beforebegin", span);
+            let msg = "Please fill in this field";
+            span.innerHTML = "<i class='fas fa-exclamation-circle'></i> &nbsp" + msg;
+            span.style.color = "red";
+            span.style.fontSize = "0.7rem";
+            input.style.borderColor = "red";
+            event.preventDefault();
+    });
+    
 
     function togglePopup(id) {
         document.getElementById(id).classList.toggle("active");

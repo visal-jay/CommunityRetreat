@@ -229,11 +229,28 @@
                     <h4>Volunteer capacity</h4>
                 </div>
                 <div class="column section">
-                    <div class="data">
-                        <a><?= $volunteer_capacity ?></a>
-                    </div>
-                    <form action="/Volunteer/updateVolunteerCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" id="volunteer-capacity">
-                        <input name="volunteer_capacity" type="number" value="<?= $volunteer_capacity ?>" min="<?= $volunteer_sum ?>" max="10000000" class=" form form-ctrl hidden" />
+                    <table class="data">
+                        <tr>
+                            <td>Event date</td>
+                            <td>Capacity</td>
+                        </tr>
+                        <tbody>
+                            <?php for($i=0;$i<count($volunteer_capacities);$i++){
+                                echo "<tr>";
+                                echo "<td>"; echo $volunteer_capacities[$i]['event_date']; 
+                                echo "</td><td>";  echo $volunteer_capacities[$i]['capacity']; echo "</td>";
+                                echo "</tr>";
+                                
+                            }?>
+                        </tbody>
+                       
+                    </table>
+                    <form action="/Volunteer/updateVolunteerCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" id="volunteer-capacity" class="flex-col flex-center">
+                        
+                        <?php for($i=0;$i<count($volunteer_capacities);$i++){
+                            echo "<label  class='form  hidden'>"; echo $volunteer_capacities[$i]['event_date']; echo "</label>
+                            <input name='"; echo $i; echo"' type='number' value="; echo $volunteer_capacities[$i]['capacity']; echo "  min=' "; $volunteer_sum; echo "' max='10000000' class='form form-ctrl hidden' style='margin: 0.3rem;' />";
+                        }?>
                     </form>
                 </div>
             </div>

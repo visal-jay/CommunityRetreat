@@ -72,10 +72,10 @@ class UserController{
         Controller::validateForm(["username"]);
         $controller=$this->getController();
         $user = new $controller();
-        $User = new User();
+        $User = new UserController();
         $uid=$_SESSION["user"]["uid"];
         $user->changeUsername($uid,$_POST['username']);
-        $this->addActivity("Username Changed",-1);
+        (new UserController)->addActivity("Username Changed",-1);
         Controller::redirect("/$controller/profile");
     }
 
@@ -125,7 +125,12 @@ class UserController{
         $user->insertActivity($activity,$event_id);
 
     }
+    function viewActivityLog(){
+        $user = new User();
+        $activities = $user->getActivity();
+        echo json_encode($activities);
 
+    }
     function checkEmailAvailable(){
         Controller::validateForm(["email"]);
         if((new Validation)->email($_POST["email"]));

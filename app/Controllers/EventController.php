@@ -16,13 +16,15 @@ class EventController
     {
         $user_roles = Controller::accessCheck(["moderator", "organization", "guest_user", "registered_user"], $_GET["event_id"]);
         $event = new Events;
-        $organisation = new Organisation;
+        $volunteer = new Volunteer();
         if (!isset($_SESSION))
             session_start();
         if ($event_details = $event->getDetails($_GET["event_id"])) {
             $data = $event_details;
             $data["volunteered"] = $data["volunteered"] == "" ? "0" :  $data["volunteered"];
             $data["donations"] = $data["donations"] == "" ? "0" :  $data["donations"];
+            $data["volunteer_date"] = $volunteer->getVolunteeredDates($_GET["event_id"]);
+            $data["volunteer_capacity_exceeded"]=$volunteer->checkVolunteerCount($_GET["event_id"],$data['start_date'],$data['end_date']);
             View::render("eventPage", $data, $user_roles);
         } else
             View::render("home");
@@ -33,6 +35,7 @@ class EventController
         (new Gallery)->addPhoto(["event_id" => $_GET["event_id"]]);
         echo json_encode("");
     }
+    
     public function userroles($event_details)
     {
         $user_roles = Controller::accessCheck(["organization"]);
@@ -82,16 +85,12 @@ class EventController
 
     public function timeline($event_details)
     {
-        $user_roles = Controller::accessCheck(["moderator", "organization"]);
-        View::render("eventPage", $event_details, $user_roles);
+        (new WorkTimelineController)->view($event_details);
     }
 
     public function forum($event_details)
     {
-        $user_roles = Controller::accessCheck(["organization", "registered_user", "moderator", "guest_user"], $_GET["event_id"]);
-        $data["announcements"] = (new Announcement)->getAnnouncement($_GET["event_id"]);
-        $data = array_merge($data, $event_details);
-        View::render("eventPage", $data, $user_roles);
+        (new ForumController)->view($event_details);
     }
 
     public function addEvent()

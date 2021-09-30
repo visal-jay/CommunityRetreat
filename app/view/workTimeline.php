@@ -27,6 +27,7 @@
         background-color: #f8f8f8;
         font-size: 16px;
         resize: none;
+        font-family: "Ubuntu", sans-serif;
     }
 
     .timelineconta {
@@ -54,7 +55,7 @@
     }
 
     .rb-container {
-        font-family: "PT Sans", sans-serif;
+        font-family: "Ubuntu", sans-serif;
         width: 50%;
         margin: auto;
         display: block;
@@ -211,7 +212,7 @@
     }
 
     @media screen and (max-width:800px) {
-        
+
         .timeline {
             background: transparent;
             width: 80%;
@@ -241,66 +242,96 @@
             <div class="rightbox">
                 <div class="rb-container">
                     <ul class="rb">
-
-                        <li class="rb-item">
-                            <div class="timestamp">
-                                <h3>3rd May 2020<br> 7:00 PM</h3>
-                            </div>
-                            <div>Chris Serrano posted a photo on your wall.</div>
-
-                        </li>
-
-                        <li class="rb-item">
-                            <div class="timestamp">
-                                <h3>19th May 2020<br> 3:00 PM</h3>
-                            </div>
-                            <div>Mia Redwood commented on your last post.</div>
-
-                        </li>
-
-                        <li class="rb-item">
-                            <div class="timestamp">
-                                <h3>17st June 2020<br> 7:00 PM</h3>
-                            </div>
-                            <div>Lucas McAlister just send you a message.</div>
-
-                        </li>
-
+                        <?php foreach ($tasks as $task) { ?>
+                            <li class="rb-item">
+                                <div class="timestamp">
+                                    <h3><?= $task["start_date"]?><br><?= $task["end_date"]?></h3>
+                                </div>
+                                <div><?= $task["task"]?></div>
+                                <div>
+                                    <update class="margin-md">
+                                        <button class="btn btn-small" onclick="edit(); editForm('<?= $task['start_date'] ?>','<?= $task['end_date'] ?>','<?= $task['task'] ?>' ,'<?= $task['task_id'] ?>'); togglePopup('edit-form'); blur_background('background'); stillBackground('id1');"><i class="btn-icon far fa-edit margin-side-md"></i>Edit</button>
+                                        <button class="btn btn-small"><i class="far fa-check-square"></i>&nbsp;&nbsp;Mark as completed</button>
+                                        <button class="btn btn-small clr-red border-red " onclick="remove()" required style="font-family:Ubuntu, sans-serif,  FontAwesome"> &#xf2ed; &nbsp;Remove </button>
+                                        <div class="flex-row flex-space" style="display: none;">
+                                            <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
+                                            <form method="post" action="/WorkTimeline/deleteTask?event_id=<?= $_GET["event_id"] ?>" class="flex-row flex-center">
+                                                <input name="task_id" class="hidden" value="<?= $task["task_id"] ?>">
+                                                <button class="btn-icon flex-row flex-center"><i type="submit" class="fas fa-check clr-green margin-side-md"></i>&nbsp;</button>
+                                            </form>
+                                            <i class="btn-icon fas fa-times clr-red margin-side-md" onclick="cancel()"></i>
+                                        </div>
+                                    </update>
+                                </div>
+                            </li>
+                        <?php } ?>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="popup" id="form">
-        <div class="content">
-            <div>
-                <h2>New Task</h2>
+    <?php if ($organization || $moderator) { ?>
+        <div class="popup" id="form">
+            <div class="content">
+                <div>
+                    <h2>New Task</h2>
+                </div>
+                <div>
+                    <button class="btn-icon btn-close" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
+                </div>
+                <form action="/WorkTimeline/addTask?event_id=<?= $_GET['event_id'] ?>" method="post" class="form-container">
+
+                    <div class="form-item">
+                        <label>Start Date</label>
+                        <input type="date" name="start_date" class="form form-ctrl" data-placeholder="Task starts on?" required></input>
+                    </div>
+
+                    <div class="form-item">
+                        <label>End Date</label>
+                        <input type="date" name="end_date" class="form form-ctrl" data-placeholder="Task ends on?" required></input>
+                    </div>
+
+                    <div class="form-item">
+                        <label>Task</label>
+                        <textarea name="task" class="form form-ctrl" placeholder="Enter the task" required>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae magni eveniet porro, ipsa mollitia dolores ipsam optio aliquam, debitis voluptatum accusamus cum perferendis, amet facere expedita nostrum laboriosam quas iste!</textarea>
+                    </div>
+
+                    <button class="btn btn-solid margin-md" type="submit">Add Task</button>
+                </form>
             </div>
-            <div>
-                <button class="btn-icon btn-close" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
-            </div>
-            <form action="/action_page.php" class="form-container">
-
-                <div class="form-item">
-                    <label>Date</label>
-                    <input type="date" name="Event date" class="form form-ctrl" data-placeholder="Task starts on?" required></input>
-                </div>
-
-                <div class="form-item">
-                    <label>Time</label>
-                    <input type="time" name="Event time" class="form form-ctrl" data-placeholder="Task starts at?" required></input>
-                </div>
-
-                <div class="form-item">
-                    <label>Task</label>
-                    <textarea name="task" class="form form-ctrl" placeholder="Enter the task" required>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae magni eveniet porro, ipsa mollitia dolores ipsam optio aliquam, debitis voluptatum accusamus cum perferendis, amet facere expedita nostrum laboriosam quas iste!</textarea>
-                </div>
-
-                <button class="btn btn-solid margin-md" type="submit" disabled>Add Task</button>
-            </form>
         </div>
-    </div>
+    <?php } ?>
+
+    <?php if ($organization || $moderator) { ?>
+        <div class="popup" id="edit-form">
+            <div class="content">
+                <form action="/WorkTimeline/editTask?event_id=<?= $_GET["event_id"] ?>" method="post" class="form-container">
+
+                    <div class="form-item">
+                        <label>Start date</label>
+                        <input type="date" class="form-ctrl" placeholder="Change start date" name="start_date" id="edit-start-date" required>
+                    </div>
+
+                    <div class="form-item">
+                        <label>End date</label>
+                        <input type="date" class="form-ctrl" placeholder="Change end date" name="end_date" id="edit-end-date" required>
+                    </div>
+
+                    <div class="form-item">
+                        <label>Task</label>
+                        <textarea name="task" class="task-textarea" placeholder="Change task" id="edit-task"></textarea>
+                    </div>
+
+                    <button name="task_id" class="btn btn-solid margin-md" type="submit" id="edit-task-id">Save</button>
+
+                    <div>
+                        <button type="button" class="btn-icon btn-close" onclick="togglePopup('edit-form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    <?php } ?>
 
 </body>
 
@@ -315,6 +346,36 @@
 
     function stillBackground(id) {
         document.getElementById(id).classList.toggle("still");
+    }
+
+    function edit() {
+        var data = document.getElementsByClassName("data");
+        var form = document.getElementsByClassName("form");
+        for (var i = 0; i < data.length; i++) {
+            data[i].classList.toggle("hidden");
+        }
+        for (var i = 0; i < form.length; i++) {
+            form[i].classList.toggle("hidden");
+        }
+    }
+
+    function editForm(start_date, end_date, task, task_id) {
+        document.getElementById("edit-start-date").value = start_date;
+        document.getElementById("edit-end-date").value = end_date;
+        document.getElementById("edit-task").value = task;
+        document.getElementById("edit-task-id").value = task_id;
+    }
+
+    function remove() {
+        event.target.style.display = "none";
+        event.target.nextElementSibling.style.display = "flex";
+    }
+
+    function cancel() {
+        var cancel = event.target.parentNode;
+        cancel.style.display = "none";
+        cancel.previousElementSibling.style.display = "block";
+
     }
 </script>
 

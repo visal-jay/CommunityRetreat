@@ -13,6 +13,8 @@ class VolunteerController{
         $data["volunteer_sum"] = $volunteer_sum;
         $data["ip"] = exec('ifconfig | grep "inet " | grep -v 127.0.0.1 | cut -d\  -f2');
         $data = array_merge($data, $event_details);
+        $data['volunteer_capacities'] = $volunteer->getVolunteerCapacities($_GET["event_id"]);
+        var_dump($data);
         View::render('eventPage', $data, $user_roles);
     }
     public function disableVolunteer()
@@ -34,7 +36,10 @@ class VolunteerController{
 
     public function updateVolunteerCapacity()
     { //update volunteering capacity
-        ( new UserCOntroller)->addActivity("Update volunteer capacity",$_GET['event_id']);
+        var_dump($_POST);
+        exit();
+        ( new UserController)->addActivity("Update volunteer capacity",$_GET['event_id']);
+
         $volunteer = new Volunteer;
         $volunteer->updateVolunteerCapacity($_GET["event_id"], $_POST["volunteer_capacity"]);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "volunteers"]);
@@ -48,11 +53,19 @@ class VolunteerController{
     }
 
     public function VolunteerEvent(){
+        if(isset($_POST['volunteer_date'])){
+            Controller::validateForm(["volunteer_date"],["event_id"]);
+            $volunteer_dates = $_POST['volunteer_date'];  
+        }
+        else{
+            $volunteer_dates =[];
+        }
         $volunteer = new Volunteer();
-        $volunteer_dates = $_POST['volunteer_date'];
         $event_id = $_GET['event_id'];
         $volunteer->addVolunteerDetails($event_id,$volunteer_dates);
-        Controller::redirect("/Event/view", ["page" => "about", "event_id" => $event_id ,"volunteered" => 1]);
+        $description = $volunteer->addVolunteerDetails($event_id,$volunteer_dates);
+        (new UserController)->addActivity($description,$event_id);
+        Controller::redirect("/Event/view", ["page" => "about", "event_id" => $event_id ]);
     }
 
 

@@ -107,10 +107,17 @@ class User extends Model
             $params = ['uid'=>$_SESSION['user']['uid'],'activity'=>$activity];
         }
         else{
-            $query =  "INSERT INTO `activity_log` (`event_id`, `uid`,`time_stamp`, `activity`) VALUES (NULL, :uid,  CURRENT_TIMESTAMP,:activity)"; 
+            $query =  "INSERT INTO `activity_log` (`event_id`, `uid`,`time_stamp`, `activity`) VALUES (:event_id, :uid,  CURRENT_TIMESTAMP,:activity)"; 
             $params =['event_id'=>$event_id,'uid'=>$_SESSION['user']['uid'],'activity'=>$activity];
         }
         User::insert($query,$params);
+    }
+
+    function getActivity(){
+        $query = 'SELECT * FROM activity_log WHERE uid = :uid ORDER BY time_stamp DESC';
+        $params = ["uid" => $_SESSION['user']['uid']];
+        $activities = User::select($query,$params);
+        return $activities;
     }
 
 

@@ -125,7 +125,12 @@ class UserController{
         $user->insertActivity($activity,$event_id);
 
     }
+    function viewActivityLog(){
+        $user = new User();
+        $activities = $user->getActivity();
+        echo json_encode($activities);
 
+    }
     function checkEmailAvailable(){
         Controller::validateForm(["email"]);
         if((new Validation)->email($_POST["email"]));

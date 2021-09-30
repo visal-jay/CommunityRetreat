@@ -2,10 +2,10 @@
 
 class Volunteer extends Model{
     public function getVolunteerDetails($event_id){//get volunteer details from backend to UI
-        $query = "SELECT registered_user.username, registered_user.contact_number, registered_user.email, volunteer.participate,  date_format(volunteer.date,'%x-%m-%d') as date FROM volunteer LEFT JOIN registered_user ON volunteer.uid=registered_user.uid WHERE event_id =:event_id"; 
+        $query = "SELECT registered_user.username, registered_user.contact_number, registered_user.email, volunteer.participated,  date_format(volunteer.date,'%x-%m-%d') as date FROM volunteer LEFT JOIN registered_user ON volunteer.uid=registered_user.uid WHERE event_id =:event_id"; 
         $params = ["event_id" => $event_id];
         $result=Model::select($query,$params);
-       return $result;
+        return $result;
     }
 
     public function disableVolunteer($event_id){//disable volunteers for an event
@@ -25,11 +25,54 @@ class Volunteer extends Model{
         $params = ["event_id" => $event_id, "volunteer_capacity" => $volunteer_capacity];
         Model::insert($query,$params);
     }
+
+    public function checkVolunteerCapacityDateRange($event_id,$start_date,$end_date){
+        $query = 'DELETE FROM volunteer_capacity WHERE event_id = :event_id AND event_date  NOT BETWEEN :start_date AND :end_date';
+        $params = ["event_id" => $event_id , "start_date" => $start_date , "end_date" => $end_date];
+        Model::insert($query,$params);
+    }
+
+    public function getVolunteerCapacities( $event_id){
+        $query = 'SELECT event_date,capacity FROM volunteer_capacity WHERE event_id = :event_id';
+        $params = ["event_id" => $event_id ];
+        $result = Model::select($query,$params);
+        return $result;
+    }
+    
     public function getVolunteeredDates($event_id){
         $params = ["uid" => $_SESSION['user']['uid'] , "event_id"=>$event_id];
         $query = 'SELECT volunteer_date FROM volunteer WHERE uid = :uid AND event_id = :event_id';
         $result = Model::select($query,$params);
         return $result;
+    }
+    public function checkVolunteerCount($event_id,$start_date,$end_date){
+       
+
+        $startDate = new DateTime($start_date);
+        $interval = new DateInterval('P1D');
+        $realEnd = new DateTime($end_date);
+        $realEnd->add($interval);
+      
+           
+        $period = new DatePeriod( $startDate , $interval, $realEnd);
+        $capacity_exceeded = [];
+        foreach($period as $date){  
+            $event_day = $date->format('Y-m-d');
+            $query = 'SELECT DISTINCT uid from volunteer WHERE event_id = :event_id AND volunteer_date = :event_date';
+            $params = ["event_id" => $event_id , "event_date" => $event_day];
+            $volunteer_count = count(Model::select($query,$params));
+            $query1 = 'SELECT capacity FROM volunteer_capacity WHERE event_id = :event_id AND event_date = :event_date';
+            $capacity = Model::select($query1,$params);
+
+            if($volunteer_count == $capacity[0]['capacity'] ){
+                $capacity_exceeded[$event_day] = "TRUE";
+            }
+            else{
+                $capacity_exceeded[$event_day] = "FALSE";
+            }
+           
+        } 
+        return $capacity_exceeded;
     }
 
     public function getVolunteerSum($event_id){
@@ -57,7 +100,7 @@ class Volunteer extends Model{
         else{
             if(count($current_volunteered_dates)>0){
                 $delete_query = "DELETE FROM  volunteer WHERE uid = :uid AND event_id = :event_id";
-                $delete_params = ['uid' => $_SESSION['user']['uid'] , 'event_id' => $event_id ,];
+                $delete_params = ['uid' => $_SESSION['user']['uid'] , 'event_id' => $event_id ];
                 Model::insert( $delete_query,$delete_params);
                 foreach($volunteer_dates as $volunteer_date){
             
@@ -88,6 +131,15 @@ class Volunteer extends Model{
 
         
     }
+
+    public function getVolunteeredUid($event_id,$start_date,$end_date){
+        $params = ["event_id" => $event_id , "start_date" => $start_date , "end_date" => $end_date];
+        $query = 'SELECT DISTINCT uid FROM volunteer WHERE event_id = :event_id AND volunteer_date  NOT BETWEEN :start_date AND :end_date ';
+        $result=Model::select($query,$params);
+        return $result;
+    }
+
+
 
     public function getReport($data){
         $query="SELECT COUNT(event_id) as volunteer_sum ,date_format(date,'%x-%m-%d') as day FROM volunteer WHERE event_id = :event_id GROUP BY day ORDER BY day ASC";

@@ -15,6 +15,10 @@
     .form {
         min-width: 50%;
     }
+    .main-container{
+        min-height: 100%;
+        align-items: center;
+    }
 
     .gallery-container {
         display: flex;
@@ -131,7 +135,7 @@
 
 
 <body>
-    <div class="flex-col flex-center margin-side-lg">
+    <div class="flex-col  margin-side-lg main-container">
         <h1>Gallery</h1>
         <?php if ($organization) { ?>
             <p class="clr-red"><?php if (isset($_GET["error"])) echo $_GET["error"]; ?></p>

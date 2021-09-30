@@ -438,10 +438,18 @@
                        
                     $period = new DatePeriod( $startDate , $interval, $realEnd);
                     foreach($period as $date) {                 
-                        $event_days = $date->format('Y-m-d'); 
-                        echo "<div class='flex-row flex-center'><h3>".$event_days."</h3>
-                        <input type='checkbox'  name='volunteer_date[]' value='$event_days'"; for($i=0;$i<count($volunteer_date);$i++){foreach($volunteer_date[$i] as $volunteered_date){ if($event_days==$volunteered_date){ echo 'checked';}}}; 
-                        echo"></div>";
+                        $event_days = $date->format('Y-m-d');
+                        if($volunteer_capacity_exceeded[$event_days] == "TRUE"){
+                            echo "<div class='flex-row flex-center'><h3>".$event_days."</h3>
+                            <input type='checkbox'  name='volunteer_date[]' value='$event_days'"; for($i=0;$i<count($volunteer_date);$i++){ if($event_days==$volunteer_date[$i]['volunteer_date']){ echo 'checked';}}; 
+                            echo" disabled></div>";
+                        } 
+                        else{
+                            echo "<div class='flex-row flex-center'><h3>".$event_days."</h3>
+                            <input type='checkbox'  name='volunteer_date[]' value='$event_days'"; for($i=0;$i<count($volunteer_date);$i++){ if($event_days==$volunteer_date[$i]['volunteer_date']){ echo 'checked';}}; 
+                            echo"></div>";
+                        }
+                        
                     }
    
                   

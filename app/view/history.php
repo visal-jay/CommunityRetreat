@@ -11,6 +11,7 @@
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
             <link rel="stylesheet" href= "../Public/assets/style/fontawesome.min.css">
             <link rel="stylesheet" href="../Public/assets/style/historystyle.css">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
             <script defer src="../Public/assets/js/main.js"></script>
         
 

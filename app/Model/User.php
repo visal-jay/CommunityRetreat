@@ -113,6 +113,13 @@ class User extends Model
         User::insert($query,$params);
     }
 
+    function getActivity(){
+        $query = 'SELECT * FROM activity_log WHERE uid = :uid ORDER BY time_stamp DESC';
+        $params = ["uid" => $_SESSION['user']['uid']];
+        $activities = User::select($query,$params);
+        return $activities;
+    }
+
 
 
 }

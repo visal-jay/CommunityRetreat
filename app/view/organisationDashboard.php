@@ -339,7 +339,7 @@
     var lat = "<?= $latitude ?>";
     var long = "<?= $longitude ?>";
 
-    console.log(latitude, longitude);
+    console.log(lat, lang);
 
     function initMap() {
         map = new google.maps.Map(document.getElementById("map"), {
@@ -385,6 +385,7 @@
         });
     }
 
+    
     function page(page) {
         var children = document.querySelector(".nav-secondary-bar").children;
         console.log(children);

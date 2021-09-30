@@ -45,6 +45,13 @@ class Volunteer extends Model{
         }
     }
 
+    //complete this
+    public function markParticipation(){
+        $time = (int)shell_exec("date '+%s'");
+        $date=date("Y-m-d",$time);
+        $query="UPDATE volunteer SET participate=1 WHERE event_id= :event_id AND ";
+        $params=["event_id"=>$_GET["event_id"],"date"=>$date];
+        Model::insert($query,$params);
     }
     
     public function getReport($data){

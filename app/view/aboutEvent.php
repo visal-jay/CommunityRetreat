@@ -338,7 +338,7 @@
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width far fa-flag clr-green margin-side-lg"></i>
                             <div class="flex-row">
-                                <p class="head-margin">Event by <a href="/Organisation/view?org_id=<?= $org_uid ?>"><b><?= $organisation_username ?></b></a></p>
+                                <p class="head-margin">Event by <a href="/Organisation/view?page=about&&org_id=<?= $org_uid ?>"><b><?= $organisation_username ?></b></a></p>
                             </div>
                         </div>
                     </div>

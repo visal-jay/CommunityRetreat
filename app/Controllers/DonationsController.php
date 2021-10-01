@@ -9,10 +9,8 @@ class DonationsController{
        // exit();
         $data = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["donation_status" => '', "donation_capacity" => '']);
         $donation = new Donations();
-        $donate_details = $donation->getDonateDetails($_GET["event_id"]);
-        $data["donations"] = $donate_details;
-        $donate_sum = $donation->getDonationSum($_GET["event_id"]);
-        $data["donation_sum"] = $donate_sum;
+        $data["donations"] = $donation->getDonateDetails($_GET["event_id"]);
+        $data["donation_sum"]= $donation->getDonationSum($_GET["event_id"]);
         $data = array_merge($data, $event_details);
         View::render('eventPage', $data, $user_roles);/*send all the data to eventPage*/
     }
@@ -23,9 +21,7 @@ class DonationsController{
         Controller::validateForm([], ["url", "event_id"]);
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
         //(new UserController)->addActivity("Disable donations", $_GET["event_id"]);
-
-        $donation = new Donations;
-        $donation->disableDonation($_GET["event_id"]);
+        (new Donations)->disableDonation($_GET["event_id"]);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "donations"]);/*redirect to event page after disabling donation.*/
     }
 
@@ -36,9 +32,7 @@ class DonationsController{
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
         //(new UserController)->addActivity("Enable donations", $_GET["event_id"]);
 
-        $donation = new Donations;
-        $donation = new Donations;
-        $donation->enableDonation($_GET["event_id"]);
+        (new Donations)->enableDonation($_GET["event_id"]);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "donations"]);/*redirect to event page after enabling donation.*/
     }
 
@@ -49,8 +43,7 @@ class DonationsController{
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
         //(new UserController)->addActivity("Update donation capacity", $_GET["event_id"]);
 
-        $donation = new Donations;
-        $donation->updateDonationCapacity($_GET["event_id"], $_POST["donation_capacity"]);
+        (new Donations)->updateDonationCapacity($_GET["event_id"], $_POST["donation_capacity"]);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "donations"]);/*redirect to event page after updating donation capacity.*/
     }
 
@@ -66,38 +59,21 @@ class DonationsController{
         View::render('donationsReport', $data);/*send all the data to donationsReport page*/
     }
 
-    public function donationRefund(){/*change the status in database when donations are refunded*/
-
-        Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
-        //(new UserController)->addActivity("Redund Donations", $_GET["event_id"]);
-
+    public function donationCredit($event_id){/*change the status in database when donations are credited to organizations account*/
         $donation = new Donations;
-        $donation->donationRefund($_GET["event_id"]);
-               
-    }
-
-    public function donationCredit(){/*change the status in database when donations are credited to organizations account*/
-
-        Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
-        //(new UserController)->addActivity("Credit Donations", $_GET["event_id"]);
-
-        $donation = new Donations;
-        $donation->donationCredit($_GET["event_id"]);
-        
+        $donation->donationCredit($event_id);
     }
 
     public function pay(){
 
-        Controller::validateForm(["donation_capacity"], ["url", "event_id"]);
-        Controller::accessCheck(["registered_user"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
-        //(new UserController)->addActivity("Donate", $_GET["event_id"]);
+        Controller::validateForm(["amount", "terms"], ["url"]);
+        Controller::accessCheck(["registered_user"], $_GET["event_id"]);/*check whether registered user accessed it.*/
+        (new UserController)->addActivity("Donated ". $_POST['amount'], $_GET["event_id"]);
         
         $validate=new Validation;
         if(!$validate->currency($_POST["amount"]))/*find whether amount is valid*/
-             Controller::redirect("/Event/view?page=budget&&event_id=" .$_POST["event_id"],["amountErr"=>"Inavlid amount"]);
+             Controller::redirect("/Event/view?page=about&&event_id=" .$_POST["event_id"],["amountErr"=>"Inavlid amount"]);
 
-        
-        $_SESSION["user"]["payment"]= $_POST["amount"];
         require __DIR__."/../Libararies/stripe-php-master/init.php";
         
         \Stripe\Stripe::setApiKey('sk_test_51JdYJ6JhZDUPzRAXbJg3k221yQ9pgNLhCFYz2ifKf6FPXszolkCJdx6N4tvg5CBvz5bSOVw3OnBZnAV7WFYnR2Ne00yji9wY0R');
@@ -111,7 +87,7 @@ class DonationsController{
                     "product_data" => [
                         "name" => "Donation"
                     ],
-                    "unit_amount" => $_POST["amount"]
+                    "unit_amount" => $_POST["amount"]."00"
                 ],
                 'quantity' => 1,
 
@@ -120,18 +96,47 @@ class DonationsController{
             'card',
         ],
         'mode' => 'payment',
-        'success_url' => $YOUR_DOMAIN . '/Donations/donationAccept',
-        'cancel_url' => $YOUR_DOMAIN . '/cancel.html',
+        'success_url' => $YOUR_DOMAIN . '/Donations/donationAccept?session_id={CHECKOUT_SESSION_ID}&&event_id='. $_GET["event_id"],
+        'cancel_url' => $YOUR_DOMAIN . '/Event/view?page=about&&event_id='. $_POST["event_id"],
         ]);
 
-        //Controller::redirect($checkout_session->url);
         header("Location: $checkout_session->url", true,  302);
         exit();
-
     }
 
-    public function donationAccept()
+   public function donationAccept()
     {
-        (new DonationsController)->pay();
+        Controller::validateForm([], ["event_id", "session_id"]);
+        Controller::accessCheck(["registered_user"], $_GET["event_id"]);/*check whether registered user accessed it.*/
+        require __DIR__."/../Libararies/stripe-php-master/init.php";
+
+        \Stripe\Stripe::setApiKey('sk_test_51JdYJ6JhZDUPzRAXbJg3k221yQ9pgNLhCFYz2ifKf6FPXszolkCJdx6N4tvg5CBvz5bSOVw3OnBZnAV7WFYnR2Ne00yji9wY0R');
+
+        $session = \Stripe\Checkout\Session::retrieve($_GET["session_id"]);
+        $customer = \Stripe\Customer::retrieve($session->customer);
+
+        (new Donations)->donationAccept($_SESSION["user"]["uid"], $_GET["event_id"], $session["amount_total"], $session["payment_intent"]);
+        Controller::redirect("/Event/view", ["page" => "about", "event_id" => $_GET["event_id"]]);
+            
+    }
+
+    public function donationRefund($event_id){/*change the status in database when donations are refunded*/
+
+        Controller::accessCheck(["admin", "organization"]);/*check whether organization or admin accessed it.*/
+        $donation = new Donations;
+        $donation_details=$donation->getRefundDetails($event_id);
+        $donation->donationRefund($event_id);
+        foreach ($donation_details as $donation_data){
+            $this->refund($donation_data["intent_id"]);
+        }
+               
+    }
+
+    public function refund($intent_id){
+
+        \Stripe\Stripe::setApiKey('sk_test_51JdYJ6JhZDUPzRAXbJg3k221yQ9pgNLhCFYz2ifKf6FPXszolkCJdx6N4tvg5CBvz5bSOVw3OnBZnAV7WFYnR2Ne00yji9wY0R');
+        $re = \Stripe\Refund::create([
+          'payment_intent' => $intent_id,
+        ]);
     }
 }

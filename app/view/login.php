@@ -163,8 +163,8 @@
                     </div>
                     <form action="/Login/validate?<?php if(isset($redirect)) echo "redirect=$redirect" ;?>" method="post" id="login-form" class="form <?php if ($_GET["login"]) echo "shown"; ?>">
                         <div class="form-item">
-                            <label>Username</label>
-                            <input name="email" class="form-ctrl" placeholder="&#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" />
+                            <label>Email</label>
+                            <input name="email" class="form-ctrl" placeholder="&#xF007; &nbsp; Enter Email" required style="font-family:Arial, FontAwesome" />
                         </div>
                         <div class="form-item">
                             <label>Password</label>

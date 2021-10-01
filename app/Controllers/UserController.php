@@ -75,7 +75,7 @@ class UserController{
         $User = new User();
         $uid=$_SESSION["user"]["uid"];
         $user->changeUsername($uid,$_POST['username']);
-        $User->addActivity("Username Changed",-1);
+        $this->addActivity("Username Changed",-1);
         Controller::redirect("/$controller/profile");
     }
 

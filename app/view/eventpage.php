@@ -221,10 +221,13 @@ h2 {
 
     ?>
 
+<?php include "complaint.php" ?>
 
 </body>
 
+
 <?php include "footer.php" ?>
+
 
 <script>
     function resizeProfile() {

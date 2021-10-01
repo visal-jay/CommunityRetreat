@@ -225,6 +225,8 @@
 
     </div>
 
+    <?php include "complaint.php" ?>
+
     <?php include "footer.php"; ?>
 
 

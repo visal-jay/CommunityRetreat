@@ -457,7 +457,7 @@
             <div>
                 <button class="btn-icon btn-close" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
             </div>
-            <form action="/Donations/pay" class="form-container" method="post">
+            <form action="/Donations/pay?event_id=<?= $_GET['event_id'] ?>" class="form-container" method="post">
 
                 <div class="form-item">
                     <label>Amount</label>
@@ -469,7 +469,7 @@
                     Terms & Coditions
                 </div>
 
-                <button class="btn btn-solid margin-md" type="submit" id="donate-btn"  onclick="window.location.href=' /Donations/pay?event_id=<?= $_GET['event_id'] ?>'" disabled>Donate</button>
+                <button class="btn btn-solid margin-md" type="submit" id="donate-btn" disabled>Donate</button>
             </form>
         </div>
     </div>

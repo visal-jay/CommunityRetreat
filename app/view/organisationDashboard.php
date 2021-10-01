@@ -162,6 +162,7 @@
         .cover-place-holder {
             min-width: 80%;
         }
+
         h1 {
             font-size: 1.5rem;
         }
@@ -216,64 +217,70 @@
         <?php if ($registered_user || $guest_user || $admin) { ?>
             <div class="nav-secondary">
                 <div class="nav-secondary-bar margin-lg">
-                    <a class="btn margin-side-md active" style=" margin-bottom:10px;" onclick="page('about');event.target.classList.add('active');">About</a>
-                    <a class="btn margin-side-md" style=" margin-bottom:10px;" onclick="page('gallery');event.target.classList.add('active');">Gallery</a>
-                    <a class="btn margin-side-md" style=" margin-bottom:10px;" onclick="page('events');event.target.classList.add('active');">Events</a>
+                    <a class="btn margin-side-md <?php if ($page == "about") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Organisation/view?page=about&&org_id=<?= $_GET["org_id"] ?>">About</a>
+                    <a class="btn margin-side-md <?php if ($page == "gallery") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Organisation/view?page=gallery&&org_id=<?= $_GET["org_id"] ?>">Gallery</a>
+                    <a class="btn margin-side-md <?php if ($page == "events") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Organisation/view?page=events&&org_id=<?= $_GET["org_id"] ?>">Events</a>
                 </div>
             </div>
-            <iframe src="/organisation/gallery?org_id=<?= $_GET["org_id"] ?>" frameborder="0" id="gallery" class="hidden"></iframe>
-            <iframe src="/organisation/events?org_id=<?= $_GET["org_id"] ?>" frameborder="0" id="events" class="hidden"></iframe>
-
         <?php } ?>
 
-        <div class="flex-col flex-center">
-            <div class="info" id="about">
-                <div class="flex-row flex-center">
-                    <div class="data">
-                        <h1><?= $username ?></h1>
-                    </div>
-                </div>
-                <div class="flex-col">
-                    <h2>About us</h2>
-                    <div class="data">
-                        <p><?= $about_us ?></p>
-                    </div>
-                    <?php if ($organization) { ?>
-                        <textarea name="about_us" class="form form-ctrl hidden" placeholder="Enter about us"><?= $about_us ?></textarea>
-                    <?php } ?>
-                </div>
-                <div class="flex-col">
-                    <h2>Contact us</h2>
-                    <div>
-                        <a href="mailto:<?= $email ?>"><?= $email ?> </a>
-                        <p><?= $contact_number ?></p>
-                    </div>
-                </div>
-                <?php if ($organization || (isset($map) && $map == true)) { ?>
-                    <div class="flex-col flex-center margin-md">
-                        <h2>Locate us</h2>
-                        <div id="map" class="border-round <?php if (!$map) echo "map-not"; ?> "></div>
-                        <div class="latlang" class="form hidden">
-                            <input class="hidden" name="longitude" id="longitude" value="<?= $longitude ?>">
-                            <input class="hidden" name="latitude" id="latitude" value="<?= $latitude ?>">
-                        </div>
-                    </div>
-                <?php } ?>
+        
 
-                <?php if ($organization) { ?>
-                    <div class="flex-row flex-center">
-                        <button type="button" class="btn btn-solid data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
-                        <button type="button" class="btn btn-solid bg-red border-red margin-side-md form hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
-                        <button type="submit" class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
-                    </div>
-                <?php } ?>
+        <div class="flex-row flex-center">
+            <div class="data">
+                <h1><?= $username ?></h1>
             </div>
         </div>
-        <?php if ($organization) { ?>
+
+        <?php
+
+        if (isset($_GET["page"]) && $_GET["page"] == "events") require __DIR__ . "/manageEvents.php";
+        elseif (isset($_GET["page"]) && $_GET["page"] == "gallery") require __DIR__ ."/organisationGallery.php";
+        elseif ($organization || $_GET["page"] == "about") { ?>
+            <!-- about organisation start -->
+            <div class="flex-col flex-center">
+                <div class="info" id="about">
+                    <div class="flex-col">
+                        <h2>About us</h2>
+                        <div class="data">
+                            <p><?= $about_us ?></p>
+                        </div>
+                        <?php if ($organization) { ?>
+                            <textarea name="about_us" class="form form-ctrl hidden" placeholder="Enter about us"><?= $about_us ?></textarea>
+                        <?php } ?>
+                    </div>
+                    <div class="flex-col">
+                        <h2>Contact us</h2>
+                        <div>
+                            <a href="mailto:<?= $email ?>"><?= $email ?> </a>
+                            <p><?= $contact_number ?></p>
+                        </div>
+                    </div>
+                    <?php if ($organization || (isset($map) && $map == true)) { ?>
+                        <div class="flex-col flex-center margin-md">
+                            <h2>Locate us</h2>
+                            <div id="map" class="border-round <?php if (!$map) echo "map-not"; ?> "></div>
+                            <div class="latlang" class="form hidden">
+                                <input class="hidden" name="longitude" id="longitude" value="<?= $longitude ?>">
+                                <input class="hidden" name="latitude" id="latitude" value="<?= $latitude ?>">
+                            </div>
+                        </div>
+                    <?php } ?>
+
+                    <?php if ($organization) { ?>
+                        <div class="flex-row flex-center">
+                            <button type="button" class="btn btn-solid data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
+                            <button type="button" class="btn btn-solid bg-red border-red margin-side-md form hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
+                            <button type="submit" class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
+                        </div>
+                    <?php } ?>
+                </div>
+            </div>
+            <!-- about organisation end -->
+            <?php if ($organization) { ?>
         </form>
     <?php } ?>
-
-
+<?php } ?>
 
 </body>
 
@@ -308,7 +315,7 @@
 
     function resizeProfile() {
         if (CSS.supports("( aspect-ratio: 1/1 )") == false) {
-            document.querySelector(".cover-place-holder").style.width = (document.querySelector(".photo-container").offsetWidth)*0.6 + "px";
+            document.querySelector(".cover-place-holder").style.width = (document.querySelector(".photo-container").offsetWidth) * 0.6 + "px";
             var cover_width = (document.querySelector(".cover").offsetWidth);
             document.querySelector(".cover-place-holder").style.height = parseInt(cover_width) * 2 / 5 + "px";
             console.log(document.querySelector(".profile-pic").style.height);
@@ -385,7 +392,7 @@
         });
     }
 
-    
+
     function page(page) {
         var children = document.querySelector(".nav-secondary-bar").children;
         console.log(children);

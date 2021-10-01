@@ -286,7 +286,7 @@
         </div>
 
         <choices class="flex-col">
-            <div class="flex-row-to-col  flex-space">
+            <div class="flex-row-to-col flex-space">
                 <button type="button" class="btn btn-solid margin-md" onclick="toggleMap();resizeMap();">Search by location</button>
                 <div class="flex-row flex-center margin-md">
                     <label>Date: &nbsp; </label>
@@ -298,6 +298,11 @@
                         </div>
                     </div>
                 </div>
+
+                <select class="form-ctrl" id="search-type" style="margin-left:0.5rem" required onchange="search();">
+                    <option value="event"selected>Event</option>
+                    <option value="organization">Organization</option>
+                </select>
 
                 <select class="form-ctrl" id="mode" name="mode" style="margin-left:0.5rem" required onchange="search();">
                     <option value="" disabled selected>Select the mode of the event</option>
@@ -411,103 +416,104 @@
 
         let parent_container = document.querySelector('events');
 
-        console.log(range);
-        $.ajax({
-            url: "/Search/searchAll", //the page containing php script
-            type: "post", //request type,
-            dataType: 'json',
-            data: {
-                name: name,
-                mode: mode,
-                latitude: latitude,
-                longitude: longitude,
-                distance: range,
-                start_date: date,
-                order_type: sort,
-                way: way,
-                status: 'published',
-            },
-            success: function(result) {
-                parent_container.innerHTML = "";
-                hideMarkers();
-                result.forEach(evn => {
-                    let template = `
-                    <figure onclick="location.href = '/event/view?page=about&&event_id=${evn.event_id}' ">
-                        <div class="content">
-                            <div class="photo-container"><img src="${evn.cover_photo}" style="object-fit: cover;" alt="">
-                                <div class="stats">
-                                <div>
-                                    <span>Volunteered ${evn.volunteered==null ? 0 : Math.round(evn.volunteer_percent)}%</span>
-                                    <br>
-                                    <span>Donations ${evn.dotaion_percent==null ? 0 : Math.round(evn.dotaion_percent)}%</span>
-                                    <br>
-                                    <span>Distance ${evn.distance==null ? " - " : Math.round(evn.distance)} KM</span>
+        if(document.getElementById("search-type").value=="event"){
+            $.ajax({
+                url: "/Search/searchAll", //the page containing php script
+                type: "post", //request type,
+                dataType: 'json',
+                data: {
+                    name: name,
+                    mode: mode,
+                    latitude: latitude,
+                    longitude: longitude,
+                    distance: range,
+                    start_date: date,
+                    order_type: sort,
+                    way: way,
+                    status: 'published',
+                },
+                success: function(result) {
+                    parent_container.innerHTML = "";
+                    hideMarkers();
+                    result.forEach(evn => {
+                        let template = `
+                        <figure onclick="location.href = '/event/view?page=about&&event_id=${evn.event_id}' ">
+                            <div class="content">
+                                <div class="photo-container"><img src="${evn.cover_photo}" style="object-fit: cover;" alt="">
+                                    <div class="stats">
+                                    <div>
+                                        <span>Volunteered ${evn.volunteered==null ? 0 : Math.round(evn.volunteer_percent)}%</span>
+                                        <br>
+                                        <span>Donations ${evn.dotaion_percent==null ? 0 : Math.round(evn.dotaion_percent)}%</span>
+                                        <br>
+                                        <span>Distance ${evn.distance==null ? " - " : Math.round(evn.distance)} KM</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <p class="margin-md" style="margin-bottom:0;color:white;padding:4px;background-color:#F67280;border-radius:15px;text-align:center;font-size:0.85em;">Event</p>
-                            <p class="margin-md" style="margin-bottom:0;"><b>${evn.event_name}</b></p>
-                            <p class="margin-md about" style="margin-top:0">${evn.start_date}</p>
-                            <div class="flex-col margin-side-md" >
-                                <div class ="flex-row" style="justify-content:space-between;align-items:center;">
-                                <p>Donations</p>
-                                <p>${evn.donation_status==0 ? '<i class="fas fa-times fa-xs clr-red margin-side-md"></i>' : '<i class="fas fa-check fa-xs clr-green margin-side-md"></i>'}</p>
+                                <p class="margin-md" style="margin-bottom:0;color:white;padding:4px;background-color:#F67280;border-radius:15px;text-align:center;font-size:0.85em;">Event</p>
+                                <p class="margin-md" style="margin-bottom:0;"><b>${evn.event_name}</b></p>
+                                <p class="margin-md about" style="margin-top:0">${evn.start_date}</p>
+                                <div class="flex-col margin-side-md" >
+                                    <div class ="flex-row" style="justify-content:space-between;align-items:center;">
+                                    <p>Donations</p>
+                                    <p>${evn.donation_status==0 ? '<i class="fas fa-times fa-xs clr-red margin-side-md"></i>' : '<i class="fas fa-check fa-xs clr-green margin-side-md"></i>'}</p>
+                                    </div>
+                                    <div class ="flex-row" style="justify-content:space-between;align-items:center;">
+                                    <div style="display:flex;align-items:center;position:relative;width:100%;"><div style="border-radius:6px;position:absolute;width:${(evn.donation_percent==null || evn.donation_percent<5) ? 5 :(evn.dotaion_percent>100? 100 : Math.round(evn.donation_percent)) }%;background-color:#FFB319;height:6px;"></div></div>
+                                    <p>${evn.donation_percent==null ? 0 : Math.round(evn.donation_percent)}%</p>
+
+                                    </div>
                                 </div>
-                                <div class ="flex-row" style="justify-content:space-between;align-items:center;">
-                                <div style="display:flex;align-items:center;position:relative;width:100%;"><div style="border-radius:6px;position:absolute;width:${(evn.donation_percent==null || evn.donation_percent<5) ? 5 :(evn.dotaion_percent>100? 100 : Math.round(evn.donation_percent)) }%;background-color:#FFB319;height:6px;"></div></div>
-                                <p>${evn.donation_percent==null ? 0 : Math.round(evn.donation_percent)}%</p>
-
+                                <div class="flex-col margin-side-md">
+                                    <div class ="flex-row" style="justify-content:space-between;align-items:center;">
+                                    <p>Volunteered</p>
+                                    <p>${evn.volunteer_status==0 ? '<i class="fas fa-times fa-xs clr-red margin-side-md"></i>' : '<i class="fas fa-check fa-xs clr-green margin-side-md"></i>'}</p>
+                                    </div>
+                                    <div class ="flex-row" style="justify-content:space-between;align-items:center;">
+                                    <div style="display:flex;align-items:center;position:relative;width:100%;"><div style="border-radius:6px;position:absolute;width:${(evn.volunteer_percent==null || evn.volunteer_percent<5) ? 5 : Math.round(evn.volunteer_percent)}%;background-color:#8236CB;height:6px;"></div></div>
+                                    <p>${evn.volunteer_percent==null ? 0 : Math.round(evn.volunteer_percent)}%</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="margin-md about">${evn.about}</p>
                                 </div>
                             </div>
-                            <div class="flex-col margin-side-md">
-                                <div class ="flex-row" style="justify-content:space-between;align-items:center;">
-                                <p>Volunteered</p>
-                                <p>${evn.volunteer_status==0 ? '<i class="fas fa-times fa-xs clr-red margin-side-md"></i>' : '<i class="fas fa-check fa-xs clr-green margin-side-md"></i>'}</p>
-                                </div>
-                                <div class ="flex-row" style="justify-content:space-between;align-items:center;">
-                                <div style="display:flex;align-items:center;position:relative;width:100%;"><div style="border-radius:6px;position:absolute;width:${(evn.volunteer_percent==null || evn.volunteer_percent<5) ? 5 : Math.round(evn.volunteer_percent)}%;background-color:#8236CB;height:6px;"></div></div>
-                                <p>${evn.volunteer_percent==null ? 0 : Math.round(evn.volunteer_percent)}%</p>
-                                </div>
-                            </div>
-                            <div>
-                                <p class="margin-md about">${evn.about}</p>
-                            </div>
-                        </div>
-                    </figure>
-                    `;
-                    parent_container.appendChild(createElementFromHTML(template));
+                        </figure>
+                        `;
+                        parent_container.appendChild(createElementFromHTML(template));
 
-                    /* if search has a longitude and latitude  display them on map*/
+                        /* if search has a longitude and latitude  display them on map*/
 
-                    if (evn.longitude != null || evn.latitude != null) {
+                        if (evn.longitude != null || evn.latitude != null) {
 
-                        const infowindow = new google.maps.InfoWindow({
-                            content: template,
-                        });
-                        let pos = {
-                            lat: evn.latitude,
-                            lng: evn.longitude
-                        }
-                        let marker = new google.maps.Marker({
-                            position: pos,
-                            map,
-                            title: evn.event_name,
-                        });
-
-                        markers.push(marker);
-
-                        marker.addListener("click", () => {
-                            infowindow.open({
-                                anchor: marker,
-                                map,
-                                shouldFocus: false,
+                            const infowindow = new google.maps.InfoWindow({
+                                content: template,
                             });
-                        });
-                    }
-                });
-            }
-        });
-        if (!(range || mode || date || sort || way))
+                            let pos = {
+                                lat: evn.latitude,
+                                lng: evn.longitude
+                            }
+                            let marker = new google.maps.Marker({
+                                position: pos,
+                                map,
+                                title: evn.event_name,
+                            });
+
+                            markers.push(marker);
+
+                            marker.addListener("click", () => {
+                                infowindow.open({
+                                    anchor: marker,
+                                    map,
+                                    shouldFocus: false,
+                                });
+                            });
+                        }
+                    });
+                }
+            });
+        }
+        else if (!(range || mode || date || sort || way) && document.getElementById("search-type").value=="organization")
             orgSearch(name);
     }
 
@@ -522,6 +528,7 @@
             },
             success: function(result) {
                 let parent_container = document.querySelector('events');
+                parent_container.innerHTML="";
                 result.forEach(org => {
                     let template = `
                     <figure onclick="location.href = '/organisation/view?org_id=${org.uid}' ">

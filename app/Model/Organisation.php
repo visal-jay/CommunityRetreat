@@ -56,14 +56,13 @@ class Organisation extends User
     public function updateDetails($uid, $data)
     {
 
-        $params = array();
 
-        if ($_FILES["profile-photo"][0]["size"] != NULL) {
+        if ($_FILES["profile-photo"]["size"][0] != NULL) {
             $cover_pic = new Image($_SESSION["user"]["uid"], "profile/", "profile-photo", true);
             $params["profile_pic"] = $cover_pic->getURL();
         }
 
-        if ($_FILES["cover-photo"][0]["size"] != NULL) {
+        if ($_FILES["cover-photo"]["size"][0] != NULL) {
             $cover_pic = new Image($_SESSION["user"]["uid"], "cover/", "cover-photo", true);
             $params["cover_pic"] = $cover_pic->getURL();
         }

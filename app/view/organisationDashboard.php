@@ -339,8 +339,6 @@
     var lat = "<?= $latitude ?>";
     var long = "<?= $longitude ?>";
 
-    console.log(lat, lang);
-
     function initMap() {
         map = new google.maps.Map(document.getElementById("map"), {
             center: {

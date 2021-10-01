@@ -229,12 +229,15 @@ h2 {
 
     ?>
 
+<?php include "complaint.php" ?>
 
 </body>
+
 
 <?php include "footer.php" ?>
 <!-- Link Script for display input validation errors-->
 <script src="/Public/assets/js/input_validation.js"></script>
+
 
 <script>
     function resizeProfile() {

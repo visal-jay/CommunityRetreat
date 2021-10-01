@@ -69,14 +69,19 @@ class Donations extends Model{
         $params = [];
         Model::insert($query,$params);
     }
-
-    public function pay($data){
-        if(!isset($_SESSION)) session_start();
-        $data["uid"] = $_SESSION["user"]["uid"] ;  
-        $query = "INSERT INTO donation (uid, amount, contact_no, event_id) 
-        SELECT donation.uid, donation.amount, donation.contact_no, donation.address, donation.event_id FROM registered_user INNER JOIN donation ON  donation.uid = registered_user.uid";
-        $params=array_intersect_key($data,["uid"=>'',"amount"=>'', "contact_no"=>'', "event_id"=>'' ]); 
+    
+    public function donationAccept($uid, $event_id, $amount, $intent_id){
+        $query = 'INSERT INTO `donation` (`uid`, `event_id`, `amount`, `intent_id`) VALUES (:uid, :event_id, :amount_total, :payment_intent)';
+        $params=["uid"=>$uid ,"event_id"=> $event_id, "amount_total"=>$amount, "payment_intent"=>$intent_id]; 
         Model::insert($query,$params);
     }
-    
+
+    public function getRefundDetails($event_id){
+        $query = 'SELECT uid, event_id, amount, intent_id FROM donation WHERE event_id =:event_id'; 
+        //$params = ["event_id" => $event_id];
+        $params = ["event_id" => "2"];
+        $result=Model::select($query,$params);
+       return $result;
+    }
+
 }

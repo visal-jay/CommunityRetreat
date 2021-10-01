@@ -68,10 +68,11 @@
 
     .update-save-btn {
         font-size: 0.9rem;
+        border: none;
     }
 
     .delete-cancel-btn {
-        border-color: #DA0037;
+        border: none;
         font-size: 0.9rem;
     }
 
@@ -181,10 +182,6 @@
         justify-content: space-evenly;
     }
 
-    .income-expense-add-container {
-        text-align: -webkit-center;
-    }
-
     .income-expense-show-hide-btn {
         text-align: center;
     }
@@ -206,11 +203,12 @@
         }
 
         .update-save-btn {
+            border: none;
             font-size: 0.75rem;
         }
 
         .delete-cancel-btn {
-            border-color: #DA0037;
+            border: none;
             font-size: 0.75rem;
         }
 
@@ -361,7 +359,7 @@
                         <form action="/Budget/delete?" method="post">
                             <!--Delete the income and save it in database-->
                             <input type="text" class="hidden" name="record_id" value="<?= $income['record_id'] ?>">
-                            <button class="btn bg-red clr-white delete-cancel-btn" name="event_id" type="submit" value=<?= $_GET['event_id'] ?>>
+                            <button class="btn bg-red clr-white delete-cancel-btn" style="border: none;" name="event_id" type="submit" value=<?= $_GET['event_id'] ?>>
                                 Delete</button>
                         </form>
                     </div>
@@ -420,7 +418,7 @@
                         <form action="/Budget/delete?" method="post">
                             <!--Delete the expense and save it in database-->
                             <input type="text" class="hidden" name="record_id" value="<?= $expense['record_id'] ?>">
-                            <button class="btn bg-red clr-white delete-cancel-btn" name="event_id" type="submit" value=<?= $_GET['event_id'] ?>>
+                            <button class="btn bg-red clr-white delete-cancel-btn" style="border: none;" name="event_id" type="submit" value=<?= $_GET['event_id'] ?>>
                                 Delete</button>
                         </form>
                     </div>
@@ -441,7 +439,7 @@
             <form action="/Budget/update" method="post" class="update-form">
 
                 <div class="input form-item">
-                <label>Details</label>
+                    <label>Details</label>
                 <input class="form-ctrl" name="details" id="details" type="text" required/>
                 </div>
 

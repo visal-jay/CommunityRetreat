@@ -20,10 +20,17 @@ class Volunteer extends Model{
         Model::insert($query,$params);
     }
 
-    public function updateVolunteerCapacity($event_id, $volunteer_capacity){//give a volunteer capacity for an event from the UI to store in backend
-        $query = 'UPDATE event SET volunteer_capacity=:volunteer_capacity WHERE event_id =:event_id';
-        $params = ["event_id" => $event_id, "volunteer_capacity" => $volunteer_capacity];
-        Model::insert($query,$params);
+    public function updateVolunteerCapacity($event_id,$capacities){//give a volunteer capacity for an event from the UI to store in backend
+       
+        $query = 'SELECT event_date FROM volunteer_capacity WHERE event_id = :event_id';
+        $params = ["event_id" => $event_id ];
+        $result = Model::select($query,$params);
+        for($i=0 ;$i < count($result); $i++){
+            $update_query = 'UPDATE volunteer_capacity SET capacity = :capacity WHERE event_id =:event_id AND event_date = :event_date';
+            $update_params = ["capacity" => (int)$capacities[$i],"event_id" => $event_id , "event_date" => $result[$i]['event_date']];
+            Model::insert($update_query,$update_params);
+
+        }
     }
 
     public function checkVolunteerCapacityDateRange($event_id,$start_date,$end_date){
@@ -76,11 +83,17 @@ class Volunteer extends Model{
     }
 
     public function getVolunteerSum($event_id){
-        $query= 'SELECT COUNT(*) as volunteer_sum FROM volunteer WHERE event_id =:event_id';
-        $params = ["event_id" => $event_id];
-        $result=Model::select($query,$params);
-        $result = ($result[0]["volunteer_sum"]==NULL)?0 : $result[0]["volunteer_sum"];
-       return $result; 
+        $volunteer_sum = [];
+        $query = 'SELECT event_date FROM volunteer_capacity WHERE event_id = :event_id';
+        $params = ["event_id" => $event_id ];
+        $result = Model::select($query,$params);
+        for($i=0 ;$i < count($result); $i++){
+            $params_volunteer = ["event_id" => $event_id , "volunteer_date" => $result[$i]["event_date"]];
+            $query_volunteer = 'SELECT count(uid) AS volunteer_sum  FROM volunteer WHERE event_id = :event_id AND volunteer_date = :volunteer_date GROUP BY volunteer_date ';
+            $volunteer_sum[$i]= Model::select($query_volunteer,$params_volunteer);
+           
+        }
+       return $volunteer_sum;
     }
 
 
@@ -109,10 +122,7 @@ class Volunteer extends Model{
                     Model::insert($query,$params);
                 }
                 return "volunteered for an event";
-  
-               
-
-
+ 
             }
             else{
 

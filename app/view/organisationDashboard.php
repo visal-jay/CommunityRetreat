@@ -282,6 +282,8 @@
     <?php } ?>
 <?php } ?>
 
+    <?php include "complaint.php" ;?>
+
 </body>
 
 <?php include "footer.php" ?>

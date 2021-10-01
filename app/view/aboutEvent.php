@@ -171,7 +171,15 @@
         border-radius: 8px;
     }
 
-
+    .home-events {
+        border-radius: 8px;
+        min-height: max-content;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+        padding: 2rem 1rem;
+        margin: 1rem 0 2rem 0;
+    }
 
 
     @media screen and (max-width:800px) {
@@ -225,7 +233,14 @@
             flex-direction: column;
         }
 
+        .home-events {
+            grid-template-columns: 1fr;
+            grid-gap: 1rem;
+        }
 
+        .grid-row-1 {
+            grid-row: 1;
+        }
     }
 </style>
 
@@ -241,7 +256,7 @@
                     <div class="date-container">
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width far fa-calendar-alt clr-green margin-side-lg"></i>
-                            <h4 class="head-margin data">Starts on  <?= $start_date ?><br>Ends on  <?= $end_date ?></h4>
+                            <h4 class="head-margin data">Starts on <?= $start_date ?><br>Ends on <?= $end_date ?></h4>
                             <?php if ($organization || $moderator) { ?>
                                 <div class="flex-row-to-col">
                                     <div class="flex-col">
@@ -260,7 +275,7 @@
                     <div class="time-container">
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width far fa-clock clr-green margin-side-lg"></i>
-                            <h4 class="head-margin data">At  <?= $start_time ?></h4>
+                            <h4 class="head-margin data">At <?= $start_time ?></h4>
                             <?php if ($organization || $moderator) { ?>
                                 <div class="flex-row-to-col flex-center">
                                     <div class="flex-row flex-center">
@@ -279,7 +294,7 @@
                     <div class="time-container">
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width fas fa-hourglass-start clr-green margin-side-lg"></i>
-                            <h4 class="head-margin">Duration  <?= $duration ?></h4>
+                            <h4 class="head-margin">Duration <?= $duration ?></h4>
                         </div>
                     </div>
 
@@ -405,9 +420,22 @@
 
 
             </div>
-            <div class="flex-col flex-center content border-round container-size1 margin-md" style="text-align:center">
-                <img src="/Public/assets/chat.gif" alt="">
-                <button class="btn btn-solid margin-md" onclick="window.location.href='/RegisteredUser/chatApp?new_chat_id=<?= 'EVN' . $_GET['event_id'] ?>'">Chat with us</button>
+
+            <div class="flex-col flex-center content border-round container-size1 home-events">
+                <div class="flex-row flex-center">
+                    <img src="/Public/assets/chat.gif" style="width:500px" alt="">
+                </div>
+
+                <div class="flex-col flex-center grid-row-1" style="text-align:center">
+                    <h4 class="margin-md felx-row flex-center">Want to clear out all your doubts?<br>Curious to know who we are?</h4>
+                    <div>
+                        <img src="/Public/assets/doubt-banner.png" style="width:200px" alt="">
+                    </div>
+                    <p>We are just one click away!</p>
+                    <div>
+                        <button class="btn btn-solid margin-md" onclick="window.location.href='/RegisteredUser/chatApp?new_chat_id=<?= 'EVN' . $_GET['event_id'] ?>'">Chat with us</button>
+                    </div>
+                </div>
             </div>
 
             <?php if ($moderator || $organization) { ?>
@@ -480,7 +508,7 @@
             <div>
                 <button class="btn-icon btn-close" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
             </div>
-            <form action="/Donations/pay" class="form-container" method="post">
+            <form action="/Donations/pay?event_id=<?= $_GET['event_id'] ?>" class="form-container" method="post">
 
                 <div class="form-item">
                     <label>Amount</label>
@@ -492,12 +520,12 @@
                     Terms & Coditions
                 </div>
 
-                <button class="btn btn-solid margin-md" type="submit" id="donate-btn" onclick="window.location.href=' /Donations/pay?event_id=<?= $_GET['event_id'] ?>'" disabled>Donate</button>
+                <button class="btn btn-solid margin-md" type="submit" id="donate-btn" disabled>Donate</button>
             </form>
         </div>
     </div>
-   
- 
+
+
 </body>
 
 

@@ -62,7 +62,7 @@ class User extends Model
         $query = 'SELECT UNIX_TIMESTAMP(first_failed_login) as first_failed_login, failed_login_count FROM login WHERE email= :email AND verified = :verified LIMIT 1';
         $params = ["email" => $email,"verified"=>1];
         $result=User::select($query,$params);
-        if (count($result[0])> 1)
+        if (count($result)>= 1)
             return $result[0];
         else
             return false;

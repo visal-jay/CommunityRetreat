@@ -137,6 +137,13 @@ h2 {
     text-align: center;
 }
 
+.photo-upload-button{
+    padding: 0.3rem;
+    border-radius: 6px;
+    background-color: white;
+    opacity: 0.7;
+}
+
 @media screen and (max-width:767px) {
     h1 {
         font-size: 1.5rem;
@@ -156,19 +163,20 @@ h2 {
             <img src="<?= $cover_photo ?>" alt="" class="photo-element" styl>
             <?php if (($organization || $moderator) && ($_GET["page"] == "about")) { ?>
                 <div class="image-upload hidden form">
-                    <label for="file-input">
-                        <i class="fas fa-edit clr-white"></i>
+                    <label for="file-input" class="photo-upload-button">
+                        <i class="fas fa-edit"></i>
                     </label>
-                    <input id="file-input" name="cover-photo" type="file" form="update-form" />
+                    <input id="file-input" name="cover-photo[]" type="file" form="update-form" />
                 </div>
             <?php } ?>
         </div>
     </div>
 
 
-    <div class="flex-row flex-center margin-md">
+    <div class="flex-col flex-center margin-md">
         <h1 class="data"><?= $event_name ?></h1>
         <?php if (($organization || $moderator) && ($_GET["page"] == "about")) { ?>
+            <label class="form hidden" for="">Event name</label>
             <input value="<?= $event_name ?>" type="text" name="event_name" form="update-form" class="form form-ctrl hidden" placeholder="Enter event name" required></input>
         <?php } ?>
     </div>
@@ -227,6 +235,8 @@ h2 {
 
 
 <?php include "footer.php" ?>
+<!-- Link Script for display input validation errors-->
+<script src="/Public/assets/js/input_validation.js"></script>
 
 
 <script>

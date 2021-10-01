@@ -7,19 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/Public/assets/newstyles.css">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <title>Document</title>
 </head>
 <style>
     .form {
         min-width: 50%;
-        overflow: hidden;
-        height: 0px;
-        transition: height, 0.3s linear;
     }
-
-    .show-form {
-        height: 130px;
-        transition: height, 0.3s linear;
+    .main-container{
+        min-height: 100%;
+        align-items: center;
     }
 
     .gallery-container {
@@ -71,14 +69,15 @@
     }
 
     .delete-button {
+        font-family: 'FontAwesome';
+        top: 18px;
         background: white;
         opacity: 0.5;
         padding: 0.2rem;
         position: absolute;
-        right: 11px;
-        top: 11px;
         border-radius: 1px !important;
         transition: opacity 0.2s ease-in-out;
+        left: 18px;
     }
 
     .delete-button:hover {
@@ -89,7 +88,34 @@
         opacity: 1;
     }
 
-    @media screen and (max-width:767px) {
+    .file-grid {
+        display: grid;
+        width: 100%;
+        grid-template-columns: repeat(auto-fill, 70px);
+        gap: 2rem;
+    }
+
+    .file-grid img {
+        object-fit: cover;
+        width: 60px;
+        height: 60px;
+    }
+
+    .file-grid>div {
+        border-radius: 4px;
+        overflow: hidden;
+        position: relative;
+        width: 60px;
+        height: 60px;
+    }
+
+
+
+    @media screen and (max-width:800px) {
+        .form {
+            min-width: 80%;
+        }
+
         .grid {
             grid-gap: 10px;
             grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -109,15 +135,17 @@
 
 
 <body>
-    <div class="flex-col flex-center margin-side-lg">
+    <div class="flex-col  margin-side-lg main-container">
         <h1>Gallery</h1>
         <?php if ($organization) { ?>
-            <button class="btn btn-solid margin-lg" onclick="addPhoto()">Add photo &nbsp; <i class="fas fa-plus"></i></button>
-            <p class="clr-red"><?php if(isset($_GET["error"])) echo $_GET["error"]; ?></p>
-            <form class="form flex-col flex-center" action="/Organisation/addPhoto" method="post" enctype="multipart/form-data">
-                <label for="myfile">Select a file:</label>
-                <input type="file" class="form-ctrl margin-md" id="myfile" name="photo">
-                <button type="submit" class="btn ">Save</button>
+            <p class="clr-red"><?php if (isset($_GET["error"])) echo $_GET["error"]; ?></p>
+            <form class="form flex-col flex-center" id="file-form" method="post" enctype="multipart/form-data">
+                <label for="files">
+                    <div class="btn btn-solid margin-lg">Add photo &nbsp; <i class="fas fa-plus"></i></div>
+                </label>
+                <input type="file" class="hidden" id="files" name="photo" accept=".jpg, .jpeg, .png" multiple />
+                <div id="selected_files" class="file-grid margin-md"></div>
+                <button type="submit" class="btn save-button hidden">Save</button>
             </form>
         <?php } ?>
 
@@ -135,62 +163,13 @@
                     </div>
                 </figure>
             <?php } ?>
-            <figure class="item">
-                <div class="delete-button">
-                    <i class="far fa-trash-alt"></i>
-                </div>
-                <div class="photo-container flex flex-center content"><img src="/Public/assets/login-image.jpg" style="object-fit: cover;" alt=""></div>
-            </figure>
-            <figure class="item">
-                <div class="delete-button">
-                    <i class="far fa-trash-alt"></i>
-                </div>
-                <div class="photo-container flex flex-center content"><img src="/Public/assets/newphoto.jpeg" style="object-fit: cover;" alt=""></div>
-            </figure>
-            <figure class="item">
-                <div class="delete-button">
-                    <i class="far fa-trash-alt"></i>
-                </div>
-                <div class="photo-container flex flex-center content"><img src="/Public/assets/photo.jpeg" style="object-fit: cover;" alt=""></div>
-            </figure>
-            <figure class="item">
-                <div class="delete-button">
-                    <i class="far fa-trash-alt"></i>
-                </div>
-                <div class="photo-container flex flex-center content"><img src="/Public/assets/login-image.jpg" style="object-fit: cover;" alt=""></div>
-            </figure>
-            <figure class="item">
-                <div class="delete-button">
-                    <i class="far fa-trash-alt"></i>
-                </div>
-                <div class="photo-container flex flex-center content"><img src="/Public/assets/photo.jpeg" style="object-fit: cover;" alt=""></div>
-            </figure>
-            <figure class="item">
-                <div class="delete-button">
-                    <i class="far fa-trash-alt"></i>
-                </div>
-                <div class="photo-container flex flex-center content"><img src="/Public/assets/login-image.jpg" style="object-fit: cover;" alt=""></div>
-            </figure>
-            <figure class="item">
-                <div class="delete-button">
-                    <i class="far fa-trash-alt"></i>
-                </div>
-                <div class="photo-container flex flex-center content"><img src="/Public/assets/login-image.jpg" style="object-fit: cover;" alt=""></div>
-            </figure>
-
-
-
         </div>
     </div>
 </body>
 
-<?php include "footer.php"?>
+<?php include "footer.php" ?>
 
 <script>
-    function addPhoto() {
-        document.querySelector(".form").classList.toggle("show-form");
-    }
-
     function resizeGridItem(item) {
         grid = document.getElementsByClassName("grid")[0];
         rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
@@ -215,6 +194,90 @@
     for (x = 0; x < allItems.length; x++) {
         imagesLoaded(allItems[x], resizeInstance);
     } */
+</script>
+<script>
+    const input = document.querySelector('#files');
+    input.addEventListener('change', handleFileSelect);
+
+    document.querySelector("#file-form").addEventListener("submit", handleForm);
+
+    document.querySelector("body").addEventListener("click", (event) => {
+        console.log(event.target);
+        if (event.target.classList.contains("sel-file")) {
+            console.log("sdfsd");
+            removeFile(event);
+        }
+    });
+
+
+    var selDiv = document.getElementById("selected_files");
+    var storedFiles = [];
+
+
+    function handleFileSelect(event) {
+
+        var files = event.target.files;
+        var filesArr = Array.prototype.slice.call(files);
+        filesArr.forEach(function(f) {
+
+            if (!f.type.match("image.*")) {
+                return;
+            }
+
+            storedFiles.push(f);
+
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                var html = document.createElement("div");;
+                html.innerHTML = "<img src=\"" + event.target.result + "\" data-file='" + f.name + "' class='sel-file' title='Click to remove'> <div class='delete-button sel-file'" + " data-file='" + f.name + "' >&#xf2ed;</div>";
+                selDiv.appendChild(html);
+            }
+            reader.readAsDataURL(f);
+        });
+        if (storedFiles.length != 0)
+            document.querySelector(".save-button").classList.remove("hidden");
+    }
+
+
+    function handleForm(event) {
+        if (storedFiles.length == 0)
+            location.reload();
+
+        event.preventDefault();
+        var formdata = new FormData();
+
+        for (var i = 0, len = storedFiles.length; i < len; i++) {
+            formdata.append('photo[]', storedFiles[i]);
+        }
+
+        $.ajax({
+
+            url: "/Organisation/addPhoto",
+            type: 'POST',
+            data: formdata,
+            dataType: "json",
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: (data) => {
+                location.reload();
+                return false;
+            }
+        });
+    }
+
+    function removeFile(e) {
+        var file = e.target.dataset["file"];
+        for (var i = 0; i < storedFiles.length; i++) {
+            if (storedFiles[i].name === file) {
+                storedFiles.splice(i, 1);
+                break;
+            }
+        }
+        e.target.parentElement.remove();
+        if (storedFiles.length == 0)
+            document.querySelector(".save-button").classList.add("hidden");
+    }
 </script>
 
 </html>

@@ -7,6 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/Public/assets/newstyles.css">
+    <link rel="me" href="https://twitter.com/twitterdev">
+    <link rel="canonical" href="/web/tweet-button">
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -98,7 +101,6 @@
 
     .about-textarea {
         height: 150px;
-        width: 800px;
         padding: 12px 20px;
         box-sizing: border-box;
         border: 2px solid #ccc;
@@ -162,21 +164,30 @@
     }
 
     #map {
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
         position: relative;
         height: 350px;
         width: 600px;
         border-radius: 8px;
     }
 
-    
+    .home-events {
+        border-radius: 8px;
+        min-height: max-content;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+        padding: 2rem 1rem;
+        margin: 1rem 0 2rem 0;
+    }
 
- 
+
     @media screen and (max-width:800px) {
         .progress {
             width: 75%;
         }
 
-        .margin-lg{
+        .margin-lg {
             margin: 10px 0px;
         }
 
@@ -209,7 +220,7 @@
 
         }
 
-        .form {
+        .about-textarea{
             width: 100%;
         }
 
@@ -221,8 +232,15 @@
         .flex-row-to-col {
             flex-direction: column;
         }
-        
 
+        .home-events {
+            grid-template-columns: 1fr;
+            grid-gap: 1rem;
+        }
+
+        .grid-row-1 {
+            grid-row: 1;
+        }
     }
 </style>
 
@@ -238,9 +256,9 @@
                     <div class="date-container">
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width far fa-calendar-alt clr-green margin-side-lg"></i>
-                            <h4 class="head-margin data"><?= $start_date ?> - <?= $end_date ?></h4>
+                            <h4 class="head-margin data">Starts on <?= $start_date ?><br>Ends on <?= $end_date ?></h4>
                             <?php if ($organization || $moderator) { ?>
-                                <div class="flex-row-to-col flex-center">
+                                <div class="flex-row-to-col">
                                     <div class="flex-col">
                                         <label class="form hidden" for="start_date">Event starts on</label>
                                         <input type="date" id="start_date" value="<?= $start_date ?>" name="start_date" class="form form-ctrl margin-side-md hidden" data-placeholder="Event starts on?" required></input>
@@ -257,14 +275,14 @@
                     <div class="time-container">
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width far fa-clock clr-green margin-side-lg"></i>
-                            <h4 class="head-margin data"><?= $start_time ?></h4>
+                            <h4 class="head-margin data">At <?= $start_time ?></h4>
                             <?php if ($organization || $moderator) { ?>
                                 <div class="flex-row-to-col flex-center">
-                                    <div class="flex-row">
+                                    <div class="flex-row flex-center">
                                         <label class="form hidden" for="start_time">Starts at?</label>
                                         <input type="time" value="<?= $start_time ?>" name="start_time" class="form form-ctrl margin-side-md hidden" data-placeholder="Event starts at?" required></input>
                                     </div>
-                                    <div class="flex-row">
+                                    <div class="flex-row flex-center">
                                         <label class="form hidden" for="end_time">Ends at?</label>
                                         <input type="time" value="<?= $end_time ?>" name="end_time" class="form form-ctrl margin-side-md hidden" data-placeholder="Event ends at?" required></input>
                                     </div>
@@ -276,7 +294,7 @@
                     <div class="time-container">
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width fas fa-hourglass-start clr-green margin-side-lg"></i>
-                            <h4 class="head-margin"><?= $duration ?></h4>
+                            <h4 class="head-margin">Duration <?= $duration ?></h4>
                         </div>
                     </div>
 
@@ -355,14 +373,16 @@
             <?php if ($volunteer_status == 1) { ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d">
                     <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
-                    <div class="progress" data-width="<?php if ($volunteer_percent == NULL) echo "0";
-                                                        else $volunteer_percent ?>%">
-
+                    <div class="progress" data-width="<?php if ($volunteer_percent == NULL) echo "0";else $volunteer_percent ?>%">
                         <div class="volunteers-progress-bar"></div>
                     </div>
-                    <div id="volunteer-btn">
-                            <button class="btn clr-green margin-md"  onclick="togglePopup('volunteer-form'); blur_background('background');stillBackground('id1')"><i class="fas fa-user-friends" ></i>&nbsp;I want to volunteer</button>  
-                    </div>
+                    <?php if ($guest_user){ ?>
+                        <button class="btn clr-green margin-md"  onclick="window.location.href='/Login/view/'" ><i class="fas fa-user-friends" ></i>&nbsp;I want to volunteer</button>  
+                    <?php } else if ($organization || $admin){ ?>
+                        <button class="btn clr-green margin-md" disabled></i>&nbsp;I want to volunteer</button>  
+                    <?php } else if($registered_user) { ?>
+                        <button class="btn clr-green margin-md"  onclick="togglePopup('volunteer-form'); blur_background('background');stillBackground('id1')"><i class="fas fa-user-friends" ></i>&nbsp;I want to volunteer</button>  
+                    <?php } ?>
                     
                 </div>
             <?php } ?>
@@ -370,16 +390,52 @@
             <?php if ($donation_status == 1) { ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d; text-align:center">
                     <p style="color:white">Would you like to give value to your hard-earned money by contributing to this community service project?</p>
-                    <div class="progress" data-width="<?php if ($donation_percent == NULL) echo "0";
-                                                        else echo $donation_percent ?>%">
+                    <div class="progress" data-width="<?php if ($donation_percent == NULL) echo "0"; else echo $donation_percent ?>%">
                         <div class="donaters-progress-bar"></div>
                     </div>
-                    <button class="btn clr-green margin-md" onclick="togglePopup('form'); blur_background('background');stillBackground('id1')"><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
+                    <?php if ($guest_user){ ?>
+                        <button class="btn clr-green margin-md" onclick="window.location.href='/Login/view/'"><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
+                    <?php } else if ($organization || $admin){ ?>
+                        <button class="btn clr-green margin-md" disabled></i>&nbsp;Donate Now!</button>
+                    <?php } else if($registered_user) { ?>
+                        <button class="btn clr-green margin-md" onclick="togglePopup('form'); blur_background('background');stillBackground('id1')"><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
+                    <?php } ?>
+
+                    
                 </div>
             <?php } ?>
 
-            <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #84d1bd; text-align:center">
-                <button class="btn btn-solid margin-md" onclick="window.location.href='/RegisteredUser/chatApp?new_chat_id=<?= 'EVN' . $_GET['event_id'] ?>'">Chat with us</button>
+            <div class="flex-row flex-center margin-lg">
+                <div class="margin-md">
+                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-show-count="false">Tweet</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="margin-md" style="margin-bottom: 12px;">
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <div id="fb-root"></div>
+                    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v12.0" nonce="xqUnsUm7"></script>
+
+                    <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+                </div>
+
+
+            </div>
+
+            <div class="flex-col flex-center content border-round container-size1 home-events">
+                <div class="flex-row flex-center">
+                    <img src="/Public/assets/chat.gif" style="width:500px" alt="">
+                </div>
+
+                <div class="flex-col flex-center grid-row-1" style="text-align:center">
+                    <h4 class="margin-md felx-row flex-center">Want to clear out all your doubts?<br>Curious to know who we are?</h4>
+                    <div>
+                        <img src="/Public/assets/doubt-banner.png" style="width:200px" alt="">
+                    </div>
+                    <p>We are just one click away!</p>
+                    <div>
+                        <button class="btn btn-solid margin-md" onclick="window.location.href='/RegisteredUser/chatApp?new_chat_id=<?= 'EVN' . $_GET['event_id'] ?>'">Chat with us</button>
+                    </div>
+                </div>
             </div>
 
             <?php if ($moderator || $organization) { ?>
@@ -408,43 +464,38 @@
             <div>
                 <h3>What are the days you would like to volunteer ?</h3>
             </div>
-            <form action = "/Volunteer/volunteerEvent?event_id=<?= $_GET["event_id"] ?>" method="post">
-                <button type="button"class="btn-icon btn-close" onclick="togglePopup('volunteer-form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
+            <form action="/Volunteer/volunteerEvent?event_id=<?= $_GET["event_id"] ?>" method="post">
+                <button type="button" class="btn-icon btn-close" onclick="togglePopup('volunteer-form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
                 <?php
-                    $event_days = [] ;
+                    $event_days = [];
 
                     $startDate = new DateTime($start_date);
                     $interval = new DateInterval('P1D');
                     $realEnd = new DateTime($end_date);
                     $realEnd->add($interval);
                   
-                    
-                    if($start_date == $end_date){
                        
-                        echo "<div class='flex-row flex-center'><h3>".$start_date."</h3>
-                        <input type='checkbox'  name='volunteer_date[]' value='$start_date' checked='checked' disabled>
-                        </div> ";
-
-                    }
-                    else{
-                       
-                        $period = new DatePeriod( $startDate , $interval, $realEnd);
-                        foreach($period as $date) {                 
-                            $event_days = $date->format('Y-m-d'); 
+                    $period = new DatePeriod( $startDate , $interval, $realEnd);
+                    foreach($period as $date) {                 
+                        $event_days = $date->format('Y-m-d');
+                        if($volunteer_capacity_exceeded[$event_days] == "TRUE"){
                             echo "<div class='flex-row flex-center'><h3>".$event_days."</h3>
-                            <input type='checkbox'  name='volunteer_date[]' value='$event_days'>
-                            </div>";
+                            <input type='checkbox'  name='volunteer_date[]' value='$event_days'"; for($i=0;$i<count($volunteer_date);$i++){ if($event_days==$volunteer_date[$i]['volunteer_date']){ echo 'checked';}}; 
+                            echo" disabled></div>";
+                        } 
+                        else{
+                            echo "<div class='flex-row flex-center'><h3>".$event_days."</h3>
+                            <input type='checkbox'  name='volunteer_date[]' value='$event_days'"; for($i=0;$i<count($volunteer_date);$i++){ if($event_days==$volunteer_date[$i]['volunteer_date']){ echo 'checked';}}; 
+                            echo"></div>";
                         }
+                        
                     }
-                    
-                    
-                  
-                   
+   
                   
                 ?>
-                <button class="btn btn-solid margin-md" type="submit" id="volunteer-btn" onClick="swithtoUnvolunteer()" >Volunteer</button>
+                <button class="btn btn-solid margin-md" type="submit" id="volunteer-btn" onClick="swithtoUnvolunteer()">Volunteer</button>
             </form>
-           
+
         </div>
 
     </div>
@@ -474,11 +525,12 @@
         </div>
     </div>
 
+
 </body>
 
 
-
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
+
 
 <script>
     <?php if ($organization || $moderator) { ?>
@@ -490,14 +542,17 @@
             }, 2000);
         }
 
-        var today = new Date();
+        <?php $today = gmdate("Y-m-d",(int)shell_exec("date '+%s'"));
+        $min_date = min($today,$start_date); ?>
+
+        /* var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0');
         var yyyy = today.getFullYear();
 
-        today = yyyy + '-' + mm + '-' + dd;
-        document.getElementById("start_date").setAttribute("min", today);
-        document.getElementById("end_date").setAttribute("min", "<?= $start_date ?>");
+        today = yyyy + '-' + mm + '-' + dd; */
+        document.getElementById("start_date").setAttribute("min", "<?= $min_date ?>");
+        document.getElementById("end_date").setAttribute("min", "<?= $today ?>");
         document.getElementById("start_date").addEventListener("change",()=>{
             document.getElementById("end_date").setAttribute("min",document.getElementById("start_date").value);
         });
@@ -589,22 +644,27 @@
         }
 
         el.animate({
-            width: usedWidth
+            width: (parseInt(width.replace('%', '')) > 100 ? "100%" : usedWidth) 
         }, {
             duration: 2000,
             step: function(now, fx) {
+                console.log("sdasdas");
                 if (fx.prop == 'width') {
-                    if (parseInt(width.replace('%', '')) < now) {
+                    if (parseInt(width.replace('%', '')) < now && now<=100) {
                         now = parseInt(width.replace('%', ''));
                     }
                     el.html(Math.round(now * 100) / 100 + '%');
                 }
             }
         });
+
+        setTimeout(()=>{
+            el.html(width);
+        },2100)
     }
 
     $('.progress').each(function() {
-        animateProgressBar($(this).find("div"), $(this).data("width"))
+        animateProgressBar($(this).find("div"), $(this).data("width"));
     });
 
 
@@ -661,8 +721,6 @@
         map.setCenter(myLatlng);
         map.setZoom(15);
     }
-
-  
 </script>
 
 </html>

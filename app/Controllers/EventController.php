@@ -15,15 +15,16 @@ class EventController
     public function about()
     {
         $user_roles = Controller::accessCheck(["moderator", "organization", "guest_user", "registered_user"], $_GET["event_id"]);
-        $register_user = new RegisteredUser;
         $event = new Events;
-        $organisation = new Organisation;
+        $volunteer = new Volunteer();
         if (!isset($_SESSION))
             session_start();
         if ($event_details = $event->getDetails($_GET["event_id"])) {
             $data = $event_details;
             $data["volunteered"] = $data["volunteered"] == "" ? "0" :  $data["volunteered"];
             $data["donations"] = $data["donations"] == "" ? "0" :  $data["donations"];
+            $data["volunteer_date"] = $volunteer->getVolunteeredDates($_GET["event_id"]);
+            $data["volunteer_capacity_exceeded"]=$volunteer->checkVolunteerCount($_GET["event_id"],$data['start_date'],$data['end_date']);
             View::render("eventPage", $data, $user_roles);
         } else
             View::render("home");
@@ -32,8 +33,9 @@ class EventController
     public function addPhoto()
     {
         (new Gallery)->addPhoto(["event_id" => $_GET["event_id"]]);
-        Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "gallery"]);
+        echo json_encode("");
     }
+    
     public function userroles($event_details)
     {
         $user_roles = Controller::accessCheck(["organization"]);
@@ -83,16 +85,12 @@ class EventController
 
     public function timeline($event_details)
     {
-        $user_roles = Controller::accessCheck(["moderator", "organization"]);
-        View::render("eventPage", $event_details, $user_roles);
+        (new WorkTimelineController)->view($event_details);
     }
 
     public function forum($event_details)
     {
-        $user_roles = Controller::accessCheck(["organization", "registered_user", "moderator", "guest_user"], $_GET["event_id"]);
-        $data["announcements"] = (new Announcement)->getAnnouncement($_GET["event_id"]);
-        $data = array_merge($data, $event_details);
-        View::render("eventPage", $data, $user_roles);
+        (new ForumController)->view($event_details);
     }
 
     public function addEvent()
@@ -106,8 +104,7 @@ class EventController
 
     public function updateDetails()
     {
-        Controller::accessCheck(["moderator", "organization", "guest_user","registered_user"], $_POST["event_id"]);
-        var_dump($_POST);
+        Controller::accessCheck(["moderator", "organization", "guest_user","registered_user"], $_GET["event_id"]);
 
         $validate = new Validation;
         foreach ($_POST as $key => $value) {
@@ -115,10 +112,10 @@ class EventController
             if ($_POST[$key] == "" || $_POST[$key] == "NULL")
                 unset($_POST[$key]);
         }
-
+        
         $events = new Events;
-        $events->updateDetails($_POST);
-        Controller::redirect("/Event/view", ["page" => "about", "event_id" => $_POST["event_id"]]);
+        $events->updateDetails(array_merge($_POST,$_GET));
+        Controller::redirect("/Event/view", ["page" => "about", "event_id" => $_GET["event_id"]]);
     }
 
     public function remove()

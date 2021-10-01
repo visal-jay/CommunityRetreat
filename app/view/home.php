@@ -507,6 +507,7 @@ if (isset($_SESSION["user"]["user_type"])) {
         search({
             sort: 'donation_percent',
             way: 'ASC',
+            donation_status : 1,
             container: 'donation-events'
         });
     }
@@ -515,6 +516,7 @@ if (isset($_SESSION["user"]["user_type"])) {
         search({
             sort: 'volunteer_percent',
             way: 'ASC',
+            volunteer_status: 1,
             container: 'volunteer-events'
         });
     }
@@ -525,8 +527,10 @@ if (isset($_SESSION["user"]["user_type"])) {
         range = '',
         sort = '',
         way = '',
+        volunteer_status='',
+        donation_status='',
         limit = 10,
-        container = ''
+        container = '',
     } = {}) {
 
         const position = await getCoordinates();
@@ -542,6 +546,8 @@ if (isset($_SESSION["user"]["user_type"])) {
                 latitude: latitude,
                 longitude: longitude,
                 distance: range,
+                volunteer_status: volunteer_status,
+                donation_status : donation_status,
                 order_type: sort,
                 way: way,
                 limit: limit
@@ -577,7 +583,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                                 <p>${evn.donation_status==0 ? '<i class="fas fa-times fa-xs clr-red margin-side-md"></i>' : '<i class="fas fa-check fa-xs clr-green margin-side-md"></i>'}</p>
                                 </div>
                                 <div class ="flex-row" style="justify-content:space-between;align-items:center;">
-                                <div style="display:flex;align-items:center;position:relative;width:100%;"><div style="border-radius:6px;position:absolute;width:${(evn.donation_percent==null || evn.donation_percent<5) ? 5 : Math.round(evn.donation_percent)}%;background-color:#FFB319;height:6px;"></div></div>
+                                <div style="display:flex;align-items:center;position:relative;width:100%;"><div style="border-radius:6px;position:absolute;width:${(evn.donation_percent==null || evn.donation_percent<5) ? 5 :(evn.dotaion_percent>100? 100 : Math.round(evn.donation_percent)) }%;background-color:#FFB319;height:6px;"></div></div>
                                 <p>${evn.donation_percent==null ? 0 : Math.round(evn.donation_percent)}%</p>
 
                                 </div>

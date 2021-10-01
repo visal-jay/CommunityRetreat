@@ -161,7 +161,7 @@
                         <div class="switch-btn <?php if ($_GET["login"]) echo "shown"; ?>" onclick="switchf('login-form','signup-form')">Login</div>
                         <div class="switch-btn <?php if ($_GET["signup"]) echo "shown"; ?>" onclick="switchf('signup-form','login-form')">Sign Up</div>
                     </div>
-                    <form action="/Login/validate?<?php if(isset($redirect)) echo "redirect=$redirect" ;?>" method="post" id="login-form" class="form <?php if ($_GET["login"]) echo "shown"; ?>">
+                    <form action="/Login/validate" method="post" id="login-form" class="form <?php if ($_GET["login"]) echo "shown"; ?>">
                         <div class="form-item">
                             <label>Email</label>
                             <input name="email" class="form-ctrl" placeholder="&#xF007; &nbsp; Enter Email" required style="font-family:Arial, FontAwesome" />

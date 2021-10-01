@@ -17,7 +17,7 @@ file.addEventListener('change', function(){
 
     const choosedfile = this.files[0];
     var form_data = new FormData();                  
-    form_data.append('profile_pic', choosedfile);
+    form_data.append('profile_pic[]', choosedfile);
 
     if(choosedfile){
 

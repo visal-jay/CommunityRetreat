@@ -183,7 +183,6 @@
 
     figure:hover .stats {
         display: flex;
-
     }
 
     figure img {
@@ -288,7 +287,7 @@
 
         <choices class="flex-col">
             <div class="flex-row-to-col  flex-space">
-                <button type="button" class="btn btn-solid margin-md" onclick="document.getElementById('map-container').classList.toggle('hidden');resizeMap();">Search by location</button>
+                <button type="button" class="btn btn-solid margin-md" onclick="toggleMap();resizeMap();">Search by location</button>
                 <div class="flex-row flex-center margin-md">
                     <label>Date: &nbsp; </label>
                     <input type="text" id="calendar-input" class="hidden" value="" onchange="search();">
@@ -331,7 +330,7 @@
 
         <!-- map start -->
         <div id="map-container" class="margin-md hidden" style="width: 100%;text-align:center;">
-            <i class="fas fa-times margin-md" style="cursor: pointer; float:right;" onclick="document.getElementById('map-container').classList.toggle('hidden');"></i>
+            <i class="fas fa-times margin-md" style="cursor: pointer; float:right;" onclick="toggleMap();"></i>
             <div id="map"></div>
         </div>
         <!-- map end -->
@@ -455,7 +454,7 @@
                                 <p>${evn.donation_status==0 ? '<i class="fas fa-times fa-xs clr-red margin-side-md"></i>' : '<i class="fas fa-check fa-xs clr-green margin-side-md"></i>'}</p>
                                 </div>
                                 <div class ="flex-row" style="justify-content:space-between;align-items:center;">
-                                <div style="display:flex;align-items:center;position:relative;width:100%;"><div style="border-radius:6px;position:absolute;width:${(evn.donation_percent==null || evn.donation_percent<5) ? 5 : Math.round(evn.donation_percent)}%;background-color:#FFB319;height:6px;"></div></div>
+                                <div style="display:flex;align-items:center;position:relative;width:100%;"><div style="border-radius:6px;position:absolute;width:${(evn.donation_percent==null || evn.donation_percent<5) ? 5 :(evn.dotaion_percent>100? 100 : Math.round(evn.donation_percent)) }%;background-color:#FFB319;height:6px;"></div></div>
                                 <p>${evn.donation_percent==null ? 0 : Math.round(evn.donation_percent)}%</p>
 
                                 </div>
@@ -625,6 +624,22 @@
 
     function resizeMap() {
         document.getElementById("map").style.width = parseInt(document.getElementById("map-container").offsetWidth) + "px";
+    }
+
+    async function toggleMap() {
+        const position = await getCoordinates();
+        let latitude = position.coords.latitude;
+        let longitude = position.coords.longitude;
+        let map = document.getElementById('map-container');
+        if (map.classList.contains("hidden")) {
+            map.classList.toggle("hidden");
+            search(latitude, longitude, 20);
+        } else {
+            map.classList.toggle("hidden");
+            search(latitude, longitude);
+        }
+        resizeMap();
+
     }
 
     window.addEventListener("resize", resizeMap);

@@ -36,7 +36,6 @@ class Announcement extends Model{
     {
         $query = "DELETE FROM `announcement` WHERE announcement_id= :announcement_id";
         $params = ["announcement_id" => $announcement_id];
-        var_dump($params);
         Model::insert($query, $params);
     }
 

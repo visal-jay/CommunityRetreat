@@ -197,7 +197,7 @@
                         <label for="file-input">
                             <i class="fas fa-edit clr-white"></i>
                         </label>
-                        <input id="file-input" name="cover-photo" type="file" />
+                        <input id="file-input" name="cover-photo[]" type="file" />
                     </div>
                 <?php } ?>
             </div>
@@ -208,7 +208,7 @@
                         <label for="file-input-1">
                             <i class="fas fa-edit clr-white"></i>
                         </label>
-                        <input id="file-input-1" name="profile-photo" type="file" />
+                        <input id="file-input-1" name="profile-photo[]" type="file" />
                     </div>
                 <?php } ?>
             </div>
@@ -339,7 +339,7 @@
     var lat = "<?= $latitude ?>";
     var long = "<?= $longitude ?>";
 
-    console.log(latitude, longitude);
+    console.log(lat, lang);
 
     function initMap() {
         map = new google.maps.Map(document.getElementById("map"), {
@@ -385,6 +385,7 @@
         });
     }
 
+    
     function page(page) {
         var children = document.querySelector(".nav-secondary-bar").children;
         console.log(children);

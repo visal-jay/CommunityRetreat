@@ -1,41 +1,53 @@
-let table_data = [ 
-    {
-        eventname: "Beach-cleaning",
-        date:"Wed Jul 28 2021",
-        Activity: "You uploaded photos."
+let table_data = [];
+let activities = renderActivities();
+for(let i=0 ; i < activities.length ; i++ ){
+    let item = 
+        {
+            
+            eventname : activities[i].event_id,
+            date : activities[i].time_stamp,
+            Activity: activities[i].activity
+        }
+        table_data.push(item);
+}
+// let table_data = [ 
+//     {
+//         eventname: "Beach-cleaning",
+//         date:"Wed Jul 28 2021",
+//         Activity: "You uploaded photos."
       
-    },
-    {
-        eventname: "Blood-donation",
-        date:"Wed Jul 28 2021",
-        Activity: "you shared a link."
+//     },
+//     {
+//         eventname: "Blood-donation",
+//         date:"Wed Jul 28 2021",
+//         Activity: "you shared a link."
         
-    },
-    {
-        eventname: "Blood-donation",
-        date:"Wed Jul 28 2021",
-        Activity: "You donated the event"
+//     },
+//     {
+//         eventname: "Blood-donation",
+//         date:"Wed Jul 28 2021",
+//         Activity: "You donated the event"
         
-    },
-    {
-        eventname: "Beach-cleaning",
-        date:"Wed Jul 28 2021",
-        Activity: "You shared a link"
+//     },
+//     {
+//         eventname: "Beach-cleaning",
+//         date:"Wed Jul 28 2021",
+//         Activity: "You shared a link"
        
-    },
-    {
-        eventname: "Blood-donation",
-        date:"Wed Jul 28 2021",
-        Activity: "you shared a link."
+//     },
+//     {
+//         eventname: "Blood-donation",
+//         date:"Wed Jul 28 2021",
+//         Activity: "you shared a link."
         
-    },
-    {
-        eventname: "sramadana campaign",
-        date:"Wed Jul 28 2021",
-        Activity: "you shared a link."
+//     },
+//     {
+//         eventname: "sramadana campaign",
+//         date:"Wed Jul 28 2021",
+//         Activity: "you shared a link."
         
-    }
-]
+//     }
+// ]
 
 table_data.map(addDataRow)
 function addDataRow(data,index){
@@ -99,3 +111,30 @@ function onDelete(index) {
 
    
 }
+function successCall(result){
+    var activities = JSON.parse(result);
+    
+    return activities;
+}
+
+
+
+function renderActivities(){
+
+     var activities = "";
+   
+    $.ajax({
+        async:false,
+        url: "/User/viewActivityLog",
+        type: "post",
+        success : function(result){
+            console.log(result);
+            activities = JSON.parse(result);
+           
+       },
+
+    });
+    return activities;
+
+}
+console.log(renderActivities());

@@ -234,7 +234,7 @@
      <!-- Link Script for change profile picture-->
     <script src="../Public/assets/js/reguserProfilePic.js"></script>
 
-    <!-- Link Script for dis[lay input validation errors-->
+    <!-- Link Script for display input validation errors-->
     <script src="/Public/assets/js/input_validation.js"></script>
 
     <script>

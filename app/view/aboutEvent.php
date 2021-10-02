@@ -421,16 +421,13 @@
 
             </div>
 
-            <div class="flex-col flex-center content border-round container-size1 home-events">
+            <div class="flex-row-to-col flex-center border-round container-size1 home-events">
                 <div class="flex-row flex-center">
-                    <img src="/Public/assets/chat.gif" style="width:500px" alt="">
+                    <img src="/Public/assets/chat.gif" style="height:250px" alt="">
                 </div>
 
                 <div class="flex-col flex-center grid-row-1" style="text-align:center">
                     <h4 class="margin-md felx-row flex-center">Want to clear out all your doubts?<br>Curious to know who we are?</h4>
-                    <div>
-                        <img src="/Public/assets/doubt-banner.png" style="width:200px" alt="">
-                    </div>
                     <p>We are just one click away!</p>
                     <div>
                         <button class="btn btn-solid margin-md" onclick="window.location.href='/RegisteredUser/chatApp?new_chat_id=<?= 'EVN' . $_GET['event_id'] ?>'">Chat with us</button>
@@ -444,7 +441,7 @@
                     <button type="button" class="btn btn-solid bg-red border-red form margin-side-md hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
                     <button name="event_id" value="<?= $_GET["event_id"] ?>" form="update-form" type="submit" class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
                     <?php if ($status == "added") { ?>
-                        <input type="text" name="status" value="published" form="update-form" class="hidden" id="publish-input">
+                        <input type="text" name="status" form="update-form" class="hidden" id="publish-input">
                         <button type="button" id="publish-btn" class="btn margin-lg" onclick="publish(); togglePopup('publish'); blur_background('background'); stillBackground('id1')">Publish</button>
                     <?php } ?>
                 </div>
@@ -515,10 +512,15 @@
                     <input type="number" name="amount" id="amount" min="1000" step="10" required class="form-ctrl" placeholder="Enter The Amount(LKR)">
                 </div>
 
-                <div onload="disableSubmit()">
-                    <input type="checkbox" min="0" name="terms" id="terms" onchange="activateButton(this)"> I Agree
-                    Terms & Coditions
+                <div>
+                    <div>
+                        <p style="color: red;">No refunds will be made except for the removal or <br> cancellation of an event after a donation has been made.</p>
+                    </div>
+                    <div onload="disableSubmit()">
+                        <input type="checkbox" min="0" name="terms" id="terms" onchange="activateButton(this)"> I Agree Terms & Coditions
+                    </div>
                 </div>
+                
 
                 <button class="btn btn-solid margin-md" type="submit" id="donate-btn" disabled>Donate</button>
             </form>
@@ -537,6 +539,7 @@
 
         function publish() {
             document.getElementById("publish-input").name = "status";
+            document.getElementById("publish-input").value = "published";
             setTimeout(function() {
                 document.getElementById("update-form").submit()
             }, 2000);

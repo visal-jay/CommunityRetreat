@@ -93,14 +93,6 @@
         border-radius: 10px;
     }
 
-    .income-form {
-        width: 60%;
-    }
-
-    .expense-form {
-        width: 60%;
-    }
-
     .update-form {
         width: 100%;
     }
@@ -188,6 +180,11 @@
 
     .full-budget-details-btn{
         margin: 25px;
+    }
+
+    .income-expense-add-container {
+        text-align: center;
+        width: 70%;
     }
 
     @media screen and (max-width:800px) {

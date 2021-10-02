@@ -26,13 +26,26 @@ class Donations extends Model{
         $query = 'UPDATE event SET donation_status=0 WHERE event_id =:event_id';
         $params = ["event_id" => $event_id];
         Model::insert($query,$params);
+         
         
     }
 
     public function enableDonation($event_id){/*enable donations for an event*/
-        $query = 'UPDATE event SET donation_status=1 WHERE event_id =:event_id';
+        /*$query = 'UPDATE event SET donation_status=1 WHERE event_id =:event_id';
         $params = ["event_id" => $event_id];
-        Model::insert($query,$params);
+        Model::insert($query,$params);*/
+        
+        $query = 'SELECT organization.account_number, event.event_id FROM organization LEFT JOIN event ON organization.org_uid=event.org_uid WHERE org_uid =:org_uid';
+        
+        if($query['account_number'] = "NULL"){
+            echo 'You have no authorization to enable donations';
+        }
+        else{
+            $query ='UPDATE event SET donation_status=1 WHERE event_id =:event_id';
+            $params = ["event_id" => $event_id];
+            $result=Model::insert($query,$params);
+            return $result;
+        }
         
     }
 
@@ -52,7 +65,7 @@ class Donations extends Model{
     }
 
     public function donationReportGenerate($event_id){/*generate a report with all the details of donations*/
-        $query = 'SELECT donation.amount, donation.contact_no, date(time_stamp) as date, registered_user.username FROM donation LEFT JOIN registered_user ON donation.uid=registered_user.uid WHERE event_id =:event_id'; 
+        $query = 'SELECT donation.amount, date(time_stamp) as date, registered_user.username FROM donation LEFT JOIN registered_user ON donation.uid=registered_user.uid WHERE event_id =:event_id'; 
         $params = ["event_id" => $event_id];
         $result=Model::select($query,$params);
        return $result;

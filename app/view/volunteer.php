@@ -157,7 +157,15 @@
         justify-content: space-between;
     }
 
+    .edit-save-btn{
+        margin-left: 5px;
+        margin-right: 5px;
+    }
 
+    .close-btn, .save-btn{
+        width: 50%;
+        font-size: 0.9rem;
+    }
 
     @media screen and (max-width:768px) {
 
@@ -184,6 +192,7 @@
 
         .save-btn {
             padding: 8px;
+            
         }
 
         .container-size {
@@ -258,8 +267,12 @@
             <div>
                 <button class="btn btn-solid btn-md data edit-btn" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
                 <div class="flex-row-to-col">
-                    <button class=" btn btn-solid btn-md bg-red border-red form hidden close-btn" onclick="edit()">Close &nbsp;&nbsp;<i class="fas fa-times "></i></button>
-                    <button class=" btn btn-solid btn-md form hidden save-btn" type="submit" form="volunteer-capacity">Save &nbsp; <i class="fas fa-check "></i></button>
+                    <div class="edit-save-btn">
+                        <button class=" btn btn-solid bg-red border-red form hidden close-btn" onclick="edit()">Close &nbsp;&nbsp;<i class="fas fa-times "></i></button>
+                    </div>
+                    <div class="edit-save-btn">
+                        <button class=" btn btn-solid form hidden save-btn" type="submit" form="volunteer-capacity">Save &nbsp; <i class="fas fa-check "></i></button>
+                    </div>
                 </div>
             </div>
 

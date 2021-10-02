@@ -185,6 +185,7 @@
 
 
     .photo-container img {
+        height: 125px;
         aspect-ratio: 4/2;
         width: 100%;
         border-radius: 3px;
@@ -291,7 +292,7 @@
             min-width: 200px;
         }
 
-        figure img{
+        .photo-container img {
             height: 100px;
         }
 

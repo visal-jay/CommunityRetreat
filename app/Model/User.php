@@ -114,10 +114,14 @@ class User extends Model
     }
 
     function getActivity(){
-        $query = 'SELECT * FROM activity_log WHERE uid = :uid ORDER BY time_stamp DESC';
+    
         $params = ["uid" => $_SESSION['user']['uid']];
-        $activities = User::select($query,$params);
-        return $activities;
+        $query = 'SELECT * FROM activity_log LEFT JOIN event_details ON activity_log.event_id = event_details.event_id WHERE  activity_log.uid = :uid ORDER BY time_stamp DESC';
+        $activities = User::select( $query,$params);
+         return $activities;
+        
+       
+        
     }
 
 

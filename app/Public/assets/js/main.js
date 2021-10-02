@@ -1,71 +1,36 @@
 let table_data = [];
 let activities = renderActivities();
 for(let i=0 ; i < activities.length ; i++ ){
-    let item = 
+    if(activities[i].event_id==null){
+        let item = 
         {
-            
-            eventname : activities[i].event_id,
+            event_id: null,
             date : activities[i].time_stamp,
             Activity: activities[i].activity
         }
         table_data.push(item);
+    }
+    else{
+        let item = 
+        {
+            event_id: activities[i].event_id,
+            date : activities[i].time_stamp,
+            Activity: activities[i].activity,
+            eventname: activities[i].event_name
+           
+        }
+        table_data.push(item);
+
+    }
 }
-// let table_data = [ 
-//     {
-//         eventname: "Beach-cleaning",
-//         date:"Wed Jul 28 2021",
-//         Activity: "You uploaded photos."
-      
-//     },
-//     {
-//         eventname: "Blood-donation",
-//         date:"Wed Jul 28 2021",
-//         Activity: "you shared a link."
-        
-//     },
-//     {
-//         eventname: "Blood-donation",
-//         date:"Wed Jul 28 2021",
-//         Activity: "You donated the event"
-        
-//     },
-//     {
-//         eventname: "Beach-cleaning",
-//         date:"Wed Jul 28 2021",
-//         Activity: "You shared a link"
-       
-//     },
-//     {
-//         eventname: "Blood-donation",
-//         date:"Wed Jul 28 2021",
-//         Activity: "you shared a link."
-        
-//     },
-//     {
-//         eventname: "sramadana campaign",
-//         date:"Wed Jul 28 2021",
-//         Activity: "you shared a link."
-        
-//     }
-// ]
+
+   
 
 table_data.map(addDataRow)
 function addDataRow(data,index){
     
     let tr = document.createElement('tr');
-    let eventname = document.createElement('td');
-    let eventlabel = document.createElement('div');
-    eventlabel.setAttribute("class","data-label");
-    eventlabel.innerText = "Event Name";
-    eventname.appendChild(eventlabel);
-    let eventdiv = document.createElement('div');
-    eventdiv.setAttribute("class","data");
-    let link = document.createElement('a');
-    link.setAttribute('href', "#");
-    link.innerText = data.eventname;
-    eventdiv.appendChild(link);
-    eventname.appendChild(eventdiv);
-    tr.appendChild(eventname);
+   
 
 
     let date = document.createElement('td');
@@ -86,7 +51,16 @@ function addDataRow(data,index){
     activity.appendChild(activitylabel);
     let activitydiv = document.createElement('div');
     activitydiv.setAttribute("class","data");
-    activitydiv.innerText = data.Activity;
+    let activity_description = document.createElement("p");
+    activity_description.innerText = data.Activity;
+    if(data.event_id != null){
+        let event_link = document.createElement("a");
+        event_link.innerText = " "+ data.eventname;
+        event_link.setAttribute("href","/event/view?page=about&&event_id="+data.event_id);
+        activity_description.appendChild(event_link);  
+    }
+
+    activitydiv.appendChild(activity_description);
     activity.appendChild(activitydiv);
     tr.appendChild(activity);
 

@@ -288,6 +288,11 @@
 
         figure {
             width: 170px;
+            min-width: 200px;
+        }
+
+        figure img{
+            height: 100px;
         }
 
         register {

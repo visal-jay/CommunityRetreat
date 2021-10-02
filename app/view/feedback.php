@@ -299,9 +299,9 @@
                                     <button class="btn flex-col margin-md" onclick="window.location.href='/Feedback/statusToggle?event_id=<?= $_GET['event_id'] ?>&&feedback_id=<?= $feedback['feedback_id'] ?>'">
                                         <?php if ($feedback["status"] == 'show') { ?>
                                             <i class="far fa-eye-slash"></i>
-                                        <? } else { ?>
+                                        <?php } else { ?>
                                             <i class="far fa-eye"></i>
-                                        <? } ?>
+                                        <?php } ?>
                                     </button>
                                 <?php } ?>
                             </div>

@@ -39,7 +39,7 @@ class LoginController
             Controller::redirect('/Login/view',["forgot_password"=>true,"mail"=>true]);
         }
         else{
-            Controller::redirect("Login/view");
+            Controller::redirect("/Login/view");
         }
     }
 

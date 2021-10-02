@@ -148,8 +148,8 @@ class Volunteer extends Model{
     public function markParticipation(){
         $time = (int)shell_exec("date '+%s'");
         $date=date("Y-m-d",$time);
-        $query="UPDATE volunteer SET participate=1 WHERE event_id= :event_id AND ";
-        $params=["event_id"=>$_GET["event_id"],"date"=>$date];
+        $query="INSERT INO volunteer (uid,volunteer_date,participated) VALUES (:uid,:volunteer_date,1) ON DUPLICATE KEY UPDATE participated=1";
+        $params=["uid"=>$_SESSION["user"]["uid"],"event_id"=>$_GET["event_id"],"date"=>$date];
         Model::insert($query,$params);
     }
     

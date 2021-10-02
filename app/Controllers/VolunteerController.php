@@ -43,7 +43,9 @@ class VolunteerController{
 
     public function volunteerValidate()
     {
+        //mark participation
         Controller::accessCheck(["registered_user"]);
+        Controller::validateForm([],["event_id"]);
         (new Volunteer)->markParticipation();
         View::render("volunteerThank");
     }

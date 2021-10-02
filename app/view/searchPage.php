@@ -457,7 +457,7 @@
                     hideMarkers();
                     result.forEach(evn => {
                         let template = `
-                        <figure onclick="location.href = '/event/view?page=about&&event_id=${evn.event_id}' ">
+                        <figure onclick="location.href = '/Event/view?page=about&&event_id=${evn.event_id}' ">
                             <div class="content">
                                 <div class="photo-container"><img src="${evn.cover_photo}" style="object-fit: cover;" alt="">
                                     <div class="stats">
@@ -551,7 +551,7 @@
                 parent_container.innerHTML="";
                 result.forEach(org => {
                     let template = `
-                    <figure onclick="location.href = '/organisation/view?org_id=${org.uid}' ">
+                    <figure onclick="location.href = '/Organisation/view?org_id=${org.uid}' ">
                         <div class="content">
                             <div class="photo-container"><img src="${org.cover_pic}" style="object-fit: cover;" alt="">
                             <p class="margin-md" style="margin-bottom:0;color:white;padding:4px;background-color:#44c9d6;border-radius:15px;text-align:center;font-size:0.85em;">Organisation</p>

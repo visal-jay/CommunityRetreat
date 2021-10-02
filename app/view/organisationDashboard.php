@@ -170,8 +170,6 @@
             font-size: 1rem;
         }
 
-
-
         .event-card-details {
             flex-direction: column;
         }
@@ -355,22 +353,24 @@
             },
             zoom: 6,
         });
-        if (lat != "" || long != "")
-            showPosition();
-    }
-
-
-    if (lat === "" && long === "") {
-        navigator.geolocation.getCurrentPosition((position) => {
+        if (lat != "" && long != "" && lat != "0" && long != "0")
+            showPosition(lat,long);
+        else{
+            navigator.geolocation.getCurrentPosition((position) => {
             lat = position.coords.latitude;
             long = position.coords.longitude;
-            showPosition();
+            showPosition(lat,long);
         });
+        }
     }
 
 
+  
 
-    function showPosition(position) {
+
+
+    function showPosition(lat,long) {
+        console.log(lat,long);
         var myLatlng = new google.maps.LatLng(lat, long);
 
         marker = new google.maps.Marker({

@@ -177,7 +177,6 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
-        padding: 2rem 1rem;
         margin: 1rem 0 2rem 0;
     }
 
@@ -220,7 +219,7 @@
 
         }
 
-        .about-textarea{
+        .about-textarea {
             width: 100%;
         }
 
@@ -240,6 +239,10 @@
 
         .grid-row-1 {
             grid-row: 1;
+        }
+
+        .grid-row-2 {
+            grid-row: 2;
         }
     }
 </style>
@@ -373,65 +376,68 @@
             <?php if ($volunteer_status == 1) { ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d">
                     <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
-                    <div class="progress" data-width="<?php if ($volunteer_percent == NULL) echo "0";else $volunteer_percent ?>%">
+                    <div class="progress" data-width="<?php if ($volunteer_percent == NULL) echo "0";
+                                                        else $volunteer_percent ?>%">
                         <div class="volunteers-progress-bar"></div>
                     </div>
-                    <?php if ($guest_user){ ?>
-                        <button class="btn clr-green margin-md"  onclick="window.location.href='/Login/view/'" ><i class="fas fa-user-friends" ></i>&nbsp;I want to volunteer</button>  
-                    <?php } else if ($organization || $admin){ ?>
-                        <button class="btn clr-green margin-md" disabled></i>&nbsp;I want to volunteer</button>  
-                    <?php } else if($registered_user) { ?>
-                        <button class="btn clr-green margin-md"  onclick="togglePopup('volunteer-form'); blur_background('background');stillBackground('id1')"><i class="fas fa-user-friends" ></i>&nbsp;I want to volunteer</button>  
+                    <?php if ($guest_user) { ?>
+                        <button class="btn clr-green margin-md" onclick="window.location.href='/Login/view/'"><i class="fas fa-user-friends"></i>&nbsp;I want to volunteer</button>
+                    <?php } else if ($organization || $admin) { ?>
+                        <button class="btn clr-green margin-md" disabled></i>&nbsp;I want to volunteer</button>
+                    <?php } else if ($registered_user) { ?>
+                        <button class="btn clr-green margin-md" onclick="togglePopup('volunteer-form'); blur_background('background');stillBackground('id1')"><i class="fas fa-user-friends"></i>&nbsp;I want to volunteer</button>
                     <?php } ?>
-                    
+
                 </div>
             <?php } ?>
 
             <?php if ($donation_status == 1) { ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d; text-align:center">
                     <p style="color:white">Would you like to give value to your hard-earned money by contributing to this community service project?</p>
-                    <div class="progress" data-width="<?php if ($donation_percent == NULL) echo "0"; else echo $donation_percent ?>%">
+                    <div class="progress" data-width="<?php if ($donation_percent == NULL) echo "0";
+                                                        else echo $donation_percent ?>%">
                         <div class="donaters-progress-bar"></div>
                     </div>
-                    <?php if ($guest_user){ ?>
+                    <?php if ($guest_user) { ?>
                         <button class="btn clr-green margin-md" onclick="window.location.href='/Login/view/'"><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
-                    <?php } else if ($organization || $admin){ ?>
+                    <?php } else if ($organization || $admin) { ?>
                         <button class="btn clr-green margin-md" disabled></i>&nbsp;Donate Now!</button>
-                    <?php } else if($registered_user) { ?>
+                    <?php } else if ($registered_user) { ?>
                         <button class="btn clr-green margin-md" onclick="togglePopup('form'); blur_background('background');stillBackground('id1')"><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
                     <?php } ?>
-
-                    
                 </div>
             <?php } ?>
+
+
+
+            <div class=" home-events margin-md content container-size1">
+                <div class="flex-row flex-center">
+                    <img src="/Public/assets/chat.gif" style="height:200px" alt="">
+                </div>
+
+                <div class="flex-col flex-center grid-row-2" style="text-align:center">
+                    <h4 class="margin-md felx-row flex-center">Want to clear out all your doubts?<br>Curious to know who we are?</h4>
+                    <p>We are just one click away!</p>
+                    <div>
+                        <?php if ($guest_user || $registered_user) { ?>
+                            <button class="btn btn-solid margin-md" onclick="window.location.href='/RegisteredUser/chatApp?new_chat_id=<?= 'EVN' . $_GET['event_id'] ?>'">Chat with us</button>
+                        <?php } else if ($organization || $admin) { ?>
+                            <button class="btn btn-solid margin-md" disabled>Chat with us</button>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
 
             <div class="flex-row flex-center margin-lg">
                 <div class="margin-md">
                     <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-show-count="false">Tweet</a>
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                 </div>
-                <div class="margin-md" style="margin-bottom: 12px;">
+                <div class="margin-md" style="margin-bottom: 12px; border-radius:20px; overflow:hidden;width:75px">
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                     <div id="fb-root"></div>
                     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v12.0" nonce="xqUnsUm7"></script>
-
-                    <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-                </div>
-
-
-            </div>
-
-            <div class="flex-row-to-col flex-center border-round container-size1 home-events">
-                <div class="flex-row flex-center">
-                    <img src="/Public/assets/chat.gif" style="height:250px" alt="">
-                </div>
-
-                <div class="flex-col flex-center grid-row-1" style="text-align:center">
-                    <h4 class="margin-md felx-row flex-center">Want to clear out all your doubts?<br>Curious to know who we are?</h4>
-                    <p>We are just one click away!</p>
-                    <div>
-                        <button class="btn btn-solid margin-md" onclick="window.location.href='/RegisteredUser/chatApp?new_chat_id=<?= 'EVN' . $_GET['event_id'] ?>'">Chat with us</button>
-                    </div>
+                    <div class="fb-share-button" data-href="https://www.communityretreat.me/Event/view?page=about&&event_id=<?php $_GET["event_id"] ?>" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
                 </div>
             </div>
 
@@ -464,31 +470,39 @@
             <form action="/Volunteer/volunteerEvent?event_id=<?= $_GET["event_id"] ?>" method="post">
                 <button type="button" class="btn-icon btn-close" onclick="togglePopup('volunteer-form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
                 <?php
-                    $event_days = [];
+                $event_days = [];
 
-                    $startDate = new DateTime($start_date);
-                    $interval = new DateInterval('P1D');
-                    $realEnd = new DateTime($end_date);
-                    $realEnd->add($interval);
-                  
-                       
-                    $period = new DatePeriod( $startDate , $interval, $realEnd);
-                    foreach($period as $date) {                 
-                        $event_days = $date->format('Y-m-d');
-                        if($volunteer_capacity_exceeded[$event_days] == "TRUE"){
-                            echo "<div class='flex-row flex-center'><h3>".$event_days."</h3>
-                            <input type='checkbox'  name='volunteer_date[]' value='$event_days'"; for($i=0;$i<count($volunteer_date);$i++){ if($event_days==$volunteer_date[$i]['volunteer_date']){ echo 'checked';}}; 
-                            echo" disabled></div>";
-                        } 
-                        else{
-                            echo "<div class='flex-row flex-center'><h3>".$event_days."</h3>
-                            <input type='checkbox'  name='volunteer_date[]' value='$event_days'"; for($i=0;$i<count($volunteer_date);$i++){ if($event_days==$volunteer_date[$i]['volunteer_date']){ echo 'checked';}}; 
-                            echo"></div>";
-                        }
-                        
+                $startDate = new DateTime($start_date);
+                $interval = new DateInterval('P1D');
+                $realEnd = new DateTime($end_date);
+                $realEnd->add($interval);
+
+
+                $period = new DatePeriod($startDate, $interval, $realEnd);
+                foreach ($period as $date) {
+                    $event_days = $date->format('Y-m-d');
+                    if ($volunteer_capacity_exceeded[$event_days] == "TRUE") {
+                        echo "<div class='flex-row flex-center'><h3>" . $event_days . "</h3>
+                            <input type='checkbox'  name='volunteer_date[]' value='$event_days'";
+                        for ($i = 0; $i < count($volunteer_date); $i++) {
+                            if ($event_days == $volunteer_date[$i]['volunteer_date']) {
+                                echo 'checked';
+                            }
+                        };
+                        echo " disabled></div>";
+                    } else {
+                        echo "<div class='flex-row flex-center'><h3>" . $event_days . "</h3>
+                            <input type='checkbox'  name='volunteer_date[]' value='$event_days'";
+                        for ($i = 0; $i < count($volunteer_date); $i++) {
+                            if ($event_days == $volunteer_date[$i]['volunteer_date']) {
+                                echo 'checked';
+                            }
+                        };
+                        echo "></div>";
                     }
-   
-                  
+                }
+
+
                 ?>
                 <button class="btn btn-solid margin-md" type="submit" id="volunteer-btn" onClick="swithtoUnvolunteer()">Volunteer</button>
             </form>
@@ -520,7 +534,7 @@
                         <input type="checkbox" min="0" name="terms" id="terms" onchange="activateButton(this)"> I Agree Terms & Coditions
                     </div>
                 </div>
-                
+
 
                 <button class="btn btn-solid margin-md" type="submit" id="donate-btn" disabled>Donate</button>
             </form>
@@ -545,8 +559,8 @@
             }, 2000);
         }
 
-        <?php $today = gmdate("Y-m-d",(int)shell_exec("date '+%s'"));
-        $min_date = min($today,$start_date); ?>
+        <?php $today = gmdate("Y-m-d", (int)shell_exec("date '+%s'"));
+        $min_date = min($today, $start_date); ?>
 
         /* var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
@@ -556,8 +570,8 @@
         today = yyyy + '-' + mm + '-' + dd; */
         document.getElementById("start_date").setAttribute("min", "<?= $min_date ?>");
         document.getElementById("end_date").setAttribute("min", "<?= $today ?>");
-        document.getElementById("start_date").addEventListener("change",()=>{
-            document.getElementById("end_date").setAttribute("min",document.getElementById("start_date").value);
+        document.getElementById("start_date").addEventListener("change", () => {
+            document.getElementById("end_date").setAttribute("min", document.getElementById("start_date").value);
         });
 
 
@@ -647,13 +661,13 @@
         }
 
         el.animate({
-            width: (parseInt(width.replace('%', '')) > 100 ? "100%" : usedWidth) 
+            width: (parseInt(width.replace('%', '')) > 100 ? "100%" : usedWidth)
         }, {
             duration: 2000,
             step: function(now, fx) {
                 console.log("sdasdas");
                 if (fx.prop == 'width') {
-                    if (parseInt(width.replace('%', '')) < now && now<=100) {
+                    if (parseInt(width.replace('%', '')) < now && now <= 100) {
                         now = parseInt(width.replace('%', ''));
                     }
                     el.html(Math.round(now * 100) / 100 + '%');
@@ -661,9 +675,9 @@
             }
         });
 
-        setTimeout(()=>{
+        setTimeout(() => {
             el.html(width);
-        },2100)
+        }, 2100)
     }
 
     $('.progress').each(function() {

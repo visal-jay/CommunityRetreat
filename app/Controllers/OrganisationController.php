@@ -10,6 +10,10 @@ class OrganisationController
         $org_id = $_GET["org_id"];
         $data = (new Organisation)->getDetails($org_id);
         View::render("organisationDashboard", $data,$user_roles);
+        if($_GET["page"]=="gallery")
+            $this->gallery();
+        elseif($_GET["page"]=="events")
+            $this->events();
     }
 
     public function dashboard()

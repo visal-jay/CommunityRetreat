@@ -569,7 +569,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                                 <div>
                                     <span>Volunteered ${evn.volunteered==null ? 0 : Math.round(evn.volunteer_percent)}%</span>
                                     <br>
-                                    <span>Donations ${evn.dotaion_percent==null ? 0 : Math.round(evn.dotaion_percent)}%</span>
+                                    <span>Donations ${evn.donation_percent==null ? 0 : Math.round(evn.donation_percent)}%</span>
                                     <br>
                                     <span>Distance ${evn.distance==null ? "- " : Math.round(evn.distance)} KM</span>
                                     </div>
@@ -583,7 +583,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                                 <p>${evn.donation_status==0 ? '<i class="fas fa-times fa-xs clr-red margin-side-md"></i>' : '<i class="fas fa-check fa-xs clr-green margin-side-md"></i>'}</p>
                                 </div>
                                 <div class ="flex-row" style="justify-content:space-between;align-items:center;">
-                                <div style="display:flex;align-items:center;position:relative;width:100%;"><div style="border-radius:6px;position:absolute;width:${(evn.donation_percent==null || evn.donation_percent<5) ? 5 :(evn.dotaion_percent>100? 100 : Math.round(evn.donation_percent)) }%;background-color:#FFB319;height:6px;"></div></div>
+                                <div style="display:flex;align-items:center;position:relative;width:100%;"><div style="border-radius:6px;position:absolute;width:${(evn.donation_percent==null || evn.donation_percent<5) ? 5 :(evn.donation_percent>100? 100 : Math.round(evn.donation_percent)) }%;background-color:#FFB319;height:6px;"></div></div>
                                 <p>${evn.donation_percent==null ? 0 : Math.round(evn.donation_percent)}%</p>
 
                                 </div>

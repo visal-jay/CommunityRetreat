@@ -47,11 +47,13 @@ class Volunteer extends Model{
     }
     
     public function getVolunteeredDates($event_id){
-        $params = ["uid" => $_SESSION['user']['uid'] , "event_id"=>$event_id];
+        $user=isset($_SESSION['user']['uid']) ? $_SESSION['user']['uid'] : "";
+        $params = ["uid" => $user , "event_id"=>$event_id];
         $query = 'SELECT volunteer_date FROM volunteer WHERE uid = :uid AND event_id = :event_id';
         $result = Model::select($query,$params);
         return $result;
     }
+
     public function checkVolunteerCount($event_id,$start_date,$end_date){
        
 

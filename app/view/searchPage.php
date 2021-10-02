@@ -94,7 +94,8 @@
     #sort,
     #date,
     #way,
-    #mode {
+    #mode,
+    #search-type {
         margin: 0;
         margin-left: 0.5rem;
     }
@@ -287,7 +288,7 @@
 
         <choices class="flex-col">
             <div class="flex-row-to-col flex-space">
-                <button type="button" class="btn btn-solid margin-md" onclick="toggleMap();resizeMap();">Search by location</button>
+                <button type="button" id="map-button" class="btn btn-solid margin-md" onclick="toggleMap();resizeMap();">Search by location</button>
                 <div class="flex-row flex-center margin-md">
                     <label>Date: &nbsp; </label>
                     <input type="text" id="calendar-input" class="hidden" value="" onchange="search();">
@@ -299,12 +300,12 @@
                     </div>
                 </div>
 
-                <select class="form-ctrl" id="search-type" style="margin-left:0.5rem" required onchange="search();">
+                <select class="form-ctrl" id="search-type" style="margin-left:0.5rem"  onchange="search();searchType();">
                     <option value="event"selected>Event</option>
                     <option value="organization">Organization</option>
                 </select>
 
-                <select class="form-ctrl" id="mode" name="mode" style="margin-left:0.5rem" required onchange="search();">
+                <select class="form-ctrl" id="mode" name="mode" style="margin-left:0.5rem"  onchange="search();">
                     <option value="" disabled selected>Select the mode of the event</option>
                     <option value="Physical">Physical</option>
                     <option value="Virtual">Virtual</option>
@@ -360,6 +361,25 @@
         if (calendar !== evt.target && !calendar.contains(evt.target) && !calendar.classList.contains("hidden") && evt.target != calendar_button)
             calendarShow();
     });
+
+    function searchType(){
+        console.log(event.target.value);
+        let mode = document.getElementById("mode");
+        let sort = document.getElementById("sort");
+        let way = document.getElementById("way");
+        let date = document.getElementById("calendar-button");
+        let map = document.getElementById("map-button");
+
+        if (event.target.value=="event"){
+            mode.disabled=sort.disabled=way.disabled=date.disabled=map.disabled=false;
+        }
+        else if(event.target.value=="organization"){
+            mode.disabled=sort.disabled=way.disabled=date.disabled=map.disabled=true;
+            let map_container = document.getElementById('map-container');
+            if(!map_container.classList.contains("hidden"))
+                toggleMap();
+        }
+    }
 
     /* input calendar show-hide */
     function calendarShow() {
@@ -646,7 +666,6 @@
             search(latitude, longitude);
         }
         resizeMap();
-
     }
 
     window.addEventListener("resize", resizeMap);

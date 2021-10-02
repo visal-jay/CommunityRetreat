@@ -64,10 +64,9 @@
         display: flex;
         align-items: center;
         overflow: auto;
-
     }
 
-    .active {
+    .nav-active {
         background-color: #16c79a !important;
         color: white !important;
     }
@@ -213,8 +212,17 @@
                     </div>
                 <?php } ?>
             </div>
+
         </div>
+
+        <div class="flex-row flex-center">
+            <div class="data">
+                <h1><?= $username ?></h1>
+            </div>
+        </div>
+
         <?php if ($registered_user || $guest_user || $admin) { ?>
+            <?php $page=$_GET["page"]; ?>
             <div class="nav-secondary">
                 <div class="nav-secondary-bar margin-lg">
                     <a class="btn margin-side-md <?php if ($page == "about") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Organisation/view?page=about&&org_id=<?= $_GET["org_id"] ?>">About</a>
@@ -224,19 +232,11 @@
             </div>
         <?php } ?>
 
-        
 
-        <div class="flex-row flex-center">
-            <div class="data">
-                <h1><?= $username ?></h1>
-            </div>
-        </div>
 
         <?php
 
-        if (isset($_GET["page"]) && $_GET["page"] == "events") require __DIR__ . "/manageEvents.php";
-        elseif (isset($_GET["page"]) && $_GET["page"] == "gallery") require __DIR__ ."/organisationGallery.php";
-        elseif ($organization || $_GET["page"] == "about") { ?>
+        if ($organization || $_GET["page"] == "about") { ?>
             <!-- about organisation start -->
             <div class="flex-col flex-center">
                 <div class="info" id="about">
@@ -282,11 +282,10 @@
     <?php } ?>
 <?php } ?>
 
-    <?php include "complaint.php" ;?>
 
 </body>
-
-<?php include "footer.php" ?>
+<?php if((isset($_GET["page"]) && $_GET["page"]=="about") || $organization) {include "complaint.php"; ?>
+<?php include "footer.php";} ?>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
 
 <script>
@@ -394,22 +393,8 @@
         });
     }
 
+    
 
-    function page(page) {
-        var children = document.querySelector(".nav-secondary-bar").children;
-        console.log(children);
-        for (i = 0; i < children.length; i++) {
-            children[i].classList.remove("active");
-        }
-        document.getElementById("about").classList.add("hidden");
-        document.getElementById("gallery").classList.add("hidden");
-        document.getElementById("events").classList.add("hidden");
-
-
-        //document.getElementById(page).classList.add("active");
-        document.getElementById(page).classList.toggle("hidden");
-
-    }
 </script>
 
 </html>

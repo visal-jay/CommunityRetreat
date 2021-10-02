@@ -26,7 +26,6 @@ class Events extends Model
         $stmt->execute([]);
         $result = $stmt->fetchColumn();
         $stmt->closeCursor();
-
         $startDate = new DateTime($data['start_date']);
         $interval = new DateInterval('P1D');
         $realEnd = new DateTime($data['end_date']);
@@ -38,7 +37,7 @@ class Events extends Model
         foreach ($period as $date) {
             $event_date = $date->format('Y-m-d');
             $capacity_query = "INSERT INTO `volunteer_capacity`(`event_id`,`event_date`,`capacity`) VALUES (:event_id,:event_date,0)";
-            $capacity_params = ["event_id" => $result[0]["MAX(event_id)"], "event_date" =>  $event_date];
+            $capacity_params = ["event_id" => $result, "event_date" =>  $event_date];
             $stmt = $db->prepare($capacity_query);
             $stmt->execute($capacity_params);
             $stmt->closeCursor();
@@ -76,7 +75,7 @@ class Events extends Model
         $db->beginTransaction();
 
         $params = array();
-        if ($_FILES["cover-photo"]["size"] != NULL) {
+        if ($_FILES["cover-photo"]["size"][0] != NULL) {
             $time = (int)shell_exec("date '+%s'");
             exec("rm -rf /Users/visaljayathilaka/code/group-project/Group-16/app/Uploads/event/cover" . $data["event_id"] . "*");
             $cover_pic = new Image($data["event_id"] . $time, "event/cover/", "cover-photo", true);

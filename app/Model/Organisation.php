@@ -56,8 +56,7 @@ class Organisation extends User
     public function updateDetails($uid, $data)
     {
 
-        $params = array();
-
+        $params=array();
         if ($_FILES["profile-photo"]["size"][0] != NULL) {
             $cover_pic = new Image($_SESSION["user"]["uid"], "profile/", "profile-photo", true);
             $params["profile_pic"] = $cover_pic->getURL();
@@ -77,7 +76,7 @@ class Organisation extends User
 
         $params = array_merge(array_merge($old_data, $data), $params);
         $params["uid"] = $uid;
-
+        
         unset($params["map"]);
 
         var_dump($params);

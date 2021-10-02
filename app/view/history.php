@@ -27,7 +27,6 @@
             <table class="event-table" id = "table">
                 <thead>
                     <tr>
-                        <th>Event name</th>
                         <th>Date</th>
                         <th>Activity</th>
                         <th></th>

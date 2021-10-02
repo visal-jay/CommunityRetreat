@@ -70,8 +70,8 @@ class Volunteer extends Model{
             $query = 'SELECT DISTINCT uid from volunteer WHERE event_id = :event_id AND volunteer_date = :event_date';
             $params = ["event_id" => $event_id , "event_date" => $event_day];
             $volunteer_count = count(Model::select($query,$params));
-            $query1 = 'SELECT capacity FROM volunteer_capacity WHERE event_id = :event_id AND event_date = :event_date';
-            $capacity = Model::select($query1,$params);
+            $query_capacity = 'SELECT capacity FROM volunteer_capacity WHERE event_id = :event_id AND event_date = :event_date';
+            $capacity = Model::select($query_capacity,$params);
 
             if($volunteer_count == $capacity[0]['capacity'] ){
                 $capacity_exceeded[$event_day] = "TRUE";

@@ -39,7 +39,7 @@ class LoginController
             Controller::redirect('/Login/view',["forgot_password"=>true,"mail"=>true]);
         }
         else{
-            Controller::redirect("Login/view");
+            Controller::redirect("/Login/view");
         }
     }
 
@@ -86,6 +86,8 @@ class LoginController
             $user_details["username"]=$user->getUsername($user_details["uid"]);
             $_SESSION["user"] = array_intersect_key($user_details, ["uid" => '', "user_type" => '',"username"=>'']);
             if(isset($_SESSION["redirect"])){
+                var_dump($_SESSION);
+                exit();
                 $redirect =$_SESSION["redirect"] ;
                 unset($_SESSION["redirect"]);
                 Controller::redirect($redirect);

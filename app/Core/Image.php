@@ -9,7 +9,7 @@ class Image
     private $target_dir ="Uploads/";
     private $file_path = "";
     private $temp_file_name="";
-    var_dump($_FILES);
+
     public function __construct(string $file_name, string $file_path ,string $upload_name, bool $overwrite=false)
     {
 
@@ -21,6 +21,7 @@ class Image
 
         $file_ext = strtolower(pathinfo($this->file_path, PATHINFO_EXTENSION));
 
+        
         $check = getimagesize($this->temp_file_name);
 
         if ($check == false) {

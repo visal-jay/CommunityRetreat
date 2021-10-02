@@ -562,7 +562,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                 } else
                     result.forEach(evn => {
                         let template = `
-                    <figure onclick="location.href = '/event/view?page=about&&event_id=${evn.event_id}' ">
+                    <figure onclick="location.href = '/Event/view?page=about&&event_id=${evn.event_id}' ">
                         <div class="content">
                             <div class="photo-container"><img src="${evn.cover_photo}" style="object-fit: cover;" alt="">
                                 <div class="stats">
@@ -669,7 +669,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                 else
                     result.forEach(evn => {
                         let template = `
-                    <figure onclick="location.href = '/event/view?page=about&&event_id=${evn.event_id}' ">
+                    <figure onclick="location.href = '/Event/view?page=about&&event_id=${evn.event_id}' ">
                         <div class="content">
                             <div class="photo-container "><img src="${evn.cover_photo}" style="object-fit: cover;" alt="">
                                 <div class="stats">

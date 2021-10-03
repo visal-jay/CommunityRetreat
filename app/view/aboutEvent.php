@@ -394,8 +394,7 @@
             <?php if ($donation_status == 1) { ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d; text-align:center">
                     <p style="color:white">Would you like to give value to your hard-earned money by contributing to this community service project?</p>
-                    <div class="progress" data-width="<?php if ($donation_percent == NULL) echo "0";
-                                                        else echo $donation_percent ?>%">
+                    <div class="progress" data-width="<?php if ($donation_percent == NULL) echo "0"; else echo (int)$donation_percent ?>%">
                         <div class="donaters-progress-bar"></div>
                     </div>
                     <?php if ($guest_user) { ?>

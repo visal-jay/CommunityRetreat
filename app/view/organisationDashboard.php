@@ -64,10 +64,9 @@
         display: flex;
         align-items: center;
         overflow: auto;
-
     }
 
-    .active {
+    .nav-active {
         background-color: #16c79a !important;
         color: white !important;
     }
@@ -162,6 +161,7 @@
         .cover-place-holder {
             min-width: 80%;
         }
+
         h1 {
             font-size: 1.5rem;
         }
@@ -169,8 +169,6 @@
         h2 {
             font-size: 1rem;
         }
-
-
 
         .event-card-details {
             flex-direction: column;
@@ -212,72 +210,80 @@
                     </div>
                 <?php } ?>
             </div>
+
         </div>
+
+        <div class="flex-row flex-center">
+            <div class="data">
+                <h1><?= $username ?></h1>
+            </div>
+        </div>
+
         <?php if ($registered_user || $guest_user || $admin) { ?>
+            <?php $page=$_GET["page"]; ?>
             <div class="nav-secondary">
                 <div class="nav-secondary-bar margin-lg">
-                    <a class="btn margin-side-md active" style=" margin-bottom:10px;" onclick="page('about');event.target.classList.add('active');">About</a>
-                    <a class="btn margin-side-md" style=" margin-bottom:10px;" onclick="page('gallery');event.target.classList.add('active');">Gallery</a>
-                    <a class="btn margin-side-md" style=" margin-bottom:10px;" onclick="page('events');event.target.classList.add('active');">Events</a>
+                    <a class="btn margin-side-md <?php if ($page == "about") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Organisation/view?page=about&&org_id=<?= $_GET["org_id"] ?>">About</a>
+                    <a class="btn margin-side-md <?php if ($page == "gallery") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Organisation/view?page=gallery&&org_id=<?= $_GET["org_id"] ?>">Gallery</a>
+                    <a class="btn margin-side-md <?php if ($page == "events") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Organisation/view?page=events&&org_id=<?= $_GET["org_id"] ?>">Events</a>
                 </div>
             </div>
-            <iframe src="/organisation/gallery?org_id=<?= $_GET["org_id"] ?>" frameborder="0" id="gallery" class="hidden"></iframe>
-            <iframe src="/organisation/events?org_id=<?= $_GET["org_id"] ?>" frameborder="0" id="events" class="hidden"></iframe>
-
         <?php } ?>
 
-        <div class="flex-col flex-center">
-            <div class="info" id="about">
-                <div class="flex-row flex-center">
-                    <div class="data">
-                        <h1><?= $username ?></h1>
+
+
+        <?php
+
+        if ($organization || $_GET["page"] == "about") { ?>
+            <!-- about organisation start -->
+            <div class="flex-col flex-center">
+                <div class="info" id="about">
+                    <div class="flex-col">
+                        <h2>About us</h2>
+                        <div class="data">
+                            <p><?= $about_us ?></p>
+                        </div>
+                        <?php if ($organization) { ?>
+                            <textarea name="about_us" class="form form-ctrl hidden" placeholder="Enter about us"><?= $about_us ?></textarea>
+                        <?php } ?>
                     </div>
-                </div>
-                <div class="flex-col">
-                    <h2>About us</h2>
-                    <div class="data">
-                        <p><?= $about_us ?></p>
-                    </div>
-                    <?php if ($organization) { ?>
-                        <textarea name="about_us" class="form form-ctrl hidden" placeholder="Enter about us"><?= $about_us ?></textarea>
-                    <?php } ?>
-                </div>
-                <div class="flex-col">
-                    <h2>Contact us</h2>
-                    <div>
-                        <a href="mailto:<?= $email ?>"><?= $email ?> </a>
-                        <p><?= $contact_number ?></p>
-                    </div>
-                </div>
-                <?php if ($organization || (isset($map) && $map == true)) { ?>
-                    <div class="flex-col flex-center margin-md">
-                        <h2>Locate us</h2>
-                        <div id="map" class="border-round <?php if (!$map) echo "map-not"; ?> "></div>
-                        <div class="latlang" class="form hidden">
-                            <input class="hidden" name="longitude" id="longitude" value="<?= $longitude ?>">
-                            <input class="hidden" name="latitude" id="latitude" value="<?= $latitude ?>">
+                    <div class="flex-col">
+                        <h2>Contact us</h2>
+                        <div>
+                            <a href="mailto:<?= $email ?>"><?= $email ?> </a>
+                            <p><?= $contact_number ?></p>
                         </div>
                     </div>
-                <?php } ?>
+                    <?php if ($organization || (isset($map) && $map == true)) { ?>
+                        <div class="flex-col flex-center margin-md">
+                            <h2>Locate us</h2>
+                            <div id="map" class="border-round <?php if (!$map) echo "map-not"; ?> "></div>
+                            <div class="latlang" class="form hidden">
+                                <input class="hidden" name="longitude" id="longitude" value="<?= $longitude ?>">
+                                <input class="hidden" name="latitude" id="latitude" value="<?= $latitude ?>">
+                            </div>
+                        </div>
+                    <?php } ?>
 
-                <?php if ($organization) { ?>
-                    <div class="flex-row flex-center">
-                        <button type="button" class="btn btn-solid data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
-                        <button type="button" class="btn btn-solid bg-red border-red margin-side-md form hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
-                        <button type="submit" class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
-                    </div>
-                <?php } ?>
+                    <?php if ($organization) { ?>
+                        <div class="flex-row flex-center">
+                            <button type="button" class="btn btn-solid data" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
+                            <button type="button" class="btn btn-solid bg-red border-red margin-side-md form hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
+                            <button type="submit" class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
+                        </div>
+                    <?php } ?>
+                </div>
             </div>
-        </div>
-        <?php if ($organization) { ?>
+            <!-- about organisation end -->
+            <?php if ($organization) { ?>
         </form>
     <?php } ?>
-
+<?php } ?>
 
 
 </body>
-
-<?php include "footer.php" ?>
+<?php if((isset($_GET["page"]) && $_GET["page"]=="about") || $organization) {include "complaint.php"; ?>
+<?php include "footer.php";} ?>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
 
 <script>
@@ -308,7 +314,7 @@
 
     function resizeProfile() {
         if (CSS.supports("( aspect-ratio: 1/1 )") == false) {
-            document.querySelector(".cover-place-holder").style.width = (document.querySelector(".photo-container").offsetWidth)*0.6 + "px";
+            document.querySelector(".cover-place-holder").style.width = (document.querySelector(".photo-container").offsetWidth) * 0.6 + "px";
             var cover_width = (document.querySelector(".cover").offsetWidth);
             document.querySelector(".cover-place-holder").style.height = parseInt(cover_width) * 2 / 5 + "px";
             console.log(document.querySelector(".profile-pic").style.height);
@@ -339,8 +345,6 @@
     var lat = "<?= $latitude ?>";
     var long = "<?= $longitude ?>";
 
-    console.log(lat, lang);
-
     function initMap() {
         map = new google.maps.Map(document.getElementById("map"), {
             center: {
@@ -349,22 +353,24 @@
             },
             zoom: 6,
         });
-        if (lat != "" || long != "")
-            showPosition();
-    }
-
-
-    if (lat === "" && long === "") {
-        navigator.geolocation.getCurrentPosition((position) => {
+        if (lat != "" && long != "" && lat != "0" && long != "0")
+            showPosition(lat,long);
+        else{
+            navigator.geolocation.getCurrentPosition((position) => {
             lat = position.coords.latitude;
             long = position.coords.longitude;
-            showPosition();
+            showPosition(lat,long);
         });
+        }
     }
 
 
+  
 
-    function showPosition(position) {
+
+
+    function showPosition(lat,long) {
+        console.log(lat,long);
         var myLatlng = new google.maps.LatLng(lat, long);
 
         marker = new google.maps.Marker({
@@ -386,21 +392,7 @@
     }
 
     
-    function page(page) {
-        var children = document.querySelector(".nav-secondary-bar").children;
-        console.log(children);
-        for (i = 0; i < children.length; i++) {
-            children[i].classList.remove("active");
-        }
-        document.getElementById("about").classList.add("hidden");
-        document.getElementById("gallery").classList.add("hidden");
-        document.getElementById("events").classList.add("hidden");
 
-
-        //document.getElementById(page).classList.add("active");
-        document.getElementById(page).classList.toggle("hidden");
-
-    }
 </script>
 
 </html>

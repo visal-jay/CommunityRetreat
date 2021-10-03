@@ -62,6 +62,10 @@ h1 {
     text-align: center;
 
 }
+
+.graph{
+    width: 100%;
+}
 </style>
 <?php  include "nav.php" ?>
 <body>
@@ -69,11 +73,9 @@ h1 {
             <div class="system-details-cards">
                 <div>
                     <img src="/Public/assets/org.png"style=" width: 200px; height: 200px;">
-                </div>  
-                    
+                </div>                     
                     <h3>Total Number of Organizations</h3>
-                    <h2>20</h2>
-      
+                    <h2>20</h2>   
             </div>
             <div  class="system-details-cards">
                 <div>
@@ -82,17 +84,14 @@ h1 {
                     <h3>Total Number of Registered users</h3>
                     <h2>130</h2>
             </div>
-
       </div>
 
     <div class="container">
-
-      
-        <div class="center" style="text-align: center;display: flex; justify-content: center;">
-            <canvas id="myChart1" style="max-width:800px; margin: 50px;"></canvas>
+        <div class="center graph" style="text-align: center;display: flex; justify-content: center; margin:20px;">
+            <canvas id="myChart1" style="display: block; height: 350px; width: 750px;"></canvas>
         </div>
-        <div class="center" style="text-align: center;display: flex; justify-content: center;">
-            <canvas id="myChart" style="max-width:800px; margin: 50px;"></canvas>
+        <div class="center graph" style="text-align: center;display: flex; justify-content: center; margin:20px;">
+            <canvas id="myChart" style="display: block; height: 350px;width: 750px;"></canvas>
         </div>
       
     </div>

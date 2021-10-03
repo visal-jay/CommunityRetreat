@@ -288,6 +288,11 @@
 
         figure {
             width: 170px;
+            min-width: 200px;
+        }
+
+        figure img{
+            height: 100px;
         }
 
         register {
@@ -562,14 +567,14 @@ if (isset($_SESSION["user"]["user_type"])) {
                 } else
                     result.forEach(evn => {
                         let template = `
-                    <figure onclick="location.href = '/event/view?page=about&&event_id=${evn.event_id}' ">
+                    <figure onclick="location.href = '/Event/view?page=about&&event_id=${evn.event_id}' ">
                         <div class="content">
                             <div class="photo-container"><img src="${evn.cover_photo}" style="object-fit: cover;" alt="">
                                 <div class="stats">
                                 <div>
                                     <span>Volunteered ${evn.volunteered==null ? 0 : Math.round(evn.volunteer_percent)}%</span>
                                     <br>
-                                    <span>Donations ${evn.dotaion_percent==null ? 0 : Math.round(evn.dotaion_percent)}%</span>
+                                    <span>Donations ${evn.donation_percent==null ? 0 : Math.round(evn.donation_percent)}%</span>
                                     <br>
                                     <span>Distance ${evn.distance==null ? "- " : Math.round(evn.distance)} KM</span>
                                     </div>
@@ -583,7 +588,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                                 <p>${evn.donation_status==0 ? '<i class="fas fa-times fa-xs clr-red margin-side-md"></i>' : '<i class="fas fa-check fa-xs clr-green margin-side-md"></i>'}</p>
                                 </div>
                                 <div class ="flex-row" style="justify-content:space-between;align-items:center;">
-                                <div style="display:flex;align-items:center;position:relative;width:100%;"><div style="border-radius:6px;position:absolute;width:${(evn.donation_percent==null || evn.donation_percent<5) ? 5 :(evn.dotaion_percent>100? 100 : Math.round(evn.donation_percent)) }%;background-color:#FFB319;height:6px;"></div></div>
+                                <div style="display:flex;align-items:center;position:relative;width:100%;"><div style="border-radius:6px;position:absolute;width:${(evn.donation_percent==null || evn.donation_percent<5) ? 5 :(evn.donation_percent>100? 100 : Math.round(evn.donation_percent)) }%;background-color:#FFB319;height:6px;"></div></div>
                                 <p>${evn.donation_percent==null ? 0 : Math.round(evn.donation_percent)}%</p>
 
                                 </div>
@@ -669,7 +674,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                 else
                     result.forEach(evn => {
                         let template = `
-                    <figure onclick="location.href = '/event/view?page=about&&event_id=${evn.event_id}' ">
+                    <figure onclick="location.href = '/Event/view?page=about&&event_id=${evn.event_id}' ">
                         <div class="content">
                             <div class="photo-container "><img src="${evn.cover_photo}" style="object-fit: cover;" alt="">
                                 <div class="stats">

@@ -38,6 +38,7 @@ a{
     letter-spacing: 0.35px;
     font-weight: normal;
     padding: 20px 10px 20px;
+    text-align: center;
     
     
 
@@ -49,6 +50,7 @@ a{
 .table-container{
     padding: 3% 5%;
     margin: 10px auto;
+    min-height: 100%;
 }
 
 
@@ -70,6 +72,10 @@ a{
     
 }
 .pop-up{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 30%;
     height: 30%;
     border-radius: 6px;

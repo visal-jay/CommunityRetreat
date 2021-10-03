@@ -20,10 +20,17 @@ class Volunteer extends Model{
         Model::insert($query,$params);
     }
 
-    public function updateVolunteerCapacity($event_id, $volunteer_capacity){//give a volunteer capacity for an event from the UI to store in backend
-        $query = 'UPDATE event SET volunteer_capacity=:volunteer_capacity WHERE event_id =:event_id';
-        $params = ["event_id" => $event_id, "volunteer_capacity" => $volunteer_capacity];
-        Model::insert($query,$params);
+    public function updateVolunteerCapacity($event_id,$capacities){//give a volunteer capacity for an event from the UI to store in backend
+       
+        $query = 'SELECT event_date FROM volunteer_capacity WHERE event_id = :event_id';
+        $params = ["event_id" => $event_id ];
+        $result = Model::select($query,$params);
+        for($i=0 ;$i < count($result); $i++){
+            $update_query = 'UPDATE volunteer_capacity SET capacity = :capacity WHERE event_id =:event_id AND event_date = :event_date';
+            $update_params = ["capacity" => (int)$capacities[$i],"event_id" => $event_id , "event_date" => $result[$i]['event_date']];
+            Model::insert($update_query,$update_params);
+
+        }
     }
 
     public function checkVolunteerCapacityDateRange($event_id,$start_date,$end_date){
@@ -40,11 +47,13 @@ class Volunteer extends Model{
     }
     
     public function getVolunteeredDates($event_id){
-        $params = ["uid" => $_SESSION['user']['uid'] , "event_id"=>$event_id];
+        $user=isset($_SESSION['user']['uid']) ? $_SESSION['user']['uid'] : "";
+        $params = ["uid" => $user , "event_id"=>$event_id];
         $query = 'SELECT volunteer_date FROM volunteer WHERE uid = :uid AND event_id = :event_id';
         $result = Model::select($query,$params);
         return $result;
     }
+
     public function checkVolunteerCount($event_id,$start_date,$end_date){
        
 
@@ -61,8 +70,8 @@ class Volunteer extends Model{
             $query = 'SELECT DISTINCT uid from volunteer WHERE event_id = :event_id AND volunteer_date = :event_date';
             $params = ["event_id" => $event_id , "event_date" => $event_day];
             $volunteer_count = count(Model::select($query,$params));
-            $query1 = 'SELECT capacity FROM volunteer_capacity WHERE event_id = :event_id AND event_date = :event_date';
-            $capacity = Model::select($query1,$params);
+            $query_capacity = 'SELECT capacity FROM volunteer_capacity WHERE event_id = :event_id AND event_date = :event_date';
+            $capacity = Model::select($query_capacity,$params);
 
             if($volunteer_count == $capacity[0]['capacity'] ){
                 $capacity_exceeded[$event_day] = "TRUE";
@@ -76,11 +85,17 @@ class Volunteer extends Model{
     }
 
     public function getVolunteerSum($event_id){
-        $query= 'SELECT COUNT(*) as volunteer_sum FROM volunteer WHERE event_id =:event_id';
-        $params = ["event_id" => $event_id];
-        $result=Model::select($query,$params);
-        $result = ($result[0]["volunteer_sum"]==NULL)?0 : $result[0]["volunteer_sum"];
-       return $result; 
+        $volunteer_sum = [];
+        $query = 'SELECT event_date FROM volunteer_capacity WHERE event_id = :event_id';
+        $params = ["event_id" => $event_id ];
+        $result = Model::select($query,$params);
+        for($i=0 ;$i < count($result); $i++){
+            $params_volunteer = ["event_id" => $event_id , "volunteer_date" => $result[$i]["event_date"]];
+            $query_volunteer = 'SELECT count(uid) AS volunteer_sum  FROM volunteer WHERE event_id = :event_id AND volunteer_date = :volunteer_date GROUP BY volunteer_date ';
+            $volunteer_sum[$i]= Model::select($query_volunteer,$params_volunteer);
+           
+        }
+       return $volunteer_sum;
     }
 
 
@@ -109,10 +124,7 @@ class Volunteer extends Model{
                     Model::insert($query,$params);
                 }
                 return "volunteered for an event";
-  
-               
-
-
+ 
             }
             else{
 
@@ -136,8 +148,8 @@ class Volunteer extends Model{
     public function markParticipation(){
         $time = (int)shell_exec("date '+%s'");
         $date=date("Y-m-d",$time);
-        $query="UPDATE volunteer SET participate=1 WHERE event_id= :event_id AND ";
-        $params=["event_id"=>$_GET["event_id"],"date"=>$date];
+        $query="INSERT INO volunteer (uid,volunteer_date,participated) VALUES (:uid,:volunteer_date,1) ON DUPLICATE KEY UPDATE participated=1";
+        $params=["uid"=>$_SESSION["user"]["uid"],"event_id"=>$_GET["event_id"],"date"=>$date];
         Model::insert($query,$params);
     }
     

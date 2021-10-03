@@ -15,7 +15,7 @@ class Routing
 
     private function match($path)
     {
-        $controller = ($path[0] != "" ? $path[0] :   "Main") . "Controller";
+        $controller = ($path[0] != "" ? ucfirst($path[0]) :   "Main") . "Controller";
 
         $action = $path[1] ?? "index";
 

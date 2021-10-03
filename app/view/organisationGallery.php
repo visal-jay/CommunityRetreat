@@ -16,7 +16,7 @@
         min-width: 50%;
     }
     .main-container{
-        min-height: 100%;
+        min-height: 50%;
         align-items: center;
     }
 

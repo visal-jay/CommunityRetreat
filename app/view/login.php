@@ -163,14 +163,14 @@
                     </div>
                     <form action="/Login/validate" method="post" id="login-form" class="form <?php if ($_GET["login"]) echo "shown"; ?>">
                         <div class="form-item">
-                            <label>Username</label>
-                            <input name="email" class="form-ctrl" placeholder="&#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" />
+                            <label>Email</label>
+                            <input name="email" class="form-ctrl" placeholder="&#xF007; &nbsp; Enter Email" required style="font-family:Arial, FontAwesome" />
                         </div>
                         <div class="form-item">
                             <label>Password</label>
                             <input type="password" name="password" class="form-ctrl" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
                         </div>
-                        <span class="input-error"><?php if(isset($_GET["loginErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp".$_GET['loginErr'] ; ?></span>
+                        <span class="input-error"><?php if(isset($_GET["loginErr"]) && $_GET["loginErr"]!="") echo "<i class='fas fa-exclamation-circle'></i> &nbsp".$_GET['loginErr'] ; ?></span>
                         <br>
                         <a onclick="switchf('forgot-form','login-form')">Forgot your password?</a>
                         <button type="submit" class="btn btn-solid margin-md">Login</button>

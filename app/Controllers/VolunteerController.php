@@ -14,7 +14,7 @@ class VolunteerController{
         $data["ip"] = exec('ifconfig | grep "inet " | grep -v 127.0.0.1 | cut -d\  -f2');
         $data = array_merge($data, $event_details);
         $data['volunteer_capacities'] = $volunteer->getVolunteerCapacities($_GET["event_id"]);
-        var_dump($data);
+        $data['volunteer_sum'] = $volunteer->getVolunteerSum($_GET["event_id"]);
         View::render('eventPage', $data, $user_roles);
     }
     public function disableVolunteer()
@@ -36,18 +36,16 @@ class VolunteerController{
 
     public function updateVolunteerCapacity()
     { //update volunteering capacity
-        var_dump($_POST);
-        exit();
-        ( new UserController)->addActivity("Update volunteer capacity",$_GET['event_id']);
-
         $volunteer = new Volunteer;
-        $volunteer->updateVolunteerCapacity($_GET["event_id"], $_POST["volunteer_capacity"]);
+        $volunteer->updateVolunteerCapacity($_GET["event_id"],$_POST);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "volunteers"]);
     }
 
     public function volunteerValidate()
     {
+        //mark participation
         Controller::accessCheck(["registered_user"]);
+        Controller::validateForm([],["event_id"]);
         (new Volunteer)->markParticipation();
         View::render("volunteerThank");
     }

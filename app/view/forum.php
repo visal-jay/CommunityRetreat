@@ -425,7 +425,7 @@
     });
 
     document.getElementById("update-form").addEventListener("submit", () => {
-        if (editor_obj_update.getData() == "")
+        if (editor_obj_update.getData() == ""){
         let span = document.createElement("span");
             document.getElementById("edit-announcement").insertAdjacentElement("beforebegin", span);
             let msg = "Please fill in this field";
@@ -434,6 +434,7 @@
             span.style.fontSize = "0.7rem";
             input.style.borderColor = "red";
             event.preventDefault();
+        }
     });
     
 
@@ -466,7 +467,7 @@
 
     function editForm(title, announcement_id) {
         document.getElementById("edit-title").value = title;
-        editor_obj.setData(document.getElementById(announcement_id).querySelector(".description").innerHTML)
+        editor_obj_update.setData(document.getElementById(announcement_id).querySelector(".description").innerHTML)
         document.getElementById("edit-announcement-id").value = announcement_id;
     }
 

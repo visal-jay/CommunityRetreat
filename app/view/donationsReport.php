@@ -116,14 +116,12 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     <th>Date</th>
                     <th>Donor</th>
                     <th class="amount">Amount</th>
-                    <th>Contact no</th>
                 </tr>
                 <?php foreach($donations as $donation) { ?>
                 <tr>
                     <td><?= $donation["date"] ?></td>
                     <td><?= $donation["username"] ?></td>
                     <td class="amount"><?php echo 'Rs. '.number_format($donation["amount"], 2) ?></td>
-                    <td><?= $donation["contact_no"] ?></td>
                 </tr>
                 <?php } ?>
             </table>

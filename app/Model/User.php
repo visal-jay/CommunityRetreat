@@ -62,7 +62,7 @@ class User extends Model
         $query = 'SELECT UNIX_TIMESTAMP(first_failed_login) as first_failed_login, failed_login_count FROM login WHERE email= :email AND verified = :verified LIMIT 1';
         $params = ["email" => $email,"verified"=>1];
         $result=User::select($query,$params);
-        if (count($result[0])> 1)
+        if (count($result)>= 1)
             return $result[0];
         else
             return false;
@@ -82,7 +82,6 @@ class User extends Model
         $query = 'SELECT UNIX_TIMESTAMP(first_failed_login) as first_failed_login, failed_login_count FROM login WHERE email= :email AND verified = :verified LIMIT 1';
         $params = ["email" => $email,"verified"=>1];
         $result=User::select($query,$params);
-        var_dump($result);
         if (count($result)>= 1){
             extract($result[0], EXTR_OVERWRITE);
            $time= (int) shell_exec("date '+%s' ");
@@ -114,10 +113,14 @@ class User extends Model
     }
 
     function getActivity(){
-        $query = 'SELECT * FROM activity_log WHERE uid = :uid ORDER BY time_stamp DESC';
+    
         $params = ["uid" => $_SESSION['user']['uid']];
-        $activities = User::select($query,$params);
-        return $activities;
+        $query = 'SELECT * FROM activity_log LEFT JOIN event_details ON activity_log.event_id = event_details.event_id WHERE  activity_log.uid = :uid ORDER BY time_stamp DESC';
+        $activities = User::select( $query,$params);
+         return $activities;
+        
+       
+        
     }
 
 

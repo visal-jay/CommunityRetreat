@@ -56,14 +56,13 @@ class Organisation extends User
     public function updateDetails($uid, $data)
     {
 
-        $params = array();
-
-        if ($_FILES["profile-photo"][0]["size"] != NULL) {
+        $params=array();
+        if ($_FILES["profile-photo"]["size"][0] != NULL) {
             $cover_pic = new Image($_SESSION["user"]["uid"], "profile/", "profile-photo", true);
             $params["profile_pic"] = $cover_pic->getURL();
         }
 
-        if ($_FILES["cover-photo"][0]["size"] != NULL) {
+        if ($_FILES["cover-photo"]["size"][0] != NULL) {
             $cover_pic = new Image($_SESSION["user"]["uid"], "cover/", "cover-photo", true);
             $params["cover_pic"] = $cover_pic->getURL();
         }
@@ -77,9 +76,8 @@ class Organisation extends User
 
         $params = array_merge(array_merge($old_data, $data), $params);
         $params["uid"] = $uid;
-
+        
         unset($params["map"]);
-
 
         $query = 'UPDATE organization SET username= :username, email= :email, contact_number = :contact_number , latlang=POINT(:latitude,:longitude) ,profile_pic = :profile_pic,cover_pic = :cover_pic,about_us=:about_us  WHERE uid = :uid';
         User::insert($query, $params);

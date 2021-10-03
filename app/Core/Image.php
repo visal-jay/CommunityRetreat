@@ -21,6 +21,7 @@ class Image
 
         $file_ext = strtolower(pathinfo($this->file_path, PATHINFO_EXTENSION));
 
+        
         $check = getimagesize($this->temp_file_name);
 
         if ($check == false) {

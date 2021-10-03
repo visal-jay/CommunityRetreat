@@ -3,17 +3,24 @@
 
 class OrganisationController
 {
-    public function view($org_id = '')
+    public function view()
     {
-        $user_roles=Controller::accessCheck(["organization","registered_user","guest_user"]);
-        $org_id = isset($_GET["org_id"]) ? $_GET["org_id"] : $org_id;
+        Controller::validateForm([],["org_id","page"]);
+        $user_roles=Controller::accessCheck(["registered_user","guest_user"]);
+        $org_id = $_GET["org_id"];
         $data = (new Organisation)->getDetails($org_id);
         View::render("organisationDashboard", $data,$user_roles);
+        if($_GET["page"]=="gallery")
+            $this->gallery();
+        elseif($_GET["page"]=="events")
+            $this->events();
     }
 
     public function dashboard()
     {
-        $this->view($_SESSION["user"]["uid"]);
+        $user_roles = Controller::accessCheck(["organization"]);
+        $data = (new Organisation)->getDetails($_SESSION["user"]["uid"]);
+        View::render("organisationDashboard", $data,$user_roles);
     }
 
     public function addPhoto()
@@ -30,11 +37,11 @@ class OrganisationController
         if(isset($_GET["org_id"])){
             $user_roles=Controller::accessCheck(["registered_user","guest_user"]);
             $org_id=$_GET["org_id"];
-            }        
+        }        
         else{
                 $user_roles=Controller::accessCheck(["organization"]);
                 $org_id = $_SESSION["user"]["uid"];
-            }
+        }
 
         if (!$data = (new Gallery)->getGallery(["uid" => $org_id], true))
             $data = array();

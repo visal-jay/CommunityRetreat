@@ -99,6 +99,11 @@
         border-color: #232931;
         transition: all 500ms ease-in-out;
     }
+    .act::before {
+        background: #50d890;
+        border-color: #232931;
+        transition: all 500ms ease-in-out;
+    }
 
     ul.rb li .timestamp {
         color: #50d890;

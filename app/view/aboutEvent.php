@@ -405,6 +405,19 @@
                 </div>
             <?php } ?>
 
+            <div class="flex-col flex-center content border-round container-size1 home-events">
+                <div class="flex-col flex-center grid-row-1" style="text-align:center">
+                    <h4 class="margin-md felx-row flex-center">Want to clear out all your doubts?<br>Curious to know who we are?</h4>
+                    <p>We are just one click away!</p>
+                    <div>
+                        <button class="btn btn-solid margin-md" onclick="window.location.href='/RegisteredUser/chatApp?new_chat_id=<?= 'EVN' . $_GET['event_id'] ?>'">Chat with us</button>
+                    </div>
+                </div>
+                <div class="flex-row flex-center">
+                    <img src="/Public/assets/chat.gif" style="height:200px" alt="">
+                </div>
+            </div>
+
             <div class="flex-row flex-center margin-lg">
                 <div class="margin-md">
                     <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-show-count="false">Tweet</a>
@@ -416,25 +429,6 @@
                     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v12.0" nonce="xqUnsUm7"></script>
 
                     <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-                </div>
-
-
-            </div>
-
-            <div class="flex-col flex-center content border-round container-size1 home-events">
-                <div class="flex-row flex-center">
-                    <img src="/Public/assets/chat.gif" style="width:500px" alt="">
-                </div>
-
-                <div class="flex-col flex-center grid-row-1" style="text-align:center">
-                    <h4 class="margin-md felx-row flex-center">Want to clear out all your doubts?<br>Curious to know who we are?</h4>
-                    <div>
-                        <img src="/Public/assets/doubt-banner.png" style="width:200px" alt="">
-                    </div>
-                    <p>We are just one click away!</p>
-                    <div>
-                        <button class="btn btn-solid margin-md" onclick="window.location.href='/RegisteredUser/chatApp?new_chat_id=<?= 'EVN' . $_GET['event_id'] ?>'">Chat with us</button>
-                    </div>
                 </div>
             </div>
 

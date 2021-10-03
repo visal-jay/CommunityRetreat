@@ -103,6 +103,21 @@
         margin-left: 5px;
         margin-right: 5px;
     }
+
+    .left{
+        text-align: left;
+        
+    }
+
+    .terms-and-conditions-box{
+        background-color: white;
+        box-shadow: 5px 5px 15px 5px #000000;
+        margin-left: 410px;
+        margin-right: 410px;
+        margin-top: 50px;
+        padding: 10px;
+    }
+
 @media screen and (max-width:768px) {
 
     table,
@@ -275,6 +290,19 @@ if(isset($_SESSION ["user"] ["user_type"])){
             class=" btn btn-lg btn-solid" id="initial-donation-enable-btn" onclick="blur_background()">Enable
             Donations</button>
         <!--initally enable the donations-->
+        <div class="terms-and-conditions-box">
+            <p>
+                <ul class="left"><b>
+                    <li>All organizations will be allowed to collect donations and these donations will be<br> credited to a bank account owned by the CommunityRetreat.</li>
+                    <li>At the end of the event, donations will be credited to the bank account belongs to<br> the Organization.</li>
+                    <li>Organization is not allowed to collect donations that exceed the donation capacity.</li>
+                    <li>If an Organization is removed from the system, all the donations will be refunded.</li>
+                </b></ul>
+                <div onload="disableSubmit()">
+                    <input type="checkbox" min="0" name="terms" id="terms" onchange="activateButton(this)"> I Agree Terms & Coditions
+                </div>
+            </p>
+        </div>
     </div>
     <?php } ?>
 </body>
@@ -313,6 +341,10 @@ function edit() {
     }
     /*when edit button is clicked, it is hidden*/
 }
+
+function disableSubmit() {
+        document.getElementById("initial-donation-enable-btn").disabled = true;
+    }
 </script>
 
 </html>

@@ -24,10 +24,5 @@ class ErrorHandler
         echo "<p>Message: '" . $exception->getMessage() . "'</p>";
         echo "<p>Stack trace:<pre>" . $exception->getTraceAsString() . "</pre></p>";
         echo "<p>Thrown in '" . $exception->getFile() . "' on line " . $exception->getLine() . "</p>";
-
-        if (strpos($exception, 'Gallery') !== false)  {
-        $url = substr($_SERVER['HTTP_REFERER'], 0, strpos($_SERVER['HTTP_REFERER'], "?"));
-        Controller::redirect($url."?error=". $exception->getMessage());
-        }
     }
 }

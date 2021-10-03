@@ -407,7 +407,7 @@
                 </div>
             <?php } ?>
 
-            <div class="flex-col flex-center content border-round container-size1 home-events">
+            <div class="content border-round container-size1 home-events">
                 <div class="flex-col flex-center grid-row-1" style="text-align:center">
                     <h4 class="margin-md felx-row flex-center">Want to clear out all your doubts?<br>Curious to know who we are?</h4>
                     <p>We are just one click away!</p>

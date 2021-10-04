@@ -99,6 +99,7 @@
         border-color: #232931;
         transition: all 500ms ease-in-out;
     }
+
     .act::before {
         background: #50d890;
         border-color: #232931;
@@ -250,13 +251,19 @@
                         <?php foreach ($tasks as $task) { ?>
                             <li class="rb-item">
                                 <div class="timestamp">
-                                    <h3><?= $task["start_date"]?><br><?= $task["end_date"]?></h3>
+                                    <h3><?= $task["start_date"] ?><br><?= $task["end_date"] ?></h3>
                                 </div>
-                                <div><?= $task["task"]?></div>
+                                <div><?= $task["task"] ?></div>
                                 <div>
                                     <update class="margin-md">
                                         <button class="btn btn-small" onclick="edit(); editForm('<?= $task['start_date'] ?>','<?= $task['end_date'] ?>','<?= $task['task'] ?>' ,'<?= $task['task_id'] ?>'); togglePopup('edit-form'); blur_background('background'); stillBackground('id1');"><i class="btn-icon far fa-edit margin-side-md"></i>Edit</button>
-                                        <button class="btn btn-small"><i class="far fa-check-square"></i>&nbsp;&nbsp;Mark as completed</button>
+
+                                        <?php if ($task['completed'] == 0) { ?>
+                                            <button class="btn btn-small" onclick="window.location.href='/WorkTimeline/completed?event_id=<?= $_GET['event_id'] ?>&&task_id=<?= $task['task_id'] ?>'"><i class="far fa-check-square"></i>&nbsp;&nbsp;Mark as completed</button>
+                                        <?php } else { ?>
+                                            <button class="btn btn-solid btn-small" onclick="window.location.href='/WorkTimeline/completed?event_id=<?= $_GET['event_id'] ?>&&task_id=<?= $task['task_id'] ?>'"><i class="far fa-check-square"></i>&nbsp;&nbsp;Completed</button>
+                                        <?php } ?>
+
                                         <button class="btn btn-small clr-red border-red " onclick="remove()" required style="font-family:Ubuntu, sans-serif,  FontAwesome"> &#xf2ed; &nbsp;Remove </button>
                                         <div class="flex-row flex-space" style="display: none;">
                                             <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>

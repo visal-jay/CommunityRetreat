@@ -157,12 +157,13 @@
         justify-content: space-between;
     }
 
-    .edit-save-btn{
+    .edit-save-btn {
         margin-left: 5px;
         margin-right: 5px;
     }
 
-    .close-btn, .save-btn{
+    .close-btn,
+    .save-btn {
         width: 50%;
         font-size: 0.9rem;
     }
@@ -192,7 +193,7 @@
 
         .save-btn {
             padding: 8px;
-            
+
         }
 
         .container-size {
@@ -241,26 +242,42 @@
                 <div class="column section">
                     <table class="data">
                         <tr>
-                            <td><h3>Event date</h3></td>
-                            <td><h3>Capacity</h3></td>
+                            <td>
+                                <h3>Event date</h3>
+                            </td>
+                            <td>
+                                <h3>Capacity</h3>
+                            </td>
                         </tr>
                         <tbody>
-                            <?php for($i=0;$i<count($volunteer_capacities);$i++){
+                            <?php for ($i = 0; $i < count($volunteer_capacities); $i++) {
                                 echo "<tr>";
-                                echo "<td>"; echo $volunteer_capacities[$i]['event_date']; 
-                                echo "</td><td>";  echo $volunteer_capacities[$i]['capacity']; echo "</td>";
+                                echo "<td>";
+                                echo $volunteer_capacities[$i]['event_date'];
+                                echo "</td><td>";
+                                echo $volunteer_capacities[$i]['capacity'];
+                                echo "</td>";
                                 echo "</tr>";
-                                
-                            }?>
+                            } ?>
                         </tbody>
-                       
+
                     </table>
                     <form action="/Volunteer/updateVolunteerCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" id="volunteer-capacity" class="flex-col flex-center">
-                        
-                        <?php for($i=0;$i<count($volunteer_capacities);$i++){
-                            echo "<label  class='form  hidden'>"; echo $volunteer_capacities[$i]['event_date']; echo "</label>
-                            <input name='"; echo $i; echo"' type='number' value="; echo $volunteer_capacities[$i]['capacity']; echo "  min="; foreach( $volunteer_sum[$i] as $sum){echo $sum['volunteer_sum'];}  echo " max='10000000' class='form form-ctrl hidden' style='margin: 0.3rem;' />";
-                        }?>
+
+                        <?php for ($i = 0; $i < count($volunteer_capacities); $i++) {
+                            echo "<label  class='form  hidden'>";
+                            echo $volunteer_capacities[$i]['event_date'];
+                            echo "</label>
+                            <input name='";
+                            echo $i;
+                            echo "' type='number' value=";
+                            echo $volunteer_capacities[$i]['capacity'];
+                            echo "  min=";
+                            foreach ($volunteer_sum[$i] as $sum) {
+                                echo $sum['volunteer_sum'];
+                            }
+                            echo " max='10000000' class='form form-ctrl hidden' style='margin: 0.3rem;' />";
+                        } ?>
                     </form>
                 </div>
             </div>
@@ -289,17 +306,27 @@
                 </form>
             <?php } ?>
 
+            <form>
+                <label for="volunteer_date">Sort by volunteering date</label>
+                <select class="form-ctrl" id="volunteer_date" required name="volunteer_date">
+                    <option value="" disabled selected>Select date</option>
+                    <?php for ($i = 0; $i < count($volunteer_capacities); $i++) { ?>
+                        <option value="<?= $volunteer_capacities[$i]['event_date'] ?>"><?= $volunteer_capacities[$i]['event_date'] ?></option>
+                    <?php } ?>
+                </select>
+            </form>
+            
             <div class="bold sum donation-sum-container">
                 <div>Total number of Volunteers:</div>
-                <div><?php  $total_sum =0;
-                            for($i=0 ;$i<count($volunteer_capacities) ;$i++){ 
-                                foreach( $volunteer_sum[$i] as $sum){ 
-                                    $total_sum += $sum['volunteer_sum'];
-                                }
+                <div><?php $total_sum = 0;
+                        for ($i = 0; $i < count($volunteer_capacities); $i++) {
+                            foreach ($volunteer_sum[$i] as $sum) {
+                                $total_sum += $sum['volunteer_sum'];
                             }
-                            echo $total_sum;
-                            
-                ?></div>
+                        }
+                        echo $total_sum;
+
+                        ?></div>
             </div>
 
             <div>
@@ -322,7 +349,11 @@
                                 <td class=" scroll"><?= $volunteer["username"] ?></td>
                                 <td class="scroll"><?= $volunteer["email"] ?></td>
                                 <td><?= $volunteer["contact_number"] ?></td>
-                                <td><?php if($volunteer["participate"]== 1){echo '<i class="fas fa-check" style="color:green" ></i>';} else {echo '<i class="fas fa-times" style="color:red"></i>';} ?></td>
+                                <td><?php if ($volunteer["participate"] == 1) {
+                                        echo '<i class="fas fa-check" style="color:green" ></i>';
+                                    } else {
+                                        echo '<i class="fas fa-times" style="color:red"></i>';
+                                    } ?></td>
                             </tr>
                         <?php } ?>
                     </tbody>

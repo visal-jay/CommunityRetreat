@@ -222,7 +222,6 @@
 
         .popup .content {
             width: 70%;
-            height: 65vh;
             position: fixed;
             text-align: center;
             top: 50%;

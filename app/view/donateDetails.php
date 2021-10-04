@@ -112,10 +112,8 @@
     .terms-and-conditions-box{
         background-color: white;
         box-shadow: 5px 5px 15px 5px #000000;
-        margin-left: 410px;
-        margin-right: 410px;
-        margin-top: 50px;
-        padding: 10px;
+        padding: 20px;
+        margin-top: 20px;
     }
 
 @media screen and (max-width:768px) {
@@ -156,6 +154,13 @@
 
     .form {
         width: fit-content;
+    }
+
+    .terms-and-conditions-box{
+        background-color: white;
+        box-shadow: 5px 5px 15px 5px #000000;
+        margin: 20px;
+        padding: 10px;
     }
 }
 </style>
@@ -219,8 +224,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     </div>
                     <div class="edit-save-btn">
                         <button class=" btn btn-solid form hidden save-btn" type="submit" form="donation-capacity">Save &nbsp; <i class="fas fa-check "></i></button>
-                    </div>
-                    
+                    </div> 
                 </div>
             </div>
 
@@ -236,8 +240,8 @@ if(isset($_SESSION ["user"] ["user_type"])){
             <?php if($donation_status==0){ ?>
             <form action="/Donations/enableDonation?event_id=<?= $_GET["event_id"] ?>" method="post"
                 class=" secondary-donation-enable-disable-btn">
-                <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Enable
-                    Donations</button>
+                    <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Enable
+                        Donations</button>
             </form>
             <?php } ?>
             <!--enable or disable donations-->
@@ -285,25 +289,32 @@ if(isset($_SESSION ["user"] ["user_type"])){
         </div>
     </div>
     <?php if($donation_status==0 && count($donations)==0){ ?>
+
     <div class=" initial-donation-enable-btn">
-        <button onclick="window.location.href=' /Donations/enableDonation?event_id=<?= $_GET['event_id'] ?>'"
-            class=" btn btn-lg btn-solid" id="initial-donation-enable-btn" onclick="blur_background()">Enable
-            Donations</button>
+    <?php if($have_account_number == "TRUE" && ($organization || $treasurer)){?>
+        <button onclick="window.location.href='/Donations/enableDonation?event_id= <?= $_GET['event_id']?>'" class="btn btn-lg btn-solid"  id="initial-donation-enable-btn" onclick='blur_background() ' disabled>Enable Donations</button> 
+    <?php } else if($have_account_number == "FALSE" && ($organization)){?>
+        <button onclick="window.location.href='/Organisation/profile?'" class="btn btn-lg btn-solid"  id="initial-donation-enable-btn" disabled>Enable Donations</button> 
+    <?php } else if($have_account_number == "FALSE" && ($treasurer)){ ?>
+            <p class="clr-red"><i class='fas fa-exclamation-circle clr-red'></i>You're not authorized to enable donations</p>
+    <?php } ?>
+
         <!--initally enable the donations-->
-        <div class="terms-and-conditions-box">
+        <div class="bg-white flex-col flex-center">
             <p>
-                <ul class="left"><b>
+                <ul class="left">
                     <li>All organizations will be allowed to collect donations and these donations will be<br> credited to a bank account owned by the CommunityRetreat.</li>
                     <li>At the end of the event, donations will be credited to the bank account belongs to<br> the Organization.</li>
                     <li>Organization is not allowed to collect donations that exceed the donation capacity.</li>
                     <li>If an Organization is removed from the system, all the donations will be refunded.</li>
-                </b></ul>
-                <div onload="disableSubmit()">
-                    <input type="checkbox" min="0" name="terms" id="terms" onchange="activateButton(this)"> I Agree Terms & Coditions
+                </ul>
+                <div>
+                    <input type="checkbox" min="0" name="terms" id="terms" onchange="activateButton()"> I Agree Terms & Coditions
                 </div>
             </p>
         </div>
     </div>
+
     <?php } ?>
 </body>
 
@@ -342,8 +353,8 @@ function edit() {
     /*when edit button is clicked, it is hidden*/
 }
 
-function disableSubmit() {
-        document.getElementById("initial-donation-enable-btn").disabled = true;
+function activateButton() {
+        document.getElementById("initial-donation-enable-btn").disabled = false;
     }
 </script>
 

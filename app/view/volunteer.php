@@ -322,7 +322,7 @@
                                 <td class=" scroll"><?= $volunteer["username"] ?></td>
                                 <td class="scroll"><?= $volunteer["email"] ?></td>
                                 <td><?= $volunteer["contact_number"] ?></td>
-                                <td><?php if($volunteer["participate"]== 1){echo '<i class="fas fa-check" style="color:green" ></i>';} else {echo '<i class="fas fa-times" style="color:red"></i>';} ?></td>
+                                <td><?php if($volunteer["participated"]== 1){echo '<i class="fas fa-check" style="color:green" ></i>';} else {echo '<i class="fas fa-times" style="color:red"></i>';} ?></td>
                             </tr>
                         <?php } ?>
                     </tbody>

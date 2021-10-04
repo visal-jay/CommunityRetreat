@@ -20,7 +20,9 @@
             align-items: center;
             flex-direction: column;
             margin-top: 20px;
-            bottom: 0%;
+            bottom: 0px;
+            width: 100%;
+          
             
         }
         .footer-content-container{

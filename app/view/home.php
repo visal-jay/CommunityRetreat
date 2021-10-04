@@ -358,7 +358,7 @@ if (isset($_SESSION["user"]["user_type"])) {
     <div class="homepage flex-col flex-center hidden" style="display:none">
         <div class="flex-col flex-center" style="position:relative;">
             <video autoplay muted loop id="myVideo">
-                <source src="/Public/assets/volunteer.mp4#t=61,65" type=video/mp4>
+                <source src="/Public/assets/volunteer.mp4" type=video/mp4>
             </video>
             <div class="heading">
                 <h1>Let's join CommunityRetreat</h1>

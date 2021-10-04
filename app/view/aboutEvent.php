@@ -387,8 +387,7 @@
             <?php if ($volunteer_status == 1) { ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d">
                     <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
-                    <div class="progress" data-width="<?php if ($volunteer_percent == NULL) echo "0";
-                                                        else $volunteer_percent ?>%">
+                    <div class="progress" data-width="<?php if ($volunteer_percent =="NULL") echo "0";else echo (int)$volunteer_percent ?>%">
                         <div class="volunteers-progress-bar"></div>
                     </div>
                     <?php if ($guest_user) { ?>
@@ -569,12 +568,6 @@
         <?php $today = gmdate("Y-m-d", (int)shell_exec("date '+%s'"));
         $min_date = min($today, $start_date); ?>
 
-        /* var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0');
-        var yyyy = today.getFullYear();
-
-        today = yyyy + '-' + mm + '-' + dd; */
         document.getElementById("start_date").setAttribute("min", "<?= $min_date ?>");
         document.getElementById("end_date").setAttribute("min", "<?= $today ?>");
         document.getElementById("start_date").addEventListener("change", () => {

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -355,104 +354,106 @@ if (isset($_SESSION["user"]["user_type"])) {
             <div id="myBar"></div>
         </div>
     </div>
-    <div class="homepage flex-col flex-center hidden" style="display:none">
-        <div class="flex-col flex-center" style="position:relative;">
-            <video autoplay muted loop id="myVideo">
-                <source src="/Public/assets/volunteer.mp4" type=video/mp4>
-            </video>
-            <div class="heading">
-                <h1>Let's join CommunityRetreat</h1>
-            </div>
-        </div>
-
-        <search class="flex-col flex-center border-round">
-            <h1 class="clr-white">Let's find what you like</h1>
-            <div class="flex-row-to-col flex-center">
-                <form action="/Search/view" method="get" class="search-bar" style="height:fit-content">
-                    <input style="color:white" type="search" name="search" class="form-ctrl" placeholder="Search">
-                    <button type="" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
-                </form>
-                <button class="btn btn-solid" id="near-me" onclick="nearme()"><i class="fas fa-map-marker-alt"></i>&nbsp;Near me</button>
-            </div>
-        </search>
-
-        <div class="home-events">
-            <div class="flex-row flex-center">
-                <video class="border-round" autoplay muted loop>
-                    <source src="/Public/assets/covid.mp4" type="video/mp4">
+    <div class="home-div" style="display: hidden;">
+        <div class="homepage flex-col flex-center">
+            <div class="flex-col flex-center" style="position:relative;">
+                <video autoplay muted loop id="myVideo">
+                    <source src="/Public/assets/volunteer.mp4" type=video/mp4>
                 </video>
-            </div>
-
-
-            <div class="flex-col flex-center grid-row-1">
-                <h1>Be safe and spread <span class="clr-red">&#xf004;</span><br>Not COVID</h1>
-                <div>
-                    <img src="/Public/assets/covid-1.svg" style="width:100px" alt="">
-                    <img src="/Public/assets/covid-2.svg" style="width:50px" alt="">
+                <div class="heading">
+                    <h1>Let's join CommunityRetreat</h1>
                 </div>
-                <p class="margin-md felx-row flex-center">Follow health and saftey protocols<br>and engage in your community</p>
             </div>
-        </div>
 
-        <?php if ($guest_user) { ?>
-            <div class="item flex-row-to-col flex-space">
-                <register class="flex-col flex-center">
-                    <img src="/Public/assets/volunteer.png" alt="">
-                    <div class="flex-col flex-center">
-                        <h3>Register as an User</h3>
-                        <p style="text-align: center">By registering as an user you will be eligible to VOLUNTEER for events proudly. <br> You will be able to push yourself more and DONATE generously. </p>
-                        <div><a href="/Login/view?signup=true&&signupUser=true">Sign up as a volunteer <i class="fas fa-long-arrow-alt-right"></i></a></div>
+            <search class="flex-col flex-center border-round">
+                <h1 class="clr-white">Let's find what you like</h1>
+                <div class="flex-row-to-col flex-center">
+                    <form action="/Search/view" method="get" class="search-bar" style="height:fit-content">
+                        <input style="color:white" type="search" name="search" class="form-ctrl" placeholder="Search">
+                        <button type="" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
+                    </form>
+                    <button class="btn btn-solid" id="near-me" onclick="nearme()"><i class="fas fa-map-marker-alt"></i>&nbsp;Near me</button>
+                </div>
+            </search>
+
+            <div class="home-events">
+                <div class="flex-row flex-center">
+                    <video class="border-round" autoplay muted loop>
+                        <source src="/Public/assets/covid.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+
+                <div class="flex-col flex-center grid-row-1">
+                    <h1>Be safe and spread <span class="clr-red">&#xf004;</span><br>Not COVID</h1>
+                    <div>
+                        <img src="/Public/assets/covid-1.svg" style="width:100px" alt="">
+                        <img src="/Public/assets/covid-2.svg" style="width:50px" alt="">
                     </div>
-                </register>
-                <register class="flex-col flex-center">
-                    <img src="/Public/assets/organisation.png" alt="">
-                    <div class="flex-col flex-center">
-                        <h3>Register as an Organisation</h3>
-                        <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
-                        <div><a href="/Login/view?signup=true&&signupOrg=true">Sign up as a organisation <i class="fas fa-long-arrow-alt-right"></i></a></div>
-                    </div>
-                </register>
+                    <p class="margin-md felx-row flex-center">Follow health and saftey protocols<br>and engage in your community</p>
+                </div>
             </div>
-        <?php } ?>
 
-        <div class="home-events">
-            <div class="flex-col flex-center">
-                <img src="/Public/assets/sample-1.svg" alt="">
-                <h2>Recently added</h2>
-                <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
+            <?php if ($guest_user) { ?>
+                <div class="item flex-row-to-col flex-space">
+                    <register class="flex-col flex-center">
+                        <img src="/Public/assets/volunteer.png" alt="">
+                        <div class="flex-col flex-center">
+                            <h3>Register as an User</h3>
+                            <p style="text-align: center">By registering as an user you will be eligible to VOLUNTEER for events proudly. <br> You will be able to push yourself more and DONATE generously. </p>
+                            <div><a href="/Login/view?signup=true&&signupUser=true">Sign up as a volunteer <i class="fas fa-long-arrow-alt-right"></i></a></div>
+                        </div>
+                    </register>
+                    <register class="flex-col flex-center">
+                        <img src="/Public/assets/organisation.png" alt="">
+                        <div class="flex-col flex-center">
+                            <h3>Register as an Organisation</h3>
+                            <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
+                            <div><a href="/Login/view?signup=true&&signupOrg=true">Sign up as a organisation <i class="fas fa-long-arrow-alt-right"></i></a></div>
+                        </div>
+                    </register>
+                </div>
+            <?php } ?>
+
+            <div class="home-events">
+                <div class="flex-col flex-center">
+                    <img src="/Public/assets/sample-1.svg" alt="">
+                    <h2>Recently added</h2>
+                    <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
+                </div>
+                <div class="flex-row margin-lg" id='recent-events'></div>
             </div>
-            <div class="flex-row margin-lg" id='recent-events'></div>
+
+            <div class="home-events">
+                <div id="map" class="margin-side-md grid-row-2"></div>
+                <div class="flex-col flex-center grid-row-1">
+                    <img src="/Public/assets/sample-2.svg" alt="">
+                    <h2>Near you</h2>
+                    <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
+                </div>
+            </div>
+
+            <div class="home-events">
+                <div class="flex-col flex-center">
+                    <img src="/Public/assets/sample-3.svg" alt="">
+                    <h2>Need your donations</h2>
+                    <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
+                </div>
+                <div class="flex-row margin-lg" id='donation-events'></div>
+            </div>
+
+            <div class="home-events">
+                <div class="flex-row margin-lg grid-row-2" id='volunteer-events'></div>
+
+                <div class="flex-col flex-center grid-row-1">
+                    <img src="/Public/assets/sample-4.svg" alt="">
+                    <h2>Need your engagement</h2>
+                    <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
+                </div>
+            </div>
         </div>
-
-        <div class="home-events">
-            <div id="map" class="margin-side-md grid-row-2"></div>
-            <div class="flex-col flex-center grid-row-1">
-                <img src="/Public/assets/sample-2.svg" alt="">
-                <h2>Near you</h2>
-                <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
-            </div>
-        </div>
-
-        <div class="home-events">
-            <div class="flex-col flex-center">
-                <img src="/Public/assets/sample-3.svg" alt="">
-                <h2>Need your donations</h2>
-                <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
-            </div>
-            <div class="flex-row margin-lg" id='donation-events'></div>
-        </div>
-
-        <div class="home-events">
-            <div class="flex-row margin-lg grid-row-2" id='volunteer-events'></div>
-
-            <div class="flex-col flex-center grid-row-1">
-                <img src="/Public/assets/sample-4.svg" alt="">
-                <h2>Need your engagement</h2>
-                <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
-            </div>
-        </div>
+        <?php include "footer.php"; ?>
     </div>
-
 
 </body>
 
@@ -461,7 +462,7 @@ if (isset($_SESSION["user"]["user_type"])) {
 <script>
     function showPage() {
         document.getElementsByClassName("loader")[0].style.display = "none";
-        document.getElementsByClassName("homepage")[0].style.display = "block";
+        document.getElementsByClassName("home-div")[0].style.display = "block";
         document.getElementById("myVideo").play();
     }
 
@@ -513,7 +514,7 @@ if (isset($_SESSION["user"]["user_type"])) {
         search({
             sort: 'donation_percent',
             way: 'ASC',
-            donation_status : 1,
+            donation_status: 1,
             container: 'donation-events'
         });
     }
@@ -533,8 +534,8 @@ if (isset($_SESSION["user"]["user_type"])) {
         range = '',
         sort = '',
         way = '',
-        volunteer_status='',
-        donation_status='',
+        volunteer_status = '',
+        donation_status = '',
         limit = 10,
         container = '',
     } = {}) {
@@ -553,7 +554,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                 longitude: longitude,
                 distance: range,
                 volunteer_status: volunteer_status,
-                donation_status : donation_status,
+                donation_status: donation_status,
                 order_type: sort,
                 way: way,
                 limit: limit
@@ -666,7 +667,8 @@ if (isset($_SESSION["user"]["user_type"])) {
                 latitude: latitude,
                 longitude: longitude,
                 distance: 20,
-                limit: 10
+                limit: 10,
+                is_virtual: 0
             },
             success: function(result) {
 

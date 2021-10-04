@@ -166,7 +166,7 @@ class Events extends Model
         $query_filter_distance = ' distance=distance AND ';
         $query_filter_near = ' distance <= :distance AND ';
         $query_filter_limit = ' LIMIT :limit ';
-        $query_is_virtual = ' is_virtual = is_virtual AND ';
+        $query_is_virtual = ' is_virtual = :is_virtual AND ';
 
         $query = $query_select_primary;
 

@@ -11,7 +11,15 @@ class DonationsController{
         $donation = new Donations();
         $data["donations"] = $donation->getDonateDetails($_GET["event_id"]);
         $data["donation_sum"]= $donation->getDonationSum($_GET["event_id"]);
+        $check_accountNo = (new Organisation)->getDetails($_SESSION['user']['uid']);
+        if($check_accountNo['account_number']){   
+            $data["have_account_number"] = "TRUE";
+        }
+        else{
+            $data["have_account_number"] = "FALSE";
+        }
         $data = array_merge($data, $event_details);
+        var_dump($data);
         View::render('eventPage', $data, $user_roles);/*send all the data to eventPage*/
     }
 

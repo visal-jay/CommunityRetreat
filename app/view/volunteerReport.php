@@ -120,7 +120,8 @@ if(isset($_SESSION ["user"] ["user_type"])){
             <table class="table">
                 <!--Display the report of all the volunteers-->
                 <tr>
-                    <th class="volunteer-date-field">Volunteerd date</th>
+                    <th class="volunteer-date-field">Registered date</th>
+                    <th>Volunteered date</th>
                     <th>Volunteer</th>
                     <th>Email</th>
                     <th>Phone number</th>
@@ -129,10 +130,11 @@ if(isset($_SESSION ["user"] ["user_type"])){
                 <?php foreach($volunteers as $volunteer) { ?>
                 <tr>
                     <td class="volunteer-date-field"><?= $volunteer["date"] ?></td>
+                    <td><?= $volunteer["volunteer_date"] ?></td>
                     <td class="volunteer-field"><?= $volunteer["username"] ?></td>
                     <td class="volunteer-field"><?= $volunteer["email"] ?></td>
                     <td><?= $volunteer["contact_number"] ?></td>
-                    <td><?php if($volunteer["participate"]== 1){echo '<i class="fas fa-check" style="color:green" ></i>';} else {echo '<i class="fas fa-times" style="color:red"></i>';} ?></td>
+                    <td><?php if($volunteer["participated"]== 1){echo '<i class="fas fa-check" style="color:green" ></i>';} else {echo '<i class="fas fa-times" style="color:red"></i>';} ?></td>
                 </tr>
                 <?php } ?>
             </table>

@@ -27,3 +27,5 @@ app/Uploads/event/gallery/35-ORG0000040-10.png
 app/Uploads/organisation/gallery/ORG0000048-0.png
 app/Uploads/event/gallery/35-ORG0000040-9.png
 .metals/metals.log
+.metals/metals.h2.db
+.gitignore

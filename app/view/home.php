@@ -185,6 +185,7 @@
 
 
     .photo-container img {
+        height: 125px;
         aspect-ratio: 4/2;
         width: 100%;
         border-radius: 3px;
@@ -291,7 +292,7 @@
             min-width: 200px;
         }
 
-        figure img{
+        .photo-container img {
             height: 100px;
         }
 
@@ -357,7 +358,7 @@ if (isset($_SESSION["user"]["user_type"])) {
     <div class="homepage flex-col flex-center hidden" style="display:none">
         <div class="flex-col flex-center" style="position:relative;">
             <video autoplay muted loop id="myVideo">
-                <source src="/Public/assets/volunteer.mp4#t=61,65" type=video/mp4>
+                <source src="/Public/assets/volunteer.mp4" type=video/mp4>
             </video>
             <div class="heading">
                 <h1>Let's join CommunityRetreat</h1>

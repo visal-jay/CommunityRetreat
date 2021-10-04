@@ -78,7 +78,7 @@ class DonationsController{
         
         \Stripe\Stripe::setApiKey('sk_test_51JdYJ6JhZDUPzRAXbJg3k221yQ9pgNLhCFYz2ifKf6FPXszolkCJdx6N4tvg5CBvz5bSOVw3OnBZnAV7WFYnR2Ne00yji9wY0R');
         
-        $YOUR_DOMAIN = 'http://localhost:8080';
+        $YOUR_DOMAIN = 'https://communityretreat.me';
 
         $checkout_session = \Stripe\Checkout\Session::create([
             'line_items' => [[
@@ -133,7 +133,6 @@ class DonationsController{
     }
 
     public function refund($intent_id){
-
         \Stripe\Stripe::setApiKey('sk_test_51JdYJ6JhZDUPzRAXbJg3k221yQ9pgNLhCFYz2ifKf6FPXszolkCJdx6N4tvg5CBvz5bSOVw3OnBZnAV7WFYnR2Ne00yji9wY0R');
         $re = \Stripe\Refund::create([
           'payment_intent' => $intent_id,

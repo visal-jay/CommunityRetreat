@@ -14,7 +14,15 @@
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <title>About Event</title>
+
+    <!-- meta for facebook sharer -->
+    <meta property="og:url" content="https://www.communityretreat.me/Event/view?page=about&event_id=<?= $_GET['event_id'] ?>">
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="<?= $event_name ?>"/>
+    <meta property="og:description" content="Volunteer, Donate events" />
+    <meta property="og:image" content="https://www.communityretreat.me<?= $cover_photo ?>" />
 </head>
+
 
 <style>
     .container-size1 {
@@ -344,7 +352,7 @@
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width far fa-flag clr-green margin-side-lg"></i>
                             <div class="flex-row">
-                                <p class="head-margin">Event by <a href="/Organisation/view?page=about&&org_id=<?= $org_uid ?>"><b><?= $organisation_username ?></b></a></p>
+                                <p class="head-margin">Event by <a href="/Organisation/view?page=about&org_id=<?= $org_uid ?>"><b><?= $organisation_username ?></b></a></p>
                             </div>
                         </div>
                     </div>
@@ -398,7 +406,7 @@
                 <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d; text-align:center">
                     <p style="color:white">Would you like to give value to your hard-earned money by contributing to this community service project?</p>
                     <div class="progress" data-width="<?php if ($donation_percent == NULL) echo "0";
-                                                        else echo $donation_percent ?>%">
+                                                        else echo (int)$donation_percent ?>%">
                         <div class="donaters-progress-bar"></div>
                     </div>
                     <?php if ($guest_user) { ?>
@@ -411,23 +419,16 @@
                 </div>
             <?php } ?>
 
-
-
-            <div class=" home-events margin-md content container-size1">
-                <div class="flex-row flex-center">
-                    <img src="/Public/assets/chat.gif" style="height:200px" alt="">
-                </div>
-
-                <div class="flex-col flex-center grid-row-2" style="text-align:center">
+            <div class="content border-round container-size1 home-events">
+                <div class="flex-col flex-center grid-row-1" style="text-align:center">
                     <h4 class="margin-md felx-row flex-center">Want to clear out all your doubts?<br>Curious to know who we are?</h4>
                     <p>We are just one click away!</p>
                     <div>
-                        <?php if ($guest_user || $registered_user) { ?>
-                            <button class="btn btn-solid margin-md" onclick="window.location.href='/RegisteredUser/chatApp?new_chat_id=<?= 'EVN' . $_GET['event_id'] ?>'">Chat with us</button>
-                        <?php } else if ($organization || $admin) { ?>
-                            <button class="btn btn-solid margin-md" disabled>Chat with us</button>
-                        <?php } ?>
+                        <button class="btn btn-solid margin-md" onclick="window.location.href='/RegisteredUser/chatApp?new_chat_id=<?= 'EVN' . $_GET['event_id'] ?>'">Chat with us</button>
                     </div>
+                </div>
+                <div class="flex-row flex-center">
+                    <img src="/Public/assets/chat.gif" style="height:200px" alt="">
                 </div>
             </div>
 
@@ -437,10 +438,9 @@
                     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                 </div>
                 <div class="margin-md" style="margin-bottom: 12px; border-radius:20px; overflow:hidden;width:75px">
-                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                     <div id="fb-root"></div>
                     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v12.0" nonce="xqUnsUm7"></script>
-                    <div class="fb-share-button" data-href="https://www.communityretreat.me/Event/view?page=about&&event_id=<?php $_GET["event_id"] ?>" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+                    <div class="fb-share-button" data-href="https://www.communityretreat.me/Event/view?page=about&event_id=<?php $_GET['event_id'] ?>" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
                 </div>
             </div>
 

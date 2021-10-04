@@ -187,8 +187,10 @@
     }
 
     figure img {
+        object-fit: cover;
         aspect-ratio: 4/2;
         max-width: 250px !important;
+        height: 125px;
     }
 
     figure .about {
@@ -218,9 +220,10 @@
 
     @media screen and (max-width:800px) {
 
-        .slider {
-            width: auto;
-        }
+    figure img {
+        max-width: 200px !important;
+        height: 100px;
+    }
 
         .grid {
             grid-gap: 10px;
@@ -372,8 +375,11 @@
 
         if (event.target.value=="event"){
             mode.disabled=sort.disabled=way.disabled=date.disabled=map.disabled=false;
+            map.style.opacity=date.style.opacity="1";
+
         }
         else if(event.target.value=="organization"){
+            map.style.opacity=date.style.opacity="0.5";
             mode.disabled=sort.disabled=way.disabled=date.disabled=map.disabled=true;
             let map_container = document.getElementById('map-container');
             if(!map_container.classList.contains("hidden"))
@@ -479,7 +485,7 @@
                                     <p>${evn.donation_status==0 ? '<i class="fas fa-times fa-xs clr-red margin-side-md"></i>' : '<i class="fas fa-check fa-xs clr-green margin-side-md"></i>'}</p>
                                     </div>
                                     <div class ="flex-row" style="justify-content:space-between;align-items:center;">
-                                    <div style="display:flex;align-items:center;position:relative;width:100%;"><div style="border-radius:6px;position:absolute;width:${(evn.donation_percent==null || evn.donation_percent<5) ? 5 :(evn.dotaion_percent>100? 100 : Math.round(evn.donation_percent)) }%;background-color:#FFB319;height:6px;"></div></div>
+                                    <div style="display:flex;align-items:center;position:relative;width:100%;"><div style="border-radius:6px;position:absolute;width:${(evn.donation_percent==null || evn.donation_percent<5) ? 5 :(evn.donation_percent>100? 100 : Math.round(evn.donation_percent)) }%;background-color:#FFB319;height:6px;"></div></div>
                                     <p>${evn.donation_percent==null ? 0 : Math.round(evn.donation_percent)}%</p>
 
                                     </div>

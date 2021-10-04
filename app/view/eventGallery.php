@@ -249,6 +249,7 @@
                 location.reload();
                 return false;
             }
+            
         });
     }
 

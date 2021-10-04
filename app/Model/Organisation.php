@@ -32,7 +32,7 @@ class Organisation extends User
         $data["time"] = (int)shell_exec("date '+%s'");
         $parameters = ["key" => $encryption->encrypt(array_intersect_key($data, ["email" => '', "password" => '',"time"=>'']), 'email verificaition')]; 
         $mail = new Mail;
-        $mail->verificationEmail($data["email"], "confirmationMail", "localhost/signup/verifyemail?" . http_build_query($parameters), 'Signup');
+        $mail->verificationEmail($data["email"], "confirmationMail", "https://www.communityretreat.me/Signup/verifyemail?" . http_build_query($parameters), 'Signup');
     }
 
 

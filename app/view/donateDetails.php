@@ -103,6 +103,19 @@
         margin-left: 5px;
         margin-right: 5px;
     }
+
+    .left{
+        text-align: left;
+        
+    }
+
+    .terms-and-conditions-box{
+        background-color: white;
+        box-shadow: 5px 5px 15px 5px #000000;
+        padding: 20px;
+        margin-top: 20px;
+    }
+
 @media screen and (max-width:768px) {
 
     table,
@@ -141,6 +154,13 @@
 
     .form {
         width: fit-content;
+    }
+
+    .terms-and-conditions-box{
+        background-color: white;
+        box-shadow: 5px 5px 15px 5px #000000;
+        margin: 20px;
+        padding: 10px;
     }
 }
 </style>
@@ -269,12 +289,33 @@ if(isset($_SESSION ["user"] ["user_type"])){
         </div>
     </div>
     <?php if($donation_status==0 && count($donations)==0){ ?>
+
     <div class=" initial-donation-enable-btn">
         <button <?php if($have_account_number = "TRUE" && $organization && $treasurer){ echo "onclick='window.location.href='/Donations/enableDonation?event_id="; $_GET['event_id']; } echo " '"?>
             class=" btn btn-lg btn-solid" id="initial-donation-enable-btn" onclick="blur_background()">Enable
+
             Donations</button>
+
+            <div style="display:none">
+                <p>You're not authorized to enable donations</p>
+            </div>
+
         <!--initally enable the donations-->
+        <div class="terms-and-conditions-box">
+            <p>
+                <ul class="left">
+                    <li>All organizations will be allowed to collect donations and these donations will be<br> credited to a bank account owned by the CommunityRetreat.</li>
+                    <li>At the end of the event, donations will be credited to the bank account belongs to<br> the Organization.</li>
+                    <li>Organization is not allowed to collect donations that exceed the donation capacity.</li>
+                    <li>If an Organization is removed from the system, all the donations will be refunded.</li>
+                </ul>
+                <div>
+                    <input type="checkbox" min="0" name="terms" id="terms" onchange="activateButton()"> I Agree Terms & Coditions
+                </div>
+            </p>
+        </div>
     </div>
+
     <?php } ?>
 </body>
 
@@ -312,6 +353,10 @@ function edit() {
     }
     /*when edit button is clicked, it is hidden*/
 }
+
+function activateButton() {
+        document.getElementById("initial-donation-enable-btn").disabled = false;
+    }
 </script>
 
 </html>

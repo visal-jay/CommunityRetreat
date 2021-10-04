@@ -188,6 +188,9 @@
         margin: 1rem 0 2rem 0;
     }
 
+    .terms-and-conditions{
+        text-align: left;
+    }
 
     @media screen and (max-width:800px) {
         .progress {
@@ -527,9 +530,13 @@
                 </div>
 
                 <div>
-                    <div>
-                        <p style="color: red;">No refunds will be made except for the removal or <br> cancellation of an event after a donation has been made.</p>
-                    </div>
+                    <div class="terms-and-conditions">
+                        <ul>
+                            <li>
+                                <p><b>No refunds will be made except for the removal or cancellation of an event <br> after a donation has been made.</b></p>
+                            </li>
+                        </ul>
+                        </div>
                     <div onload="disableSubmit()">
                         <input type="checkbox" min="0" name="terms" id="terms" onchange="activateButton(this)"> I Agree Terms & Coditions
                     </div>

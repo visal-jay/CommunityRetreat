@@ -19,7 +19,6 @@ class DonationsController{
             $data["have_account_number"] = "FALSE";
         }
         $data = array_merge($data, $event_details);
-        var_dump($data);
         View::render('eventPage', $data, $user_roles);/*send all the data to eventPage*/
     }
 

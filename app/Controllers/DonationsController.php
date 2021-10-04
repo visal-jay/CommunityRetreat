@@ -12,7 +12,7 @@ class DonationsController{
         $data["donations"] = $donation->getDonateDetails($_GET["event_id"]);
         $data["donation_sum"]= $donation->getDonationSum($_GET["event_id"]);
         $check_accountNo = (new Organisation)->getDetails($_SESSION['user']['uid']);
-        if($check_accountNo['account_number']){   
+        if($check_accountNo['account_number']!=NULL){   
             $data["have_account_number"] = "TRUE";
         }
         else{

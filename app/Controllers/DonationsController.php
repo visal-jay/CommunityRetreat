@@ -123,7 +123,7 @@ class DonationsController{
         $session = \Stripe\Checkout\Session::retrieve($_GET["session_id"]);
         $customer = \Stripe\Customer::retrieve($session->customer);
 
-        (new Donations)->donationAccept($_SESSION["user"]["uid"], $_GET["event_id"], $session["amount_total"], $session["payment_intent"]);
+        (new Donations)->donationAccept($_SESSION["user"]["uid"], $_GET["event_id"], substr($session["amount_total"],0,-2), $session["payment_intent"]);
         Controller::redirect("/Event/view", ["page" => "about", "event_id" => $_GET["event_id"]]);
             
     }

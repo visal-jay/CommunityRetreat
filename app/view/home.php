@@ -451,8 +451,9 @@ if (isset($_SESSION["user"]["user_type"])) {
                 <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
             </div>
         </div>
+        
+       
     </div>
-
 
 </body>
 

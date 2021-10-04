@@ -300,7 +300,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
     <?php } ?>
 
         <!--initally enable the donations-->
-        <div class="terms-and-conditions-box">
+        <div class="bg-white flex-col flex-center">
             <p>
                 <ul class="left">
                     <li>All organizations will be allowed to collect donations and these donations will be<br> credited to a bank account owned by the CommunityRetreat.</li>

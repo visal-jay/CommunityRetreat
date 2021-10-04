@@ -291,10 +291,13 @@ if(isset($_SESSION ["user"] ["user_type"])){
     <?php if($donation_status==0 && count($donations)==0){ ?>
 
     <div class=" initial-donation-enable-btn">
-        <button <?php if($have_account_number = "TRUE" && $organization && $treasurer){ echo "onclick='window.location.href='/Donations/enableDonation?event_id="; $_GET['event_id']; } echo " '"?>
-            class=" btn btn-lg btn-solid" id="initial-donation-enable-btn" onclick="blur_background()">Enable
+    <?php if($have_account_number == "TRUE" && ($organization || $treasurer)){?>
+        <button onclick="window.location.href='/Donations/enableDonation?event_id= <?= $_GET['event_id']?>'" class="btn btn-lg btn-solid"  id="initial-donation-enable-btn" onclick='blur_background()'>Enable Donations</button> 
+    <?php } ?>
 
-            Donations</button>
+    <?php if($have_account_number == "FALSE" && ($organization)){?>
+        <button onclick="window.location.href='/Organisation/profile?'" class="btn btn-lg btn-solid"  id="initial-donation-enable-btn" onclick='blur_background()'>Enable Donations</button> 
+    <?php } ?>
 
             <div style="display:none">
                 <p>You're not authorized to enable donations</p>

@@ -204,8 +204,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     </div>
                     <div class="edit-save-btn">
                         <button class=" btn btn-solid form hidden save-btn" type="submit" form="donation-capacity">Save &nbsp; <i class="fas fa-check "></i></button>
-                    </div>
-                    
+                    </div> 
                 </div>
             </div>
 
@@ -221,8 +220,8 @@ if(isset($_SESSION ["user"] ["user_type"])){
             <?php if($donation_status==0){ ?>
             <form action="/Donations/enableDonation?event_id=<?= $_GET["event_id"] ?>" method="post"
                 class=" secondary-donation-enable-disable-btn">
-                <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Enable
-                    Donations</button>
+                    <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Enable
+                        Donations</button>
             </form>
             <?php } ?>
             <!--enable or disable donations-->
@@ -271,7 +270,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
     </div>
     <?php if($donation_status==0 && count($donations)==0){ ?>
     <div class=" initial-donation-enable-btn">
-        <button onclick="window.location.href=' /Donations/enableDonation?event_id=<?= $_GET['event_id'] ?>'"
+        <button <?php if($have_account_number = "TRUE" && $organization && $treasurer){ echo "onclick='window.location.href='/Donations/enableDonation?event_id="; $_GET['event_id']; } echo " '"?>
             class=" btn btn-lg btn-solid" id="initial-donation-enable-btn" onclick="blur_background()">Enable
             Donations</button>
         <!--initally enable the donations-->

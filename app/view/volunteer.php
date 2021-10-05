@@ -282,13 +282,13 @@
                 </div>
             </div>
             <div>
-                <button class="btn btn-solid btn-md data edit-btn" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
+                <button class="btn btn-solid btn-md data btn-small edit-btn" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
                 <div class="flex-row-to-col">
                     <div class="edit-save-btn">
-                        <button class=" btn btn-solid bg-red border-red form hidden close-btn" onclick="edit()">Close &nbsp;&nbsp;<i class="fas fa-times "></i></button>
+                        <button class=" btn btn-solid bg-red border-red form btn-small hidden close-btn" onclick="edit()">Close &nbsp;&nbsp;<i class="fas fa-times "></i></button>
                     </div>
                     <div class="edit-save-btn">
-                        <button class=" btn btn-solid form hidden save-btn" type="submit" form="volunteer-capacity">Save &nbsp; <i class="fas fa-check "></i></button>
+                        <button class=" btn btn-solid form hidden save-btn btn-small" type="submit" form="volunteer-capacity">Save &nbsp; <i class="fas fa-check "></i></button>
                     </div>
                 </div>
             </div>
@@ -306,22 +306,36 @@
                 </form>
             <?php } ?>
 
-            <form>
+            <form action="/Event/view?page=volunteers&event_id=<?= $_GET["event_id"] ?>" method="post">
                 <label for="volunteer_date">Sort by volunteering date</label>
-                <select class="form-ctrl" id="volunteer_date" required name="volunteer_date">
-                    <option value="" disabled selected>Select date</option>
-                    <?php for ($i = 0; $i < count($volunteer_capacities); $i++) { ?>
+                <select class="form-ctrl" id="volunteer_date" required name="volunteer_date" onchange="this.form.submit()">
+                    <option value="" selected>All</option>
+                    <?php for ($i = 0; $i < count($volunteer_capacities); $i++) { 
+                        if($volunteer_date_req ==$volunteer_capacities[$i]['event_date']) { ?>
+                        <option value="<?= $volunteer_capacities[$i]['event_date'] ?>" selected><?= $volunteer_capacities[$i]['event_date'] ?></option>
+                       <?php } else {  ?>
                         <option value="<?= $volunteer_capacities[$i]['event_date'] ?>"><?= $volunteer_capacities[$i]['event_date'] ?></option>
-                    <?php } ?>
+                    <?php } } ?>
                 </select>
             </form>
-            
             <div class="bold sum donation-sum-container">
                 <div>Total number of Volunteers:</div>
+                
                 <div><?php $total_sum = 0;
-                        for ($i = 0; $i < count($volunteer_capacities); $i++) {
-                            foreach ($volunteer_sum[$i] as $sum) {
-                                $total_sum += $sum['volunteer_sum'];
+                        if(!$volunteer_date_req){
+                            for ($i = 0; $i < count($volunteer_capacities); $i++) {
+                                foreach ($volunteer_sum[$i] as $sum) {
+                                    $total_sum += $sum['volunteer_sum'];
+                                }
+                            }
+                        }
+                        else{
+                            for ($i = 0; $i < count($volunteer_capacities); $i++) {
+                                foreach ($volunteer_sum[$i] as $sum) {
+
+                                    if($sum["event_date"]==$volunteer_date_req)
+                                    $total_sum = $sum['volunteer_sum'];
+                                }
                             }
                         }
                         echo $total_sum;
@@ -331,15 +345,13 @@
 
             <div>
                 <table id="mytable" class="center">
-                    <col style="width:30%">
-                    <col style="width:30%">
-                    <col style="width:20%">
+                    <col style="width:40%">
+                    <col style="width:40%">
                     <col style="width:20%">
                     <thead>
                         <tr class="headers">
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>Contact Number</th>
+                            <th>Volunteer Date</th>
                             <th>Participation</th>
                         </tr>
                     </thead>
@@ -347,9 +359,8 @@
                         <?php foreach ($volunteers as $volunteer) { ?>
                             <tr>
                                 <td class=" scroll"><?= $volunteer["username"] ?></td>
-                                <td class="scroll"><?= $volunteer["email"] ?></td>
-                                <td><?= $volunteer["contact_number"] ?></td>
-                                <td><?php if ($volunteer["participate"] == 1) {
+                                <td><?= $volunteer["volunteer_date"] ?></td>
+                                <td><?php if ($volunteer["participated"] == 1) {
                                         echo '<i class="fas fa-check" style="color:green" ></i>';
                                     } else {
                                         echo '<i class="fas fa-times" style="color:red"></i>';

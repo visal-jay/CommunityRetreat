@@ -7,7 +7,16 @@ class VolunteerController{
         $user_roles = Controller::accessCheck(["moderator", "organization"]);
         $data = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["volunteer_status" => '', "volunteer_capacity" => '']);
         $volunteer = new Volunteer();
-        $volunteer_details = $volunteer->getVolunteerDetails($_GET["event_id"]);
+        
+        if(isset($_POST["volunteer_date"]) && $_POST["volunteer_date"]!=""){
+            $volunteer_details = $volunteer->getVolunteerDetails($_GET["event_id"],$_POST["volunteer_date"]);
+            $data["volunteer_date_req"]=$_POST["volunteer_date"];
+        }
+        else{
+            $volunteer_details = $volunteer->getVolunteerDetails($_GET["event_id"]);
+            $data["volunteer_date_req"]=FALSE;
+        }
+
         $data["volunteers"] = $volunteer_details;
         $volunteer_sum = $volunteer->getVolunteerSum($_GET["event_id"]);
         $data["volunteer_sum"] = $volunteer_sum;

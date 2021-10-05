@@ -188,10 +188,10 @@ class Events extends Model
             $date_query = "(";
             $dates = explode(",", $start_date);
             for ($i = 0; $i < count($dates); $i++) {
-                $date_query = $date_query . " start_date= :start_date$i";
+                $date_query = $date_query . " :date$i BETWEEN start_date AND end_date ";
                 if ($i + 1 < count($dates))
                     $date_query = $date_query . " OR ";
-                $params["start_date$i"] = $dates[$i];
+                $params["date$i"] = $dates[$i];
             }
             $date_query = $date_query . " ) AND ";
             $query = $query . $date_query;

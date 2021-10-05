@@ -386,7 +386,7 @@
             <?php if ($volunteer_status == 1) { ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d">
                     <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
-                    <div class="progress" data-width="<?php if ($volunteer_percent =="NULL") echo "0";else echo (int)$volunteer_percent ?>%">
+                    <div class="progress" data-width="<?php if ($volunteer_percent =="NULL") echo "0";else echo round($volunteer_percent); ?>%">
                         <div class="volunteers-progress-bar"></div>
                     </div>
                     <?php if ($guest_user) { ?>
@@ -404,7 +404,7 @@
                 <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d; text-align:center">
                     <p style="color:white">Would you like to give value to your hard-earned money by contributing to this community service project?</p>
                     <div class="progress" data-width="<?php if ($donation_percent == NULL) echo "0";
-                                                        else echo (int)$donation_percent ?>%">
+                                                        else echo round($donation_percent); ?>%">
                         <div class="donaters-progress-bar"></div>
                     </div>
                     <?php if ($guest_user) { ?>
@@ -664,7 +664,6 @@
         }, {
             duration: 2000,
             step: function(now, fx) {
-                console.log("sdasdas");
                 if (fx.prop == 'width') {
                     if (parseInt(width.replace('%', '')) < now && now <= 100) {
                         now = parseInt(width.replace('%', ''));

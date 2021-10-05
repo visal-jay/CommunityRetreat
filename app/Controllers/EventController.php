@@ -17,7 +17,7 @@ class EventController
 
     public function about()
     {
-        $user_roles = Controller::accessCheck(["moderator", "organization", "guest_user", "registered_user"], $_GET["event_id"]);
+        $user_roles = Controller::accessCheck(["moderator","treasurer", "organization", "guest_user", "registered_user"], $_GET["event_id"]);
         $event = new Events;
         $volunteer = new Volunteer();
         if (!isset($_SESSION))

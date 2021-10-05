@@ -51,6 +51,8 @@ class OrganisationController
 
     public function deletePhoto()
     {
+        $user_roles = Controller::accessCheck(["organization"]);
+        Controller::validateForm(["photo"]);   
         (new UserController)->addActivity("Delete photo from gallery");
         (new Gallery)->deletePhoto(["image" => $_POST["photo"]], true);
         Controller::redirect("/Organisation/gallery");
@@ -70,7 +72,7 @@ class OrganisationController
         if(isset($_GET["org_id"]))
             $user_roles=Controller::accessCheck(["registered_user","guest_user"]);
         else
-            $user_roles=Controller::accessCheck(["organization","registered_user","guest_user"]);
+            $user_roles=Controller::accessCheck(["organization"]);
 
         $org_id = isset($_GET["org_id"]) ? $_GET["org_id"] : $_SESSION["user"]["uid"];
 

@@ -79,7 +79,8 @@ class Organisation extends User
         
         unset($params["map"]);
 
-        $query = 'UPDATE organization SET username= :username, email= :email, contact_number = :contact_number , latlang=POINT(:latitude,:longitude) ,profile_pic = :profile_pic,cover_pic = :cover_pic,about_us=:about_us  WHERE uid = :uid';
+
+        $query = 'UPDATE organization SET username= :username, email= :email, contact_number = :contact_number ,account_number = :account_number , bank_name = :bank_name, latlang=POINT(:latitude,:longitude) ,profile_pic = :profile_pic,cover_pic = :cover_pic,about_us=:about_us  WHERE uid = :uid';
         User::insert($query, $params);
     }
 

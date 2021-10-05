@@ -457,7 +457,7 @@
                     order_type: sort,
                     way: way,
                     status: 'published',
-                    is_virtual=is_virtual
+                    is_virtual : is_virtual,
                 },
                 success: function(result) {
                     parent_container.innerHTML = "";

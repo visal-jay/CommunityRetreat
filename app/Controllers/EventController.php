@@ -1,4 +1,7 @@
 <?php
+
+use Stripe\Event;
+
 class EventController
 {
 
@@ -23,8 +26,8 @@ class EventController
             $data = $event_details;
             $data["volunteered"] = $data["volunteered"] == "" ? "0" :  $data["volunteered"];
             $data["donations"] = $data["donations"] == "" ? "0" :  $data["donations"];
-           /*  $data["volunteer_date"] = $volunteer->getVolunteeredDates($_GET["event_id"]);
-            $data["volunteer_capacity_exceeded"]=$volunteer->checkVolunteerCount($_GET["event_id"],$data['start_date'],$data['end_date']); */
+            $data["volunteer_date"] = $volunteer->getVolunteeredDates($_GET["event_id"]);
+            $data["volunteer_capacity_exceeded"]=$volunteer->checkVolunteerCount($_GET["event_id"],$data['start_date'],$data['end_date']);
             View::render("eventPage", $data, $user_roles);
         } else
             View::render("home");
@@ -120,6 +123,12 @@ class EventController
 
     public function remove()
     {
+        Controller::validateForm(["event_id"],[]);
+        Controller::accessCheck(["admin","organization"]);
+        $time = (int)shell_exec("date '+%s'");
+        $end_date=((new Events)->getDetails($_POST["event_id"]))["end_date"];
+        if (gmdate("Y-m-d",$time)>= $end_date)
+            (new DonationsController)->donationRefund($_POST["event_id"]);
         (new Events)->remove($_POST["event_id"]);
         Controller::redirect("/Organisation/events");
     }

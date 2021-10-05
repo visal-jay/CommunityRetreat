@@ -138,7 +138,7 @@ class Events extends Model
 
     public function query($args)
     {
-        $name = $city = $latitude = $longitude = $mode = $start_date = $org_uid = $distance = $order_type = $way = $status = $limit = $donation_capacity = $volunteer_capacity = $volunteer_status = $donation_status = NULL;
+        $name = $city = $latitude = $longitude = $mode = $start_date = $org_uid = $distance = $order_type = $way = $status = $limit = $donation_capacity = $volunteer_capacity = $volunteer_status = $donation_status=$is_virtual = NULL;
         extract($args, EXTR_OVERWRITE);
         $params = array();
 
@@ -166,6 +166,7 @@ class Events extends Model
         $query_filter_distance = ' distance=distance AND ';
         $query_filter_near = ' distance <= :distance AND ';
         $query_filter_limit = ' LIMIT :limit ';
+        $query_is_virtual = ' is_virtual = :is_virtual AND ';
 
         $query = $query_select_primary;
 
@@ -221,6 +222,11 @@ class Events extends Model
 
         if ($donation_capacity != NULL) {
             $query = $query . $query_filter_donation_capacity;
+        }
+
+        if($is_virtual != NULL){
+            $query = $query . $query_is_virtual;
+            $params["is_virtual"]=$is_virtual;
         }
 
         if ($org_uid != NULL) {

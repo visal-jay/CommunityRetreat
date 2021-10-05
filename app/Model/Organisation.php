@@ -32,13 +32,13 @@ class Organisation extends User
         $data["time"] = (int)shell_exec("date '+%s'");
         $parameters = ["key" => $encryption->encrypt(array_intersect_key($data, ["email" => '', "password" => '',"time"=>'']), 'email verificaition')]; 
         $mail = new Mail;
-        $mail->verificationEmail($data["email"], "confirmationMail", "localhost/signup/verifyemail?" . http_build_query($parameters), 'Signup');
+        $mail->verificationEmail($data["email"], "confirmationMail", "https://www.communityretreat.me/Signup/verifyemail?" . http_build_query($parameters), 'Signup');
     }
 
 
     public function getDetails($uid)
     {
-        $query = 'SELECT  org.username,org.email,org.contact_number,ST_X(org.latlang) as latitude ,ST_Y(org.latlang) as longitude ,org.profile_pic,org.cover_pic,org.about_us FROM organization org INNER JOIN login ON org.uid= login.uid WHERE org.uid = :uid  AND verified=1';
+        $query = 'SELECT  org.username,org.email,org.contact_number,org.account_number,org.bank_name,ST_X(org.latlang) as latitude ,ST_Y(org.latlang) as longitude ,org.profile_pic,org.cover_pic,org.about_us FROM organization org INNER JOIN login ON org.uid= login.uid WHERE org.uid = :uid  AND verified=1';
         $params = ["uid" => $uid];
         $result = User::select($query, $params);
         $result[0]["map"] = true;

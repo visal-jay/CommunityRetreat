@@ -10,5 +10,6 @@
   
     <?php include __DIR__ . "/../nav.php" ?> 
     <?php include __DIR__ . "/chatApp.php" ?>
+    <?php include __DIR__ . "/../footer.php"?>
 </body>
 </html>

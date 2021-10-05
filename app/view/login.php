@@ -270,6 +270,12 @@
         }
         document.querySelector("#" + id1).classList.add("shown");
         document.querySelector("#" + id2).classList.remove("shown");
+
+        /* errors = document.getElementsByTagName("span");
+
+        for(var i = 0; i < errors.length; i++) {
+            errors[i].innerHTML="";
+        } */
     }
 
 

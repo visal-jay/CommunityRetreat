@@ -241,8 +241,10 @@
         document.getElementById("end_date").setAttribute("min", today);
         
 
-        var today = new Date();
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        document.getElementById("start_date").addEventListener("change", () => {
+            document.getElementById("end_date").setAttribute("min", document.getElementById("start_date").value);
+        });
+
 
         function addEvent() {
             document.querySelector(".form").classList.toggle("show-form");

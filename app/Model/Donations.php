@@ -31,11 +31,11 @@ class Donations extends Model{
     }
 
     public function enableDonation($event_id){/*enable donations for an event*/
-        /*$query = 'UPDATE event SET donation_status=1 WHERE event_id =:event_id';
+        $query = 'UPDATE event SET donation_status=1 WHERE event_id =:event_id';
         $params = ["event_id" => $event_id];
-        Model::insert($query,$params);*/
+        Model::insert($query,$params);
         
-        $query = 'SELECT organization.account_number, event.event_id FROM organization LEFT JOIN event ON organization.org_uid=event.org_uid WHERE org_uid =:org_uid';
+        /*$query = 'SELECT organization.account_number, event.event_id FROM organization LEFT JOIN event ON organization.org_uid=event.org_uid WHERE org_uid =:org_uid';
         
         if($query['account_number'] = "NULL"){
             echo 'You have no authorization to enable donations';
@@ -45,7 +45,7 @@ class Donations extends Model{
             $params = ["event_id" => $event_id];
             $result=Model::insert($query,$params);
             return $result;
-        }
+        }*/
         
     }
 

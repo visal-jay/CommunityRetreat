@@ -229,6 +229,7 @@ h2 {
 
     ?>
 
+<!-- complaint div -->
 <?php include "complaint.php" ?>
 
 </body>

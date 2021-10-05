@@ -17,8 +17,8 @@ class Task extends Model
 
     public function addTask($data)
     {
-        $query = "INSERT INTO `work_timeline` (`event_id`, `task`, `start_date`, `end_date`, `completed`) VALUES (:event_id, :task, :start_date, :end_date)";
-        $params = array_intersect_key($data, ["event_id" => '', "task" => '', "start_date" => '', "end_date" => '', "complete"=>'']);
+        $query = "INSERT INTO `work_timeline` (`event_id`, `task`, `start_date`, `end_date`) VALUES (:event_id, :task, :start_date, :end_date)";
+        $params = array_intersect_key($data, ["event_id" => '', "task" => '', "start_date" => '', "end_date" => '']);
         Model::insert($query, $params);
     }
 

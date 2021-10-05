@@ -392,7 +392,7 @@
                     <?php if ($guest_user) { ?>
                         <button class="btn clr-green margin-md" onclick="window.location.href='/Login/view/'"><i class="fas fa-user-friends"></i>&nbsp;I want to volunteer</button>
                     <?php } else if ($organization || $admin) { ?>
-                        <button class="btn clr-green margin-md" disabled></i>&nbsp;I want to volunteer</button>
+                        <button class="btn clr-green margin-md" disabled><i class="fas fa-user-friends"></i>&nbsp;I want to volunteer</button>
                     <?php } else if ($registered_user) { ?>
                         <button class="btn clr-green margin-md" onclick="togglePopup('volunteer-form'); blur_background('background');stillBackground('id1')"><i class="fas fa-user-friends"></i>&nbsp;I want to volunteer</button>
                     <?php } ?>
@@ -410,7 +410,7 @@
                     <?php if ($guest_user) { ?>
                         <button class="btn clr-green margin-md" onclick="window.location.href='/Login/view/'"><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
                     <?php } else if ($organization || $admin) { ?>
-                        <button class="btn clr-green margin-md" disabled></i>&nbsp;Donate Now!</button>
+                        <button class="btn clr-green margin-md" disabled><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
                     <?php } else if ($registered_user) { ?>
                         <button class="btn clr-green margin-md" onclick="togglePopup('form'); blur_background('background');stillBackground('id1')"><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
                     <?php } ?>

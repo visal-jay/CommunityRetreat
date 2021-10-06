@@ -392,7 +392,7 @@
                     <?php if ($guest_user) { ?>
                         <button class="btn clr-green margin-md" onclick="window.location.href='/Login/view/'"><i class="fas fa-user-friends"></i>&nbsp;I want to volunteer</button>
                     <?php } else if ($organization || $admin) { ?>
-                        <button class="btn clr-green margin-md" disabled></i>&nbsp;I want to volunteer</button>
+                        <button class="btn clr-green margin-md" disabled><i class="fas fa-user-friends"></i>&nbsp;I want to volunteer</button>
                     <?php } else if ($registered_user) { ?>
                         <button class="btn clr-green margin-md" onclick="togglePopup('volunteer-form'); blur_background('background');stillBackground('id1')"><i class="fas fa-user-friends"></i>&nbsp;I want to volunteer</button>
                     <?php } ?>
@@ -410,7 +410,7 @@
                     <?php if ($guest_user) { ?>
                         <button class="btn clr-green margin-md" onclick="window.location.href='/Login/view/'"><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
                     <?php } else if ($organization || $admin) { ?>
-                        <button class="btn clr-green margin-md" disabled></i>&nbsp;Donate Now!</button>
+                        <button class="btn clr-green margin-md" disabled><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
                     <?php } else if ($registered_user) { ?>
                         <button class="btn clr-green margin-md" onclick="togglePopup('form'); blur_background('background');stillBackground('id1')"><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
                     <?php } ?>
@@ -487,10 +487,14 @@
                             <input type='checkbox'  name='volunteer_date[]' value='$event_days'";
                         for ($i = 0; $i < count($volunteer_date); $i++) {
                             if ($event_days == $volunteer_date[$i]['volunteer_date']) {
-                                echo 'checked';
+                                echo 'checked ';
+                                $v_flag=TRUE;
                             }
                         };
-                        echo " disabled></div>";
+                        if(!$v_flag){
+                            echo " disbaled ";
+                        }
+                        echo "></div>";
                     } else {
                         echo "<div class='flex-row flex-center'><h3>" . $event_days . "</h3>
                             <input type='checkbox'  name='volunteer_date[]' value='$event_days'";
@@ -545,7 +549,8 @@
             </form>
         </div>
     </div>
-
+<!-- complaint div -->
+<?php include "complaint.php" ?>
 
 </body>
 

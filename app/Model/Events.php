@@ -99,7 +99,7 @@ class Events extends Model
 
         for ($i = 0; $i < count($volunteered_uid); $i++) {
             foreach ($volunteered_uid[$i] as $uid) {
-                //    (new User)->sendNotification($uid);
+                (new UserController)->sendNotifications("{$params['event_name']} event informations has been changed.Please volunteer again..!",$params["event_id"],$uid,"event");
                 $delete_query = "DELETE FROM  volunteer WHERE uid = :uid AND event_id = :event_id";
                 $delete_params = ['uid' => $uid, 'event_id' => $params["event_id"]];
                 $stmt = $db->prepare($delete_query);
@@ -166,7 +166,7 @@ class Events extends Model
         $query_filter_distance = ' distance=distance AND ';
         $query_filter_near = ' distance <= :distance AND ';
         $query_filter_limit = ' LIMIT :limit ';
-        $query_is_virtual = ' is_virtual = is_virtual AND ';
+        $query_is_virtual = ' is_virtual = :is_virtual AND ';
 
         $query = $query_select_primary;
 
@@ -188,10 +188,10 @@ class Events extends Model
             $date_query = "(";
             $dates = explode(",", $start_date);
             for ($i = 0; $i < count($dates); $i++) {
-                $date_query = $date_query . " start_date= :start_date$i";
+                $date_query = $date_query . " :date$i BETWEEN start_date AND end_date ";
                 if ($i + 1 < count($dates))
                     $date_query = $date_query . " OR ";
-                $params["start_date$i"] = $dates[$i];
+                $params["date$i"] = $dates[$i];
             }
             $date_query = $date_query . " ) AND ";
             $query = $query . $date_query;

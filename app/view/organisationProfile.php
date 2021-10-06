@@ -11,39 +11,31 @@
     <link rel="stylesheet" href="../Public/assets/style/organisationprofilestyle.css">
     <link rel="stylesheet" href="../Public/assets/style/fontawesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <title>organization profile</title>
 </head>
 <?php if ($organization) include "nav.php" ?>
+
 <body class="body">
 
     <!-- main-container -->
     <div class="profilecontainer">
         <div class="profilecontainer-top">
-
-
             <div class="aboutme-container">
                 <div class="intro">
                     <h2 id="name"><?= $username ?></h2><br><br>
-
-
                 </div>
                 <!-- Activity-log-button -->
                 <a href="activityLog" class="view-activitylog-btn" role="button"><i class="fa fa-history"></i>&nbsp&nbspActivity log</a>
-
             </div>
-
-
-
-
 
             <div class="details-settings">
                 <h2>Details</h2>
                 <hr>
-
                 <div class="details">
 
 
-                     <!-- username-container -->
+                    <!-- username-container -->
                     <div class="username-container">
                         <div class="username-icon">
                             <i class="fa fa-user-circle fa-2x clr-gray" id="user"></i>
@@ -60,19 +52,19 @@
                     </div>
 
                     <!--username update form-->
-                    
-                        <form action="/User/updateUsername" method="post" class="update-form" id="usernameupdater">
-                            <div class="input-container">
-                                <label for="text" class="edit-coontainer">Enter new username:</label>
-                                <input type="text" id="usernameinput" class="form-ctrl" placeholder="Enter new username" name="username"><br>
 
-                                <div class="intro-update-btn">
-                                    <button type="submit" class="btn bg-green clr-white" onclick=" updateField('username','usernameupdater')">Update</button>
-                                    <button type="button" class="btn bg-red border-red clr-white" onclick="showEddite('usernameupdater')">Cancel</button>
-                                </div>
+                    <form action="/User/updateUsername" method="post" class="update-form" id="usernameupdater">
+                        <div class="input-container">
+                            <label for="text" class="edit-coontainer">Enter new username:</label>
+                            <input type="text" id="usernameinput" class="form-ctrl" placeholder="Enter new username" name="username"><br>
+
+                            <div class="intro-update-btn">
+                                <button type="submit" class="btn bg-green clr-white" onclick=" updateField('username','usernameupdater')">Update</button>
+                                <button type="button" class="btn bg-red border-red clr-white" onclick="showEddite('usernameupdater')">Cancel</button>
                             </div>
-                        </form>
-                    
+                        </div>
+                    </form>
+
 
 
 
@@ -95,20 +87,20 @@
                     </div>
 
                     <!--mobile update form-->
-                        <form action="/User/updateContactNumber" method="post"  class="update-form" id="mobileupdater">
-                            <div class="input-container">
+                    <form action="/User/updateContactNumber" method="post" class="update-form" id="mobileupdater">
+                        <div class="input-container">
 
-                                <label for="text" class="form-item label">Enter new mobile:</label>
-                                <input type="tel" class="form-ctrl" placeholder="Enter new mobile" id="mobileinput" name="contact_number" onkeyup="checkTelephone(this.value)" required><br>
-                                
+                            <label for="text" class="form-item label">Enter new mobile:</label>
+                            <input type="tel" class="form-ctrl" placeholder="Enter new mobile" id="mobileinput" name="contact_number" onkeyup="checkTelephone(this.value)" required><br>
 
-                                <div class="intro-update-btn">
-                                    <button type="submit" class="btn bg-green clr-white mobile-submit-btn" onclick=" updateField('mobile','mobileupdater')">Update</button>
-                                    <button type="button" class="btn bg-red border-red clr-white" onclick=" showEddite('mobileupdater')">Cancel</button>
-                                </div>
+
+                            <div class="intro-update-btn">
+                                <button type="submit" class="btn bg-green clr-white mobile-submit-btn" onclick=" updateField('mobile','mobileupdater')">Update</button>
+                                <button type="button" class="btn bg-red border-red clr-white" onclick=" showEddite('mobileupdater')">Cancel</button>
                             </div>
-                        </form>
-               
+                        </div>
+                    </form>
+
                     <!-- Account-number-container -->
                     <div class="account-number-container">
                         <div class="account-number-icon">
@@ -117,7 +109,7 @@
                         </div>
 
                         <div class="account-number">
-                            <h3 id="account-number"><?php if (isset($account_number)) echo $bank_name," - ",$account_number; ?></h3>
+                            <h3 id="account-number"><?php if (isset($account_number)) echo $bank_name, " - ", $account_number; ?></h3>
 
                         </div>
                         <div class="account-number-change-btn">
@@ -129,7 +121,7 @@
                     <form action="/Organisation/updateAccountNumber" method="post" id="edit-user-profile-form">
                         <div class="update-form" id="account-number-updater">
                             <div class="input-container">
-                            <label for="text" class="edit-coontainer">Enter bank name:</label>
+                                <label for="text" class="edit-coontainer">Enter bank name:</label>
                                 <input type="text" id="usernameinput" placeholder="Enter bank name" name="bank_name" required><br>
                                 <label for="text" class="edit-coontainer">Enter new account number:</label>
                                 <input type="text" id="usernameinput" placeholder="Enter new account number" name="account_number" onkeyup="checkAccountNumber(this.value)" required><br>
@@ -176,25 +168,25 @@
                     </div>
 
                     <!--email update form-->
-          
-                        <form action="/User/updateEmail" method="post" class="update-form" id="emailupdater">
-                            <div class="input-container">
-                                <label for="text">Enter new email:</label>
-                                <span class="input-error email-error error" style="color :red; font-size :0.7rem; "><?php if (isset($_GET["invaliderr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp" . $_GET['invaliderr']; ?></span>
-                                <input type="email" class="form-ctrl" placeholder="Enter new email" name="email" required onkeyup="checkMail(this.value)"  required/><br>
 
-                                <div class="intro-update-btn">
-                                    <button type="submit" id="email-submit-btn" class="btn bg-green clr-white" onclick=" updateField('email','emailupdater')" <?php if (isset($_GET['invaliderr'])) {
-                                                                                                                                                                    echo "disabled";
-                                                                                                                                                                } ?>>Update</button>
-                                    <button type="button" class="btn bg-red border-red clr-white" onclick=" showEddite('emailupdater')">Cancel</button>
-                                </div>
+                    <form action="/User/updateEmail" method="post" class="update-form" id="emailupdater">
+                        <div class="input-container">
+                            <label for="text">Enter new email:</label>
+                            <span class="input-error email-error error" style="color :red; font-size :0.7rem; "><?php if (isset($_GET["invaliderr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp" . $_GET['invaliderr']; ?></span>
+                            <input type="email" class="form-ctrl" placeholder="Enter new email" name="email" required onkeyup="checkMail(this.value)" required /><br>
+
+                            <div class="intro-update-btn">
+                                <button type="submit" id="email-submit-btn" class="btn bg-green clr-white" onclick=" updateField('email','emailupdater')" <?php if (isset($_GET['invaliderr'])) {
+                                                                                                                                                                echo "disabled";
+                                                                                                                                                            } ?>>Update</button>
+                                <button type="button" class="btn bg-red border-red clr-white" onclick=" showEddite('emailupdater')">Cancel</button>
                             </div>
-                        </form>
-                 
+                        </div>
+                    </form>
 
 
-                     <!-- Password container -->
+
+                    <!-- Password container -->
                     <div class="password-container">
                         <div class="password-icon">
                             <i class="fa fa-key fa-2x clr-gray" id="pass"></i>
@@ -211,35 +203,35 @@
                     </div>
 
                     <!--password update form-->
-        
-                        <form action="/User/updatePassword" method="post"  class="update-form" id="passwordupdater">
-                            <div class="input-container">
 
-                                <label for="password" class="form-item label">Enter current password:</label>
-                                <span class="input-error" style="color :red ; font-size :0.7rem;"><?php if (isset($_GET["currentpassworderr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp" . $_GET['currentpassworderr']; ?></span>
-                                <input type="password" class="form-ctrl" placeholder="Enter current password" id="passwordinputold" name="current_password" onkeyup="clearCurrentpasswordError()"><br>
-                                
-                                <label for="password" class="form-item label">Enter new password: </label>
-                                <input type="password" class="form-ctrl password-error" placeholder="Enter new password" id="new-password" name="new_password" onkeyup="checkPassword(this.value)"><br>
-                                
+                    <form action="/User/updatePassword" method="post" class="update-form" id="passwordupdater">
+                        <div class="input-container">
 
+                            <label for="password" class="form-item label">Enter current password:</label>
+                            <span class="input-error" style="color :red ; font-size :0.7rem;"><?php if (isset($_GET["currentpassworderr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp" . $_GET['currentpassworderr']; ?></span>
+                            <input type="password" class="form-ctrl" placeholder="Enter current password" id="passwordinputold" name="current_password" onkeyup="clearCurrentpasswordError()"><br>
 
-                                <label for="password" class="form-item label">Confirm password:</label>
-                                <span class="error" id="confirm-password-error"></span>
-                                <input type="password" class="form-ctrl" placeholder="Enter confirm password" id="confirm-password" name="password" onkeyup="passwordMatch(this.value)"><br>
-
-                                
+                            <label for="password" class="form-item label">Enter new password: </label>
+                            <input type="password" class="form-ctrl password-error" placeholder="Enter new password" id="new-password" name="new_password" onkeyup="checkPassword(this.value)"><br>
 
 
-                                <div class="intro-update-btn">
-                                    <button type="submit" class="btn bg-green clr-white password-submit-btn" onclick="showEddite('passwordupdater')" <?php if (isset($_GET['currentpassworderr'])) {
-                                                                                                                                                            echo "disabled";
-                                                                                                                                                        } ?>>Update</button>
-                                    <button type="button" class="btn bg-red border-red clr-white" onclick="showEddite('passwordupdater')">Cancel</button>
-                                </div>
+
+                            <label for="password" class="form-item label">Confirm password:</label>
+                            <span class="error" id="confirm-password-error"></span>
+                            <input type="password" class="form-ctrl" placeholder="Enter confirm password" id="confirm-password" name="password" onkeyup="passwordMatch(this.value)"><br>
+
+
+
+
+                            <div class="intro-update-btn">
+                                <button type="submit" class="btn bg-green clr-white password-submit-btn" onclick="showEddite('passwordupdater')" <?php if (isset($_GET['currentpassworderr'])) {
+                                                                                                                                                        echo "disabled";
+                                                                                                                                                    } ?>>Update</button>
+                                <button type="button" class="btn bg-red border-red clr-white" onclick="showEddite('passwordupdater')">Cancel</button>
                             </div>
-                        </form>
- 
+                        </div>
+                    </form>
+
 
 
                 </div>
@@ -260,21 +252,20 @@
     </div>
     <?php include "footer.php" ?>
 
-      <!-- Link Script for change profile picture-->
+    <!-- Link Script for change profile picture-->
     <script src="../Public/assets/js/app.js"></script>
 
     <!-- Link Script for dis[lay input validation errors-->
     <script src="/Public/assets/js/input_validation.js"></script>
 
     <script>
-
         // Invalid email error
         <?php if (isset($_GET["invaliderr"])) echo "showEddite('emailupdater');" ?>
 
-         // Current password incorrect error
+        // Current password incorrect error
         <?php if (isset($_GET["currentpassworderr"])) echo "showEddite('passwordupdater');" ?>
 
-         // Clear current password input  field
+        // Clear current password input  field
         function clearCurrentpasswordError() {
             let current_password_error = document.querySelector(".current-password-error");
             current_password_error.innerHTML = "";
@@ -286,15 +277,15 @@
 
             const pattern = /^[+]?[0-9]{10,11}$/;
             if (!pattern.test(number)) {
-                
+
                 document.querySelector('.mobile-submit-btn').disabled = true;
             } else {
                 document.querySelector('.mobile-submit-btn').disabled = false;
             }
-          
+
 
         }
-        
+
         // Check account number input and disable/enable submit buttons
         function checkAccountNumber(account_number) {
             var err = "";
@@ -349,17 +340,17 @@
         // }
 
         function checkPassword(password) {
-            
+
             const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
             if (!pattern.test(password)) {
-             
+
                 document.querySelector('.password-submit-btn').disabled = true;
 
             } else {
                 document.querySelector('.password-submit-btn').disabled = false;
             }
 
-          
+
         }
 
         // Edit form toggle function
@@ -368,15 +359,15 @@
             document.getElementById(elementId).classList.toggle("unhide");
 
         }
-        
-         // Update detail container when update by user
+
+        // Update detail container when update by user
         function updateField(elementId, containerID) {
 
             document.getElementById(elementId).innerText = document.getElementById(elementId + 'input').value;
             document.getElementById(containerID).classList.toggle("hide");
 
         }
-        
+
         // Match new password and confirm password and disable/enable submit buttons
         function passwordMatch(confirm_password) {
 

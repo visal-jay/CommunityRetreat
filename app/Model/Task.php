@@ -4,11 +4,11 @@ class Task extends Model
     public function getTask($event_id,$task_id=-1)
     {
         if($task_id != -1){
-            $query = "SELECT `task`, `task_id`, `start_date`, `end_date` FROM work_timeline WHERE event_id= :event_id AND task_id= :task_id";
-            $params = ["event_id"=> $event_id, "task_id"=> $task_id];
+            $query = "SELECT `task`, `task_id`, `start_date`, `end_date`, `completed` FROM work_timeline WHERE task_id= :task_id";
+            $params = ["task_id"=> $task_id];
         }
         else{
-            $query = "SELECT `task`, `task_id`, `start_date`, `end_date` FROM work_timeline WHERE event_id= :event_id";
+            $query = "SELECT `task`, `task_id`, `start_date`, `end_date`, `completed` FROM work_timeline WHERE event_id= :event_id";
             $params = ["event_id"=> $event_id];
         }
         $result = Model::select($query, $params);
@@ -36,6 +36,19 @@ class Task extends Model
     public function deleteTask($task_id)
     {
         $query = "DELETE FROM `work_timeline` WHERE task_id= :task_id";
+        $params = ["task_id" => $task_id];
+        Model::insert($query, $params);
+    }
+
+    public function completed($task_id){
+        $result= $this->getTask(-1,$task_id);
+        if ($result[0]["completed"]== 0){
+            $query = "UPDATE work_timeline SET completed=1 WHERE task_id= :task_id";
+        }
+        else {
+            $query = "UPDATE work_timeline SET completed=0 WHERE task_id= :task_id";
+        }
+        
         $params = ["task_id" => $task_id];
         Model::insert($query, $params);
     }

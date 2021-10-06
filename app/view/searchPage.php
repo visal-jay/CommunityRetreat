@@ -425,7 +425,7 @@
     }
 
     /* event search ajax */
-    async function search(latitude = "", longitude = "", range = "") {
+    async function search(latitude = "", longitude = "", range = "" ,is_virtual="") {
 
         if (latitude == "" || longitude == "") {
             const position = await getCoordinates();
@@ -457,6 +457,7 @@
                     order_type: sort,
                     way: way,
                     status: 'published',
+                    is_virtual : is_virtual,
                 },
                 success: function(result) {
                     parent_container.innerHTML = "";
@@ -626,13 +627,13 @@
 
         map.addListener("center_changed", () => {
             let latlang = map.getCenter();
-            search(latlang.lat(), latlang.lng(), 20);
+            search(latlang.lat(), latlang.lng(), 20,0);
         });
 
         if (range) {
             document.getElementById("map-container").classList.toggle("hidden");
             resizeMap();
-            search(latitude, longitude, 20);
+            search(latitude, longitude, 20 , 0);
 
         } else {
             search(latitude, longitude);

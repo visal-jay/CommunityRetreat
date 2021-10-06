@@ -15,7 +15,8 @@
     .form {
         min-width: 50%;
     }
-    .main-container{
+
+    .main-container {
         height: 100%;
         align-items: center;
     }
@@ -138,7 +139,6 @@
     <div class="flex-col  margin-side-lg main-container">
         <h1>Gallery</h1>
         <?php if ($organization) { ?>
-            <p class="clr-red"><?php if (isset($_GET["error"])) echo $_GET["error"]; ?></p>
             <form class="form flex-col flex-center" id="file-form" method="post" enctype="multipart/form-data">
                 <label for="files">
                     <div class="btn btn-solid margin-lg">Add photo &nbsp; <i class="fas fa-plus"></i></div>
@@ -215,6 +215,10 @@
 
 
     function handleFileSelect(event) {
+        let error_element = document.querySelector(".input-error");
+        if (error_element) {
+            error_element.remove();
+        }
 
         var files = event.target.files;
         var filesArr = Array.prototype.slice.call(files);
@@ -262,6 +266,16 @@
             success: (data) => {
                 location.reload();
                 return false;
+            },
+            error: function(request, status, error) {
+                let msg = request.responseText.match(/####(.*)####/);
+                let span = document.createElement("span");
+                span.classList.add("input-error");
+                span.innerHTML = "<i class='fas fa-exclamation-circle'></i> &nbsp" + msg[1];
+                span.style.color = "red";
+                span.style.fontSize = "0.7rem";
+                input.style.borderColor = "red";
+                document.getElementById("file-form").insertAdjacentElement("beforebegin", span);
             }
         });
     }
@@ -275,8 +289,13 @@
             }
         }
         e.target.parentElement.remove();
-        if (storedFiles.length == 0)
+        if (storedFiles.length == 0) {
             document.querySelector(".save-button").classList.add("hidden");
+            let error_element = document.querySelector(".input-error");
+            if (error_element) {
+                error_element.remove();
+            }
+        }
     }
 </script>
 

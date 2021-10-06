@@ -18,6 +18,11 @@ class ErrorHandler
         if ($code != 404) {
             $code = 500;
         }
+        $arr = array('message' => 'blah'); //etc
+
+
+        echo "####". $exception->getMessage() . "####";
+        
         http_response_code($code);
         echo "<h3>Fatal exception $code</h3>";
         echo "<p>Uncaught exception: '" . get_class($exception) . "'</p>";

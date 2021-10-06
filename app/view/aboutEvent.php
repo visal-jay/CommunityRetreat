@@ -386,14 +386,13 @@
             <?php if ($volunteer_status == 1) { ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d">
                     <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
-                    <div class="progress" data-width="<?php if ($volunteer_percent == NULL) echo "0";
-                                                        else $volunteer_percent ?>%">
+                    <div class="progress" data-width="<?php if ($volunteer_percent =="NULL") echo "0";else echo round($volunteer_percent); ?>%">
                         <div class="volunteers-progress-bar"></div>
                     </div>
                     <?php if ($guest_user) { ?>
                         <button class="btn clr-green margin-md" onclick="window.location.href='/Login/view/'"><i class="fas fa-user-friends"></i>&nbsp;I want to volunteer</button>
                     <?php } else if ($organization || $admin) { ?>
-                        <button class="btn clr-green margin-md" disabled></i>&nbsp;I want to volunteer</button>
+                        <button class="btn clr-green margin-md" disabled><i class="fas fa-user-friends"></i>&nbsp;I want to volunteer</button>
                     <?php } else if ($registered_user) { ?>
                         <button class="btn clr-green margin-md" onclick="togglePopup('volunteer-form'); blur_background('background');stillBackground('id1')"><i class="fas fa-user-friends"></i>&nbsp;I want to volunteer</button>
                     <?php } ?>
@@ -405,13 +404,13 @@
                 <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d; text-align:center">
                     <p style="color:white">Would you like to give value to your hard-earned money by contributing to this community service project?</p>
                     <div class="progress" data-width="<?php if ($donation_percent == NULL) echo "0";
-                                                        else echo (int)$donation_percent ?>%">
+                                                        else echo round($donation_percent); ?>%">
                         <div class="donaters-progress-bar"></div>
                     </div>
                     <?php if ($guest_user) { ?>
                         <button class="btn clr-green margin-md" onclick="window.location.href='/Login/view/'"><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
                     <?php } else if ($organization || $admin) { ?>
-                        <button class="btn clr-green margin-md" disabled></i>&nbsp;Donate Now!</button>
+                        <button class="btn clr-green margin-md" disabled><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
                     <?php } else if ($registered_user) { ?>
                         <button class="btn clr-green margin-md" onclick="togglePopup('form'); blur_background('background');stillBackground('id1')"><i class="fas fa-hand-holding-usd"></i>&nbsp;Donate Now!</button>
                     <?php } ?>
@@ -488,10 +487,14 @@
                             <input type='checkbox'  name='volunteer_date[]' value='$event_days'";
                         for ($i = 0; $i < count($volunteer_date); $i++) {
                             if ($event_days == $volunteer_date[$i]['volunteer_date']) {
-                                echo 'checked';
+                                echo 'checked ';
+                                $v_flag=TRUE;
                             }
                         };
-                        echo " disabled></div>";
+                        if(!$v_flag){
+                            echo " disbaled ";
+                        }
+                        echo "></div>";
                     } else {
                         echo "<div class='flex-row flex-center'><h3>" . $event_days . "</h3>
                             <input type='checkbox'  name='volunteer_date[]' value='$event_days'";
@@ -569,12 +572,6 @@
         <?php $today = gmdate("Y-m-d", (int)shell_exec("date '+%s'"));
         $min_date = min($today, $start_date); ?>
 
-        /* var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0');
-        var yyyy = today.getFullYear();
-
-        today = yyyy + '-' + mm + '-' + dd; */
         document.getElementById("start_date").setAttribute("min", "<?= $min_date ?>");
         document.getElementById("end_date").setAttribute("min", "<?= $today ?>");
         document.getElementById("start_date").addEventListener("change", () => {
@@ -672,7 +669,6 @@
         }, {
             duration: 2000,
             step: function(now, fx) {
-                console.log("sdasdas");
                 if (fx.prop == 'width') {
                     if (parseInt(width.replace('%', '')) < now && now <= 100) {
                         now = parseInt(width.replace('%', ''));

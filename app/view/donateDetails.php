@@ -112,8 +112,6 @@
     .terms-and-conditions-box{
         background-color: white;
         box-shadow: 5px 5px 15px 5px #000000;
-        padding: 20px;
-        margin-top: 20px;
     }
 
 @media screen and (max-width:768px) {
@@ -159,8 +157,6 @@
     .terms-and-conditions-box{
         background-color: white;
         box-shadow: 5px 5px 15px 5px #000000;
-        margin: 20px;
-        padding: 10px;
     }
 }
 </style>

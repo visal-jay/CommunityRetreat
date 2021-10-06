@@ -489,10 +489,11 @@
                             <input type='checkbox'  name='volunteer_date[]' value='$event_days'";
                         for ($i = 0; $i < count($volunteer_date); $i++) {
                             if ($event_days == $volunteer_date[$i]['volunteer_date']) {
-                                echo 'checked';
+                                echo 'checked ';
                             }
+                            
                         };
-                        echo " disabled></div>";
+                        echo "disabled></div>";
                     } else {
                         echo "<div class='flex-row flex-center'><h3>" . $event_days . "</h3>
                             <input type='checkbox'  name='volunteer_date[]' value='$event_days'";

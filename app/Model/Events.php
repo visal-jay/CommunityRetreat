@@ -99,7 +99,7 @@ class Events extends Model
 
         for ($i = 0; $i < count($volunteered_uid); $i++) {
             foreach ($volunteered_uid[$i] as $uid) {
-                //    (new User)->sendNotification($uid);
+                (new UserController)->sendNotifications("{$params['event_name']} event informations has been changed.Please volunteer again..!",$params["event_id"],$uid,"event");
                 $delete_query = "DELETE FROM  volunteer WHERE uid = :uid AND event_id = :event_id";
                 $delete_params = ['uid' => $uid, 'event_id' => $params["event_id"]];
                 $stmt = $db->prepare($delete_query);

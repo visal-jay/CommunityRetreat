@@ -131,6 +131,18 @@ class UserController{
         echo json_encode($activities);
 
     }
+    function sendNotifications($notification,$event_id =-1,$uid,$status){
+        $user = new User();
+        $user->insertNotification($notification,$event_id,$uid,$status);
+
+    }
+    function getNotifications(){
+        $user = new User();
+        $notifications = $user->getNotifications();
+        echo json_encode($notifications);
+
+    }
+    
     function checkEmailAvailable(){
         Controller::validateForm(["email"]);
         if((new Validation)->email($_POST["email"]));

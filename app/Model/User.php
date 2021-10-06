@@ -122,6 +122,24 @@ class User extends Model
        
         
     }
+    function insertNotification($notification,$event_id,$uid,$status){
+        if($event_id == -1){
+            $params = ["uid" => $uid, "notification" => $notification ,"status" => $status];
+            $query = 'INSERT INTO `notification`(`uid`,`event_id`,`time_stamp`,`description`,`status`) VALUES (:uid,NULL,CURRENT_TIMESTAMP,:notification,:status)'; 
+        }
+        else{
+            $params = ["uid" => $uid, "event_id" => $event_id, "notification" => $notification ,"status" => $status];
+            $query = 'INSERT INTO `notification` (`uid`,`event_id`,`time_stamp`,`description`,`status`) VALUES (:uid,:event_id,CURRENT_TIMESTAMP,:notification, :status)'; 
+        }
+        User::insert($query,$params);
+    }
+
+    function getNotifications(){
+        $params = ["uid" => $_SESSION["user"]["uid"] ];
+        $query = 'SELECT reg.profile_pic AS reguser_profile_pic,org.profile_pic AS org_profile_pic,event_details.organisation_username,event_details.cover_photo AS event_cover_pic,event_details.event_name,notification.event_id AS event_id,notification.description AS description ,notification.time_stamp AS time_stamp,notification.viewed AS viewed,notification.status AS status FROM notification JOIN event_details ON notification.event_id = event_details.event_id RIGHT JOIN registered_user reg ON notification.uid  =reg.uid  RIGHT JOIN organization org ON event_details.org_uid = org.uid  WHERE  notification.uid = :uid';
+        $notifications = User::select($query,$params);
+        return  $notifications;
+    }
 
 
 

@@ -39,4 +39,13 @@ class WorkTimelineController
         (new Task)->deleteTask($_POST["task_id"]);
         Controller::redirect("/Event/view", ["page" => "timeline", "event_id" => $_GET["event_id"]]);
     }
+
+    public function completed()
+    {
+        /* Controller::validateForm([], ["event_id","feedback_id"]);
+        Controller::accessCheck(["organization","moderator"]);
+        (new UserController)->addActivity("Hide a feedback",$_GET["event_id"]); */
+        (new Task)->completed($_GET["task_id"]);
+        Controller::redirect("/Event/view", ["page" => "timeline", "event_id" => $_GET["event_id"]]);
+    }
 }

@@ -26,7 +26,7 @@
               <!-- Profile container division -->
             <div class="profilepic-pic-div">
                 <img src="<?= $profile_pic ?>" id="dp">
-                <input type="file" id="file" name="profile_pic">
+                <input type="file" id="file" name="profile_pic" accept=".jpg, .jpeg, .png">
                 <label for="file" id="uploadbtn">upload photo</label>
 
             </div>

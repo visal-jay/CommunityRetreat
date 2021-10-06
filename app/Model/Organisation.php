@@ -38,7 +38,9 @@ class Organisation extends User
 
     public function getDetails($uid)
     {
-        $query = 'SELECT  org.username,org.email,org.contact_number,org.bank_name, org.account_number,ST_X(org.latlang) as latitude ,ST_Y(org.latlang) as longitude ,org.profile_pic,org.cover_pic,org.about_us FROM organization org INNER JOIN login ON org.uid= login.uid WHERE org.uid = :uid  AND verified=1';
+
+        $query = 'SELECT  org.username,org.email,org.contact_number,org.account_number,org.bank_name,ST_X(org.latlang) as latitude ,ST_Y(org.latlang) as longitude ,org.profile_pic,org.cover_pic,org.about_us FROM organization org INNER JOIN login ON org.uid= login.uid WHERE org.uid = :uid  AND verified=1';
+
         $params = ["uid" => $uid];
         $result = User::select($query, $params);
         $result[0]["map"] = true;
@@ -79,7 +81,8 @@ class Organisation extends User
         
         unset($params["map"]);
 
-        $query = 'UPDATE organization SET username= :username, email= :email, contact_number = :contact_number , latlang=POINT(:latitude,:longitude) ,profile_pic = :profile_pic,cover_pic = :cover_pic,about_us=:about_us  WHERE uid = :uid';
+
+        $query = 'UPDATE organization SET username= :username, email= :email, contact_number = :contact_number ,account_number = :account_number , bank_name = :bank_name, latlang=POINT(:latitude,:longitude) ,profile_pic = :profile_pic,cover_pic = :cover_pic,about_us=:about_us  WHERE uid = :uid';
         User::insert($query, $params);
     }
 

@@ -22,7 +22,7 @@
     .styled-table {
         border-collapse: collapse;
         margin: 25px 25px;
-        font-size: 0.9em;
+        font-size: 1em;
         min-width: 80%;
         max-width: 100%;
         width: 600px;
@@ -30,7 +30,7 @@
 
     .styled-table th,
     td {
-        text-align: center;
+        text-align: left;
     }
 
     #role {
@@ -68,8 +68,8 @@
     th,
     td {
         padding-right: 20px;
-        padding-top: 4px;
-        padding-bottom: 4px;
+        padding-top: 7px;
+        padding-bottom: 7px;
     }
 
     .drop-down-list {

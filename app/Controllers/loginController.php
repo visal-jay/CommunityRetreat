@@ -88,7 +88,8 @@ class LoginController
             if(isset($_SESSION["redirect"])){
                 $redirect =$_SESSION["redirect"] ;
                 unset($_SESSION["redirect"]);
-                Controller::redirect($redirect);
+                header("Location:".$redirect, true,  302);
+                exit();
             }
             else
                 Controller::redirect("/User/home");

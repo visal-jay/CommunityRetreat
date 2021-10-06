@@ -12,7 +12,9 @@ class DonationsController{
         $data["donations"] = $donation->getDonateDetails($_GET["event_id"]);
         $data["donation_sum"]= $donation->getDonationSum($_GET["event_id"]);
         $check_accountNo = (new Organisation)->getDetails($_SESSION['user']['uid']);
-        if($check_accountNo['account_number']!=NULL && $check_accountNo['bank_name']!=NULL ){   
+
+        if($check_accountNo['account_number']!=NULL || $check_accountNo["bank_name"]!=NULL ){   
+
             $data["have_account_number"] = "TRUE";
         }
         else{
@@ -123,7 +125,7 @@ class DonationsController{
         $session = \Stripe\Checkout\Session::retrieve($_GET["session_id"]);
         $customer = \Stripe\Customer::retrieve($session->customer);
 
-        (new Donations)->donationAccept($_SESSION["user"]["uid"], $_GET["event_id"], $session["amount_total"], $session["payment_intent"]);
+        (new Donations)->donationAccept($_SESSION["user"]["uid"], $_GET["event_id"], substr($session["amount_total"],0,-2), $session["payment_intent"]);
         Controller::redirect("/Event/view", ["page" => "about", "event_id" => $_GET["event_id"]]);
             
     }

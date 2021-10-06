@@ -292,19 +292,15 @@ if(isset($_SESSION ["user"] ["user_type"])){
 
     <div class=" initial-donation-enable-btn">
     <?php if($have_account_number == "TRUE" && ($organization || $treasurer)){?>
-        <button onclick="window.location.href='/Donations/enableDonation?event_id= <?= $_GET['event_id']?>'" class="btn btn-lg btn-solid"  id="initial-donation-enable-btn" onclick='blur_background()'>Enable Donations</button> 
+        <button onclick="window.location.href='/Donations/enableDonation?event_id= <?= $_GET['event_id']?>'" class="btn btn-lg btn-solid"  id="initial-donation-enable-btn" onclick='blur_background() ' disabled>Enable Donations</button> 
+    <?php } else if($have_account_number == "FALSE" && ($organization)){?>
+        <button onclick="window.location.href='/Organisation/profile?'" class="btn btn-lg btn-solid"  id="initial-donation-enable-btn" disabled>Enable Donations</button> 
+    <?php } else if($have_account_number == "FALSE" && ($treasurer)){ ?>
+            <p class="clr-red"><i class='fas fa-exclamation-circle clr-red'></i>You're not authorized to enable donations</p>
     <?php } ?>
-
-    <?php if($have_account_number == "FALSE" && ($organization)){?>
-        <button onclick="window.location.href='/Organisation/profile?'" class="btn btn-lg btn-solid"  id="initial-donation-enable-btn" onclick='blur_background()'>Enable Donations</button> 
-    <?php } ?>
-
-            <div style="display:none">
-                <p>You're not authorized to enable donations</p>
-            </div>
 
         <!--initally enable the donations-->
-        <div class="terms-and-conditions-box">
+        <div class="bg-white flex-col flex-center">
             <p>
                 <ul class="left">
                     <li>All organizations will be allowed to collect donations and these donations will be<br> credited to a bank account owned by the CommunityRetreat.</li>

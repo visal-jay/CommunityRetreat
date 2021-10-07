@@ -311,6 +311,41 @@
             </div>
         </div>
     <?php } ?>
+<!-- popup -->
+    <div class="popup" id="update_announcement_id">
+            <div class="content">
+
+                <?php foreach ($announcements as $announcement) { ?>
+                <div class="card-container margin-md">
+                    <div class="event-card-details" id="<?= $announcement["announcement_id"] ?>">
+                        <h3 class="margin-md"><?= $announcement["title"] ?></h3>
+                        <date><?= $announcement["date"] ?></date>
+                        <description class="margin-md description"><?= $announcement["announcement"] ?></description>
+
+                        <?php if ($organization || $moderator) { ?>
+                            <update class="margin-md">
+                                <button class="btn btn-small margin-side-md" onclick="edit(); editForm('<?= $announcement['title'] ?>','<?= $announcement['announcement_id'] ?>'); togglePopup('edit-div'); blur_background('background'); stillBackground('id1');"> <i class="btn-icon far fa-edit margin-side-md"></i>&nbsp;Edit</button>
+                                <button class="btn btn-small clr-red border-red " onclick="remove()" required style="font-family:Ubuntu, sans-serif,  FontAwesome"> &#xf2ed; &nbsp;Remove </button>
+                                <div class="flex-row flex-space" style="display: none;">
+                                    <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
+                                    <form method="post" action="/Forum/deleteAnnouncement?event_id=<?= $_GET["event_id"] ?>" class="flex-row flex-center">
+                                        <input name="announcement_id" class="hidden" value="<?= $announcement["announcement_id"] ?>">
+                                        <button class="btn-icon flex-row flex-center"><i type="submit" class="fas fa-check clr-green margin-side-md"></i>&nbsp;</button>
+                                    </form>
+                                    <i class="btn-icon fas fa-times clr-red margin-side-md" onclick="cancel()"></i>
+                                </div>
+                            </update>
+                        <?php } ?>
+
+                    </div>
+                </div>
+            <?php } ?>
+                    <div>
+                        <button type="button" class="btn-icon btn-close" onclick="window.location.href='/Event/view?page=forum&event_id=<?= $_GET['event_id'] ?>' "><i class="fas fa-times"></i></button>
+                    </div>
+            </div>
+        </div>
+<!-- popup -->
 </body>
 <style>
 
@@ -449,6 +484,10 @@
     function stillBackground(id) {
         document.getElementById(id).classList.toggle("still");
     }
+    <?php if($registered_user && isset($_GET["update_announcement_id"])) { ?> 
+        window.addEventListener('load', (event) => {
+        togglePopup('update_announcement_id'); blur_background('background'); stillBackground('id1') });
+    <?php } ?>
 
     function add() {
         document.querySelector(".form").classList.toggle("show-form");

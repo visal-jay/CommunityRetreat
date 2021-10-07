@@ -14,9 +14,9 @@ class Donations extends Model{
             return $result;
     }
 
-    public function getDonateDetails($event_id){/*get donation details from backend to UI*/
-        $query = 'SELECT donation.amount, date(time_stamp) as date, registered_user.username FROM donation LEFT JOIN registered_user ON donation.uid=registered_user.uid WHERE event_id =:event_id'; 
-        $params = ["event_id" => $event_id];
+    public function getDonateDetails($event_id, $offset, $no_of_records_per_page){/*get donation details from backend to UI*/
+        $query = 'SELECT donation.amount, date(time_stamp) as date, registered_user.username FROM donation LEFT JOIN registered_user ON donation.uid=registered_user.uid WHERE event_id =:event_id LIMIT :offset , :no_of_records_per_page'; 
+        $params = ["event_id" => $event_id, "offset"=>$offset, "no_of_records_per_page"=>$no_of_records_per_page];
         $result=Model::select($query,$params);
        return $result;
        

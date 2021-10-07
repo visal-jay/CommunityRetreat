@@ -9,7 +9,8 @@ class DonationsController{
        // exit();
         $data = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["donation_status" => '', "donation_capacity" => '']);
         $donation = new Donations();
-        $data["donations"] = $donation->getDonateDetails($_GET["event_id"]);
+        $pagination= Model::pagination("donation", 10, "WHERE event_id =:event_id", ["event_id"=>$_GET["event_id"]]);
+        $data["donations"] = $donation->getDonateDetails($_GET["event_id"], $pagination["offset"],  $pagination["no_of_records_per_page"]);
         $data["donation_sum"]= $donation->getDonationSum($_GET["event_id"]);
         $check_accountNo = (new Organisation)->getDetails($_SESSION['user']['uid']);
 

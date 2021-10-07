@@ -12,7 +12,8 @@ for(let i=0;i<notification_data.length;i++){
                 event_id : notification_data[i].event_id,
                 imgname : "/../.."+notification_data[i].event_cover_pic,
                 description : notification_data[i].description,
-                orgnaization : notification_data[i].organisation_username
+                path : notification_data[i].path
+
 
             }
             
@@ -26,7 +27,8 @@ for(let i=0;i<notification_data.length;i++){
                 event_id :"",
                 imgname : notification_data[i].org_profile_pic,
                 description : notification_data[i].description,
-                orgnaization : notification_data[i].organisation_username
+                path : notification_data[i].path
+
 
             }
             
@@ -41,7 +43,8 @@ for(let i=0;i<notification_data.length;i++){
                 event_id : "",
                 imgname : "../Public/assets/visal logo.png",
                 description : notification_data[i].description,
-               
+                path : notification_data[i].path
+
 
             }
             
@@ -111,12 +114,8 @@ function addDatacontainer(data){
     notificationbar.appendChild(imagediv);
     let descriptiondiv=  document.createElement('div');
     descriptiondiv.setAttribute("class","description");
-    let a = document.createElement("a");
-    a.innerText =  data[0].description +".";
-    if(data[0].event_id != ""){
-        a.setAttribute("href","/event/view?page=about&&event_id="+data[0].event_id);
-    }
-    descriptiondiv.appendChild(a); 
+    descriptiondiv.setAttribute("onClick",data[0].path);
+    descriptiondiv.innerText = data[0].description;
     notificationbar.appendChild(descriptiondiv);
     document.querySelector('.notifications-form').appendChild(notificationbar);
 

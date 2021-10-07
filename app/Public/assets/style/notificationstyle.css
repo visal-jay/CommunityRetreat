@@ -58,6 +58,7 @@
 .description{
     width:70%;
     padding:1.5rem 0.5rem 1rem;
+    cursor: pointer;
 }
 @media screen  and (max-width: 768px){
 

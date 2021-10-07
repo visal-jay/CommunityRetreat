@@ -131,9 +131,14 @@ class UserController{
         echo json_encode($activities);
 
     }
-    function sendNotifications($notification,$event_id =-1,$uid,$status){
+    function sendNotifications($notification,$uid,$status,$path,$event_id =-1){
         $user = new User();
-        $user->insertNotification($notification,$event_id,$uid,$status);
+        $user->insertNotification($notification,$uid,$status,$path,$event_id);
+
+    }
+    function viewNotifications(){
+        $user = new User();
+        $user->setNotificationViewed();
 
     }
     function getNotifications(){

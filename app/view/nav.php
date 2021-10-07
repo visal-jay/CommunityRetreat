@@ -8,6 +8,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="/Public/assets/newstyles.css">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
+    
 </head>
 
 <body>
@@ -36,7 +37,7 @@
                 <a class="nav-link margin-side-md" href="/User/home">Home</a>
                 <a class="nav-link margin-side-md" href="/RegisteredUser/calendar">Calendar</a>
                 <a class="nav-link margin-side-md" href="/RegisteredUser/administratored">Administration</a>
-                <a class="nav-link margin-side-md" href="/User/Notifications">Notifications</a>
+                <a class="nav-link margin-side-md" href="/User/Notifications" onclick="viewNotification()">Notifications</a>
                 <a class="nav-link margin-side-md" href="/RegisteredUser/chatApp">Chat</a>
             <?php } ?>
 
@@ -70,7 +71,7 @@
                     <?php if ($organization) { ?>
                         <a href="/User/profile" class="nav-link margin-md"><i class="far fa-user"></i>&nbsp; Profile</a>
                     <?php } elseif ($registered_user) { ?>
-                        <a href="/User/profile" class="nav-link margin-md"><i class="far fa-user"></i>&nbsp; Profile</a>
+                        <a href="/User/profile" class="nav-link margin-md" onclick="hello()"><i class="far fa-user"></i>&nbsp; Profile</a>
                     <?php ?>
                     <?php }elseif ($admin) { ?>
                         <a href="/User/profile" class="nav-link margin-md"><i class="far fa-user"></i>&nbsp; Profile</a>
@@ -112,6 +113,13 @@
         if (targetElement != navDropdownButton)
             navDropdown.classList.add('hidden');
     });
+    function viewNotification(){
+        $.ajax({
+        url: "/User/viewNotifications",
+        type: "post",
+        });
+    }
+
 </script>
 
 </html>

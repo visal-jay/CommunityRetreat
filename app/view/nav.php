@@ -22,10 +22,7 @@
             -webkit-transition: border-bottom 0.1s ease-in-out;
             transition: border-bottom 0.1s ease-in-out;
         }
-        .nav-link-notification:hover {
-            color: #16c79a;
-            border-bottom: 2px solid black;
-        }
+ 
         #notification {   
             position: relative;
         }

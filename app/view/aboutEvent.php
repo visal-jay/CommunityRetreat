@@ -472,6 +472,7 @@
                 <button type="button" class="btn-icon btn-close" onclick="togglePopup('volunteer-form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
                 <?php
                 $event_days = [];
+                $v_flag=FALSE;
 
                 $startDate = new DateTime($start_date);
                 $interval = new DateInterval('P1D');

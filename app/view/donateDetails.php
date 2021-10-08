@@ -214,7 +214,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
             <div>
                 <button class="btn btn-solid data edit-btn" onclick="edit()">Edit
                     &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
-                <div class="flex-row-to-col">
+                <div class="flex-row flex-center">
                     <div class="edit-save-btn">
                         <button class=" btn btn-solid bg-red border-red form hidden close-btn" onclick="edit()">Close &nbsp;&nbsp;<i class="fas fa-times "></i></button>
                     </div>

@@ -262,7 +262,7 @@
                         </tbody>
 
                     </table>
-                    <form action="/Volunteer/updateVolunteerCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" id="volunteer-capacity" class="flex-col flex-center">
+                    <form action="/Volunteer/updateVolunteerCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" id="volunteer-capacity" class="flex-row flex-center">
 
                         <?php for ($i = 0; $i < count($volunteer_capacities); $i++) {
                             echo "<label  class='form  hidden'>";
@@ -283,7 +283,7 @@
             </div>
             <div>
                 <button class="btn btn-solid btn-md data btn-small edit-btn" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
-                <div class="flex-row-to-col">
+                <div class="flex-row flex-center">
                     <div class="edit-save-btn">
                         <button class=" btn btn-solid bg-red border-red form btn-small hidden close-btn" onclick="edit()">Close &nbsp;&nbsp;<i class="fas fa-times "></i></button>
                     </div>

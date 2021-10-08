@@ -40,3 +40,4 @@ app/Core/Model.php
 .metals/metals.lock.db
 .metals/metals.lock.db
 .metals/metals.h2.db
+.metals/metals.log

@@ -146,11 +146,10 @@ class OrganisationController
         Controller::validateForm(["role","uid"],["event_id"]);
         Controller::accessCheck(["organization"]);
         (new UserController)->addActivity("User role added",$_GET["event_id"]);
-
-    
         (new Organisation)->addUserRole($_POST["uid"],$_POST["role"],$_GET["event_id"]);
         Controller::redirect("/Event/view",["page"=>'userroles',"event_id"=>$_GET["event_id"]]);
     }
+
 
     function deleteUserRole(){
         Controller::validateForm(["role","uid"],["event_id"]);

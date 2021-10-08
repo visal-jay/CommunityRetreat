@@ -210,6 +210,7 @@ class Organisation extends User
             $params = ["event_id" => $event_id, "uid" => $uid, "role1" => $role, "role2" => $role];
             User::insert($query, $params);
         }
+
     }
 
     public function deleteUserRole($uid, $role, $event_id)

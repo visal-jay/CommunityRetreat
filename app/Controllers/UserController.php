@@ -141,6 +141,12 @@ class UserController{
         $user->setNotificationViewed();
 
     }
+
+    function checkNotificationViewed(){
+        $user = new User();
+        $not_viewed = $user->getNotificationsViewed();
+        echo json_encode($not_viewed);
+    }
     function getNotifications(){
         $user = new User();
         $notifications = $user->getNotifications();

@@ -10,6 +10,22 @@
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <style>
+        .nav-link-notification {
+            text-decoration: none;
+            color: black;
+            padding: 0rem 0.0rem 0.3rem 0rem;
+            cursor: pointer;
+            -webkit-transition: -webkit-text-decoration-color 0.3s ease-in-out;
+            transition: -webkit-text-decoration-color 0.3s ease-in-out;
+            transition: text-decoration-color 0.3s ease-in-out;
+            transition: text-decoration-color 0.3s ease-in-out, -webkit-text-decoration-color 0.3s ease-in-out;
+            -webkit-transition: border-bottom 0.1s ease-in-out;
+            transition: border-bottom 0.1s ease-in-out;
+        }
+        .nav-link-notification:hover {
+            color: #16c79a;
+            border-bottom: 2px solid black;
+        }
         #notification {   
             position: relative;
         }
@@ -72,8 +88,9 @@
                 <a class="nav-link margin-side-md" href="/User/home">Home</a>
                 <a class="nav-link margin-side-md" href="/RegisteredUser/calendar">Calendar</a>
                 <a class="nav-link margin-side-md" href="/RegisteredUser/administratored">Administration</a>
-                <div class="nav-link margin-side-md" id="notification">
-                    <a class="nav-link margin-side-md" href="/User/Notifications" onclick="viewNotification()">Notifications<span class="badge"></span></a> 
+                <div class="nav-link-notification margin-side-md" id="notification">
+                    <a class="nav-link margin-side-md" href="/User/Notifications" onclick="viewNotification()">Notifications</a>
+                    <span class="badge"></span> 
                 </div>
                 <a class="nav-link margin-side-md" href="/RegisteredUser/chatApp">Chat</a>
             <?php } ?>

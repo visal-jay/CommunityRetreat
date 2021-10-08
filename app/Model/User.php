@@ -145,6 +145,20 @@ class User extends Model
         $query = 'UPDATE notification SET viewed = 1 WHERE uid = :uid';
         User::insert($query,$params);
     }
+    function getNotificationsViewed(){
+        $not_viewed = false;
+        $params = ["uid" => $_SESSION['user']['uid']];
+        $query = 'SELECT viewed FROM notification WHERE uid = :uid';
+        $result = User::select($query,$params);
+        for($i=0;$i < count($result);$i++){
+            if($result[$i]['viewed'] == 0){
+                $not_viewed = true;
+                break;
+            }
+            
+        }
+        return $not_viewed;
+    }
 
 
 

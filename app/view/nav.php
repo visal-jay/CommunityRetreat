@@ -8,6 +8,57 @@
     <title>Document</title>
     <link rel="stylesheet" href="/Public/assets/newstyles.css">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+        .nav-link-notification {
+            text-decoration: none;
+            color: black;
+            padding: 0rem 0.0rem 0.3rem 0rem;
+            cursor: pointer;
+            -webkit-transition: -webkit-text-decoration-color 0.3s ease-in-out;
+            transition: -webkit-text-decoration-color 0.3s ease-in-out;
+            transition: text-decoration-color 0.3s ease-in-out;
+            transition: text-decoration-color 0.3s ease-in-out, -webkit-text-decoration-color 0.3s ease-in-out;
+            -webkit-transition: border-bottom 0.1s ease-in-out;
+            transition: border-bottom 0.1s ease-in-out;
+        }
+        .nav-link-notification:hover {
+            color: #16c79a;
+            border-bottom: 2px solid black;
+        }
+        #notification {   
+            position: relative;
+        }
+        #notification .badge {
+            display: none;
+            position: absolute;
+            top : -1px;
+            right: -1px;
+            padding: 6px;
+            border-radius: 50%;
+            background-color:#16c79a;
+        }
+    </style>
+    <script>
+        function checkNotificationViewed(){
+            $.ajax({
+                url: "/User/checkNotificationViewed",
+                type: "post",
+                success : function(result){
+            
+                    if(result=="true"){
+                
+                        let badge = document.querySelector(".badge");
+                        badge.style.display = "flex";
+                        
+                    }
+           
+                },
+
+            });
+        }
+        checkNotificationViewed();
+    </script>
     
 </head>
 
@@ -32,12 +83,15 @@
                     <button type="" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
                 </form>
             <?php } ?>
-
+                
             <?php if ($registered_user) { ?>
                 <a class="nav-link margin-side-md" href="/User/home">Home</a>
                 <a class="nav-link margin-side-md" href="/RegisteredUser/calendar">Calendar</a>
                 <a class="nav-link margin-side-md" href="/RegisteredUser/administratored">Administration</a>
-                <a class="nav-link margin-side-md" href="/User/Notifications" onclick="viewNotification()">Notifications</a>
+                <div class="nav-link-notification margin-side-md" id="notification">
+                    <a class="nav-link margin-side-md" href="/User/Notifications" onclick="viewNotification()">Notifications</a>
+                    <span class="badge"></span> 
+                </div>
                 <a class="nav-link margin-side-md" href="/RegisteredUser/chatApp">Chat</a>
             <?php } ?>
 
@@ -71,7 +125,7 @@
                     <?php if ($organization) { ?>
                         <a href="/User/profile" class="nav-link margin-md"><i class="far fa-user"></i>&nbsp; Profile</a>
                     <?php } elseif ($registered_user) { ?>
-                        <a href="/User/profile" class="nav-link margin-md" onclick="hello()"><i class="far fa-user"></i>&nbsp; Profile</a>
+                        <a href="/User/profile" class="nav-link margin-md" ><i class="far fa-user"></i>&nbsp; Profile</a>
                     <?php ?>
                     <?php }elseif ($admin) { ?>
                         <a href="/User/profile" class="nav-link margin-md"><i class="far fa-user"></i>&nbsp; Profile</a>
@@ -113,6 +167,7 @@
         if (targetElement != navDropdownButton)
             navDropdown.classList.add('hidden');
     });
+
     function viewNotification(){
         $.ajax({
         url: "/User/viewNotifications",

@@ -209,7 +209,6 @@
 
     function getChatMessages(uid) {
         let chats = document.querySelectorAll(".chat-user-card");
-        console.log(chats);
         for (var i = 0; i < chats.length; ++i) {
             chats[i].classList.remove("active-chat");
         }
@@ -363,58 +362,62 @@
         }, interval);
     }
 
-    function createNewChat() {
-        let parent_container = document.querySelector('.chatlist');
-        var chat_body = "";
-        $.ajax({
-            url: "/Message/newChat<?php if (isset($_GET['new_chat_id'])) echo ("?new_chat_id=" . $_GET['new_chat_id']); ?>",
-            type: "post", //request type,
-            dataType: 'json',
-            success: function(result) {
-                result.forEach(usr => {
-                    if (!existsList(chat_list, [usr.uid, usr.time_stamp])) {
+    <?php if(isset($_GET['new_chat_id'])) { ?>
+        function createNewChat() {
+            let parent_container = document.querySelector('.chatlist');
+            var chat_body = "";
+            $.ajax({
+                url: "/Message/newChat<?php if (isset($_GET['new_chat_id'])) echo ("?new_chat_id=" . $_GET['new_chat_id']); ?>",
+                type: "post", //request type,
+                dataType: 'json',
+                success: function(result) {
+                    result.forEach(usr => {
+                        if (!existsList(chat_list, [usr.uid, usr.time_stamp])) {
+                            if (exists(chat_list, usr.uid)) {
+                                chat_list = chat_list.filter((e) => {
+                                    return e[0] != usr.uid
+                                });
+                                document.getElementById(usr.uid).remove();
+                            }
 
-                        if (exists(chat_list, usr.uid)) {
-                            chat_list = chat_list.filter((e) => {
-                                return e[0] != usr.uid
-                            });
-                            document.getElementById(usr.uid).remove();
-                        }
-
-                        chat_list.push([usr.uid, usr.time_stamp]);
-                        let template = `
-                        <div class="chat-user-card flex-row " id="${usr.uid}" onclick="getChatMessages('${usr.uid}');">
-                            <div>
-                                <img class="chat-user-photo" src="${usr.photo}" alt="">
-                            </div>
-                            <div class="flex-row flex-space-between">
-                                <div class="flex-col margin-side-lg">
-                                    <h3>${usr.username}</h3>
-                                    <p class="last-message"></p>
+                            chat_list.push([usr.uid, usr.time_stamp]);
+                            let template = `
+                            <div class="chat-user-card flex-row " id="${usr.uid}" onclick="getChatMessages('${usr.uid}');">
+                                <div>
+                                    <img class="chat-user-photo" src="${usr.photo}" alt="">
                                 </div>
-                                <i class="seen fas fa-circle clr-white"></i>
-                            </div>
-                        </div>`;
-                        parent_container.insertAdjacentElement("afterbegin", createElementFromHTML(template));
-                        getChatMessages(usr.uid);
-                    }
-                });
-
-                document.querySelectorAll('.chat-user-card').forEach(item => {
-                    item.addEventListener('click', event => {
-                        var chat_box = document.querySelector('.chat-box');
-                        if (window.innerWidth <= 800 && chat_box.classList.contains('hidden')) {
-                            var chat_list = document.querySelector('.chatlist');
-                            chat_box.classList.toggle('hidden');
-                            chat_list.classList.toggle('hidden');
+                                <div class="flex-row flex-space-between">
+                                    <div class="flex-col margin-side-lg">
+                                        <h3>${usr.username}</h3>
+                                        <p class="last-message"></p>
+                                    </div>
+                                    <i class="seen fas fa-circle clr-white"></i>
+                                </div>
+                            </div>`;
+                            parent_container.insertAdjacentElement("afterbegin", createElementFromHTML(template));
+                            getChatMessages(usr.uid);
                         }
-                    })
-                });
-            }
-        });
-    }
-    chatList();
+                    });
+
+                    document.querySelectorAll('.chat-user-card').forEach(item => {
+                        item.addEventListener('click', event => {
+                            var chat_box = document.querySelector('.chat-box');
+                            if (window.innerWidth <= 800 && chat_box.classList.contains('hidden')) {
+                                var chat_list = document.querySelector('.chatlist');
+                                chat_box.classList.toggle('hidden');
+                                chat_list.classList.toggle('hidden');
+                            }
+                        })
+                    });
+                }
+            });
+        }
+
     createNewChat();
+    chatList();
+
+    <?php } ?>
+    chatList();
     setInterval(function() {
         chatList();
     }, 1000);

@@ -43,12 +43,11 @@ class OrganisationController
                 $org_id = $_SESSION["user"]["uid"];
         }
 
-        $pagination=Model::pagination("organization",10," WHERE uid = :uid",["uid"=>$org_id]);
+        $pagination=Model::pagination("organization_gallery",10," WHERE uid = :uid",["uid"=>$org_id]);
         if (!$data = (new Gallery)->getGallery(["uid" => $org_id, "offset"=>$pagination["offset"] , "no_of_records_per_page"=> $pagination["no_of_records_per_page"]], true))
             $data = array();
-        
 
-        View::render("organisationGallery", array_merge(["photos" => $data]),$user_roles);
+        View::render("organisationGallery", array_merge(["photos" => $data],$pagination),$user_roles);
     }
 
     public function deletePhoto()
@@ -80,17 +79,9 @@ class OrganisationController
 
         $events = new Events;
         $data["events"] = array();
-        if ($result = $events->query(["org_uid" => $org_id, "status" => "published"]))
-            foreach ($result as $event)
-                array_push($data["events"], $event);
-        if ($result = $events->query(["org_uid" => $org_id, "status" => "added"]))
-            foreach ($result as $event)
-                array_push($data["events"], $event);
-
-        usort($data["events"], function ($a, $b) {
-            return $a['event_id'] <=> $b['event_id'];
-        });
-
+        $pagination=Model::pagination("event_details",10," WHERE org_uid = :org_uid AND NOT status = :status ",["status"=>"deleted","org_uid"=>$org_id]);
+        $data["events"]= $events->query(["org_uid" => $org_id, "status" => "deleted" ,"not_status"=>TRUE,"order_type"=>"event_id" ,"offset"=>$pagination["offset"],"limit"=>$pagination["no_of_records_per_page"]]);
+        $data=array_merge($data,$pagination);
         View::render("manageEvents", $data,$user_roles);
     }
 
@@ -146,8 +137,6 @@ class OrganisationController
         Controller::validateForm(["role","uid"],["event_id"]);
         Controller::accessCheck(["organization"]);
         (new UserController)->addActivity("User role added",$_GET["event_id"]);
-
-    
         (new Organisation)->addUserRole($_POST["uid"],$_POST["role"],$_GET["event_id"]);
         Controller::redirect("/Event/view",["page"=>'userroles',"event_id"=>$_GET["event_id"]]);
     }

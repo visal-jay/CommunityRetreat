@@ -557,7 +557,8 @@ if (isset($_SESSION["user"]["user_type"])) {
                 donation_status: donation_status,
                 order_type: sort,
                 way: way,
-                limit: limit
+                limit: limit,
+                offset : 0
             },
             success: function(result) {
                 console.log(result);
@@ -667,6 +668,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                 latitude: latitude,
                 longitude: longitude,
                 distance: 20,
+                offset: 0,
                 limit: 10,
                 is_virtual: 0
             },

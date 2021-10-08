@@ -350,7 +350,7 @@
                 <div class="budget-card-container">
                     <!--Display the donation sum from the database-->
                     <p class="details-overflow">Donations</p>
-                    <div class="amount-field"><p><?php echo 'Rs. ' . number_format($donation_sum, 2) ?></p></div>
+                    <div class="amount-field"><p style="margin: 0; align-items:center"><?php echo 'Rs. ' . number_format($donation_sum, 2) ?></p></div>
                     <div class="flex-row btn-field"></div>
                 </div>
 

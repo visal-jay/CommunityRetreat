@@ -12,12 +12,13 @@
     <title>Document</title>
 </head>
 <style>
+
     .form {
         min-width: 50%;
     }
 
     .main-container {
-        height: 100%;
+        min-height: 100%;
         align-items: center;
     }
 
@@ -164,19 +165,20 @@
                 </figure>
             <?php } ?>
         </div>
-        <div>
+        <div class="flex-row flex-center">
             <ul class="pagination">
-                <li><a href="?pageno=1">First</a></li>
+                <li><a href="/Organisation/gallery?pageno=1"><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i>&nbsp;First</a></li>
                 <li class="<?php if($pageno <= 1){ echo 'disabled'; } ?>">
-                    <a href="<?php if($pageno <= 1){ echo '#'; } else { echo "?pageno=".($pageno - 1); } ?>">Prev</a>
+                    <a href="<?php if($pageno <= 1){ echo '#'; } else { echo "/Organisation/gallery?pageno=".($pageno - 1); } ?>"><i class="fas fa-chevron-left"></i>&nbsp;Prev</a>
                 </li>
                 <li class="<?php if($pageno >= $total_pages){ echo 'disabled'; } ?>">
-                    <a href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "?pageno=".($pageno + 1); } ?>">Next</a>
+                    <a href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "/Organisation/gallery?pageno=".($pageno + 1); } ?>">Next&nbsp;<i class="fas fa-chevron-right"></i></a>
                 </li>
-                <li><a href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
+                <li><a href="/Organisation/gallery?pageno=<?php echo $total_pages; ?>">Last&nbsp;<i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right"></i></a></li>
             </ul>
         </div>
     </div>
+    
 </body>
 
 <?php include "footer.php" ?>
@@ -220,6 +222,8 @@
             removeFile(event);
         }
     });
+    
+
 
 
     var selDiv = document.getElementById("selected_files");
@@ -267,7 +271,6 @@
         }
 
         $.ajax({
-
             url: "/Organisation/addPhoto",
             type: 'POST',
             data: formdata,

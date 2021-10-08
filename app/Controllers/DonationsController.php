@@ -122,8 +122,8 @@ class DonationsController{
             'card',
         ],
         'mode' => 'payment',
-        'success_url' => $YOUR_DOMAIN . '/Donations/donationAccept?session_id={CHECKOUT_SESSION_ID}&&event_id='. $_GET["event_id"],
-        'cancel_url' => $YOUR_DOMAIN . '/Event/view?page=about&&event_id='. $_POST["event_id"],
+        'success_url' => $YOUR_DOMAIN . '/Donations/donationAccept?session_id={CHECKOUT_SESSION_ID}&event_id='. $_GET["event_id"],
+        'cancel_url' => $YOUR_DOMAIN . '/Event/view?page=about&event_id='. $_POST["event_id"],
         ]);
 
         header("Location: $checkout_session->url", true,  302);

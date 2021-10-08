@@ -6,9 +6,9 @@ class Gallery extends Model
     public function getGallery($data, $organisation = false)
     {
         if ($organisation)
-            $query = "SELECT * FROM organization_gallery WHERE uid = :uid";
+            $query = "SELECT * FROM organization_gallery WHERE uid = :uid LIMIT :offset , :no_of_records_per_page";
         else
-            $query = " SELECT * FROM (SELECT photo.* , reg.username FROM add_photo photo INNER JOIN registered_user reg ON reg.uid=photo.uid  UNION SELECT photo.* , org.username FROM add_photo photo INNER JOIN organization org ON org.uid=photo.uid) sub WHERE event_id = :event_id ";
+            $query = " SELECT * FROM (SELECT photo.* , reg.username FROM add_photo photo INNER JOIN registered_user reg ON reg.uid=photo.uid  UNION SELECT photo.* , org.username FROM add_photo photo INNER JOIN organization org ON org.uid=photo.uid) sub WHERE event_id = :event_id LIMIT :offset , :no_of_records_per_page";
 
         $params = $data;
         $result = Model::select($query, $params);

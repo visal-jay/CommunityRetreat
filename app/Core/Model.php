@@ -35,4 +35,15 @@ class Model
         $stmt->execute($params);
     }
     
+    
+    public static function pagination($table, $no_of_records_per_page,$extrenal_query="", $params = [])
+    {
+        $query="SELECT COUNT(*) as count FROM " . $table . " " . $extrenal_query; 
+        $result = Model::select($query,$params);
+        $pagination["no_of_records_per_page"]=$no_of_records_per_page;
+        $pagination["pageno"]= isset($_GET["pageno"]) ? $_GET["pageno"] : 1;
+        $pagination["offset"]=($pagination["pageno"]-1) * $no_of_records_per_page;
+        $pagination["total_pages"]=ceil($result[0]["count"]/$no_of_records_per_page);
+        return($pagination);
+    }
 }

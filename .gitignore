@@ -30,3 +30,7 @@ app/Uploads/event/gallery/35-ORG0000040-9.png
 .metals/metals.h2.db
 .gitignore
 app/Core/Model.php
+.metals/metals.h2.db
+.metals/metals.lock.db
+.metals/metals.log
+.metals/metals.log

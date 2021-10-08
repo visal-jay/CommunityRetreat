@@ -19,8 +19,7 @@
         filter: blur(0px);
         min-height: 150px;
         min-width: 800px;
-        margin-left: 200px;
-        margin-right: 200px;
+        width: 90%;
         padding: 10px;
         background-color: white;
         border-radius: 10px;
@@ -33,8 +32,7 @@
         filter: blur(0px);
         min-height: 150px;
         min-width: 800px;
-        margin-left: 200px;
-        margin-right: 200px;
+        width: 90%;
         padding: 10px;
         background-color: white;
         border-radius: 10px;
@@ -63,17 +61,17 @@
     }
 
     .submit-btn {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
     }
 
     .update-save-btn {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         border: none;
     }
 
     .delete-cancel-btn {
         border: none;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
     }
 
     .header {
@@ -82,12 +80,13 @@
 
     .read-more-btn {
         cursor: pointer;
-        font-size: 1rem;
+        font-size: 0.8rem;
         margin-top: 10px;
     }
 
     .income-expense-form-inside {
-        margin: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
         box-shadow: 5px 5px 15px 5px #cccccc;
         padding: 20px;
         border-radius: 10px;
@@ -168,8 +167,6 @@
         box-shadow: 2px 4px #ccbcbc;
         padding: 5px;
         text-align: center;
-        margin-left: 200px;
-        margin-right: 200px;
         display: flex;
         justify-content: space-evenly;
     }
@@ -184,33 +181,41 @@
 
     .income-expense-add-container {
         text-align: center;
-        width: 70%;
     }
 
     @media screen and (max-width:800px) {
+        .container{
+            padding: 0;
+        }
 
         .income-info {
             margin-left: 0;
             margin-right: 0;
+            padding: 0;
         }
 
         .expense-info {
             margin-left: 0;
             margin-right: 0;
+            padding: 0;
         }
 
         .update-save-btn {
             border: none;
-            font-size: 0.75rem;
+            font-size: 0.65rem;
         }
 
         .delete-cancel-btn {
             border: none;
+            font-size: 0.65rem;
+        }
+
+        .submit-btn{
             font-size: 0.75rem;
         }
 
         .btn-field {
-            width: 50%;
+            width: 40%;
             margin: 2px;
             padding: 2px;
             justify-content: center;
@@ -219,12 +224,12 @@
         }
 
         .amount-field {
-            width: 20%;
+            width: 30%;
             text-align: right;
             overflow: auto;
             white-space: nowrap;
             margin: 4px;
-            padding: 2px;
+            padding: 3px;
         }
 
         .details-overflow {
@@ -257,14 +262,22 @@
         .income-expenxe-balance-container {
             display: flex;
             flex-direction: column;
-            margin-left: 0;
-            margin-right: 0;
+            margin: 4px;
         }
 
         .sum {
             margin: 5px;
             justify-content: space-between;
         }
+
+        .income-expense-form-inside {
+            margin-left: 10px;
+            margin-right: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            box-shadow: 5px 5px 15px 5px #cccccc;
+            padding: 15px;
+    }
     }
 </style>
 
@@ -307,7 +320,7 @@
                 <form action="/Budget/addIncome?" method="post" class="form income-form">
 
                     <div>
-                        <button class="btn btn-md btn-solid margin-md" type="button" id="button" value="Add" onclick="show_hide('income-form')">Add &nbsp;<i class="fas fa-plus"></i></button>
+                        <button class="btn btn-sm btn-solid margin-md" type="button" id="button" value="Add" onclick="show_hide('income-form')">Add &nbsp;<i class="fas fa-plus"></i></button>
                     </div>
 
                     <div id="income-form" class="hidden income-expense-form-inside">
@@ -323,7 +336,7 @@
                         </div>
 
                         <div class="form-action-buttons">
-                            <button class="btn btn-md" name="event_id" type="submit" value="<?= $_GET["event_id"] ?>">Submit</button>
+                            <button class="btn submit-btn" name="event_id" type="submit" value="<?= $_GET["event_id"] ?>">Submit</button>
                         </div>
 
                     </div>
@@ -332,14 +345,14 @@
 
         </div>
 
-        <div class="income-info" id="income-info">
-
-            <div class="budget-card-container">
-                <!--Display the donation sum from the database-->
-                <p class="details-overflow">Donations</p>
-                <div class="amount-field"><p><?php echo 'Rs. ' . number_format($donation_sum, 2) ?></p></div>
-                <div class="flex-row btn-field"></div>
-            </div>
+        <div style="text-align: -webkit-center;">
+            <div class="income-info" id="income-info">
+                <div class="budget-card-container">
+                    <!--Display the donation sum from the database-->
+                    <p class="details-overflow">Donations</p>
+                    <div class="amount-field"><p><?php echo 'Rs. ' . number_format($donation_sum, 2) ?></p></div>
+                    <div class="flex-row btn-field"></div>
+                </div>
 
             <?php foreach ($incomes as $income) { ?>
 
@@ -362,11 +375,12 @@
                     </div>
                 </div>
             <?php } ?>
+            </div>
         </div>
 
         <div id="income-show-hide-btn" class="income-expense-show-hide-btn">
             <!--Show all the hidden incomes-->
-            <button class=" btn btn-solid btn-md read-more-btn" onclick="show('income-info');change_button('income-down-btn');"><i id="income-down-btn" class="fas fa-chevron-down"></i></button>
+            <button class=" btn btn-solid read-more-btn" onclick="show('income-info');change_button('income-down-btn');"><i id="income-down-btn" class="fas fa-chevron-down"></i></button>
         </div>
 
         <h2 class="header margin-md">Expense</h2>
@@ -376,7 +390,7 @@
             <?php if ($organization || $treasurer) { ?>
                 <form action="/Budget/addExpense?" method="post" class="form expense-form">
 
-                    <button class="btn btn-md btn-solid margin-md" type="button" name="button" id="btn" value="Add" onclick="show_hide('expense-form') ">Add &nbsp;<i class="fas fa-plus"></i></button>
+                    <button class="btn btn-sm btn-solid margin-md" type="button" name="button" id="btn" value="Add" onclick="show_hide('expense-form') ">Add &nbsp;<i class="fas fa-plus"></i></button>
 
                     <div id="expense-form" class="hidden income-expense-form-inside">
 
@@ -391,7 +405,7 @@
                         </div>
 
                         <div class="form-action-buttons">
-                            <button class="btn btn-md submit-btn" name="event_id" type="submit" value="<?= $_GET["event_id"] ?>">Submit</button>
+                            <button class="btn submit-btn" name="event_id" type="submit" value="<?= $_GET["event_id"] ?>">Submit</button>
                         </div>
 
                     </div>
@@ -399,33 +413,35 @@
             <?php } ?>
         </div>
 
-        <div class="expense-info" id="expense-info">
-            <?php foreach ($expenses as $expense) { ?>
+        <div style="text-align: -webkit-center;">
+            <div class="expense-info" id="expense-info">
+                <?php foreach ($expenses as $expense) { ?>
 
-                <div class="budget-card-container">
-                    <!--Display the expenses from the database-->
-                    <p class="details-overflow"><?= $expense["details"] ?></p>
-                    <p class="amount-field"><?php echo 'Rs. ' . number_format($expense["amount"], 2) ?></p>
+                    <div class="budget-card-container">
+                        <!--Display the expenses from the database-->
+                        <p class="details-overflow"><?= $expense["details"] ?></p>
+                        <p class="amount-field"><?php echo 'Rs. ' . number_format($expense["amount"], 2) ?></p>
 
-                    <div class="flex-row btn-field">
-                        <div>
-                            <!--Update the expense and save it in database-->
-                            <button class="btn btn-solid update-save-btn " onclick="togglePopup('update-form','<?= $expense['details'] ?>', '<?= $expense['amount'] ?>', '<?= $expense['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
+                        <div class="flex-row btn-field">
+                            <div>
+                                <!--Update the expense and save it in database-->
+                                <button class="btn btn-solid update-save-btn " onclick="togglePopup('update-form','<?= $expense['details'] ?>', '<?= $expense['amount'] ?>', '<?= $expense['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
+                            </div>
+                            <form action="/Budget/delete?" method="post">
+                                <!--Delete the expense and save it in database-->
+                                <input type="text" class="hidden" name="record_id" value="<?= $expense['record_id'] ?>">
+                                <button class="btn bg-red clr-white delete-cancel-btn" style="border: none;" name="event_id" type="submit" value=<?= $_GET['event_id'] ?>>
+                                    Delete</button>
+                            </form>
                         </div>
-                        <form action="/Budget/delete?" method="post">
-                            <!--Delete the expense and save it in database-->
-                            <input type="text" class="hidden" name="record_id" value="<?= $expense['record_id'] ?>">
-                            <button class="btn bg-red clr-white delete-cancel-btn" style="border: none;" name="event_id" type="submit" value=<?= $_GET['event_id'] ?>>
-                                Delete</button>
-                        </form>
                     </div>
-                </div>
-            <?php } ?>
+                <?php } ?>
+            </div>
         </div>
 
         <div id="expense-show-hide-btn" class="income-expense-show-hide-btn">
             <!--Show all the hidden expenses-->
-            <button class="btn btn-solid btn-md read-more-btn" onclick="show('expense-info');change_button('expense-down-btn');"><i id="expense-down-btn" class="fas fa-chevron-down"></i></button>
+            <button class="btn btn-solid read-more-btn" onclick="show('expense-info');change_button('expense-down-btn');"><i id="expense-down-btn" class="fas fa-chevron-down"></i></button>
         </div>
 
     </div>

@@ -112,8 +112,6 @@
     .terms-and-conditions-box{
         background-color: white;
         box-shadow: 5px 5px 15px 5px #000000;
-        padding: 20px;
-        margin-top: 20px;
     }
 
 @media screen and (max-width:768px) {
@@ -159,8 +157,6 @@
     .terms-and-conditions-box{
         background-color: white;
         box-shadow: 5px 5px 15px 5px #000000;
-        margin: 20px;
-        padding: 10px;
     }
 }
 </style>
@@ -301,6 +297,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
 
         <!--initally enable the donations-->
         <div class="bg-white flex-col flex-center">
+        <?php if ($organization) { ?>
             <p>
                 <ul class="left">
                     <li>All organizations will be allowed to collect donations and these donations will be<br> credited to a bank account owned by the CommunityRetreat.</li>
@@ -308,10 +305,11 @@ if(isset($_SESSION ["user"] ["user_type"])){
                     <li>Organization is not allowed to collect donations that exceed the donation capacity.</li>
                     <li>If an Organization is removed from the system, all the donations will be refunded.</li>
                 </ul>
-                <div>
+                <div>     
                     <input type="checkbox" min="0" name="terms" id="terms" onchange="activateButton()"> I Agree Terms & Coditions
                 </div>
             </p>
+        <?php } ?>
         </div>
     </div>
 

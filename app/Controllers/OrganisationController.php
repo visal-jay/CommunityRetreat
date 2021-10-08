@@ -43,8 +43,10 @@ class OrganisationController
                 $org_id = $_SESSION["user"]["uid"];
         }
 
-        if (!$data = (new Gallery)->getGallery(["uid" => $org_id], true))
+        $pagination=Model::pagination("organization",10," WHERE uid = :uid",["uid"=>$org_id]);
+        if (!$data = (new Gallery)->getGallery(["uid" => $org_id, "offset"=>$pagination["offset"] , "no_of_records_per_page"=> $pagination["no_of_records_per_page"]], true))
             $data = array();
+        
 
         View::render("organisationGallery", array_merge(["photos" => $data]),$user_roles);
     }
@@ -160,9 +162,7 @@ class OrganisationController
     }
 
     function test(){
-        var_dump($_POST);
-        var_dump($_GET);
-        var_dump($_FILES);
+        var_dump(Model::pagination("organization",10));
     }
                
 }

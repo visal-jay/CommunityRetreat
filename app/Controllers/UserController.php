@@ -120,21 +120,33 @@ class UserController{
     }
 
     function addActivity($activity,$event_id=-1){
-
         $user = new User();
         $user->insertActivity($activity,$event_id);
-
     }
+
     function viewActivityLog(){
         $user = new User();
         $activities = $user->getActivity();
         echo json_encode($activities);
+    }
+
+    // /Event/view?page=forum&event_id=#&update_announcement_id=#
+    //sendNotifications("You have assigend modertor user role",$uid,"system","window.location.href=/Event/view?page=about&event_id=" . $_GET["event_id"], $_GET["event_id"])
+    function sendNotifications($notification,$uid,$status,$path,$event_id =-1){
+        $user = new User();
+        $user->insertNotification($notification,$uid,$status,$path,$event_id);
+    }
+
+    function viewNotifications(){
+        $user = new User();
+        $user->setNotificationViewed();
 
     }
-    function sendNotifications($notification,$event_id =-1,$uid,$status){
-        $user = new User();
-        $user->insertNotification($notification,$event_id,$uid,$status);
 
+    function checkNotificationViewed(){
+        $user = new User();
+        $not_viewed = $user->getNotificationsViewed();
+        echo json_encode($not_viewed);
     }
     function getNotifications(){
         $user = new User();

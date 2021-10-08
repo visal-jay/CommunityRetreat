@@ -5,13 +5,14 @@ class Volunteer extends Model
     public function getVolunteerDetails($event_id, $volunteer_date = -1)
     { //get volunteer details from backend to UI
         if ($volunteer_date != -1) {
-            $query = "SELECT registered_user.username, registered_user.contact_number, registered_user.email, volunteer.participated,  date_format(volunteer.date,'%x-%m-%d') as date, volunteer.volunteer_date FROM volunteer LEFT JOIN registered_user ON volunteer.uid=registered_user.uid WHERE event_id =:event_id AND volunteer_date = :volunteer_date GROUP BY volunteer.volunteer_date ORDER BY date";
+            $query = "SELECT registered_user.uid ,registered_user.username, registered_user.contact_number, registered_user.email, volunteer.participated,  date_format(volunteer.date,'%x-%m-%d') as date, volunteer.volunteer_date FROM volunteer LEFT JOIN registered_user ON volunteer.uid=registered_user.uid WHERE event_id =:event_id AND volunteer_date = :volunteer_date GROUP BY volunteer.volunteer_date ORDER BY date";
             $params = ["event_id" => $event_id, "volunteer_date"=> $volunteer_date];
         } 
         else {
-            $query = "SELECT registered_user.username, registered_user.contact_number, registered_user.email, volunteer.participated,  date_format(volunteer.date,'%x-%m-%d') as date, volunteer.volunteer_date FROM volunteer LEFT JOIN registered_user ON volunteer.uid=registered_user.uid WHERE event_id =:event_id GROUP BY volunteer.volunteer_date ORDER BY date";
+            $query = "SELECT registered_user.uid,registered_user.username, registered_user.contact_number, registered_user.email, volunteer.participated,  date_format(volunteer.date,'%x-%m-%d') as date, volunteer.volunteer_date FROM volunteer LEFT JOIN registered_user ON volunteer.uid=registered_user.uid WHERE event_id =:event_id GROUP BY volunteer.volunteer_date ORDER BY date";
             $params = ["event_id" => $event_id];
         }
+
         $result = Model::select($query, $params);
         return $result;
     }

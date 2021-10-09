@@ -5,7 +5,7 @@ class MessageController
 
     public function getMessages()
     {
-        $user=isset($_GET["event_id"]) ? "EVN" . $_GET["event_id"] : $_SESSION["user"]["uid"];
+        $user=isset($_GET["event_id"]) ? "EVN" . trim($_GET["event_id"]) : $_SESSION["user"]["uid"];
         echo json_encode((new Message)->getMessages($user, $_POST["uid"]));
     }
 
@@ -49,7 +49,7 @@ class MessageController
 
 
     public function sendMessage(){
-        $user=isset($_GET["event_id"]) ? "EVN" . $_GET["event_id"] : $_SESSION["user"]["uid"];
+        $user=isset($_GET["event_id"]) ? "EVN" . trim($_GET["event_id"]) : $_SESSION["user"]["uid"];
         (new Message)->insertMessage($user,$_POST["reciever"],$_POST["message"]);
     }
 

@@ -141,6 +141,7 @@ class OrganisationController
         Controller::redirect("/Event/view",["page"=>'userroles',"event_id"=>$_GET["event_id"]]);
     }
 
+
     function deleteUserRole(){
         Controller::validateForm(["role","uid"],["event_id"]);
         Controller::accessCheck(["organization"]);

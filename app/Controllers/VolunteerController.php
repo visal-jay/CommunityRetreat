@@ -7,7 +7,7 @@ class VolunteerController{
         $user_roles = Controller::accessCheck(["moderator", "organization"]);
         $data = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["volunteer_status" => '', "volunteer_capacity" => '']);
         $volunteer = new Volunteer();
-        
+        $pagination= Model::pagination("volunteer", 10, "WHERE event_id= :event_id", ["event_id"=>$_GET["event_id"]]);
         if(isset($_POST["volunteer_date"]) && $_POST["volunteer_date"]!=""){
             $volunteer_details = $volunteer->getVolunteerDetails($_GET["event_id"],$_POST["volunteer_date"]);
             $data["volunteer_date_req"]=$_POST["volunteer_date"];
@@ -38,6 +38,9 @@ class VolunteerController{
 
     public function enableVolunteer()
     { //enable volunteering for an event
+        Controller::validateForm([],["event_id"]);
+        Controller::accessCheck(["moderator","organization"]);
+        (new UserController)->addActivity("Enable volunteer",$_GET['event_id']);
         $volunteer = new Volunteer;
         $volunteer->enableVolunteer($_GET["event_id"]);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "volunteers"]);

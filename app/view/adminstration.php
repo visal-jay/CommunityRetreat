@@ -47,7 +47,7 @@
             width: 50%;
             margin: auto;
         }
-        .table th{
+        th{
             
             font-weight: 900;
             letter-spacing: 0.35px;
@@ -56,11 +56,12 @@
             
         }
 
-        .table td{  
+         td{  
             letter-spacing: 0.35px;
             font-weight: normal;
             padding: 0.5rem;
             text-align: center;
+            width: 200px;
             border-collapse: none;
         }
 

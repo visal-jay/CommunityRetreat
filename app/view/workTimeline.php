@@ -94,7 +94,7 @@
         transition: all 500ms ease-in-out;
     }
 
-    .rb-container ul.rb li:hover::before {
+    .rb-container ul.rb li.completed::before {
         background: #50d890;
         border-color: #232931;
         transition: all 500ms ease-in-out;
@@ -249,7 +249,7 @@
                 <div class="rb-container">
                     <ul class="rb">
                         <?php foreach ($tasks as $task) { ?>
-                            <li class="rb-item">
+                            <li class="rb-item <?= $task['completed'] != 0 ? "completed" : "" ?>">
                                 <div class="timestamp">
                                     <h3><?= $task["start_date"] ?><br><?= $task["end_date"] ?></h3>
                                 </div>

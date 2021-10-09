@@ -304,7 +304,8 @@
                 </div>
 
                 <select class="form-ctrl" id="search-type" style="margin-left:0.5rem"  onchange="search();searchType();">
-                    <option value="event"selected>Event</option>
+                    <option value="all"selected>All</option>
+                    <option value="event">Event</option>
                     <option value="organization">Organization</option>
                 </select>
 
@@ -442,7 +443,7 @@
 
         let parent_container = document.querySelector('events');
 
-        if(document.getElementById("search-type").value=="event"){
+        if(document.getElementById("search-type").value=="event" || document.getElementById("search-type").value=="all"){
             $.ajax({
                 url: "/Search/searchAll", //the page containing php script
                 type: "post", //request type,
@@ -540,7 +541,7 @@
                 }
             });
         }
-        else if (!(range || mode || date || sort || way) && document.getElementById("search-type").value=="organization")
+        else if (!(range || mode || date || sort || way) && (document.getElementById("search-type").value=="organization" || document.getElementById("search-type").value=="all"))
             orgSearch(name);
     }
 

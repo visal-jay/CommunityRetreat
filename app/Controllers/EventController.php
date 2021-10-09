@@ -127,8 +127,10 @@ class EventController
         Controller::accessCheck(["admin","organization"]);
         $time = (int)shell_exec("date '+%s'");
         $end_date=((new Events)->getDetails($_POST["event_id"]))["end_date"];
-        if (gmdate("Y-m-d",$time)>= $end_date)
-            (new DonationsController)->donationRefund($_POST["event_id"]);
+
+        if (gmdate("Y-m-d",$time) < $end_date){
+            (new DonationsController)->donationRefund($_POST["event_id"]);     
+        }
         (new Events)->remove($_POST["event_id"]);
         Controller::redirect("/Organisation/events");
     }

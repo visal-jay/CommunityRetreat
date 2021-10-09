@@ -153,16 +153,17 @@ class DonationsController{
         //(new UserController)->addActivity("Donation refund ". $_POST['amount'], $_GET["event_id"]);
         $donation = new Donations;
         $donation_details=$donation->getRefundDetails($event_id);
-        $data["event_name"]  = (new Events)->getDetails($_GET["event_id"])["event_name"];
+        $data = (new Events)->getDetails($event_id);
         $donation->donationRefund($event_id);
         foreach ($donation_details as $donation_data){
-            (new UserController)->sendNotifications("{$data['event_name']} event has refunded your donation.",$data["event_id"], $donation_data["uid"], "event","window.location.href= '' ", $_GET["event_id"]);
+            (new UserController)->sendNotifications("{$data['event_name']} event has refunded your donation.", $donation_data["uid"], "event","window.location.href= '' ", $event_id);
             $this->refund($donation_data["intent_id"]);
         }
                
     }
 
     public function refund($intent_id){
+        require __DIR__."/../Libararies/stripe-php-master/init.php";
         \Stripe\Stripe::setApiKey('sk_test_51JdYJ6JhZDUPzRAXbJg3k221yQ9pgNLhCFYz2ifKf6FPXszolkCJdx6N4tvg5CBvz5bSOVw3OnBZnAV7WFYnR2Ne00yji9wY0R');
         $re = \Stripe\Refund::create([
           'payment_intent' => $intent_id,

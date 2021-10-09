@@ -110,7 +110,6 @@
 
                         <div class="account-number">
                             <h3 id="account-number"><?php if (isset($account_number)) echo $bank_name, " - ", $account_number; ?></h3>
-
                         </div>
                         <div class="account-number-change-btn">
                             <button class="btn btn-clr" type="button" onclick="showEddite('account-number-updater')"><i class="fas fa-pen fa-1x" id="edit-icon"></i></button>
@@ -121,6 +120,7 @@
                     <form action="/Organisation/updateAccountNumber" method="post" id="edit-user-profile-form">
                         <div class="update-form" id="account-number-updater">
                             <div class="input-container">
+                                <span class="input-error email-error error" style="color :red; font-size :1rem; text-align:center; "><?php if (isset($_GET["email_Update_Err"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp" . $_GET['email_Update_Err']; ?></span>
                                 <label for="text" class="edit-coontainer">Enter bank name:</label>
                                 <input type="text" id="usernameinput" placeholder="Enter bank name" name="bank_name" required><br>
                                 <label for="text" class="edit-coontainer">Enter new account number:</label>
@@ -261,6 +261,8 @@
     <script>
         // Invalid email error
         <?php if (isset($_GET["invaliderr"])) echo "showEddite('emailupdater');" ?>
+
+        <?php if (isset($_GET["email_Update_Err"])) echo "showEddite('account-number-updater')" ?>
 
         // Current password incorrect error
         <?php if (isset($_GET["currentpassworderr"])) echo "showEddite('passwordupdater');" ?>

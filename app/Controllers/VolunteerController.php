@@ -4,7 +4,7 @@ class VolunteerController{
     //volunteer
 
     public function view($event_details){
-        $user_roles = Controller::accessCheck(["moderator", "organization"]);
+        $user_roles = Controller::accessCheck(["moderator", "organization"],$_GET["event_id"]);
         $data = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["volunteer_status" => '', "volunteer_capacity" => '']);
         $volunteer = new Volunteer();
         $pagination= Model::pagination("volunteer", 10, "WHERE event_id= :event_id", ["event_id"=>$_GET["event_id"]]);

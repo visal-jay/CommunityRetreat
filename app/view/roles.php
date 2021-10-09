@@ -30,7 +30,7 @@
 
     .styled-table th,
     td {
-        text-align: left;
+        text-align: center;
     }
 
     #role {
@@ -97,6 +97,10 @@
             flex-direction: column;
         }
 
+        .flex-row{
+            flex-wrap: wrap;
+        }
+
         .search-bar-role {
             width: 50%;
         }
@@ -111,6 +115,10 @@
 
         .styled-table {
             width: 200px;
+        }
+
+        table{
+            table-layout:auto;
         }
     }
 </style>

@@ -195,7 +195,7 @@
                         <label for="file-input">
                             <i class="fas fa-edit clr-white"></i>
                         </label>
-                        <input id="file-input" name="cover-photo[]" type="file" />
+                        <input id="file-input" name="cover-photo[]" accept=".jpg, .jpeg, .png" type="file" />
                     </div>
                 <?php } ?>
             </div>
@@ -206,7 +206,7 @@
                         <label for="file-input-1">
                             <i class="fas fa-edit clr-white"></i>
                         </label>
-                        <input id="file-input-1" name="profile-photo[]" type="file" />
+                        <input id="file-input-1" name="profile-photo[]" accept=".jpg, .jpeg, .png" type="file" />
                     </div>
                 <?php } ?>
             </div>

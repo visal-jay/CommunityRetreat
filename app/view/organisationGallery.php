@@ -12,7 +12,6 @@
     <title>Document</title>
 </head>
 <style>
-
     .form {
         min-width: 50%;
     }
@@ -22,52 +21,41 @@
         align-items: center;
     }
 
-    .gallery-container {
-        display: flex;
-        border-radius: 8px;
-        box-shadow: 0px 0px 0px 1px rgb(192, 192, 192);
-        padding: 0;
-    }
 
     .grid {
-        width: 80%;
+        width: 90%;
         display: grid;
+        align-content: center;
+        justify-content: center;
         grid-gap: 10px;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        grid-auto-rows: 20px;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        padding-bottom: 2rem;
     }
 
 
     figure {
+        height: 150px;
+        width: 300px;
         position: relative;
         background: #eeeeee;
+        border-radius: 6px;
+        box-shadow: 0px 0px 0px 1px rgb(192, 192, 192);
         margin: 0;
-        display: grid;
-        grid-template-rows: 1fr auto;
-        border-radius: 8px;
-        width: fit-content;
-        height: fit-content;
+        overflow: hidden;
     }
 
-    p {
-        margin: 0.5rem;
-    }
-
-    figure>img {
-        grid-row: 1 / -1;
-        grid-column: 1;
-    }
-
-    .grid div {
-        align-items: baseline;
-        height: fit-content;
-        border-radius: 8px;
-        transition: all .4s ease-in-out;
+    figure div {
+        width: 100%;
+        height: 100%;
     }
 
     .grid div img {
-        border-radius: 8px;
         width: 100%;
+        height: 100%;
+        object-position: center;
+        object-fit: cover;
+        display: flex;
+        padding: 0;
     }
 
     .delete-button {
@@ -118,17 +106,8 @@
             min-width: 80%;
         }
 
-        .grid {
-            grid-gap: 10px;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-        }
-
         .grid div {
             margin: 0px;
-        }
-
-        .event-card-details {
-            flex-direction: column;
         }
     }
 </style>
@@ -137,7 +116,7 @@
 
 
 <body>
-    <div class="flex-col  margin-side-lg main-container">
+    <div class="flex-col  margin-side-lg main-container position-relative">
         <h1>Gallery</h1>
         <?php if ($organization) { ?>
             <form class="form flex-col flex-center" id="file-form" method="post" enctype="multipart/form-data">
@@ -153,62 +132,48 @@
 
         <div class="grid margin-lg">
             <?php foreach ($photos as $photo) { ?>
-                <figure class="item bg-green">
-                    <div class="content">
-                        <?php if (!$guest_user && $photo["uid"] == $_SESSION["user"]["uid"]) { ?>
-                            <form class="delete-button" method="post" action="/Organisation/deletePhoto">
-                                <button type="submit" class="btn-icon" name="photo" value="<?= $photo["image"] ?>"> <i class="far fa-trash-alt"></i></button>
-                            </form>
-                        <?php  } ?>
-                        <div class="gallery-container flex flex-center"><img src="<?= $photo["image"] ?>" style="object-fit: cover;" alt=""></div>
-                    </div>
+                <figure class="item">
+                    <?php if (!$guest_user && $photo["uid"] == $_SESSION["user"]["uid"]) { ?>
+                        <form class="delete-button" method="post" action="/Organisation/deletePhoto">
+                            <button type="submit" class="btn-icon" name="photo" value="<?= $photo["image"] ?>"> <i class="far fa-trash-alt"></i></button>
+                        </form>
+                    <?php  } ?>
+                    <div class="gallery-container flex flex-center"><img src="<?= $photo["image"] ?>" style="object-fit: cover;" alt=""></div>
                 </figure>
             <?php } ?>
         </div>
-        <div class="flex-row flex-center">
+
+        <div class="flex-row flex-center position-absolute position-bottom">
             <ul class="pagination">
                 <li><a href="/Organisation/gallery?pageno=1"><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i>&nbsp;First</a></li>
-                <li class="<?php if($pageno <= 1){ echo 'disabled'; } ?>">
-                    <a href="<?php if($pageno <= 1){ echo '#'; } else { echo "/Organisation/gallery?pageno=".($pageno - 1); } ?>"><i class="fas fa-chevron-left"></i>&nbsp;Prev</a>
+                <li class="<?php if ($pageno <= 1) {
+                                echo 'disabled';
+                            } ?>">
+                    <a href="<?php if ($pageno <= 1) {
+                                    echo '';
+                                } else {
+                                    echo "/Organisation/gallery?pageno=" . ($pageno - 1);
+                                } ?>"><i class="fas fa-chevron-left"></i>&nbsp;Prev</a>
                 </li>
-                <li class="<?php if($pageno >= $total_pages){ echo 'disabled'; } ?>">
-                    <a href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "/Organisation/gallery?pageno=".($pageno + 1); } ?>">Next&nbsp;<i class="fas fa-chevron-right"></i></a>
+                <li class="<?php if ($pageno >= $total_pages) {
+                                echo 'disabled';
+                            } ?>">
+                    <a href="<?php if ($pageno >= $total_pages) {
+                                    echo '#';
+                                } else {
+                                    echo "/Organisation/gallery?pageno=" . ($pageno + 1);
+                                } ?>">Next&nbsp;<i class="fas fa-chevron-right"></i></a>
                 </li>
                 <li><a href="/Organisation/gallery?pageno=<?php echo $total_pages; ?>">Last&nbsp;<i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right"></i></a></li>
             </ul>
         </div>
     </div>
-    
+
 </body>
 
 <?php include "footer.php" ?>
 
-<script>
-    function resizeGridItem(item) {
-        grid = document.getElementsByClassName("grid")[0];
-        rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
-        rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
-        rowSpan = Math.ceil((item.querySelector('.content').getBoundingClientRect().height + rowGap) / (rowHeight + rowGap));
-        item.style.gridRowEnd = "span " + rowSpan;
-        //location.reload();
-    }
 
-    function resizeAllGridItems() {
-        allItems = document.getElementsByClassName("item");
-        for (x = 0; x < allItems.length; x++) {
-            resizeGridItem(allItems[x]);
-        }
-    }
-
-    window.onload = resizeAllGridItems();
-    window.addEventListener("resize", resizeAllGridItems);
-
-
-    /* allItems = document.getElementsByClassName("item");
-    for (x = 0; x < allItems.length; x++) {
-        imagesLoaded(allItems[x], resizeInstance);
-    } */
-</script>
 <script>
     const input = document.querySelector('#files');
     input.addEventListener('change', handleFileSelect);
@@ -222,7 +187,7 @@
             removeFile(event);
         }
     });
-    
+
 
 
 

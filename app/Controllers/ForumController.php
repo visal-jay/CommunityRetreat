@@ -5,11 +5,15 @@ class ForumController
     public function view($event_details)
     {
         $user_roles = Controller::accessCheck(["organization", "registered_user", "moderator", "guest_user"], $_GET["event_id"]);
-        if(isset($_GET["update_announcement_id"]) && $user_roles["registered_user"])
+        
+        if(isset($_GET["update_announcement_id"]) && $user_roles["registered_user"]){
             $data["announcements"] = (new Announcement)->getAnnouncement($_GET["event_id"], $_GET["update_announcement_id"]);
-        else
+        }
+            else{
             $data["announcements"] = (new Announcement)->getAnnouncement($_GET["event_id"]);
-        $data = array_merge($data, $event_details);
+            $pagination= Model::pagination("work_timeline", 5, "WHERE event_id= :event_id", ["event_id"=>$_GET["event_id"]]);
+        }
+            $data = array_merge($data, $event_details);
         View::render("eventPage", $data, $user_roles);
     }
 

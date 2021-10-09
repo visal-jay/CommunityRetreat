@@ -89,7 +89,7 @@
         margin-inline-end: 0px;
     }
 
-    .secondary-donation-enable-disable-btn {
+    .secondary-volunteer-enable-disable-btn {
         margin: 10px;
     }
 
@@ -262,7 +262,7 @@
                         </tbody>
 
                     </table>
-                    <form action="/Volunteer/updateVolunteerCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" id="volunteer-capacity" class="flex-row flex-center">
+                    <form action="/Volunteer/updateVolunteerCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" id="volunteer-capacity" class="flex-col flex-center">
 
                         <?php for ($i = 0; $i < count($volunteer_capacities); $i++) {
                             echo "<label  class='form  hidden'>";
@@ -273,7 +273,7 @@
                             echo "' type='number' value=";
                             echo $volunteer_capacities[$i]['capacity'];
                             echo "  min=";
-                            foreach ($volunteer_sum[$i] as $sum) {
+                            foreach ($volunteer_sum[$volunteer_capacities[$i]['event_date']] as $sum) {
                                 echo $sum['volunteer_sum'];
                             }
                             echo " max='10000000' class='form form-ctrl hidden' style='margin: 0.3rem;' />";
@@ -295,7 +295,7 @@
 
 
             <?php if ($volunteer_status == 1) { ?>
-                <form action="/Volunteer/disableVolunteer?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-donation-enable-disable-btn">
+                <form action="/Volunteer/disableVolunteer?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-volunteer-enable-disable-btn">
                     <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Disable Volunteering</button>
                 </form>
             <?php } ?>
@@ -324,16 +324,16 @@
                 <div><?php $total_sum = 0;
                         if(!$volunteer_date_req){
                             for ($i = 0; $i < count($volunteer_capacities); $i++) {
-                                foreach ($volunteer_sum[$i] as $sum) {
-                                    $total_sum += $sum['volunteer_sum'];
+                                foreach ($volunteer_sum[$volunteer_capacities[$i]['event_date']] as $sum) {
+                                    $total_sum +=  $sum['volunteer_sum'];
                                 }
                             }
                         }
                         else{
                             for ($i = 0; $i < count($volunteer_capacities); $i++) {
-                                foreach ($volunteer_sum[$i] as $sum) {
+                                foreach ($volunteer_sum[$volunteer_capacities[$i]['event_date']] as $sum) {
 
-                                    if($sum["event_date"]==$volunteer_date_req)
+                                    if($volunteer_capacities[$i]['event_date']==$volunteer_date_req)
                                     $total_sum = $sum['volunteer_sum'];
                                 }
                             }
@@ -345,9 +345,9 @@
 
             <div>
                 <table id="mytable" class="center">
-                    <col style="width:40%">
-                    <col style="width:40%">
-                    <col style="width:20%">
+                    <col style="width:30%">
+                    <col style="width:35%">
+                    <col style="width:35%">
                     <thead>
                         <tr class="headers">
                             <th>Name</th>

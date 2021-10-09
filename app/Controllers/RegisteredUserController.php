@@ -37,7 +37,11 @@ class RegisteredUserController {
         $user_roles=Controller::accessCheck(["registered_user"]);
         View::render("adminstration",[],$user_roles);
     }
-
+    function viewAdministration(){
+        $registered_user = new RegisteredUser();
+        $administrations = $registered_user->getAdministrations();
+        echo json_encode($administrations);   
+    }
     //View activity_log
     public function activityLog(){
         $user_roles=Controller::accessCheck(["registered_user"]);

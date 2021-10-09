@@ -43,7 +43,7 @@ class OrganisationController
                 $org_id = $_SESSION["user"]["uid"];
         }
 
-        $pagination=Model::pagination("organization_gallery",10," WHERE uid = :uid",["uid"=>$org_id]);
+        $pagination=Model::pagination("organization_gallery",12," WHERE uid = :uid",["uid"=>$org_id]);
         if (!$data = (new Gallery)->getGallery(["uid" => $org_id, "offset"=>$pagination["offset"] , "no_of_records_per_page"=> $pagination["no_of_records_per_page"]], true))
             $data = array();
 

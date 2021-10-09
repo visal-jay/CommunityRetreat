@@ -363,6 +363,22 @@ header .logo img {
   border-radius: 8px;
 }
 
+.position-absolute {
+  position: absolute;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.position-top {
+  top: 0;
+}
+
+.position-bottom {
+  bottom: 0;
+}
+
 @media (max-width: 800px) {
   .pagination li {
     margin: 0 0.3em;

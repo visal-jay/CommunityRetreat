@@ -21,7 +21,7 @@ class Gallery extends Model
     public function addPhoto($data = [], $organisation = false)
     {
         $image_count=count($_FILES["photo"]["name"]);
-        for ($i = 0; $i < $image_count; $i++) { //
+        for ($i = 0; $i < $image_count; $i++) { 
             $db = Model::getDB();
             $db->beginTransaction();
 

@@ -103,8 +103,7 @@ class DonationsController{
         
         \Stripe\Stripe::setApiKey('sk_test_51JdYJ6JhZDUPzRAXbJg3k221yQ9pgNLhCFYz2ifKf6FPXszolkCJdx6N4tvg5CBvz5bSOVw3OnBZnAV7WFYnR2Ne00yji9wY0R');
         
-        //$YOUR_DOMAIN = 'https://communityretreat.me';
-        $YOUR_DOMAIN = 'http://localhost:8080/';
+        $YOUR_DOMAIN = 'https://communityretreat.me';
 
         $checkout_session = \Stripe\Checkout\Session::create([
             'line_items' => [[

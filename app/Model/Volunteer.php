@@ -105,8 +105,8 @@ class Volunteer extends Model
         $result = Model::select($query, $params);
         for ($i = 0; $i < count($result); $i++) {
             $params_volunteer = ["event_id" => $event_id, "volunteer_date" => $result[$i]["event_date"]];
-            $query_volunteer = 'SELECT count(uid) AS volunteer_sum  FROM volunteer WHERE event_id = :event_id AND volunteer_date = :volunteer_date GROUP BY volunteer_date ';
-            $volunteer_sum[$i] = Model::select($query_volunteer, $params_volunteer);
+            $query_volunteer = 'SELECT count(uid) AS volunteer_sum FROM volunteer WHERE event_id = :event_id AND volunteer_date = :volunteer_date GROUP BY volunteer_date ';
+            $volunteer_sum[$result[$i]["event_date"]] = Model::select($query_volunteer, $params_volunteer);
         }
         return $volunteer_sum;
     }
@@ -159,10 +159,16 @@ class Volunteer extends Model
         Model::insert($query, $params);
     }
 
-    public function getVolunteeredUid($event_id, $start_date, $end_date)
+    public function getVolunteeredUid($event_id, $start_date=-1, $end_date=-1)
     {
-        $params = ["event_id" => $event_id, "start_date" => $start_date, "end_date" => $end_date];
-        $query = 'SELECT DISTINCT uid FROM volunteer WHERE event_id = :event_id AND volunteer_date  NOT BETWEEN :start_date AND :end_date ';
+        if($start_date!=-1 && $end_date!=-1){
+            $params = ["event_id" => $event_id];
+            $query = 'SELECT DISTINCT uid FROM volunteer WHERE event_id = :event_id';      
+        }
+        else{
+            $params = ["event_id" => $event_id, "start_date" => $start_date, "end_date" => $end_date];
+            $query = 'SELECT DISTINCT uid FROM volunteer WHERE event_id = :event_id AND volunteer_date  NOT BETWEEN :start_date AND :end_date ';
+        }
         $result = Model::select($query, $params);
         return $result;
     }

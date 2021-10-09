@@ -207,7 +207,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
                         <!--enter the donation capacity and save it in the database-->
                         <label for="" class="hidden"> </label>
                         <input name="donation_capacity" type="number" value="<?= $donation_capacity ?>"
-                            min="<?= $donation_sum ?>" max="10000000" class=" form form-ctrl hidden" required/>
+                            min="<?= $donation_sum ?>" class=" form form-ctrl hidden" required/>
                     </form>
                 </div>
             </div>

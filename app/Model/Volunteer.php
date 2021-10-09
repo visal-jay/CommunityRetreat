@@ -104,8 +104,8 @@ class Volunteer extends Model
         $result = Model::select($query, $params);
         for ($i = 0; $i < count($result); $i++) {
             $params_volunteer = ["event_id" => $event_id, "volunteer_date" => $result[$i]["event_date"]];
-            $query_volunteer = 'SELECT count(uid) AS volunteer_sum  FROM volunteer WHERE event_id = :event_id AND volunteer_date = :volunteer_date GROUP BY volunteer_date ';
-            $volunteer_sum[$i] = Model::select($query_volunteer, $params_volunteer);
+            $query_volunteer = 'SELECT count(uid) AS volunteer_sum FROM volunteer WHERE event_id = :event_id AND volunteer_date = :volunteer_date GROUP BY volunteer_date ';
+            $volunteer_sum[$result[$i]["event_date"]] = Model::select($query_volunteer, $params_volunteer);
         }
         return $volunteer_sum;
     }

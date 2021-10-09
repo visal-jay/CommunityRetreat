@@ -273,7 +273,7 @@
                             echo "' type='number' value=";
                             echo $volunteer_capacities[$i]['capacity'];
                             echo "  min=";
-                            foreach ($volunteer_sum[$i] as $sum) {
+                            foreach ($volunteer_sum[$volunteer_capacities[$i]['event_date']] as $sum) {
                                 echo $sum['volunteer_sum'];
                             }
                             echo " max='10000000' class='form form-ctrl hidden' style='margin: 0.3rem;' />";
@@ -324,16 +324,16 @@
                 <div><?php $total_sum = 0;
                         if(!$volunteer_date_req){
                             for ($i = 0; $i < count($volunteer_capacities); $i++) {
-                                foreach ($volunteer_sum[$i] as $sum) {
-                                    $total_sum += $sum['volunteer_sum'];
+                                foreach ($volunteer_sum[$volunteer_capacities[$i]['event_date']] as $sum) {
+                                    $total_sum +=  $sum['volunteer_sum'];
                                 }
                             }
                         }
                         else{
                             for ($i = 0; $i < count($volunteer_capacities); $i++) {
-                                foreach ($volunteer_sum[$i] as $sum) {
+                                foreach ($volunteer_sum[$volunteer_capacities[$i]['event_date']] as $sum) {
 
-                                    if($sum["event_date"]==$volunteer_date_req)
+                                    if($volunteer_capacities[$i]['event_date']==$volunteer_date_req)
                                     $total_sum = $sum['volunteer_sum'];
                                 }
                             }

@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="../Public/assets/newstyles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="../Public/assets/style/fontawesome.min.css">
-    <script defer src="../Public/assets/js/admininis.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <style>
         *{
             margin: 0%;
@@ -30,55 +31,63 @@
             padding:2em 0 ;
             display:flex;
             justify-content: center;
+            flex-direction: column;
+            align-items: center;
     
         }
+        #event-search{
+            background-image: url('/css/searchicon.png');
+        }
+
         .table-container{
             margin: 10px auto;
             min-height: 100%;
         }
         .table{
-            width: 70%;
-            border-collapse: collapse;
+            width: 50%;
             margin: auto;
         }
-
         .table th{
             
             font-weight: 900;
             letter-spacing: 0.35px;
             text-align: center; 
+            padding: 1rem;
             
         }
 
         .table td{  
             letter-spacing: 0.35px;
             font-weight: normal;
-            padding: 20px 10px 20px;
+            padding: 0.5rem;
             text-align: center;
+            border-collapse: none;
         }
 
     </style>
+  
+
 
 
 </head>
 <?php include "nav.php" ?>
 
-<body>
+<body onload="renderDetails()">
 
     <h1 id="topic">
-        Adminstration
+        Administration
     </h1>
-    <div class="eventsearchbar">
-        <form action="/action_page.html" class="search-bar" style="height:fit-content">
-            <input type="search" class="form-ctrl" placeholder="Search event">
-            <button type="" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
-        </form>
-    </div>
+    
+    <form action="/action_page.html"  class="eventsearchbar" style="height:fit-content">
+        <input type="search" id="event-search" class="form-ctrl" placeholder="Search event" onkeyup="searchEvent()">
+    </form>
+    
     <div class="table-container">
         <table class="table" >
             <thead>
                 <tr>
                     <th>Event</th>
+                    <th>Organization</th>
                     <th>User role</th>
                 </tr>
             </thead>
@@ -90,5 +99,68 @@
     
     
 </body>
+<script>
+    function renderDetails(){
+        $.ajax({
+        url: "/RegisteredUser/viewAdministration",
+        type: "post",
+        success : function(results){
+            result = JSON.parse(results);
+            console.log(result[1]);
+            let tbody = document.getElementById("table-body");
+                for(let i=0 ; i<result.length ;i++){
+                    if(result[i].moderator_flag == 1 && result[i].treasurer_flag == 0){
+                        tbody.innerHTML += `<tr id="data-row">
+                                            <td id="event-name-td"><a class="clr-black" href='/Event/view?page=about&&event_id=${result[i].event_id}'>${result[i].event_name}</a></td>
+                                            <td>${result[i].organisation_username}</td>
+                                            <td>Moderator</td>
+                                        </tr>`;
+
+                    }
+                    else if(result[i].moderator_flag == 0 && result[i].treasurer_flag == 1){
+                        tbody.innerHTML += `<tr id="data-row">
+                                            <td id="event-name-td"><a class="clr-black" href='/Event/view?page=about&&event_id=${result[i].event_id}'>${result[i].event_name}</a></td>
+                                            <td>${result[i].organisation_username}</td>
+                                            <td>Treasurer</td>
+                                        </tr>`;
+
+                    }
+                    else if(result[i].moderator_flag == 1 && result[i].treasurer_flag == 1){
+                        tbody.innerHTML += `<tr id="data-row">
+                                            <td id="event-name-td"><a class="clr-black" href='/Event/view?page=about&&event_id=${result[i].event_id}'>${result[i].event_name}</a></td>
+                                            <td>${result[i].organisation_username}</td>
+                                            <td>Moderator&nbsp/&nbspTreasurer</td>
+                                        </tr>`;
+
+                    }
+                }
+
+            }
+
+        });
+    }
+
+    function searchEvent(){
+        var input = document.getElementById("event-search");
+        var filter = input.value.toUpperCase();
+        var tbody = document.getElementById("table-body");
+        var row =  tbody.getElementsByTagName("tr");
+        for (let i = 0; i < row.length; i++){
+           
+            var td =  row[i].getElementsByTagName("td")[0];
+            var a = td.getElementsByTagName("a")[0];
+            var txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                row[i].style.display = "";
+            } else {
+                row[i].style.display = "none";
+            }
+        }
+
+        
+    }
+    
+</script>
 <?php include "footer.php" ?>
+
 </html>

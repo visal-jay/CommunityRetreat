@@ -52,7 +52,7 @@ class DonationsController{
         (new Donations)->enableDonation($_GET["event_id"]);
 
         foreach ($volunteer_details as $volunteer){
-            (new UserController)->sendNotifications("{$event['event_name']} event accepts donations now.You can donate..!",$event["event_id"], $volunteer["uid"], "event","window.location.href= '/Event/view?page=about&event_id= " . $_GET['event_id'] . " ' ", $_GET["event_id"]);
+            (new UserController)->sendNotifications("{$event['event_name']} event accepts donations now.You can donate..!", $volunteer["uid"], "event","window.location.href= '/Event/view?page=about&event_id=" . $_GET['event_id'] . " ' ", $_GET["event_id"]);
         }
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "donations"]);/*redirect to event page after enabling donation.*/
     }

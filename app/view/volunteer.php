@@ -262,7 +262,7 @@
                         </tbody>
 
                     </table>
-                    <form action="/Volunteer/updateVolunteerCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" id="volunteer-capacity" class="flex-row flex-center">
+                    <form action="/Volunteer/updateVolunteerCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" id="volunteer-capacity" class="flex-col flex-center">
 
                         <?php for ($i = 0; $i < count($volunteer_capacities); $i++) {
                             echo "<label  class='form  hidden'>";

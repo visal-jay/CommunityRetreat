@@ -10,12 +10,12 @@
     <title>Document</title>
 </head>
 <style>
-    .main-container{
-       
+
+    .main-container {
         min-height: 100%;
         align-items: center;
-
     }
+
     textarea {
         height: 150px;
         padding: 12px 20px;
@@ -79,9 +79,6 @@
             width: 100%;
         }
 
-        .card-container {
-            height: 220px;
-        }
 
         .form {
             width: 80%;
@@ -116,6 +113,7 @@
         }
 
         td {
+            width: 140px;
             padding: .5rem 0;
         }
 
@@ -133,7 +131,7 @@
 <?php if ($organization) include "nav.php" ?>
 
 <body>
- 
+
     <div class="flex-col main-container margin-side-lg">
         <h1>Manage Events</h1>
         <?php if ($organization) { ?>
@@ -185,7 +183,7 @@
                 </form>
             </div>
         <?php } ?>
-        <div class="events">
+        <div class="events position-relative">
             <?php foreach ($events as $event) { ?>
                 <div class="card-container margin-md">
                     <a class="event-link" href="/Event/view?page=about&&event_id=<?= $event["event_id"] ?>">
@@ -200,7 +198,8 @@
 
                             </tr>
                             <tr>
-                                <td><?= $event["start_date"] ?></td>
+                                <td st><?php if ($event["start_date"] == $event["end_date"]) echo $event["start_date"];
+                                        else echo "From :&nbsp;" . $event["start_date"] . "<br>To :&nbsp;" . $event["end_date"] ?></td>
                                 <td><?php if ($event["volunteer_status"]) { ?><i class="fas fa-check clr-green"></i><?php } else { ?><i class="fas fa-times clr-red"></i><?php } ?> </td>
                                 <td><?php if ($event["donation_status"]) { ?><i class="fas fa-check clr-green"></i><?php } else { ?><i class="fas fa-times clr-red"></i><?php } ?> </td>
                             </tr>
@@ -222,6 +221,30 @@
                     </div>
                 </div>
             <?php } ?>
+            <div class="flex-row flex-center">
+                <ul class="pagination">
+                    <li><a href="/Organisation/events?pageno=1"><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i>&nbsp;First</a></li>
+                    <li class="<?php if ($pageno <= 1) {
+                                    echo 'disabled';
+                                } ?>">
+                        <a href="<?php if ($pageno <= 1) {
+                                        echo '#';
+                                    } else {
+                                        echo "/Organisation/events?pageno=" . ($pageno - 1);
+                                    } ?>"><i class="fas fa-chevron-left"></i>&nbsp;Prev</a>
+                    </li>
+                    <li class="<?php if ($pageno >= $total_pages) {
+                                    echo 'disabled';
+                                } ?>">
+                        <a href="<?php if ($pageno >= $total_pages) {
+                                        echo '#';
+                                    } else {
+                                        echo "/Organisation/events?pageno=" . ($pageno + 1);
+                                    } ?>">Next&nbsp;<i class="fas fa-chevron-right"></i></a>
+                    </li>
+                    <li><a href="/Organisation/events?pageno=<?php echo $total_pages; ?>">Last&nbsp;<i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right"></i></a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </body>
@@ -239,7 +262,7 @@
         today = yyyy + '-' + mm + '-' + dd;
         document.getElementById("start_date").setAttribute("min", today);
         document.getElementById("end_date").setAttribute("min", today);
-        
+
 
         document.getElementById("start_date").addEventListener("change", () => {
             document.getElementById("end_date").setAttribute("min", document.getElementById("start_date").value);

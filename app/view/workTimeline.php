@@ -41,15 +41,6 @@
         margin: 2.6em auto;
     }
 
-    nav a {
-        list-style: none;
-        padding: 35px;
-        color: #232931;
-        font-size: 1.1em;
-        display: block;
-        transition: all 0.5s ease-in-out;
-    }
-
     .rightbox {
         height: 100%;
     }
@@ -94,7 +85,7 @@
         transition: all 500ms ease-in-out;
     }
 
-    .rb-container ul.rb li:hover::before {
+    .rb-container ul.rb li.completed::before {
         background: #50d890;
         border-color: #232931;
         transition: all 500ms ease-in-out;
@@ -226,6 +217,14 @@
             margin: 0 0 0 2rem;
             position: relative;
         }
+
+        .rb-container {
+        width: 100%;
+        }
+
+        .remove{
+            margin: 10px 0 0 10px;
+        }
     }
 </style>
 
@@ -249,32 +248,32 @@
                 <div class="rb-container">
                     <ul class="rb">
                         <?php foreach ($tasks as $task) { ?>
-                            <li class="rb-item">
+                            <li class="rb-item <?= $task['completed'] != 0 ? "completed" : "" ?>">
                                 <div class="timestamp">
                                     <h3><?= $task["start_date"] ?><br><?= $task["end_date"] ?></h3>
                                 </div>
                                 <div><?= $task["task"] ?></div>
-                                <div>
-                                    <update class="margin-md">
+                                
+                                    <update class="margin-md flex-row-to-col">
                                         <button class="btn btn-small" onclick="edit(); editForm('<?= $task['start_date'] ?>','<?= $task['end_date'] ?>','<?= $task['task'] ?>' ,'<?= $task['task_id'] ?>'); togglePopup('edit-form'); blur_background('background'); stillBackground('id1');"><i class="btn-icon far fa-edit margin-side-md"></i>Edit</button>
 
                                         <?php if ($task['completed'] == 0) { ?>
-                                            <button class="btn btn-small" onclick="window.location.href='/WorkTimeline/completed?event_id=<?= $_GET['event_id'] ?>&&task_id=<?= $task['task_id'] ?>'"><i class="far fa-check-square"></i>&nbsp;&nbsp;Mark as completed</button>
+                                            <button class="btn btn-small margin-side-md" onclick="window.location.href='/WorkTimeline/completed?event_id=<?= $_GET['event_id'] ?>&&task_id=<?= $task['task_id'] ?>'"><i class="far fa-check-square"></i>&nbsp;&nbsp;Mark as completed</button>
                                         <?php } else { ?>
-                                            <button class="btn btn-solid btn-small" onclick="window.location.href='/WorkTimeline/completed?event_id=<?= $_GET['event_id'] ?>&&task_id=<?= $task['task_id'] ?>'"><i class="far fa-check-square"></i>&nbsp;&nbsp;Completed</button>
+                                            <button class="btn btn-solid btn-small margin-side-md" onclick="window.location.href='/WorkTimeline/completed?event_id=<?= $_GET['event_id'] ?>&&task_id=<?= $task['task_id'] ?>'"><i class="far fa-check-square"></i>&nbsp;&nbsp;Completed</button>
                                         <?php } ?>
 
-                                        <button class="btn btn-small clr-red border-red " onclick="remove()" required style="font-family:Ubuntu, sans-serif,  FontAwesome"> &#xf2ed; &nbsp;Remove </button>
+                                        <button class="btn btn-small clr-red border-red remove" onclick="remove()" required style="font-family:Ubuntu, sans-serif,  FontAwesome"> &#xf2ed; &nbsp;Remove </button>
                                         <div class="flex-row flex-space" style="display: none;">
                                             <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
                                             <form method="post" action="/WorkTimeline/deleteTask?event_id=<?= $_GET["event_id"] ?>" class="flex-row flex-center">
                                                 <input name="task_id" class="hidden" value="<?= $task["task_id"] ?>">
                                                 <button class="btn-icon flex-row flex-center"><i type="submit" class="fas fa-check clr-green margin-side-md"></i>&nbsp;</button>
                                             </form>
-                                            <i class="btn-icon fas fa-times clr-red margin-side-md" onclick="cancel()"></i>
+                                            <i class="fas fa-times clr-red margin-side-md" onclick="cancel()"></i>
                                         </div>
                                     </update>
-                                </div>
+                                
                             </li>
                         <?php } ?>
                     </ul>
@@ -386,7 +385,7 @@
     function cancel() {
         var cancel = event.target.parentNode;
         cancel.style.display = "none";
-        cancel.previousElementSibling.style.display = "block";
+        cancel.previousElementSibling.style.display = "";
 
     }
 </script>

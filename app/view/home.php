@@ -419,7 +419,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                 <div class="flex-col flex-center">
                     <img src="/Public/assets/sample-1.svg" alt="">
                     <h2>Recently added</h2>
-                    <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
+                    <p style="text-align: center">Interested in newly published events?<br> Here is your place!<br> Keep scrolling left to find out more and more events.</p>
                 </div>
                 <div class="flex-row margin-lg" id='recent-events'></div>
             </div>
@@ -428,8 +428,8 @@ if (isset($_SESSION["user"]["user_type"])) {
                 <div id="map" class="margin-side-md grid-row-2"></div>
                 <div class="flex-col flex-center grid-row-1">
                     <img src="/Public/assets/sample-2.svg" alt="">
-                    <h2>Near you</h2>
-                    <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
+                    <h2>Near me</h2>
+                    <p style="text-align: center">Look what we've found!<br>We got the events within your reach for you!</p>
                 </div>
             </div>
 
@@ -437,7 +437,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                 <div class="flex-col flex-center">
                     <img src="/Public/assets/sample-3.svg" alt="">
                     <h2>Need your donations</h2>
-                    <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
+                    <p style="text-align: center">The events that are waiting just for your kindness and generosity.<br>Join the donors' community <br>&<br> support the good-willed projects.</p>
                 </div>
                 <div class="flex-row margin-lg" id='donation-events'></div>
             </div>
@@ -448,7 +448,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                 <div class="flex-col flex-center grid-row-1">
                     <img src="/Public/assets/sample-4.svg" alt="">
                     <h2>Need your engagement</h2>
-                    <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
+                    <p style="text-align: center">The events that are waiting just for you.<br> Hurry up and be a proud VOLUNTEER!<br> Become a responsible citizen and be a part of making a better society.</p>
                 </div>
             </div>
         </div>
@@ -557,7 +557,8 @@ if (isset($_SESSION["user"]["user_type"])) {
                 donation_status: donation_status,
                 order_type: sort,
                 way: way,
-                limit: limit
+                limit: limit,
+                offset : 0
             },
             success: function(result) {
                 console.log(result);
@@ -667,6 +668,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                 latitude: latitude,
                 longitude: longitude,
                 distance: 20,
+                offset: 0,
                 limit: 10,
                 is_virtual: 0
             },

@@ -114,6 +114,10 @@
         box-shadow: 5px 5px 15px 5px #000000;
     }
 
+    .center{
+        text-align: center;
+    }
+
 @media screen and (max-width:768px) {
 
     table,
@@ -207,14 +211,14 @@ if(isset($_SESSION ["user"] ["user_type"])){
                         <!--enter the donation capacity and save it in the database-->
                         <label for="" class="hidden"> </label>
                         <input name="donation_capacity" type="number" value="<?= $donation_capacity ?>"
-                            min="<?= $donation_sum ?>" max="10000000" class=" form form-ctrl hidden" required/>
+                            min="<?= $donation_sum ?>" class=" form form-ctrl hidden" required/>
                     </form>
                 </div>
             </div>
             <div>
                 <button class="btn btn-solid data edit-btn" onclick="edit()">Edit
                     &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
-                <div class="flex-row-to-col">
+                <div class="flex-row flex-center">
                     <div class="edit-save-btn">
                         <button class=" btn btn-solid bg-red border-red form hidden close-btn" onclick="edit()">Close &nbsp;&nbsp;<i class="fas fa-times "></i></button>
                     </div>
@@ -300,6 +304,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
         <?php if ($organization) { ?>
             <p>
                 <ul class="left">
+                    <h3 class="center">Terms and Conditions</h3>
                     <li>All organizations will be allowed to collect donations and these donations will be<br> credited to a bank account owned by the CommunityRetreat.</li>
                     <li>At the end of the event, donations will be credited to the bank account belongs to<br> the Organization.</li>
                     <li>Organization is not allowed to collect donations that exceed the donation capacity.</li>

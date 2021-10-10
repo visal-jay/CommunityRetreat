@@ -30,7 +30,7 @@
 
     .styled-table th,
     td {
-        text-align: left;
+        text-align: center;
     }
 
     #role {
@@ -58,9 +58,10 @@
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     }
 
-    .search-bar-dropdown div{
+    .search-bar-dropdown div {
         padding: 0 3px;
     }
+
     .search-bar-dropdown div:hover {
         background: grey;
     }
@@ -88,12 +89,16 @@
         color: gray;
         background-color: gray;
     }
-  
+
 
     @media screen and (max-width:767px) {
 
         .flex-row-to-col {
             flex-direction: column;
+        }
+
+        .flex-row{
+            flex-wrap: wrap;
         }
 
         .search-bar-role {
@@ -111,8 +116,13 @@
         .styled-table {
             width: 200px;
         }
+
+        table{
+            table-layout:auto;
+        }
     }
 </style>
+
 <body>
 
     <div class="flex-col flex-center">

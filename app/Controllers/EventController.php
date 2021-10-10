@@ -50,7 +50,8 @@ class EventController
     public function gallery($event_details)
     {
         $user_roles = Controller::accessCheck(["moderator", "organization", "guest_user", "registered_user"], $_GET["event_id"]);
-        if (!$data = (new Gallery)->getGallery(["event_id" => $_GET["event_id"]]))
+        $pagination=Model::pagination("add_photo",10," WHERE event_id = :event_id",["event_id"=>$_GET["event_id"]]);
+        if (!$data = (new Gallery)->getGallery(["event_id" => $_GET["event_id"],"offset"=>$pagination["offset"] , "no_of_records_per_page"=> $pagination["no_of_records_per_page"]]))
             $data = array();
         else
             for ($i = 0; $i < count($data); $i++) {
@@ -127,8 +128,10 @@ class EventController
         Controller::accessCheck(["admin","organization"]);
         $time = (int)shell_exec("date '+%s'");
         $end_date=((new Events)->getDetails($_POST["event_id"]))["end_date"];
-        if (gmdate("Y-m-d",$time)>= $end_date)
-            (new DonationsController)->donationRefund($_POST["event_id"]);
+
+        if (gmdate("Y-m-d",$time) < $end_date){
+            (new DonationsController)->donationRefund($_POST["event_id"]);     
+        }
         (new Events)->remove($_POST["event_id"]);
         Controller::redirect("/Organisation/events");
     }
@@ -139,8 +142,7 @@ class EventController
     }
 
     public function chat($event_details){
-        Controller::accessCheck(["organization","moderator"],$_GET["event_id"]);
-        $user_roles = Controller::accessCheck(["organization", "moderator"]);
+        $user_roles =Controller::accessCheck(["organization","moderator"],$_GET["event_id"]);
         View::render("eventPage",$event_details,$user_roles);
     }
 

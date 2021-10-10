@@ -200,9 +200,9 @@ class Organisation extends User
         $query = "SELECT uid FROM  moderator_treasurer WHERE event_id= :event_id AND uid= :uid";
         $params = ["event_id" => $event_id, "uid" => $uid];
         if (count(User::select($query, $params)) == 1) {
-            if ($role = "treasurer")
+            if ($role == "Treasurer")
                 $query = "UPDATE moderator_treasurer SET treasurer_flag = 1 WHERE event_id= :event_id AND uid= :uid";
-            else if ($role = "moderator")
+            else if ($role == "Moderator")
                 $query = "UPDATE moderator_treasurer SET moderator_flag = 1 WHERE event_id= :event_id AND uid= :uid";
             User::insert($query, $params);
         } else {
@@ -210,18 +210,19 @@ class Organisation extends User
             $params = ["event_id" => $event_id, "uid" => $uid, "role1" => $role, "role2" => $role];
             User::insert($query, $params);
         }
+
     }
 
     public function deleteUserRole($uid, $role, $event_id)
     {
 
-
         $query = "SELECT uid FROM  moderator_treasurer WHERE event_id= :event_id AND uid= :uid AND treasurer_flag = 1 AND moderator_flag = 1";
         $params = ["event_id" => $event_id, "uid" => $uid];
+       
         if (count(User::select($query, $params)) == 1) {
-            if ($role = "treasurer")
+            if ($role == "treasurer")
                 $query = "UPDATE moderator_treasurer SET treasurer_flag = 0 WHERE event_id= :event_id AND uid= :uid";
-            else if ($role = "moderator")
+            else if ($role == "moderator")
                 $query = "UPDATE moderator_treasurer SET moderator_flag = 0 WHERE event_id= :event_id AND uid= :uid";
             User::insert($query, $params);
         } else {
@@ -229,6 +230,7 @@ class Organisation extends User
             $params = ["event_id" => $event_id, "uid" => $uid];
             User::insert($query, $params);
         }
+        
     }
 
     public function donationReport()

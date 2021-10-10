@@ -330,7 +330,50 @@ header .logo img {
  .card-container .heading{
    margin-bottom: 0.5rem;
  }
+
+ .pagination{
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.pagination li{
+  margin: 0 0.5em;
+}
+
+.pagination li a{
+  text-decoration: none;
+  color: white;
+  background-color: #16c79a;
+  padding: 0.2em 0.6em;
+  border-radius: 8px;
+}
+
+.position-absolute{
+  position: absolute;
+}
+
+.position-relative{
+  position: relative;
+}
+
+.position-top{
+  top:0;
+}
+.position-bottom{
+  bottom: 0;
+}
+
+
 @media (max-width: 800px) {
+
+  .pagination li{
+    margin: 0 0.3em;
+    font-size: 0.9em;
+  }
+
   .more-btn {
     display: block;
   }

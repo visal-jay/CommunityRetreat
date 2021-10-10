@@ -1,15 +1,14 @@
 <?php
 class Task extends Model
 {
-    public function getTask($event_id,$task_id=-1)
+    public function getTask($event_id, $task_id = -1)
     {
-        if($task_id != -1){
+        if ($task_id != -1) {
             $query = "SELECT `task`, `task_id`, `start_date`, `end_date`, `completed` FROM work_timeline WHERE task_id= :task_id";
-            $params = ["task_id"=> $task_id];
-        }
-        else{
+            $params = ["task_id" => $task_id];
+        } else {
             $query = "SELECT `task`, `task_id`, `start_date`, `end_date`, `completed` FROM work_timeline WHERE event_id= :event_id";
-            $params = ["event_id"=> $event_id];
+            $params = ["event_id" => $event_id];
         }
         $result = Model::select($query, $params);
         return $result;
@@ -24,11 +23,11 @@ class Task extends Model
 
     public function editTask($data)
     {
-        $params=array();
+        $params = array();
         $old_data = $this->getTask($data["event_id"], $data["task_id"]);
         $new_data = array_merge($old_data, $data);
         $update_data = array_intersect_key($new_data, ['task_id' => "", 'task' => "", 'start_date' => "", 'end_date' => ""]);
-        $params=array_merge($update_data,$params);
+        $params = array_merge($update_data, $params);
         $query = "UPDATE work_timeline SET `task` = :task, `start_date` = :start_date, `end_date` = :end_date WHERE `task_id`=:task_id ";
         Model::insert($query, $params);
     }
@@ -40,15 +39,15 @@ class Task extends Model
         Model::insert($query, $params);
     }
 
-    public function completed($task_id){
-        $result= $this->getTask(-1,$task_id);
-        if ($result[0]["completed"]== 0){
+    public function completed($task_id)
+    {
+        $result = $this->getTask(-1, $task_id);
+        if ($result[0]["completed"] == 0) {
             $query = "UPDATE work_timeline SET completed=1 WHERE task_id= :task_id";
-        }
-        else {
+        } else {
             $query = "UPDATE work_timeline SET completed=0 WHERE task_id= :task_id";
         }
-        
+
         $params = ["task_id" => $task_id];
         Model::insert($query, $params);
     }

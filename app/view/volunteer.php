@@ -89,7 +89,7 @@
         margin-inline-end: 0px;
     }
 
-    .secondary-donation-enable-disable-btn {
+    .secondary-volunteer-enable-disable-btn {
         margin: 10px;
     }
 
@@ -283,7 +283,7 @@
             </div>
             <div>
                 <button class="btn btn-solid btn-md data btn-small edit-btn" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
-                <div class="flex-row-to-col">
+                <div class="flex-row flex-center">
                     <div class="edit-save-btn">
                         <button class=" btn btn-solid bg-red border-red form btn-small hidden close-btn" onclick="edit()">Close &nbsp;&nbsp;<i class="fas fa-times "></i></button>
                     </div>
@@ -295,7 +295,7 @@
 
 
             <?php if ($volunteer_status == 1) { ?>
-                <form action="/Volunteer/disableVolunteer?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-donation-enable-disable-btn">
+                <form action="/Volunteer/disableVolunteer?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-volunteer-enable-disable-btn">
                     <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Disable Volunteering</button>
                 </form>
             <?php } ?>
@@ -345,9 +345,9 @@
 
             <div>
                 <table id="mytable" class="center">
-                    <col style="width:40%">
-                    <col style="width:40%">
-                    <col style="width:20%">
+                    <col style="width:30%">
+                    <col style="width:35%">
+                    <col style="width:35%">
                     <thead>
                         <tr class="headers">
                             <th>Name</th>
@@ -502,7 +502,7 @@
         correctLevel: QRCode.CorrectLevel.H,
     });
 
-    QR_CODE.makeCode("https://communityretreat/Volunteer/volunteerValidate?event_id=<?= $_GET["event_id"] ?>");
+    QR_CODE.makeCode("https://communityretreat.me/Volunteer/volunteerValidate?event_id=<?= $_GET["event_id"] ?>");
 
     function printDiv() {
         var divContents = document.getElementById("qrcode").innerHTML;

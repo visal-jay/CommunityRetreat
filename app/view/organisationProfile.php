@@ -56,7 +56,7 @@
                     <form action="/User/updateUsername" method="post" class="update-form" id="usernameupdater">
                         <div class="input-container">
                             <label for="text" class="edit-coontainer">Enter new username:</label>
-                            <input type="text" id="usernameinput" class="form-ctrl" placeholder="Enter new username" name="username"><br>
+                            <input type="text" id="usernameinput" class="form-ctrl" value="<?= $username ?>" name="username"><br>
 
                             <div class="intro-update-btn">
                                 <button type="submit" class="btn bg-green clr-white" onclick=" updateField('username','usernameupdater')">Update</button>
@@ -91,7 +91,7 @@
                         <div class="input-container">
 
                             <label for="text" class="form-item label">Enter new mobile:</label>
-                            <input type="tel" class="form-ctrl" placeholder="Enter new mobile" id="mobileinput" name="contact_number" onkeyup="checkTelephone(this.value)" required><br>
+                            <input type="tel" class="form-ctrl" value="<?= $contact_number ?>" id="mobileinput" name="contact_number" onkeyup="checkTelephone(this.value)" required><br>
 
 
                             <div class="intro-update-btn">
@@ -122,9 +122,9 @@
                             <div class="input-container">
                                 <span class="input-error email-error error" style="color :red; font-size :1rem; text-align:center; "><?php if (isset($_GET["email_Update_Err"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp" . $_GET['email_Update_Err']; ?></span>
                                 <label for="text" class="edit-coontainer">Enter bank name:</label>
-                                <input type="text" id="usernameinput" placeholder="Enter bank name" name="bank_name" required><br>
+                                <input type="text" id="usernameinput" value="<?= $bank_name ?>" name="bank_name" required><br>
                                 <label for="text" class="edit-coontainer">Enter new account number:</label>
-                                <input type="text" id="usernameinput" placeholder="Enter new account number" name="account_number" onkeyup="checkAccountNumber(this.value)" required><br>
+                                <input type="text" id="usernameinput" value="<?= $account_number; ?>"placeholder="Enter new account number" name="account_number" onkeyup="checkAccountNumber(this.value)" required><br>
                                 <p class="alert account-number-error"></p>
 
                                 <div class="intro-update-btn">
@@ -173,7 +173,7 @@
                         <div class="input-container">
                             <label for="text">Enter new email:</label>
                             <span class="input-error email-error error" style="color :red; font-size :0.7rem; "><?php if (isset($_GET["invaliderr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp" . $_GET['invaliderr']; ?></span>
-                            <input type="email" class="form-ctrl" placeholder="Enter new email" name="email" required onkeyup="checkMail(this.value)" required /><br>
+                            <input type="email" class="form-ctrl" value="<?= $email; ?>" name="email" required onkeyup="checkMail(this.value)" required /><br>
 
                             <div class="intro-update-btn">
                                 <button type="submit" id="email-submit-btn" class="btn bg-green clr-white" onclick=" updateField('email','emailupdater')" <?php if (isset($_GET['invaliderr'])) {

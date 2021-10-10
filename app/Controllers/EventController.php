@@ -142,8 +142,7 @@ class EventController
     }
 
     public function chat($event_details){
-        Controller::accessCheck(["organization","moderator"],$_GET["event_id"]);
-        $user_roles = Controller::accessCheck(["organization", "moderator"]);
+        $user_roles =Controller::accessCheck(["organization","moderator"],$_GET["event_id"]);
         View::render("eventPage",$event_details,$user_roles);
     }
 

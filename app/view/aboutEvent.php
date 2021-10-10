@@ -467,7 +467,7 @@
             </div>
         </div>
     </div>
-    <div class="popup" id="volunteer-form">
+     <div class="popup" id="volunteer-form">
         <div class="content">
             <div>
                 <h3>What are the days you would like to volunteer ?</h3>
@@ -476,7 +476,6 @@
                 <button type="button" class="btn-icon btn-close" onclick="togglePopup('volunteer-form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
                 <?php
                 $event_days = [];
-                $v_flag=FALSE;
 
                 $startDate = new DateTime($start_date);
                 $interval = new DateInterval('P1D');
@@ -488,6 +487,7 @@
                 foreach ($period as $date) {
                     $event_days = $date->format('Y-m-d');
                     if ($volunteer_capacity_exceeded[$event_days] == "TRUE") {
+                        $v_flag=FALSE;
                         echo "<div class='flex-row flex-center'><h3>" . $event_days . "</h3>
                             <input type='checkbox'  name='volunteer_date[]' value='$event_days'";
                         for ($i = 0; $i < count($volunteer_date); $i++) {
@@ -497,7 +497,7 @@
                             }
                         };
                         if(!$v_flag){
-                            echo " disbaled ";
+                            echo " disabled ";
                         }
                         echo "></div>";
                     } else {

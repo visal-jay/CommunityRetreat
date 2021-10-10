@@ -22,6 +22,8 @@ class LoginController
             $_SESSION["redirect"] = $_GET["redirect"];
         else if (isset($_SERVER['HTTP_REFERER']))
             $_SESSION["redirect"] = $_SERVER['HTTP_REFERER'];
+        
+        var_dump($_SESSION["redirect"]);
             
         View::render("login",[],$user_roles);
     }
@@ -86,7 +88,7 @@ class LoginController
             $user_details["username"]=$user->getUsername($user_details["uid"]);
             $_SESSION["user"] = array_intersect_key($user_details, ["uid" => '', "user_type" => '',"username"=>'']);
             if(isset($_SESSION["redirect"])){
-                $redirect =$_SESSION["redirect"] ;
+                $redirect = $_SESSION["redirect"] ;
                 unset($_SESSION["redirect"]);
                 header("Location:".$redirect, true,  302);
                 exit();

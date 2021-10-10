@@ -5,8 +5,7 @@ class BudgetController
     public function view(){/*view the incomes and expenses in the UI by sending the data from backend*/
 
         Controller::validateForm([], ["url", "page", "event_id"]);
-        Controller::accessCheck(["organization","treasurer"],$_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
-        $user_roles=Controller::accessCheck(["organization","moderator,treasurer"],$_GET["event_id"]);
+        $user_roles=Controller::accessCheck(["organization","moderator","treasurer"],$_GET["event_id"]);
         $budget = new Budget();
         $expense_details=$budget->getExpenseDetails($_GET["event_id"]);
         $income_details=$budget->getIncomeDetails($_GET["event_id"]);

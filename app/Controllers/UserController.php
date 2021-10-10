@@ -140,7 +140,6 @@ class UserController{
     function viewNotifications(){
         $user = new User();
         $user->setNotificationViewed();
-
     }
 
     function checkNotificationViewed(){
@@ -152,7 +151,6 @@ class UserController{
         $user = new User();
         $notifications = $user->getNotifications();
         echo json_encode($notifications);
-
     }
     
     function checkEmailAvailable(){

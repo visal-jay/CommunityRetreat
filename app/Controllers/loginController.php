@@ -23,8 +23,6 @@ class LoginController
         else if (isset($_SERVER['HTTP_REFERER']))
             $_SESSION["redirect"] = $_SERVER['HTTP_REFERER'];
         
-        var_dump($_SESSION["redirect"]);
-            
         View::render("login",[],$user_roles);
     }
 

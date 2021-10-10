@@ -3,8 +3,12 @@ class Controller
 {
     public  static function redirect(string $location, $parameters = [])
     {
+        if(count($parameters)==0)
+            header("Location: $location" , true,  302);
+        else{
         $query = http_build_query($parameters);
         header("Location: $location?" . $query, true,  302);
+        }
         exit();
     }
 

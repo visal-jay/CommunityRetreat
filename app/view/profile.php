@@ -66,7 +66,7 @@
                         <form action="/User/updateUsername" method="post" class="update-form" id="usernameupdater">
                             <div class="input-container">
                                 <label for="text" class="edit-coontainer">Enter new username:</label>
-                                <input type="text" id="usernameinput" class="form-ctrl" placeholder="Enter new username" name="username" required><br>
+                                <input type="text" id="usernameinput" class="form-ctrl" value=<?= $username?> name="username" required><br>
 
                                 <div class="intro-update-btn">
                                     <button type="submit" class="btn bg-green clr-white" onclick=" updateField('username','usernameupdater')">Update</button>
@@ -102,7 +102,7 @@
                             <div class="input-container">
 
                                 <label for="text" class="form-item label">Enter new mobile:</label>
-                                <input type="tel" placeholder="Enter new mobile" class="form-ctrl"  name="contact_number" onkeyup="checkTelephone(this.value)" required><br>
+                                <input type="tel" placeholder="Enter new mobile" class="form-ctrl" value="<?= $contact_number ?>"  name="contact_number" onkeyup="checkTelephone(this.value)" required><br>
 
                                 <div class="intro-update-btn">
                                     <button type="submit" class="btn bg-green clr-white mobile-submit-btn" onclick=" updateField('mobile','mobileupdater')">Update</button>
@@ -150,7 +150,7 @@
                             <div class="input-container">
                                 <label for="text">Enter new email:</label>
                                 <span class="input-error email-error error" style="color :red; font-size :0.7rem; "><?php if (isset($_GET["invaliderr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp" . $_GET['invaliderr']; ?></span>
-                                <input type="email" class="form-ctrl" placeholder="Enter new email" name="email" onkeyup="checkMail(this.value)" required /><br>
+                                <input type="email" class="form-ctrl" value="<?= $email; ?>" name="email" onkeyup="checkMail(this.value)" required /><br>
 
                                 <div class="intro-update-btn">
                                     <button type="submit" id="email-submit-btn" class="btn bg-green clr-white" onclick=" updateField('email','emailupdater')" <?php if (isset($_GET['invaliderr'])) {

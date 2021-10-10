@@ -493,7 +493,7 @@
                             }
                         };
                         if(!$v_flag){
-                            echo " disbaled ";
+                            echo " disabled ";
                         }
                         echo "></div>";
                     } else {

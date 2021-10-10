@@ -192,6 +192,10 @@
         text-align: left;
     }
 
+    .center{
+        text-align: center;
+    }
+
     @media screen and (max-width:800px) {
         .progress {
             width: 75%;
@@ -535,8 +539,9 @@
                 <div>
                     <div class="terms-and-conditions">
                         <ul>
+                            <h3 class="center">Terms and Conditions</h3>
                             <li>
-                                <p><b>No refunds will be made except for the removal or cancellation of an event <br> after a donation has been made.</b></p>
+                                <p>No refunds will be made except for the removal or cancellation of an event after a donation has been made.</p>
                             </li>
                         </ul>
                         </div>

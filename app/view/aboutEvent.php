@@ -192,6 +192,10 @@
         text-align: left;
     }
 
+    h4{
+        font-weight: 500;
+    }
+
     @media screen and (max-width:800px) {
         .progress {
             width: 75%;
@@ -351,7 +355,7 @@
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width far fa-flag clr-green margin-side-lg"></i>
                             <div class="flex-row">
-                                <p class="head-margin">Event by <a href="/Organisation/view?page=about&org_id=<?= $org_uid ?>"><b><?= $organisation_username ?></b></a></p>
+                                <p class="head-margin">Event by <a class="clr-black" href="/Organisation/view?page=about&org_id=<?= $org_uid ?>"><b><?= $organisation_username ?></b></a></p>
                             </div>
                         </div>
                     </div>

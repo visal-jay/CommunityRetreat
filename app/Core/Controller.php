@@ -3,8 +3,12 @@ class Controller
 {
     public  static function redirect(string $location, $parameters = [])
     {
+        if(count($parameters)==0)
+            header("Location: $location" , true,  302);
+        else{
         $query = http_build_query($parameters);
         header("Location: $location?" . $query, true,  302);
+        }
         exit();
     }
 
@@ -21,16 +25,22 @@ class Controller
     {
 
         $data = ["admin" => false, "organization" => false, "moderator" => false, "treasurer" => false, "registered_user" => false, "guest_user" => false];
-
+        
         if (isset($_SESSION["user"]["user_type"])) {
             if (in_array($_SESSION["user"]["user_type"], $userroles))
                 $data[$_SESSION["user"]["user_type"]] = true;
 
             if ($moderator_treasurer = (new RegisteredUser)->getUserRoles($_SESSION["user"]["uid"], $event_id)) {
-                if (in_array("moderator", $moderator_treasurer) && in_array("moderator", $userroles))
+                if (in_array("moderator", $moderator_treasurer) && in_array("moderator", $userroles)){
                     $data["moderator"] = true;
-                if (in_array("treasurer", $moderator_treasurer) && in_array("treasurer", $userroles))
+                    if(in_array("treasurer", $moderator_treasurer))
+                        $data["treasurer"] = true;
+                }
+                if (in_array("treasurer", $moderator_treasurer) && in_array("treasurer", $userroles)){
                     $data["treasurer"] = true;
+                    if(in_array("moderator", $moderator_treasurer))
+                        $data["moderator"] = true;
+                }
             }
 
             if ($_SESSION["user"]["user_type"] == "organization" && in_array("organization", $userroles) && $event_id != '-1') {

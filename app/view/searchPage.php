@@ -541,8 +541,13 @@
                 }
             });
         }
-        else if (!(range || mode || date || sort || way) && (document.getElementById("search-type").value=="organization" || document.getElementById("search-type").value=="all"))
+        if (!(range || mode || date || sort || way) && (document.getElementById("search-type").value=="organization")){
+            parent_container.innerHTML="";
             orgSearch(name);
+        }
+        else if(document.getElementById("search-type").value=="all")
+            orgSearch(name);
+
     }
 
     /* orgnaiztion search ajax */
@@ -556,7 +561,6 @@
             },
             success: function(result) {
                 let parent_container = document.querySelector('events');
-                parent_container.innerHTML="";
                 result.forEach(org => {
                     let template = `
                     <figure onclick="location.href = '/Organisation/view?org_id=${org.uid}' ">

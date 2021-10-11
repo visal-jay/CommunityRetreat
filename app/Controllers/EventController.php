@@ -61,7 +61,7 @@ class EventController
                     array_unshift($data, $temp);
                 }
             }
-        View::render("eventPage", array_merge($event_details, ["photos" => $data]), $user_roles);
+        View::render("eventPage", array_merge($event_details, ["photos" => $data],$pagination), $user_roles);
     }
 
     public function deletePhoto()
@@ -142,8 +142,7 @@ class EventController
     }
 
     public function chat($event_details){
-        Controller::accessCheck(["organization","moderator"],$_GET["event_id"]);
-        $user_roles = Controller::accessCheck(["organization", "moderator"]);
+        $user_roles =Controller::accessCheck(["organization","moderator"],$_GET["event_id"]);
         View::render("eventPage",$event_details,$user_roles);
     }
 

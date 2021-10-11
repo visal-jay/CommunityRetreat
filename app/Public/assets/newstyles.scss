@@ -268,7 +268,14 @@ header .logo img {
   position: relative;
 }
 
-.nav-drop-down-list {
+.nav-username{
+  width: 55px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-drop-down-list{
   background-color: white;
   z-index: 10000;
   position: absolute;

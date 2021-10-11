@@ -114,6 +114,10 @@
         box-shadow: 5px 5px 15px 5px #000000;
     }
 
+    .center{
+        text-align: center;
+    }
+
 @media screen and (max-width:768px) {
 
     table,
@@ -300,6 +304,7 @@ if(isset($_SESSION ["user"] ["user_type"])){
         <?php if ($organization) { ?>
             <p>
                 <ul class="left">
+                    <h3 class="center">Terms and Conditions</h3>
                     <li>All organizations will be allowed to collect donations and these donations will be<br> credited to a bank account owned by the CommunityRetreat.</li>
                     <li>At the end of the event, donations will be credited to the bank account belongs to<br> the Organization.</li>
                     <li>Organization is not allowed to collect donations that exceed the donation capacity.</li>

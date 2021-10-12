@@ -11,21 +11,6 @@
 </head>
 
 <style>
-    /* .watermark{
-        display: flex;
-        position: relative; 
-        top: 0; 
-        right: 0;
-        opacity: 0.3;
-    } */
-    /* .background {
-        background-image: url("/Public/assets/visal logo.png");
-        background:blanchedalmond
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-size: cover;
-    } */
-
     .page{
         min-height: 53%;
     }
@@ -39,7 +24,6 @@
 <?php include "nav.php" ?>
 
 <body>
-    <!-- <div class="background"> -->
     <div class="page">
         <div class="box">
             <h3>Terms and Conditions</h3>
@@ -54,9 +38,6 @@
             <p>No refunds will be made except for the removal or cancellation of an event after a donation has been made.</p>
         </div>
     </div>
-    <!-- <div class="watermark">
-        <img src="/Public/assets/visal logo.png" alt="">
-    </div> -->
     <?php include "footer.php"; ?>
 </body>
 

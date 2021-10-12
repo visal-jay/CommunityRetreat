@@ -111,4 +111,3 @@ function renderActivities(){
     return activities;
 
 }
-console.log(renderActivities());

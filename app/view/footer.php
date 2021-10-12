@@ -228,7 +228,7 @@
         <?php if (!$admin) { ?>
             <div class="footer-content-container">
                 <div class="footer-main-content">
-                    <p class="footer-content">About Us</p>
+                    <p onclick="window.location.href='/Main/aboutUs'" class="footer-content">About Us</p>
                 </div>
                 <div class="footer-main-content">
                     <p class="footer-content" onclick="popup()">Feedback Us</p>

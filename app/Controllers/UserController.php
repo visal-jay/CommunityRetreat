@@ -151,7 +151,6 @@ class UserController{
         $user = new User();
         $notifications = $user->getNotifications();
         echo json_encode($notifications);
-
     }
     
     function checkEmailAvailable(){

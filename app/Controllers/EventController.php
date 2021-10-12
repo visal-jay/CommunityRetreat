@@ -61,7 +61,7 @@ class EventController
                     array_unshift($data, $temp);
                 }
             }
-        View::render("eventPage", array_merge($event_details, ["photos" => $data]), $user_roles);
+        View::render("eventPage", array_merge($event_details, ["photos" => $data],$pagination), $user_roles);
     }
 
     public function deletePhoto()

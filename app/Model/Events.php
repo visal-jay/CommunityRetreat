@@ -1,5 +1,7 @@
 <?php
 
+use Stripe\Event;
+
 class Events extends Model
 {
     //add new event 
@@ -16,34 +18,17 @@ class Events extends Model
 
         $query = "INSERT INTO `event` (`event_name`, `org_uid`, `latlang`, `start_date`,`end_date`,`start_time`,`end_time`, `about`,`mode`) VALUES (:event_name,  :org_uid, IF (STRCMP(:map, 'false')=0 ,NULL,POINT(:latitude ,:longitude)),:start_date,:end_date,:start_time, :end_time , :about ,:mode)";
         $params = array_intersect_key($data, ["event_name" => '', "org_uid" => '', "latitude" => '', "longitude" => '', "start_date" => '', "end_date" => '', "start_time" => '', "end_time" => '', "about" => '', "mode" => '', "map" => '']);
-
         $stmt = $db->prepare($query);
         $stmt->execute($params);
         $stmt->closeCursor();
-
         $select_query = "SELECT MAX(event_id) FROM event";
         $stmt = $db->prepare($select_query);
         $stmt->execute([]);
-        $result = $stmt->fetchColumn();
+        $event_id = $stmt->fetchColumn();
         $stmt->closeCursor();
-        $startDate = new DateTime($data['start_date']);
-        $interval = new DateInterval('P1D');
-        $realEnd = new DateTime($data['end_date']);
-        $realEnd->add($interval);
-
-
-        $period = new DatePeriod($startDate, $interval, $realEnd);
-
-        foreach ($period as $date) {
-            $event_date = $date->format('Y-m-d');
-            $capacity_query = "INSERT INTO `volunteer_capacity`(`event_id`,`event_date`,`capacity`) VALUES (:event_id,:event_date,0)";
-            $capacity_params = ["event_id" => $result, "event_date" =>  $event_date];
-            $stmt = $db->prepare($capacity_query);
-            $stmt->execute($capacity_params);
-            $stmt->closeCursor();
-        }
-        
         $db->commit();
+        $this->insertVolunteerCapacities($event_id,$params['start_date'],$params['end_date']);
+
     }
 
     //remove an exsiting event
@@ -94,43 +79,12 @@ class Events extends Model
         $update_data = array_intersect_key($new_data, ['event_id' => "", 'start_date' => "", 'end_date' => "", 'start_time' => "", 'end_time' => "", 'mode' => "", 'about' => "", 'event_name' => "", 'longitude' => "", 'latitude' => "", 'map' => '', 'cover_photo' => "", 'status' => ""]);
         $params = array_merge($update_data, $params);
         $volunteer = new Volunteer();
-        $volunteered_uid = $volunteer->getVolunteeredUid($params["event_id"], $params["start_date"], $params["end_date"]);
-        
-        for ($i = 0; $i < count($volunteered_uid); $i++) {
-            foreach ($volunteered_uid[$i] as $uid) {
-                (new UserController)->sendNotifications("{$params['event_name']} event informations has been changed.Please volunteer again..!",$uid,"event","window.location.href='/event/view?page=about&&event_id={$params["event_id"]}'",$params["event_id"]);
-                $delete_query = "DELETE FROM  volunteer WHERE uid = :uid AND event_id = :event_id AND  (volunteer_date NOT BETWEEN  :start_date AND :end_date)";
-                $delete_params = ['uid' => $uid, 'event_id' => $params["event_id"] , "start_date" => $params["start_date"] , "end_date" => $params["end_date"]];
-                $stmt = $db->prepare($delete_query);
-                $stmt->execute($delete_params);
-                $stmt->closeCursor();
-            }
-        }
-
-        $volunteer->checkVolunteerCapacityDateRange($params["event_id"], $params["start_date"], $params["end_date"]);
-        $startDate = new DateTime($data['start_date']);
-        $interval = new DateInterval('P1D');
-        $realEnd = new DateTime($data['end_date']);
-        $realEnd->add($interval);
-
-
-        $period = new DatePeriod($startDate, $interval, $realEnd);
-
-        foreach ($period as $date) {
-            $event_date = $date->format('Y-m-d');
-            $capacity_query = "INSERT IGNORE INTO `volunteer_capacity`(`event_id`,`event_date`,`capacity`) VALUES (:event_id,:event_date,0)";
-            $capacity_params = ["event_id" => $params["event_id"], "event_date" =>  $event_date];
-            $stmt = $db->prepare($capacity_query);
-            $stmt->execute($capacity_params);
-            $stmt->closeCursor();
-        }
-
+        $volunteer->removeVolunteerCapacity($params["event_id"], $params["start_date"], $params["end_date"]);
         $query = "UPDATE event SET `start_date` = :start_date, `end_date` = :end_date, `start_time`= :start_time, `end_time`= :end_time, `mode` = :mode, `about`=:about,`cover_photo` = :cover_photo, `status` = :status, `latlang`= IF (STRCMP(:map, 'false')=0 ,NULL,POINT(:latitude ,:longitude)) , `event_name` =:event_name WHERE `event_id`=:event_id ";
-        
         $stmt = $db->prepare($query);
         $stmt->execute($params);
-
         $db->commit();
+        $this->insertVolunteerCapacities($params["event_id"], $params["start_date"], $params["end_date"]);
     }
 
 
@@ -285,4 +239,25 @@ class Events extends Model
             return false;
         return $result;
     }
+
+    public function insertVolunteerCapacities($event_id,$start_date,$end_date){
+
+        $startDate = new DateTime($start_date);
+        $interval = new DateInterval('P1D');
+        $realEnd = new DateTime($end_date);
+        $realEnd->add($interval);
+    
+    
+        $period = new DatePeriod($startDate, $interval, $realEnd);
+    
+        foreach ($period as $date) {
+            $event_date = $date->format('Y-m-d');
+            $capacity_query = "INSERT IGNORE INTO `volunteer_capacity`(`event_id`,`event_date`,`capacity`) VALUES (:event_id,:event_date,0)";
+            $capacity_params = ["event_id" =>$event_id, "event_date" =>  $event_date];
+            var_dump($event_date);
+            Model::insert($capacity_query,$capacity_params);
+        }
+    
+    }
 }
+

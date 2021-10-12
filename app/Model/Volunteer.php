@@ -44,11 +44,25 @@ class Volunteer extends Model
         }
     }
 
-    public function checkVolunteerCapacityDateRange($event_id, $start_date, $end_date)
+    public function removeVolunteerCapacity($event_id, $start_date, $end_date)
     {
         $query = 'DELETE FROM volunteer_capacity WHERE event_id = :event_id AND event_date  NOT BETWEEN :start_date AND :end_date';
         $params = ["event_id" => $event_id, "start_date" => $start_date, "end_date" => $end_date];
         Model::insert($query, $params);
+    }
+
+    public function removeVolunteers($event_id,$uid = -1,$start_date = -1,$end_date = -1)
+    {
+        if($start_date == -1 && $end_date == -1 && $uid =-1){ 
+            $query = 'DELETE FROM volunteer WHERE event_id = :event_id';
+            $params = ["event_id" => $event_id];
+            Model::insert($query,$params);
+        }
+        else{
+            $delete_query = "DELETE FROM  volunteer WHERE uid = :uid AND event_id = :event_id AND  (volunteer_date NOT BETWEEN  :start_date AND :end_date)";
+            $delete_params = ['uid' => $uid, 'event_id' => $_GET["event_id"] , "start_date" => $_POST["start_date"] , "end_date" => $_POST["end_date"]];
+            Model::insert($delete_query,$delete_params);
+        }
     }
 
     public function getVolunteerCapacities($event_id)
@@ -161,7 +175,7 @@ class Volunteer extends Model
 
     public function getVolunteeredUid($event_id, $start_date=-1, $end_date=-1)
     {
-        if($start_date!=-1 && $end_date!=-1){
+        if($start_date ==-1 && $end_date==-1){
             $params = ["event_id" => $event_id];
             $query = 'SELECT DISTINCT uid FROM volunteer WHERE event_id = :event_id';      
         }

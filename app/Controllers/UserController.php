@@ -32,11 +32,6 @@ class UserController{
         return $controller;
     }
 
-    public function notifications(){
-        $user_roles=Controller::accessCheck(["registered_user"]);
-        View::render("notification",[],$user_roles);
-    }
-
     public function updatePassword(){
         Controller::validateForm(["current_password", "new_password","password"]);
         $controller=$this->getController();
@@ -64,6 +59,7 @@ class UserController{
         $controller=$this->getController();
         $user=new $controller();
         $uid=$_SESSION["user"]["uid"];
+        $this->addActivity("You changed your profile picture.",-1);
         $data=["uid"=>$uid,"profile_pic"=>$_FILES['profile_pic']];
         $user->changeProfilePic($data);
     }
@@ -75,7 +71,7 @@ class UserController{
         $User = new UserController();
         $uid=$_SESSION["user"]["uid"];
         $user->changeUsername($uid,$_POST['username']);
-        $this->addActivity("Username Changed",-1);
+        $this->addActivity("You changed your username.",-1);
         Controller::redirect("/$controller/profile");
     }
 
@@ -95,6 +91,7 @@ class UserController{
         }          
         else
             $user->changeContactNumber($uid,$data);
+            $this->addActivity("You changed your contact number.",-1);
             Controller::redirect("/$controller/profile");
     }
 
@@ -116,6 +113,7 @@ class UserController{
         }
         else
             $user->changeEmail($uid,$data);
+            $this->addActivity("You changed your email.",-1);
             Controller::redirect("/$controller/profile");
     }
 
@@ -132,15 +130,16 @@ class UserController{
 
     // /Event/view?page=forum&event_id=#&update_announcement_id=#
     //sendNotifications("You have assigend modertor user role",$uid,"system","window.location.href=/Event/view?page=about&event_id=" . $_GET["event_id"], $_GET["event_id"])
+    
+    public function notifications(){
+        $user_roles=Controller::accessCheck(["registered_user"]);
+        (new User)->setNotificationViewed();
+        View::render("notification",[],$user_roles);
+    }
+
     function sendNotifications($notification,$uid,$status,$path,$event_id =-1){
         $user = new User();
         $user->insertNotification($notification,$uid,$status,$path,$event_id);
-    }
-
-    function viewNotifications(){
-        $user = new User();
-        $user->setNotificationViewed();
-
     }
 
     function checkNotificationViewed(){

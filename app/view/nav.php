@@ -86,7 +86,7 @@
                 <a class="nav-link margin-side-md" href="/RegisteredUser/calendar">Calendar</a>
                 <a class="nav-link margin-side-md" href="/RegisteredUser/administratored">Administration</a>
                 <div class="nav-link-notification margin-side-md" id="notification">
-                    <a class="nav-link margin-side-md" href="/User/Notifications" onclick="viewNotification()">Notifications</a>
+                    <a class="nav-link margin-side-md" href="/User/Notifications">Notifications</a>
                     <span class="badge"></span> 
                 </div>
                 <a class="nav-link margin-side-md" href="/RegisteredUser/chatApp">Chat</a>
@@ -165,12 +165,7 @@
             navDropdown.classList.add('hidden');
     });
 
-    function viewNotification(){
-        $.ajax({
-        url: "/User/viewNotifications",
-        type: "post",
-        });
-    }
+    
 
 </script>
 

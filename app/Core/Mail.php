@@ -12,7 +12,6 @@ class Mail
 {
     private $mail = NULL;
 
-  
     public function sendMail($recievers, $subject, $body)
     {
         $this->mail = new PHPMailer(true);
@@ -28,8 +27,8 @@ class Mail
         $this->mail->setFrom('communityretreatproject@gmail.com', 'Commuintyretreat');
         $this->mail->isHTML(true);
 
-
         foreach ($recievers as $reciever) {
+            //$this->mail->addBCC($reciever);
             $this->mail->addAddress($reciever);
         }
         $this->mail->Body = $body;
@@ -41,10 +40,11 @@ class Mail
         }
     }
 
-    public  function verificationEmail($reciever,$body_file, $url, $subject)
+    public  function verificationEmail($reciever,$body_file,$url, $subject)
     {
         $recievers = [$reciever];    
         $body = View::renderTostring($body_file,["url" => $url]);
         $this->sendMail($recievers, $subject, $body);
     }
+
 }

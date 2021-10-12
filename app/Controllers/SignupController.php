@@ -40,7 +40,6 @@ class SignupController
         }
 
         if (isset($_POST["signupOrg"])) {
-            $_POST["first_failed_login"]=time();
             $organisation->addOrganisation($_POST);
         }
 
@@ -60,13 +59,13 @@ class SignupController
         $data = $encyption->decrypt($key, 'email verificaition');
         $user = new User;
         $time = (int)shell_exec("date '+%s'");
-        $user_details=$user->authenticate($data["email"], $data["password"],0);
+        $user_details=$user->authenticateWithMails($data["email"], $data["password"],0);
         if($data["time"]>$time-86400 && $user_details) {
             $user->setVerification($user_details["uid"]);
-            LoginController::validate($data["email"],$data["password"]);
+            $user_details["username"]=$user->getUsername($user_details["uid"]);
+            $_SESSION["user"] = array_intersect_key($user_details, ["uid" => '', "user_type" => '',"username"=>'']);
         }
-        else
-            Controller::redirect("/Login/view");
+         Controller::redirect("/Login/view");
     }
 
     function checkEmailAvailable(){

@@ -247,14 +247,16 @@
                 return false;
             },
             error: function(request, status, error) {
-                let msg = request.responseText.match(/####(.*)####/);
-                let span = document.createElement("span");
-                span.classList.add("input-error");
-                span.innerHTML = "<i class='fas fa-exclamation-circle'></i> &nbsp" + msg[1];
-                span.style.color = "red";
-                span.style.fontSize = "0.7rem";
-                input.style.borderColor = "red";
-                document.getElementById("file-form").insertAdjacentElement("beforebegin", span);
+                if(!document.querySelector("#file-form").firstElementChild.classList.contains("input-error")){
+                    let msg = request.responseText.match(/####(.*)####/);
+                    let span = document.createElement("span");
+                    span.classList.add("input-error");
+                    span.innerHTML = "<i class='fas fa-exclamation-circle'></i> &nbsp" + msg[1];
+                    span.style.color = "red";
+                    span.style.fontSize = "0.7rem";
+                    input.style.borderColor = "red";
+                    document.getElementById("file-form").insertAdjacentElement("beforebegin", span);
+                }
             }
         });
     }

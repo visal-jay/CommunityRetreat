@@ -21,6 +21,7 @@ class Organisation extends User
         $stmt->closeCursor();
 
         $data["user_type"] = "organization";
+        $data["password"] = password_hash($data["password"],PASSWORD_DEFAULT);
         $insertOrgLoginSql = 'INSERT INTO `login` (`email`,`password`, `uid`, `user_type`) VALUES (:email,  :password, :uid, :user_type)';
         $stmt = $db->prepare($insertOrgLoginSql);
         $insertData = array_intersect_key($data, ["email" => '', "password" => '', "uid" => '', "user_type" => '']);
@@ -30,7 +31,7 @@ class Organisation extends User
 
         $encryption = new Encryption;
         $data["time"] = (int)shell_exec("date '+%s'");
-        $parameters = ["key" => $encryption->encrypt(array_intersect_key($data, ["email" => '', "password" => '',"time"=>'']), 'email verificaition')]; 
+        $parameters = ["key" => $encryption->encrypt(["email" => $data["email"], "password" => $data["password"],"time"=>$data["time"]], 'email verificaition')]; 
         $mail = new Mail;
         $mail->verificationEmail($data["email"], "confirmationMail", "https://www.communityretreat.me/Signup/verifyemail?" . http_build_query($parameters), 'Signup');
     }
@@ -80,7 +81,6 @@ class Organisation extends User
         $params["uid"] = $uid;
         
         unset($params["map"]);
-
 
         $query = 'UPDATE organization SET username= :username, email= :email, contact_number = :contact_number ,account_number = :account_number , bank_name = :bank_name, latlang=POINT(:latitude,:longitude) ,profile_pic = :profile_pic,cover_pic = :cover_pic,about_us=:about_us  WHERE uid = :uid';
         User::insert($query, $params);

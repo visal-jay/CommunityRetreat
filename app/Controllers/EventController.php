@@ -116,7 +116,14 @@ class EventController
             if ($_POST[$key] == "" || $_POST[$key] == "NULL")
                 unset($_POST[$key]);
         }
-        
+        $volunteer = new Volunteer;
+        $volunteered_uid = $volunteer->getVolunteeredUid( $_GET["event_id"], $_POST["start_date"], $_POST["end_date"]);
+        for ($i = 0; $i < count($volunteered_uid); $i++) {
+            foreach ($volunteered_uid[$i] as $uid) {
+                (new UserController)->sendNotifications("{$_POST['event_name']} event informations has been changed.Please volunteer again..!",$uid,"event","window.location.href='/event/view?page=about&&event_id={$_GET["event_id"]}'",$_GET["event_id"]);
+                $volunteer->removeVolunteers( $_GET["event_id"],$uid,$_POST["start_date"],$_POST["end_date"]);
+            }
+        }
         $events = new Events;
         $events->updateDetails(array_merge($_POST,$_GET));
         Controller::redirect("/Event/view", ["page" => "about", "event_id" => $_GET["event_id"]]);
@@ -127,12 +134,22 @@ class EventController
         Controller::validateForm(["event_id"],[]);
         Controller::accessCheck(["admin","organization"]);
         $time = (int)shell_exec("date '+%s'");
-        $end_date=((new Events)->getDetails($_POST["event_id"]))["end_date"];
+        $event = new Events();
+        $event_details = $event->getDetails($_POST["event_id"]);
+        $end_date = $event_details["end_date"];
 
         if (gmdate("Y-m-d",$time) < $end_date){
             (new DonationsController)->donationRefund($_POST["event_id"]);     
         }
-        (new Events)->remove($_POST["event_id"]);
+        $volunteer = new Volunteer();
+        $volunteers = $volunteer->getVolunteeredUid($_POST["event_id"]);
+        for ($i = 0; $i < count($volunteers); $i++){
+            foreach ($volunteers[$i] as $uid){
+                (new UserController)->sendNotifications("{$event_details['event_name']} event  has been removed.",$uid,"event","window.location.href='/Event/view?page=about&&event_id={$_POST["event_id"]}'",$_POST["event_id"]);
+            }
+        }
+        $volunteer->removeVolunteers($_POST["event_id"]);
+        $event->remove($_POST["event_id"]);
         Controller::redirect("/Organisation/events");
     }
 

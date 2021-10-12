@@ -138,21 +138,32 @@ class OrganisationController
     function addUserRole()
     {
         Controller::validateForm(["role", "uid"], ["event_id"]);
-        Controller::accessCheck(["organization"]);
-        (new UserController)->addActivity("User role added", $_GET["event_id"]);
+        $user_roles = Controller::accessCheck(["organization"]);
+        $userController = new UserController();
+        $userController->addActivity("User role added", $_GET["event_id"]);
         (new Organisation)->addUserRole($_POST["uid"], $_POST["role"], $_GET["event_id"]);
-        Controller::redirect("/Event/view", ["page" => 'userroles', "event_id" => $_GET["event_id"]]);
+        $event_details = (new Events)->getDetails( $_GET["event_id"]);
+        if ($_POST["role"] == "Treasurer")
+            $userController->sendNotifications("You have been assigned as a treasurer in {$event_details['event_name']} event By {$event_details['organisation_username']}.",$_POST["uid"],"event","window.location.href='/Event/view?page=about&&event_id={$_GET["event_id"]}'",$_GET["event_id"]);
+        else if($_POST["role"] == "Moderator")
+            $userController->sendNotifications("You have been assigned as a moderator in {$event_details['event_name']} event By {$event_details['organisation_username']}.",$_POST["uid"],"event","window.location.href='/Event/view?page=about&&event_id={$_GET["event_id"]}'",$_GET["event_id"]);
+        Controller::redirect("/Event/view", ["page" => 'userroles', "event_id" => $_GET["event_id"],$user_roles]);
     }
 
 
     function deleteUserRole()
     {
         Controller::validateForm(["role", "uid"], ["event_id"]);
-        Controller::accessCheck(["organization"]);
-        (new UserController)->addActivity("User role deleted", $_GET["event_id"]);
-
+        $user_roles = Controller::accessCheck(["organization"]);
+        $userController = new UserController();
+        $userController->addActivity("User role deleted", $_GET["event_id"]);
         (new Organisation)->deleteUserRole($_POST["uid"], $_POST["role"], $_GET["event_id"]);
-        Controller::redirect("/Event/view", ["page" => 'userroles', "event_id" => $_GET["event_id"]]);
+        $event_details = (new Events)->getDetails( $_GET["event_id"]);
+        if ($_POST["role"] == "treasurer")
+            $userController->sendNotifications("You have been removed from the treasurer position of {$event_details['event_name']} event By {$event_details['organisation_username']}.",$_POST["uid"],"event","window.location.href='/Event/view?page=about&&event_id={$_GET["event_id"]}'",$_GET["event_id"]);
+        else if($_POST["role"] == "moderator")
+            $userController->sendNotifications("You have been removed from the treasurer position of {$event_details['event_name']} event By {$event_details['organisation_username']}.",$_POST["uid"],"event","window.location.href='/Event/view?page=about&&event_id={$_GET["event_id"]}'",$_GET["event_id"]);
+        Controller::redirect("/Event/view", ["page" =>'userroles', "event_id" => $_GET["event_id"],$user_roles]);
     }
 
     function test()

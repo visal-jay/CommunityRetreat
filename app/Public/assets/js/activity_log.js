@@ -56,7 +56,7 @@ function addDataRow(data,index){
     if(data.event_id != null){
         let event_link = document.createElement("a");
         event_link.innerText = " "+ data.eventname;
-        event_link.setAttribute("href","/event/view?page=about&&event_id="+data.event_id);
+        event_link.setAttribute("href","/Event/view?page=about&&event_id="+data.event_id);
         activity_description.appendChild(event_link);  
     }
 

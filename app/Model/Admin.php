@@ -61,18 +61,4 @@ class Admin extends User{
         User::insert($query,$params); 
     }
 
-    //Check current passward with current password given by user
-    function checkCurrentPassword($uid,$password){
-        $query= 'SELECT password FROM admin adm JOIN login ON adm.uid= login.uid WHERE adm.uid = :uid AND verified=1';
-        $params = ["uid"=> $uid];
-        $result= USER::select($query,$params);
-       
-        if($result[0]['password']==$password){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
 }

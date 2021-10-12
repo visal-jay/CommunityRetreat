@@ -123,37 +123,27 @@ class Organisation extends User
         return $result;
     }
 
-    public function getAdminDetails($uid)
-    {
-        $query = 'SELECT * FROM organization org JOIN login ON org.uid= login.uid WHERE org.uid = :uid AND verified=1';
-        $params = ["uid" => $uid];
-        $result = User::select($query, $params);
-        if (count($result[0]) >= 1)
-
-            return $result[0];
-        else
-            return false;
-    }
     public function changeUsername($uid, $data)
     {
-
         $params = ["uid" => $uid, "username" => $data];
         $query = 'UPDATE organization SET username= :username   WHERE uid = :uid ';
         User::insert($query, $params);
     }
+
     public function changeContactNumber($uid, $data)
     {
-
         $params = ["uid" => "$uid", "contact_number" => "$data[contact_number]"];
         $query = 'UPDATE organization SET  contact_number = :contact_number  WHERE uid = :uid ';
         User::insert($query, $params);
     }
+
     public function changeAccountNumber($uid, $data)
     {
         $params = ["uid" => "$uid","bank_name"=>$data['bank_name'], "account_number" => "$data[account_number]"];
         $query = 'UPDATE organization SET bank_name = :bank_name , account_number = :account_number  WHERE uid = :uid ';
         User::insert($query, $params);
     }
+    
     public function changeEmail($uid, $data)
     {
 
@@ -168,17 +158,7 @@ class Organisation extends User
         User::insert($query, $params);
     }
 
-    function checkCurrentPassword($uid, $password)
-    {
-        $query = 'SELECT password FROM organization org JOIN login ON org.uid= login.uid WHERE org.uid = :uid AND verified=1';
-        $params = ["uid" => $uid];
-        $result = USER::select($query, $params);
-        if ($result[0]['password'] == $password) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+
     public function getAvailableUserRoles($name)
     {
         $query = 'SELECT username, uid,profile_pic FROM registered_user  WHERE username LIKE :name';
@@ -202,8 +182,8 @@ class Organisation extends User
         if (count(User::select($query, $params)) == 1) {
             if ($role == "Treasurer")
                 $query = "UPDATE moderator_treasurer SET treasurer_flag = 1 WHERE event_id= :event_id AND uid= :uid";
-            else if ($role == "Moderator")
-                $query = "UPDATE moderator_treasurer SET moderator_flag = 1 WHERE event_id= :event_id AND uid= :uid";
+            else if($role == "Moderator")
+                $query = "UPDATE moderator_treasurer SET moderator_flag = 1 WHERE event_id= :event_id AND uid= :uid";  
             User::insert($query, $params);
         } else {
             $query = "INSERT INTO moderator_treasurer (uid,event_id,moderator_flag,treasurer_flag) VALUES (:uid, :event_id, IF (STRCMP(:role1, 'moderator')=0 ,1,0),IF (STRCMP(:role2, 'treasurer')=0 ,1,0))";
@@ -215,7 +195,6 @@ class Organisation extends User
 
     public function deleteUserRole($uid, $role, $event_id)
     {
-
         $query = "SELECT uid FROM  moderator_treasurer WHERE event_id= :event_id AND uid= :uid AND treasurer_flag = 1 AND moderator_flag = 1";
         $params = ["event_id" => $event_id, "uid" => $uid];
        
@@ -224,13 +203,13 @@ class Organisation extends User
                 $query = "UPDATE moderator_treasurer SET treasurer_flag = 0 WHERE event_id= :event_id AND uid= :uid";
             else if ($role == "moderator")
                 $query = "UPDATE moderator_treasurer SET moderator_flag = 0 WHERE event_id= :event_id AND uid= :uid";
+
             User::insert($query, $params);
         } else {
             $query = "DELETE FROM moderator_treasurer WHERE event_id= :event_id AND uid =:uid";
             $params = ["event_id" => $event_id, "uid" => $uid];
             User::insert($query, $params);
-        }
-        
+        }  
     }
 
     public function donationReport()

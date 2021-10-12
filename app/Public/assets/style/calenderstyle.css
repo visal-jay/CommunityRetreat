@@ -130,7 +130,7 @@
     padding: 0 0.8rem;
     width: 40%;
     margin:auto;
-    background-color: honeydew;
+    background-color: white;
     position: fixed;
    
 } 
@@ -192,10 +192,8 @@
     position: relative;
 }
 
-
 a{
-    text-decoration: none;
-    
+    color: black;    
 }
 
 .close-btn{

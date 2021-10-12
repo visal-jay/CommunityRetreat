@@ -80,18 +80,6 @@ class RegisteredUser extends User
         User::insert($query,$params); 
     }
 
-    //Check current passward with current password given by user
-    function checkCurrentPassword($uid,$password){
-        $query= 'SELECT password FROM registered_user reg JOIN login ON reg.uid= login.uid WHERE reg.uid = :uid AND verified=1';
-        $params = ["uid"=> $uid];
-        $result= USER::select($query,$params);
-        if($result[0]['password']==$password){ //If current passward with current password given by user
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
 
     //Get calendar details
     public function getCalendarDetails($uid){

@@ -170,6 +170,18 @@ class User extends Model
         return $not_viewed;
     }
 
+    function checkCurrentPassword($uid, $password)
+    {
+        $query = 'SELECT password FROM login WHERE uid = :uid AND verified=1';
+        $params = ["uid" => $uid];
+        $result = USER::select($query, $params);
+        if (password_verify($password,$result[0]['password'])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 
 }

@@ -103,7 +103,10 @@ class OrganisationController
         $user_roles = Controller::accessCheck(["organization"]);
         $organisation_admin = new Organisation();
         $uid = $_SESSION["user"]["uid"];
-        $org_admin_details = $organisation_admin->getAdminDetails($uid);
+        $org_admin_details = $organisation_admin->getDetails($uid);
+        $encryption = new Encryption();
+        $account=$encryption -> decrypt($org_admin_details['account_number'],"account details");
+        $org_admin_details["account_number"]=$account["account_number"];
         View::render('organisationProfile', $org_admin_details, $user_roles);
     }
 
@@ -119,11 +122,12 @@ class OrganisationController
         Controller::validateForm(["bank_name", "account_number"]);
         Controller::accessCheck(["organization"]);
         (new UserController)->addActivity("Bank details updated");
-
+        $encryption = new Encryption();
         $organisation_admin = new Organisation();
         $validate = new Validation();
         $uid = $_SESSION["user"]["uid"];
-        $data = ["uid" => $uid, "bank_name" => $_POST['bank_name'], "account_number" => $_POST['account_number']];
+        $account_number = $encryption->encrypt(["account_number"=>$_POST['account_number']],"account details");
+        $data = ["uid" => $uid, "bank_name" => $_POST['bank_name'], "account_number" => $account_number];
         if ($validate->bankaccount($_POST['account_number'])) {
             $organisation_admin->changeAccountNumber($uid, $data);
             Controller::redirect("/Organisation/profile");

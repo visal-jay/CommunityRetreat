@@ -38,8 +38,8 @@ class UserController{
         $user = new $controller();
         $validate =new Validation();
         $uid=$_SESSION["user"]["uid"];
-        $data = ["uid"=>$_POST['uid'],"password"=>$_POST['password']];
-        if(!$user->checkCurrentPassword($uid,$_POST['current_password'])){
+        $data = ["uid"=>$_POST['uid'],"password"=>password_hash($_POST['password'],PASSWORD_DEFAULT)];
+        if(!(new User)->checkCurrentPassword($uid,$_POST['current_password'])){
             $error1=["currentpassworderr"=>"Password incorrect"];
             Controller::redirect("/$controller/profile", $error1);
         }

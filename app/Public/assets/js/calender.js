@@ -95,7 +95,7 @@ function popupLoad(index){
 
         let Eventname = document.createElement('h4');
         let eventlink = document.createElement('a');
-        eventlink.setAttribute("href","/event/view?page=about&&event_id="+calender_data2[index].event[eventIndex].event_id);
+        eventlink.setAttribute("href","/Event/view?page=about&&event_id="+calender_data2[index].event[eventIndex].event_id);
         eventlink.innerHTML = calender_data2[index].event[eventIndex].eventname;
         Eventname.appendChild(eventlink);
         eventdetailsdiv.appendChild(Eventname);

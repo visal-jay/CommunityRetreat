@@ -123,17 +123,6 @@ class Organisation extends User
         return $result;
     }
 
-    public function getAdminDetails($uid)
-    {
-        $query = 'SELECT * FROM organization org JOIN login ON org.uid= login.uid WHERE org.uid = :uid AND verified=1';
-        $params = ["uid" => $uid];
-        $result = User::select($query, $params);
-        if (count($result[0]) >= 1)
-
-            return $result[0];
-        else
-            return false;
-    }
     public function changeUsername($uid, $data)
     {
         $params = ["uid" => $uid, "username" => $data];
@@ -169,17 +158,7 @@ class Organisation extends User
         User::insert($query, $params);
     }
 
-    function checkCurrentPassword($uid, $password)
-    {
-        $query = 'SELECT password FROM organization org JOIN login ON org.uid= login.uid WHERE org.uid = :uid AND verified=1';
-        $params = ["uid" => $uid];
-        $result = USER::select($query, $params);
-        if ($result[0]['password'] == $password) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+
     public function getAvailableUserRoles($name)
     {
         $query = 'SELECT username, uid,profile_pic FROM registered_user  WHERE username LIKE :name';

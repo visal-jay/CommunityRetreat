@@ -59,9 +59,9 @@ class UserController{
         $controller=$this->getController();
         $user=new $controller();
         $uid=$_SESSION["user"]["uid"];
-        $this->addActivity("You changed your profile picture.",-1);
         $data=["uid"=>$uid,"profile_pic"=>$_FILES['profile_pic']];
         $user->changeProfilePic($data);
+        $this->addActivity("You changed your profile picture.",-1);
     }
 
     public function updateUsername(){

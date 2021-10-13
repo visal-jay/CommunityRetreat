@@ -149,7 +149,8 @@
         .chat-back-button {
             display: flex;
         }
-        .chat-input{
+
+        .chat-input {
             padding: 2rem 1rem;
         }
     }
@@ -188,7 +189,10 @@
     });
 
     function displayChat() {
-        document.querySelector(".chat-preview").classList.add("hidden");
+        document.querySelector(".chat-preview").classList.add('hidden');
+        document.querySelector(".chat-list-empty").classList.add('hidden');
+
+        console.log(document.querySelector(".chat-preview"));
         var chat_box = document.querySelector('.chat-box');
         var chat_list = document.querySelector('.chatlist');
         if (window.innerWidth <= 800 && !chat_box.classList.contains('hidden') && !chat_list.classList.contains('hidden')) {
@@ -210,15 +214,16 @@
 
     let active_chat_box;
 
-    function getChatMessages(uid,event) {
-        let user_card = event.target.closest(".chat-user-card")
-        if(user_card.classList.contains("disabled")){
-            document.getElementById("chat-input").disabled =true;
-            document.getElementById("chat-input").placeholder ="You can't reply to this";
-        }
-        else{
-            document.getElementById("chat-input").disabled =false;
-            document.getElementById("chat-input").placeholder ="";
+    function getChatMessages(uid, event = null) {
+        if (event != null) {
+            let user_card = event.target.closest(".chat-user-card");
+            if (user_card.classList.contains("disabled")) {
+                document.getElementById("chat-input").disabled = true;
+                document.getElementById("chat-input").placeholder = "You can't reply to this";
+            } else {
+                document.getElementById("chat-input").disabled = false;
+                document.getElementById("chat-input").placeholder = "";
+            }
         }
 
         let chats = document.querySelectorAll(".chat-user-card");
@@ -375,7 +380,8 @@
         }, interval);
     }
 
-    <?php if(isset($_GET['new_chat_id'])) { ?>
+    <?php if (isset($_GET['new_chat_id'])) { ?>
+
         function createNewChat() {
             let parent_container = document.querySelector('.chatlist');
             var chat_body = "";
@@ -426,11 +432,11 @@
             });
         }
 
-    createNewChat();
-    chatList();
+        createNewChat();
+        chatList();
 
     <?php } ?>
-    window.onload = function(){
+    window.onload = function() {
         var chat_box = document.querySelector('.chat-box');
         var chat_list = document.querySelector('.chatlist');
         if (window.innerWidth <= 800) {
@@ -439,7 +445,8 @@
         }
 
         if (window.innerWidth > 800) {
-            document.querySelector(".chat-preview").classList.remove("hidden");
+            if(!active_chat_box)
+                document.querySelector(".chat-preview").classList.remove("hidden");
             document.querySelector('.chatlist').classList.remove('hidden');
         }
     };

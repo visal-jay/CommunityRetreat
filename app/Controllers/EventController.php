@@ -36,6 +36,7 @@ class EventController
     public function addPhoto()
     {
         (new Gallery)->addPhoto(["event_id" => $_GET["event_id"]]);
+        (new UserController)->addActivity("Added photo ",$_GET["event_id"]);
         echo json_encode("");
     }
     
@@ -67,6 +68,7 @@ class EventController
     public function deletePhoto()
     {
         (new Gallery)->deletePhoto(["image" => $_POST["photo"]]);
+        (new UserController)->addActivity("Deleted photo",$_GET["event_id"]);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "gallery"]);
     }
 

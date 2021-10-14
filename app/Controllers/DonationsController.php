@@ -8,7 +8,6 @@ class DonationsController{
 
         Controller::validateForm([], ["url", "event_id", "page"]);
         $user_roles = Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
-       // exit();
         $data = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["donation_status" => '', "donation_capacity" => '']);
         $donation = new Donations();
         $pagination= Model::pagination("donation", 10, "WHERE event_id =:event_id", ["event_id"=>$_GET["event_id"]]);
@@ -33,7 +32,7 @@ class DonationsController{
 
         Controller::validateForm([], ["url", "event_id"]);
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
-        //(new UserController)->addActivity("Donation disabled", $_GET["event_id"]);
+        (new UserController)->addActivity("Donation disabled", $_GET["event_id"]);
         (new Donations)->disableDonation($_GET["event_id"]);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "donations"]);/*redirect to event page after disabling donation.*/
     }
@@ -43,7 +42,7 @@ class DonationsController{
 
         Controller::validateForm([], ["url", "event_id"]);
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
-        //(new UserController)->addActivity("Enable donations", $_GET["event_id"]);
+        (new UserController)->addActivity("Enable donations", $_GET["event_id"]);
 
         $volunteer = new Volunteer;
         $volunteer_details=$volunteer->getVolunteerDetails($_GET["event_id"]);
@@ -62,7 +61,7 @@ class DonationsController{
 
         Controller::validateForm(["donation_capacity"], ["url", "event_id"]);
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
-        //(new UserController)->addActivity("Update donation capacity", $_GET["event_id"]);
+        (new UserController)->addActivity("Update donation capacity", $_GET["event_id"]);
 
         (new Donations)->updateDonationCapacity($_GET["event_id"], $_POST["donation_capacity"]);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "donations"]);/*redirect to event page after updating donation capacity.*/
@@ -84,7 +83,7 @@ class DonationsController{
         
         //Controller::validateForm([], []);
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
-        //(new UserController)->addActivity("Update donation status as credited", $_GET["event_id"]);
+        (new UserController)->addActivity("Update donation status as credited", $_GET["event_id"]);
         $donation = new Donations;
         $donation->donationCredit($event_id);
     }
@@ -93,7 +92,7 @@ class DonationsController{
 
         Controller::validateForm(["amount", "terms"], ["url"]);
         Controller::accessCheck(["registered_user"]);/*check whether registered user accessed it.*/
-        //(new UserController)->addActivity("Donated ". $_POST['amount'], $_GET["event_id"]);
+        (new UserController)->addActivity("Donated ". $_POST['amount'], $_GET["event_id"]);
         
         $validate=new Validation;
         if(!$validate->currency($_POST["amount"]))/*find whether amount is valid*/

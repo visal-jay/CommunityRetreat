@@ -56,49 +56,6 @@ for(let i=0;i<notification_data.length;i++){
 }
 console.log(notify_data[0][0].imgname);
 
-// let notify_data = [
-//     {
-//         imgname : "../Public/assets/visal logo.png",
-//         description:" you have an email from",
-//         orgnaization : "Leo club Nilwala"
-//     },
-//     {
-//         imgname : "../Public/assets/organisation.png",
-//         description:" Beach cleaning event has been removed",
-//         orgnaization : ""
-//     },
-//     {
-//         imgname : "../Public/assets/org.png",
-//         description:" You successfully volunteered to",
-//         orgnaization : "Leo club UCSC"
-//     },
-//     {
-//         imgname : "../Public/assets/user.png",
-//         description:" you have an email from",
-//         orgnaization : "Embark"
-//     },
-//     {
-//         imgname : "../Public/assets/visal logo.png",
-//         description:" you have an email from",
-//         orgnaization : "Leo club Nilwala"
-//     },
-//     {
-//         imgname : "../Public/assets/organisation.png",
-//         description:" Beach cleaning event has been removed",
-//         orgnaization : ""
-//     },
-//     {
-//         imgname : "../Public/assets/org.png",
-//         description:" You successfully volunteered to",
-//         orgnaization : "Leo club UCSC"
-//     },
-//     {
-//         imgname : "../Public/assets/user.png",
-//         description:" you have an email from",
-//         orgnaization : "Embark"
-//     }
-   
-// ]
 
 notify_data.map(addDatacontainer);
 

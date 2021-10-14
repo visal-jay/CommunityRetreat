@@ -512,7 +512,7 @@
         if (!(range || mode || date || sort || way) && (document.getElementById("search-type").value == "organization")) {
             parent_container.innerHTML = "";
             orgSearch(name);
-        } else if (document.getElementById("search-type").value == "all")
+        } else if (document.getElementById("search-type").value == "all" &&  document.getElementById('map-container').classList.contains("hidden"))
             orgSearch(name);
 
     }
@@ -551,7 +551,7 @@
     }
 
     /* listen to search input text */
-    document.getElementById("in-search").addEventListener('keyup', debounce(search, 100));
+    document.getElementById("in-search").addEventListener('keyup', debounce(search, 500));
 
     /* toggle choice bar */
     function choices() {
@@ -638,8 +638,9 @@
         let longitude = position.coords.longitude;
         let map = document.getElementById('map-container');
         if (map.classList.contains("hidden")) {
+            document.getElementById("search-type").value="event";
             map.classList.toggle("hidden");
-            search(latitude, longitude, 20);
+            debounce(search(latitude, longitude,20),1000);
         } else {
             map.classList.toggle("hidden");
             search(latitude, longitude);

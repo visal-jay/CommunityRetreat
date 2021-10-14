@@ -376,6 +376,9 @@ header .logo img {
 }
 
 @media (max-width: 800px) {
+  .btn-lg{
+    font-size: 1.1rem;
+  }
   .pagination li {
     margin: 0 0.3em;
     font-size: 0.9em;

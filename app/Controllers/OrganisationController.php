@@ -79,7 +79,7 @@ class OrganisationController
         $events = new Events;
         $pagination = Model::pagination("event_details", 10, " WHERE org_uid = :org_uid AND NOT status = :status ", ["status" => "deleted", "org_uid" => $org_id]);
         if(!$data["events"] = $events->query(["org_uid" => $org_id, "status" => "deleted", "not_status" => TRUE, "order_type" => "event_id", "offset" => $pagination["offset"], "limit" => $pagination["no_of_records_per_page"]]))
-            $data=array();
+            $data["events"]=array();
         $data = array_merge($data, $pagination);
         View::render("manageEvents", $data, $user_roles);
     }

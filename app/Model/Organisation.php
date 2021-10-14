@@ -72,8 +72,9 @@ class Organisation extends User
 
 
         foreach (array_keys($data, NULL) as $key) {
-            unset($array[$key]);
+            unset($data[$key]);
         }
+
         if (!$old_data = $this->getDetails($uid))
             return false;
 

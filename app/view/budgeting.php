@@ -145,6 +145,7 @@
         display: flex;
         align-content: stretch;
         align-items: center;
+        text-align: left;
     }
 
     .amount-field {
@@ -463,7 +464,7 @@
 
                 <input type="text" class="hidden" name="record_id" id="record_id">
 
-                <div class="flex-row-to-col">
+                <div class="flex-row-to-col flex-center">
                     <button type="submit" id="save" name="event_id" class="btn btn-solid update-save-btn">Save</button>
                     <button type="button" class="btn bg-red clr-white delete-cancel-btn" onclick="togglePopup('update-form');blur_background('container');stillBackground('id1')">Cancel</button>
                 </div>

@@ -374,7 +374,7 @@
                     <div class="human-container">
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width fas fa-hand-holding-usd clr-green margin-side-lg"></i>
-                            <h4 class="head-margin"><?= $donations ?> people donated</h4>
+                            <h4 class="head-margin"><?php echo 'Rs. ' .number_format($donations, 2) ?> Donations recieved</h4>
                         </div>
                     </div>
 

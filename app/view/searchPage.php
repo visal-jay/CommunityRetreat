@@ -638,6 +638,7 @@
         let longitude = position.coords.longitude;
         let map = document.getElementById('map-container');
         if (map.classList.contains("hidden")) {
+            document.getElementById("search-type").value="event";
             map.classList.toggle("hidden");
             debounce(search(latitude, longitude,20),1000);
         } else {

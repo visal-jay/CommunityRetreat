@@ -28,7 +28,7 @@
     .initial-donation-enable-btn {
         text-align: center;
         transform: translate(-50%, -50%);
-        top: 120%;
+        top: 800px;
         left: 50%;
         position: absolute;
         width: 100%;
@@ -142,7 +142,7 @@
     }
 
     .initial-donation-enable-btn {
-        top: 100%;
+        top: 650px;
     }
 
     .container {
@@ -165,9 +165,9 @@
 }
 
 
-@media screen and (max-width:800px) {
+@media screen and (max-width:400px) {
     .initial-donation-enable-btn {
-        top: 75%;
+        top: 600px;
     }
 }
 

@@ -50,7 +50,8 @@ class EventController
 
     public function gallery($event_details)
     {
-        $user_roles = Controller::accessCheck(["moderator", "organization", "guest_user", "registered_user"], $_GET["event_id"]);
+        $user_roles = Controller::accessCheck(["moderator", "organization", "guest_user", "registered_user","treasurer"], $_GET["event_id"]);
+        var_dump($user_roles);
         $pagination=Model::pagination("add_photo",10," WHERE event_id = :event_id",["event_id"=>$_GET["event_id"]]);
         if (!$data = (new Gallery)->getGallery(["event_id" => $_GET["event_id"],"offset"=>$pagination["offset"] , "no_of_records_per_page"=> $pagination["no_of_records_per_page"]]))
             $data = array();

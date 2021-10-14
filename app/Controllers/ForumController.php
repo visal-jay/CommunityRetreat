@@ -4,7 +4,7 @@ class ForumController
 {
     public function view($event_details)
     {
-        $user_roles = Controller::accessCheck(["organization", "registered_user", "moderator", "guest_user"], $_GET["event_id"]);
+        $user_roles = Controller::accessCheck(["organization", "registered_user", "moderator", "guest_user","treasurer"], $_GET["event_id"]);
 
         if (isset($_GET["update_announcement_id"]) && $user_roles["registered_user"]) {
             $data["announcements"] = (new Announcement)->getAnnouncement($_GET["event_id"], $_GET["update_announcement_id"]);

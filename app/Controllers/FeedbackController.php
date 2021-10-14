@@ -4,7 +4,7 @@ class FeedbackController {
     public function view($event_details)
     {
         $feedback = new Feedback;
-        $user_roles = Controller::accessCheck(["registered_user", "organization", "moderator","guest_user"],$_GET["event_id"]);
+        $user_roles = Controller::accessCheck(["registered_user", "organization", "moderator","guest_user","treasurer"],$_GET["event_id"]);
         $pagination= Model::pagination("event_feedback", 5, "WHERE event_id= :event_id", ["event_id"=> $_GET["event_id"]]);
         $data = array();
         if ($user_roles["moderator"] || $user_roles["organization"]){

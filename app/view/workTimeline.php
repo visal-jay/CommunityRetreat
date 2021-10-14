@@ -305,7 +305,7 @@
 
                     <div class="form-item">
                         <label>Task</label>
-                        <textarea name="task" class="form form-ctrl" placeholder="Enter the task" required>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae magni eveniet porro, ipsa mollitia dolores ipsam optio aliquam, debitis voluptatum accusamus cum perferendis, amet facere expedita nostrum laboriosam quas iste!</textarea>
+                        <textarea name="task" class="form form-ctrl" placeholder="Enter the task" required></textarea>
                     </div>
 
                     <button class="btn btn-solid margin-md" type="submit">Add Task</button>

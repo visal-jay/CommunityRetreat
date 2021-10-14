@@ -59,9 +59,9 @@ class UserController{
         $controller=$this->getController();
         $user=new $controller();
         $uid=$_SESSION["user"]["uid"];
-        $this->addActivity("You changed your profile picture.",-1);
         $data=["uid"=>$uid,"profile_pic"=>$_FILES['profile_pic']];
         $user->changeProfilePic($data);
+        $this->addActivity("You changed your profile picture.",-1);
     }
 
     public function updateUsername(){
@@ -128,6 +128,7 @@ class UserController{
         echo json_encode($activities);
     }
 
+
     function removeActivity(){
         $user = new User();
         $activities = $user->deleteActivity($_POST['time_stamp']);
@@ -135,7 +136,7 @@ class UserController{
 
     // /Event/view?page=forum&event_id=#&update_announcement_id=#
     //sendNotifications("You have assigend modertor user role",$uid,"system","window.location.href=/Event/view?page=about&event_id=" . $_GET["event_id"], $_GET["event_id"])
-    
+
     public function notifications(){
         $user_roles=Controller::accessCheck(["registered_user"]);
         (new User)->setNotificationViewed();

@@ -6,8 +6,8 @@ class Controller
         if(count($parameters)==0)
             header("Location: $location" , true,  302);
         else{
-        $query = http_build_query($parameters);
-        header("Location: $location?" . $query, true,  302);
+            $query = http_build_query($parameters);
+            header("Location: $location?" . $query, true,  302);
         }
         exit();
     }
@@ -31,6 +31,7 @@ class Controller
                 $data[$_SESSION["user"]["user_type"]] = true;
 
             if ($moderator_treasurer = (new RegisteredUser)->getUserRoles($_SESSION["user"]["uid"], $event_id)) {
+                $data["registered_user"] =true;
                 if (in_array("moderator", $moderator_treasurer) && in_array("moderator", $userroles)){
                     $data["moderator"] = true;
                     if(in_array("treasurer", $moderator_treasurer))

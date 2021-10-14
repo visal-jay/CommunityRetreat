@@ -191,7 +191,7 @@ h2 {
                 style=" margin-bottom:10px;"
                 href="/Event/view?page=gallery&&event_id=<?= $_GET["event_id"] ?>">Gallery</a>
             <a class="btn margin-side-md <?php if ($page == "forum") echo "nav-active"; ?>" style=" margin-bottom:10px;"
-                href="/Event/view?page=forum&&event_id=<?= $_GET["event_id"] ?>">Forum</a>
+                href="/Event/view?page=forum&&event_id=<?= $_GET["event_id"] ?>">Announcement</a>
             <a class="btn margin-side-md <?php if ($page == "feedback") echo "nav-active"; ?>"
                 style=" margin-bottom:10px;"
                 href="/Event/view?page=feedback&&event_id=<?= $_GET["event_id"] ?>">Feedback</a>

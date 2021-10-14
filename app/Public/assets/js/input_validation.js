@@ -5,6 +5,40 @@ const password_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@
 document.querySelectorAll(".form-ctrl").forEach(ValidationMessages);
 
 
+/* document.querySelectorAll("form").forEach((e)=>{
+	e.addEventListener("submit",(event)=>{
+		e.querySelectorAll(".form-ctrl").forEach((input_field)=>{
+			console.log(input_field);
+			if(!validateField(input_field)){
+				event.preventDefault();
+				event.stopPropagation();
+			}
+		});
+	});
+}); */
+
+document.querySelectorAll("form").forEach((form) => {
+
+		form.setAttribute("novalidate", "");
+		form.addEventListener("submit", async function (e) {
+			let valid = true;
+
+			// validate field
+			for (const field of form.querySelectorAll(".form-ctrl")) {
+				let is_field_valid = await validateField(field);
+				if (!is_field_valid) {
+					valid = false;
+				}
+			}
+			
+			if (!valid) {
+				e.preventDefault();
+				e.stopPropagation();
+			}
+		});
+	});
+
+
 // function to show an error msg on a given field
 function addErrorMsg(input, msg) {
 	let span = input.previousElementSibling;
@@ -36,6 +70,7 @@ function clearErrorMsg(input) {
 
 
 async function validateField(input) {
+
 	clearErrorMsg(input);
 	// validation using built in validations
 	if (input.validationMessage) {
@@ -77,9 +112,9 @@ function ValidationMessages(input) {
 			timer = setTimeout(() => validateField(input), 500);
 		}
 	});
-
 	input.addEventListener("focusout", (event) => validateField(input));
 }
+
 
 function checkMail(email) {
 	console.log("sdfsdfsdfsd");

@@ -149,6 +149,10 @@
         .chat-back-button {
             display: flex;
         }
+
+        .chat-input {
+            padding: 2rem 1rem;
+        }
     }
 </style>
 
@@ -185,7 +189,10 @@
     });
 
     function displayChat() {
-        document.querySelector(".chat-preview").classList.add("hidden");
+        document.querySelector(".chat-preview").classList.add('hidden');
+        document.querySelector(".chat-list-empty").classList.add('hidden');
+
+        console.log(document.querySelector(".chat-preview"));
         var chat_box = document.querySelector('.chat-box');
         var chat_list = document.querySelector('.chatlist');
         if (window.innerWidth <= 800 && !chat_box.classList.contains('hidden') && !chat_list.classList.contains('hidden')) {
@@ -207,7 +214,18 @@
 
     let active_chat_box;
 
-    function getChatMessages(uid) {
+    function getChatMessages(uid, event = null) {
+        if (event != null) {
+            let user_card = event.target.closest(".chat-user-card");
+            if (user_card.classList.contains("disabled")) {
+                document.getElementById("chat-input").disabled = true;
+                document.getElementById("chat-input").placeholder = "You can't reply to this";
+            } else {
+                document.getElementById("chat-input").disabled = false;
+                document.getElementById("chat-input").placeholder = "";
+            }
+        }
+
         let chats = document.querySelectorAll(".chat-user-card");
         for (var i = 0; i < chats.length; ++i) {
             chats[i].classList.remove("active-chat");
@@ -302,7 +320,7 @@
                             document.querySelector(".chat-list-empty").classList.add("hidden");
                         }
                         let template = `
-                        <div class="chat-user-card flex-row ${chat_open==true?'active-chat':''}" id="${usr.uid}" onclick="getChatMessages('${usr.uid}');">
+                        <div class="chat-user-card flex-row ${chat_open==true?'active-chat':''} ${usr.status==true? '':'disabled'}" id="${usr.uid}" onclick="getChatMessages('${usr.uid}',event);">
                             <div>
                                 <img class="chat-user-photo" src="${usr.photo}" alt="">
                             </div>
@@ -362,7 +380,8 @@
         }, interval);
     }
 
-    <?php if(isset($_GET['new_chat_id'])) { ?>
+    <?php if (isset($_GET['new_chat_id'])) { ?>
+
         function createNewChat() {
             let parent_container = document.querySelector('.chatlist');
             var chat_body = "";
@@ -413,10 +432,24 @@
             });
         }
 
-    createNewChat();
-    chatList();
+        createNewChat();
+        chatList();
 
     <?php } ?>
+    window.onload = function() {
+        var chat_box = document.querySelector('.chat-box');
+        var chat_list = document.querySelector('.chatlist');
+        if (window.innerWidth <= 800) {
+            chat_box.classList.add('hidden');
+            document.querySelector(".chat-preview").classList.add("hidden");
+        }
+
+        if (window.innerWidth > 800) {
+            if(!active_chat_box)
+                document.querySelector(".chat-preview").classList.remove("hidden");
+            document.querySelector('.chatlist').classList.remove('hidden');
+        }
+    };
     chatList();
     setInterval(function() {
         chatList();

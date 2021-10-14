@@ -29,7 +29,7 @@ class VolunteerController{
     public function disableVolunteer()
     { //disable donations for an event
         Controller::validateForm([],["event_id"]);
-        Controller::accessCheck(["moderator","organization"]);
+        Controller::accessCheck(["moderator","organization"],$_GET['event_id']);
         (new UserController)->addActivity("Disable volunteer",$_GET['event_id']);
         $volunteer = new Volunteer;
         $volunteer->disableVolunteer($_GET["event_id"]);
@@ -39,7 +39,7 @@ class VolunteerController{
     public function enableVolunteer()
     { //enable volunteering for an event
         Controller::validateForm([],["event_id"]);
-        Controller::accessCheck(["moderator","organization"]);
+        Controller::accessCheck(["moderator","organization"],$_GET['event_id']);
         (new UserController)->addActivity("Enable volunteer",$_GET['event_id']);
         $volunteer = new Volunteer;
         $volunteer->enableVolunteer($_GET["event_id"]);

@@ -178,7 +178,6 @@
             <div class="hidden chat-box">
                 <button class="btn-icon chat-back-button" style="font-family: FontAwesome;font-size:1.2rem">&#xf060;</button>
                 <div class="chat-messages flex-col">
-                    <div class="flex-row flex-center">Chat with with Organisations</div>
                 </div>
                 <div class="chat-input flex-row flex-center">
                     <input type="text" class="form-ctrl" id="chat-input" onkeyup=" if(event.keyCode==13) sendMessage();">

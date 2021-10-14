@@ -28,7 +28,7 @@
     .initial-donation-enable-btn {
         text-align: center;
         transform: translate(-50%, -50%);
-        top: 110%;
+        top: 120%;
         left: 50%;
         position: absolute;
         width: 100%;
@@ -118,7 +118,7 @@
         text-align: center;
     }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width:800px) {
 
     table,
     th,
@@ -142,7 +142,7 @@
     }
 
     .initial-donation-enable-btn {
-        top: 80%;
+        top: 100%;
     }
 
     .container {
@@ -163,31 +163,16 @@
         box-shadow: 5px 5px 15px 5px #000000;
     }
 }
+
+
+@media screen and (max-width:800px) {
+    .initial-donation-enable-btn {
+        top: 75%;
+    }
+}
+
 </style>
 
-
-<?php 
-if(!isset($moderator)) $moderator= false;
-if(!isset($treasurer)) $treasurer= false;
-$organization = $admin =$registered_user = $guest_user = false;
-
-if(isset($_SESSION ["user"] ["user_type"])){
-    if($_SESSION ["user"] ["user_type"] == "organization"){
-        $organization = true;
-    }
-    
-    if($_SESSION ["user"] ["user_type"] == "admin"){
-        $admin = true;
-    }
-
-    if($_SESSION ["user"] ["user_type"] == "registered_user"){
-        $registered_user = true;
-    }
-    
-}else{
-    $guest_user= true;
-}
-?>
 
 
 <body>

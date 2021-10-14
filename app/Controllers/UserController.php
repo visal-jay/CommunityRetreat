@@ -49,6 +49,7 @@ class UserController{
         }
         else{
             $user->changePassword($uid,$data);
+            $this->addActivity("You changed your password");
             Controller::redirect("/$controller/profile");
         }       
     }
@@ -59,6 +60,7 @@ class UserController{
         $controller=$this->getController();
         $user=new $controller();
         $uid=$_SESSION["user"]["uid"];
+        $this->addActivity("You changed your profile picture");
         $data=["uid"=>$uid,"profile_pic"=>$_FILES['profile_pic']];
         $user->changeProfilePic($data);
         $this->addActivity("You changed your profile picture.",-1);
@@ -71,7 +73,7 @@ class UserController{
         $User = new UserController();
         $uid=$_SESSION["user"]["uid"];
         $user->changeUsername($uid,$_POST['username']);
-        $this->addActivity("You changed your username.",-1);
+        $this->addActivity("You changed your username");
         Controller::redirect("/$controller/profile");
     }
 
@@ -91,7 +93,7 @@ class UserController{
         }          
         else
             $user->changeContactNumber($uid,$data);
-            $this->addActivity("You changed your contact number.",-1);
+            $this->addActivity("You changed your contact number");
             Controller::redirect("/$controller/profile");
     }
 
@@ -113,7 +115,7 @@ class UserController{
         }
         else
             $user->changeEmail($uid,$data);
-            $this->addActivity("You changed your email.",-1);
+            $this->addActivity("You changed your email");
             Controller::redirect("/$controller/profile");
     }
 

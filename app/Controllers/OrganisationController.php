@@ -62,7 +62,7 @@ class OrganisationController
     {
         Controller::validateForm(["about_us", "longitude", "latitude"]);
         Controller::accessCheck(["organization"]);
-        (new UserController)->addActivity("Dahsboard details updated");
+        (new UserController)->addActivity("Dashboard details updated");
         (new Organisation)->updateDetails($_SESSION["user"]["uid"], $_POST);
         Controller::redirect("/Organisation/dashboard");
     }
@@ -146,9 +146,9 @@ class OrganisationController
         Controller::validateForm(["role", "uid"], ["event_id"]);
         $user_roles = Controller::accessCheck(["organization"]);
         $userController = new UserController();
-        $userController->addActivity("User role added", $_GET["event_id"]);
         (new Organisation)->addUserRole($_POST["uid"], $_POST["role"], $_GET["event_id"]);
         $event_details = (new Events)->getDetails( $_GET["event_id"]);
+        $userController->addActivity("User role added for {$event_details['event_name']}", $_GET["event_id"]);
         if ($_POST["role"] == "Treasurer")
             $userController->sendNotifications("You have been assigned as a treasurer in {$event_details['event_name']} event By {$event_details['organisation_username']}.",$_POST["uid"],"event","window.location.href='/Event/view?page=about&&event_id={$_GET["event_id"]}'",$_GET["event_id"]);
         else if($_POST["role"] == "Moderator")
@@ -162,9 +162,9 @@ class OrganisationController
         Controller::validateForm(["role", "uid"], ["event_id"]);
         $user_roles = Controller::accessCheck(["organization"]);
         $userController = new UserController();
-        $userController->addActivity("User role deleted", $_GET["event_id"]);
         (new Organisation)->deleteUserRole($_POST["uid"], $_POST["role"], $_GET["event_id"]);
         $event_details = (new Events)->getDetails( $_GET["event_id"]);
+        $userController->addActivity("User role deleted from {$event_details['event_name']}", $_GET["event_id"]);
         if ($_POST["role"] == "treasurer")
             $userController->sendNotifications("You have been removed from the treasurer position of {$event_details['event_name']} event By {$event_details['organisation_username']}.",$_POST["uid"],"event","window.location.href='/Event/view?page=about&&event_id={$_GET["event_id"]}'",$_GET["event_id"]);
         else if($_POST["role"] == "moderator")

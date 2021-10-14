@@ -551,7 +551,7 @@
     }
 
     /* listen to search input text */
-    document.getElementById("in-search").addEventListener('keyup', debounce(search, 100));
+    document.getElementById("in-search").addEventListener('keyup', debounce(search, 500));
 
     /* toggle choice bar */
     function choices() {
@@ -642,7 +642,7 @@
             search(latitude, longitude, 20);
         } else {
             map.classList.toggle("hidden");
-            search(latitude, longitude);
+            debounce(search(latitude, longitude),500);
         }
         resizeMap();
     }

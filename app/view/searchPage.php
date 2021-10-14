@@ -220,11 +220,6 @@
 
     @media screen and (max-width:800px) {
 
-    figure img {
-        max-width: 200px !important;
-        height: 100px;
-    }
-
         .grid {
             grid-gap: 10px;
             grid-template-columns: repeat(auto-fill, 250px);

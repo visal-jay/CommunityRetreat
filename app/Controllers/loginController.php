@@ -34,7 +34,7 @@ class LoginController
             if ($user->checkUserEmail($_POST["email"])) {
                 $key = $user->getForgotPasswordKey($_POST["email"]);
                 $mail = new Mail;
-                $mail->verificationEmail($_POST["email"], "forgotPasswordMail", "localhost/login/validateforgotpassword?" . http_build_query(["key" => $key]), 'Reset password');
+                $mail->verificationEmail($_POST["email"], "forgotPasswordMail", "https://www.communityretreat.me/Login/validateforgotpassword?" . http_build_query(["key" => $key]), 'Reset password');
             }
             Controller::redirect('/Login/view',["forgot_password"=>true,"mail"=>true]);
         }
@@ -53,7 +53,7 @@ class LoginController
         $data = $encyption->decrypt($key, 'reset password');
         $time = (int)shell_exec("date '+%s'");
         $user = new User;
-        $user_details = $user->authenticate($data["email"], $data["password"],1,1);
+        $user_details = $user->authenticateWithMails($data["email"], $data["password"],1,1);
         if ($user_details && $data["time"] > $time - 3600) {
             View::render("resetPassword",["key"=>$key]);
         } else
@@ -73,10 +73,10 @@ class LoginController
     }
 
     /* validate login */
-    public static function validate($email = '', $password = '')
+    public static function validate()
     {
-        if (isset($_POST["email"]) and isset($_POST["password"]))
-            extract($_POST, EXTR_OVERWRITE);
+        Controller::validateForm(["email","password"]);
+        extract($_POST, EXTR_OVERWRITE);
 
         $user = new User;
         if (($user->checkLoginAcess($email)))

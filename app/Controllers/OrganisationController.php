@@ -77,9 +77,9 @@ class OrganisationController
         $org_id = isset($_GET["org_id"]) ? $_GET["org_id"] : $_SESSION["user"]["uid"];
 
         $events = new Events;
-        $data["events"] = array();
         $pagination = Model::pagination("event_details", 10, " WHERE org_uid = :org_uid AND NOT status = :status ", ["status" => "deleted", "org_uid" => $org_id]);
-        $data["events"] = $events->query(["org_uid" => $org_id, "status" => "deleted", "not_status" => TRUE, "order_type" => "event_id", "offset" => $pagination["offset"], "limit" => $pagination["no_of_records_per_page"]]);
+        if(!$data["events"] = $events->query(["org_uid" => $org_id, "status" => "deleted", "not_status" => TRUE, "order_type" => "event_id", "offset" => $pagination["offset"], "limit" => $pagination["no_of_records_per_page"]]))
+            $data=array();
         $data = array_merge($data, $pagination);
         View::render("manageEvents", $data, $user_roles);
     }
@@ -105,8 +105,10 @@ class OrganisationController
         $uid = $_SESSION["user"]["uid"];
         $org_admin_details = $organisation_admin->getDetails($uid);
         $encryption = new Encryption();
-        $account=$encryption -> decrypt($org_admin_details['account_number'],"account details");
-        $org_admin_details["account_number"]=$account["account_number"];
+        if($org_admin_details['account_number']!=NULL){
+            $account=$encryption -> decrypt($org_admin_details['account_number'],"account details");
+            $org_admin_details["account_number"]=$account["account_number"];
+        }
         View::render('organisationProfile', $org_admin_details, $user_roles);
     }
 

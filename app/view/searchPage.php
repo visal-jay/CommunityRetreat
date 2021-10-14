@@ -512,7 +512,7 @@
         if (!(range || mode || date || sort || way) && (document.getElementById("search-type").value == "organization")) {
             parent_container.innerHTML = "";
             orgSearch(name);
-        } else if (document.getElementById("search-type").value == "all")
+        } else if (document.getElementById("search-type").value == "all" &&  document.getElementById('map-container').classList.contains("hidden"))
             orgSearch(name);
 
     }
@@ -639,10 +639,10 @@
         let map = document.getElementById('map-container');
         if (map.classList.contains("hidden")) {
             map.classList.toggle("hidden");
-            search(latitude, longitude, 20);
+            debounce(search(latitude, longitude,20),1000);
         } else {
             map.classList.toggle("hidden");
-            debounce(search(latitude, longitude),500);
+            search(latitude, longitude);
         }
         resizeMap();
     }

@@ -33,7 +33,7 @@ class DonationsController{
 
         Controller::validateForm([], ["url", "event_id"]);
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
-        //(new UserController)->addActivity("Disable donations", $_GET["event_id"]);
+        //(new UserController)->addActivity("Donation disabled", $_GET["event_id"]);
         (new Donations)->disableDonation($_GET["event_id"]);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "donations"]);/*redirect to event page after disabling donation.*/
     }

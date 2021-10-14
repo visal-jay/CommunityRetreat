@@ -117,11 +117,17 @@ class User extends Model
         $params = ["uid" => $_SESSION['user']['uid']];
         $query = 'SELECT * FROM activity_log LEFT JOIN event_details ON activity_log.event_id = event_details.event_id WHERE  activity_log.uid = :uid ORDER BY time_stamp DESC';
         $activities = User::select( $query,$params);
-         return $activities;
-        
-       
-        
+         return $activities;  
     }
+
+    function deleteActivity($time_stamp){
+
+        $params = ["uid" => $_SESSION['user']['uid'], "time_stamp" => $time_stamp];
+        $query = 'DELETE FROM activity_log WHERE uid =:uid AND time_stamp = :time_stamp';
+        User::insert($query,$params);
+
+    }
+    
     function insertNotification($notification,$uid,$status, $path,$event_id){
         if($event_id == -1){
             $params = ["uid" => $uid, "notification" => $notification ,"status" => $status,"path" => $path];

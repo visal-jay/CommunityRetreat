@@ -128,6 +128,11 @@ class UserController{
         echo json_encode($activities);
     }
 
+    function removeActivity(){
+        $user = new User();
+        $activities = $user->deleteActivity($_POST['time_stamp']);
+    }
+
     // /Event/view?page=forum&event_id=#&update_announcement_id=#
     //sendNotifications("You have assigend modertor user role",$uid,"system","window.location.href=/Event/view?page=about&event_id=" . $_GET["event_id"], $_GET["event_id"])
     

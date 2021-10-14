@@ -53,6 +53,7 @@ class WorkTimelineController
         Controller::accessCheck(["organization", "moderator"], $_GET["event_id"]);
         (new UserController)->addActivity("Hide a feedback", $_GET["event_id"]);
         (new Task)->completed($_GET["task_id"]);
+        (new UserController)->addActivity("Hide a feedback", $_GET["event_id"]);
         Controller::redirect("/Event/view", ["page" => "timeline", "event_id" => $_GET["event_id"]]);
     }
 }

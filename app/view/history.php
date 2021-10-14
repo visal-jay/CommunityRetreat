@@ -38,35 +38,52 @@
                   
             </table>
         
-                
-
-            
-            
-              
-            </div>
-        
-    </div>
+       </div>
        <div class="pop-up-container" id="popup">
            <div class="pop-up">
                 <h3>Are you sure ?</h3>
-               <div class="confirm-buttons">
-                   
-                    <button onclick = "onDelete('')" class= "btn bg-green clr-white border-green">Yes</button>
-                    <button onclick="popupLoad()" class= "btn bg-red clr-white border-red">No</button>
+               <div class="confirm-buttons">   
+                    <button  class= "btn bg-green clr-white border-green" id="confirm-btn" >Yes</button>
+                    <button  class= "btn bg-red clr-white border-red" onclick="popupHide()">No</button>
                </div>
            </div>
        </div>
-    <script>
-        const tableEl = document.querySelector('table');
-        function popupLoad(){
-            var popup = document.getElementById("popup");
-            popup.classList.toggle("pop-up-load");
-        }
- 
-    </script>
+    
 
 
     </body>
     <?php include "footer.php" ?>
+    <script>
+        function popupLoad(index){
+            var popup = document.getElementById("popup");
+            popup.classList.toggle("pop-up-load");
+            var time_stamp = table_data[index].date;
+            console.log(index);
+            console.log(time_stamp);
+            document.getElementById('confirm-btn').addEventListener('click', () =>{
+                table_data.splice(index,1);
+                document.getElementById("table-body").innerHTML = "";
+                table_data.map(addDataRow);
+                $.ajax({
+                        url: "/User/removeActivity",
+                        type: "post",
+                        dataType: 'json',
+                        data: {
+                            time_stamp: time_stamp
+                        }
+                
+                    });
+                popup.classList.toggle("pop-up-load")
+            });
+            ;
+            
+        }
+
+        function popupHide(){
+            var popup = document.getElementById("popup");
+            popup.classList.toggle("pop-up-load");
+
+        }
+    </script>
 
 </html>

@@ -33,7 +33,7 @@ class DonationsController{
 
         Controller::validateForm([], ["url", "event_id"]);
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
-        //(new UserController)->addActivity("Disable donations", $_GET["event_id"]);
+        //(new UserController)->addActivity("Donation disabled", $_GET["event_id"]);
         (new Donations)->disableDonation($_GET["event_id"]);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "donations"]);/*redirect to event page after disabling donation.*/
     }
@@ -150,7 +150,7 @@ class DonationsController{
 
         //Controller::validateForm([], []);
         Controller::accessCheck(["admin", "organization"]);/*check whether organization or admin accessed it.*/
-        //(new UserController)->addActivity("Donation refund ". $_POST['amount'], $_GET["event_id"]);
+        (new UserController)->addActivity("Donation refund ". $_POST['amount'], $_GET["event_id"]);
         $donation = new Donations;
         $donation_details=$donation->getRefundDetails($event_id);
         $data = (new Events)->getDetails($event_id);

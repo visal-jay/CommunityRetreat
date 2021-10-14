@@ -80,18 +80,6 @@ class RegisteredUser extends User
         User::insert($query,$params); 
     }
 
-    //Check current passward with current password given by user
-    function checkCurrentPassword($uid,$password){
-        $query= 'SELECT password FROM registered_user reg JOIN login ON reg.uid= login.uid WHERE reg.uid = :uid AND verified=1';
-        $params = ["uid"=> $uid];
-        $result= USER::select($query,$params);
-        if($result[0]['password']==$password){ //If current passward with current password given by user
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
 
     //Get calendar details
     public function getCalendarDetails($uid){
@@ -137,7 +125,8 @@ class RegisteredUser extends User
         $data["uid"] = $stmt->fetchColumn();
         $stmt->closeCursor();
 
-        $data["user_type"]="organization";
+        $data["user_type"]="registered_user";
+        $data["password"] = password_hash($data["password"],PASSWORD_DEFAULT);
         $insertOrgLoginSql = 'INSERT INTO `login` (`email`,`password`, `uid`, `user_type`) VALUES (:email,  :password, :uid, "registered_user")';
         $stmt=$db->prepare($insertOrgLoginSql);
         $insertData=array_intersect_key($data,["email"=>'',"password"=>'',"uid"=>'']);
@@ -147,7 +136,7 @@ class RegisteredUser extends User
 
         $encryption=new Encryption;
         $data["time"] = (int)shell_exec("date '+%s'");
-        $parameters = ["key" => $encryption->encrypt(array_intersect_key($data, ["email" => '', "password" => '',"time"=>'']), 'email verificaition')];
+        $parameters = ["key" => $encryption->encrypt(["email" => $data["email"], "password" => $data["password"],"time"=>$data["time"]], 'email verificaition')];
         $mail=new Mail;
         
         $mail->verificationEmail($data["email"],"confirmationMail","https://www.communityretreat.me/Signup/verifyemail?".http_build_query($parameters),'Signup');

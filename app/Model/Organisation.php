@@ -21,6 +21,7 @@ class Organisation extends User
         $stmt->closeCursor();
 
         $data["user_type"] = "organization";
+        $data["password"] = password_hash($data["password"],PASSWORD_DEFAULT);
         $insertOrgLoginSql = 'INSERT INTO `login` (`email`,`password`, `uid`, `user_type`) VALUES (:email,  :password, :uid, :user_type)';
         $stmt = $db->prepare($insertOrgLoginSql);
         $insertData = array_intersect_key($data, ["email" => '', "password" => '', "uid" => '', "user_type" => '']);
@@ -30,7 +31,7 @@ class Organisation extends User
 
         $encryption = new Encryption;
         $data["time"] = (int)shell_exec("date '+%s'");
-        $parameters = ["key" => $encryption->encrypt(array_intersect_key($data, ["email" => '', "password" => '',"time"=>'']), 'email verificaition')]; 
+        $parameters = ["key" => $encryption->encrypt(["email" => $data["email"], "password" => $data["password"],"time"=>$data["time"]], 'email verificaition')]; 
         $mail = new Mail;
         $mail->verificationEmail($data["email"], "confirmationMail", "https://www.communityretreat.me/Signup/verifyemail?" . http_build_query($parameters), 'Signup');
     }
@@ -81,7 +82,6 @@ class Organisation extends User
         
         unset($params["map"]);
 
-
         $query = 'UPDATE organization SET username= :username, email= :email, contact_number = :contact_number ,account_number = :account_number , bank_name = :bank_name, latlang=POINT(:latitude,:longitude) ,profile_pic = :profile_pic,cover_pic = :cover_pic,about_us=:about_us  WHERE uid = :uid';
         User::insert($query, $params);
     }
@@ -123,17 +123,6 @@ class Organisation extends User
         return $result;
     }
 
-    public function getAdminDetails($uid)
-    {
-        $query = 'SELECT * FROM organization org JOIN login ON org.uid= login.uid WHERE org.uid = :uid AND verified=1';
-        $params = ["uid" => $uid];
-        $result = User::select($query, $params);
-        if (count($result[0]) >= 1)
-
-            return $result[0];
-        else
-            return false;
-    }
     public function changeUsername($uid, $data)
     {
         $params = ["uid" => $uid, "username" => $data];
@@ -169,17 +158,7 @@ class Organisation extends User
         User::insert($query, $params);
     }
 
-    function checkCurrentPassword($uid, $password)
-    {
-        $query = 'SELECT password FROM organization org JOIN login ON org.uid= login.uid WHERE org.uid = :uid AND verified=1';
-        $params = ["uid" => $uid];
-        $result = USER::select($query, $params);
-        if ($result[0]['password'] == $password) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+
     public function getAvailableUserRoles($name)
     {
         $query = 'SELECT username, uid,profile_pic FROM registered_user  WHERE username LIKE :name';

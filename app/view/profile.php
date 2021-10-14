@@ -270,25 +270,6 @@
         }
 
 
-        // function checkMail(email) {
-
-        //         $.ajax({
-        //             url: "/User/checkEmailAvailable",
-        //             type: "post",
-        //             dataType: 'json',
-        //             data: {
-        //                 email: email
-        //             },
-        //             success: function(result) {
-
-        //                 if (result.taken == true) {
-        //                     document.getElementById('email-submit-btn').disabled = true;
-        //                 } else {
-        //                     document.getElementById('email-submit-btn').disabled = false;
-        //                 }
-        //             }
-        //         });
-        // } 
 
 
 

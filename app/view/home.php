@@ -29,6 +29,7 @@
 
 
     .home-events {
+        width: 100%;
         border-radius: 8px;
         min-height: max-content;
         display: grid;
@@ -240,6 +241,7 @@
         left: 50%;
         width: 50%;
         transform: translate(-50%, -50%);
+        background-color: white;
     }
 
     .loader img {
@@ -330,22 +332,6 @@
     }
 </style>
 <?php include "nav.php" ?>
-<?php
-$organization = $admin = $registered_user = $guest_user = false;
-if (isset($_SESSION["user"]["user_type"])) {
-    if ($_SESSION["user"]["user_type"] == "organization") {
-        $organization = true;
-    }
-    if ($_SESSION["user"]["user_type"] == "admin") {
-        $$admin = true;
-    }
-    if ($_SESSION["user"]["user_type"] == "registered user") {
-        $registered_user = true;
-    }
-} else {
-    $guest_user = true;
-}
-?>
 
 <body>
     <div class="loader" onload="move();">
@@ -354,7 +340,7 @@ if (isset($_SESSION["user"]["user_type"])) {
             <div id="myBar"></div>
         </div>
     </div>
-    <div class="home-div" style="display: hidden;">
+    <div class="home-div" style="display: none;">
         <div class="homepage flex-col flex-center">
             <div class="flex-col flex-center" style="position:relative;">
                 <video autoplay muted loop id="myVideo">
@@ -467,6 +453,7 @@ if (isset($_SESSION["user"]["user_type"])) {
     }
 
     function move() {
+        console.log("hello");
         var elem = document.getElementById("myBar");
         var width = 0;
         var id = setInterval(frame, 20);

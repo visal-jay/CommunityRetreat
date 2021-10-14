@@ -16,28 +16,34 @@ class MessageController
         $results = $message->getChatList($chat_holder);
         $data = array();
 
-        foreach ($results as $result) {
+        foreach ($results as $key => $result) {
             $result = $result["uid"];
             $user_type = substr($result, 0, 3);
             if ($user_type == "ORG"){
                 if ($org = (new Organisation)->getDetails($result))
-                    array_push($data, ["username" => $org["username"], "uid" => $result, "photo" => $org["profile_pic"]]);
+                    array_push($data, ["username" => $org["username"], "uid" => $result, "photo" => $org["profile_pic"] ,"status"=>true]);
                 $user=$result;
             }
             elseif ($user_type == "REG"){
                 if ($reg = (new RegisteredUser)->getDetails($result))
-                    array_push($data, ["username" => $reg["username"], "uid" => $result, "photo" => $reg["profile_pic"]]);
+                    array_push($data, ["username" => $reg["username"], "uid" => $result, "photo" => $reg["profile_pic"], "status"=>true]);
+                else
+                    array_push($data, ["username" => "Deleted User", "uid" => $result, "photo" => "/Uploads/placeholder-image.jpg", "status"=>false]);
                 $user=$result;
             }
             elseif ($user_type == "ADM"){
                 if ($adm = (new Admin)->getDetails($result))
-                    array_push($data, ["username" => $adm["username"], "uid" => $result, "photo" => $adm["profile_pic"]]);
+                    array_push($data, ["username" => $adm["username"], "uid" => $result, "photo" => $adm["profile_pic"],"status"=>true]);
                     $user=$result;
             }
             elseif ($user_type == "EVN"){
                 $user=substr($result, 3);
                 $event_details=(new Events)->getDetails($user);
-                array_push($data, ["uid" => $result, "username" => $event_details["event_name"],"photo" => $event_details["cover_photo"]]);
+                if($event_details["status"]=="published")
+                    array_push($data, ["uid" => $result, "username" => $event_details["event_name"],"photo" => $event_details["cover_photo"],"status"=>true]);
+                else
+                    array_push($data, ["uid" => $result, "username" => $event_details["event_name"],"photo" => $event_details["cover_photo"],"status"=>false]);
+
             }
             if(count($data)>0){
                 $data[count($data)-1] = array_merge($data[count($data)-1],($message->getLastMessage($chat_holder,$result))[0]);

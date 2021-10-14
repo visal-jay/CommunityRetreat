@@ -30,7 +30,7 @@ table_data.map(addDataRow)
 function addDataRow(data,index){
     
     let tr = document.createElement('tr');
-   
+ 
 
 
     let date = document.createElement('td');
@@ -39,7 +39,7 @@ function addDataRow(data,index){
     datelabel.innerText = "Date";
     date.appendChild(datelabel);
     let datediv = document.createElement('div');
-    datediv.setAttribute("class","data");
+    datediv.setAttribute("class","data date");
     datediv.innerText = data.date;
     date.appendChild(datediv);
     tr.appendChild(date);
@@ -51,16 +51,17 @@ function addDataRow(data,index){
     activity.appendChild(activitylabel);
     let activitydiv = document.createElement('div');
     activitydiv.setAttribute("class","data");
-    let activity_description = document.createElement("p");
-    activity_description.innerText = data.Activity;
     if(data.event_id != null){
         let event_link = document.createElement("a");
-        event_link.innerText = " "+ data.eventname;
-        event_link.setAttribute("href","/event/view?page=about&&event_id="+data.event_id);
-        activity_description.appendChild(event_link);  
+        event_link.innerText = data.Activity;
+        event_link.setAttribute("href","/Event/view?page=about&&event_id="+data.event_id);
+        activitydiv.appendChild(event_link);  
     }
-
-    activitydiv.appendChild(activity_description);
+    else{
+        let activity_description = document.createElement("p");
+        activity_description.innerText = data.Activity;
+        activitydiv.appendChild(activity_description);
+    } 
     activity.appendChild(activitydiv);
     tr.appendChild(activity);
 
@@ -69,22 +70,20 @@ function addDataRow(data,index){
     action.setAttribute("class","action-div");
     let actiondiv = document.createElement('div');
     actiondiv.setAttribute("class","action");
-    actiondiv.innerHTML = '<button class="btn bg-red clr-white border-red" onclick="popupLoad()">Remove</button>';
+    actiondiv.innerHTML = `<button class="btn bg-red clr-white border-red "  onclick="popupLoad('${index}')">Remove</button>`;
     action.appendChild(actiondiv);
     tr.appendChild(action);
 
     document.getElementById("table-body").appendChild(tr);
+
+    
 }
 
-function onDelete(index) {
-   
-        table_data.splice(index,1);
-        document.getElementById("table-body").innerHTML = "";
-        table_data.map(addDataRow);
-        popupLoad();
 
-   
-}
+
+
+
+
 function successCall(result){
     var activities = JSON.parse(result);
     
@@ -102,9 +101,7 @@ function renderActivities(){
         url: "/User/viewActivityLog",
         type: "post",
         success : function(result){
-            console.log(result);
-            activities = JSON.parse(result);
-           
+            activities = JSON.parse(result);   
        },
 
     });

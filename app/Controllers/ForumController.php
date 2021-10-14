@@ -19,7 +19,7 @@ class ForumController
     public function addAnnouncement()
     {
         Controller::validateForm(["title", "announcement"], ["event_id"]);
-        Controller::accessCheck(["organization", "moderator"]);
+        Controller::accessCheck(["organization", "moderator"], $_GET["event_id"]);
         (new UserController)->addActivity("Add an announcement", $_GET["event_id"]);
         $_POST["event_id"] = $_GET["event_id"];
         (new Announcement)->addAnnouncement($_POST);
@@ -29,7 +29,7 @@ class ForumController
     public function editAnnouncement()
     {
         Controller::validateForm(["title", "announcement", "announcement_id"], ["event_id"]);
-        Controller::accessCheck(["organization", "moderator"]);
+        Controller::accessCheck(["organization", "moderator"], $_GET["event_id"]);
         (new UserController)->addActivity("Edit an announcement", $_GET["event_id"]);
         $_POST["event_id"] = $_GET["event_id"];
         $announcement = new Announcement;
@@ -40,7 +40,7 @@ class ForumController
     public function deleteAnnouncement()
     {
         Controller::validateForm(["announcement_id"], ["event_id"]);
-        Controller::accessCheck(["organization", "moderator"]);
+        Controller::accessCheck(["organization", "moderator"], $_GET["event_id"]);
         (new UserController)->addActivity("Delete an announcement", $_GET["event_id"]);
         (new Announcement)->deleteAnnouncement($_POST["announcement_id"]);
         Controller::redirect("/Event/view", ["page" => "forum", "event_id" => $_GET["event_id"]]);

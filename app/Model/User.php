@@ -12,17 +12,28 @@ class User extends Model
             return false;
     }
 
-    public function authenticate($email,$password,$verified=1,$reset_password=0)
+    public function authenticate($email,$password,$verified=1)
+    {
+        $query = 'SELECT uid,user_type,password,COUNT(*) as count FROM login where email = :email AND verified= :verified';
+        $params = ["email" => $email,"verified"=>$verified];
+        $result=User::select($query,$params);
+
+        if ($result[0]["count"]== 1 && password_verify($password,$result[0]["password"]))
+            return $result[0];
+        else
+            return false;
+    }
+
+    public function authenticateWithMails($email,$password,$verified=1,$reset_password=0)
     {
         if ($reset_password==1){
-            $query = 'SELECT uid,user_type,COUNT(*) as count FROM login where email = :email AND password = :password AND verified= :verified AND reset_password = :reset_password';
-            $params = ["email" => $email,"password"=>$password,"verified"=>$verified,"reset_password"=>$reset_password];
+            $query = 'SELECT uid,user_type,password,COUNT(*) as count FROM login where email = :email AND password =:password AND verified= :verified AND reset_password = :reset_password';
+            $params = ["email" => $email,"verified"=>$verified,"password"=>$password,"reset_password"=>$reset_password];
         }
         else{
-            $query = 'SELECT uid,user_type,COUNT(*) as count FROM login where email = :email AND password = :password AND verified= :verified';
+            $query = 'SELECT uid,user_type,COUNT(*) as count FROM login where email = :email AND password =:password AND verified= :verified';
             $params = ["email" => $email,"password"=>$password,"verified"=>$verified];
         }
-
         $result=User::select($query,$params);
         if ($result[0]["count"]== 1)
             return $result[0];
@@ -96,9 +107,10 @@ class User extends Model
 
     function resetPassword($email,$password){
         $query = 'UPDATE login SET password= :password,reset_password=0 WHERE email = :email';
-        $params = ["email" => $email,"password"=>$password];
+        $params = ["email" => $email,"password"=>password_hash($password,PASSWORD_DEFAULT)];
         User::insert($query,$params);
     }
+    
     function insertActivity($activity,$event_id){
 
         if($event_id==-1){
@@ -115,13 +127,20 @@ class User extends Model
     function getActivity(){
     
         $params = ["uid" => $_SESSION['user']['uid']];
-        $query = 'SELECT * FROM activity_log LEFT JOIN event_details ON activity_log.event_id = event_details.event_id WHERE  activity_log.uid = :uid ORDER BY time_stamp DESC';
+        $query = 'SELECT event_details.event_name,event_details.event_id,activity_log.activity,activity_log.time_stamp FROM activity_log LEFT JOIN event_details ON activity_log.event_id = event_details.event_id WHERE  activity_log.uid = :uid ORDER BY time_stamp DESC';
         $activities = User::select( $query,$params);
-         return $activities;
-        
-       
-        
+
+         return $activities;  
     }
+
+    function deleteActivity($time_stamp){
+
+        $params = ["uid" => $_SESSION['user']['uid'], "time_stamp" => $time_stamp];
+        $query = 'DELETE FROM activity_log WHERE uid =:uid AND time_stamp = :time_stamp';
+        User::insert($query,$params);
+
+    }
+    
     function insertNotification($notification,$uid,$status, $path,$event_id){
         if($event_id == -1){
             $params = ["uid" => $uid, "notification" => $notification ,"status" => $status,"path" => $path];
@@ -158,6 +177,18 @@ class User extends Model
             
         }
         return $not_viewed;
+    }
+
+    function checkCurrentPassword($uid, $password)
+    {
+        $query = 'SELECT password FROM login WHERE uid = :uid AND verified=1';
+        $params = ["uid" => $uid];
+        $result = USER::select($query, $params);
+        if (password_verify($password,$result[0]['password'])) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

@@ -4,7 +4,7 @@ class Task extends Model
     public function getTask($event_id, $task_id = -1)
     {
         if ($task_id != -1) {
-            $query = "SELECT `task`, `task_id`, `start_date`, `end_date`, `completed` FROM work_timeline WHERE task_id= :task_id ORDER BY `start_date` ASC";
+            $query = "SELECT `task`, `task_id`, `start_date`, `end_date`, `completed` FROM work_timeline WHERE task_id= :task_id";
             $params = ["task_id" => $task_id];
         } else {
             $query = "SELECT `task`, `task_id`, `start_date`, `end_date`, `completed` FROM work_timeline WHERE event_id= :event_id ORDER BY `start_date` ASC";

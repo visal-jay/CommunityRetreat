@@ -30,9 +30,10 @@ class VolunteerController{
     { //disable donations for an event
         Controller::validateForm([],["event_id"]);
         Controller::accessCheck(["moderator","organization"]);
-        (new UserController)->addActivity("Disable volunteer",$_GET['event_id']);
         $volunteer = new Volunteer;
         $volunteer->disableVolunteer($_GET["event_id"]);
+        $event_details = (new Events)->getDetails($_GET["event_id"]);
+        (new UserController)->addActivity("Disable volunteer for {$event_details['event_name']}",$_GET['event_id']);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "volunteers"]);
     }
 
@@ -40,8 +41,9 @@ class VolunteerController{
     { //enable volunteering for an event
         Controller::validateForm([],["event_id"]);
         Controller::accessCheck(["moderator","organization"]);
-        (new UserController)->addActivity("Enable volunteer",$_GET['event_id']);
         $volunteer = new Volunteer;
+        $event_details = (new Events)->getDetails($_GET['event_id']);
+        (new UserController)->addActivity("Enable volunteer for {$event_details['event_name']}",$_GET['event_id']);
         $volunteer->enableVolunteer($_GET["event_id"]);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "volunteers"]);
     }
@@ -49,7 +51,9 @@ class VolunteerController{
     public function updateVolunteerCapacity()
     { //update volunteering capacity
         $volunteer = new Volunteer;
+        $event_details = (new Events)->getDetails($_GET['event_id']);
         $volunteer->updateVolunteerCapacity($_GET["event_id"],$_POST);
+        (new UserController)->addActivity("You update volunteer capacities of {$event_details['event_name']}",$_GET['event_id']);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "volunteers"]);
     }
 

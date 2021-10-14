@@ -52,6 +52,13 @@
         text-overflow: ellipsis;
     }
 
+    .chat-user-card p {
+        width: 230px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
     .flex-space-between {
         align-items: center;
         justify-content: space-between;
@@ -445,7 +452,7 @@
         }
 
         if (window.innerWidth > 800) {
-            if(!active_chat_box)
+            if (!active_chat_box)
                 document.querySelector(".chat-preview").classList.remove("hidden");
             document.querySelector('.chatlist').classList.remove('hidden');
         }

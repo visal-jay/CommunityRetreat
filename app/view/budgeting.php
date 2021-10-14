@@ -145,6 +145,7 @@
         display: flex;
         align-content: stretch;
         align-items: center;
+        text-align: left;
     }
 
     .amount-field {

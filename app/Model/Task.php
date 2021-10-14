@@ -7,7 +7,7 @@ class Task extends Model
             $query = "SELECT `task`, `task_id`, `start_date`, `end_date`, `completed` FROM work_timeline WHERE task_id= :task_id";
             $params = ["task_id" => $task_id];
         } else {
-            $query = "SELECT `task`, `task_id`, `start_date`, `end_date`, `completed` FROM work_timeline WHERE event_id= :event_id";
+            $query = "SELECT `task`, `task_id`, `start_date`, `end_date`, `completed` FROM work_timeline WHERE event_id= :event_id ORDER BY `start_date` ASC";
             $params = ["event_id" => $event_id];
         }
         $result = Model::select($query, $params);

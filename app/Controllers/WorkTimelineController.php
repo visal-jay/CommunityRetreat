@@ -13,7 +13,7 @@ class WorkTimelineController
     public function addTask()
     {
         Controller::validateForm(["start_date", "end_date", "task"], ["event_id"]);
-        Controller::accessCheck(["organization", "moderator"],$_GET["event_id"]);
+        Controller::accessCheck(["organization", "moderator"], $_GET["event_id"]);
         $event = (new Events)->getDetails($_GET["event_id"]);
         (new UserController)->addActivity("Add a task to the timeline", $_GET["event_id"]);
         $id = (new Organisation)->getUserRoles($_GET["event_id"]);
@@ -30,7 +30,7 @@ class WorkTimelineController
     public function editTask()
     {
         Controller::validateForm(["start_date", "end_date", "task", "task_id"], ["event_id"]);
-        Controller::accessCheck(["organization", "moderator"],$_GET["event_id"]);
+        Controller::accessCheck(["organization", "moderator"], $_GET["event_id"]);
         (new UserController)->addActivity("Edit an existing task", $_GET["event_id"]);
         $_POST["event_id"] = $_GET["event_id"];
         $task = new Task;
@@ -41,7 +41,7 @@ class WorkTimelineController
     public function deleteTask()
     {
         Controller::validateForm(["task_id"], ["event_id"]);
-        Controller::accessCheck(["organization", "moderator"],$_GET["event_id"]);
+        Controller::accessCheck(["organization", "moderator"], $_GET["event_id"]);
         (new UserController)->addActivity("Delete an existing task", $_GET["event_id"]);
         (new Task)->deleteTask($_POST["task_id"]);
         Controller::redirect("/Event/view", ["page" => "timeline", "event_id" => $_GET["event_id"]]);
@@ -50,7 +50,8 @@ class WorkTimelineController
     public function completed()
     {
         Controller::validateForm([], ["event_id", "task_id"]);
-        Controller::accessCheck(["organization", "moderator"],$_GET["event_id"]);
+        Controller::accessCheck(["organization", "moderator"], $_GET["event_id"]);
+        (new UserController)->addActivity("Hide a feedback", $_GET["event_id"]);
         (new Task)->completed($_GET["task_id"]);
         (new UserController)->addActivity("Hide a feedback", $_GET["event_id"]);
         Controller::redirect("/Event/view", ["page" => "timeline", "event_id" => $_GET["event_id"]]);

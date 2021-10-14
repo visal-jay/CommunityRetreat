@@ -18,7 +18,7 @@
     <!-- meta for facebook sharer -->
     <meta property="og:url" content="https://www.communityretreat.me/Event/view?page=about&event_id=<?= $_GET['event_id'] ?>">
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="<?= $event_name ?>"/>
+    <meta property="og:title" content="<?= $event_name ?>" />
     <meta property="og:description" content="Volunteer, Donate events" />
     <meta property="og:image" content="https://www.communityretreat.me<?= $cover_photo ?>" />
 </head>
@@ -188,15 +188,15 @@
         margin: 1rem 0 2rem 0;
     }
 
-    .terms-and-conditions{
+    .terms-and-conditions {
         text-align: left;
     }
 
-    h4{
+    h4 {
         font-weight: 500;
     }
-    
-    .center{
+
+    .center {
         text-align: center;
     }
 
@@ -374,7 +374,7 @@
                     <div class="human-container">
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width fas fa-hand-holding-usd clr-green margin-side-lg"></i>
-                            <h4 class="head-margin"><?= $donations ?> people donated</h4>
+                            <h4 class="head-margin"><?php echo 'Rs. ' .number_format($donations, 2) ?> Donations recieved</h4>
                         </div>
                     </div>
 
@@ -394,7 +394,8 @@
             <?php if ($volunteer_status == 1) { ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d">
                     <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
-                    <div class="progress" data-width="<?php if ($volunteer_percent =="NULL") echo "0";else echo round($volunteer_percent); ?>%">
+                    <div class="progress" data-width="<?php if ($volunteer_percent == "NULL") echo "0";
+                                                        else echo round($volunteer_percent); ?>%">
                         <div class="volunteers-progress-bar"></div>
                     </div>
                     <?php if ($guest_user) { ?>
@@ -462,6 +463,8 @@
                 </div>
             <?php } ?>
         </div>
+        <!-- complaint div -->
+        <?php include "complaint.php" ?>
     </div>
 
     <div class="popup" id="publish">
@@ -471,7 +474,7 @@
             </div>
         </div>
     </div>
-     <div class="popup" id="volunteer-form">
+    <div class="popup" id="volunteer-form">
         <div class="content">
             <div>
                 <h3>What are the days you would like to volunteer ?</h3>
@@ -491,16 +494,16 @@
                 foreach ($period as $date) {
                     $event_days = $date->format('Y-m-d');
                     if ($volunteer_capacity_exceeded[$event_days] == "TRUE") {
-                        $v_flag=FALSE;
+                        $v_flag = FALSE;
                         echo "<div class='flex-row flex-center'><h3>" . $event_days . "</h3>
                             <input type='checkbox'  name='volunteer_date[]' value='$event_days'";
                         for ($i = 0; $i < count($volunteer_date); $i++) {
                             if ($event_days == $volunteer_date[$i]['volunteer_date']) {
                                 echo 'checked ';
-                                $v_flag=TRUE;
+                                $v_flag = TRUE;
                             }
                         };
-                        if(!$v_flag){
+                        if (!$v_flag) {
                             echo " disabled ";
                         }
                         echo "></div>";
@@ -548,7 +551,7 @@
                                 <p>No refunds will be made except for the removal or cancellation of an event after a donation has been made.</p>
                             </li>
                         </ul>
-                        </div>
+                    </div>
                     <div onload="disableSubmit()">
                         <input type="checkbox" min="0" name="terms" id="terms" onchange="activateButton(this)"> I Agree Terms & Coditions
                     </div>
@@ -559,8 +562,7 @@
             </form>
         </div>
     </div>
-<!-- complaint div -->
-<?php include "complaint.php" ?>
+
 
 </body>
 

@@ -194,11 +194,11 @@ class Events extends Model
             $params["status"] = $status;
         }
 
-        if ($order_type == 'volunteer_percent')
+/*         if ($order_type == 'volunteer_percent')
             $query = $query . ' volunteer_percent=volunteer_percent AND ';
 
         if ($order_type == 'donation_percent')
-            $query = $query . ' donation_percent=donation_percent AND ';
+            $query = $query . ' donation_percent=donation_percent AND '; */
 
         $query = $query . $query_filter_last . " HAVING ";
 
@@ -220,6 +220,7 @@ class Events extends Model
                 $params["latitude"] = $latitude;
             }
             $query = $query . " ORDER BY " . $order_type;
+
             if ($way == NULL)
                 $way = 'DESC';
             $query = $query . " " . $way;

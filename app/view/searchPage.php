@@ -36,58 +36,27 @@
         border-radius: 8px;
         transition: height, 0.3s linear;
         overflow: visible;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 275px);
+        align-items: center;
+        grid-gap: 1rem;
+        justify-content: center;
+        justify-items: center;
+        padding: 0.4em;
+        box-sizing: border-box;
     }
 
     .show-choices {
-        height: 70px;
+        height: 120px;
         transition: height, 0.3s linear;
-        overflow: visible;
     }
 
     .slidecontainer {
         width: 30%;
     }
 
-    .slider {
-        -webkit-appearance: none;
-        border-radius: 8px;
-        width: 100%;
-        height: 0.5rem;
-        background: #d3d3d3;
-        outline: none;
-        opacity: 0.7;
-        -webkit-transition: .2s;
-        transition: opacity .2s;
-    }
-
-    .slider:hover {
-        opacity: 1;
-    }
-
-    .slider::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        border-radius: 50%;
-        width: 1rem;
-        height: 1rem;
-        background: #04AA6D;
-        cursor: pointer;
-    }
-
-    .slider::-moz-range-thumb {
-        width: 1rem;
-        height: 1rem;
-        border-radius: 50%;
-        background: #04AA6D;
-        cursor: pointer;
-    }
-
-    .slidecontainer p {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    .choice-menu {
+      .choice-menu {
         display: none;
     }
 
@@ -95,9 +64,12 @@
     #date,
     #way,
     #mode,
-    #search-type {
+    #search-type,
+    #calendar-button,
+    #map-button {
         margin: 0;
         margin-left: 0.5rem;
+        width: 200px;
     }
 
     search {
@@ -217,6 +189,13 @@
     .map-index {
         z-index: -1;
     }
+    @media screen and (max-width:600px) {
+        .show-choices {
+            padding: 0.4em;
+            height: 270px;
+            transition: height, 0.3s linear;
+        }
+    }
 
     @media screen and (max-width:800px) {
 
@@ -234,11 +213,13 @@
         choices {
             height: 0;
             overflow: hidden;
-
+            grid-gap: 0.2rem;
+            padding: 0;
         }
 
         .show-choices {
-            height: 220px;
+            padding: 0.4em;
+            height: 170px;
             transition: height, 0.3s linear;
         }
 
@@ -284,51 +265,44 @@
             <button class="btn-icon" onclick="choices()"><i class="fas fa-sliders-h" style="font-size:1.5em"></i></button>
         </div>
 
-        <choices class="flex-col">
-            <div class="flex-row-to-col flex-space">
-                <button type="button" id="map-button" class="btn btn-solid margin-md" onclick="toggleMap();resizeMap();">Search by location</button>
-                <div class="flex-row flex-center margin-md">
-                    <label>Date: &nbsp; </label>
-                    <input type="text" id="calendar-input" class="hidden" value="" onchange="search();">
-                    <div style="position: relative;">
-                        <button type="button" class="btn" id="calendar-button" onclick="calendarShow();" style="border: 1px solid #ccc;color:black">year-month-date &nbsp;<i class="far fa-calendar-alt"></i></button>
-                        <div style="position: absolute; top:40px; left:-50px;" class="hidden" id="search-input-calendar">
-                            <?php include "calendarInput.php" ?>
-                        </div>
+        <choices>
+            <button type="button" id="map-button" class="btn btn-solid margin-md" onclick="toggleMap();resizeMap();">Search by location</button>
+            <div class="flex-row flex-center margin-md">
+                <input type="text" id="calendar-input" class="hidden" value="" onchange="search();">
+                <div style="position: relative;">
+                    <button type="button" class="btn" id="calendar-button" onclick="calendarShow();" style="border: 1px solid #ccc;color:black">Select Date &nbsp;<i class="far fa-calendar-alt"></i></button>
+                    <div style="position: absolute; top:40px; left:-50px;" class="hidden" id="search-input-calendar">
+                        <?php include "calendarInput.php" ?>
                     </div>
-                </div>
-
-                <select class="form-ctrl" id="search-type" style="margin-left:0.5rem"  onchange="search();searchType();">
-                    <option value="all"selected>All</option>
-                    <option value="event">Event</option>
-                    <option value="organization">Organization</option>
-                </select>
-
-                <select class="form-ctrl" id="mode" name="mode" style="margin-left:0.5rem"  onchange="search();">
-                    <option value="" disabled selected>Select the mode of the event</option>
-                    <option value="Physical">Physical</option>
-                    <option value="Virtual">Virtual</option>
-                    <option value="Physical & Virtual">Physical & Virtual</option>
-                </select>
-
-                <div class="flex-row-to-col flex-center">
-                    <div class="flex-row flex-center margin-md">
-                        <select id="sort" class="form-ctrl" onchange="search();">
-                            <option selected disabled>Sort by</option>
-                            <option value=distance>Distance</option>
-                            <option value=start_date>Date</option>
-                            <option value=volunteered>Volunteers</option>
-                            <option value=donations>Donations</option>
-                        </select>
-                        <select id="way" class="form-ctrl" style="margin-left:0.5rem" onchange="search();">
-                            <option selected disabled>Sort</option>
-                            <option value=ASC>Ascending</option>
-                            <option value=DESC>Descending</option>
-                        </select>
-                    </div>
-
                 </div>
             </div>
+
+            <select class="form-ctrl" id="search-type" style="margin-left:0.5rem" onchange="search();searchType();">
+                <option value="all" selected>All</option>
+                <option value="event">Event</option>
+                <option value="organization">Organization</option>
+            </select>
+
+            <select class="form-ctrl" id="mode" name="mode" style="margin-left:0.5rem" onchange="search();">
+                <option value="" disabled selected>Select the mode</option>
+                <option value="Physical">Physical</option>
+                <option value="Virtual">Virtual</option>
+                <option value="Physical & Virtual">Physical & Virtual</option>
+            </select>
+
+
+            <select id="sort" class="form-ctrl" onchange="search();">
+                <option selected disabled>Sort by</option>
+                <option value=distance>Distance</option>
+                <option value=start_date>Date</option>
+                <option value=volunteered>Volunteers</option>
+                <option value=donations>Donations</option>
+            </select>
+            <select id="way" class="form-ctrl" style="margin-left:0.5rem" onchange="search();">
+                <option selected disabled>Sort</option>
+                <option value=ASC>Ascending</option>
+                <option value=DESC>Descending</option>
+            </select>
         </choices>
 
         <!-- choice menu end -->
@@ -361,7 +335,7 @@
             calendarShow();
     });
 
-    function searchType(){
+    function searchType() {
         console.log(event.target.value);
         let mode = document.getElementById("mode");
         let sort = document.getElementById("sort");
@@ -369,16 +343,15 @@
         let date = document.getElementById("calendar-button");
         let map = document.getElementById("map-button");
 
-        if (event.target.value=="event"){
-            mode.disabled=sort.disabled=way.disabled=date.disabled=map.disabled=false;
-            map.style.opacity=date.style.opacity="1";
+        if (event.target.value == "event") {
+            mode.disabled = sort.disabled = way.disabled = date.disabled = map.disabled = false;
+            map.style.opacity = date.style.opacity = "1";
 
-        }
-        else if(event.target.value=="organization"){
-            map.style.opacity=date.style.opacity="0.5";
-            mode.disabled=sort.disabled=way.disabled=date.disabled=map.disabled=true;
+        } else if (event.target.value == "organization") {
+            map.style.opacity = date.style.opacity = "0.5";
+            mode.disabled = sort.disabled = way.disabled = date.disabled = map.disabled = true;
             let map_container = document.getElementById('map-container');
-            if(!map_container.classList.contains("hidden"))
+            if (!map_container.classList.contains("hidden"))
                 toggleMap();
         }
     }
@@ -421,7 +394,7 @@
     }
 
     /* event search ajax */
-    async function search(latitude = "", longitude = "", range = "" ,is_virtual="") {
+    async function search(latitude = "", longitude = "", range = "", is_virtual = "") {
 
         if (latitude == "" || longitude == "") {
             const position = await getCoordinates();
@@ -438,7 +411,7 @@
 
         let parent_container = document.querySelector('events');
 
-        if(document.getElementById("search-type").value=="event" || document.getElementById("search-type").value=="all"){
+        if (document.getElementById("search-type").value == "event" || document.getElementById("search-type").value == "all") {
             $.ajax({
                 url: "/Search/searchAll", //the page containing php script
                 type: "post", //request type,
@@ -453,7 +426,7 @@
                     order_type: sort,
                     way: way,
                     status: 'published',
-                    is_virtual : is_virtual,
+                    is_virtual: is_virtual,
                 },
                 success: function(result) {
                     parent_container.innerHTML = "";
@@ -536,11 +509,10 @@
                 }
             });
         }
-        if (!(range || mode || date || sort || way) && (document.getElementById("search-type").value=="organization")){
-            parent_container.innerHTML="";
+        if (!(range || mode || date || sort || way) && (document.getElementById("search-type").value == "organization")) {
+            parent_container.innerHTML = "";
             orgSearch(name);
-        }
-        else if(document.getElementById("search-type").value=="all")
+        } else if (document.getElementById("search-type").value == "all")
             orgSearch(name);
 
     }
@@ -627,13 +599,13 @@
 
         map.addListener("center_changed", () => {
             let latlang = map.getCenter();
-            search(latlang.lat(), latlang.lng(), 20,0);
+            search(latlang.lat(), latlang.lng(), 20, 0);
         });
 
         if (range) {
             document.getElementById("map-container").classList.toggle("hidden");
             resizeMap();
-            search(latitude, longitude, 20 , 0);
+            search(latitude, longitude, 20, 0);
 
         } else {
             search(latitude, longitude);

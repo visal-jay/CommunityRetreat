@@ -308,7 +308,7 @@
 
             <form action="/Event/view?page=volunteers&event_id=<?= $_GET["event_id"] ?>" method="post">
                 <label for="volunteer_date">Sort by volunteering date</label>
-                <select class="form-ctrl" id="volunteer_date" required name="volunteer_date" onchange="this.form.submit()">
+                <select class="form-ctrl" id="volunteer_date"  name="volunteer_date" onchange="this.form.submit()">
                     <option value="" selected>All</option>
                     <?php for ($i = 0; $i < count($volunteer_capacities); $i++) { 
                         if($volunteer_date_req ==$volunteer_capacities[$i]['event_date']) { ?>

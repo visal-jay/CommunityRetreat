@@ -56,6 +56,7 @@ class DonationsController{
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "donations"]);/*redirect to event page after enabling donation.*/
     }
 
+
     public function updateDonationCapacity()
     { /*update donation capacity*/
 

@@ -119,9 +119,7 @@
     }
 
 @media screen and (max-width:800px) {
-    .btn-lg{
 
-    }
 
     table,
     th,

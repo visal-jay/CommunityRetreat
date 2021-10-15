@@ -20,8 +20,7 @@ class EventController
         $user_roles = Controller::accessCheck(["moderator","treasurer", "organization", "guest_user", "registered_user"], $_GET["event_id"]);
         $event = new Events;
         $volunteer = new Volunteer();
-        if (!isset($_SESSION))
-            session_start();
+
         if ($event_details = $event->getDetails($_GET["event_id"])) {
             $data = $event_details;
             $data["volunteered"] = $data["volunteered"] == "" ? "0" :  $data["volunteered"];

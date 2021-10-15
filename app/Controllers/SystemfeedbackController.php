@@ -9,6 +9,7 @@ class SystemfeedbackController{
         $uid = $_SESSION["user"]["uid"];
         $data = ['uid' => $uid, 'feedback'=>$_POST['feedback']];
         $feedback->updateSystemFeedback($data);
+        (new UserController)->addActivity("You gave system feedback");
         if($user_roles["organization"])
             Controller::redirect("/Organisation/dashboard");
         elseif($user_roles["registered_user"] || $user_roles["guest_user"])

@@ -90,6 +90,7 @@ class DonationsController{
     }
 
     public function pay(){
+
         Controller::validateForm(["amount", "terms"], ["url"]);
         Controller::accessCheck(["registered_user"]);/*check whether registered user accessed it.*/
         (new UserController)->addActivity("Donated ". $_POST['amount'], $_GET["event_id"]);
@@ -102,7 +103,8 @@ class DonationsController{
         
         \Stripe\Stripe::setApiKey('sk_test_51JdYJ6JhZDUPzRAXbJg3k221yQ9pgNLhCFYz2ifKf6FPXszolkCJdx6N4tvg5CBvz5bSOVw3OnBZnAV7WFYnR2Ne00yji9wY0R');
         
-        $YOUR_DOMAIN = 'https://communityretreat.me';
+        $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === 0 ? 'https://' : 'http://';
+        $YOUR_DOMAIN = $protocol . $_SERVER['HTTP_HOST'];
 
 
         $checkout_session = \Stripe\Checkout\Session::create([
@@ -128,7 +130,6 @@ class DonationsController{
         header("Location: $checkout_session->url", true,  302);
         exit();
     }
-
 
    public function donationAccept()
     {

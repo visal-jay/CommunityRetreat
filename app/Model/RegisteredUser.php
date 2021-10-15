@@ -137,8 +137,9 @@ class RegisteredUser extends User
         $encryption=new Encryption;
         $data["time"] = (int)shell_exec("date '+%s'");
         $parameters = ["key" => $encryption->encrypt(["email" => $data["email"], "password" => $data["password"],"time"=>$data["time"]], 'email verificaition')];
-        $mail=new Mail;
         
+        $mail=new Mail;
+
         $mail->verificationEmail($data["email"],"confirmationMail","https://www.communityretreat.me/Signup/verifyemail?".http_build_query($parameters),'Signup');
    
     }

@@ -213,8 +213,8 @@
                                     <span class="input-error password-error error"><?php if(isset($_GET["passwordErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp".$_GET['passwordErr'] ; ?></span>
                                     <input type="password" class="password-error form-ctrl" name="password"  placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
                                 </div>
-
-                                <button name="signupUser" type="submit" class="btn btn-solid margin-md" value="registered-user">Sign Up</button>
+                                    <input name="signupUser" value="registered-user" type="hidden">
+                                <button  type="submit" class="btn btn-solid margin-md" >Sign Up</button>
                             </form>
                             <form action="/Signup/validate" method="post" id="signup-form-organisation" class="form <?php if ($_GET["signupOrg"]) echo "shown"; ?>">
                                 <div class="form-item">
@@ -236,7 +236,8 @@
                                     <span class="input-error password-error error"><?php if(isset($_GET["passwordErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp".$_GET['passwordErr'] ; ?></span>
                                     <input name="password" type="password"  class="form-ctrl" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
                                 </div>
-                                <button type="submit" class="btn btn-solid margin-md" value="organization" name="signupOrg">Sign Up</button>
+                                <input name="signupOrg" value="organization" type="hidden">
+                                <button type="submit" class="btn btn-solid margin-md">Sign Up</button>
                             </form>
                         </div>
                     </div>
@@ -246,7 +247,7 @@
         </div>
     </div>
 </body>
-<script src="/Public/assets/js/input_validation.js"></script>
+<!-- <script src="/Public/assets/js/input_validation.js"></script> -->
 <script>
     function switchf(id1, id2) {
         var forgot_form = document.getElementById("forgot-form");

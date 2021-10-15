@@ -66,7 +66,6 @@ class Budget extends Model
         $db = Model::getDB();
         $db->beginTransaction();
         
-        if(!isset($_SESSION)) session_start();
         $uid = $_SESSION["user"]["uid"] ;
                 
         /*update income and set the status as updated*/
@@ -98,7 +97,6 @@ class Budget extends Model
         $db = Model::getDB();
         $db->beginTransaction();
         
-        if(!isset($_SESSION)) session_start();
         $uid = $_SESSION["user"]["uid"] ;
                 
         $query = "UPDATE income SET status = 'updated' WHERE record_id = :record_id ORDER BY time_stamp DESC LIMIT 1";
@@ -130,8 +128,6 @@ class Budget extends Model
         $record_id = str_replace("EXP", "", $record_id);
         $db = Model::getDB();
         $db->beginTransaction();
-        
-        if(!isset($_SESSION)) session_start();
         $uid = $_SESSION["user"]["uid"] ;
                 
         $query = "UPDATE expense SET status = 'updated' WHERE record_id = :record_id ORDER BY time_stamp DESC LIMIT 1";

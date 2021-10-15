@@ -56,6 +56,7 @@ class Controller
                 if (!in_array($event_id, $user_events))
                     Controller::redirect("/Organisation/events");
             }
+
         } elseif (in_array("guest_user", $userroles))
             $data["guest_user"] = true;
 

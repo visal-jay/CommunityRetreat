@@ -149,7 +149,9 @@ class EventController
                 (new UserController)->sendNotifications("{$event_details['event_name']} event  has been removed.",$uid,"event","window.location.href='/Event/view?page=about&&event_id={$_POST["event_id"]}'",$_POST["event_id"]);
             }
         }
+
         $volunteer->removeVolunteers($_POST["event_id"]);
+        (new DonationsController)->donationRefund($_POST["event_id"]);
         $event->remove($_POST["event_id"]);
         Controller::redirect("/Organisation/events");
     }

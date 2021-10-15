@@ -29,7 +29,7 @@ class WorkTimelineController
 
     public function editTask()
     {
-        Controller::validateForm(["start_date", "end_date", "task", "task_id"], ["event_id"]);
+        Controller::validateForm(["start_date", "end_date", "task", "task_id"], $_GET["event_id"]);
         Controller::accessCheck(["organization", "moderator"], $_GET["event_id"]);
         (new UserController)->addActivity("Edit an existing task", $_GET["event_id"]);
         $_POST["event_id"] = $_GET["event_id"];

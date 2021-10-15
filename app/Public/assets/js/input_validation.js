@@ -17,7 +17,7 @@ document.querySelectorAll("form").forEach((form) => {
 						valid = false;
 					}
 				}
-				
+
 				if (valid) {
 					form.dataset["validated"] = "true";
 					form.submit();
@@ -38,10 +38,10 @@ function addErrorMsg(input, msg) {
 			span = document.createElement("span");
 			input.insertAdjacentElement("beforebegin",span);
 		}
-	else{
-		span = document.createElement("span");
-		input.insertAdjacentElement("beforebegin",span);
-	}
+		else{
+			span = document.createElement("span");
+			input.insertAdjacentElement("beforebegin",span);
+		}
 	
 	span.classList.add("input-error");
 	span.innerHTML = "<i class='fas fa-exclamation-circle'></i> &nbsp" + msg;

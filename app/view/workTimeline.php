@@ -334,7 +334,8 @@
                         <textarea name="task" class="task-textarea" placeholder="Change task" id="edit-task"></textarea>
                     </div>
 
-                    <button name="task_id" class="btn btn-solid margin-md" type="submit" id="edit-task-id">Save</button>
+                    <input type="hidden" id="edit-task-id" name="task_id">
+                    <button  class="btn btn-solid margin-md" type="submit" >Save</button>
 
                     <div>
                         <button type="button" class="btn-icon btn-close" onclick="togglePopup('edit-form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>

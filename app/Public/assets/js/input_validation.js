@@ -4,36 +4,27 @@ const password_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@
 
 document.querySelectorAll(".form-ctrl").forEach(ValidationMessages);
 
-
-/* document.querySelectorAll("form").forEach((e)=>{
-	e.addEventListener("submit",(event)=>{
-		e.querySelectorAll(".form-ctrl").forEach((input_field)=>{
-			console.log(input_field);
-			if(!validateField(input_field)){
-				event.preventDefault();
-				event.stopPropagation();
-			}
-		});
-	});
-}); */
-
 document.querySelectorAll("form").forEach((form) => {
-
-		form.setAttribute("novalidate", "");
 		form.addEventListener("submit", async function (e) {
-			let valid = true;
-
-			// validate field
-			for (const field of form.querySelectorAll(".form-ctrl")) {
-				let is_field_valid = await validateField(field);
-				if (!is_field_valid) {
-					valid = false;
-				}
-			}
-			
-			if (!valid) {
+			if(!form.dataset["validated"]){
 				e.preventDefault();
 				e.stopPropagation();
+				let valid = true;
+
+				for (const field of form.querySelectorAll(".form-ctrl")) {
+					let is_field_valid = await validateField(field);
+					if (!is_field_valid) {
+						valid = false;
+					}
+				}
+				
+				if (valid) {
+					form.dataset["validated"] = "true";
+					form.submit();
+				}
+			} 
+			else{
+				form.dataset["validated"] = null;
 			}
 		});
 	});
@@ -117,7 +108,6 @@ function ValidationMessages(input) {
 
 
 function checkMail(email) {
-	console.log("sdfsdfsdfsd");
 	return new Promise((resolve,reject)=>{
 		$.ajax({
 			url: "/Signup/checkEmailAvailable", //the page containing php script

@@ -19,7 +19,9 @@ error_reporting(E_ALL);
 set_error_handler('ErrorHandler::error');
 set_exception_handler('ErrorHandler::exception');
 
+$lifetime=3600;
 if(!isset($_SESSION)) session_start();
+setcookie(session_name(),session_id(),time()+$lifetime);
 
 $routing = new Routing();
 

@@ -131,8 +131,6 @@
         overflow: scroll;
     }
 
-
-
     .container-size {
         width: 90%;
     }

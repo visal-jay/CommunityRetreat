@@ -90,7 +90,6 @@ class DonationsController{
     }
 
     public function pay(){
-
         Controller::validateForm(["amount", "terms"], ["url"]);
         Controller::accessCheck(["registered_user"]);/*check whether registered user accessed it.*/
         (new UserController)->addActivity("Donated ". $_POST['amount'], $_GET["event_id"]);
@@ -129,6 +128,7 @@ class DonationsController{
         header("Location: $checkout_session->url", true,  302);
         exit();
     }
+
 
    public function donationAccept()
     {

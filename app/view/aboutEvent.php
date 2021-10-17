@@ -1,4 +1,3 @@
-<?php if (!isset($_SESSION)) session_start(); ?>
 <!DOCTYPE html>
 <html lang="en" id="id1">
 
@@ -729,12 +728,12 @@
         var latitude = '<?= $latitude ?>';
         var longitude = '<?= $longitude ?>';
 
-        latitude = latitude == '' ? position.coords.latitude : latitude;
-        longitude = longitude == '' ? position.coords.longitude : longitude;
+
+        latitude = (latitude == '' || latitude == 0) ? position.coords.latitude : latitude;
+        longitude = (longitude == ''|| longitude ==0) ? position.coords.longitude : longitude;
 
         var myLatlng = new google.maps.LatLng(latitude, longitude);
 
-        console.log(latitude, longitude);
 
         marker = new google.maps.Marker({
             position: myLatlng,
@@ -746,6 +745,7 @@
         marker.setMap(map);
 
         google.maps.event.addListener(marker, 'dragend', function(evt) {
+            console.log("asdasd");
             document.getElementById('longitude').value = evt.latLng.lng().toFixed(3);
             document.getElementById('latitude').value = evt.latLng.lat().toFixed(3);
             //document.getElementById('current').innerHTML = '<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';

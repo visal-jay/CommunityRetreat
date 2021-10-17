@@ -20,8 +20,7 @@ class EventController
         $user_roles = Controller::accessCheck(["moderator","treasurer", "organization", "guest_user", "registered_user"], $_GET["event_id"]);
         $event = new Events;
         $volunteer = new Volunteer();
-        if (!isset($_SESSION))
-            session_start();
+
         if ($event_details = $event->getDetails($_GET["event_id"])) {
             $data = $event_details;
             $data["volunteered"] = $data["volunteered"] == "" ? "0" :  $data["volunteered"];
@@ -50,7 +49,7 @@ class EventController
 
     public function gallery($event_details)
     {
-        $user_roles = Controller::accessCheck(["moderator", "organization", "guest_user", "registered_user"], $_GET["event_id"]);
+        $user_roles = Controller::accessCheck(["moderator", "organization", "guest_user", "registered_user","treasurer"], $_GET["event_id"]);
         $pagination=Model::pagination("add_photo",10," WHERE event_id = :event_id",["event_id"=>$_GET["event_id"]]);
         if (!$data = (new Gallery)->getGallery(["event_id" => $_GET["event_id"],"offset"=>$pagination["offset"] , "no_of_records_per_page"=> $pagination["no_of_records_per_page"]]))
             $data = array();
@@ -150,7 +149,9 @@ class EventController
                 (new UserController)->sendNotifications("{$event_details['event_name']} event  has been removed.",$uid,"event","window.location.href='/Event/view?page=about&&event_id={$_POST["event_id"]}'",$_POST["event_id"]);
             }
         }
+
         $volunteer->removeVolunteers($_POST["event_id"]);
+        (new DonationsController)->donationRefund($_POST["event_id"]);
         $event->remove($_POST["event_id"]);
         Controller::redirect("/Organisation/events");
     }

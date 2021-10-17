@@ -1,4 +1,3 @@
-<?php if (!isset($_SESSION)) session_start(); ?>
 <!DOCTYPE html>
 <html lang="en" id="id1">
 
@@ -183,6 +182,12 @@
     .income-expense-add-container {
         text-align: center;
     }
+    .amount-field {
+        width: 20%;
+        text-align: right;
+        margin: 5px;
+        padding: 5px;
+    }
 
     @media screen and (max-width:800px) {
         .container{
@@ -335,9 +340,10 @@
                             <label>Amount</label>
                             <input class="form-ctrl" name="amount" id="amount" type="number" placeholder="Enter the amount" required/>
                         </div>
-
+                        
                         <div class="form-action-buttons">
-                            <button class="btn submit-btn" name="event_id" type="submit" value="<?= $_GET["event_id"] ?>">Submit</button>
+                        <input type="text" class="hidden" name="event_id" value="<?= $_GET["event_id"] ?>">
+                            <button class="btn submit-btn" type="submit" >Submit</button>
                         </div>
 
                     </div>
@@ -351,7 +357,7 @@
                 <div class="budget-card-container">
                     <!--Display the donation sum from the database-->
                     <p class="details-overflow">Donations</p>
-                    <div class="amount-field"><p style="margin: 0; align-items:center"><?php echo 'Rs. ' . number_format($donation_sum, 2) ?></p></div>
+                    <p class="amount-field"><?php echo 'Rs. ' . number_format($donation_sum, 2) ?></p>
                     <div class="flex-row btn-field"></div>
                 </div>
 
@@ -370,7 +376,8 @@
                         <form action="/Budget/delete?" method="post">
                             <!--Delete the income and save it in database-->
                             <input type="text" class="hidden" name="record_id" value="<?= $income['record_id'] ?>">
-                            <button class="btn bg-red clr-white delete-cancel-btn" style="border: none;" name="event_id" type="submit" value=<?= $_GET['event_id'] ?>>
+                            <input type="hidden" name="event_id" value=<?= $_GET['event_id'] ?>>
+                            <button class="btn bg-red clr-white delete-cancel-btn" style="border: none;"  type="submit" >
                                 Delete</button>
                         </form>
                     </div>
@@ -406,7 +413,8 @@
                         </div>
 
                         <div class="form-action-buttons">
-                            <button class="btn submit-btn" name="event_id" type="submit" value="<?= $_GET["event_id"] ?>">Submit</button>
+                            <input type="hidden" name="event_id" value=<?= $_GET['event_id'] ?>>
+                            <button class="btn submit-btn" type="submit">Submit</button>
                         </div>
 
                     </div>
@@ -431,7 +439,8 @@
                             <form action="/Budget/delete?" method="post">
                                 <!--Delete the expense and save it in database-->
                                 <input type="text" class="hidden" name="record_id" value="<?= $expense['record_id'] ?>">
-                                <button class="btn bg-red clr-white delete-cancel-btn" style="border: none;" name="event_id" type="submit" value=<?= $_GET['event_id'] ?>>
+                                <input type="hidden" name="event_id" value=<?= $_GET['event_id'] ?>>
+                                <button class="btn bg-red clr-white delete-cancel-btn" style="border: none;" type="submit" >
                                     Delete</button>
                             </form>
                         </div>
@@ -465,6 +474,7 @@
                 <input type="text" class="hidden" name="record_id" id="record_id">
 
                 <div class="flex-row-to-col flex-center">
+                    <input type="hidden" name="event_id" value=<?= $_GET['event_id'] ?>>
                     <button type="submit" id="save" name="event_id" class="btn btn-solid update-save-btn">Save</button>
                     <button type="button" class="btn bg-red clr-white delete-cancel-btn" onclick="togglePopup('update-form');blur_background('container');stillBackground('id1')">Cancel</button>
                 </div>

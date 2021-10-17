@@ -17,7 +17,6 @@ class Budget extends Model
     }
     
 	public function addIncome($data){/*add incomes to the budget*/
-        if(!isset($_SESSION)) session_start();
         $data["uid"] = $_SESSION["user"]["uid"] ;       
         $query = 'INSERT INTO `income` (`details`, `amount`, `uid`, `event_id`) VALUES (:details,  :amount, :uid, :event_id)';
         $params=array_intersect_key($data,["details"=>'',"amount"=>'', "uid"=>'', "event_id"=>'']); 
@@ -25,7 +24,6 @@ class Budget extends Model
     }
 
     public function addExpense($data){/*add expenses to the budget*/
-        if(!isset($_SESSION)) session_start();
         $data["uid"] = $_SESSION["user"]["uid"] ;
         $query = 'INSERT INTO `expense` (`details`, `amount`, `uid`, `event_id`) VALUES (:details,  :amount, :uid, :event_id)';
         $params=array_intersect_key($data,["details"=>'',"amount"=>'', "uid"=>'', "event_id"=>'']);
@@ -37,8 +35,6 @@ class Budget extends Model
         $record_id = str_replace("INC", "", $record_id);
         $db = Model::getDB();
         $db->beginTransaction();
-        
-        if(!isset($_SESSION)) session_start();
         $uid = $_SESSION["user"]["uid"] ;
                 
         /*update income and set the status as updated*/
@@ -70,7 +66,6 @@ class Budget extends Model
         $db = Model::getDB();
         $db->beginTransaction();
         
-        if(!isset($_SESSION)) session_start();
         $uid = $_SESSION["user"]["uid"] ;
                 
         /*update income and set the status as updated*/
@@ -102,7 +97,6 @@ class Budget extends Model
         $db = Model::getDB();
         $db->beginTransaction();
         
-        if(!isset($_SESSION)) session_start();
         $uid = $_SESSION["user"]["uid"] ;
                 
         $query = "UPDATE income SET status = 'updated' WHERE record_id = :record_id ORDER BY time_stamp DESC LIMIT 1";
@@ -134,8 +128,6 @@ class Budget extends Model
         $record_id = str_replace("EXP", "", $record_id);
         $db = Model::getDB();
         $db->beginTransaction();
-        
-        if(!isset($_SESSION)) session_start();
         $uid = $_SESSION["user"]["uid"] ;
                 
         $query = "UPDATE expense SET status = 'updated' WHERE record_id = :record_id ORDER BY time_stamp DESC LIMIT 1";

@@ -119,9 +119,7 @@
     }
 
 @media screen and (max-width:800px) {
-    .btn-lg{
 
-    }
 
     table,
     th,
@@ -131,13 +129,6 @@
 
     #table .overflow {
         overflow: scroll;
-    }
-
-    .edit-btn,
-    .close-btn,
-    .save-btn {
-        font-size: 0.9rem;
-        padding: 8px;
     }
 
     .container-size {
@@ -207,11 +198,11 @@
                 <button class="btn btn-solid data edit-btn" onclick="edit()">Edit
                     &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
                 <div class="flex-row flex-center">
-                    <div class="edit-save-btn">
-                        <button class=" btn btn-solid bg-red border-red form hidden close-btn" onclick="edit()">Close &nbsp;&nbsp;<i class="fas fa-times "></i></button>
+                    <div class="edit-save-btn ">
+                        <button class=" btn btn-solid bg-red border-red form hidden btn-small close-btn" onclick="edit()">Close &nbsp;&nbsp;<i class="fas fa-times "></i></button>
                     </div>
                     <div class="edit-save-btn">
-                        <button class=" btn btn-solid form hidden save-btn" type="submit" form="donation-capacity">Save &nbsp; <i class="fas fa-check "></i></button>
+                        <button class=" btn btn-solid form hidden btn-small save-btn" type="submit" form="donation-capacity">Save &nbsp; <i class="fas fa-check "></i></button>
                     </div> 
                 </div>
             </div>

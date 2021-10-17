@@ -335,7 +335,6 @@
             google.maps.event.addListener(marker, 'dragend', function(evt) {
                 document.getElementById('longitude').value = evt.latLng.lng().toFixed(3);
                 document.getElementById('latitude').value = evt.latLng.lat().toFixed(3);
-                //document.getElementById('current').innerHTML = '<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';
             });
             map.setCenter(myLatlng);
             map.setZoom(15)

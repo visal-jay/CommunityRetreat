@@ -67,15 +67,15 @@ class Events extends Model
             $params["cover_photo"] = $cover_pic->getURL();
         }
 
-        if (isset($data["longitude"]) || isset($data["latitude"]))
-            $data["map"] = "true";
-        else
-            $data["map"] = "false";
-
-
         //updating date, start time, duration, mode, description, event name, location, cover photo & status???    
         $old_data = $this->getDetails($data["event_id"]);
         $new_data = array_merge($old_data, $data);
+
+        if (isset($new_data["longitude"]) || isset($new_data["latitude"]))
+            $new_data["map"] = "true";
+        else
+            $new_data["map"] = "false";
+
         $update_data = array_intersect_key($new_data, ['event_id' => "", 'start_date' => "", 'end_date' => "", 'start_time' => "", 'end_time' => "", 'mode' => "", 'about' => "", 'event_name' => "", 'longitude' => "", 'latitude' => "", 'map' => '', 'cover_photo' => "", 'status' => ""]);
         $params = array_merge($update_data, $params);
         $volunteer = new Volunteer();

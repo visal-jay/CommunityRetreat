@@ -61,7 +61,7 @@
         padding: 1rem 0;
     }
 
-    .container{
+    .container {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -116,7 +116,7 @@
     }
 
     @media (max-width:800px) {
-        .container{
+        .container {
             margin: 2rem auto !important;
         }
 
@@ -170,7 +170,7 @@
                             <label>Password</label>
                             <input type="password" name="password" class="form-ctrl" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
                         </div>
-                        <span class="input-error"><?php if(isset($_GET["loginErr"]) && $_GET["loginErr"]!="") echo "<i class='fas fa-exclamation-circle'></i> &nbsp".$_GET['loginErr'] ; ?></span>
+                        <span class="input-error"><?php if (isset($_GET["loginErr"]) && $_GET["loginErr"] != "") echo "<i class='fas fa-exclamation-circle'></i> &nbsp" . $_GET['loginErr']; ?></span>
                         <br>
                         <a onclick="switchf('forgot-form','login-form')">Forgot your password?</a>
                         <button type="submit" class="btn btn-solid margin-md">Login</button>
@@ -196,47 +196,48 @@
                             <form action="/Signup/validate" method="post" id="signup-form-user" class="form <?php if ($_GET["signupUser"]) echo "shown"; ?>">
                                 <div class="form-item">
                                     <label>Username</label>
-                                    <input type="text" name="username" class="form-ctrl" placeholder=" &#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" maxlength="10"/>
+                                    <input type="text" name="username" class="form-ctrl" placeholder=" &#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" maxlength="10" />
                                 </div>
                                 <div class="form-item">
                                     <label>Email</label>
-                                    <span class="input-error email-error error"><?php if(isset($_GET["emailErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp".$_GET['emailErr'] ; ?></span>
-                                    <input type="email" name="email" class="form-ctrl"  placeholder=" &#xf0e0; &nbsp; Enter Email" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
+                                    <span class="input-error email-error error"><?php if (isset($_GET["emailErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp" . $_GET['emailErr']; ?></span>
+                                    <input type="email" name="email" class="form-ctrl" placeholder=" &#xf0e0; &nbsp; Enter Email" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
                                 </div>
                                 <div class="form-item">
                                     <label>Telephone</label>
-                                    <span class="input-error telephone-error"><?php if(isset($_GET["telephoneErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp".$_GET['telephoneErr'] ; ?></span>
-                                    <input type="tel" name="contact_number" class="form-ctrl"  placeholder="&#xf879; &nbsp; Enter phone number" required style="font-family:Arial, FontAwesome" />
+                                    <span class="input-error telephone-error"><?php if (isset($_GET["telephoneErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp" . $_GET['telephoneErr']; ?></span>
+                                    <input type="tel" name="contact_number" class="form-ctrl" placeholder="&#xf879; &nbsp; Enter phone number" required style="font-family:Arial, FontAwesome" />
                                 </div>
                                 <div class="form-item">
                                     <label>Password</label>
-                                    <span class="input-error password-error error"><?php if(isset($_GET["passwordErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp".$_GET['passwordErr'] ; ?></span>
-                                    <input type="password" class="password-error form-ctrl" name="password"  placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
+                                    <span class="input-error password-error error"><?php if (isset($_GET["passwordErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp" . $_GET['passwordErr']; ?></span>
+                                    <input type="password" class="password-error form-ctrl" name="password" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
                                 </div>
-
-                                <button name="signupUser" type="submit" class="btn btn-solid margin-md" value="registered-user">Sign Up</button>
+                                <input name="signupUser" value="registered-user" type="hidden">
+                                <button type="submit" class="btn btn-solid margin-md">Sign Up</button>
                             </form>
                             <form action="/Signup/validate" method="post" id="signup-form-organisation" class="form <?php if ($_GET["signupOrg"]) echo "shown"; ?>">
                                 <div class="form-item">
                                     <label>Organization name</label>
-                                    <input type="text" name="username" class="form-ctrl" placeholder=" &#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" maxlength="10"/>
+                                    <input type="text" name="username" class="form-ctrl" placeholder=" &#xF007; &nbsp; Enter Username" required style="font-family:Arial, FontAwesome" maxlength="10" />
                                 </div>
                                 <div class="form-item">
                                     <label>Email</label>
-                                    <span class="input-error email-error error"><?php if(isset($_GET["emailErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp".$_GET['emailErr'] ; ?></span>
+                                    <span class="input-error email-error error"><?php if (isset($_GET["emailErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp" . $_GET['emailErr']; ?></span>
                                     <input type="email" name="email" class="form-ctrl" onkeyup="checkMail(this.value)" placeholder=" &#xf0e0; &nbsp; Enter Email" required style="font-family:Arial, FontAwesome" onkeyup="checkMail(this.value)" />
                                 </div>
                                 <div class="form-item">
                                     <label>Telephone</label>
-                                    <span class="input-error telephone-error"><?php if(isset($_GET["telephoneErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp".$_GET['telephoneErr'] ; ?></span>
-                                    <input type="text" name="contact_number" class="form-ctrl"  placeholder="&#xf879; &nbsp; Enter phone number" required style="font-family:Arial, FontAwesome" />
+                                    <span class="input-error telephone-error"><?php if (isset($_GET["telephoneErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp" . $_GET['telephoneErr']; ?></span>
+                                    <input type="text" name="contact_number" class="form-ctrl" placeholder="&#xf879; &nbsp; Enter phone number" required style="font-family:Arial, FontAwesome" />
                                 </div>
                                 <div class="form-item">
                                     <label>Password</label>
-                                    <span class="input-error password-error error"><?php if(isset($_GET["passwordErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp".$_GET['passwordErr'] ; ?></span>
-                                    <input name="password" type="password"  class="form-ctrl" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
+                                    <span class="input-error password-error error"><?php if (isset($_GET["passwordErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp" . $_GET['passwordErr']; ?></span>
+                                    <input name="password" type="password" class="form-ctrl" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
                                 </div>
-                                <button type="submit" class="btn btn-solid margin-md" value="organization" name="signupOrg">Sign Up</button>
+                                <input name="signupOrg" value="organization" type="hidden">
+                                <button type="submit" class="btn btn-solid margin-md">Sign Up</button>
                             </form>
                         </div>
                     </div>
@@ -277,8 +278,6 @@
             errors[i].innerHTML="";
         } */
     }
-
-
 </script>
 
 

@@ -1,4 +1,3 @@
-<?php if (!isset($_SESSION)) session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -530,7 +529,7 @@
                 let parent_container = document.querySelector('events');
                 result.forEach(org => {
                     let template = `
-                    <figure onclick="location.href = '/Organisation/view?org_id=${org.uid}' ">
+                    <figure onclick="location.href = '/Organisation/view?org_id=${org.uid}&page=about' ">
                         <div class="content">
                             <div class="photo-container"><img src="${org.cover_pic}" style="object-fit: cover;" alt="">
                             <p class="margin-md" style="margin-bottom:0;color:white;padding:4px;background-color:#44c9d6;border-radius:15px;text-align:center;font-size:0.85em;">Organisation</p>

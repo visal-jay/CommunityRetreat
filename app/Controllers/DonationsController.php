@@ -56,6 +56,7 @@ class DonationsController{
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "donations"]);/*redirect to event page after enabling donation.*/
     }
 
+
     public function updateDonationCapacity()
     { /*update donation capacity*/
 
@@ -92,7 +93,6 @@ class DonationsController{
 
         Controller::validateForm(["amount", "terms"], ["url"]);
         Controller::accessCheck(["registered_user"]);/*check whether registered user accessed it.*/
-        (new UserController)->addActivity("Donated ". $_POST['amount'], $_GET["event_id"]);
         
         $validate=new Validation;
         if(!$validate->currency($_POST["amount"]))/*find whether amount is valid*/
@@ -102,7 +102,8 @@ class DonationsController{
         
         \Stripe\Stripe::setApiKey('sk_test_51JdYJ6JhZDUPzRAXbJg3k221yQ9pgNLhCFYz2ifKf6FPXszolkCJdx6N4tvg5CBvz5bSOVw3OnBZnAV7WFYnR2Ne00yji9wY0R');
         
-        $YOUR_DOMAIN = 'https://communityretreat.me';
+        $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === 0 ? 'https://' : 'http://';
+        $YOUR_DOMAIN = $protocol . $_SERVER['HTTP_HOST'];
 
 
         $checkout_session = \Stripe\Checkout\Session::create([
@@ -133,13 +134,12 @@ class DonationsController{
     {
         Controller::validateForm([], ["event_id", "session_id"]);
         Controller::accessCheck(["registered_user"]);/*check whether registered user accessed it.*/
-        (new UserController)->addActivity("Donated ". $_POST['amount'], $_GET["event_id"]);
         require __DIR__."/../Libararies/stripe-php-master/init.php";
 
         \Stripe\Stripe::setApiKey('sk_test_51JdYJ6JhZDUPzRAXbJg3k221yQ9pgNLhCFYz2ifKf6FPXszolkCJdx6N4tvg5CBvz5bSOVw3OnBZnAV7WFYnR2Ne00yji9wY0R');
 
         $session = \Stripe\Checkout\Session::retrieve($_GET["session_id"]);
-
+        (new UserController)->addActivity("Donated ". substr($session["amount_total"],0,-2), $_GET["event_id"]);
         (new Donations)->donationAccept($_SESSION["user"]["uid"], $_GET["event_id"], substr($session["amount_total"],0,-2), $session["payment_intent"]);
         Controller::redirect("/Event/view", ["page" => "about", "event_id" => $_GET["event_id"]]);
             

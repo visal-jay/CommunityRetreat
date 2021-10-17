@@ -49,6 +49,7 @@ class UserController{
         }
         else{
             $user->changePassword($uid,$data);
+            $this->addActivity("You changed your password");
             Controller::redirect("/$controller/profile");
         }       
     }
@@ -61,7 +62,7 @@ class UserController{
         $uid=$_SESSION["user"]["uid"];
         $data=["uid"=>$uid,"profile_pic"=>$_FILES['profile_pic']];
         $user->changeProfilePic($data);
-        $this->addActivity("You changed your profile picture.",-1);
+        $this->addActivity("You changed your profile picture");
     }
 
     public function updateUsername(){
@@ -71,7 +72,7 @@ class UserController{
         $User = new UserController();
         $uid=$_SESSION["user"]["uid"];
         $user->changeUsername($uid,$_POST['username']);
-        $this->addActivity("You changed your username.",-1);
+        $this->addActivity("You changed your username");
         Controller::redirect("/$controller/profile");
     }
 
@@ -91,7 +92,7 @@ class UserController{
         }          
         else
             $user->changeContactNumber($uid,$data);
-            $this->addActivity("You changed your contact number.",-1);
+            $this->addActivity("You changed your contact number");
             Controller::redirect("/$controller/profile");
     }
 
@@ -113,7 +114,7 @@ class UserController{
         }
         else
             $user->changeEmail($uid,$data);
-            $this->addActivity("You changed your email.",-1);
+            $this->addActivity("You changed your email");
             Controller::redirect("/$controller/profile");
     }
 
@@ -133,9 +134,6 @@ class UserController{
         $user = new User();
         $activities = $user->deleteActivity($_POST['time_stamp']);
     }
-
-    // /Event/view?page=forum&event_id=#&update_announcement_id=#
-    //sendNotifications("You have assigend modertor user role",$uid,"system","window.location.href=/Event/view?page=about&event_id=" . $_GET["event_id"], $_GET["event_id"])
 
     public function notifications(){
         $user_roles=Controller::accessCheck(["registered_user"]);

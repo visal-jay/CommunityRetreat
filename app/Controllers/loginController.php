@@ -100,7 +100,6 @@ class LoginController
 
     /* logout and destroy session */
     public function logout(){
-        if(!isset($_SESSION)) session_start();
         session_destroy();
         Controller::redirect('/Login/view');
     }

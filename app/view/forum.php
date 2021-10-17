@@ -302,7 +302,8 @@
                         <textarea name="announcement" class="announcement-textarea" placeholder="Enter announcement" id="edit-announcement"></textarea>
                     </div>
 
-                    <button name="announcement_id" class="btn btn-solid margin-md" type="submit" id="edit-announcement-id">Save</button>
+                    <input type="hidden" name="announcement_id" id="edit-announcement-id">
+                    <button class="btn btn-solid margin-md" type="submit" >Save</button>
 
                     <div>
                         <button type="button" class="btn-icon btn-close" onclick="togglePopup('edit-div'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>

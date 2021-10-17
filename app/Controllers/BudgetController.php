@@ -25,11 +25,9 @@ class BudgetController
     } 
      
 	public function addIncome(){/*add incomes to the budget*/
-
         Controller::validateForm(["details", "amount", "event_id"], ["url"]);
         Controller::accessCheck(["organization","treasurer"],$_POST["event_id"]);/*check whether organization or treasurer accessed it.*/
         (new UserController)->addActivity("Add Income", $_GET["event_id"]);
-
         $data=array_merge($_GET, $_POST);
         $validate=new Validation;
         if(!$validate->currency($_POST["amount"]))/*find whether amount is valid*/

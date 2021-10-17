@@ -25,7 +25,7 @@ class OrganisationController
 
     public function addPhoto()
     {
-        (new UserController)->addActivity("Add photo to gallery");
+        (new UserController)->addActivity("You added photo to gallery");
         (new Gallery)->addPhoto([], true);
         echo json_encode("");
         //Controller::redirect("/Organisation/gallery");
@@ -41,7 +41,6 @@ class OrganisationController
             $user_roles = Controller::accessCheck(["organization"]);
             $org_id = $_SESSION["user"]["uid"];
         }
-
         $pagination = Model::pagination("organization_gallery", 12, " WHERE uid = :uid", ["uid" => $org_id]);
         if (!$data = (new Gallery)->getGallery(["uid" => $org_id, "offset" => $pagination["offset"], "no_of_records_per_page" => $pagination["no_of_records_per_page"]], true))
             $data = array();
@@ -53,7 +52,7 @@ class OrganisationController
     {
         $user_roles = Controller::accessCheck(["organization"]);
         Controller::validateForm(["photo"]);
-        (new UserController)->addActivity("Delete photo from gallery");
+        (new UserController)->addActivity("you deleted photo from gallery");
         (new Gallery)->deletePhoto(["image" => $_POST["photo"]], true);
         Controller::redirect("/Organisation/gallery");
     }
@@ -62,7 +61,7 @@ class OrganisationController
     {
         Controller::validateForm(["about_us", "longitude", "latitude"]);
         Controller::accessCheck(["organization"]);
-        (new UserController)->addActivity("Dahsboard details updated");
+        (new UserController)->addActivity("You updated dashboard details");
         (new Organisation)->updateDetails($_SESSION["user"]["uid"], $_POST);
         Controller::redirect("/Organisation/dashboard");
     }
@@ -83,7 +82,6 @@ class OrganisationController
         $data = array_merge($data, $pagination);
         View::render("manageEvents", $data, $user_roles);
     }
-
 
     public function report()
     {
@@ -123,7 +121,6 @@ class OrganisationController
     {
         Controller::validateForm(["bank_name", "account_number"]);
         Controller::accessCheck(["organization"]);
-        (new UserController)->addActivity("Bank details updated");
         $encryption = new Encryption();
         $organisation_admin = new Organisation();
         $validate = new Validation();
@@ -132,6 +129,7 @@ class OrganisationController
         $data = ["uid" => $uid, "bank_name" => $_POST['bank_name'], "account_number" => $account_number];
         if ($validate->bankaccount($_POST['account_number'])) {
             $organisation_admin->changeAccountNumber($uid, $data);
+            (new UserController)->addActivity("you updated your bank details");
             Controller::redirect("/Organisation/profile");
         }
     }
@@ -146,9 +144,9 @@ class OrganisationController
         Controller::validateForm(["role", "uid"], ["event_id"]);
         $user_roles = Controller::accessCheck(["organization"]);
         $userController = new UserController();
-        $userController->addActivity("User role added", $_GET["event_id"]);
         (new Organisation)->addUserRole($_POST["uid"], $_POST["role"], $_GET["event_id"]);
         $event_details = (new Events)->getDetails( $_GET["event_id"]);
+        $userController->addActivity("User role added for {$event_details['event_name']}", $_GET["event_id"]);
         if ($_POST["role"] == "Treasurer")
             $userController->sendNotifications("You have been assigned as a treasurer in {$event_details['event_name']} event By {$event_details['organisation_username']}.",$_POST["uid"],"event","window.location.href='/Event/view?page=about&&event_id={$_GET["event_id"]}'",$_GET["event_id"]);
         else if($_POST["role"] == "Moderator")
@@ -162,9 +160,9 @@ class OrganisationController
         Controller::validateForm(["role", "uid"], ["event_id"]);
         $user_roles = Controller::accessCheck(["organization"]);
         $userController = new UserController();
-        $userController->addActivity("User role deleted", $_GET["event_id"]);
         (new Organisation)->deleteUserRole($_POST["uid"], $_POST["role"], $_GET["event_id"]);
         $event_details = (new Events)->getDetails( $_GET["event_id"]);
+        $userController->addActivity("User role deleted from {$event_details['event_name']}", $_GET["event_id"]);
         if ($_POST["role"] == "treasurer")
             $userController->sendNotifications("You have been removed from the treasurer position of {$event_details['event_name']} event By {$event_details['organisation_username']}.",$_POST["uid"],"event","window.location.href='/Event/view?page=about&&event_id={$_GET["event_id"]}'",$_GET["event_id"]);
         else if($_POST["role"] == "moderator")

@@ -126,14 +126,14 @@ class Volunteer extends Model
     {
 
         $current_volunteered_dates = (new Volunteer)->getVolunteeredDates($event_id);
-
+        $event_details = (new Events)->getDetails($event_id);
 
 
         if ($volunteer_dates == NULL) {
             $delete_query = "DELETE FROM  volunteer WHERE uid = :uid AND event_id = :event_id";
             $delete_params = ['uid' => $_SESSION['user']['uid'], 'event_id' => $event_id];
             Model::insert($delete_query, $delete_params);
-            return "Unvolunteered from an event";
+            return "You unvolunteered from {$event_details['event_name']}";
         } else {
             if (count($current_volunteered_dates) > 0) {
                 $delete_query = "DELETE FROM  volunteer WHERE uid = :uid AND event_id = :event_id";
@@ -145,7 +145,7 @@ class Volunteer extends Model
                     $params = ['uid' => $_SESSION['user']['uid'], 'event_id' => $event_id, 'volunteer_date' => $volunteer_date];
                     Model::insert($query, $params);
                 }
-                return "volunteered for an event";
+                return "You volunteered for {$event_details['event_name']}";
             } else {
 
                 foreach ($volunteer_dates as $volunteer_date) {
@@ -154,7 +154,7 @@ class Volunteer extends Model
                     $params = ['uid' => $_SESSION['user']['uid'], 'event_id' => $event_id, 'volunteer_date' => $volunteer_date];
                     Model::insert($query, $params);
                 }
-                return "volunteered for an event";
+                return "volunteered for {$event_details['event_name']}";
             }
         }
     }

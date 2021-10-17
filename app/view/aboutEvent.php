@@ -71,6 +71,11 @@
         transform: translate(-50%, -50%);
     }
 
+    .volunteer-popup{
+        height: 440px;
+        overflow: scroll;
+    }
+
     .blurred {
         filter: blur(2px);
         overflow: hidden;
@@ -235,6 +240,10 @@
             left: 50%;
 
         }
+
+        .popup.active .content {
+            top:290px;
+    }
 
         .about-textarea {
             width: 100%;
@@ -474,7 +483,7 @@
         </div>
     </div>
     <div class="popup" id="volunteer-form">
-        <div class="content">
+        <div class="content volunteer-popup">
             <div>
                 <h3>What are the days you would like to volunteer ?</h3>
             </div>

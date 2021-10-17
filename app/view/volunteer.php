@@ -124,8 +124,6 @@
     .popup.active .content {
         transition: all 300ms ease-in-out;
         transform: translate(-50%, -50%);
-        height: 440px;
-        overflow: scroll;
     }
 
     .blurred {
@@ -226,9 +224,6 @@
             width: fit-content;
         }
 
-        .popup.active .content {
-            top: 290px;
-    }
     }
 </style>
 

@@ -19,7 +19,7 @@ class WorkTimelineController
         $id = (new Organisation)->getUserRoles($_GET["event_id"]);
         for ($i = 0; $i < count($id); $i++) {
             if ($id[$i]["moderator_flag"] == 1) {
-                (new UserController)->sendNotifications("New task has been added to {$event['event_name']}!", $id[$i]["uid"], "event", "window.location.href='/event/view?page=about&&event_id={$_GET["event_id"]}'", $_GET["event_id"]);
+                (new UserController)->sendNotifications("New task has been added to {$event['event_name']}!", $id[$i]["uid"], "event", "window.location.href='/event/view?page=timeline&&event_id={$_GET["event_id"]}'", $_GET["event_id"]);
             }
         }
         $_POST["event_id"] = $_GET["event_id"];

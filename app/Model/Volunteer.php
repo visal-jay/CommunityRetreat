@@ -84,14 +84,10 @@ class Volunteer extends Model
 
     public function checkVolunteerCount($event_id, $start_date, $end_date)
     {
-
-
         $startDate = new DateTime($start_date);
         $interval = new DateInterval('P1D');
         $realEnd = new DateTime($end_date);
         $realEnd->add($interval);
-
-
         $period = new DatePeriod($startDate, $interval, $realEnd);
         $capacity_exceeded = [];
         foreach ($period as $date) {

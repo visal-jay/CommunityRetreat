@@ -135,7 +135,8 @@
                 <figure class="item">
                     <?php if (!$guest_user && $photo["uid"] == $_SESSION["user"]["uid"]) { ?>
                         <form class="delete-button" method="post" action="/Organisation/deletePhoto">
-                            <button type="submit" class="btn-icon" name="photo" value="<?= $photo["image"] ?>"> <i class="far fa-trash-alt"></i></button>
+                        <input type="hidden" name="photo" value="<?= $photo["image"] ?>">
+                            <button type="submit" class="btn-icon"> <i class="far fa-trash-alt"></i></button>
                         </form>
                     <?php  } ?>
                     <div class="gallery-container flex flex-center"><img src="<?= $photo["image"] ?>" style="object-fit: cover;" alt=""></div>

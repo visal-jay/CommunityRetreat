@@ -15,7 +15,7 @@
         min-width: 50%;
     }
 
-    
+
 
     p {
         margin: 0.5rem;
@@ -137,7 +137,8 @@
                     <div class="content">
                         <?php if (isset($_SESSION["user"]) && $photo["uid"] == $_SESSION["user"]["uid"]) { ?>
                             <form class="delete-button" method="post" action="/Event/deletePhoto?event_id=<?= $_GET["event_id"] ?>">
-                                <button type="submit" class="btn-icon" name="photo" value="<?= $photo["image"] ?>"> <i class="far fa-trash-alt"></i></button>
+                                <input type="hidden" name="photo" value="<?= $photo["image"] ?>">
+                                <button type="submit" class="btn-icon"> <i class="far fa-trash-alt"></i></button>
                             </form>
                         <?php  } ?>
                         <div class="gallery-container flex flex-center"><img src="<?= $photo["image"] ?>" style="object-fit: cover;" alt=""></div>
@@ -247,7 +248,7 @@
                 return false;
             },
             error: function(request, status, error) {
-                if(!document.querySelector("#file-form").firstElementChild.classList.contains("input-error")){
+                if (!document.querySelector("#file-form").firstElementChild.classList.contains("input-error")) {
                     let msg = request.responseText.match(/####(.*)####/);
                     let span = document.createElement("span");
                     span.classList.add("input-error");

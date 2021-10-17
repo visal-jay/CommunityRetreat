@@ -20,7 +20,6 @@ class VolunteerController{
         $data["volunteers"] = $volunteer_details;
         $volunteer_sum = $volunteer->getVolunteerSum($_GET["event_id"]);
         $data["volunteer_sum"] = $volunteer_sum;
-        $data["ip"] = exec('ifconfig | grep "inet " | grep -v 127.0.0.1 | cut -d\  -f2');
         $data = array_merge($data, $event_details);
         $data['volunteer_capacities'] = $volunteer->getVolunteerCapacities($_GET["event_id"]);
         $data['volunteer_sum'] = $volunteer->getVolunteerSum($_GET["event_id"]);
@@ -66,6 +65,7 @@ class VolunteerController{
         View::render("volunteerThank");
     }
 
+    //first letter eka simple karanna (function name) 
     public function VolunteerEvent(){
         if(isset($_POST['volunteer_date'])){
             Controller::validateForm(["volunteer_date"],["event_id"]);

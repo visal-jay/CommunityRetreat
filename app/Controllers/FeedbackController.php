@@ -3,9 +3,10 @@
 class FeedbackController {
     public function view($event_details)
     {
-        $feedback = new Feedback;
-        $user_roles = Controller::accessCheck(["registered_user", "organization", "moderator","guest_user","treasurer"],$_GET["event_id"]);
+        Controller::validateForm([], ["event_id"]);   
+        $user_roles = Controller::accessCheck(["registered_user", "organization", "moderator","guest_user"],$_GET["event_id"]);
         $pagination= Model::pagination("event_feedback", 5, "WHERE event_id= :event_id", ["event_id"=> $_GET["event_id"]]);
+        $feedback = new Feedback;
         $data = array();
         if ($user_roles["moderator"] || $user_roles["organization"]){
             $data["feedbacks"] = $feedback->getFeedback($_GET["event_id"]);
@@ -20,13 +21,14 @@ class FeedbackController {
 
     public function addFeedback()
     {
+        //feedback rate : Visal
         Controller::validateForm(["feedback", "rate"], ["event_id"]);
         Controller::accessCheck(["registered_user"],$_GET["event_id"]);
         (new UserController)->addActivity("Add a feedback",$_GET["event_id"]);
         $_POST["event_id"] = $_GET["event_id"];
         $_POST["uid"] = $_SESSION["user"]["uid"];
         (new Feedback)->addFeedback($_POST);
-        Controller::redirect("/Event/view", ["page" => "feedback", "event_id" => $_POST["event_id"]]);
+        Controller::redirect("/Event/view", ["page" => "feedback", "event_id" => $_GET["event_id"]]);
     }
 
     public function statusToggle()

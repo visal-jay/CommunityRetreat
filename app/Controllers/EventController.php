@@ -152,6 +152,7 @@ class EventController
         }
         $volunteer->removeVolunteers($_POST["event_id"]);
         $event->remove($_POST["event_id"]);
+        $donation->donationRefund($_POST["event_id"]);
         Controller::redirect("/Organisation/events");
     }
 

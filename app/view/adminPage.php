@@ -55,7 +55,6 @@ h1 {
 .system-details-cards{
     display: flex;
     height: 300px;
-    width: 250px;
     justify-content: space-between;
     flex-direction: column;
     text-align: center;
@@ -65,23 +64,40 @@ h1 {
 .graph{
     width: 100%;
 }
+
+@media screen and (max-width:800px) {
+    .system-details-cards-container{
+        flex-direction: column;
+    }
+
+    .system-details-cards{
+        height: 350px;
+    }
+}
 </style>
 <?php  include "nav.php" ?>
 <body>
     <div class="system-details-cards-container">
             <div class="system-details-cards">
                 <div>
-                    <img src="/Public/assets/org.png"style=" width: 200px; height: 200px;">
+                    <img src="/Public/assets/org-count.jpg"style=" width: 300px; height: 200px;">
                 </div>                     
                     <h3>Total Number of Organizations</h3>
-                    <h2>20</h2>   
+                    <h2><?= $org_count ?></h2>   
             </div>
             <div  class="system-details-cards">
                 <div>
-                    <img src="/Public/assets/user.png"style=" width: 200px; height: 200px;">
+                    <img src="/Public/assets/reg-count.jpg"style=" width: 300px; height: 200px;">
                 </div>
                     <h3>Total Number of Registered users</h3>
-                    <h2>130</h2>
+                    <h2><?= $reg_user_count ?></h2>
+            </div>
+            <div  class="system-details-cards">
+                <div>
+                    <img src="/Public/assets/event-count.jpg"style=" width: 300px; height: 200px;">
+                </div>
+                    <h3>Total Number of Published Events</h3>
+                    <h2><?= $event_count ?></h2>
             </div>
       </div>
 

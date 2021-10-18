@@ -61,4 +61,34 @@ class Admin extends User{
         User::insert($query,$params); 
     }
 
+    public function regUserCount()
+    {
+        $query = 'SELECT count(uid) as count FROM registered_user';
+        $result= Model::select($query);
+        return $result[0]["count"];
+    }
+
+    public function orgCount()
+    {
+        $query = 'SELECT count(uid) as count FROM organization';
+        $result= Model::select($query);
+        return $result[0]["count"];
+    }
+
+    public function eventCount()
+    {
+        $query = 'SELECT count(event_id) as count FROM event WHERE status="published"';
+        $result= Model::select($query);
+        return $result[0]["count"];
+    }
+
+    /*public function eventCount()
+    {
+        $query = 'SELECT count(uid) FROM event';
+        $result= Model::select($query);
+        return $result;
+    }
+*/
+
+
 }

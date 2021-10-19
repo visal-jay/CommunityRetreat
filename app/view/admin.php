@@ -73,6 +73,9 @@
                                 <h3 onclick="<?= $complaint['path'] ?>"><?=$complaint['complaint_name']?></h3>
                             </div>
                             <div class='margin-side-md'>
+                                <h4>By: <?=$complaint['username']?></h4>
+                            </div>
+                            <div class='margin-side-md'>
                                 <h4>Date: <?=$complaint['date']?></h4>
                             </div>
                             <div class='margin-side-md'>

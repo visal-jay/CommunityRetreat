@@ -1,5 +1,7 @@
 <?php
 
+use Stripe\Event;
+
 class ForumController
 {
     public function view($event_details)
@@ -35,9 +37,9 @@ class ForumController
         $_POST["event_id"] = $_GET["event_id"];
         $announcement = new Announcement;
         $announcement->editAnnouncement($_POST);
+        $event = (new Events)->getDetails($_GET["event_id"]);
+        (new VolunteerController)->sendNotificationstoVolunteers("{$event['event_name']} event informations has been changed!","/event/view?page=forum&event_id={$_GET["event_id"]}&update_announcement_id={$_POST["announcement_id"]}",$_GET["event_id"]);
         Controller::redirect("/Event/view", ["page" => "forum", "event_id" => $_GET["event_id"]]);
-
-        //notification for volunteered people : Manuka & Venodi (aref=/Event/view/page=forum&event_id=$_GET["event_id"]&update_announcement_id)
     }
 
     public function deleteAnnouncement()

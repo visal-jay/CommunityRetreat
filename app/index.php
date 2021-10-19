@@ -23,6 +23,9 @@ $lifetime=3600;
 session_set_cookie_params($lifetime);
 if(!isset($_SESSION)) session_start();
 
+$_SESSION["user"]["uid"]="ADM0000046";
+$_SESSION["user"]["user_type"]="admin";
+
 $routing = new Routing();
 
 $routing->process($_SERVER['QUERY_STRING']);

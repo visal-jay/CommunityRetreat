@@ -322,22 +322,6 @@
                         <h3 class="margin-md"><?= $announcement["title"] ?></h3>
                         <date><?= $announcement["date"] ?></date>
                         <description class="margin-md description"><?= $announcement["announcement"] ?></description>
-
-                        <?php if ($organization || $moderator) { ?>
-                            <update class="margin-md">
-                                <button class="btn btn-small margin-side-md" onclick="edit(); editForm('<?= $announcement['title'] ?>','<?= $announcement['announcement_id'] ?>'); togglePopup('edit-div'); blur_background('background'); stillBackground('id1');"> <i class="btn-icon far fa-edit margin-side-md"></i>&nbsp;Edit</button>
-                                <button class="btn btn-small clr-red border-red " onclick="remove()" required style="font-family:Ubuntu, sans-serif,  FontAwesome"> &#xf2ed; &nbsp;Remove </button>
-                                <div class="flex-row flex-space" style="display: none;">
-                                    <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
-                                    <form method="post" action="/Forum/deleteAnnouncement?event_id=<?= $_GET["event_id"] ?>" class="flex-row flex-center">
-                                        <input name="announcement_id" class="hidden" value="<?= $announcement["announcement_id"] ?>">
-                                        <button class="btn-icon flex-row flex-center"><i type="submit" class="fas fa-check clr-green margin-side-md"></i>&nbsp;</button>
-                                    </form>
-                                    <i class="btn-icon fas fa-times clr-red margin-side-md" onclick="cancel()"></i>
-                                </div>
-                            </update>
-                        <?php } ?>
-
                     </div>
                 </div>
             <?php } ?>

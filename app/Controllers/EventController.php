@@ -126,6 +126,7 @@ class EventController
                 $volunteer->removeVolunteersOutofRange( $_GET["event_id"],$uid,$_POST["start_date"],$_POST["end_date"]);
             }
         }
+        (new VolunteerController)->sendNotificationstoVolunteers("{$_POST['event_name']} event informations has been changed!","/event/view?page=about&&event_id={$_GET["event_id"]}",$_GET["event_id"]);
         $events = new Events;
         $events->updateDetails(array_merge($_POST,$_GET));
         Controller::redirect("/Event/view", ["page" => "about", "event_id" => $_GET["event_id"]]);

@@ -176,8 +176,8 @@ h2 {
     <div class="flex-col flex-center margin-md">
         <h1 class="data"><?= $event_name ?></h1>
         <?php if (($organization || $moderator) && ($_GET["page"] == "about")) { ?>
-            <label class="form hidden" for="">Event name</label>
-            <input value="<?= $event_name ?>" type="text" name="event_name" form="update-form" class="form form-ctrl hidden" placeholder="Enter event name" required></input>
+            <label class="form hidden" id="event_name" for="">Event name</label>
+            <input value="<?= $event_name ?>" type="text" name="event_name"  form="update-form" class="form form-ctrl hidden" placeholder="Enter event name" required></input>
         <?php } ?>
     </div>
 

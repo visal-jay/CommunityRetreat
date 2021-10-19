@@ -25,7 +25,8 @@ class AdminController{
     //View complaints
     public function complaint(){
         $user_roles=Controller::accessCheck(["admin"]);
-        View::render("admin",[],$user_roles);
+        $data['complaints'] = (new Complaint)->getComplaints();
+        View::render("admin",$data,$user_roles);
     }
 
     //View system feedbacks UI

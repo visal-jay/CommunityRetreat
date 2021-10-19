@@ -391,6 +391,19 @@
         });
     }
 
+    function fillComplaint(){
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        var complaint_event_id = document.getElementById("complaint_uid");
+        complaint_event_id.setAttribute("value",urlParams.get('org_id'));
+        var complaint_name = document.getElementById('complaint_name');
+        complaint_name.setAttribute("value",'<?= $username ?>'); 
+        var complaint_status = document.getElementById('complaint_status');
+        complaint_status.setAttribute("value",'organization');
+    }
+
+    fillComplaint();
+
     
 
 </script>

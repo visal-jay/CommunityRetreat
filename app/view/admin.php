@@ -64,94 +64,29 @@
 <body>
     <div class="flex-col flex-center margin-side-lg " >
         <h1>Complaints</h1>
-        <div class="margin-side-lg card-container" style="margin-top: 2rem; margin-left:150px; margin-right:150px; border:white">
-            <div class="event-card-details flex-col" style="display: flex; flex-direction: row;">
-                <div class="margin-side-md complaint">
-                    <p style="margin: 10px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptatem numquam laboriosam quaerat nisi repellat, nam temporibus molestias maxime eum iste velit officia deserunt recusandae voluptatum molestiae nihil ipsam et.</p>
-                </div>
-
-                <div class="margin-side-md complainant" style="display: flex; align-items: center;">
-                    <a href="" style="text-decoration: none; color:black">Venodi widanagamage</a>
-                </div>
-
-                <div class="margin-side-md" style="display: flex; align-items: center;">
-                    <a href="" style="text-decoration: none; color:black">Embark</a>
-                </div>
-                
-                <div class="margin-side-md" style="display: flex; align-items: center;">
-                    <p>2021.08.20</p>
-                </div>
-                
-                <div style="display: flex; align-items: center;"><button class="btn flex-col flex-center margin-md btn-solid">Dismiss</button></div>
-                <div style="display: flex; align-items: center;"><button class="btn flex-col flex-center margin-md remove-btn" style="background-color: red; color: white; border: none;">Remove</button></div>
-            </div>
-        </div>
-        <div class="margin-side-lg card-container" style="margin-top: 2rem; margin-left:150px; margin-right:150px">
-            <div class="event-card-details flex-col" style="display: flex; flex-direction: row;">
-                <div class="margin-side-md complaint">
-                    <p style="margin: 10px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptatem numquam laboriosam quaerat nisi repellat, nam temporibus molestias maxime eum iste velit officia deserunt recusandae voluptatum molestiae nihil ipsam et.</p>
-                </div>
-
-                <div class="margin-side-md complainant" style="display: flex; align-items: center;">
-                    <a href="" style="text-decoration: none; color:black">Venodi widanagamage</a>
-                </div>
-
-                <div class="margin-side-md" style="display: flex; align-items: center;">
-                    <a href="" style="text-decoration: none; color:black">Embark</a>
-                </div>
-                
-                <div class="margin-side-md" style="display: flex; align-items: center;">
-                    <p>2021.08.20</p>
-                </div>
-                
-                <div style="display: flex; align-items: center;"><button class="btn flex-col flex-center margin-md btn-solid">Dismiss</button></div>
-                <div style="display: flex; align-items: center;"><button class="btn flex-col flex-center margin-md remove-btn" style="background-color: red; color: white; border: none;">Remove</button></div>
-            </div>
-        </div>
-        <div class="margin-side-lg card-container" style="margin-top: 2rem; margin-left:150px; margin-right:150px">
-            <div class="event-card-details flex-col" style="display: flex; flex-direction: row;">
-                <div class="margin-side-md complaint">
-                    <p style="margin: 10px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptatem numquam laboriosam quaerat nisi repellat, nam temporibus molestias maxime eum iste velit officia deserunt recusandae voluptatum molestiae nihil ipsam et.</p>
-                </div>
-
-                <div class="margin-side-md complainant" style="display: flex; align-items: center;">
-                    <a href="" style="text-decoration: none; color:black">Venodi widanagamage</a>
-                </div>
-
-                <div class="margin-side-md" style="display: flex; align-items: center;">
-                    <a href="" style="text-decoration: none; color:black">Embark</a>
-                </div>
-                
-                <div class="margin-side-md" style="display: flex; align-items: center;">
-                    <p>2021.08.20</p>
-                </div>
-                
-                <div style="display: flex; align-items: center;"><button class="btn flex-col flex-center margin-md btn-solid">Dismiss</button></div>
-                <div style="display: flex; align-items: center;"><button class="btn flex-col flex-center margin-md remove-btn" style="background-color: red; color: white; border: none;">Remove</button></div>
-            </div>
-        </div>
-        <div class="margin-side-lg card-container" style="margin-top: 2rem; margin-left:150px; margin-right:150px">
-            <div class="event-card-details flex-col" style="display: flex; flex-direction: row;">
-                <div class="margin-side-md complaint">
-                    <p style="margin: 10px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptatem numquam laboriosam quaerat nisi repellat, nam temporibus molestias maxime eum iste velit officia deserunt recusandae voluptatum molestiae nihil ipsam et.</p>
-                </div>
-
-                <div class="margin-side-md complainant" style="display: flex; align-items: center;">
-                    <a href="" style="text-decoration: none; color:black">Venodi widanagamage</a>
-                </div>
-
-                <div class="margin-side-md" style="display: flex; align-items: center;">
-                    <a href="" style="text-decoration: none; color:black">Embark</a>
-                </div>
-                
-                <div class="margin-side-md" style="display: flex; align-items: center;">
-                    <p>2021.08.20</p>
-                </div>
-                
-                <div style="display: flex; align-items: center;"><button class="btn flex-col flex-center margin-md btn-solid">Dismiss</button></div>
-                <div style="display: flex; align-items: center;"><button class="btn flex-col flex-center margin-md remove-btn" style="background-color: red; color: white; border: none;">Remove</button></div>
-            </div>
-        </div>
+        <?php
+            foreach($complaints as $complaint){?>
+    
+                    <div class='margin-side-lg card-container' style='margin-top: 2rem; width:90%'>
+                        <div class='event-card-details flex-col'>
+                            <div class='margin-side-md'>
+                                <h3 onclick="<?= $complaint['path'] ?>"><?=$complaint['complaint_name']?></h3>
+                            </div>
+                            <div class='margin-side-md'>
+                                <h4>Date: <?=$complaint['date']?></h4>
+                            </div>
+                            <div class='margin-side-md'>
+                                <p><?=$complaint['complaint']?></p>
+                            </div>
+                            <div class="flex-row flex-center">
+                                <div class='margin-md'><button class='btn bg-green clr-white'>Resolve</button></div>
+                                <div class='margin-md'><button class='btn bg-red clr-white'>Dismiss</button></div>
+                            </div>
+                           
+                        </div>
+                    </div>
+         <?php } ?>
+      
     </div>
     
 </body>

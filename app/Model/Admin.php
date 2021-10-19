@@ -82,6 +82,15 @@ class Admin extends User{
         return $result[0]["count"];
     }
 
+    public function getDonationReport(){/*get the donation sum and date and send it to the graph in view file*/
+        $query="SELECT SUM(amount) as donation_sum ,date_format(time_stamp,'%x-%m-%d') as day FROM donation GROUP BY day ORDER BY day ASC";
+        $result=Model::select($query);
+        if (count($result)==0)
+            return false;
+        else
+            return $result;
+    }
+
     /*public function eventCount()
     {
         $query = 'SELECT count(uid) FROM event';

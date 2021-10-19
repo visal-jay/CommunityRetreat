@@ -10,34 +10,6 @@
     <title>Document</title>
 </head>
 <style>
-    textarea {
-        height: 150px;
-        padding: 12px 20px;
-        box-sizing: border-box;
-        border: 2px solid #ccc;
-        border-radius: 4px;
-        background-color: #f8f8f8;
-        font-size: 16px;
-        resize: none;
-    }
-
-    p {
-       text-align: justify;
-       max-height:150px ;
-       overflow-y: scroll;
-       background: gainsboro;
-       padding:.2rem;
-       border-radius: 8px;
-
-    }
-
-    h3{
-        margin: 0.8rem 0rem;
-    }
-    h4{
-        margin: 0.2rem 0rem;
-    }
-
 
     .form {
         min-width: 50%;
@@ -79,6 +51,12 @@
         background: #16c79a;
     }
 
+    .remove-btn{
+        background-color: red;
+        color: white;
+        border: none;
+
+    }
     
 </style>
 <?php if($admin) include "nav.php" ?>
@@ -86,72 +64,92 @@
 <body>
     <div class="flex-col flex-center margin-side-lg " >
         <h1>Complaints</h1>
-        <div class="margin-side-lg card-container" style="margin-top: 2rem;">
-            <div class="event-card-details flex-col">
-                <div class="margin-side-md">
-                    <h3>Embark</h3>
+        <div class="margin-side-lg card-container" style="margin-top: 2rem; margin-left:150px; margin-right:150px; border:white">
+            <div class="event-card-details flex-col" style="display: flex; flex-direction: row;">
+                <div class="margin-side-md complaint">
+                    <p style="margin: 10px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptatem numquam laboriosam quaerat nisi repellat, nam temporibus molestias maxime eum iste velit officia deserunt recusandae voluptatum molestiae nihil ipsam et.</p>
                 </div>
-                <div class="margin-side-md">
-                    <h4>By: Venodi widanagamage</h4>
+
+                <div class="margin-side-md complainant" style="display: flex; align-items: center;">
+                    <a href="" style="text-decoration: none; color:black">Venodi widanagamage</a>
                 </div>
-                <div class="margin-side-md">
-                    <h4>Date: 2021.08.20</h4>
+
+                <div class="margin-side-md" style="display: flex; align-items: center;">
+                    <a href="" style="text-decoration: none; color:black">Embark</a>
                 </div>
-                <div class="margin-side-md">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptatem numquam laboriosam quaerat nisi repellat, nam temporibus molestias maxime eum iste velit officia deserunt recusandae voluptatum molestiae nihil ipsam et.</p>
+                
+                <div class="margin-side-md" style="display: flex; align-items: center;">
+                    <p>2021.08.20</p>
                 </div>
-                <div class="flex-col flex-center margin-md"><button class="btn ">Viewed</button></div>
+                
+                <div style="display: flex; align-items: center;"><button class="btn flex-col flex-center margin-md btn-solid">Dismiss</button></div>
+                <div style="display: flex; align-items: center;"><button class="btn flex-col flex-center margin-md remove-btn" style="background-color: red; color: white; border: none;">Remove</button></div>
             </div>
         </div>
-        <div class="margin-side-lg card-container" style="margin-top: 2rem;">
-            <div class="event-card-details flex-col">
-                <div class="margin-side-md">
-                    <h3>Aiesec</h3>
+        <div class="margin-side-lg card-container" style="margin-top: 2rem; margin-left:150px; margin-right:150px">
+            <div class="event-card-details flex-col" style="display: flex; flex-direction: row;">
+                <div class="margin-side-md complaint">
+                    <p style="margin: 10px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptatem numquam laboriosam quaerat nisi repellat, nam temporibus molestias maxime eum iste velit officia deserunt recusandae voluptatum molestiae nihil ipsam et.</p>
                 </div>
-                <div class="margin-side-md">
-                    <h4>By: Sasheen samarajeewa</h4>
+
+                <div class="margin-side-md complainant" style="display: flex; align-items: center;">
+                    <a href="" style="text-decoration: none; color:black">Venodi widanagamage</a>
                 </div>
-                <div class="margin-side-md">
-                    <h4>Date: 2021.08.12</h4>
+
+                <div class="margin-side-md" style="display: flex; align-items: center;">
+                    <a href="" style="text-decoration: none; color:black">Embark</a>
                 </div>
-                <div class="margin-side-md">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptatem numquam laboriosam quaerat nisi repellat, nam temporibus molestias maxime eum iste velit officia deserunt recusandae voluptatum molestiae nihil ipsam et.</p>
+                
+                <div class="margin-side-md" style="display: flex; align-items: center;">
+                    <p>2021.08.20</p>
                 </div>
-                <div class="flex-col flex-center margin-md"><button class="btn ">Viewed</button></div>
+                
+                <div style="display: flex; align-items: center;"><button class="btn flex-col flex-center margin-md btn-solid">Dismiss</button></div>
+                <div style="display: flex; align-items: center;"><button class="btn flex-col flex-center margin-md remove-btn" style="background-color: red; color: white; border: none;">Remove</button></div>
             </div>
         </div>
-        <div class="margin-side-lg card-container " style="margin-top: 2rem;">
-            <div class="event-card-details flex-col">
-                <div class="margin-side-md">
-                    <h3>Leo Club</h3>
+        <div class="margin-side-lg card-container" style="margin-top: 2rem; margin-left:150px; margin-right:150px">
+            <div class="event-card-details flex-col" style="display: flex; flex-direction: row;">
+                <div class="margin-side-md complaint">
+                    <p style="margin: 10px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptatem numquam laboriosam quaerat nisi repellat, nam temporibus molestias maxime eum iste velit officia deserunt recusandae voluptatum molestiae nihil ipsam et.</p>
                 </div>
-                <div class="margin-side-md">
-                    <h4>By: Nirmal ilamgamge</h4>
+
+                <div class="margin-side-md complainant" style="display: flex; align-items: center;">
+                    <a href="" style="text-decoration: none; color:black">Venodi widanagamage</a>
                 </div>
-                <div class="margin-side-md">
-                    <h4>Date: 2021.08.10</h4>
+
+                <div class="margin-side-md" style="display: flex; align-items: center;">
+                    <a href="" style="text-decoration: none; color:black">Embark</a>
                 </div>
-                <div class="margin-side-md">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptatem numquam laboriosam quaerat nisi repellat, nam temporibus molestias maxime eum iste velit officia deserunt recusandae voluptatum molestiae nihil ipsam et.</p>
+                
+                <div class="margin-side-md" style="display: flex; align-items: center;">
+                    <p>2021.08.20</p>
                 </div>
-                <div class="flex-col flex-center margin-md"><button class="btn ">Viewed</button></div>
+                
+                <div style="display: flex; align-items: center;"><button class="btn flex-col flex-center margin-md btn-solid">Dismiss</button></div>
+                <div style="display: flex; align-items: center;"><button class="btn flex-col flex-center margin-md remove-btn" style="background-color: red; color: white; border: none;">Remove</button></div>
             </div>
         </div>
-        <div class="margin-side-lg card-container" style="margin-top: 2rem;">
-            <div class="event-card-details flex-col">
-                <div class="margin-side-md">
-                    <h3>RevolUX</h3>
+        <div class="margin-side-lg card-container" style="margin-top: 2rem; margin-left:150px; margin-right:150px">
+            <div class="event-card-details flex-col" style="display: flex; flex-direction: row;">
+                <div class="margin-side-md complaint">
+                    <p style="margin: 10px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptatem numquam laboriosam quaerat nisi repellat, nam temporibus molestias maxime eum iste velit officia deserunt recusandae voluptatum molestiae nihil ipsam et.</p>
                 </div>
-                <div class="margin-side-md">
-                    <h4>By: Venodi widanagamage</h4>
+
+                <div class="margin-side-md complainant" style="display: flex; align-items: center;">
+                    <a href="" style="text-decoration: none; color:black">Venodi widanagamage</a>
                 </div>
-                <div class="margin-side-md">
-                    <h4>Date: 2021.08.2</h4>
+
+                <div class="margin-side-md" style="display: flex; align-items: center;">
+                    <a href="" style="text-decoration: none; color:black">Embark</a>
                 </div>
-                <div class="margin-side-md">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptatem numquam laboriosam quaerat nisi repellat, nam temporibus molestias maxime eum iste velit officia deserunt recusandae voluptatum molestiae nihil ipsam et.</p>
+                
+                <div class="margin-side-md" style="display: flex; align-items: center;">
+                    <p>2021.08.20</p>
                 </div>
-                <div class="flex-col flex-center margin-md"><button class="btn ">Viewed</button></div>
+                
+                <div style="display: flex; align-items: center;"><button class="btn flex-col flex-center margin-md btn-solid">Dismiss</button></div>
+                <div style="display: flex; align-items: center;"><button class="btn flex-col flex-center margin-md remove-btn" style="background-color: red; color: white; border: none;">Remove</button></div>
             </div>
         </div>
     </div>

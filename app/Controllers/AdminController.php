@@ -64,4 +64,13 @@ class AdminController{
         Controller::redirect("systemFeedbacks");
     }
 
+    public function donationReport()/*Generate the report of all the donations*/
+    {
+        Controller::accessCheck(["admin"]);/*check whether admij accessed it.*/
+        
+        $donation = new Donations;
+        $data["donations_graph"] = json_encode($donation->getReport(["event_id" => $_GET["event_id"]]));
+        View::render('adminPage', $data);/*send all the data to admin page*/
+    }
+
 }

@@ -113,23 +113,25 @@
         </div>
 
     </div>
+    <?php var_dump($volunteers_graph); ?>
+    <?php var_dump($donations_graph); ?>
 </body>
 <?php include "footer.php" ?>
 <script>
     /*send data to the graph*/
     const data = <?= $donations_graph ?>;
-    console.log(data);
+
     const backgroundColor = ['#6F69AC', '#FEC260', '#93B5C6', '#FA8072']
     const borderColor = ['#6F69AC80', '#FEC26080', '#93B5C680', '#FA807280']
 
     let keys = [];
     let amounts = [];
     for (const event in data) {
-        keys.push(data["day"]);
-        amounts.push(data["donation_sum"]);
+        keys.push(data[event]["day"]);
+        amounts.push(data[event]["donation_sum"]);
     }
 
-    //console.log(keys, amount);
+    console.log(keys, amounts);
 
     var myLineChart = new Chart('myChart', {
         type: 'line',
@@ -160,13 +162,6 @@
                     },
                     ticks: {
                         beginAtZero: true,
-                        userCallback: function(label, index, labels) {
-                            // when the floored value is the same as the value we have a whole number
-                            if (Math.floor(label) === label) {
-                                return label;
-                            }
-
-                        },
                     }
 
                 }]
@@ -176,44 +171,51 @@
 </script>
 
 <script>
-    var xValues = ["Jan 2021", "Feb 2021", "Mar 2021", "Apr 2021", "May 2021", "Jun 2021", "Jul 2021", "Aug 2021",
-        "Sep 2021", "Oct 2021",
-        "Nov 2021", "Dec 2021"
-    ];
-    var yValues = [10, 15, 11, 12, 13, 18, 20, 14, 11, 19, 10, 17];
+    /*send data to the graph*/
+    const data = <?= $volunteers_graph ?>;
 
-    new Chart("myChart1", {
-        type: "line",
+    const backgroundColor = ['#6F69AC', '#FEC260', '#93B5C6', '#FA8072']
+    const borderColor = ['#6F69AC80', '#FEC26080', '#93B5C680', '#FA807280']
+
+    let keys = [];
+    let amounts = [];
+    for (const event in data) {
+        keys.push(data[event]["day"]);
+        amounts.push(data[event]["volunteer_sum"]);
+    }
+
+    console.log(keys, amounts);
+
+    var myLineChart = new Chart('myChart1', {
+        type: 'line',
         data: {
-            labels: xValues,
+            labels: keys,
             datasets: [{
-                fill: false,
-                lineTension: 0,
-                backgroundColor: "#4B3869",
-                borderColor: "#E7E0C9",
-                data: yValues
+                label: 'Volunteers',
+                data: amounts,
+                backgroundColor: backgroundColor[0],
+                borderColor: borderColor[0],
+                fill: false
             }]
+
         },
         options: {
-            legend: {
-                display: false
-            },
+            responsive: true,
             scales: {
                 yAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'Organizations',
+                        labelString: 'Count',
                     },
-                    ticks: {
-                        min: 10,
-                        max: 20
-                    }
                 }],
                 xAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'Month',
+                        labelString: 'Date',
                     },
+                    ticks: {
+                        beginAtZero: true,
+                    }
 
                 }]
             }

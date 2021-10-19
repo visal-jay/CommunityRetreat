@@ -10,12 +10,12 @@ class AdminController{
         $reg_user_count = $admin->regUserCount();
         $org_count = $admin->orgCount();
         $event_count = $admin->eventCount();
-        //$event_count = $admin->eventCount();
+        $data["donations_graph"] = json_encode($admin->getDonationReport());
+        $data["volunteers_graph"] = json_encode($admin->getVolunteerReport());
 
         $data["reg_user_count"]=$reg_user_count;
         $data["org_count"]=$org_count;
         $data["event_count"]=$event_count;
-        //$data["event_count"]=$event_count;
         View::render("adminPage",$data,$user_roles);
     }
 
@@ -63,15 +63,6 @@ class AdminController{
         $data=["feedback_id"=>$_POST['feedback_id']];
         $systemFeedback->changeFeedbackState($data);
         Controller::redirect("systemFeedbacks");
-    }
-
-    public function donationReport()/*Generate the report of all the donations*/
-    {
-        Controller::accessCheck(["admin"]);/*check whether admij accessed it.*/
-        
-        $donation = new Donations;
-        $data["donations_graph"] = json_encode($donation->getReport(["event_id" => $_GET["event_id"]]));
-        View::render('adminPage', $data);/*send all the data to admin page*/
     }
 
 }

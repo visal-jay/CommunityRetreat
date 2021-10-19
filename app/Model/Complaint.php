@@ -11,7 +11,7 @@ class Complaint extends Model{
 
     public function getComplaints(){
         $query = 'SELECT reg.username, complaint.complaint_name, complaint.complaint ,complaint.date, complaint.path FROM complaint JOIN registered_user reg ON complaint.complainant_uid = reg.uid';
-        $result = Model::select($query,[]);
+        $result = Model::select($query,[]);                                          
         return $result;
     }
 }

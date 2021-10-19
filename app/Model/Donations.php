@@ -91,8 +91,7 @@ class Donations extends Model{
 
     public function getRefundDetails($event_id){
         $query = 'SELECT uid, event_id, amount, intent_id FROM donation WHERE event_id =:event_id'; 
-        //$params = ["event_id" => $event_id];
-        $params = ["event_id" => "2"];
+        $params = ["event_id" => $event_id];
         $result=Model::select($query,$params);
        return $result;
     }

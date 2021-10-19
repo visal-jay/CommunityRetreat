@@ -47,3 +47,4 @@ app/Core/Model.php
 .metals/metals.lock.db
 .metals/metals.log
 .metals/metals.log
+app/Core/Model.php

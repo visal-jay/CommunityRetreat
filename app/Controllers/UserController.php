@@ -40,12 +40,12 @@ class UserController{
         $uid=$_SESSION["user"]["uid"];
         $data = ["uid"=>$_POST['uid'],"password"=>password_hash($_POST['password'],PASSWORD_DEFAULT)];
         if(!(new User)->checkCurrentPassword($uid,$_POST['current_password'])){
-            $error1=["currentpassworderr"=>"Password incorrect"];
-            Controller::redirect("/$controller/profile", $error1);
+            $error["currentpassworderr"] = "Password incorrect";
+            Controller::redirect("/$controller/profile", $error);
         }
         if(!$validate->password($_POST["new_password"])) {
-            $error2 = ["newpassworderr"=>"Strong password required<br> Combine least 8 of the following: uppercase letters,lowercase letters,numbers and symbols"];
-            Controller::redirect("/$controller/profile",$error2);
+            $error["newpassworderr"] = "Strong password required<br> Combine least 8 of the following: uppercase letters,lowercase letters,numbers and symbols";
+            Controller::redirect("/$controller/profile",$error);
         }
         else{
             $user->changePassword($uid,$data);
@@ -132,7 +132,7 @@ class UserController{
 
     function removeActivity(){
         $user = new User();
-        $activities = $user->deleteActivity($_POST['time_stamp']);
+        $user->deleteActivity($_POST['time_stamp']);
     }
 
     public function notifications(){

@@ -17,15 +17,16 @@ class EventController
 
     public function about()
     {
-        $user_roles = Controller::accessCheck(["moderator","treasurer", "organization", "guest_user", "registered_user"], $_GET["event_id"]);
+        $user_roles = Controller::accessCheck(["moderator","treasurer", "organization", "guest_user", "registered_user","admin"], $_GET["event_id"]);
         $event = new Events;
         $volunteer = new Volunteer();
+        $uid = $_SESSION['user']['uid'];
 
         if ($event_details = $event->getDetails($_GET["event_id"])) {
             $data = $event_details;
             $data["volunteered"] = $data["volunteered"] == "" ? "0" :  $data["volunteered"];
             $data["donations"] = $data["donations"] == "" ? "0" :  $data["donations"];
-            $data["volunteer_date"] = $volunteer->getVolunteeredDates($_GET["event_id"]);
+            $data["volunteer_date"] = $volunteer->getVolunteeredDates($uid,$_GET["event_id"]);
             $data["volunteer_capacity_exceeded"]=$volunteer->checkVolunteerCount($_GET["event_id"],$data['start_date'],$data['end_date']);
             View::render("eventPage", $data, $user_roles);
         } else
@@ -118,11 +119,11 @@ class EventController
                 unset($_POST[$key]);
         }
         $volunteer = new Volunteer;
-        $volunteered_uid = $volunteer->getVolunteeredUid( $_GET["event_id"], $_POST["start_date"], $_POST["end_date"]);
+        $volunteered_uid = $volunteer->getvolunteereduidOutofRange( $_GET["event_id"], $_POST["start_date"], $_POST["end_date"]);
         for ($i = 0; $i < count($volunteered_uid); $i++) {
             foreach ($volunteered_uid[$i] as $uid) {
                 (new UserController)->sendNotifications("{$_POST['event_name']} event informations has been changed.Please volunteer again..!",$uid,"event","window.location.href='/event/view?page=about&&event_id={$_GET["event_id"]}'",$_GET["event_id"]);
-                $volunteer->removeVolunteers( $_GET["event_id"],$uid,$_POST["start_date"],$_POST["end_date"]);
+                $volunteer->removeVolunteersOutofRange( $_GET["event_id"],$uid,$_POST["start_date"],$_POST["end_date"]);
             }
         }
         $events = new Events;
@@ -142,15 +143,8 @@ class EventController
         if (gmdate("Y-m-d",$time) < $end_date){
             (new DonationsController)->donationRefund($_POST["event_id"]);     
         }
-        $volunteer = new Volunteer();
-        $volunteers = $volunteer->getVolunteeredUid($_POST["event_id"]);
-        for ($i = 0; $i < count($volunteers); $i++){
-            foreach ($volunteers[$i] as $uid){
-                (new UserController)->sendNotifications("{$event_details['event_name']} event  has been removed.",$uid,"event","window.location.href='/Event/view?page=about&&event_id={$_POST["event_id"]}'",$_POST["event_id"]);
-            }
-        }
-
-        $volunteer->removeVolunteers($_POST["event_id"]);
+        (new VolunteerController)->sendNotificationstoVolunteers("{$event_details['event_name']} event  has been removed.","/",$_POST["event_id"]);
+        (new Volunteer)->removeVolunteers($_POST["event_id"]);
         (new DonationsController)->donationRefund($_POST["event_id"]);
         $event->remove($_POST["event_id"]);
         Controller::redirect("/Organisation/events");

@@ -223,6 +223,7 @@
         .form {
             width: fit-content;
         }
+
     }
 </style>
 

@@ -4,7 +4,19 @@ class AdminController{
     // View admin homepage
     public function dashboard(){
         $user_roles = Controller::accessCheck(["admin"]);
-        View::render('adminPage',$user_roles);
+
+        $admin=new Admin();
+
+        $reg_user_count = $admin->regUserCount();
+        $org_count = $admin->orgCount();
+        $event_count = $admin->eventCount();
+        //$event_count = $admin->eventCount();
+
+        $data["reg_user_count"]=$reg_user_count;
+        $data["org_count"]=$org_count;
+        $data["event_count"]=$event_count;
+        //$data["event_count"]=$event_count;
+        View::render("adminPage",$data,$user_roles);
     }
 
     //View admin profile
@@ -25,7 +37,8 @@ class AdminController{
     //View complaints
     public function complaint(){
         $user_roles=Controller::accessCheck(["admin"]);
-        View::render("admin",[],$user_roles);
+        $data['complaints'] = (new Complaint)->getComplaints();
+        View::render("admin",$data,$user_roles);
     }
 
     //View system feedbacks UI
@@ -51,4 +64,5 @@ class AdminController{
         $systemFeedback->changeFeedbackState($data);
         Controller::redirect("systemFeedbacks");
     }
+
 }

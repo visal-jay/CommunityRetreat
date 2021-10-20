@@ -1,7 +1,7 @@
 <?php
 //use Defuse\Crypto\File;
 
-class OrganisationController
+class OrganisationController extends Controller
 {
     public function view()
     {

@@ -19,8 +19,8 @@ class Admin extends User{
 
         if($data['profile_pic']['size']!==NULL){
             $time= (int)shell_exec("date '+%s'"); //Get current timestamp
-            // exec("rm -rf /Users/visaljayathilaka/code/group-project/Group-16/app/Uploads/event/cover" . $data["event_id"] . "*");
-            $cover_pic = new Image($data['uid'].$time,"profile/","profile_pic",true);
+            shell_exec("rm ". __DIR__ ."/../Uploads/profile/" .$data['uid'] ."*");
+            $cover_pic = new Image($data['uid']."-".$time,"profile/","profile_pic",true);
             $params =["profile_pic"=>  $cover_pic->getURL(),"uid"=>$data['uid']];  
         }
         $query = 'UPDATE admin SET profile_pic= :profile_pic   WHERE uid = :uid ';

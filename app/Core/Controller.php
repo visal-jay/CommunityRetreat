@@ -1,22 +1,33 @@
 <?php
 class Controller
 {
+    function __construct()
+    {
+        (Model::getDB())->beginTransaction();
+    }
+
+    function __destruct()
+    {
+        (Model::getDB())->commit();
+        print_r("sdfsd");
+    }
+
     public  static function redirect(string $location, $parameters = [])
     {
-        if(count($parameters)==0)
-            header("Location: $location" , true,  302);
-        else{
+        if (count($parameters) == 0)
+            header("Location: $location", true,  302);
+        else {
             $query = http_build_query($parameters);
             header("Location: $location?" . $query, true,  302);
         }
         exit();
     }
 
-    public static function validateForm($post=[],$get=[]){
-        if(!(array_intersect($post,array_keys($_POST))==$post && array_intersect($get,array_keys($_GET))==$get)){
-            Controller::redirect(isset($_SERVER['http_referer']) ? $_SERVER['http_referer'] :"/");
-        }
-        else
+    public static function validateForm($post = [], $get = [])
+    {
+        if (!(array_intersect($post, array_keys($_POST)) == $post && array_intersect($get, array_keys($_GET)) == $get)) {
+            Controller::redirect(isset($_SERVER['http_referer']) ? $_SERVER['http_referer'] : "/");
+        } else
             return true;
     }
 
@@ -25,21 +36,21 @@ class Controller
     {
 
         $data = ["admin" => false, "organization" => false, "moderator" => false, "treasurer" => false, "registered_user" => false, "guest_user" => false];
-        
+
         if (isset($_SESSION["user"]["user_type"])) {
             if (in_array($_SESSION["user"]["user_type"], $userroles))
                 $data[$_SESSION["user"]["user_type"]] = true;
 
             if ($moderator_treasurer = (new RegisteredUser)->getUserRoles($_SESSION["user"]["uid"], $event_id)) {
-                $data["registered_user"] =true;
-                if (in_array("moderator", $moderator_treasurer) && in_array("moderator", $userroles)){
+                $data["registered_user"] = true;
+                if (in_array("moderator", $moderator_treasurer) && in_array("moderator", $userroles)) {
                     $data["moderator"] = true;
-                    if(in_array("treasurer", $moderator_treasurer))
+                    if (in_array("treasurer", $moderator_treasurer))
                         $data["treasurer"] = true;
                 }
-                if (in_array("treasurer", $moderator_treasurer) && in_array("treasurer", $userroles)){
+                if (in_array("treasurer", $moderator_treasurer) && in_array("treasurer", $userroles)) {
                     $data["treasurer"] = true;
-                    if(in_array("moderator", $moderator_treasurer))
+                    if (in_array("moderator", $moderator_treasurer))
                         $data["moderator"] = true;
                 }
             }
@@ -56,7 +67,6 @@ class Controller
                 if (!in_array($event_id, $user_events))
                     Controller::redirect("/Organisation/events");
             }
-
         } elseif (in_array("guest_user", $userroles))
             $data["guest_user"] = true;
 
@@ -64,12 +74,14 @@ class Controller
             return $data;
 
         else {
-            ?>
-        
-        <a href="/Login/view" id="link">&nbsp;</a>
-        <script>link.click()</script>
+?>
 
-            <?php 
+            <a href="/Login/view" id="link">&nbsp;</a>
+            <script>
+                link.click()
+            </script>
+
+<?php
             die();
             //  $redirect= (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             //Controller::redirect('/Login/view',["redirect"=>$redirect]);

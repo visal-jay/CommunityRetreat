@@ -119,34 +119,6 @@
         text-align: center;
     }
 
-    ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-        margin: 2rem;
-    }
-
-    /* Track */
-    ::-webkit-scrollbar-track {
-        background: white;
-        border-radius: 5px;
-        padding: 10px;
-        margin: 1rem;
-    }
-
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-        background: #16c79a;
-        border-radius: 5px;
-        border: 1 px solid #16c79a;
-        margin: 1rem;
-        height: 1px;
-        width: 10px;
-    }
-
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-        background: #16c79a;
-    }
 
     @media screen and (max-width:800px) {
 

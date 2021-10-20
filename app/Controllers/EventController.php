@@ -7,17 +7,16 @@ class EventController
 
     public function view()
     {
-        $event_details = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["event_name" => '', "cover_photo" => '']);
-        if (isset($_GET["event_id"]) && isset($_GET["page"])) {
-            $page = $_GET["page"];
-            (new EventController)->$page($event_details);
+        if ($event_details = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["event_name" => '', "cover_photo" => ''])) {
+            $page=isset($_GET["page"]) ? $_GET["page"] : "about" ;
+            $this->$page($event_details);
         } else
-            View::render("home");
+            Controller::redirect("/User/home");
     }
 
     public function about()
     {
-        $user_roles = Controller::accessCheck(["moderator","treasurer", "organization", "guest_user", "registered_user"], $_GET["event_id"]);
+        $user_roles = Controller::accessCheck(["moderator", "treasurer", "organization", "guest_user", "registered_user"], $_GET["event_id"]);
         $event = new Events;
         $volunteer = new Volunteer();
 
@@ -26,19 +25,20 @@ class EventController
             $data["volunteered"] = $data["volunteered"] == "" ? "0" :  $data["volunteered"];
             $data["donations"] = $data["donations"] == "" ? "0" :  $data["donations"];
             $data["volunteer_date"] = $volunteer->getVolunteeredDates($_GET["event_id"]);
-            $data["volunteer_capacity_exceeded"]=$volunteer->checkVolunteerCount($_GET["event_id"],$data['start_date'],$data['end_date']);
+            $data["volunteer_capacity_exceeded"] = $volunteer->checkVolunteerCount($_GET["event_id"], $data['start_date'], $data['end_date']);
             View::render("eventPage", $data, $user_roles);
-        } else
-            View::render("home");
+        } 
+        else
+            Controller::redirect("/User/home");
     }
 
     public function addPhoto()
     {
         (new Gallery)->addPhoto(["event_id" => $_GET["event_id"]]);
-        (new UserController)->addActivity("Added photo ",$_GET["event_id"]);
+        (new UserController)->addActivity("Added photo ", $_GET["event_id"]);
         echo json_encode("");
     }
-    
+
     public function userroles($event_details)
     {
         $user_roles = Controller::accessCheck(["organization"]);
@@ -49,9 +49,9 @@ class EventController
 
     public function gallery($event_details)
     {
-        $user_roles = Controller::accessCheck(["moderator", "organization", "guest_user", "registered_user","treasurer"], $_GET["event_id"]);
-        $pagination=Model::pagination("add_photo",10," WHERE event_id = :event_id",["event_id"=>$_GET["event_id"]]);
-        if (!$data = (new Gallery)->getGallery(["event_id" => $_GET["event_id"],"offset"=>$pagination["offset"] , "no_of_records_per_page"=> $pagination["no_of_records_per_page"]]))
+        $user_roles = Controller::accessCheck(["moderator", "organization", "guest_user", "registered_user", "treasurer"], $_GET["event_id"]);
+        $pagination = Model::pagination("add_photo", 10, " WHERE event_id = :event_id", ["event_id" => $_GET["event_id"]]);
+        if (!$data = (new Gallery)->getGallery(["event_id" => $_GET["event_id"], "offset" => $pagination["offset"], "no_of_records_per_page" => $pagination["no_of_records_per_page"]]))
             $data = array();
         else
             for ($i = 0; $i < count($data); $i++) {
@@ -61,13 +61,13 @@ class EventController
                     array_unshift($data, $temp);
                 }
             }
-        View::render("eventPage", array_merge($event_details, ["photos" => $data],$pagination), $user_roles);
+        View::render("eventPage", array_merge($event_details, ["photos" => $data], $pagination), $user_roles);
     }
 
     public function deletePhoto()
     {
         (new Gallery)->deletePhoto(["image" => $_POST["photo"]]);
-        (new UserController)->addActivity("Deleted photo",$_GET["event_id"]);
+        (new UserController)->addActivity("Deleted photo", $_GET["event_id"]);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "gallery"]);
     }
 
@@ -78,7 +78,7 @@ class EventController
     }
 
     public function donations($event_details)
-    { 
+    {
         (new DonationsController)->view($event_details);
     }
 
@@ -101,15 +101,15 @@ class EventController
     public function addEvent()
     {
         $validate = new Validation;
-        
+
         (new Events)->addEvent($_POST);
-        
+
         Controller::redirect("/Organisation/events");
     }
 
     public function updateDetails()
     {
-        Controller::accessCheck(["moderator", "organization", "guest_user","registered_user"], $_GET["event_id"]);
+        Controller::accessCheck(["moderator", "organization", "guest_user", "registered_user"], $_GET["event_id"]);
 
         $validate = new Validation;
         foreach ($_POST as $key => $value) {
@@ -118,35 +118,35 @@ class EventController
                 unset($_POST[$key]);
         }
         $volunteer = new Volunteer;
-        $volunteered_uid = $volunteer->getVolunteeredUid( $_GET["event_id"], $_POST["start_date"], $_POST["end_date"]);
+        $volunteered_uid = $volunteer->getVolunteeredUid($_GET["event_id"], $_POST["start_date"], $_POST["end_date"]);
         for ($i = 0; $i < count($volunteered_uid); $i++) {
             foreach ($volunteered_uid[$i] as $uid) {
-                (new UserController)->sendNotifications("{$_POST['event_name']} event informations has been changed.Please volunteer again..!",$uid,"event","window.location.href='/event/view?page=about&&event_id={$_GET["event_id"]}'",$_GET["event_id"]);
-                $volunteer->removeVolunteers( $_GET["event_id"],$uid,$_POST["start_date"],$_POST["end_date"]);
+                (new UserController)->sendNotifications("{$_POST['event_name']} event informations has been changed.Please volunteer again..!", $uid, "event", "window.location.href='/event/view?page=about&&event_id={$_GET["event_id"]}'", $_GET["event_id"]);
+                $volunteer->removeVolunteers($_GET["event_id"], $uid, $_POST["start_date"], $_POST["end_date"]);
             }
         }
         $events = new Events;
-        $events->updateDetails(array_merge($_POST,$_GET));
+        $events->updateDetails(array_merge($_POST, $_GET));
         Controller::redirect("/Event/view", ["page" => "about", "event_id" => $_GET["event_id"]]);
     }
 
     public function remove()
     {
-        Controller::validateForm(["event_id"],[]);
-        Controller::accessCheck(["admin","organization"]);
+        Controller::validateForm(["event_id"], []);
+        Controller::accessCheck(["admin", "organization"]);
         $time = (int)shell_exec("date '+%s'");
         $event = new Events();
         $event_details = $event->getDetails($_POST["event_id"]);
         $end_date = $event_details["end_date"];
 
-        if (gmdate("Y-m-d",$time) < $end_date){
-            (new DonationsController)->donationRefund($_POST["event_id"]);     
+        if (gmdate("Y-m-d", $time) < $end_date) {
+            (new DonationsController)->donationRefund($_POST["event_id"]);
         }
         $volunteer = new Volunteer();
         $volunteers = $volunteer->getVolunteeredUid($_POST["event_id"]);
-        for ($i = 0; $i < count($volunteers); $i++){
-            foreach ($volunteers[$i] as $uid){
-                (new UserController)->sendNotifications("{$event_details['event_name']} event  has been removed.",$uid,"event","window.location.href='/Event/view?page=about&&event_id={$_POST["event_id"]}'",$_POST["event_id"]);
+        for ($i = 0; $i < count($volunteers); $i++) {
+            foreach ($volunteers[$i] as $uid) {
+                (new UserController)->sendNotifications("{$event_details['event_name']} event  has been removed.", $uid, "event", "window.location.href='/Event/view?page=about&&event_id={$_POST["event_id"]}'", $_POST["event_id"]);
             }
         }
 
@@ -161,9 +161,9 @@ class EventController
         (new FeedbackController)->view($event_details);
     }
 
-    public function chat($event_details){
-        $user_roles =Controller::accessCheck(["organization","moderator"],$_GET["event_id"]);
-        View::render("eventPage",$event_details,$user_roles);
+    public function chat($event_details)
+    {
+        $user_roles = Controller::accessCheck(["organization", "moderator"], $_GET["event_id"]);
+        View::render("eventPage", $event_details, $user_roles);
     }
-
 }

@@ -28,9 +28,7 @@
         width: 70%;
     }
 
-    .container-size2 {
-        width: 98%;
-    }
+
 
     .head-margin {
         margin: unset;
@@ -51,7 +49,6 @@
         top: 50%;
         display: flex;
         flex-direction: column;
-
     }
 
     .popup .btn-close {
@@ -103,8 +100,6 @@
     .container-size {
         width: 70%;
     }
-
-
 
     .about-textarea {
         height: 150px;
@@ -223,9 +218,6 @@
             width: 90%;
         }
 
-        .container-size2 {
-            width: 88%;
-        }
 
         .popup .content {
             width: 70%;

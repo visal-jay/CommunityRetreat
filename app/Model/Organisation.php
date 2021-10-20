@@ -59,24 +59,29 @@ class Organisation extends User
     public function updateDetails($uid, $data)
     {
 
+        if (!$old_data = $this->getDetails($uid))
+            return false;
+
         $params=array();
+        $time = (int)shell_exec("date '+%s'");
+        /* print_r("rm ". __DIR__ ."/../Uploads/profile/" .$_SESSION['user']['uid'] ."*");
+        exit(); */
+
         if ($_FILES["profile-photo"]["size"][0] != NULL) {
-            $cover_pic = new Image($_SESSION["user"]["uid"], "profile/", "profile-photo", true);
+            shell_exec("rm ". __DIR__ ."/../Uploads/profile/" .$_SESSION['user']['uid'] ."*");
+            $cover_pic = new Image($_SESSION["user"]["uid"]."-".$time, "profile/", "profile-photo", true);
             $params["profile_pic"] = $cover_pic->getURL();
         }
 
         if ($_FILES["cover-photo"]["size"][0] != NULL) {
-            $cover_pic = new Image($_SESSION["user"]["uid"], "cover/", "cover-photo", true);
+            shell_exec("rm ". __DIR__ ."/../Uploads/cover/" .$_SESSION['user']['uid'] ."*");
+            $cover_pic = new Image($_SESSION["user"]["uid"]."-".$time, "cover/", "cover-photo", true);
             $params["cover_pic"] = $cover_pic->getURL();
         }
-
 
         foreach (array_keys($data, NULL) as $key) {
             unset($data[$key]);
         }
-
-        if (!$old_data = $this->getDetails($uid))
-            return false;
 
         $params = array_merge(array_merge($old_data, $data), $params);
         $params["uid"] = $uid;

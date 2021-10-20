@@ -1,7 +1,7 @@
 <?php
 class Model
 {
-    protected static function getDB()
+    public static function getDB()
     {
         //require './DB-implement.php';
 

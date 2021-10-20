@@ -342,7 +342,7 @@
         let date = document.getElementById("calendar-button");
         let map = document.getElementById("map-button");
 
-        if (event.target.value == "event") {
+        if (event.target.value == "event" || event.target.value == "all") {
             mode.disabled = sort.disabled = way.disabled = date.disabled = map.disabled = false;
             map.style.opacity = date.style.opacity = "1";
 
@@ -407,6 +407,10 @@
         var sort = document.getElementById("sort").value == "Sort by" ? "" : document.getElementById("sort").value;
         var way = document.getElementById("way").value == "Sort" ? "" : document.getElementById("way").value;
 
+        if (range || mode || date || sort || way){
+            document.getElementById("search-type").value = "event";
+            searchType();
+        }
 
         let parent_container = document.querySelector('events');
 

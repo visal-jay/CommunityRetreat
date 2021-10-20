@@ -146,7 +146,6 @@ class EventController
         }
         (new VolunteerController)->sendNotificationstoVolunteers("{$event_details['event_name']} event  has been removed.","/",$_POST["event_id"]);
         (new Volunteer)->removeVolunteers($_POST["event_id"]);
-        (new DonationsController)->donationRefund($_POST["event_id"]);
         $event->remove($_POST["event_id"]);
         Controller::redirect("/Organisation/events");
     }

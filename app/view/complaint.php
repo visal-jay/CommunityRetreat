@@ -9,21 +9,8 @@
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
 </head>
     <style>
-        /* Button used to open the contact form - fixed at the bottom of the page */
-        .complain-button {
-            border: none;
-            cursor: pointer;
-        }
-
-        /* Add styles to the form container */
-        .complaint-form-container {
-            max-width: 500px;
-            padding: 10px;
-            background-color: white;
-        }
-
         /* Full-width input fields */
-        .complaint-form-container input[type=text]{
+        .input[type=text]{
             width: 80%;
             padding: 15px;
             margin: 5px 0 22px 0;
@@ -32,20 +19,16 @@
         }
 
         /* When the inputs get focus, do something */
-        .complaint-form-container input[type=text]:focus {
+        .input[type=text]:focus {
             background-color: #ddd;
             outline: none;
         }
 
-        /* Add a red background color to the cancel button */
-        .complaint-form-container .cancel {
-            background-color: red;
-        }
-
         /* Add some hover effects to buttons */
-        .complaint-form-container .btn:hover, .complain-button:hover {
+        .btn:hover{
             opacity: 1;
         }
+
         .complaint-form {
             width: 100%;
         }
@@ -74,9 +57,9 @@
             flex-direction: row;
         }
 
-        .complaint-blurred {
+       /* .complaint-blurred {
             filter: blur(2px);
-        }
+        }*/
 
         .complaint-still {
             overflow: hidden;

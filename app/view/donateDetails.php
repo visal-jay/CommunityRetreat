@@ -76,11 +76,6 @@
         margin: 10px;
     }
 
-
-    .still {
-        overflow: hidden;
-    }
-
     .bold {
         font-weight: 700;
         align-items: center;
@@ -107,11 +102,6 @@
     .left{
         text-align: left;
         
-    }
-
-    .terms-and-conditions-box{
-        background-color: white;
-        box-shadow: 5px 5px 15px 5px #000000;
     }
 
     .center{
@@ -150,11 +140,6 @@
 
     .form {
         width: fit-content;
-    }
-
-    .terms-and-conditions-box{
-        background-color: white;
-        box-shadow: 5px 5px 15px 5px #000000;
     }
 }
 

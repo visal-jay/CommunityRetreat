@@ -13,37 +13,9 @@
 </head>
 
 <style>
-    search {
-        width: 100%;
-        max-width: 100%;
-        padding: 2rem;
-        box-sizing: border-box;
-    }
-
-
-
-    search input[type=search] {
-        width: 90%;
-        -webkit-transition: width 0.4s ease-in-out;
-        transition: width 0.4s ease-in-out;
-    }
-
-    search input[type=search]:focus {
-        width: 100%;
-    }
-
-    h1 {
-        text-align: center;
-    }
-
     .container {
         max-width: none;
         width: 70%;
-    }
-
-    .card-container {
-        padding: 20px;
-        margin: 20px;
     }
 
     .system-details-cards-container {
@@ -113,12 +85,10 @@
         </div>
 
     </div>
-    <?php var_dump($volunteers_graph); ?>
-    <?php var_dump($donations_graph); ?>
 </body>
 <?php include "footer.php" ?>
 <script>
-    /*send data to the graph*/
+    /*send donation data to the graph*/
     const data = <?= $donations_graph ?>;
 
     const backgroundColor = ['#6F69AC', '#FEC260', '#93B5C6', '#FA8072']
@@ -171,17 +141,16 @@
 </script>
 
 <script>
-    /*send data to the graph*/
-    const data = <?= $volunteers_graph ?>;
+    /*send volunteer data to the graph*/
+    const volunteer_data = <?= $volunteers_graph ?>;
 
-    const backgroundColor = ['#6F69AC', '#FEC260', '#93B5C6', '#FA8072']
-    const borderColor = ['#6F69AC80', '#FEC26080', '#93B5C680', '#FA807280']
 
-    let keys = [];
-    let amounts = [];
-    for (const event in data) {
-        keys.push(data[event]["day"]);
-        amounts.push(data[event]["volunteer_sum"]);
+
+    let volunteer_keys = [];
+    let volunteers = [];
+    for (const event in volunteer_data) {
+        volunteer_keys.push(volunteer_data[event]["day"]);
+        volunteers.push(volunteer_data[event]["volunteer_sum"]);
     }
 
     console.log(keys, amounts);
@@ -189,10 +158,10 @@
     var myLineChart = new Chart('myChart1', {
         type: 'line',
         data: {
-            labels: keys,
+            labels: volunteer_keys,
             datasets: [{
                 label: 'Volunteers',
-                data: amounts,
+                data: volunteers,
                 backgroundColor: backgroundColor[0],
                 borderColor: borderColor[0],
                 fill: false

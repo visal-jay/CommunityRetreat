@@ -37,7 +37,7 @@ class EventController
     {
         (new Gallery)->addPhoto(["event_id" => $_GET["event_id"]]);
         (new UserController)->addActivity("Added photo ", $_GET["event_id"]);
-        echo json_encode("");
+        echo "success";
     }
 
     public function userroles($event_details)

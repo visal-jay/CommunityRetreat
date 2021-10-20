@@ -9,13 +9,13 @@ class Model
 
         if ($db === null) {
             $dsn = 'mysql:host=localhost;dbname=communityretreat_db;charset=utf8';
-            $db = new PDO($dsn, "root","");
+            $db = new PDO($dsn, "root","root");
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         }
         return $db;
     }
-
+    
 
     public static function select($query, $params = [])
     {

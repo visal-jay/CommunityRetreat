@@ -27,7 +27,7 @@ class OrganisationController extends Controller
     {
         (new UserController)->addActivity("You added photo to gallery");
         (new Gallery)->addPhoto([], true);
-        echo json_encode([]);
+        echo "success";
         //Controller::redirect("/Organisation/gallery");
     }
 

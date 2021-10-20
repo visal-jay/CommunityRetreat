@@ -135,7 +135,7 @@
                 <figure class="item">
                     <?php if (!$guest_user && $photo["uid"] == $_SESSION["user"]["uid"]) { ?>
                         <form class="delete-button" method="post" action="/Organisation/deletePhoto">
-                        <input type="hidden" name="photo" value="<?= $photo["image"] ?>">
+                            <input type="hidden" name="photo" value="<?= $photo["image"] ?>">
                             <button type="submit" class="btn-icon"> <i class="far fa-trash-alt"></i></button>
                         </form>
                     <?php  } ?>
@@ -245,11 +245,15 @@
             cache: false,
             processData: false,
             success: (data) => {
-                setTimeout(()=>{location.reload()},1000);
-                return false;
+                if (data == "success") {
+                    setTimeout(() => {
+                        location.reload()
+                    }, 1000);
+                    return false;
+                }
             },
             error: function(request, status, error) {
-                if(!document.querySelector("#file-form").firstElementChild.classList.contains("input-error")){
+                if (!document.querySelector("#file-form").firstElementChild.classList.contains("input-error")) {
                     let msg = request.responseText.match(/####(.*)####/);
                     let span = document.createElement("span");
                     span.classList.add("input-error");

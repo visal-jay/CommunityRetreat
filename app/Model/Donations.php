@@ -97,7 +97,7 @@ class Donations extends Model
 
     public function getRefundDetails($event_id)
     {
-        $query = "SELECT uid, event_id, amount, intent_id FROM donation WHERE event_id =:event_id WHERE donation_status='debit' ";
+        $query = "SELECT uid, event_id, amount, intent_id FROM donation WHERE event_id =:event_id WHERE ddonation_status ='debit' ";
         $params = ["event_id" => $event_id];
         $result = Model::select($query, $params);
         return $result;

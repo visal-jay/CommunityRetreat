@@ -247,7 +247,8 @@
             success: (data) => {
                 if (data == "success") {
                     setTimeout(() => {
-                        location.reload()
+                        console.log("success message");
+                        //location.reload();
                     }, 1000);
                     return false;
                 }

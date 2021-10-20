@@ -68,6 +68,11 @@
         transform: translate(-50%, -50%);
     }
 
+    .volunteer-popup{
+        height: 440px;
+        overflow: scroll;
+    }
+
     .blurred {
         filter: blur(2px);
         overflow: hidden;
@@ -228,6 +233,10 @@
 
         }
 
+        .popup.active .content {
+            top:290px;
+    }
+
         .about-textarea {
             width: 100%;
         }
@@ -255,7 +264,6 @@
         }
     }
 </style>
-
 
 <body>
     <div id="background">
@@ -288,7 +296,7 @@
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width far fa-clock clr-green margin-side-lg"></i>
                             <h4 class="head-margin data">At <?= $start_time ?></h4>
-                            <?php if ($organization || $moderator) { ?>
+                            <?php if ($organization || $moderator){ ?>
                                 <div class="flex-row-to-col flex-center">
                                     <div class="flex-row flex-center">
                                         <label class="form hidden" for="start_time">Starts at?</label>
@@ -466,7 +474,7 @@
         </div>
     </div>
     <div class="popup" id="volunteer-form">
-        <div class="content">
+        <div class="content volunteer-popup">
             <div>
                 <h3>What are the days you would like to volunteer ?</h3>
             </div>
@@ -484,7 +492,7 @@
                 $period = new DatePeriod($startDate, $interval, $realEnd);
                 foreach ($period as $date) {
                     $event_days = $date->format('Y-m-d');
-                    if ($volunteer_capacity_exceeded[$event_days] == "TRUE") {
+                    if ($volunteer_capacity_exceeded[$event_days] == true) {
                         $v_flag = FALSE;
                         echo "<div class='flex-row flex-center'><h3>" . $event_days . "</h3>
                             <input type='checkbox'  name='volunteer_date[]' value='$event_days'";
@@ -745,6 +753,25 @@
         map.setCenter(myLatlng);
         map.setZoom(15);
     }
+
+    function fillComplaint(){
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        var complaint_event_id = document.getElementById("complaint_event_id");
+        complaint_event_id.setAttribute("value",urlParams.get('event_id'));
+        console.log(urlParams.get('event_id'));
+        var complaint_name = document.getElementById('complaint_name');
+        complaint_name.setAttribute("value",'<?= $event_name ?>'); 
+        var complaint_status = document.getElementById('complaint_status');
+        complaint_status.setAttribute("value",'event');
+
+
+    }
+    fillComplaint();
+    
+
+    
+
 </script>
 
 </html>

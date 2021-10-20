@@ -6,7 +6,7 @@ class OrganisationController extends Controller
     public function view()
     {
         Controller::validateForm([], ["org_id", "page"]);
-        $user_roles = Controller::accessCheck(["registered_user", "guest_user"]);
+        $user_roles = Controller::accessCheck(["registered_user", "guest_user","admin"]);
         $org_id = $_GET["org_id"];
         $data = (new Organisation)->getDetails($org_id);
         View::render("organisationDashboard", $data, $user_roles);

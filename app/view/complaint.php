@@ -93,20 +93,26 @@
 </head>
 <body>
 
-<button class="btn btn-solid" style="background-color: red; border:none;" onclick="popupForm('complaint-form'); background_blur('container');background_still('id1')">Complain &nbsp;<i class="far fa-comments"></i></button>
+<button class="btn btn-solid" style="background-color: red; border:none;" onclick="popupForm('complaint-form');background_still('id1')">Complain &nbsp;<i class="far fa-comments"></i></button>
 
 <div class="complaint-container">
         <div class="complaint-popup-box" id="complaint-form">
-            <form action="" class="complaint-form">
+            <form action="/Complaint/makeComplaint" method="post" class="complaint-form">
 
                 <div class="input form-item flex-col flex-center">
                     <label>Name</label> 
-                    <input class="form-ctrl" style="width:90%;" id="name" type="text" />
+                    <input class="form-ctrl" style="width:90%;" name="complaint_name" id="complaint_name" type="text" />
                 </div>
 
                 <div class="input form-item flex-col flex-center">
                     <label>Complaint </label>
-                <input class="form-ctrl" style="width:90%;" id="details" type="text" />
+                <textarea name="complaint" id="complaint" class="form-ctrl" style="width:90%;" cols="30" rows="10"></textarea>
+
+                <input type="hidden"  name="event_id" id="complaint_event_id" >
+
+                <input type="hidden"  name="uid" id="complaint_uid" >
+
+                <input type="hidden"  name="complaint_status" id="complaint_status" >
             </div>
 
                 <div class="flex-row-to-col">
@@ -128,9 +134,9 @@ function popupForm(id) {
         form.classList.toggle("active-popup");
     }
 
-function background_blur(id) {
-    document.getElementById(id).classList.toggle("complaint-blurred")
-}
+// function background_blur(id) {
+//     document.getElementById(id).classList.toggle("complaint-blurred");
+// }
 
 function background_still(id) {
     document.getElementById(id).classList.toggle("complaint-still");

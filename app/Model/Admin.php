@@ -61,4 +61,53 @@ class Admin extends User{
         User::insert($query,$params); 
     }
 
+    public function regUserCount()
+    {
+        $query = 'SELECT count(uid) as count FROM registered_user';
+        $result= Model::select($query);
+        return $result[0]["count"];
+    }
+
+    public function orgCount()
+    {
+        $query = 'SELECT count(uid) as count FROM organization';
+        $result= Model::select($query);
+        return $result[0]["count"];
+    }
+
+    public function eventCount()
+    {
+        $query = 'SELECT count(event_id) as count FROM event WHERE status="published"';
+        $result= Model::select($query);
+        return $result[0]["count"];
+    }
+
+    public function getDonationReport(){/*get the donation sum and date and send it to the graph in view file*/
+        $query="SELECT SUM(amount) as donation_sum ,date_format(time_stamp,'%x-%m-%d') as day FROM donation GROUP BY day ORDER BY day ASC";
+        $result=Model::select($query);
+        if (count($result)==0)
+            return false;
+        else
+            return $result;
+    }
+
+    public function getVolunteerReport(){/*get the donation sum and date and send it to the graph in view file*/
+        $query="SELECT COUNT(uid) as volunteer_sum ,date_format(date,'%x-%m-%d') as day FROM volunteer GROUP BY day ORDER BY day ASC";
+        $result=Model::select($query);
+        if (count($result)==0)
+            return false;
+        else
+            return $result;
+            
+    }
+
+    /*public function eventCount()
+    {
+        $query = 'SELECT count(uid) FROM event';
+        $result= Model::select($query);
+        return $result;
+    }
+*/
+
+
 }

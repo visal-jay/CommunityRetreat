@@ -18,12 +18,9 @@ class VolunteerController{
         }
 
         $data["volunteers"] = $volunteer_details;
-        $volunteer_sum = $volunteer->getVolunteerSum($_GET["event_id"]);
-        $data["volunteer_sum"] = $volunteer_sum;
-        $data["ip"] = exec('ifconfig | grep "inet " | grep -v 127.0.0.1 | cut -d\  -f2');
-        $data = array_merge($data, $event_details);
         $data['volunteer_capacities'] = $volunteer->getVolunteerCapacities($_GET["event_id"]);
         $data['volunteer_sum'] = $volunteer->getVolunteerSum($_GET["event_id"]);
+        $data = array_merge($data, $event_details);
         View::render('eventPage', $data, $user_roles);
     }
     public function disableVolunteer()
@@ -66,7 +63,10 @@ class VolunteerController{
         View::render("volunteerThank");
     }
 
-    public function VolunteerEvent(){
+    
+    public function volunteerEvent($uid){
+
+
         if(isset($_POST['volunteer_date'])){
             Controller::validateForm(["volunteer_date"],["event_id"]);
             $volunteer_dates = $_POST['volunteer_date'];  
@@ -76,18 +76,18 @@ class VolunteerController{
         }
         $volunteer = new Volunteer();
         $event_id = $_GET['event_id'];
-        $volunteer->addVolunteerDetails($event_id,$volunteer_dates);
-        $description = $volunteer->addVolunteerDetails($event_id,$volunteer_dates);
+        $volunteer->addVolunteerDetails($uid,$event_id,$volunteer_dates);
+        $description = $volunteer->addVolunteerDetails($uid,$event_id,$volunteer_dates);
         (new UserController)->addActivity($description,$event_id);
         Controller::redirect("/Event/view", ["page" => "about", "event_id" => $event_id ]);
+
     }
 
 
     public function volunteerReport()
     {
         Controller::validateForm([], ["url", "event_id"]);
-        Controller::accessCheck(["organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
-        
+        Controller::accessCheck(["organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/ 
         $volunteer = new Volunteer;
         $data["volunteers"] = $volunteer->getVolunteerDetails($_GET["event_id"]);
         $data["volunteer_graph"] = json_encode($volunteer->getReport(["event_id" => $_GET["event_id"]]));
@@ -95,5 +95,17 @@ class VolunteerController{
         View::render('volunteerReport', $data);/*send all the data to volunteerReport page*/
     }
 
+    public function sendNotificationstoVolunteers($notification,$path,$event_id)
+    {
+        $volunteer = new Volunteer();
+        $volunteers = $volunteer->getVolunteeredUid($_POST["event_id"]);
+        $path = "window.location.href='" . $path . "'";
+        for ($i = 0; $i < count($volunteers); $i++){
+            foreach ($volunteers[$i] as $uid){
+                (new UserController)->sendNotifications($notification,$uid,"event",$path,$event_id);
+            }
+        }
+
+    }
 }
 

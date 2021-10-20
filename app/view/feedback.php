@@ -297,7 +297,7 @@
                                 <description class="margin-md"><?= $feedback["feedback"] ?></description>
                                 <?php if ($organization || $moderator) { ?>
                                     <button class="btn flex-col margin-md" onclick="window.location.href='/Feedback/statusToggle?event_id=<?= $_GET['event_id'] ?>&&feedback_id=<?= $feedback['feedback_id'] ?>'">
-                                        <?php if($feedback["status"] == 'show') { ?>
+                                        <?php if ($feedback["status"] == 'show') { ?>
                                             <i class="far fa-eye-slash"></i>
                                         <?php  } else { ?>
                                             <i class="far fa-eye"></i>
@@ -354,6 +354,34 @@
             </div>
         <?php } ?>
     </div>
+
+    <div class="popup" id="complaint_feedback_id">
+        <div class="content">
+
+            <?php foreach ($feedbacks as $feedback) { ?>
+                <div class="card-container margin-md <?php if ($feedback["status"] == 'hide') echo 'opacity-reduce' ?>">
+                    <div class="flex-col flex-center margin-md event-card-details">
+                        <h3 class="margin-md"><?= $feedback["username"] ?></h3>
+                        <date><?= $feedback["time_stamp"] ?></date>
+                        <div class="margin-md">
+                            <?php for ($i = 1; $i < 6; $i++) {
+                                if ($i <= $feedback["rate"]) { ?>
+                                    <span class="fas fa-star fa-sm checked"></span>
+                                <?php } else { ?>
+                                    <span class="fas fa-star fa-sm"></span>
+                            <?php }
+                            } ?>
+                        </div>
+                        <description class="margin-md"><?= $feedback["feedback"] ?></description>
+                    </div>
+                </div>
+            <?php } ?>
+
+            <div>
+                <button type="button" class="btn-icon btn-close" onclick="window.location.href='/Event/view?page=feedback&event_id=<?= $_GET['event_id'] ?>' "><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script>
@@ -368,6 +396,12 @@
     function stillBackground(id) {
         document.getElementById(id).classList.toggle("still");
     }
+
+    <?php if($admin && isset($_GET["complaint_feedback_id"])) { ?> 
+        window.addEventListener('load', (event) => {
+        togglePopup('complaint_feedback_id'); blur_background('background'); stillBackground('id1') });
+    <?php } ?>
+
 </script>
 
 </html>

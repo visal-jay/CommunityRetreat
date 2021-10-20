@@ -1,7 +1,7 @@
 <?php
 class Controller
 {
-    function __construct()
+    /* function __construct()
     {
         (Model::getDB())->beginTransaction();
     }
@@ -10,7 +10,7 @@ class Controller
     {
         (Model::getDB())->commit();
         print_r("sdfsd");
-    }
+    } */
 
     public  static function redirect(string $location, $parameters = [])
     {

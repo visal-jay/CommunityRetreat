@@ -245,7 +245,7 @@
             cache: false,
             processData: false,
             success: (data) => {
-                location.reload();
+                setTimeout(()=>{location.reload()},1000);
                 return false;
             },
             error: function(request, status, error) {

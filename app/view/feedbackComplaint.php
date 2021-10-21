@@ -9,8 +9,21 @@
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
 </head>
     <style>
+        /* Button used to open the contact form - fixed at the bottom of the page */
+        .complain-button {
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Add styles to the form container */
+        .complaint-form-container {
+            max-width: 500px;
+            padding: 10px;
+            background-color: white;
+        }
+
         /* Full-width input fields */
-        .input[type=text]{
+        .complaint-form-container input[type=text]{
             width: 80%;
             padding: 15px;
             margin: 5px 0 22px 0;
@@ -19,16 +32,20 @@
         }
 
         /* When the inputs get focus, do something */
-        .input[type=text]:focus {
+        .complaint-form-container input[type=text]:focus {
             background-color: #ddd;
             outline: none;
         }
 
-        /* Add some hover effects to buttons */
-        .btn:hover{
-            opacity: 1;
+        /* Add a red background color to the cancel button */
+        .complaint-form-container .cancel {
+            background-color: red;
         }
 
+        /* Add some hover effects to buttons */
+        .complaint-form-container .btn:hover, .complain-button:hover {
+            opacity: 1;
+        }
         .complaint-form {
             width: 100%;
         }
@@ -57,9 +74,9 @@
             flex-direction: row;
         }
 
-       /* .complaint-blurred {
+        .complaint-blurred {
             filter: blur(2px);
-        }*/
+        }
 
         .complaint-still {
             overflow: hidden;
@@ -76,7 +93,7 @@
 </head>
 <body>
 
-<button class="btn btn-solid" style="background-color: red; border:none;" onclick="popupForm('complaint-form');background_still('id1')">Complain &nbsp;<i class="far fa-comments"></i></button>
+
 
 <div class="complaint-container">
         <div class="complaint-popup-box" id="complaint-form">
@@ -89,13 +106,11 @@
 
                 <div class="input form-item flex-col flex-center">
                     <label>Complaint </label>
-                <textarea name="complaint" id="complaint" class="form-ctrl" style="width:90%;" cols="30" rows="10"></textarea>
-
-                <input type="hidden"  name="event_id" id="complaint_event_id" >
-
-                <input type="hidden"  name="uid" id="complaint_uid" >
-
-                <input type="hidden"  name="complaint_status" id="complaint_status" >
+                    <input class="form-ctrl" style="width:90%;" name="complaint" id="complaint" type="text" />
+                    <input type="hidden" name="feedback_id" id="feedback_id" ></input>
+                    <input type="hidden" name="uid" id="uid"></input>
+                    <input type="hidden" name="event_id" id="event_id"></input>
+                    <input type="hidden" name="complaint_status" value="user"></input>
             </div>
 
                 <div class="flex-row-to-col">
@@ -112,10 +127,19 @@
 
 <script>
 
-function popupForm(id) {
+function popupFormandFillComplaint(id,complaint_name,feedback_id,uid,event_id) {
         var form = document.getElementById(id);
         form.classList.toggle("active-popup");
-    }
+        document.getElementById("complaint_name").value = complaint_name;
+        document.getElementById("feedback_id").value = feedback_id;
+        document.getElementById("uid").value = uid;
+        document.getElementById("event_id").value = event_id;
+
+}
+function popupForm(id){
+    var form = document.getElementById(id);
+    form.classList.toggle("active-popup");
+}
 
 function background_blur(id) {
     document.getElementById(id).classList.toggle("complaint-blurred");

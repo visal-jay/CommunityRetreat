@@ -93,7 +93,7 @@
 </head>
 <body>
 
-<button class="btn btn-solid" style="background-color: red; border:none;" onclick="popupForm('complaint-form');background_still('id1')">Complain &nbsp;<i class="far fa-comments"></i></button>
+
 
 <div class="complaint-container">
         <div class="complaint-popup-box" id="complaint-form">
@@ -106,13 +106,11 @@
 
                 <div class="input form-item flex-col flex-center">
                     <label>Complaint </label>
-                <input class="form-ctrl" style="width:90%;" name="complaint" id="complaint" type="text" />
-
-                <input type="hidden"  name="event_id" id="complaint_event_id" >
-
-                <input type="hidden"  name="uid" id="complaint_uid" >
-
-                <input type="hidden"  name="complaint_status" id="complaint_status" >
+                    <input class="form-ctrl" style="width:90%;" name="complaint" id="complaint" type="text" />
+                    <input type="hidden" name="feedback_id" id="feedback_id" ></input>
+                    <input type="hidden" name="uid" id="uid"></input>
+                    <input type="hidden" name="event_id" id="event_id"></input>
+                    <input type="hidden" name="complaint_status" value="user"></input>
             </div>
 
                 <div class="flex-row-to-col">
@@ -129,10 +127,19 @@
 
 <script>
 
-function popupForm(id) {
+function popupFormandFillComplaint(id,complaint_name,feedback_id,uid,event_id) {
         var form = document.getElementById(id);
         form.classList.toggle("active-popup");
-    }
+        document.getElementById("complaint_name").value = complaint_name;
+        document.getElementById("feedback_id").value = feedback_id;
+        document.getElementById("uid").value = uid;
+        document.getElementById("event_id").value = event_id;
+
+}
+function popupForm(id){
+    var form = document.getElementById(id);
+    form.classList.toggle("active-popup");
+}
 
 function background_blur(id) {
     document.getElementById(id).classList.toggle("complaint-blurred");

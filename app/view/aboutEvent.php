@@ -767,13 +767,10 @@
         const urlParams = new URLSearchParams(queryString);
         var complaint_event_id = document.getElementById("complaint_event_id");
         complaint_event_id.setAttribute("value",urlParams.get('event_id'));
-        console.log(urlParams.get('event_id'));
         var complaint_name = document.getElementById('complaint_name');
         complaint_name.setAttribute("value",'<?= $event_name ?>'); 
         var complaint_status = document.getElementById('complaint_status');
         complaint_status.setAttribute("value",'event');
-
-
     }
     fillComplaint();
     

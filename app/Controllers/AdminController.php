@@ -41,24 +41,19 @@ class AdminController{
         View::render("admin",$data,$user_roles);
     }
 
-    //View system feedbacks UI
-    public function systemFeedbacks(){
-        $user_roles=Controller::accessCheck(["admin"]);
-        View::render("systemFeedback",[],$user_roles);
-    }
 
     //Post system feedbacks to view
-    public function viewFeedbacks(){
-      
+    public function systemFeedbacks(){
+        $user_roles=Controller::accessCheck(["admin"]);
         $systemFeedback=new Systemfeedback();
         $systemFeedbacks= $systemFeedback->renderSystemFeedbacks();
-        echo json_encode($systemFeedbacks);
-        
+        $data['system_feedbacks'] = $systemFeedbacks;
+        View::render("systemFeedback",$data,$user_roles);
+ 
     }
 
     //Mark system feedbacks as viewed
     public function feedbackViewed(){
-
         $systemFeedback=new Systemfeedback();
         $data=["feedback_id"=>$_POST['feedback_id']];
         $systemFeedback->changeFeedbackState($data);

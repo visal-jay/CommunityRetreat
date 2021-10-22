@@ -26,6 +26,14 @@ class ComplaintController{
             $complaint->addComplaint($data);
             Controller::redirect("/Event/view", ["page" => "feedback", "event_id" => $_POST["event_id"]]);
         }
+
+       
+    }
+
+    public function dismissComplaint(){
+        $complaint = new Complaint;
+        $complaint->removeComplaint($_POST['complaint_id']);
+        Controller::redirect("/Admin/complaint");
     }
  
     

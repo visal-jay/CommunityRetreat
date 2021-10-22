@@ -99,7 +99,10 @@
                                     <i class="fas fa-times clr-red  margin-side-md" onclick="cancel_complaint()"></i>
                                     </div>
                                 </div>
-                                <div class='margin-md'><button class='btn btn-small bg-red clr-white' style="border: none;">Dismiss</button></div>
+                                <form class='margin-md' action="/Complaint/dismissComplaint" method="post">
+                                    <input type="hidden" name="complaint_id" value="<?= $complaint['complaint_id']?>"></input>
+                                    <button class='btn btn-small bg-red clr-white'  style="border: none;">Dismiss</button>
+                                </form>
                             </div>
                            
                         </div>

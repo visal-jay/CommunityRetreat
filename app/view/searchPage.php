@@ -335,18 +335,18 @@
     });
 
     function searchType() {
-        console.log(event.target.value);
         let mode = document.getElementById("mode");
         let sort = document.getElementById("sort");
         let way = document.getElementById("way");
         let date = document.getElementById("calendar-button");
         let map = document.getElementById("map-button");
+        let search_type=document.getElementById("search-type");
 
-        if (event.target.value == "event" || event.target.value == "all") {
+        if (search_type.value == "event" || search_type.value == "all") {
             mode.disabled = sort.disabled = way.disabled = date.disabled = map.disabled = false;
             map.style.opacity = date.style.opacity = "1";
 
-        } else if (event.target.value == "organization") {
+        } else if (search_type.value == "organization") {
             map.style.opacity = date.style.opacity = "0.5";
             mode.disabled = sort.disabled = way.disabled = date.disabled = map.disabled = true;
             let map_container = document.getElementById('map-container');
@@ -395,12 +395,7 @@
     /* event search ajax */
     async function search(latitude = "", longitude = "", range = "", is_virtual = "") {
 
-        if (latitude == "" || longitude == "") {
-            const position = await getCoordinates();
-            latitude = position.coords.latitude;
-            longitude = position.coords.longitude;
-        }
-
+        let parent_container = document.querySelector('events');
         var name = document.getElementById("in-search").value;
         var mode = document.getElementById("mode").value;
         var date = document.getElementById("calendar-input").value;
@@ -412,7 +407,17 @@
             searchType();
         }
 
-        let parent_container = document.querySelector('events');
+        if (latitude == "" || longitude == "") {
+            const position = await getCoordinates();
+            latitude = position.coords.latitude;
+            longitude = position.coords.longitude;
+        }
+
+        if(!document.getElementById('map-container').classList.contains("hidden")){
+            range=40;
+            is_virtual=0;
+        }
+
 
         if (document.getElementById("search-type").value == "event" || document.getElementById("search-type").value == "all") {
             $.ajax({
@@ -451,7 +456,7 @@
                                 </div>
                                 <p class="margin-md" style="margin-bottom:0;color:white;padding:4px;background-color:#F67280;border-radius:15px;text-align:center;font-size:0.85em;">Event</p>
                                 <p class="margin-md" style="margin-bottom:0;"><b>${evn.event_name}</b></p>
-                                <p class="margin-md about" style="margin-top:0">${evn.start_date}</p>
+                                <p class="margin-md about" style="margin-top:0">${evn.start_date==evn.end_date ? evn.end_date : 'From:'+evn.start_date+'<br>To:'+evn.end_date}</p>
                                 <div class="flex-col margin-side-md" >
                                     <div class ="flex-row" style="justify-content:space-between;align-items:center;">
                                     <p>Donations</p>
@@ -602,13 +607,13 @@
 
         map.addListener("center_changed", () => {
             let latlang = map.getCenter();
-            search(latlang.lat(), latlang.lng(), 20, 0);
+            search(latlang.lat(), latlang.lng(), 40, 0);
         });
 
         if (range) {
             document.getElementById("map-container").classList.toggle("hidden");
             resizeMap();
-            search(latitude, longitude, 20, 0);
+            search(latitude, longitude, 40, 0);
 
         } else {
             search(latitude, longitude);
@@ -643,7 +648,7 @@
         if (map.classList.contains("hidden")) {
             document.getElementById("search-type").value="event";
             map.classList.toggle("hidden");
-            debounce(search(latitude, longitude,20),1000);
+            debounce(search(latitude, longitude,40,0),1000);
         } else {
             map.classList.toggle("hidden");
             search(latitude, longitude);

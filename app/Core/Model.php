@@ -1,4 +1,7 @@
 <?php
+
+use Stripe\Issuing\Transaction;
+
 class Model
 {
     public static function getDB()
@@ -35,6 +38,28 @@ class Model
         $stmt->execute($params);
     }
     
+
+    public static function beginTransaction(){
+        $db = Model::getDB();
+        if($db->inTransaction()==false){
+            $db->beginTransaction();
+        }
+    }
+
+    public static function endTransaction(){
+        $db= Model::getDB();
+        if($db->inTransaction()==true){
+            $db->commit();
+        }
+    }
+
+    public static function rollBack(){
+        $db= Model::getDB();
+        if($db->inTransaction()==true){
+            $db->rollBack();
+        }
+    }
+
     
     public static function pagination($table, $no_of_records_per_page,$extrenal_query="", $params = [])
     {

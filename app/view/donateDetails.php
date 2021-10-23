@@ -168,7 +168,7 @@
                 <div class="column section">
                     <div class="data">
                         <!--Display the donation capacity-->
-                        <a><?= $donation_capacity ?></a>
+                        <a><?php echo 'Rs. ' .number_format($donation_capacity, 2) ?></a>
                     </div>
                     <form action="/Donations/updateDonationCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" class="flex-col flex-center"
                         id="donation-capacity">

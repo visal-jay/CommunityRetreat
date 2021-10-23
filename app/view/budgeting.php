@@ -147,12 +147,6 @@
         text-align: left;
     }
 
-    .amount-field {
-        width: 20%;
-        text-align: right;
-        margin-right: 45px;
-    }
-
     .btn-field {
         width: 40%;
         margin: 5px;
@@ -198,12 +192,14 @@
             margin-left: 0;
             margin-right: 0;
             padding: 0;
+            min-width: 0;
         }
 
         .expense-info {
             margin-left: 0;
             margin-right: 0;
             padding: 0;
+            min-width: 0;
         }
 
         .update-save-btn {
@@ -255,14 +251,6 @@
             position: fixed;
             width: 80%;
             top: 40%;
-        }
-
-        .income-info {
-            min-width: 0;
-        }
-
-        .expense-info {
-            min-width: 0;
         }
 
         .income-expenxe-balance-container {

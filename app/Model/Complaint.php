@@ -10,9 +10,15 @@ class Complaint extends Model{
     }
 
     public function getComplaints(){
-        $query = 'SELECT reg.username, complaint.complaint_name, complaint.complaint ,complaint.date, complaint.path FROM complaint JOIN registered_user reg ON complaint.complainant_uid = reg.uid ORDER BY date DESC';
+        $query = 'SELECT reg.username,complaint.complaint_id, complaint.complaint_name, complaint.complaint ,complaint.date, complaint.path FROM complaint JOIN registered_user reg ON complaint.complainant_uid = reg.uid ORDER BY date DESC';
         $result = Model::select($query,[]);                                          
         return $result;
+    }
+
+    public function removeComplaint($complaint_id){
+        $query = 'DELETE FROM complaint WHERE complaint_id = :complaint_id';
+        $params = ['complaint_id' => $complaint_id];
+        Model::insert($query,$params);
     }
 }
 ?>

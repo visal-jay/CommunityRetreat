@@ -56,13 +56,6 @@
         background: #16c79a;
     }
 
-    .remove-btn{
-        background-color: red;
-        color: white;
-        border: none;
-
-    }
-
     @media screen and (max-width:800px) {
         .event-card-details {
             display: flex;
@@ -74,7 +67,7 @@
 <?php if($admin) include "nav.php" ?>
 
 <body>
-    <div class="flex-center margin-side-lg " >
+    <div class="flex-center margin-side-lg " style="min-height: 100vh;">
         <div><h1 style="text-align: center;">Complaints</h1></div>
     
         <?php
@@ -97,16 +90,19 @@
                             <div class="flex-row flex-center" style="width: 250px;">
                                 <div class="flex-row flex-center">
                                     <button class='btn btn-small bg-green clr-white' onclick="remove_complaint();" style="border: none;">Resolve</button>
-                                <div class="flex-row flex-space " style="display: none;">
+                                    <div class="flex-row flex-space " style="display: none;">
                                     <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
                                     <form method="post" action="" class="flex-row flex-center">
                                         <input name="event_id" class="hidden" value="<?= $event["event_id"] ?>">
                                         <button class="btn-icon flex-row flex-center"><i type="submit" class="fas fa-check clr-green margin-side-md"></i>&nbsp;</button>
                                     </form>
                                     <i class="fas fa-times clr-red  margin-side-md" onclick="cancel_complaint()"></i>
-                                
+                                    </div>
                                 </div>
-                                <div class='margin-md'><button class='btn btn-small bg-red clr-white' style="border: none;">Dismiss</button></div>
+                                <form class='margin-md' action="/Complaint/dismissComplaint" method="post">
+                                    <input type="hidden" name="complaint_id" value="<?= $complaint['complaint_id']?>"></input>
+                                    <button class='btn btn-small bg-red clr-white'  style="border: none;">Dismiss</button>
+                                </form>
                             </div>
                            
                         </div>

@@ -101,7 +101,7 @@
 
             <?php if ($admin) { ?>
                 <a class="nav-link margin-side-md" href="/Admin/dashboard ">Home</a>
-                <a class="nav-link margin-side-md" href="/Admin/complaint ">complaints</a>
+                <a class="nav-link margin-side-md" href="/Admin/complaint ">Complaints</a>
                 <a class="nav-link margin-side-md" href="/Admin/systemFeedbacks ">System Feedback</a>
             <?php } ?>
 

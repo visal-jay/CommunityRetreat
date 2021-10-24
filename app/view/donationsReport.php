@@ -126,7 +126,6 @@ if (isset($_SESSION["user"]["user_type"])) {
         </div>
 
     </div>
-    <?php var_dump($donations_graph); ?>
 </body>
 
 <script>

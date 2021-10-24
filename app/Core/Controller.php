@@ -3,13 +3,12 @@ class Controller
 {
     /* function __construct()
     {
-        (Model::getDB())->beginTransaction();
+        Model::beginTransaction();
     }
 
     function __destruct()
     {
-        (Model::getDB())->commit();
-        print_r("sdfsd");
+        Model::endTransaction();
     } */
 
     public  static function redirect(string $location, $parameters = [])

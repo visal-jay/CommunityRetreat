@@ -205,7 +205,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                                             else echo 'Rs. ' . number_format($income_report["amount"], 2); ?></td>
                         <td class="right"><?= $income_report["username"] ?></td>
                     </tr>
-                    <?php if ($income_report["status"] == "deleted" || $income_report["status"] == "updated" || $income_report["status"] == "current") echo '<tr style="background-color: white; height:10px;"></tr>'; ?>
+                    <?php if ($income_report["status"] == "deleted" || $income_report["status"] == "current") echo '<tr style="background-color: white; height:20px;"></tr>'; ?>
                 <?php } ?>
             </table>
         </div>
@@ -234,7 +234,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                                             else echo 'Rs. ' . number_format($expense_report["amount"], 2); ?></td>
                         <td class="right"><?= $expense_report["username"] ?></td>
                     </tr>
-                    <?php if ($expense_report["status"] == "deleted" || $expense_report["status"] == "updated" || $expense_report["status"] == "current") echo '<tr style="background-color: white; height:10px;"></tr>'; ?>
+                    <?php if ($expense_report["status"] == "deleted" || $expense_report["status"] == "current") echo '<tr style="background-color: white; height:20px;"></tr>'; ?>
                 <?php } ?>
             </table>
         </div>

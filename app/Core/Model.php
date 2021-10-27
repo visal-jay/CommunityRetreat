@@ -37,7 +37,7 @@ class Model
         $stmt = $db->prepare($query);
         $stmt->execute($params);
     }
-    
+
 
     public static function beginTransaction(){
         $db = Model::getDB();

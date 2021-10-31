@@ -92,8 +92,14 @@
                                     <button class='btn btn-small bg-green clr-white' onclick="remove_complaint();" style="border: none;">Resolve</button>
                                     <div class="flex-row flex-space " style="display: none;">
                                     <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
-                                    <form method="post" action="" class="flex-row flex-center">
-                                        <input name="event_id" class="hidden" value="<?= $event["event_id"] ?>">
+                                    <?php if($complaint['event_id'] != NULL){?>
+                                        <form method="post" action="/Admin/removeEvent" class="flex-row flex-center">
+                                        <input name="event_id" type="hidden" value="<?= $complaint["event_id"] ?>">
+                                    <?php } else{ ?>
+                                        <form method="post" action="/Admin/removeUser" class="flex-row flex-center">
+                                        <input name="uid" type="hidden" value="<?= $complaint["uid"] ?>">
+                                    <?php } ?>
+                                        <input type="hidden" name="complaint_id" value="<?= $complaint['complaint_id']?>"></input>
                                         <button class="btn-icon flex-row flex-center"><i type="submit" class="fas fa-check clr-green margin-side-md"></i>&nbsp;</button>
                                     </form>
                                     <i class="fas fa-times clr-red  margin-side-md" onclick="cancel_complaint()"></i>

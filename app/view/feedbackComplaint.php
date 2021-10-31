@@ -106,7 +106,7 @@
 
                 <div class="input form-item flex-col flex-center">
                     <label>Complaint </label>
-                    <input class="form-ctrl" style="width:90%;" name="complaint" id="complaint" type="text" />
+                    <textarea name="complaint" id="complaint" class="form-ctrl" style="width:90%;" cols="30" rows="10"></textarea>
                     <input type="hidden" name="feedback_id" id="feedback_id" ></input>
                     <input type="hidden" name="uid" id="uid"></input>
                     <input type="hidden" name="event_id" id="event_id"></input>

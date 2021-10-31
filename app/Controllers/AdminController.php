@@ -60,4 +60,24 @@ class AdminController{
         Controller::redirect("systemFeedbacks");
     }
 
+    function removeUser(){
+        $user = new User();
+        $complaint = new Complaint;
+        $uid = $_POST['uid'];
+        //sendNotificationMail($uid)
+        $user->removeUser($uid);
+        $complaint->removeComplaint($_POST['complaint_id']);
+        Controller::redirect("complaint");
+    }
+
+    function removeEvent(){
+        $event = new Events();
+        $complaint = new Complaint;
+        $event_id = $_POST['event_id'];
+        //sendNotificationMail($uid)
+        $event->remove($event_id);
+        $complaint->removeComplaint($_POST['complaint_id']);
+        Controller::redirect("complaint");
+    }
+
 }

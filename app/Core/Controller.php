@@ -63,6 +63,9 @@ class Controller
                 if ($result = $events->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "added"]))
                     foreach ($result as $event)
                         array_push($user_events, $event["event_id"]);
+                if ($result = $events->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "ended"]))
+                    foreach ($result as $event)
+                        array_push($user_events, $event["event_id"]);
                 if (!in_array($event_id, $user_events))
                     Controller::redirect("/Organisation/events");
             }

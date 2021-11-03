@@ -1,6 +1,6 @@
 <?php 
     
-class BudgetController
+class BudgetController extends Controller
 {
     public function view(){/*view the incomes and expenses in the UI by sending the data from backend*/
 

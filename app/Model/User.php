@@ -190,6 +190,12 @@ class User extends Model
             return false;
         }
     }
+    
+    function  removeUser($uid){
+        $query = 'DELETE FROM login WHERE uid = :uid';
+        $params = ["uid" => $uid];
+        User::insert($query,$params);
+    }
 
 
 

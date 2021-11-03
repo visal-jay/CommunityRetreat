@@ -170,6 +170,7 @@
                         <!--Display the donation capacity-->
                         <a><?php echo 'Rs. ' .number_format($donation_capacity, 2) ?></a>
                     </div>
+                    <?php if($status=='published'){ ?>
                     <form action="/Donations/updateDonationCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" class="flex-col flex-center"
                         id="donation-capacity">
                         <!--enter the donation capacity and save it in the database-->
@@ -177,8 +178,11 @@
                         <input name="donation_capacity" type="number" value="<?= $donation_capacity ?>"
                             min="<?= $donation_sum ?>" class=" form form-ctrl hidden" required/>
                     </form>
+                    <?php } ?>
                 </div>
             </div>
+
+            <?php if($status=='published'){ ?>
             <div>
                 <button class="btn btn-solid data edit-btn" onclick="edit()">Edit
                     &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
@@ -191,9 +195,10 @@
                     </div> 
                 </div>
             </div>
+            <?php } ?>
 
 
-            <?php if($donation_status==1){ ?>
+            <?php if($donation_status==1 && $status=='published'){ ?>
             <form action="/Donations/disableDonation?event_id=<?= $_GET["event_id"] ?>" method="post"
                 class=" secondary-donation-enable-disable-btn">
                 <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Disable
@@ -201,7 +206,7 @@
             </form>
             <?php } ?>
 
-            <?php if($donation_status==0){ ?>
+            <?php if($donation_status==0 && $status=='published'){ ?>
             <form action="/Donations/enableDonation?event_id=<?= $_GET["event_id"] ?>" method="post"
                 class=" secondary-donation-enable-disable-btn">
                     <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Enable
@@ -252,7 +257,7 @@
 
         </div>
     </div>
-    <?php if($donation_status==0 && count($donations)==0){ ?>
+    <?php if($donation_status==0 && count($donations)==0 && $status=='published'){ ?>
 
     <div class=" initial-donation-enable-btn">
     <?php if($have_account_number == "TRUE" && ($organization || $treasurer)){?>

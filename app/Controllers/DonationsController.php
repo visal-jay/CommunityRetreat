@@ -8,7 +8,7 @@ class DonationsController{
 
         Controller::validateForm([], ["url", "event_id", "page"]);
         $user_roles = Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
-        $data = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["donation_status" => '', "donation_capacity" => '']);
+        $data = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["donation_status" => '', "donation_capacity" => '', "status" => '']);
         $donation = new Donations();
         $pagination= Model::pagination("donation", 10, "WHERE event_id =:event_id", ["event_id"=>$_GET["event_id"]]);
         $data["donations"] = $donation->getDonateDetails($_GET["event_id"], $pagination["offset"],  $pagination["no_of_records_per_page"]);
@@ -87,6 +87,7 @@ class DonationsController{
         (new UserController)->addActivity("Update donation status as credited", $_GET["event_id"]);
         $donation = new Donations;
         $donation->donationCredit($event_id);
+        
     }
 
     public function pay(){

@@ -31,15 +31,13 @@
     .styled-table th,
     td {
         text-align: center;
+        padding-right: 20px;
+        padding-top: 7px;
+        padding-bottom: 7px;
     }
 
     #role {
         margin-bottom: 0px;
-    }
-
-    .flex-row-to-col {
-        display: flex;
-        flex-direction: row;
     }
 
     .search-bar-role {
@@ -66,13 +64,6 @@
         background: grey;
     }
 
-    th,
-    td {
-        padding-right: 20px;
-        padding-top: 7px;
-        padding-bottom: 7px;
-    }
-
     .drop-down-list {
         display: flex;
         align-items: center;
@@ -93,11 +84,7 @@
 
     @media screen and (max-width:767px) {
 
-        .flex-row-to-col {
-            flex-direction: column;
-        }
-
-        .flex-row{
+        .flex-row {
             flex-wrap: wrap;
         }
 
@@ -117,8 +104,8 @@
             width: 200px;
         }
 
-        table{
-            table-layout:auto;
+        table {
+            table-layout: auto;
         }
     }
 </style>
@@ -175,6 +162,7 @@
                                 </div>
                             </td>
                         </tr>
+
                     <?php }
                     if ($userrole["treasurer_flag"] == 1) {
                     ?>

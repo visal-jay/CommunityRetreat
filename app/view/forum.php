@@ -21,10 +21,6 @@
         justify-content: flex-end;
     }
 
-    .align-left {
-        text-align: left;
-    }
-
     .form {
         min-width: 50%;
         overflow: hidden;
@@ -41,16 +37,6 @@
         height: 350px;
         width: 350px;
         border-radius: 8px;
-    }
-
-    table {
-        width: 100%;
-        table-layout: fixed;
-    }
-
-    td {
-        text-align: center;
-        padding: 1rem 0;
     }
 
     .event-card-details {
@@ -158,7 +144,6 @@
     date {
         font-size: 0.8rem;
     }
-
 
     table {
         width: 100%;

@@ -28,10 +28,6 @@
         width: 70%;
     }
 
-    .container-size2 {
-        width: 98%;
-    }
-
     .head-margin {
         margin: unset;
     }
@@ -71,7 +67,7 @@
         transform: translate(-50%, -50%);
     }
 
-    .volunteer-popup{
+    .volunteer-popup {
         height: 440px;
         overflow: scroll;
     }
@@ -108,8 +104,6 @@
     .container-size {
         width: 70%;
     }
-
-
 
     .about-textarea {
         height: 150px;
@@ -170,11 +164,6 @@
         width: fit-content !important;
     }
 
-    .flex-row-to-col {
-        display: flex;
-        flex-direction: row;
-    }
-
     #map {
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
         position: relative;
@@ -228,22 +217,17 @@
             width: 90%;
         }
 
-        .container-size2 {
-            width: 88%;
-        }
-
         .popup .content {
             width: 70%;
             position: fixed;
             text-align: center;
             top: 50%;
             left: 50%;
-
         }
 
         .popup.active .content {
-            top:290px;
-    }
+            top: 290px;
+        }
 
         .about-textarea {
             width: 100%;
@@ -252,10 +236,6 @@
         .textbox {
             box-sizing: border-box;
             padding: 1rem;
-        }
-
-        .flex-row-to-col {
-            flex-direction: column;
         }
 
         .home-events {
@@ -304,7 +284,7 @@
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width far fa-clock clr-green margin-side-lg"></i>
                             <h4 class="head-margin data">At <?= $start_time ?></h4>
-                            <?php if ($organization || $moderator){ ?>
+                            <?php if ($organization || $moderator) { ?>
                                 <div class="flex-row-to-col flex-center">
                                     <div class="flex-row flex-center">
                                         <label class="form hidden" for="start_time">Starts at?</label>
@@ -381,7 +361,7 @@
                     <div class="human-container">
                         <div class="flex-row margin-lg">
                             <i class="btn-icon icon-width fas fa-hand-holding-usd clr-green margin-side-lg"></i>
-                            <h4 class="head-margin"><?php echo 'Rs. ' .number_format($donations, 2) ?> Donations recieved</h4>
+                            <h4 class="head-margin"><?php echo 'Rs. ' . number_format($donations, 2) ?> Donations recieved</h4>
                         </div>
                     </div>
 
@@ -738,7 +718,7 @@
 
 
         latitude = (latitude == '' || latitude == 0) ? position.coords.latitude : latitude;
-        longitude = (longitude == ''|| longitude ==0) ? position.coords.longitude : longitude;
+        longitude = (longitude == '' || longitude == 0) ? position.coords.longitude : longitude;
 
         var myLatlng = new google.maps.LatLng(latitude, longitude);
 
@@ -762,24 +742,20 @@
         map.setZoom(15);
     }
 
-    function fillComplaint(){
+    function fillComplaint() {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         var complaint_event_id = document.getElementById("complaint_event_id");
-        complaint_event_id.setAttribute("value",urlParams.get('event_id'));
+        complaint_event_id.setAttribute("value", urlParams.get('event_id'));
         console.log(urlParams.get('event_id'));
         var complaint_name = document.getElementById('complaint_name');
-        complaint_name.setAttribute("value",'<?= $event_name ?>'); 
+        complaint_name.setAttribute("value", '<?= $event_name ?>');
         var complaint_status = document.getElementById('complaint_status');
-        complaint_status.setAttribute("value",'event');
+        complaint_status.setAttribute("value", 'event');
 
 
     }
     fillComplaint();
-    
-
-    
-
 </script>
 
 </html>

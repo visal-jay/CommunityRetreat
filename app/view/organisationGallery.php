@@ -119,7 +119,7 @@
     <div class="flex-col  margin-side-lg main-container position-relative">
         <h1>Gallery</h1>
         <?php if ($organization) { ?>
-            <form class="form flex-col flex-center" id="file-form" method="post" enctype="multipart/form-data">
+            <form class="form flex-col flex-center" id="file-form" method="post" enctype="multipart/form-data" data-validated="null">
                 <label for="files">
                     <div class="btn btn-solid margin-lg">Add photo &nbsp; <i class="fas fa-plus"></i></div>
                 </label>
@@ -135,7 +135,7 @@
                 <figure class="item">
                     <?php if (!$guest_user && $photo["uid"] == $_SESSION["user"]["uid"]) { ?>
                         <form class="delete-button" method="post" action="/Organisation/deletePhoto">
-                        <input type="hidden" name="photo" value="<?= $photo["image"] ?>">
+                            <input type="hidden" name="photo" value="<?= $photo["image"] ?>">
                             <button type="submit" class="btn-icon"> <i class="far fa-trash-alt"></i></button>
                         </form>
                     <?php  } ?>
@@ -182,9 +182,7 @@
     document.querySelector("#file-form").addEventListener("submit", handleForm);
 
     document.querySelector("body").addEventListener("click", (event) => {
-        console.log(event.target);
         if (event.target.classList.contains("sel-file")) {
-            console.log("sdfsd");
             removeFile(event);
         }
     });
@@ -240,16 +238,20 @@
             url: "/Organisation/addPhoto",
             type: 'POST',
             data: formdata,
-            dataType: "json",
             contentType: false,
             cache: false,
             processData: false,
             success: (data) => {
-                location.reload();
-                return false;
+                if (data == "success") {
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+                    return false;
+                }
             },
             error: function(request, status, error) {
-                if(!document.querySelector("#file-form").firstElementChild.classList.contains("input-error")){
+                console.log(error);
+                if (!document.querySelector("#file-form").firstElementChild.classList.contains("input-error")) {
                     let msg = request.responseText.match(/####(.*)####/);
                     let span = document.createElement("span");
                     span.classList.add("input-error");

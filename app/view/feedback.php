@@ -217,6 +217,9 @@
                                             <i class="far fa-eye"></i>
                                         <?php } ?>
                                     </button>
+                              
+                                    <button class="btn btn-solid" style="background-color: red; border:none;" onclick ="popupFormandFillComplaint('complaint-form','<?= $feedback['username']?>','<?= $feedback['feedback_id'] ?>','<?= $feedback['uid'] ?>','<?= $_GET['event_id'] ?>');background_still('id1')" >Complain &nbsp;<i class="far fa-comments"></i></button>
+ 
                                 <?php } ?>
                             </div>
                         </div>
@@ -286,8 +289,10 @@
                             <?php }
                             } ?>
                         </div>
-                        <description class="margin-md"><?= $feedback["feedback"] ?></description>
+            
+                        <description class="margin-md"><?= $feedback["feedback"]?></description>
                     </div>
+            
                 </div>
             <?php } ?>
 
@@ -296,9 +301,12 @@
             </div>
         </div>
     </div>
+
+    <?php include "feedbackComplaint.php" ?>
 </body>
 
 <script>
+
     function togglePopup(id) {
         document.getElementById(id).classList.toggle("active");
     }

@@ -19,8 +19,8 @@ class Admin extends User{
 
         if($data['profile_pic']['size']!==NULL){
             $time= (int)shell_exec("date '+%s'"); //Get current timestamp
-            // exec("rm -rf /Users/visaljayathilaka/code/group-project/Group-16/app/Uploads/event/cover" . $data["event_id"] . "*");
-            $cover_pic = new Image($data['uid'].$time,"profile/","profile_pic",true);
+            shell_exec("rm ". __DIR__ ."/../Uploads/profile/" .$data['uid'] ."*");
+            $cover_pic = new Image($data['uid']."-".$time,"profile/","profile_pic",true);
             $params =["profile_pic"=>  $cover_pic->getURL(),"uid"=>$data['uid']];  
         }
         $query = 'UPDATE admin SET profile_pic= :profile_pic   WHERE uid = :uid ';
@@ -80,6 +80,25 @@ class Admin extends User{
         $query = 'SELECT count(event_id) as count FROM event WHERE status="published"';
         $result= Model::select($query);
         return $result[0]["count"];
+    }
+
+    public function getDonationReport(){/*get the donation sum and date and send it to the graph in view file*/
+        $query="SELECT SUM(amount) as donation_sum ,date_format(time_stamp,'%x-%m-%d') as day FROM donation GROUP BY day ORDER BY day ASC";
+        $result=Model::select($query);
+        if (count($result)==0)
+            return false;
+        else
+            return $result;
+    }
+
+    public function getVolunteerReport(){/*get the volunteer count and date and send it to the graph in view file*/
+        $query="SELECT COUNT(uid) as volunteer_sum ,date_format(date,'%x-%m-%d') as day FROM volunteer GROUP BY day ORDER BY day ASC";
+        $result=Model::select($query);
+        if (count($result)==0)
+            return false;
+        else
+            return $result;
+            
     }
 
     /*public function eventCount()

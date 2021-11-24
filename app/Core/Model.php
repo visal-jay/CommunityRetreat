@@ -1,7 +1,10 @@
 <?php
+
+use Stripe\Issuing\Transaction;
+
 class Model
 {
-    protected static function getDB()
+    public static function getDB()
     {
         //require './DB-implement.php';
 
@@ -15,7 +18,7 @@ class Model
         }
         return $db;
     }
-
+    
 
     public static function select($query, $params = [])
     {
@@ -34,7 +37,29 @@ class Model
         $stmt = $db->prepare($query);
         $stmt->execute($params);
     }
-    
+
+
+    public static function beginTransaction(){
+        $db = Model::getDB();
+        if($db->inTransaction()==false){
+            $db->beginTransaction();
+        }
+    }
+
+    public static function endTransaction(){
+        $db= Model::getDB();
+        if($db->inTransaction()==true){
+            $db->commit();
+        }
+    }
+
+    public static function rollBack(){
+        $db= Model::getDB();
+        if($db->inTransaction()==true){
+            $db->rollBack();
+        }
+    }
+
     
     public static function pagination($table, $no_of_records_per_page,$extrenal_query="", $params = [])
     {

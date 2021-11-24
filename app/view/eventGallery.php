@@ -121,7 +121,7 @@
         <h1>Gallery</h1>
 
         <?php if ($moderator || $organization || $registered_user) { ?>
-            <form class="form flex-col flex-center" id="file-form" method="post" enctype="multipart/form-data">
+            <form class="form flex-col flex-center" id="file-form" method="post" enctype="multipart/form-data" data-validated="null">
                 <label for="files">
                     <div class="btn btn-solid margin-lg">Add photo &nbsp; <i class="fas fa-plus"></i></div>
                 </label>
@@ -183,9 +183,7 @@
     document.querySelector("#file-form").addEventListener("submit", handleForm);
 
     document.querySelector("body").addEventListener("click", (event) => {
-        console.log(event.target);
         if (event.target.classList.contains("sel-file")) {
-            console.log("sdfsd");
             removeFile(event);
         }
     });
@@ -235,19 +233,23 @@
         }
 
         $.ajax({
-
             url: "/Event/addPhoto?event_id=<?= $_GET["event_id"] ?>",
             type: 'POST',
             data: formdata,
-            dataType: "json",
             contentType: false,
             cache: false,
             processData: false,
             success: (data) => {
-                location.reload();
-                return false;
+                console.log("success message",data);
+                if (data == "success") {
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+                    return false;
+                }
             },
             error: function(request, status, error) {
+                console.log(error);
                 if (!document.querySelector("#file-form").firstElementChild.classList.contains("input-error")) {
                     let msg = request.responseText.match(/####(.*)####/);
                     let span = document.createElement("span");

@@ -571,7 +571,7 @@
                                 </div>
                             </div>
                             <p class="margin-md" style="margin-bottom:0;"><b>${evn.event_name}</b></p>
-                            <p class="margin-md about" style="margin-top:0">${evn.start_date}</p>
+                            <p class="margin-md about" style="margin-top:0">${evn.start_date==evn.end_date ? evn.end_date : 'From:'+evn.start_date+'<br>To:'+evn.end_date}</p>
                             <div class="flex-col margin-side-md" >
                                 <div class ="flex-row" style="justify-content:space-between;align-items:center;">
                                 <p>Donations</p>
@@ -680,7 +680,7 @@
                                 </div>
                             </div>
                             <p class="margin-md" style="margin-bottom:0;"><b>${evn.event_name}</b></p>
-                            <p class="margin-md about" style="margin-top:0">${evn.start_date}</p>
+                            <p class="margin-md about" style="margin-top:0">${evn.start_date==evn.end_date ? evn.end_date : 'From:'+evn.start_date+'<br>To:'+evn.end_date}</p>
                             <div class="flex-col margin-side-md" >
                                 <div class ="flex-row" style="justify-content:space-between;align-items:center;">
                                 <p>Donations</p>

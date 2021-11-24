@@ -5,7 +5,7 @@ class VolunteerController{
 
     public function view($event_details){
         $user_roles = Controller::accessCheck(["moderator", "organization"],$_GET["event_id"]);
-        $data = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["volunteer_status" => '', "volunteer_capacity" => '']);
+        $data = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["volunteer_status" => '', "volunteer_capacity" => '', "status" => '']);
         $volunteer = new Volunteer();
         $pagination= Model::pagination("volunteer", 10, "WHERE event_id= :event_id", ["event_id"=>$_GET["event_id"]]);
         if(isset($_POST["volunteer_date"]) && $_POST["volunteer_date"]!=""){
@@ -66,9 +66,7 @@ class VolunteerController{
     }
 
     
-    public function volunteerEvent($uid){
-
-
+    public function volunteerEvent(){
         if(isset($_POST['volunteer_date'])){
             Controller::validateForm(["volunteer_date"],["event_id"]);
             $volunteer_dates = $_POST['volunteer_date'];  
@@ -78,8 +76,7 @@ class VolunteerController{
         }
         $volunteer = new Volunteer();
         $event_id = $_GET['event_id'];
-        $volunteer->addVolunteerDetails($uid,$event_id,$volunteer_dates);
-        $description = $volunteer->addVolunteerDetails($uid,$event_id,$volunteer_dates);
+        $description = $volunteer->addVolunteerDetails($_SESSION["user"]["uid"],$event_id,$volunteer_dates);
         (new UserController)->addActivity($description,$event_id);
         Controller::redirect("/Event/view", ["page" => "about", "event_id" => $event_id ]);
 

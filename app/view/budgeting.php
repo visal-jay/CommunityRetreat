@@ -8,17 +8,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 
 <style>
+
+    #chart {
+        max-width: 760px;
+        margin: 35px auto;
+        opacity: 0.9;
+    }
+
+    #timeline-chart .apexcharts-toolbar {
+        opacity: 1;
+        border: 0;
+    }
+
     .income-info {
         max-height: 200px;
         overflow: hidden;
         transition: all .5s ease-in-out;
         filter: blur(0px);
-        min-height: 150px;
+        min-height: 500px;
         min-width: 800px;
-        width: 90%;
         padding: 10px;
         background-color: white;
         border-radius: 10px;
@@ -147,14 +159,7 @@
         text-align: left;
     }
 
-    .amount-field {
-        width: 20%;
-        text-align: right;
-        margin-right: 45px;
-    }
-
     .btn-field {
-        width: 40%;
         margin: 5px;
         padding: 5px;
         justify-content: end;
@@ -175,13 +180,14 @@
         text-align: center;
     }
 
-    .full-budget-details-btn{
+    .full-budget-details-btn {
         margin: 25px;
     }
 
     .income-expense-add-container {
         text-align: center;
     }
+
     .amount-field {
         width: 20%;
         text-align: right;
@@ -189,8 +195,58 @@
         padding: 5px;
     }
 
+
+    .center {
+        text-align: center;
+    }
+
+    .table {
+        width: 100%;
+        background: #ddd5d5;
+        text-align: center;
+        margin: 20px;
+    }
+
+    table,
+    th,
+    td {
+
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        border-bottom: 1px solid #fff;
+        padding: 8px;
+    }
+
+    .container {
+        width: 80%;
+        max-width: none;
+    }
+
+    .color-container {
+        border-radius: 8px;
+        width: 15%;
+        margin: 20px;
+        padding: 10px;
+    }
+
+    .right {
+        text-align: right;
+    }
+
+    .overflow {
+        width: 40%;
+    }
+
+    .canvas {
+        display: -webkit-inline-box;
+        width: 100%;
+    }
+
     @media screen and (max-width:800px) {
-        .container{
+        .container {
             padding: 0;
         }
 
@@ -198,12 +254,15 @@
             margin-left: 0;
             margin-right: 0;
             padding: 0;
+            min-width: 0;
+            min-height: 0;
         }
 
         .expense-info {
             margin-left: 0;
             margin-right: 0;
             padding: 0;
+            min-width: 0;
         }
 
         .update-save-btn {
@@ -216,12 +275,12 @@
             font-size: 0.65rem;
         }
 
-        .submit-btn{
+        .submit-btn {
             font-size: 0.75rem;
         }
 
         .btn-field {
-            width: 40%;
+            width: 35%;
             margin: 2px;
             padding: 2px;
             justify-content: center;
@@ -230,7 +289,7 @@
         }
 
         .amount-field {
-            width: 30%;
+            width: 32.5%;
             text-align: right;
             overflow: auto;
             white-space: nowrap;
@@ -240,7 +299,7 @@
 
         .details-overflow {
             overflow: auto;
-            width: 30%;
+            width: 35%;
             margin: 4px;
             padding: 2px;
             white-space: nowrap;
@@ -255,14 +314,6 @@
             position: fixed;
             width: 80%;
             top: 40%;
-        }
-
-        .income-info {
-            min-width: 0;
-        }
-
-        .expense-info {
-            min-width: 0;
         }
 
         .income-expenxe-balance-container {
@@ -283,7 +334,11 @@
             margin-bottom: 20px;
             box-shadow: 5px 5px 15px 5px #cccccc;
             padding: 15px;
-    }
+        }
+
+        .apexcharts-toolbar{
+            display: none;
+        }
     }
 </style>
 
@@ -311,63 +366,66 @@
         </div>
 
         <div class="full-budget-details-btn" style="text-align:center;">
-                <!--Display the full budget details-->
-                <button class="btn btn-md btn-solid"
-                    onclick="window.location.href=' /Budget/budgetReport?event_id=<?= $_GET['event_id'] ?>'">Full
-                    Budget details</button>
-            </div>
-
-        <h2 class="header margin-md">Income</h2>
-
-        <div class="income-expense-add-container">
-
-            <?php if ($organization || $treasurer) { ?>
-                <!--Add incomes to the database-->
-                <form action="/Budget/addIncome?" method="post" class="form income-form">
-
-                    <div>
-                        <button class="btn btn-sm btn-solid margin-md" type="button" id="button" value="Add" onclick="show_hide('income-form')">Add &nbsp;<i class="fas fa-plus"></i></button>
-                    </div>
-
-                    <div id="income-form" class="hidden income-expense-form-inside">
-
-                        <div class="input form-item">
-                            <label>Details</label>
-                            <input class="form-ctrl" name="details" id=" details" type="text" placeholder="Enter the details" required/>
-                        </div>
-
-                        <div class="input form-item">
-                            <label>Amount</label>
-                            <input class="form-ctrl" name="amount" id="amount" type="number" placeholder="Enter the amount" required/>
-                        </div>
-                        
-                        <div class="form-action-buttons">
-                        <input type="text" class="hidden" name="event_id" value="<?= $_GET["event_id"] ?>">
-                            <button class="btn submit-btn" type="submit" >Submit</button>
-                        </div>
-
-                    </div>
-                </form>
-            <?php } ?>
-
+            <!--Display the full budget details-->
+            <button class="btn btn-md btn-solid" onclick="window.location.href=' /Budget/budgetReport?event_id=<?= $_GET['event_id'] ?>'">Full
+                Budget details</button>
         </div>
 
-        <div style="text-align: -webkit-center;">
+        <div id="chart">
+            <div id="timeline-chart"></div>
+        </div>
+
+        <div class="container">
+            <div class="income-expense-add-container">
+
+                <?php if ($organization || $treasurer) { ?>
+                    <!--Add incomes to the database-->
+                    <form action="/Budget/addIncomeAndExpense?" method="post" class="form income-form">
+
+                        <div>
+                            <button class="btn btn-sm btn-solid margin-md" type="button" id="button" value="Add" onclick="show_hide('income-form')">Add &nbsp;<i class="fas fa-plus"></i></button>
+                        </div>
+
+                        <div id="income-form" class="hidden income-expense-form-inside">
+
+                            <div class="input form-item">
+                                <label class="form hidden" for="mode">Type</label>
+                                <select class="form-ctrl margin-side-md" name="type" id="type">
+                                    <option value="INCOME">Income</option>
+                                    <option value="EXPENSE">Expense</option>
+                                </select>
+                            </div>
+
+                            <div class="input form-item">
+                                <label>Details</label>
+                                <input class="form-ctrl" name="details" id=" details" type="text" placeholder="Enter the details" required />
+                            </div>
+
+                            <div class="input form-item">
+                                <label>Amount</label>
+                                <input class="form-ctrl" name="amount" id="amount" type="number" placeholder="Enter the amount" required />
+                            </div>
+
+                            <div class="form-action-buttons">
+                                <input type="text" class="hidden" name="event_id" value="<?= $_GET["event_id"] ?>">
+                                <button class="btn submit-btn" type="submit">Submit</button>
+                            </div>
+
+                        </div>
+                    </form>
+                <?php } ?>
+
+            </div>
+        </div>
+
+
+        <div style="text-align: -webkit-center; margin-top:20px">
             <div class="income-info" id="income-info">
                 <div class="budget-card-container">
-                    <!--Display the donation sum from the database-->
-                    <p class="details-overflow">Donations</p>
-                    <p class="amount-field"><?php echo 'Rs. ' . number_format($donation_sum, 2) ?></p>
-                    <div class="flex-row btn-field"></div>
-                </div>
-
-            <?php foreach ($incomes as $income) { ?>
-
-                <div class="budget-card-container">
-                    <!--Display all the incomes from the database-->
-                    <p class="details-overflow"><?= $income["details"] ?></p>
-                    <p class="amount-field"><?php echo 'Rs. ' . number_format($income["amount"], 2) ?></p>
-                    <div class="flex-row btn-field">
+                    <h3 class="details-overflow"></h3>
+                    <h3 class="amount-field">Incomes</h3>
+                    <h3 class="amount-field">Expenses</h3>
+                    <div class="flex-row btn-field hidden" style="visibility: hidden;">
                         <div>
                             <!--Update the income and save it in database-->
                             <button class="btn btn-solid update-save-btn " onclick="togglePopup('update-form','<?= $income['details'] ?>', '<?= $income['amount'] ?>', '<?= $income['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
@@ -377,70 +435,56 @@
                             <!--Delete the income and save it in database-->
                             <input type="text" class="hidden" name="record_id" value="<?= $income['record_id'] ?>">
                             <input type="hidden" name="event_id" value=<?= $_GET['event_id'] ?>>
-                            <button class="btn bg-red clr-white delete-cancel-btn" style="border: none;"  type="submit" >
+                            <button class="btn bg-red clr-white delete-cancel-btn" style="border: none;" type="submit">
                                 Delete</button>
                         </form>
                     </div>
                 </div>
-            <?php } ?>
-            </div>
-        </div>
-
-        <div id="income-show-hide-btn" class="income-expense-show-hide-btn">
-            <!--Show all the hidden incomes-->
-            <button class=" btn btn-solid read-more-btn" onclick="show('income-info');change_button('income-down-btn');"><i id="income-down-btn" class="fas fa-chevron-down"></i></button>
-        </div>
-
-        <h2 class="header margin-md">Expense</h2>
-
-        <div class="income-expense-add-container">
-            <!--Add expenses to the database-->
-            <?php if ($organization || $treasurer) { ?>
-                <form action="/Budget/addExpense?" method="post" class="form expense-form">
-
-                    <button class="btn btn-sm btn-solid margin-md" type="button" name="button" id="btn" value="Add" onclick="show_hide('expense-form') ">Add &nbsp;<i class="fas fa-plus"></i></button>
-
-                    <div id="expense-form" class="hidden income-expense-form-inside">
-
-                        <div class="input form-item">
-                        <label>Details</label>
-                            <input class="form-ctrl" name="details" id="details" type="text" placeholder="Enter the details" required/>
+                <div class="budget-card-container">
+                    <!--Display the donation sum from the database-->
+                    <p class="details-overflow">Donations</p>
+                    <p class="amount-field"><?php echo 'Rs. ' . number_format($donation_sum, 2) ?></p>
+                    <p class="amount-field"></p>
+                    <div class="flex-row btn-field hidden" style="visibility: hidden;">
+                        <div>
+                            <!--Update the income and save it in database-->
+                            <button class="btn btn-solid update-save-btn " onclick="togglePopup('update-form','<?= $income['details'] ?>', '<?= $income['amount'] ?>', '<?= $income['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
                         </div>
 
-                        <div class="input form-item">
-                            <label>Amount</label>
-                            <input class="form-ctrl" name="amount" id="amount" type="number" placeholder="Enter the amount" required/>
-                        </div>
-
-                        <div class="form-action-buttons">
+                        <form action="/Budget/delete?" method="post">
+                            <!--Delete the income and save it in database-->
+                            <input type="text" class="hidden" name="record_id" value="<?= $income['record_id'] ?>">
                             <input type="hidden" name="event_id" value=<?= $_GET['event_id'] ?>>
-                            <button class="btn submit-btn" type="submit">Submit</button>
-                        </div>
-
+                            <button class="btn bg-red clr-white delete-cancel-btn" style="border: none;" type="submit">
+                                Delete</button>
+                        </form>
                     </div>
-                </form>
-            <?php } ?>
-        </div>
+                </div>
 
-        <div style="text-align: -webkit-center;">
-            <div class="expense-info" id="expense-info">
-                <?php foreach ($expenses as $expense) { ?>
+
+                <?php foreach ($report as $income) { ?>
 
                     <div class="budget-card-container">
-                        <!--Display the expenses from the database-->
-                        <p class="details-overflow"><?= $expense["details"] ?></p>
-                        <p class="amount-field"><?php echo 'Rs. ' . number_format($expense["amount"], 2) ?></p>
-
+                        <!--Display all the incomes from the database-->
+                        <p class="details-overflow"><?= $income["details"] ?></p>
+                        <?php if (substr($income["record_id"], 0, 3) === "INC") { ?>
+                            <p class="amount-field"><?php echo 'Rs. ' . number_format($income["amount"], 2) ?></p>
+                            <p class="amount-field"></p>
+                        <?php } else { ?>
+                            <p class="amount-field"></p>
+                            <p class="amount-field"><?php echo 'Rs. ' . number_format($income["amount"], 2) ?></p>
+                        <?php } ?>
                         <div class="flex-row btn-field">
                             <div>
-                                <!--Update the expense and save it in database-->
-                                <button class="btn btn-solid update-save-btn " onclick="togglePopup('update-form','<?= $expense['details'] ?>', '<?= $expense['amount'] ?>', '<?= $expense['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
+                                <!--Update the income and save it in database-->
+                                <button class="btn btn-solid update-save-btn " onclick="togglePopup('update-form','<?= $income['details'] ?>', '<?= $income['amount'] ?>', '<?= $income['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
                             </div>
+
                             <form action="/Budget/delete?" method="post">
-                                <!--Delete the expense and save it in database-->
-                                <input type="text" class="hidden" name="record_id" value="<?= $expense['record_id'] ?>">
+                                <!--Delete the income and save it in database-->
+                                <input type="text" class="hidden" name="record_id" value="<?= $income['record_id'] ?>">
                                 <input type="hidden" name="event_id" value=<?= $_GET['event_id'] ?>>
-                                <button class="btn bg-red clr-white delete-cancel-btn" style="border: none;" type="submit" >
+                                <button class="btn bg-red clr-white delete-cancel-btn" style="border: none;" type="submit">
                                     Delete</button>
                             </form>
                         </div>
@@ -449,9 +493,9 @@
             </div>
         </div>
 
-        <div id="expense-show-hide-btn" class="income-expense-show-hide-btn">
-            <!--Show all the hidden expenses-->
-            <button class="btn btn-solid read-more-btn" onclick="show('expense-info');change_button('expense-down-btn');"><i id="expense-down-btn" class="fas fa-chevron-down"></i></button>
+        <div id="income-show-hide-btn" class="income-expense-show-hide-btn">
+            <!--Show all the hidden incomes-->
+            <button class=" btn btn-solid read-more-btn" onclick="show('income-info');change_button('income-down-btn');"><i id="income-down-btn" class="fas fa-chevron-down"></i></button>
         </div>
 
     </div>
@@ -463,12 +507,12 @@
 
                 <div class="input form-item">
                     <label>Details</label>
-                <input class="form-ctrl" name="details" id="details" type="text" required/>
+                    <input class="form-ctrl" name="details" id="details" type="text" required />
                 </div>
 
                 <div class="input form-item">
                     <label>Amount</label>
-                <input class="form-ctrl" name="amount" id="amount" type="number" required/>
+                    <input class="form-ctrl" name="amount" id="amount" type="number" required />
                 </div>
 
                 <input type="text" class="hidden" name="record_id" id="record_id">
@@ -483,8 +527,11 @@
         </div>
     </div>
 
-<script src="/Public/assets/js/input_validation.js"></script>
+    </body>
+    <script src="/Public/assets/js/input_validation.js"></script>
     <script>
+        const data = <?php echo json_encode($income_graph); ?> ;
+        console.log(data);
         /*Calculate the balance of incomes and expenses*/
         document.getElementById("balance").innerHTML = "<div>Balance :</div><div> Rs. " +
             (parseInt('<?= $income_sum  ?>') - parseInt('<?= $expense_sum ?>')).toString().replace(
@@ -550,6 +597,115 @@
             /*when down button is clicked it changes to up button.*/
         }
     </script>
-</body>
+
+    <script>
+        var options = {
+            chart: {
+                type: "area",
+                height: 300,
+                foreColor: "#999",
+                stacked: true,
+                dropShadow: {
+                    enabled: true,
+                    enabledSeries: [0],
+                    top: -2,
+                    left: 2,
+                    blur: 5,
+                    opacity: 0.06
+                }
+            },
+            colors: ['#00E396', '#0090FF', '#FFFF50'],
+            stroke: {
+                curve: "smooth",
+                width: 3
+            },
+            dataLabels: {
+                enabled: false
+            },
+            series: [{
+                name: 'Income',
+                data:  <?php echo json_encode($income_graph); ?>
+            }, {
+                name: 'Expense',
+                data:  <?php echo json_encode($expense_graph); ?>
+            }
+            , {
+                name: 'Balance',
+                data:  <?php echo json_encode($balance_graph); ?>
+            }],
+            markers: {
+                size: 0,
+                strokeColor: "#fff",
+                strokeWidth: 3,
+                strokeOpacity: 1,
+                fillOpacity: 1,
+                hover: {
+                    size: 6
+                }
+            },
+            xaxis: {
+                type: "datetime",
+                axisBorder: {
+                    show: false
+                },
+                axisTicks: {
+                    show: false
+                }
+            },
+            yaxis: {
+                labels: {
+                    offsetX: 14,
+                    offsetY: -5
+                },
+                tooltip: {
+                    enabled: true
+                }
+            },
+            grid: {
+                padding: {
+                    left: -5,
+                    right: 5
+                }
+            },
+            tooltip: {
+                x: {
+                    format: "dd MMM yyyy"
+                },
+            },
+            legend: {
+                position: 'top',
+                horizontalAlign: 'left'
+            },
+            fill: {
+                type: "solid",
+                fillOpacity: 0.7
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#timeline-chart"), options);
+
+        chart.render();
+
+        function generateDayWiseTimeSeries(s, count) {
+            var values = [
+                [
+                    4, 3, 10, 9, 29, 19, 25, 9, 12, 7, 19, 5, 13, 9, 17, 2, 7, 5
+                ],
+                [
+                    2, 3, 8, 7, 22, 16, 23, 7, 11, 5, 12, 5, 10, 4, 15, 2, 6, 2
+                ]
+            ];
+            var i = 0;
+            var series = [];
+            var x = new Date("11 Nov 2012").getTime();
+            while (i < count) {
+                series.push([x, values[s][i]]);
+                x += 86400000;
+                i++;
+            }
+            return series;
+        }
+    </script>
+
 
 </html>

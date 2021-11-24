@@ -77,6 +77,6 @@ class Gallery extends Model
 
         $params = ["image" => $image];
         Model::insert($query, $params);
-        exec("rm -rf /Users/visaljayathilaka/code/group-project/Group-16/app/" . $image);
+        exec("rm ". __DIR__ ."/.." .$image);
     }
 }

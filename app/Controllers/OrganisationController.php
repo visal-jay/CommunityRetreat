@@ -1,7 +1,7 @@
 <?php
 //use Defuse\Crypto\File;
 
-class OrganisationController
+class OrganisationController 
 {
     public function view()
     {
@@ -27,7 +27,7 @@ class OrganisationController
     {
         (new UserController)->addActivity("You added photo to gallery");
         (new Gallery)->addPhoto([], true);
-        echo json_encode("");
+        echo "success";
         //Controller::redirect("/Organisation/gallery");
     }
 

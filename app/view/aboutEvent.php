@@ -28,6 +28,8 @@
         width: 70%;
     }
 
+
+
     .head-margin {
         margin: unset;
     }
@@ -47,7 +49,6 @@
         top: 50%;
         display: flex;
         flex-direction: column;
-
     }
 
     .popup .btn-close {

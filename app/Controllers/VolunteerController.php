@@ -17,10 +17,12 @@ class VolunteerController{
             $data["volunteer_date_req"]=FALSE;
         }
 
+        $data["volunteer_graph"] = json_encode($volunteer->getReport(["event_id" => $_GET["event_id"]]));
         $data["volunteers"] = $volunteer_details;
         $data['volunteer_capacities'] = $volunteer->getVolunteerCapacities($_GET["event_id"]);
         $data['volunteer_sum'] = $volunteer->getVolunteerSum($_GET["event_id"]);
         $data = array_merge($data, $event_details);
+        
         View::render('eventPage', $data, $user_roles);
     }
     public function disableVolunteer()

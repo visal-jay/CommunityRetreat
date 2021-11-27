@@ -447,7 +447,7 @@
     <div class="update-container">
 
         <div class="popup unblurred box" id="update-form">
-            <form action="/Budget/update" method="post" class="update-form">
+            <form action="/Budget/update?event_id=<?= $_GET['event_id'] ?>" method="post" class="update-form">
 
                 <div class="input form-item">
                     <label>Details</label>
@@ -462,7 +462,7 @@
                 <input type="text" class="hidden" name="record_id" id="record_id">
 
                 <div class="flex-row-to-col flex-center">
-                    <input type="hidden" name="event_id" value=<?= $_GET['event_id'] ?>>
+                    <input type="hidden" name="event_id" value=<?= $_GET['event_id'] ?> >
                     <button type="submit" id="save" name="event_id" class="btn btn-solid update-save-btn">Save</button>
                     <button type="button" class="btn bg-red clr-white delete-cancel-btn" onclick="togglePopup('update-form');blur_background('container');stillBackground('id1')">Cancel</button>
                 </div>

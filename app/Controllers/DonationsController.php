@@ -5,7 +5,7 @@ use Stripe\Event;
 class DonationsController{
     public function view($event_details){
         /*view the donations in the UI by sending the data from backend*/
-
+        
         Controller::validateForm([], ["url", "event_id", "page"]);
         $user_roles = Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
         $data = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["donation_status" => '', "donation_capacity" => '', "status" => '']);
@@ -13,6 +13,9 @@ class DonationsController{
         $pagination= Model::pagination("donation", 10, "WHERE event_id =:event_id", ["event_id"=>$_GET["event_id"]]);
         $data["donations"] = $donation->getDonateDetails($_GET["event_id"], $pagination["offset"],  $pagination["no_of_records_per_page"]);
         $data["donation_sum"]= $donation->getDonationSum($_GET["event_id"]);
+        $data["donations_graph"] = json_encode($donation->getReport(["event_id" => $_GET["event_id"]]));
+        $event = new Events;
+        $data["donation_percent"] = $event->getDetails($_GET["event_id"])["donation_percent"];
         $check_accountNo = (new Organisation)->getDetails($_SESSION['user']['uid']);
 
         if($check_accountNo['account_number']!=NULL || $check_accountNo["bank_name"]!=NULL ){   

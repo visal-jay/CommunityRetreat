@@ -65,10 +65,6 @@
         height: 28px;
     }
 
-    .amount {
-        text-align: right;
-    }
-
     /* Clear floats after the columns */
     .row:after {
         content: "";

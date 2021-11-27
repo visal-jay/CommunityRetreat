@@ -126,6 +126,7 @@ if (isset($_SESSION["user"]["user_type"])) {
         </div>
 
     </div>
+
 </body>
 
 <script>

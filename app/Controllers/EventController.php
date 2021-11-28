@@ -19,7 +19,7 @@ class EventController
         $user_roles = Controller::accessCheck(["moderator","treasurer", "organization", "guest_user", "registered_user","admin"], $_GET["event_id"]);
         $event = new Events;
         $volunteer = new Volunteer();
-        $uid = $_SESSION['user']['uid'];
+        $uid = isset($_SESSION['user']['uid']) ? $_SESSION['user']['uid'] : '';
 
         if ($event_details = $event->getDetails($_GET["event_id"])) {
             $data = $event_details;
@@ -27,6 +27,7 @@ class EventController
             $data["donations"] = $data["donations"] == "" ? "0" :  $data["donations"];
             $data["volunteer_date"] = $volunteer->getVolunteeredDates($uid,$_GET["event_id"]);
             $data["volunteer_capacity_exceeded"]=$volunteer->checkVolunteerCount($_GET["event_id"],$data['start_date'],$data['end_date']);
+            $data["volunteer_date"] = $volunteer->getVolunteeredDates($uid,$_GET["event_id"]);
             View::render("eventPage", $data, $user_roles);
            
         } 
@@ -161,4 +162,15 @@ class EventController
         $user_roles = Controller::accessCheck(["organization", "moderator"], $_GET["event_id"]);
         View::render("eventPage", $event_details, $user_roles);
     }
+
+    public function endEvents(){
+        $event = new Events();
+        $donation = new DonationsController;
+        $ended_events = $event->getEndedEvents();
+        foreach($ended_events as $event_id){
+            $event -> endEvents($event_id);
+            $donation -> donationCredit($event_id);
+        }
+    }
+
 }

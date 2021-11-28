@@ -65,10 +65,6 @@
         height: 28px;
     }
 
-    .amount {
-        text-align: right;
-    }
-
     /* Clear floats after the columns */
     .row:after {
         content: "";
@@ -263,6 +259,7 @@
                         </tbody>
 
                     </table>
+                    <?php if ($status=='published') { ?>
                     <form action="/Volunteer/updateVolunteerCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" id="volunteer-capacity" class="flex-col flex-center">
 
                         <?php for ($i = 0; $i < count($volunteer_capacities); $i++) {
@@ -280,8 +277,11 @@
                             echo " max='10000000' class='form form-ctrl hidden' style='margin: 0.3rem;' />";
                         } ?>
                     </form>
+                    <?php } ?>
                 </div>
             </div>
+
+            <?php if ($status=='published') { ?>
             <div>
                 <button class="btn btn-solid btn-md data btn-small edit-btn" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
                 <div class="flex-row flex-center">
@@ -293,15 +293,15 @@
                     </div>
                 </div>
             </div>
+            <?php } ?>
 
-
-            <?php if ($volunteer_status == 1) { ?>
+            <?php if ($volunteer_status == 1 && $status=='published') { ?>
                 <form action="/Volunteer/disableVolunteer?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-volunteer-enable-disable-btn">
                     <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Disable Volunteering</button>
                 </form>
             <?php } ?>
 
-            <?php if ($volunteer_status == 0) { ?>
+            <?php if ($volunteer_status == 0 && $status=='published') { ?>
                 <form action="/Volunteer/enableVolunteer?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-volunteer-enable-disable-btn">
                     <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Enable Volunteering</button>
                 </form>
@@ -391,7 +391,7 @@
             </div>
         </div>
     </div>
-    <?php if ($volunteer_status == 0 && count($volunteers) == 0) { ?>
+    <?php if ($volunteer_status == 0 && count($volunteers) == 0 && $status=='published') { ?>
         <div class="initial-donation-enable-btn">
             <button onclick="window.location.href='/Volunteer/enableVolunteer?event_id=<?= $_GET['event_id'] ?>'" class="btn btn-lg btn-solid" id="initial-volunteer-enable-btn" onclick="myFunction()">Enable Volunteers</button>
         </div>

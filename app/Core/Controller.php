@@ -1,16 +1,15 @@
 <?php
 class Controller
 {
-    /* function __construct()
+    function __construct()
     {
-        (Model::getDB())->beginTransaction();
+        Model::beginTransaction();
     }
 
     function __destruct()
     {
-        (Model::getDB())->commit();
-        print_r("sdfsd");
-    } */
+        Model::endTransaction();
+    }
 
     public  static function redirect(string $location, $parameters = [])
     {
@@ -62,6 +61,9 @@ class Controller
                     foreach ($result as $event)
                         array_push($user_events, $event["event_id"]);
                 if ($result = $events->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "added"]))
+                    foreach ($result as $event)
+                        array_push($user_events, $event["event_id"]);
+                if ($result = $events->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "ended"]))
                     foreach ($result as $event)
                         array_push($user_events, $event["event_id"]);
                 if (!in_array($event_id, $user_events))

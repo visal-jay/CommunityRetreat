@@ -9,7 +9,7 @@
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
-    <title>CommunityRetreat</title>
+    <title>Document</title>
 </head>
 <style>
     h1 {
@@ -26,9 +26,14 @@
         flex-direction: row;
     }
 
+    html {
+        scroll-snap-type: y mandatory;
+    }
+
 
 
     .home-events {
+        scroll-snap-align: center;
         width: 100%;
         border-radius: 8px;
         min-height: max-content;
@@ -38,6 +43,8 @@
         box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
         padding: 2rem 1rem;
         margin: 1rem 0 2rem 0;
+        -webkit-backdrop-filter: blur(5px);
+        backdrop-filter: blur(5px);
     }
 
     .home-events img {
@@ -52,6 +59,7 @@
     }
 
     search {
+        scroll-snap-align: end;
         width: 100%;
         max-width: 100%;
         background-color: #0A1931;
@@ -110,6 +118,7 @@
     }
 
     video {
+
         object-fit: fill;
         border-radius: 8px;
         width: 100%;
@@ -265,6 +274,10 @@
         height: 400px;
     }
 
+    #myVideo {
+        scroll-snap-align: center;
+    }
+
     @media screen and (max-width:767px) {
         .grid-row-1 {
             grid-row: 1;
@@ -330,6 +343,157 @@
             margin: 2rem;
         }
     }
+
+
+    .animated {
+        -webkit-animation-duration: 1.5s;
+        animation-duration: 1.5s;
+    }
+
+    @-webkit-keyframes fadeInRight {
+        from {
+            opacity: 0;
+            -webkit-transform: translate3d(100px, 0, 0);
+            transform: translate3d(100px, 0, 0);
+        }
+
+        to {
+            opacity: 1;
+            -webkit-transform: none;
+            transform: none;
+        }
+    }
+
+    @keyframes fadeInRight {
+        from {
+            opacity: 0;
+            -webkit-transform: translate3d(100px, 0, 0);
+            transform: translate3d(100px, 0, 0);
+        }
+
+        to {
+            opacity: 1;
+            -webkit-transform: none;
+            transform: none;
+        }
+    }
+
+    .fadeInRight.start {
+        -webkit-animation-name: fadeInRight;
+        animation-name: fadeInRight;
+    }
+
+
+
+    .more-pens {
+        position: fixed;
+        left: 20px;
+        bottom: 20px;
+        z-index: 10;
+        font-family: "Montserrat";
+        font-size: 12px;
+    }
+
+    a.white-mode,
+    a.white-mode:link,
+    a.white-mode:visited,
+    a.white-mode:active {
+        font-family: "Montserrat";
+        font-size: 12px;
+        text-decoration: none;
+        background: #212121;
+        padding: 4px 8px;
+        color: #f7f7f7;
+    }
+
+    a.white-mode:hover,
+    a.white-mode:link:hover,
+    a.white-mode:visited:hover,
+    a.white-mode:active:hover {
+        background: #edf3f8;
+        color: #212121;
+    }
+
+
+
+    .background {
+        z-index: -100;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 500%;
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#edf3f8", endColorstr="#dee3e8", GradientType=1);
+    }
+
+    .title h1 {
+        position: relative;
+        color: #000000;
+        font-weight: 300;
+        font-size: 46px;
+        padding: 0;
+        margin: 0;
+        line-height: 1;
+    }
+
+    .title h2 {
+        font-weight: 600;
+        font-size: 60px;
+        padding: 0;
+        margin: 0;
+        line-height: 1;
+    }
+
+    .title h3 {
+        font-weight: 200;
+        font-size: 20px;
+        padding: 0;
+        margin: 0;
+        line-height: 2;
+        color: #5e7283;
+        letter-spacing: 2px;
+    }
+
+    .title p {
+        font-weight: 200;
+        font-size: 16px;
+        color: #5e7283;
+    }
+
+    .pentahedron {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        fill: #3E82F7;
+    }
+
+    .point {
+        fill: #8491A3;
+    }
+
+    .rhombus {
+        fill: #2DA94F;
+        stroke: #2DA94F;
+    }
+
+    .x {
+        fill: #FDBD00;
+    }
+
+    .circle {
+        fill: #ED412D;
+    }
+
+    svg {
+        display: block;
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        transform: translateZ(0px);
+        z-index: -1000;
+    }
+
+    /*# sourceMappingURL=sample.css.map */
 </style>
 <?php include "nav.php" ?>
 
@@ -340,7 +504,9 @@
             <div id="myBar"></div>
         </div>
     </div>
-    <div class="home-div" style="display: none;">
+    <back class="background"></back>
+
+    <div class="home-div " style="display: none;">
         <div class="homepage flex-col flex-center">
             <div class="flex-col flex-center" style="position:relative;">
                 <video autoplay muted loop id="myVideo">
@@ -352,7 +518,7 @@
             </div>
 
             <search class="flex-col flex-center border-round">
-                <h1 class="clr-white">Let's find what you like</h1>
+                <h1 class="clr-white animated fadeInRight">Let's find what you like</h1>
                 <div class="flex-row-to-col flex-center">
                     <form action="/Search/view" method="get" class="search-bar" style="height:fit-content">
                         <input style="color:white" type="search" name="search" class="form-ctrl" placeholder="Search">
@@ -362,25 +528,27 @@
                 </div>
             </search>
 
-            <div class="home-events">
-                <div class="flex-row flex-center">
-                    <video class="border-round" autoplay muted loop>
-                        <source src="/Public/assets/covid.mp4" type="video/mp4">
-                    </video>
-                </div>
-
-
-                <div class="flex-col flex-center grid-row-1">
-                    <h1>Be safe and spread <span class="clr-red">&#xf004;</span><br>Not COVID</h1>
-                    <div>
-                        <img src="/Public/assets/covid-1.svg" style="width:100px" alt="">
-                        <img src="/Public/assets/covid-2.svg" style="width:50px" alt="">
+            <div class ="flex-col flex-center" style="height: 100vh;">
+                <div class="home-events">
+                    <div class="flex-row flex-center">
+                        <video class="border-round" autoplay muted loop>
+                            <source src="/Public/assets/covid.mp4" type="video/mp4">
+                        </video>
                     </div>
-                    <p class="margin-md felx-row flex-center">Follow health and saftey protocols<br>and engage in your community</p>
+
+                    <div class="flex-col flex-center grid-row-1">
+                        <h1 class="animated fadeInRight">Be safe and spread <span class="clr-red">&#xf004;</span><br>Not COVID</h1>
+                        <div>
+                            <img src="/Public/assets/covid-1.svg" style="width:100px" alt="">
+                            <img src="/Public/assets/covid-2.svg" style="width:50px" alt="">
+                        </div>
+                        <p class="margin-md felx-row flex-center">Follow health and saftey protocols<br>and engage in your community</p>
+                    </div>
                 </div>
             </div>
 
             <?php if ($guest_user) { ?>
+                <div class ="flex-col flex-center" style="height: 100vh;">
                 <div class="item flex-row-to-col flex-space">
                     <register class="flex-col flex-center">
                         <img src="/Public/assets/volunteer.png" alt="">
@@ -399,17 +567,21 @@
                         </div>
                     </register>
                 </div>
+            </div>
             <?php } ?>
 
+            <div class ="flex-col flex-center" style="height: 100vh;">
             <div class="home-events">
                 <div class="flex-col flex-center">
                     <img src="/Public/assets/sample-1.svg" alt="">
-                    <h2>Recently added</h2>
-                    <p style="text-align: center">Interested in newly published events?<br> Here is your place!<br> Keep scrolling left to find out more and more events.</p>
+                    <h1 class="animated fadeInRight">Recently added</h2>
+                        <p style="text-align: center">Interested in newly published events?<br> Here is your place!<br> Keep scrolling left to find out more and more events.</p>
                 </div>
                 <div class="flex-row margin-lg" id='recent-events'></div>
             </div>
+            </div>
 
+            <div class ="flex-col flex-center" style="height: 100vh;">
             <div class="home-events">
                 <div id="map" class="margin-side-md grid-row-2"></div>
                 <div class="flex-col flex-center grid-row-1">
@@ -418,16 +590,20 @@
                     <p style="text-align: center">Look what we've found!<br>We got the events within your reach for you!</p>
                 </div>
             </div>
+            </div>
 
+            <div class ="flex-col flex-center" style="height: 100vh;">
             <div class="home-events">
                 <div class="flex-col flex-center">
                     <img src="/Public/assets/sample-3.svg" alt="">
-                    <h2>Need your donations</h2>
+                    <h2 class="animated fadeInRight">Need your donations</h2>
                     <p style="text-align: center">The events that are waiting just for your kindness and generosity.<br>Join the donors' community <br>&<br> support the good-willed projects.</p>
                 </div>
                 <div class="flex-row margin-lg" id='donation-events'></div>
             </div>
+            </div>
 
+            <div class ="flex-col flex-center" style="height: 100vh;">
             <div class="home-events">
                 <div class="flex-row margin-lg grid-row-2" id='volunteer-events'></div>
 
@@ -437,6 +613,7 @@
                     <p style="text-align: center">The events that are waiting just for you.<br> Hurry up and be a proud VOLUNTEER!<br> Become a responsible citizen and be a part of making a better society.</p>
                 </div>
             </div>
+            </div>
         </div>
         <?php include "footer.php"; ?>
     </div>
@@ -445,15 +622,111 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
 
+
 <script>
+    class Particle {
+
+        constructor(svg, coordinates, friction) {
+            this.svg = svg
+            this.steps = ($(window).height()) / 2
+            this.item = null
+            this.friction = friction
+            this.coordinates = coordinates
+            this.position = this.coordinates.y
+            this.dimensions = this.render()
+            this.rotation = Math.random() > 0.5 ? "-" : "+"
+            this.scale = 0.5 + Math.random()
+            this.siner = 200 * Math.random()
+        }
+
+        destroy() {
+            this.item.remove()
+        }
+
+        move() {
+            this.position = this.position - this.friction
+            let top = this.position;
+            let left = this.coordinates.x + Math.sin(this.position * Math.PI / this.steps) * this.siner;
+            this.item.css({
+                transform: "translateX(" + left + "px) translateY(" + top + "px) scale(" + this.scale + ") rotate(" + (this.rotation) + (this.position + this.dimensions.height) + "deg)"
+            })
+
+            if (this.position < -(100)) {
+                this.destroy()
+                return false
+            } else {
+                return true
+            }
+        }
+
+        render() {
+            this.item = $(this.svg, {
+                css: {
+                    transform: "translateX(" + this.coordinates.x + "px) translateY(" + this.coordinates.y + "px)"
+                }
+            })
+            $("back").append(this.item)
+            return {
+                width: this.item.width(),
+                height: this.item.height()
+            }
+        }
+    }
+
+    const rhombus = '<svg viewBox="0 0 13 14"><path class="rhombus" d="M5.9,1.2L0.7,6.5C0.5,6.7,0.5,7,0.7,7.2l5.2,5.4c0.2,0.2,0.5,0.2,0.7,0l5.2-5.4 C12,7,12,6.7,11.8,6.5L6.6,1.2C6.4,0.9,6.1,0.9,5.9,1.2L5.9,1.2z M3.4,6.5L6,3.9c0.2-0.2,0.5-0.2,0.7,0l2.6,2.6 c0.2,0.2,0.2,0.5,0,0.7L6.6,9.9c-0.2,0.2-0.5,0.2-0.7,0L3.4,7.3C3.2,7.1,3.2,6.8,3.4,6.5L3.4,6.5z" /></svg>'
+
+    const pentahedron = '<svg viewBox="0 0 561.8 559.4"><path class="pentahedron" d="M383.4,559.4h-204l-2.6-0.2c-51.3-4.4-94-37-108.8-83l-0.2-0.6L6,276.7l-0.2-0.5c-14.5-50,3.1-102.7,43.7-131.4 L212.1,23C252.4-7.9,310.7-7.9,351,23l163.5,122.5l0.4,0.3c39,30.3,56,82.6,42.2,130.3l-0.3,1.1l-61.5,198 C480.4,525.6,435.5,559.4,383.4,559.4z M185.5,439.4h195.2l61.1-196.8c0-0.5-0.3-1.6-0.7-2.1L281.5,120.9L120.9,241.2 c0,0.3,0.1,0.7,0.2,1.2l60.8,195.8C182.5,438.5,183.7,439.1,185.5,439.4z M441,240.3L441,240.3L441,240.3z"/></svg>'
+    const x = '<svg viewBox="0 0 12 12"> <path class="x" d="M10.3,4.3H7.7V1.7C7.7,0.8,7,0,6,0S4.3,0.8,4.3,1.7v2.5H1.7C0.8,4.3,0,5,0,6s0.8,1.7,1.7,1.7h2.5v2.5 C4.3,11.2,5,12,6,12s1.7-0.8,1.7-1.7V7.7h2.5C11.2,7.7,12,7,12,6S11.2,4.3,10.3,4.3z"/></svg>'
+
+    const circle = '<svg x="0px" y="0px" viewBox="0 0 13 12"> <path class="circle" d="M6.5,0.1C3.4,0.1,0.8,2.8,0.8,6s2.6,5.9,5.7,5.9s5.7-2.7,5.7-5.9S9.7,0.1,6.5,0.1L6.5,0.1z M6.5,8.8 C5,8.8,3.8,7.6,3.8,6S5,3.2,6.5,3.2S9.2,4.4,9.2,6S8,8.8,6.5,8.8L6.5,8.8z"/> </svg>'
+
+    const point = '<svg viewBox="0 0 12 12"> <path class="point" d="M6,7.5L6,7.5C5.1,7.5,4.5,6.9,4.5,6v0c0-0.9,0.7-1.5,1.5-1.5h0c0.9,0,1.5,0.7,1.5,1.5v0C7.5,6.9,6.9,7.5,6,7.5z "/> </svg>'
+
+    function randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+
+    const data = [point, rhombus, pentahedron, circle, x]
+
+    let isPaused = false;
+    window.onblur = function() {
+        isPaused = true;
+    }.bind(this)
+    window.onfocus = function() {
+        isPaused = false;
+    }.bind(this)
+
+    let particles = []
+
+    setInterval(function() {
+        if (!isPaused) {
+            particles.push(
+                new Particle(data[randomInt(0, data.length - 1)], {
+                    "x": (Math.random() * $(window).width()),
+                    "y": $(window).height()
+                }, (1 + Math.random() * 3))
+            )
+        }
+    }, 200)
+
+    function update() {
+        particles = particles.filter(function(p) {
+            return p.move()
+        })
+        requestAnimationFrame(update.bind(this))
+    }
+    update()
+
+
     function showPage() {
         document.getElementsByClassName("loader")[0].style.display = "none";
         document.getElementsByClassName("home-div")[0].style.display = "block";
         document.getElementById("myVideo").play();
+
     }
 
     function move() {
-        console.log("hello");
         var elem = document.getElementById("myBar");
         var width = 0;
         var id = setInterval(frame, 20);
@@ -545,7 +818,7 @@
                 order_type: sort,
                 way: way,
                 limit: limit,
-                offset : 0
+                offset: 0
             },
             success: function(result) {
                 console.log(result);
@@ -734,34 +1007,40 @@
     }
 
 
-    var videos = document.getElementsByTagName("video");
+
+    function isElementInViewport(elem) {
+        var $elem = $(elem);
+
+        // Get the scroll position of the page.
+        var scrollElem = 'html';
+        var viewportTop = $(scrollElem).scrollTop();
+        var viewportBottom = viewportTop + $(window).height();
+
+        // Get the position of the element on the page.
+        var elemTop = Math.round($elem.offset().top);
+        var elemBottom = elemTop + $elem.height();
+        console.log(viewportTop, viewportBottom, elemTop, elemBottom);
+
+        return ((elemTop < viewportBottom) && (elemBottom > viewportTop));
+    }
 
     function checkScroll() {
-        var fraction = 0.8; // Play when 80% of the player is visible.
+        var videos = document.getElementsByTagName("video");
+        var animations = document.querySelectorAll(".animated");
 
         for (var i = 0; i < videos.length; i++) {
-
-            var video = videos[i];
-
-            var x = video.offsetLeft,
-                y = video.offsetTop,
-                w = video.offsetWidth,
-                h = video.offsetHeight,
-                r = x + w, //right
-                b = y + h, //bottom
-                visibleX, visibleY, visible;
-
-            visibleX = Math.max(0, Math.min(w, window.pageXOffset + window.innerWidth - x, r - window.pageXOffset));
-            visibleY = Math.max(0, Math.min(h, window.pageYOffset + window.innerHeight - y, b - window.pageYOffset));
-
-            visible = visibleX * visibleY / (w * h);
-
-            if (visible > fraction) {
-                video.play();
+            if (isElementInViewport(videos[i])) {
+                videos[i].play();
             } else {
-                video.pause();
+                videos[i].pause();
             }
+        }
 
+        for (var i = 0; i < animations.length; i++) {
+            if (isElementInViewport(animations[i])) {
+                if (!animations[i].classList.contains("start"))
+                    animations[i].classList.add("start");
+            }
         }
 
     }

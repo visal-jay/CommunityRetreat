@@ -47,4 +47,11 @@ class Mail
         $this->sendMail($recievers, $subject, $body);
     }
 
+    public  function notificationEmail($reciever,$body_file,$data, $subject)
+    {
+        $recievers = [$reciever];    
+        $body = View::renderTostring($body_file,$data);
+        $this->sendMail($recievers, $subject, $body);
+    }
+
 }

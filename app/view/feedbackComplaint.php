@@ -74,11 +74,7 @@
             flex-direction: row;
         }
 
-        .complaint-blurred {
-            filter: blur(2px);
-        }
-
-        .complaint-still {
+        .complaint-blurr{
             overflow: hidden;
         }
 
@@ -118,7 +114,7 @@
                         <button type="submit" class="btn btn-solid" style="border:none;">Submit</button>
                     </div>
                     <div style="margin: 5px;">
-                        <button type="button" class="btn bg-red clr-white del" style="border:none;" onclick="popupForm('complaint-form');background_blur('container');background_still('id1')">Cancel</button>
+                        <button type="button" class="btn bg-red clr-white del" style="border:none;" onclick="popupForm('complaint-form');">Cancel</button>
                     </div>
                 </div>
         </div>
@@ -134,20 +130,17 @@ function popupFormandFillComplaint(id,complaint_name,feedback_id,uid,event_id) {
         document.getElementById("feedback_id").value = feedback_id;
         document.getElementById("uid").value = uid;
         document.getElementById("event_id").value = event_id;
+        var body = document.getElementById("body");
+        body.classList.toggle("complaint-blurr");
 
 }
 function popupForm(id){
     var form = document.getElementById(id);
     form.classList.toggle("active-popup");
+    var body = document.getElementById("body");
+    body.classList.toggle("complaint-blurr");
 }
 
-function background_blur(id) {
-    document.getElementById(id).classList.toggle("complaint-blurred");
-}
-
-function background_still(id) {
-    document.getElementById(id).classList.toggle("complaint-still");
-}
 </script>
 
 </body>

@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>Complaint</title>
-    <link rel="stylesheet" href="/Public/assets/newstyles.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,7 +31,6 @@
         .complaint-form {
             width: 100%;
         }
-
         .complaint-popup-box {
             position: fixed;
             transform: scale(0);
@@ -57,11 +55,7 @@
             flex-direction: row;
         }
 
-       /* .complaint-blurred {
-            filter: blur(2px);
-        }*/
-
-        .complaint-still {
+       .complaint-blurr {
             overflow: hidden;
         }
 
@@ -76,7 +70,7 @@
 </head>
 <body>
 
-<button class="btn btn-solid" style="background-color: red; border:none;" onclick="popupForm('complaint-form');background_still('id1')">Complain &nbsp;<i class="far fa-comments"></i></button>
+<button class="btn btn-solid" style="background-color: red; border:none;" onclick="popupForm('complaint-form');">Complain &nbsp;<i class="far fa-comments"></i></button>
 
 <div class="complaint-container">
         <div class="complaint-popup-box" id="complaint-form">
@@ -103,7 +97,7 @@
                         <button type="submit" class="btn btn-solid" style="border:none;">Submit</button>
                     </div>
                     <div style="margin: 5px;">
-                        <button type="button" class="btn bg-red clr-white del" style="border:none;" onclick="popupForm('complaint-form');background_blur('container');background_still('id1')">Cancel</button>
+                        <button type="button" class="btn bg-red clr-white del" style="border:none;" onclick="popupForm('complaint-form');">Cancel</button>
                     </div>
                 </div>
         </div>
@@ -112,18 +106,14 @@
 
 <script>
 
-function popupForm(id) {
+function popupForm(id){
         var form = document.getElementById(id);
         form.classList.toggle("active-popup");
-    }
-
-function background_blur(id) {
-    document.getElementById(id).classList.toggle("complaint-blurred");
+        var body = document.getElementById("body");
+        body.classList.toggle("complaint-blurr");
 }
 
-function background_still(id) {
-    document.getElementById(id).classList.toggle("complaint-still");
-}
+
 </script>
 
 </body>

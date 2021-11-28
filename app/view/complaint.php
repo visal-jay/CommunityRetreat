@@ -65,13 +65,6 @@
             overflow: hidden;
         }
 
-        .flex-row-to-col{
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            
-        }
-
     </style>
 </head>
 <body>

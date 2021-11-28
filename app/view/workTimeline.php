@@ -14,10 +14,6 @@
 <style>
     @import url("https://fonts.googleapis.com/css2?family=PT+Sans&display=swap");
 
-    body {
-        background: #ffffff;
-    }
-
     textarea {
         height: 150px;
         padding: 12px 20px;
@@ -28,17 +24,6 @@
         font-size: 16px;
         resize: none;
         font-family: "Ubuntu", sans-serif;
-    }
-
-    .timelineconta {
-        background: transparent;
-        width: 80%;
-        height: 500px;
-        position: relative;
-    }
-
-    nav {
-        margin: 2.6em auto;
     }
 
     .rightbox {
@@ -104,36 +89,6 @@
         font-size: 12px;
     }
 
-    .container-3 {
-        width: 5em;
-        vertical-align: right;
-        white-space: nowrap;
-        position: absolute;
-    }
-
-    .container-3 input#search {
-        width: 150px;
-        height: 30px;
-        background: #fbfbfb;
-        border: none;
-        font-size: 10pt;
-        color: #262626;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
-        margin: 0.9em 0 0 28.5em;
-        box-shadow: 3px 3px 15px rgba(119, 119, 119, 0.5);
-    }
-
-    .container-3 .icon {
-        margin: 1.3em 3em 0 31.5em;
-        position: absolute;
-        width: 150px;
-        height: 30px;
-        z-index: 1;
-        color: black;
-    }
-
     input::placeholder {
         padding: 5em 5em 1em 1em;
         color: black;
@@ -174,7 +129,6 @@
         top: 50%;
         display: flex;
         flex-direction: column;
-
     }
 
     .popup .btn-close {
@@ -186,7 +140,6 @@
         color: black;
         font-size: 1.5rem;
         padding: 2px 5px 7px 5px;
-
     }
 
     .popup.active .content {
@@ -219,12 +172,17 @@
         }
 
         .rb-container {
-        width: 100%;
+            width: 100%;
         }
 
-        .remove{
-            margin: 10px 0 0 10px;
+        .margin-md {
+            margin: 10px 0px 0px 0px;
         }
+
+        .popup .content{
+            width: 80%;
+        }
+
     }
 </style>
 
@@ -233,10 +191,6 @@
     <div id="background">
         <div class="flex-col flex-center margin-side-lg">
             <button class="btn btn-solid btn-close margin-lg" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')">Add Task &nbsp; <i class="fas fa-plus"></i></button>
-            <!-- <div class="container-3">
-                <span class="icon"><i class="fa fa-search"></i></span>
-                <input type="search" id="search" placeholder="Search..." />
-            </div> -->
         </div>
 
         <div class="timeline">
@@ -253,27 +207,27 @@
                                     <h3><?= $task["start_date"] ?><br><?= $task["end_date"] ?></h3>
                                 </div>
                                 <div><?= $task["task"] ?></div>
-                                
-                                    <update class="margin-md flex-row-to-col">
-                                        <button class="btn btn-small" onclick="edit(); editForm('<?= $task['start_date'] ?>','<?= $task['end_date'] ?>','<?= $task['task'] ?>' ,'<?= $task['task_id'] ?>'); togglePopup('edit-form'); blur_background('background'); stillBackground('id1');"><i class="btn-icon far fa-edit margin-side-md"></i>Edit</button>
 
-                                        <?php if ($task['completed'] == 0) { ?>
-                                            <button class="btn btn-small margin-side-md" onclick="window.location.href='/WorkTimeline/completed?event_id=<?= $_GET['event_id'] ?>&&task_id=<?= $task['task_id'] ?>'"><i class="far fa-check-square"></i>&nbsp;&nbsp;Mark as completed</button>
-                                        <?php } else { ?>
-                                            <button class="btn btn-solid btn-small margin-side-md" onclick="window.location.href='/WorkTimeline/completed?event_id=<?= $_GET['event_id'] ?>&&task_id=<?= $task['task_id'] ?>'"><i class="far fa-check-square"></i>&nbsp;&nbsp;Completed</button>
-                                        <?php } ?>
+                                <update class="margin-md flex-row-to-col">
+                                    <button class="btn btn-small margin-md" onclick="edit(); editForm('<?= $task['start_date'] ?>','<?= $task['end_date'] ?>','<?= $task['task'] ?>' ,'<?= $task['task_id'] ?>'); togglePopup('edit-form'); blur_background('background'); stillBackground('id1');"><i class="btn-icon far fa-edit margin-side-md"></i>Edit</button>
 
-                                        <button class="btn btn-small clr-red border-red remove" onclick="remove()" required style="font-family:Ubuntu, sans-serif,  FontAwesome"> &#xf2ed; &nbsp;Remove </button>
-                                        <div class="flex-row flex-space" style="display: none;">
-                                            <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
-                                            <form method="post" action="/WorkTimeline/deleteTask?event_id=<?= $_GET["event_id"] ?>" class="flex-row flex-center">
-                                                <input name="task_id" class="hidden" value="<?= $task["task_id"] ?>">
-                                                <button class="btn-icon flex-row flex-center"><i type="submit" class="fas fa-check clr-green margin-side-md"></i>&nbsp;</button>
-                                            </form>
-                                            <i class="fas fa-times clr-red margin-side-md" onclick="cancel()"></i>
-                                        </div>
-                                    </update>
-                                
+                                    <?php if ($task['completed'] == 0) { ?>
+                                        <button class="btn btn-small margin-md" onclick="window.location.href='/WorkTimeline/completed?event_id=<?= $_GET['event_id'] ?>&&task_id=<?= $task['task_id'] ?>'"><i class="far fa-check-square"></i>&nbsp;&nbsp;Mark as completed</button>
+                                    <?php } else { ?>
+                                        <button class="btn btn-solid btn-small margin-md" onclick="window.location.href='/WorkTimeline/completed?event_id=<?= $_GET['event_id'] ?>&&task_id=<?= $task['task_id'] ?>'"><i class="far fa-check-square"></i>&nbsp;&nbsp;Completed</button>
+                                    <?php } ?>
+
+                                    <button class="btn btn-small clr-red border-red remove margin-md" onclick="remove()" required style="font-family:Ubuntu, sans-serif,  FontAwesome"> &#xf2ed; &nbsp;Remove </button>
+                                    <div class="flex-row flex-space" style="display: none;">
+                                        <p class="margin-side-md" style="white-space: nowrap;">Are you sure</p>
+                                        <form method="post" action="/WorkTimeline/deleteTask?event_id=<?= $_GET["event_id"] ?>" class="flex-row flex-center">
+                                            <input name="task_id" class="hidden" value="<?= $task["task_id"] ?>">
+                                            <button class="btn-icon flex-row flex-center"><i type="submit" class="fas fa-check clr-green margin-side-md"></i>&nbsp;</button>
+                                        </form>
+                                        <i class="fas fa-times clr-red margin-side-md" onclick="cancel()"></i>
+                                    </div>
+                                </update>
+
                             </li>
                         <?php } ?>
                     </ul>
@@ -335,7 +289,7 @@
                     </div>
 
                     <input type="hidden" id="edit-task-id" name="task_id">
-                    <button  class="btn btn-solid margin-md" type="submit" >Save</button>
+                    <button class="btn btn-solid margin-md" type="submit">Save</button>
 
                     <div>
                         <button type="button" class="btn-icon btn-close" onclick="togglePopup('edit-form'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>

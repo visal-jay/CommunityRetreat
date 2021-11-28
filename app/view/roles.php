@@ -10,7 +10,7 @@
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
-    <title>User Roles</title>
+    <title>CommunityRetreat</title>
 </head>
 
 <style>

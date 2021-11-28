@@ -12,7 +12,8 @@ for(let i=0;i<notification_data.length;i++){
                 event_id : notification_data[i].event_id,
                 imgname : "/../.."+notification_data[i].event_cover_pic,
                 description : notification_data[i].description,
-                path : notification_data[i].path
+                path : notification_data[i].path,
+                date: notification_data[i].time_stamp
 
 
             }
@@ -27,7 +28,8 @@ for(let i=0;i<notification_data.length;i++){
                 event_id :"",
                 imgname : notification_data[i].org_profile_pic,
                 description : notification_data[i].description,
-                path : notification_data[i].path
+                path : notification_data[i].path,
+                date: notification_data[i].time_stamp
 
 
             }
@@ -43,8 +45,8 @@ for(let i=0;i<notification_data.length;i++){
                 event_id : "",
                 imgname : "../Public/assets/visal logo.png",
                 description : notification_data[i].description,
-                path : notification_data[i].path
-
+                path : notification_data[i].path,
+                date: notification_data[i].time_stamp
 
             }
             
@@ -73,10 +75,22 @@ function addDatacontainer(data){
     descriptiondiv.setAttribute("class","description");
     descriptiondiv.setAttribute("onClick",data[0].path);
     descriptiondiv.innerText = data[0].description;
+    // let time_stamp_container = document.createElement('div');
+    // time_stamp_container.setAttribute("class","timestamp-container");
+    // let date = document.createElement('p');
+    // date.setAttribute("id","date-text"); 
+    const time_stamp = new Date(data[0].date);
+    // date.innerText = time_stamp .toLocaleDateString('en-GB', {  day: 'numeric', month: 'short', year:  'numeric',});
+    // time_stamp_container.appendChild(date);
+    let time = document.createElement('p');
+    time.setAttribute("id","moment-text");  
+    time.innerText = moment(time_stamp).fromNow();
+    descriptiondiv.appendChild(time);
     notificationbar.appendChild(descriptiondiv);
     document.querySelector('.notifications-form').appendChild(notificationbar);
-
-
+    let horizontal_line = document.createElement('hr');
+    document.querySelector('.notifications-form').appendChild(horizontal_line);
+ 
 }
 
 function successCall(result){

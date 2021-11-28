@@ -27,43 +27,146 @@
             color: #16c79a;
     
         }
-        .eventsearchbar{
-            padding:2em 0 ;
-            display:flex;
-            justify-content: center;
-            flex-direction: column;
-            align-items: center;
-    
-        }
+ 
         #event-search{
             background-image: url('/css/searchicon.png');
+            width: 40%;
         }
 
         .table-container{
             margin: 10px auto;
-            min-height: 100%;
+            height: 80%;
         }
         .table{
+            position: absoulte;
+            z-index: 2;
+            border-collapse: collapse;
+            border-spacing: 0;
+            border-radius: 12px 12px 0 0;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(32,32,32,.3);
             width: 50%;
             margin: auto;
         }
         th{
             
             font-weight: 900;
-            letter-spacing: 0.35px;
-            text-align: center; 
-            padding: 1rem;
-            
+            text-align: left; 
+            padding: 12px 15px;
+            text-transform: uppercase ;
+            color: white;
+            background: #03142d;
+       
         }
 
          td{  
             letter-spacing: 0.35px;
             font-weight: normal;
-            padding: 0.5rem;
-            text-align: center;
+            padding: 12px 15px;
             width: 200px;
             border-collapse: none;
+            text-align: left;
         }
+        tr:nth-child(odd){
+            background-color: #eeee;
+        }
+        tr:hover:not(.thead){
+            transform: scale(1.03);
+            transition-duration: 1s;
+        }
+        a{
+            text-decoration: none;
+        }
+        a:hover{
+            text-decoration: underline;
+        }
+        .searchbar-container{
+            margin: 30px auto 20px auto;
+            padding:1em;
+            display:flex;
+            justify-content: space-evenly;
+            flex-direction: column;
+            align-items: center;
+            width: 50%;
+        }
+        @media screen and (max-width: 700px) {
+            .searchbar-container{
+                width: 70%;
+            }
+            #event-search{
+                width: 50%;
+            }
+            .table{
+                width: 70%;
+            }
+        }
+ 
+        @media screen and (max-width:500px) {
+            .searchbar-container{
+                width: 90%;
+                background: #03142d;
+                color: white;
+                border-radius: 12px;
+                box-shadow: 0 2px 12px rgba(32,32,32,.3);
+            }
+            #event-search{
+                width: 60%;
+            }
+            .table thead{
+                display: none;
+            }
+
+            .table, .table tbody, .table tr{
+            
+                display: block;
+                width: 95%;
+                box-shadow: none;
+                margin: auto;
+            }
+            .table td{
+                display: block;
+                padding-left: 45%;
+                text-align: left;
+                position: relative;
+                width: 100%;
+            }
+
+            .table tr{
+                display: block;
+                margin-bottom: 15px;
+                border-radius: 8px;
+                border-top: 3px solid #16c79a;
+                background: transparent;
+                box-shadow: 0 2px 12px rgba(32,32,32,.3);
+
+            }
+            .table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 50%;
+                padding-left: 15px;
+                font-size: 15px;
+                font-weight: bold;
+                text-align: left;
+             }
+
+        }
+
+        @media screen and (max-width: 350px) {
+            .searchbar-container{
+                width: 95%;
+            }
+            #event-search{
+                width: 70%;
+            }
+            .table td{
+                width: 100%;
+                font-size: 13px;
+            }
+            
+        }
+
 
     </style>
   
@@ -78,24 +181,25 @@
     <h1 id="topic">
         Administration
     </h1>
-    
-    <form action="/action_page.html"  class="eventsearchbar" style="height:fit-content">
-        <input type="search" id="event-search" class="form-ctrl" placeholder="Search event" onkeyup="searchEvent()">
-    </form>
+    <div class="searchbar-container">
+            <h3 style="margin: 10px 0 10px 0;text-align:center;"><i class="fas fa-search "></i>&nbsp&nbspSearch your Administrations</h3>
+            <input type="search" id="event-search" class="form-ctrl" placeholder="Search event" onkeyup="searchEvent()">
+    </div>
     
     <div class="table-container">
         <table class="table" >
-            <thead>
-                <tr>
+            <thead >
+                <tr class="thead">
                     <th>Event</th>
                     <th>Organization</th>
                     <th>User role</th>
-                </tr>
+                </tr>                
             </thead>
-            <tbody id="table-body">
+            <tbody id="table-body" >
 
             </tbody>   
         </table>
+   
     </div>
     
     
@@ -112,25 +216,25 @@
                 for(let i=0 ; i<result.length ;i++){
                     if(result[i].moderator_flag == 1 && result[i].treasurer_flag == 0){
                         tbody.innerHTML += `<tr id="data-row">
-                                            <td id="event-name-td"><a class="clr-black" href='/Event/view?page=about&&event_id=${result[i].event_id}'>${result[i].event_name}</a></td>
-                                            <td>${result[i].organisation_username}</td>
-                                            <td>Moderator</td>
+                                            <td id="event-name-td" data-label="EVENT"><a class="clr-black" href='/Event/view?page=about&&event_id=${result[i].event_id}'>${result[i].event_name}</a></td>
+                                            <td data-label="ORGANIZATION">${result[i].organisation_username}</td>
+                                            <td data-label="USER ROLE">Moderator</td>
                                         </tr>`;
 
                     }
                     else if(result[i].moderator_flag == 0 && result[i].treasurer_flag == 1){
                         tbody.innerHTML += `<tr id="data-row">
-                                            <td id="event-name-td"><a class="clr-black" href='/Event/view?page=about&&event_id=${result[i].event_id}'>${result[i].event_name}</a></td>
-                                            <td>${result[i].organisation_username}</td>
-                                            <td>Treasurer</td>
+                                            <td id="event-name-td" data-label="EVENT"><a class="clr-black" href='/Event/view?page=about&&event_id=${result[i].event_id}'>${result[i].event_name}</a></td>
+                                            <td data-label="ORGANIZATION">${result[i].organisation_username}</td>
+                                            <td data-label="USER ROLE">Treasurer</td>
                                         </tr>`;
 
                     }
                     else if(result[i].moderator_flag == 1 && result[i].treasurer_flag == 1){
                         tbody.innerHTML += `<tr id="data-row">
-                                            <td id="event-name-td"><a class="clr-black" href='/Event/view?page=about&&event_id=${result[i].event_id}'>${result[i].event_name}</a></td>
-                                            <td>${result[i].organisation_username}</td>
-                                            <td>Moderator&nbsp/&nbspTreasurer</td>
+                                            <td id="event-name-td" data-label="EVENT"><a class="clr-black" href='/Event/view?page=about&&event_id=${result[i].event_id}'>${result[i].event_name}</a></td>
+                                            <td data-label="ORGANIZATION">${result[i].organisation_username}</td>
+                                            <td data-label="USER ROLE">Moderator&nbsp/&nbspTreasurer</td>
                                         </tr>`;
 
                     }

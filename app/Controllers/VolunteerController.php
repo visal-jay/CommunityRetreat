@@ -94,14 +94,14 @@ class VolunteerController{
         View::render('volunteerReport', $data);/*send all the data to volunteerReport page*/
     }
 
-    public function sendNotificationstoVolunteers($notification,$path,$event_id)
+    public function sendNotificationstoVolunteers($notification,$path,$event_id,$body_file,$data,$subject)
     {
         $volunteer = new Volunteer();
-        $volunteers = $volunteer->getVolunteeredUid($_POST["event_id"]);
+        $volunteers = $volunteer->getVolunteeredUid($event_id);
         $path = "window.location.href='" . $path . "'";
         for ($i = 0; $i < count($volunteers); $i++){
             foreach ($volunteers[$i] as $uid){
-                (new UserController)->sendNotifications($notification,$uid,"event",$path,$event_id);
+                (new UserController)->sendNotifications($notification,$uid,"event",$path,$event_id,$body_file,$data,$subject);
             }
         }
 

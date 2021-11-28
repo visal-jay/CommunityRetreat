@@ -193,6 +193,12 @@
     .center {
         text-align: center;
     }
+    .volunteer-container{
+        display: none;
+    }
+    .donation-container{
+        display: none;
+    }
 
     @media screen and (max-width:800px) {
         .progress {
@@ -253,8 +259,8 @@
         }
     }
 </style>
-
-<body>
+ 
+<body id="body" >
     <div id="background">
         <div class="flex-col flex-center">
             <h1>About</h1>
@@ -380,7 +386,7 @@
 
             </div>
             <?php if ($volunteer_status == 1) { ?>
-                <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d">
+                <div class="flex-col flex-center content border-round container-size1 margin-md volunteer-container" style="background-color: #03142d;">
                     <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
                     <div class="progress" data-width="<?php if ($volunteer_percent == "NULL") echo "0";
                                                         else echo round($volunteer_percent); ?>%">
@@ -398,7 +404,7 @@
             <?php } ?>
 
             <?php if ($donation_status == 1) { ?>
-                <div class="flex-col flex-center content border-round container-size1 margin-md" style="background-color: #03142d; text-align:center">
+                <div class="flex-col flex-center content border-round container-size1 margin-md donation-container" style="background-color: #03142d; text-align:center">
                     <p style="color:white">Would you like to give value to your hard-earned money by contributing to this community service project?</p>
                     <div class="progress" data-width="<?php if ($donation_percent == NULL) echo "0";
                                                         else echo round($donation_percent); ?>%">
@@ -752,11 +758,26 @@
         var complaint_name = document.getElementById('complaint_name');
         complaint_name.setAttribute("value", '<?= $event_name ?>');
         var complaint_status = document.getElementById('complaint_status');
-        complaint_status.setAttribute("value", 'event');
-
-
+        complaint_status.setAttribute("value",'event');
     }
+    
     fillComplaint();
+
+    function renderVoluneerDonationContainers(){
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        var donation_container = document.querySelector('.donation-container');
+        var volunteer_container = document.querySelector('.volunteer-container');
+        if(urlParams.get('action') == "volunteer"){
+            volunteer_container.style.display = 'flex';
+            console.log('hello pik');
+        }
+        if(urlParams.get('action') == "donation"){
+            donation_container.style.display = 'flex';
+        }
+    }
+    renderVoluneerDonationContainers();
+
 </script>
 
 </html>

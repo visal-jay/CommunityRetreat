@@ -19,16 +19,21 @@
         width: 30px;
     }
 
-    .styled-table {
+    .table {
+        z-index: 2;
         border-collapse: collapse;
+        border-spacing: 0;
+        border-radius: 12px 12px 0 0;
+        overflow: hidden;
         margin: 25px 25px;
         font-size: 1em;
         min-width: 80%;
         max-width: 100%;
         width: 600px;
+        box-shadow: 0 2px 12px rgba(32,32,32,.3);
     }
 
-    .styled-table th,
+    .table th,
     td {
         text-align: center;
         padding-right: 20px;
@@ -62,6 +67,27 @@
 
     .search-bar-dropdown div:hover {
         background: grey;
+    }
+
+    th{
+        text-transform: uppercase ;
+        color: white;
+        background: #03142d;
+        padding-right: 20px;
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+    td {
+        padding-right: 20px;
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+    tr:nth-child(odd){
+        background-color: #eeee;
+    }
+    tr:hover:not(.thead){
+        transform: scale(1.03);
+        transition-duration: 1s;
     }
 
     .drop-down-list {
@@ -100,7 +126,7 @@
             width: 150px;
         }
 
-        .styled-table {
+        .table {
             width: 200px;
         }
 
@@ -137,12 +163,15 @@
 
 
         <div class="event-card-details">
-            <table class="styled-table">
-                <tr>
-                    <th>User</th>
-                    <th>User Role</th>
-                    <th></th>
-                </tr>
+            <table class="table">
+                <thead >
+                    <tr class="thead">
+                        <th>User</th>
+                        <th>User Role</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
                 <?php foreach ($users as $userrole) {
                     if ($userrole["moderator_flag"] == 1) {
                 ?>
@@ -185,7 +214,7 @@
 
                 <?php }
                 } ?>
-
+                </tbody>
             </table>
             <form method="post" action="/Organisation/deleteUserRole?event_id=<?= $_GET["event_id"] ?>" id="delete-form">
                 <input type="text" class="hidden" name="uid" id="user-role-uid" required>

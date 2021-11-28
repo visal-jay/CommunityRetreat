@@ -10,24 +10,29 @@
     color: #16c79a;
 
 } 
-.calender-container{
-   
+/* .calender-container{
+    grid-area: calendar;
     width:100%;
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
-}
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 12px rgba(32,32,32,.3);
+} */
 .calender{
+    grid-area: calendar;
     display: flex;
-    margin: 3% 8% 8%;
+    margin: auto;
     padding: 0.5rem;
-    width:90%;
+    width:100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 8px;
-    box-shadow: 0px 0px 0px 1px silver;
-    border-top: 3px solid #16c79a;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 12px rgba(32,32,32,.3);
 }
 .month{
     display: flex;
@@ -80,7 +85,7 @@
 .days div{
     
     width:calc(100%/7);
-    height: 7rem;
+    height: 3rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -157,6 +162,7 @@
     flex-direction: column;
     padding: 0.8rem 0rem;
     width:100%;
+    overflow: scroll;
 }
 .event-container{
     display: flex;

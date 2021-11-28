@@ -134,19 +134,67 @@
         resize: none;
     }
 
-    .card-container {
-        width: 80%;
+
+    .container {
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
     }
 
     .event-card-details {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        align-items: center;
     }
 
     .opacity-reduce {
         opacity: 0.5;
+    }
+
+
+    .grid-container{
+        display: grid;
+        height: 100%;
+        grid-gap: 1rem;
+        grid-template-columns:repeat(auto-fill,300px);     
+
+    }
+    .feedback-card{
+
+        min-height: 100px;
+        margin: 0;
+        min-width: 230px;
+        width: 230px;
+
+    }
+    .feedback-card:hover{
+        transform: scale(1.02);
+        transition-duration: 0.5s;
+    }
+
+    .image-div{
+        display:flex;
+        align-self: center;
+        height: 60px;
+        width: 60px;
+        border-radius: 50%;
+        overflow: hidden;
+        transform: translate(0%,0%);
+        border:2px solid  rgb(252, 246, 246);
+        background: rgb(202, 196, 196);
+        object-fit: cover;
+    }
+    .image-div img{
+        height: 60px;
+        width: 60px;    
+    }
+    .description{
+        font-size:medium; 
+        font-weight:300; 
+        margin:20px 0 10px;
+        height: 5rem;
+        overflow: scroll;
     }
 
     /* Responsive layout - make the columns stack on top of each other instead of next to each other */
@@ -156,18 +204,40 @@
             width: 75%;
         }
 
-        .card-container {
-            height: fit-content;
-            width: 80%;
+        .side,
+        .middle {
+            width: 100%;
+        }
+
+        .right {
+            display: none;
         }
 
         .event-card-details {
             flex-direction: column;
         }
+        .feedback-card{
+            width: 230px;
+        }
     }
+
+ 
+    @media screen and (max-width:800px) {
+        .grid-container {
+            grid-gap: 10px;
+            grid-template-columns: repeat(auto-fill, 280px);
+        }
+        .feedback-card{
+            width: 200px;
+        }
+    }
+ 
+
 </style>
 
-<body>
+<?php include "feedbackComplaint.php" ?>
+
+<body id="body">
     <div class="flex-col flex-center">
         <div id="background">
 
@@ -193,34 +263,47 @@
 
             <div>
                 <span class="heading margin-md">Feedbacks</span>
-                <div class="flex-col flex-center" style="min-height:200px; width: 100%;">
+                <div class="flex-center grid-container margin-md" style="min-height:200px; width: 100%;">
                     <?php foreach ($feedbacks as $feedback) { ?>
-                        <div class="card-container margin-md <?php if ($feedback["status"] == 'hide') echo 'opacity-reduce' ?>">
-                            <div class="flex-col flex-center margin-md event-card-details">
-                                <h3 class="margin-md"><?= $feedback["username"] ?></h3>
-                                <date><?= $feedback["time_stamp"] ?></date>
-                                <div class="margin-md">
-                                    <?php for ($i = 1; $i < 6; $i++) {
-                                        if ($i <= $feedback["rate"]) { ?>
-                                            <span class="fas fa-star fa-sm checked"></span>
-                                        <?php } else { ?>
-                                            <span class="fas fa-star fa-sm"></span>
-                                    <?php }
-                                    } ?>
+                        <div class="card-container margin-md feedback-card <?php if ($feedback["status"] == 'hide') echo 'opacity-reduce' ?>">
+                            <div class="flex-col margin-md event-card-details">
+                                <div class="flex-row">
+                                    <div>
+                                        <img class="image-div" src="/../..<?=$feedback["profile_pic"]?>">
+                                    </div>                                
+                                    <div>
+                                        <h3 class="margin-md" style="margin:12px 10px 10px 10px; "><?= $feedback["username"] ?></h3>
+                                    </div>
                                 </div>
-                                <description class="margin-md"><?= $feedback["feedback"] ?></description>
-                                <?php if ($organization || $moderator) { ?>
-                                    <button class="btn flex-col margin-md" onclick="window.location.href='/Feedback/statusToggle?event_id=<?= $_GET['event_id'] ?>&&feedback_id=<?= $feedback['feedback_id'] ?>'">
-                                        <?php if ($feedback["status"] == 'show') { ?>
-                                            <i class="far fa-eye-slash"></i>
-                                        <?php  } else { ?>
-                                            <i class="far fa-eye"></i>
-                                        <?php } ?>
-                                    </button>
-                              
-                                    <button class="btn btn-solid" style="background-color: red; border:none;" onclick ="popupFormandFillComplaint('complaint-form','<?= $feedback['username']?>','<?= $feedback['feedback_id'] ?>','<?= $feedback['uid'] ?>','<?= $_GET['event_id'] ?>');background_still('id1')" >Complain &nbsp;<i class="far fa-comments"></i></button>
- 
-                                <?php } ?>
+                                <div class="description">
+                                    <description class="margin-md " style="font-size:medium; font-weight:350; margin:20px 0 10px;"><?= $feedback["feedback"] ?></description>  
+                                </div>
+                                <div class="margin-md flex-row flex-center">
+                                        <?php for ($i = 1; $i < 6; $i++) {
+                                            if ($i <= $feedback["rate"]) { ?>
+                                                <span class="fas fa-star fa-sm checked"></span>
+                                            <?php } else { ?>
+                                                <span class="fas fa-star fa-sm"></span>
+                                        <?php }
+                                        } ?>
+                                </div>
+                                <div class="flex-col flex-center">
+                                    <date style="font-size: 0.8rem; font-weight:100;"><?= date('j M Y ', strtotime($feedback['time_stamp'])) ?></date>
+                                    
+                                    <?php if ($organization || $moderator) { ?>
+                                        <button class="btn bg-green flex-col margin-md " style="border-radius: 40px; width: 200px; " onclick="window.location.href='/Feedback/statusToggle?event_id=<?= $_GET['event_id'] ?>&&feedback_id=<?= $feedback['feedback_id'] ?>'">
+                                            <?php if ($feedback["status"] == 'show') { ?>
+                                                <i class="far fa-eye-slash clr-white"></i>
+                                            <?php  } else { ?>
+                                                <i class="far fa-eye clr-white"></i>
+                                            <?php } ?>
+                                        </button>
+                                
+                                        <button class="btn btn-solid complaint-btn" style="background-color: #ff002b; border:none; border-radius: 40px; width: 200px;" onclick ="popupFormandFillComplaint('complaint-form','<?= $feedback['username']?>','<?= $feedback['feedback_id'] ?>','<?= $feedback['uid'] ?>','<?= $_GET['event_id'] ?>');";>Complain &nbsp;<i class="far fa-comments"></i></button>
+    
+                                    <?php } ?>    
+                                </div>
+                                
                             </div>
                         </div>
 
@@ -272,9 +355,8 @@
         <?php } ?>
     </div>
 
-    <div class="popup" id="complaint_feedback_id">
-        <div class="content">
-
+    <div class="popup" id="complaint_feedback_id" >
+        <div class="content" >
             <?php foreach ($feedbacks as $feedback) { ?>
                 <div class="card-container margin-md <?php if ($feedback["status"] == 'hide') echo 'opacity-reduce' ?>">
                     <div class="flex-col flex-center margin-md event-card-details">
@@ -302,7 +384,7 @@
         </div>
     </div>
 
-    <?php include "feedbackComplaint.php" ?>
+    
 </body>
 
 <script>

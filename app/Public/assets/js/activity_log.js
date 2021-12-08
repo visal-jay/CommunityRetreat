@@ -40,7 +40,7 @@ function addDataRow(data,index){
     date.appendChild(datelabel);
     let datediv = document.createElement('div');
     datediv.setAttribute("class","data date");
-    datediv.innerText = data.date;
+    datediv.innerText = new Date(data.date).toLocaleDateString('en-GB', {  day: 'numeric', month: 'short', year:  'numeric',});
     date.appendChild(datediv);
     tr.appendChild(date);
 

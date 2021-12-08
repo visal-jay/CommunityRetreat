@@ -197,6 +197,15 @@ class User extends Model
         User::insert($query,$params);
     }
 
+    function getDetails($uid){
+        if($result=(new Organisation)->getDetails($uid))
+            return $result;
+        if($result=(new RegisteredUser)->getDetails($uid))
+            return $result;
+        if($result=(new Admin)->getDetails($uid))
+            return $result;
+    }
+
 
 
 }

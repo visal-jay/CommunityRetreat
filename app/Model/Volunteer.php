@@ -171,14 +171,14 @@ class Volunteer extends Model
         Model::insert($query, $params);
     }
 
-    public function getVolunteeredUid($event_id, $start_date=-1, $end_date=-1)
+    public function getVolunteeredUid($event_id)
     {
         $params = ["event_id" => $event_id];
         $query = 'SELECT DISTINCT uid FROM volunteer WHERE event_id = :event_id';         
         $result = Model::select($query, $params);
         return $result;
     }
-
+ 
     public function getvolunteereduidOutofRange($event_id, $start_date, $end_date){
 
         $params = ["event_id" => $event_id, "start_date" => $start_date, "end_date" => $end_date];
@@ -199,5 +199,12 @@ class Volunteer extends Model
             return false;
         else
             return $result;
+    }
+
+    public function notifyNearEvents()
+    {
+        $query = 'SELECT * FROM `volunteer` WHERE volunteer_date = CURDATE() + INTERVAL 18 DAY AND event_id = :event_id';
+        $result = Model::select($query,[]);
+        return $result;
     }
 }

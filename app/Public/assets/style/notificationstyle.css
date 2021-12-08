@@ -11,43 +11,56 @@
     color: #16c79a;
 }
 
-.notifications-container{
+/* .notifications-container{
     top: 0%;
     margin: auto;
     min-height: 100%;
     width: 100%;
-}
+    grid-area: notification;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 12px rgba(32,32,32,.3);
+} */
 
 .notifications-form{
-    width: 80%;
+    width: 100%;
+    min-height: 100%;
     display:flex;
     flex-direction: column;
     margin: auto;
     align-items: center;
-    background-color: #eeeeee;
-    border-radius: 10px;
-    
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 12px rgba(32,32,32,.3);
+    grid-area: notification;
+    overflow: scroll;
 
 }
 .notificationbar{
-    width:50%;
+    width:90%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     padding: 0.2rem 0.3rem 0.2rem;
-    
-    
+    box-shadow: 0 1px 4px rgba(32,32,32,.3);
+    margin-top: 0.5rem;
+    border-radius: 12px; 
+}
+.notificationbar:hover{
+    transform: scale(1.02);
+    transition-duration: 1s;
 }
 .image-div{
     display:flex;
     align-self: center;
     height: 60px;
     width: 60px;
-    border-radius: 50%;
+    border-radius:50%;
     overflow: hidden;
     transform: translate(0%,0%);
-    border:2px solid  rgb(252, 246, 246);
+    border:2px solid  #eeee;
     background: rgb(202, 196, 196);
+    object-fit: cover;
 }
 .image-div img{
     height: 60px;
@@ -59,21 +72,27 @@
     width:70%;
     padding:1.5rem 0.5rem 1rem;
     cursor: pointer;
+    font-weight: 400;
 }
-@media screen  and (max-width: 768px){
-
-    .notifications-form{
-        width: 80%;
-    }
+/* .timestamp-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: lightslategray;
+}
+#date-text{
+    text-align: left;
     
+} */
+#moment-text{
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: lightslategray;
+    padding-top: 0.2rem;
 }
-@media screen  and (max-width: 768px){
 
-    .notifications-form{
-        width: 80%;
-    }
-    
-}
 
 @media screen  and (max-width: 500px){
     .image-div{

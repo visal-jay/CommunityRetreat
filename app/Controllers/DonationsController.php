@@ -13,10 +13,12 @@ class DonationsController{
         $pagination= Model::pagination("donation", 10, "WHERE event_id =:event_id", ["event_id"=>$_GET["event_id"]]);
         $data["donations"] = $donation->getDonateDetails($_GET["event_id"], $pagination["offset"],  $pagination["no_of_records_per_page"]);
         $data["donation_sum"]= $donation->getDonationSum($_GET["event_id"]);
+        $check_accountNo = (new Organisation)->getDetails($event['org_uid']);
         $data["donations_graph"] = json_encode($donation->getReport(["event_id" => $_GET["event_id"]]));
         $event = new Events;
         $data["donation_percent"] = $event->getDetails($_GET["event_id"])["donation_percent"];
         $check_accountNo = (new Organisation)->getDetails($_SESSION['user']['uid']);
+
 
         if($check_accountNo['account_number']!=NULL || $check_accountNo["bank_name"]!=NULL ){   
 
@@ -45,17 +47,10 @@ class DonationsController{
 
         Controller::validateForm([], ["url", "event_id"]);
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
-        (new UserController)->addActivity("Enable donations", $_GET["event_id"]);
-
-        $volunteer = new Volunteer;
-        $volunteer_details=$volunteer->getVolunteerDetails($_GET["event_id"]);
-        $event = (new Events)->getDetails($_GET["event_id"]);
-        
+        (new UserController)->addActivity("Enable donations", $_GET["event_id"]);;
+        $event = (new Events)->getDetails($_GET["event_id"]);        
         (new Donations)->enableDonation($_GET["event_id"]);
-
-        foreach ($volunteer_details as $volunteer){
-            (new UserController)->sendNotifications("{$event['event_name']} event accepts donations now.You can donate..!", $volunteer["uid"], "event","window.location.href= '/Event/view?page=about&event_id= " . $_GET['event_id'] . " ' ", $_GET["event_id"]);
-        }
+        (new VolunteerController)->sendNotificationstoVolunteers("{$event['event_name']} event accepts donations now.You can donate..!","/Event/view?page=about&event_id={$_GET['event_id']}", $_GET["event_id"],"donationEnabledMail",["event_name"=>$event['event_name']],"Donations for ".$event['event_name']." have been enabled.");
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "donations"]);/*redirect to event page after enabling donation.*/
     }
 
@@ -66,7 +61,6 @@ class DonationsController{
         Controller::validateForm(["donation_capacity"], ["url", "event_id"]);
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
         (new UserController)->addActivity("Update donation capacity", $_GET["event_id"]);
-
         (new Donations)->updateDonationCapacity($_GET["event_id"], $_POST["donation_capacity"]);
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "donations"]);/*redirect to event page after updating donation capacity.*/
     }
@@ -158,7 +152,7 @@ class DonationsController{
         $data = (new Events)->getDetails($event_id);
         $donation->donationRefund($event_id);
         foreach ($donation_details as $donation_data){
-            (new UserController)->sendNotifications("{$data['event_name']} event has been removed. We refunded your donations.", $donation_data["uid"], "event","window.location.href= '' ", $event_id);
+            (new UserController)->sendNotifications("{$data['event_name']} event has been removed. We refunded your donations.", $donation_data["uid"], "event","window.location.href= '' ", $event_id,"donationRefundMail",["event_name"=> $data['event_name']],"Donation refunded.");
             $this->refund($donation_data["intent_id"]);
         }
                

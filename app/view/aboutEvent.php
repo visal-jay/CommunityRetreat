@@ -754,7 +754,6 @@
         var complaint_status = document.getElementById('complaint_status');
         complaint_status.setAttribute("value", 'event');
 
-
     }
     fillComplaint();
 </script>

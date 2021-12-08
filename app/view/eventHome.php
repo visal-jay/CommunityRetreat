@@ -14,71 +14,8 @@
 
     <title>CommunityRetreat</title>
 </head>
+
 <style>
-    a {
-        text-decoration: none;
-    }
-
-    nav {
-        width: 100%;
-        height: 20px;
-    }
-
-    ul {
-        list-style: none;
-        margin: 0;
-        padding-left: 0;
-    }
-
-    li {
-        display: block;
-        float: left;
-        padding: 1rem;
-        position: relative;
-        text-decoration: none;
-        transition-duration: 0.5s;
-    }
-
-    li a {
-        color: black;
-    }
-
-
-    li:focus-within a {
-        outline: none;
-    }
-
-    ul li ul li {
-        padding: 0.7rem;
-    }
-
-    ul li ul {
-        z-index: 100;
-        background: white;
-        visibility: hidden;
-        opacity: 0;
-        min-width: 5rem;
-        position: absolute;
-        transition: all 0.5s ease;
-        margin-top: 1rem;
-        left: 0;
-        display: none;
-    }
-
-    ul li:hover>ul,
-    ul li:focus-within>ul,
-    ul li ul:hover,
-    ul li ul:focus {
-        visibility: visible;
-        opacity: 1;
-        display: block;
-    }
-
-    ul li ul li {
-        clear: both;
-        width: 100%;
-    }
-
     .grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -194,10 +131,9 @@
     }
 
     .bg-event {
-        background-image: linear-gradient(0deg, rgb(32 32 32 / 72%), rgb(255 255 255 / 0%)), url(/Public/assets/newphoto.jpeg);
-        /* box-shadow:inset 0 0 0 2000px rgba(255, 0, 150, 0.3); */
+        background-position: center;
+        background-size: cover;
         animation: none !important;
-        background-size: 100% 100%;
     }
 
     @media screen and (max-width:767px) {
@@ -218,8 +154,8 @@
         }
 
         .span-row-2 {
-        grid-row-end: span 1;
-    }
+            grid-row-end: span 1;
+        }
     }
 
     .object {
@@ -240,72 +176,50 @@
 </style>
 
 <body>
-    <?php include "nav.php" ?>
-    <nav role="navigation">
-        <ul>
-            <li><a href="#">Event name</a></li>
-            <li><i class="fas fa-chevron-right"></i></li>
-            <li><a href="#" aria-haspopup="true">Home &nbsp;<i class="fas fa-chevron-down"></i></a>
-                <ul class="dropdown" aria-label="submenu">
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Gallery</a></li>
-                    <li><a href="#">Announcement</a></li>
-                    <li><a href="#">Feedback</a></li>
-                    <li><a href="#">Volunteers</a></li>
-                    <li><a href="#">Work Timeline</a></li>
-                    <li><a href="#">Chat</a></li>
-                    <li><a href="#">Budget</a></li>
-                    <li><a href="#">Donations</a></li>
-                    <li><a href="#">User roles</a></li>
-
-                </ul>
-            </li>
-        </ul>
-    </nav>
-
+    
     <div id="container" class="grid card-grid">
         <div class="card  box one span-col-4 span-row-2">
-            <div class="card__background gradient-2 bg-event" >
+            <div class="card__background gradient-2 bg-event" style=" background-image: linear-gradient(0deg, rgb(32 32 32 / 72%), rgb(255 255 255 / 0%)), url(<?= $cover_photo ?>);">
                 <div style="display: flex;height: 100%;align-items: flex-end;">
-                    <h1 class="margin-lg clr-white">Event name</h1>
-                </div>
-
-            </div>
-        </div>
-
-
-        <div class="card">
-            <div class="card__background flex-col flex-center bg-image-1">
-                <div class="flex-col flex-center box">
-                    <h1 class="clr-white">18%</h1>
-                    <p class="clr-white">Collected</p>
-                    <button class="btn btn-solid margin-md">Donate</button>
+                    <h1 class="margin-lg clr-white"><?= $event_name ?></h1>
                 </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card__background flex-col flex-center bg-image-2">
-                <div class="flex-col flex-center box">
-                    <h1 class="clr-white">20%</h1>
-                    <p class="clr-white">Volunteered</p>
-                    <button class="btn btn-solid margin-md">Volunteer</button>
+        <?php if ($donation_status == 1) { ?>
+            <div class="card">
+                <div class="card__background flex-col flex-center bg-image-1">
+                    <div class="flex-col flex-center box">
+                        <h1 class="clr-white"><?php echo (int)$donation_percent ?>%</h1>
+                        <p class="clr-white">Collected</p>
+                        <button class="btn btn-solid margin-md" onclick="window.location.href='/Event/view?page=about&event_id=<?= $_GET['event_id'] ?>action=donate'">Donate</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        <?php } ?>
 
+        <?php if ($volunteer_status == 1) { ?>
+            <div class="card">
+                <div class="card__background flex-col flex-center bg-image-2">
+                    <div class="flex-col flex-center box">
+                        <h1 class="clr-white"><?php echo (int)$volunteer_percent ?>%</h1>
+                        <p class="clr-white">Volunteered</p>
+                        <button class="btn btn-solid margin-md" onclick="window.location.href='/Event/view?page=about&event_id=<?= $_GET['event_id'] ?>'">Volunteer</button>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
         <div class="card">
             <div class="card__background flex-col flex-center bg-image-4">
-                <div class="flex-col flex-center box">
+                <div class="flex-col flex-center box" onclick="window.location.href='/Organisation/view?page=about&org_id=<?= $org_uid ?>'">
                     <h2 class="clr-white">Organized by:</h2>
-                    <h3 class="clr-white">Organization</h3>
+                    <h3 class="clr-white"><?= $organisation_username ?></h3>
                 </div>
             </div>
         </div>
-
 
         <div class="card">
             <div class="card__background flex-col flex-center bg-image-5">
-                <div class="flex-col flex-center box">
+                <div class="flex-col flex-center box" onclick="window.location.href='/Event/view?page=about&event_id=<?= $_GET['event_id'] ?>'">
                     <h2 class="clr-white">Find out more</h2>
                 </div>
             </div>
@@ -346,7 +260,7 @@
                 <div class="margin-md" style="margin-bottom: 12px; border-radius:20px; overflow:hidden;width:75px">
                     <div id="fb-root"></div>
                     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v12.0" nonce="xqUnsUm7"></script>
-                    <div class="fb-share-button" data-href="https://www.communityretreat.me/Event/view?page=about&event_id=<?php $_GET['event_id'] ?>" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+                    <div class="fb-share-button" data-href="https://www.communityretreat.me/Event/view?page=about&event_id=<?= $_GET['event_id'] ?>" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
                 </div>
             </div>
         </div>

@@ -176,7 +176,6 @@ class Volunteer extends Model
         $params = ["event_id" => $event_id];
         $query = 'SELECT DISTINCT uid FROM volunteer WHERE event_id = :event_id';         
         $result = Model::select($query, $params);
-
         return $result;
     }
 
@@ -185,7 +184,6 @@ class Volunteer extends Model
         $params = ["event_id" => $event_id, "start_date" => $start_date, "end_date" => $end_date];
         $query = 'SELECT DISTINCT uid FROM volunteer WHERE event_id = :event_id AND volunteer_date  NOT BETWEEN :start_date AND :end_date ';
         $result = Model::select($query, $params);
-
         return $result;
     }
 

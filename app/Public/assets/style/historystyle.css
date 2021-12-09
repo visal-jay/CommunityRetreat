@@ -17,20 +17,25 @@ a{
 }
 .event-table{
     
-    width: 100%;
+    position: absoulte;
+    z-index: 2;
     border-collapse: collapse;
-    
+    border-spacing: 0;
+    border-radius: 12px 12px 0 0;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(32,32,32,.3);
+    width: 90%;
+    margin: auto;
     
 }
 
 .event-table th{
-    
     font-weight: 900;
-    letter-spacing: 0.35px;
     text-align: center; 
-   
-
-    
+    padding: 12px 15px;
+    text-transform: uppercase ;
+    color: white;
+    background: #03142d;
 }
 
 .event-table td{
@@ -38,20 +43,30 @@ a{
     letter-spacing: 0.35px;
     font-weight: normal;
     padding: 20px 10px 20px;
+    letter-spacing: 0.35px;
+    font-weight: normal;
+    width: 200px;
+    border-collapse: none;
     text-align: center;
-    
-    
-
 }
+
 .event-table tr{
     text-align: center;
  
+}
+tr:nth-child(odd){
+    background-color: #eeee;
+}
+tr:hover:not(.thead){
+    transform: scale(1.03);
+    transition-duration: 1s;
 }
 .table-container{
     padding: 3% 5%;
     margin: 10px auto;
     min-height: 100%;
 }
+
 
 
 .pop-up-container{
@@ -109,6 +124,12 @@ a{
     font-weight: 600;
     white-space: nowrap;
 }
+.data{
+    text-align: left;
+}
+.date{
+    text-align: center;
+}
 
 @media screen and (max-width:768px) {
 
@@ -120,6 +141,7 @@ a{
        
         display: block;
         width: 100%;
+        box-shadow: none;
 
     }
     .action{
@@ -136,12 +158,14 @@ a{
     }
 
     .event-table tr{
+    
       margin-bottom: 15px;
       border-radius: 8px;
       box-shadow: 0px 0px 0px 1px silver;
       border-top: 3px solid #16c79a;
+      background: transparent;
     
-       }
+    }
 
     .data-label{
         display: block;
@@ -162,10 +186,9 @@ a{
         text-align:left;
         
     }
-    .pop-up{
-        width: 40%;
-    }
+
 }
+
 @media screen and (max-width:500px){
     .pop-up{
         width: 60%;

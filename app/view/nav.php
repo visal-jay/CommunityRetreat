@@ -83,7 +83,6 @@
                 
             <?php if ($registered_user) { ?>
                 <a class="nav-link margin-side-md" href="/User/home">Home</a>
-                <a class="nav-link margin-side-md" href="/RegisteredUser/calendar">Calendar</a>
                 <a class="nav-link margin-side-md" href="/RegisteredUser/administratored">Administration</a>
                 <div class="nav-link-notification margin-side-md" id="notification">
                     <a class="nav-link margin-side-md" href="/User/Notifications">Notifications</a>

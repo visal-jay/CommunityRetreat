@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../Public/assets/style/fontawesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <title>organization profile</title>
+    <title>CommunityRetreat</title>
 </head>
 <?php if ($organization) include "nav.php" ?>
 

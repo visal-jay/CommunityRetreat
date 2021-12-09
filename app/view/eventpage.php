@@ -8,215 +8,274 @@
     <link rel="stylesheet" href="/Public/assets/newstyles.css">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
     <title>Event Page</title>
+    <meta property="og:url" content="https://www.communityretreat.me/Event/view?page=about&event_id=<?= $_GET['event_id'] ?>" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="<?= $event_name ?>" />
+    <meta property="og:description" content="Volunteer, Donate events" />
+    <meta property="og:image" content="https://www.communityretreat.me<?= $cover_photo ?>" />
 </head>
 <style>
-.photo-container {
-    height: 55%;
-    text-align: center;
-    position: relative;
-    padding: 2rem 2rem 0rem 2rem;
-}
+        a {
+        text-decoration: none;
+    }
 
-.profile-pic {
-    max-width: 10%;
-    min-width: 60px;
-    aspect-ratio: 1/1;
-    background-color: gray;
-    border: 1px solid white;
-    position: absolute;
-    overflow: hidden;
-    top: 20px;
-    left: 0;
-    right: 0;
-    margin: auto
-}
+    nav {
+        width: 100%;
+        height: 20px;
+    }
+
+    nav ul {
+        list-style: none;
+        margin: 0;
+        padding-left: 0;
+    }
+
+    nav li {
+        z-index: 100;
+        display: block;
+        float: left;
+        padding: 1rem;
+        position: relative;
+        text-decoration: none;
+        transition-duration: 0.5s;
+    }
+
+    nav li a {
+        color: black;
+    }
 
 
-.cover-place-holder {
-    vertical-align: center;
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: auto;
-    max-height: 300px;
-    min-height: 100px;
-    background-color: gray;
-    overflow: hidden;
-    aspect-ratio: 4/1.2;
-    max-width: 80%;
-}
+    nav li:focus-within a {
+        outline: none;
+    }
 
-.photo-element {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-}
+    nav ul li ul li {
+        padding: 0.7rem;
+    }
 
-.nav-secondary {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    nav ul li ul {
+        z-index: 100;
+        background: white;
+        visibility: hidden;
+        opacity: 0;
+        min-width: 5rem;
+        position: absolute;
+        transition: all 0.5s ease;
+        margin-top: 1rem;
+        left: 0;
+        display: none;
+        border-radius: 0px 0px 5px 5px;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    }
 
-}
+    nav ul li:hover>ul,
+    nav ul li:focus-within>ul,
+    nav ul li ul:hover,
+    nav ul li ul:focus {
+        visibility: visible;
+        opacity: 1;
+        display: block;
+    }
 
-.nav-secondary-bar {
+    nav ul li ul li {
+        clear: both;
+        width: 100%;
+    }
 
-    display: flex;
-    align-items: center;
-    overflow: auto;
+    .photo-container {
+        height: 55%;
+        text-align: center;
+        position: relative;
+        padding: 2rem 2rem 0rem 2rem;
+    }
 
-}
+    .profile-pic {
+        max-width: 10%;
+        min-width: 60px;
+        aspect-ratio: 1/1;
+        background-color: gray;
+        border: 1px solid white;
+        position: absolute;
+        overflow: hidden;
+        top: 20px;
+        left: 0;
+        right: 0;
+        margin: auto
+    }
 
-.nav-active {
-    background-color: #16c79a !important;
-    color: white !important;
-}
 
-.image-upload {
-    position: absolute;
-    bottom: 11px;
-    right: 11px;
-}
+    .cover-place-holder {
+        vertical-align: center;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        max-height: 300px;
+        min-height: 100px;
+        background-color: gray;
+        overflow: hidden;
+        aspect-ratio: 4/1.2;
+        max-width: 80%;
+    }
 
-.image-upload>input {
-    display: none;
+    .photo-element {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+    }
 
-}
+    .nav-secondary {
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-/* Designing for scroll-bar */
-::-webkit-scrollbar {
-    width: 2px;
-    height: 8px;
-    margin: 2rem;
-}
+    }
 
-/* Track */
-/*     ::-webkit-scrollbar-track {
+    .nav-secondary-bar {
+
+        display: flex;
+        align-items: center;
+        overflow: auto;
+
+    }
+
+    .nav-active {
+        background-color: #16c79a !important;
+        color: white !important;
+    }
+
+    .image-upload {
+        position: absolute;
+        bottom: 11px;
+        right: 11px;
+    }
+
+    .image-upload>input {
+        display: none;
+
+    }
+
+    /* Designing for scroll-bar */
+    ::-webkit-scrollbar {
+        width: 2px;
+        height: 8px;
+        margin: 2rem;
+    }
+
+    /* Track */
+    /*     ::-webkit-scrollbar-track {
         background: gainsboro;
         border-radius: 5px;
         padding: 10px;
         margin: 1rem;
     } */
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: #16c79a;
-    border-radius: 5px;
-    border: 1 px solid #16c79a;
-    margin: 1rem;
-    height: 1px;
-    width: 10px;
-}
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #16c79a;
+        border-radius: 5px;
+        border: 1 px solid #16c79a;
+        margin: 1rem;
+        height: 1px;
+        width: 10px;
+    }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: #16c79a;
-}
-
-table {
-    width: 100%;
-    table-layout: fixed;
-}
-
-td {
-    text-align: center;
-    padding: 1rem 0;
-}
-
-.event-card-details {
-    display: flex;
-    flex-direction: row;
-}
-
-h1,
-h2 {
-    margin: 0px;
-}
-
-.info {
-    text-align: center;
-}
-
-.photo-upload-button{
-    padding: 0.3rem;
-    border-radius: 6px;
-    background-color: white;
-    opacity: 0.7;
-}
-
-@media screen and (max-width:767px) {
-    h1 {
-        font-size: 1.5rem;
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #16c79a;
     }
 
     .event-card-details {
-        flex-direction: column;
+        display: flex;
+        flex-direction: row;
     }
-}
+
+    h1,
+    h2 {
+        margin: 0px;
+    }
+
+    .photo-upload-button {
+        padding: 0.3rem;
+        border-radius: 6px;
+        background-color: white;
+        opacity: 0.7;
+    }
+
+    @media screen and (max-width:767px) {
+        h1 {
+            font-size: 1.5rem;
+        }
+
+        .event-card-details {
+            flex-direction: column;
+        }
+    }
 </style>
+
 <?php include "nav.php" ?>
 
 <body>
+    <nav role="navigation">
+        <ul>
+            <li><a href="/Event/view?page=home&&event_id=<?= $_GET["event_id"] ?>"><?= $event_name ?></a></li>
+            <li><i class="fas fa-chevron-right"></i></li>
+            <li id="chosen-nav">
+                <ul class="dropdown" aria-label="submenu">
+                    <?php $page = $_GET["page"] ?>
+                    <li><a class="<?php if ($page == "home") echo "nav-active"; ?>" href="/Event/view?page=home&&event_id=<?= $_GET["event_id"] ?>">Home</a></li>
+                    <li><a class="<?php if ($page == "about") echo "nav-active"; ?>" href="/Event/view?page=about&&event_id=<?= $_GET["event_id"] ?>">About</a></li>
+                    <li><a class="<?php if ($page == "gallery") echo "nav-active"; ?>" href="/Event/view?page=gallery&&event_id=<?= $_GET["event_id"] ?>">Gallery</a></li>
+                    <li><a class="<?php if ($page == "forum") echo "nav-active"; ?>" href="/Event/view?page=forum&&event_id=<?= $_GET["event_id"] ?>">Announcements</a></li>
+                    <li><a class="<?php if ($page == "feedback") echo "nav-active"; ?>" href="/Event/view?page=feedback&&event_id=<?= $_GET["event_id"] ?>">Feedback</a></li>
+                    <?php if ($organization || $moderator) { ?>
+                        <li><a class="<?php if ($page == "volunteers") echo "nav-active"; ?>" href="/Event/view?page=volunteers&&event_id=<?= $_GET["event_id"] ?>">Volunteers</a></li>
+                        <li><a class="<?php if ($page == "timeline") echo "nav-active"; ?>" href="/Event/view?page=timeline&&event_id=<?= $_GET["event_id"] ?>">WorkTimeline</a></li>
+                        <li><a class="<?php if ($page == "chat") echo "nav-active"; ?>" href="/Event/view?page=chat&&event_id=<?= $_GET["event_id"] ?>">Chat</a></li>
+                    <?php } ?>
+                    <?php if ($organization || $treasurer) { ?>
+                        <li><a class="<?php if ($page == "budget") echo "nav-active"; ?>" href="/Event/view?page=budget&&event_id=<?= $_GET["event_id"] ?>">Budget</a></li>
+                        <li><a class="<?php if ($page == "donations") echo "nav-active"; ?>" href="/Event/view?event_id=<?= $_GET["event_id"] ?>&&page=donations">Donations</a></li>
+                    <?php } ?>
+                    <?php if ($organization) { ?>
+                        <li><a class="<?php if ($page == "userroles") echo "nav-active"; ?>" href="/Event/view?page=userroles&&event_id=<?= $_GET["event_id"] ?>">User Roles</a></li>
+                    <?php } ?>
+                </ul>
+            </li>
+        </ul>
+    </nav>
 
-    <div class="photo-container">
-        <div class="cover-place-holder cover border-round">
-            <img src="<?= $cover_photo ?>" alt="" class="photo-element" styl>
+    <?php if ($page != "home") { ?>
+
+        <div class="photo-container">
+            <div class="cover-place-holder cover border-round">
+                <img src="<?= $cover_photo ?>" alt="" class="photo-element">
+                <?php if (($organization || $moderator) && ($_GET["page"] == "about")) { ?>
+                    <div class="image-upload hidden form">
+                        <label for="file-input" class="photo-upload-button">
+                            <i class="fas fa-edit"></i>
+                        </label>
+                        <input id="file-input" name="cover-photo[]" type="file" form="update-form" />
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+
+        <div class="flex-col flex-center margin-md">
+            <h1 class="data"><?= $event_name ?></h1>
             <?php if (($organization || $moderator) && ($_GET["page"] == "about")) { ?>
-                <div class="image-upload hidden form">
-                    <label for="file-input" class="photo-upload-button">
-                        <i class="fas fa-edit"></i>
-                    </label>
-                    <input id="file-input" name="cover-photo[]" type="file" form="update-form" />
-                </div>
+                <label class="form hidden" id="event_name" for="">Event name</label>
+                <input value="<?= $event_name ?>" type="text" name="event_name" form="update-form" class="form form-ctrl hidden" placeholder="Enter event name" required></input>
             <?php } ?>
         </div>
-    </div>
+                <hr>
+    <?php } ?>
 
 
-    <div class="flex-col flex-center margin-md">
-        <h1 class="data"><?= $event_name ?></h1>
-        <?php if (($organization || $moderator) && ($_GET["page"] == "about")) { ?>
-            <label class="form hidden" id="event_name" for="">Event name</label>
-            <input value="<?= $event_name ?>" type="text" name="event_name"  form="update-form" class="form form-ctrl hidden" placeholder="Enter event name" required></input>
-        <?php } ?>
-    </div>
-
-
-    <div class="nav-secondary">
-        <div class="nav-secondary-bar margin-lg">
-            <?php $page = $_GET["page"] ?>
-            <a class="btn margin-side-md <?php if ($page == "about") echo "nav-active"; ?>" style=" margin-bottom:10px;"
-                href="/Event/view?page=about&&event_id=<?= $_GET["event_id"] ?>">About</a>
-            <a class="btn margin-side-md <?php if ($page == "gallery") echo "nav-active"; ?>"
-                style=" margin-bottom:10px;"
-                href="/Event/view?page=gallery&&event_id=<?= $_GET["event_id"] ?>">Gallery</a>
-            <a class="btn margin-side-md <?php if ($page == "forum") echo "nav-active"; ?>" style=" margin-bottom:10px;"
-                href="/Event/view?page=forum&&event_id=<?= $_GET["event_id"] ?>">Announcements</a>
-            <a class="btn margin-side-md <?php if ($page == "feedback") echo "nav-active"; ?>"
-                style=" margin-bottom:10px;"
-                href="/Event/view?page=feedback&&event_id=<?= $_GET["event_id"] ?>">Feedback</a>
-            <?php if ($organization || $moderator) { ?>
-            <a class="btn margin-side-md <?php if ($page == "volunteers") echo "nav-active"; ?>"
-                style=" margin-bottom:10px;"
-                href="/Event/view?page=volunteers&&event_id=<?= $_GET["event_id"] ?>">Volunteers</a>
-            <a class="btn margin-side-md <?php if ($page == "timeline") echo "nav-active"; ?>"
-                style=" margin-bottom:10px;" href="/Event/view?page=timeline&&event_id=<?= $_GET["event_id"] ?>">Work
-                Timeline</a>
-            <a class="btn margin-side-md <?php if ($page == "chat") echo "nav-active"; ?>" style=" margin-bottom:10px;"
-                href="/Event/view?page=chat&&event_id=<?= $_GET["event_id"] ?>">Chat</a>
-            <?php } ?>
-            <?php if ($organization || $treasurer) { ?>
-                <a class="btn margin-side-md <?php if ($page == "budget") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=budget&&event_id=<?= $_GET["event_id"] ?>">Budget</a>
-                <a class="btn margin-side-md <?php if ($page == "donations") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?event_id=<?= $_GET["event_id"] ?>&&page=donations">Donations</a>
-            <?php } ?>
-            <?php if ($organization) { ?>
-                <a class="btn margin-side-md <?php if ($page == "userroles") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Event/view?page=userroles&&event_id=<?= $_GET["event_id"] ?>">User Roles</a>
-            <?php } ?>
-        </div>
-    </div>
 
     <?php
-    if (isset($_GET["page"]) && $_GET["page"] == "about") require __DIR__ . "/aboutEvent.php";
+    if (isset($_GET["page"]) && $_GET["page"] == "home") require __DIR__ . "/eventHome.php";
+    elseif (isset($_GET["page"]) && $_GET["page"] == "about") require __DIR__ . "/aboutEvent.php";
     elseif (isset($_GET["page"]) && $_GET["page"] == "gallery") require __DIR__ .  "/eventGallery.php";
     elseif (isset($_GET["page"]) && $_GET["page"] == "forum") require __DIR__ . "/forum.php";
     elseif (isset($_GET["page"]) && $_GET["page"] == "feedback") require __DIR__ . "/feedback.php";
@@ -226,7 +285,6 @@ h2 {
     elseif (isset($_GET["page"]) && $_GET["page"] == "donations") require __DIR__ . "/donateDetails.php";
     elseif (isset($_GET["page"]) && $_GET["page"] == "volunteers") require __DIR__ . "/volunteercopy.php";
     elseif (isset($_GET["page"]) && $_GET["page"] == "chat") require __DIR__ . "/chat/chatApp.php";
-
     ?>
 
 </body>
@@ -238,6 +296,13 @@ h2 {
 
 
 <script>
+    let selected_nav = document.querySelector(".nav-active");
+    selected_nav.setAttribute("aria-haspopup", "true");
+    selected_nav.setAttribute("style", "padding-right:10px");
+    let selected_nav_outerHTML = selected_nav.outerHTML;
+    selected_nav.parentElement.remove();
+    document.getElementById("chosen-nav").insertAdjacentHTML('afterBegin', selected_nav_outerHTML + '&nbsp;<i class="fas fa-chevron-down"></i>');
+
     function resizeProfile() {
         var cover_height = (document.querySelector(".cover").offsetHeight);
         //var cover_width =(document.querySelector(".cover").offsetwidth);
@@ -251,13 +316,7 @@ h2 {
     }
     window.onload = resize();
     window.addEventListener("resize", resize);
-
-
-    document.querySelector(".nav-active").scrollIntoView({
-        behavior: 'auto',
-        block: 'center',
-        inline: 'center'
-    });
+    
 </script>
 
 </html>

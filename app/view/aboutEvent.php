@@ -773,7 +773,7 @@
             volunteer_container.style.display = 'flex';
             console.log('hello pik');
         }
-        if(urlParams.get('action') == "donation"){
+        if(urlParams.get('action') == "donate"){
             donation_container.style.display = 'flex';
         }
     }

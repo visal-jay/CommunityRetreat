@@ -25,6 +25,9 @@ if(!isset($_SESSION)) session_start();
 
 $routing = new Routing();
 
+/* $_SESSION["user"]["uid"]="ORG0000040";
+$_SESSION["user"]["user_type"]="organization";
+$_SESSION["user"]["username"]="admin"; */
 $routing->process($_SERVER['QUERY_STRING']);
 
 

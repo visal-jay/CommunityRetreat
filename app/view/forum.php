@@ -454,6 +454,7 @@
     function stillBackground(id) {
         document.getElementById(id).classList.toggle("still");
     }
+    
     <?php if($registered_user && isset($_GET["update_announcement_id"])) { ?> 
         window.addEventListener('load', (event) => {
         togglePopup('update_announcement_id'); blur_background('background'); stillBackground('id1') });

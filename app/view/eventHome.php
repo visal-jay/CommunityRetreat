@@ -191,7 +191,7 @@
                     <div class="flex-col flex-center box">
                         <h1 class="clr-white"><?php echo (int)$donation_percent ?>%</h1>
                         <p class="clr-white">Collected</p>
-                        <button class="btn btn-solid margin-md" onclick="window.location.href='/Event/view?page=about&event_id=<?= $_GET['event_id'] ?>action=donate'">Donate</button>
+                        <button class="btn btn-solid margin-md" onclick="window.location.href='/Event/view?page=about&event_id=<?= $_GET['event_id'] ?>&action=donate'">Donate</button>
                     </div>
                 </div>
             </div>
@@ -203,7 +203,7 @@
                     <div class="flex-col flex-center box">
                         <h1 class="clr-white"><?php echo (int)$volunteer_percent ?>%</h1>
                         <p class="clr-white">Volunteered</p>
-                        <button class="btn btn-solid margin-md" onclick="window.location.href='/Event/view?page=about&event_id=<?= $_GET['event_id'] ?>'">Volunteer</button>
+                        <button class="btn btn-solid margin-md" onclick="window.location.href='/Event/view?page=about&event_id=<?= $_GET['event_id'] ?>&action=volunteer''">Volunteer</button>
                     </div>
                 </div>
             </div>

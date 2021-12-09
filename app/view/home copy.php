@@ -516,8 +516,8 @@
                     <h1>Let's join CommunityRetreat</h1>
                 </div>
             </div>
-            <div class="flex-col flex-center" style="height: 100vh;">
-                <search class="flex-col flex-center border-round">
+            <div class="flex-col flex-center" style="height: 100vh;width:100%;">
+                <search class="flex-col flex-center border-round" style="height: 50%;width: 100%;position: relative;">
                     <h1 class="clr-white animated fadeInRight">Let's find what you like</h1>
                     <div class="flex-row-to-col flex-center">
                         <form action="/Search/view" method="get" class="search-bar" style="height:fit-content">
@@ -525,6 +525,7 @@
                             <button type="" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
                         </form>
                         <button class="btn btn-solid" id="near-me" onclick="nearme()"><i class="fas fa-map-marker-alt"></i>&nbsp;Near me</button>
+                        <img src="/Public/assets/search.svg" alt="" style="max-width: 45%;max-height:95%;position:absolute;top:0;right:0;">
                     </div>
                 </search>
             </div>

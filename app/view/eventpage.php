@@ -140,8 +140,8 @@
     }
 
     .nav-active {
-        background-color: #16c79a !important;
-        color: white !important;
+        text-decoration: underline;
+        text-decoration-color: #16c79a !important;
     }
 
     .image-upload {
@@ -153,36 +153,6 @@
     .image-upload>input {
         display: none;
 
-    }
-
-    /* Designing for scroll-bar */
-    ::-webkit-scrollbar {
-        width: 2px;
-        height: 8px;
-        margin: 2rem;
-    }
-
-    /* Track */
-    /*     ::-webkit-scrollbar-track {
-        background: gainsboro;
-        border-radius: 5px;
-        padding: 10px;
-        margin: 1rem;
-    } */
-
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-        background: #16c79a;
-        border-radius: 5px;
-        border: 1 px solid #16c79a;
-        margin: 1rem;
-        height: 1px;
-        width: 10px;
-    }
-
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-        background: #16c79a;
     }
 
     .event-card-details {

@@ -284,6 +284,13 @@ class Events extends Model
         $result = Model::select($query, $params);
         return $result;
     }
+
+    public function getDetailsofNearEvents()
+    {
+        $query = 'SELECT  DISTINCT event_id,volunteer_date FROM `volunteer` WHERE volunteer_date = CURDATE() + INTERVAL 7 DAY OR volunteer_date = CURDATE() + INTERVAL 3 DAY ';
+        $result = Model::select($query,[]);
+        return $result;
+    }
 }
 
 

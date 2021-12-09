@@ -203,10 +203,5 @@ class Volunteer extends Model
             return $result;
     }
 
-    public function notifyNearEvents()
-    {
-        $query = 'SELECT * FROM `volunteer` WHERE volunteer_date = CURDATE() + INTERVAL 18 DAY AND event_id = :event_id';
-        $result = Model::select($query,[]);
-        return $result;
-    }
+
 }

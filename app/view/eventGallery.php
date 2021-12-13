@@ -118,8 +118,9 @@
 
 <body>
     <div class="flex-col flex-center margin-side-lg position-relative">
-        <h1>Gallery</h1>
-
+        <div>
+            <h1>Gallery</h1>
+        </div>
         <?php if ($moderator || $organization || $registered_user) { ?>
             <form class="form flex-col flex-center" id="file-form" method="post" enctype="multipart/form-data" data-validated="null">
                 <label for="files">
@@ -240,7 +241,7 @@
             cache: false,
             processData: false,
             success: (data) => {
-                console.log("success message",data);
+                console.log("success message", data);
                 if (data == "success") {
                     setTimeout(() => {
                         location.reload();

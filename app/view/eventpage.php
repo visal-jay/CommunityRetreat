@@ -15,7 +15,7 @@
     <meta property="og:image" content="https://www.communityretreat.me<?= $cover_photo ?>" />
 </head>
 <style>
-        a {
+    a {
         text-decoration: none;
     }
 
@@ -87,6 +87,13 @@
         text-align: center;
         position: relative;
         padding: 2rem 2rem 0rem 2rem;
+    }
+
+    .bg-event {
+        background-position: center;
+        background-size: cover;
+        animation: none !important;
+        height: 100%;
     }
 
     .profile-pic {
@@ -219,7 +226,12 @@
 
         <div class="photo-container">
             <div class="cover-place-holder cover border-round">
-                <img src="<?= $cover_photo ?>" alt="" class="photo-element">
+                <div class="bg-event" style=" background-image: linear-gradient(0deg, rgb(32 32 32 / 72%), rgb(255 255 255 / 0%)), url(<?= $cover_photo ?>);">
+                    <div style="display: flex;height: 100%;align-items: flex-end;">
+                        <h1 class="margin-lg clr-white"><?= $event_name ?></h1>
+                    </div>
+                </div>
+
                 <?php if (($organization || $moderator) && ($_GET["page"] == "about")) { ?>
                     <div class="image-upload hidden form">
                         <label for="file-input" class="photo-upload-button">
@@ -232,13 +244,12 @@
         </div>
 
         <div class="flex-col flex-center margin-md">
-            <h1 class="data"><?= $event_name ?></h1>
             <?php if (($organization || $moderator) && ($_GET["page"] == "about")) { ?>
                 <label class="form hidden" id="event_name" for="">Event name</label>
                 <input value="<?= $event_name ?>" type="text" name="event_name" form="update-form" class="form form-ctrl hidden" placeholder="Enter event name" required></input>
             <?php } ?>
         </div>
-                <hr>
+        <div style="height:20px"></div>
     <?php } ?>
 
 
@@ -286,7 +297,6 @@
     }
     window.onload = resize();
     window.addEventListener("resize", resize);
-    
 </script>
 
 </html>

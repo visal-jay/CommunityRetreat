@@ -265,7 +265,9 @@
 <body id="body">
     <div id="background">
         <div class="flex-col flex-center">
-            <h1>About</h1>
+            <div class="container-size">
+                <h1>About</h1>
+            </div>
             <div class="content border-round container-size margin-md" id="details" style="background-color: #eeeeee">
                 <?php if ($organization || $moderator) { ?>
                     <form action="/Event/updateDetails?event_id=<?= $_GET["event_id"] ?>" method="post" id="update-form" enctype="multipart/form-data">
@@ -791,7 +793,7 @@
             volunteer_container.style.display = 'flex';
             console.log('hello pik');
         }
-        if(urlParams.get('action') == "donate"){
+        if (urlParams.get('action') == "donate") {
             donation_container.style.display = 'flex';
         }
     }

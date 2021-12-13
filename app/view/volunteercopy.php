@@ -346,55 +346,60 @@
                     <div class="capacity-div">
                         <h3>Volunteer Capacity</h3>
 
-                            <!-- capacity bars to be checked -->
-                            <form action="/Volunteer/updateVolunteerCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" id="volunteer-capacity">
-                               <?php 
-                               $i=0;
-                               foreach($volunteer_capacities as $capacity){
-                                    echo "<div class='flex-row' style='justify-content:space-between;'>";
+                        <!-- capacity bars to be checked -->
+                        <form action="/Volunteer/updateVolunteerCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" id="volunteer-capacity">
+                            <?php
+                            $i = 0;
+                            foreach ($volunteer_capacities as $capacity) {
+                                echo "<div class='flex-row' style='justify-content:space-between;'>";
 
-                                        echo "<div style='min-width:fit-content'; >";
-                                            echo "<p>" .$capacity['event_date']."</p>";
-                                        echo "</div>";
+                                echo "<div style='min-width:fit-content'; >";
+                                echo "<p>" . $capacity['event_date'] . "</p>";
+                                echo "</div>";
 
-                                        echo "<div style='min-width:60%;margin:auto'>";
-                                            echo "<div class='grey-bar margin-md' style='min-width:40px; min-width:100px; width:" . ($capacity['capacity'] / max(array_column($volunteer_capacities,'capacity'))*100) . "%'>";
-                                            $sum_capacity = isset($volunteer_sum[$capacity['event_date']][0]['volunteer_sum']) ? $volunteer_sum[$capacity['event_date']][0]['volunteer_sum']:0;
-                                                echo "<div class='filled-bar' style='min-width:40px; width: ".($sum_capacity/($capacity['capacity']==0?1:$capacity['capacity'])*100)."%'>";
-                                                echo ($sum_capacity/($capacity['capacity']==0?1:$capacity['capacity'])*100)."%";
-                                                echo "</div>";
-                                            echo "</div>";
-                                        echo "</div>";
+                                echo "<div style='min-width:60%;margin:auto'>";
+                                echo "<div class='grey-bar margin-md' style='min-width:40px; min-width:100px; width:" . ($capacity['capacity'] / max(array_column($volunteer_capacities, 'capacity')) * 100) . "%'>";
+                                $sum_capacity = isset($volunteer_sum[$capacity['event_date']][0]['volunteer_sum']) ? $volunteer_sum[$capacity['event_date']][0]['volunteer_sum'] : 0;
+                                echo "<div class='filled-bar' style='min-width:40px; width: " . ($sum_capacity / ($capacity['capacity'] == 0 ? 1 : $capacity['capacity']) * 100) . "%'>";
+                                echo ($sum_capacity / ($capacity['capacity'] == 0 ? 1 : $capacity['capacity']) * 100) . "%";
+                                echo "</div>";
+                                echo "</div>";
+                                echo "</div>";
 
-                                        echo "<div style='margin:auto;'>";
-                                            echo "<p class='data'>" . $volunteer_capacities[$i]['capacity'] . "</p>";
-                                            echo "<input name='";
-                                            echo $i;
-                                            echo "' type='number' value=";
-                                            echo $volunteer_capacities[$i]['capacity'];
-                                            echo "  min=";
-                                            foreach ($volunteer_sum[$volunteer_capacities[$i]['event_date']] as $sum) {
-                                                echo $sum['volunteer_sum'];
-                                            }
-                                            echo " max='10000000' class='capacity form form-ctrl hidden' style='margin: 0.3rem;' />";
-                                            $i=$i+1;
-                                        echo "</div>";
-
-                                    echo "</div>";
+                                echo "<div style='margin:auto;'>";
+                                echo "<p class='data'>" . $volunteer_capacities[$i]['capacity'] . "</p>";
+                                echo "<input name='";
+                                echo $i;
+                                echo "' type='number' value=";
+                                echo $volunteer_capacities[$i]['capacity'];
+                                echo "  min=";
+                                foreach ($volunteer_sum[$volunteer_capacities[$i]['event_date']] as $sum) {
+                                    echo $sum['volunteer_sum'];
                                 }
-                               ?>
-                               </form>
+                                echo " max='10000000' class='capacity form form-ctrl hidden' style='margin: 0.3rem;' />";
+                                $i = $i + 1;
+                                echo "</div>";
+
+                                echo "</div>";
+                            }
+                            ?>
+                        </form>
 
                         <div>
-                            <button class="btn btn-solid btn-md data btn-small edit-btn" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
-                            <div class="flex-row flex-center">
-                                <div class="edit-save-btn">
-                                    <button class=" btn btn-solid bg-red border-red form btn-small hidden close-btn" onclick="edit()">Close &nbsp;&nbsp;<i class="fas fa-times "></i></button>
+                            <?php if ($status == 'published') { ?>
+                                <button class="btn btn-solid btn-md data btn-small edit-btn" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
+                                <div class="flex-row flex-center">
+                                    <div class="edit-save-btn">
+                                        <button class=" btn btn-solid bg-red border-red form btn-small hidden close-btn" onclick="edit()">Close &nbsp;&nbsp;<i class="fas fa-times "></i></button>
+                                    </div>
+                                    <div class="edit-save-btn">
+                                        <button class=" btn btn-solid form hidden save-btn btn-small" type="submit" form="volunteer-capacity">Save &nbsp; <i class="fas fa-check "></i></button>
+                                    </div>
                                 </div>
-                                <div class="edit-save-btn">
-                                    <button class=" btn btn-solid form hidden save-btn btn-small" type="submit" form="volunteer-capacity">Save &nbsp; <i class="fas fa-check "></i></button>
-                                </div>
-                            </div>
+                            <?php } else if ($status == 'ended') { ?>
+                                <div style="display: none;"></div>
+                            <?php } ?>
+
                         </div>
 
                     </div>
@@ -406,23 +411,26 @@
                 </div>
 
                 <div class="grid">
-
-                    <div class="card">
-                        <div class="card__background flex-col flex-center bg-image-4">
-                            <div class="flex-col flex-center box">
-                                <?php if ($volunteer_status == 1) { ?>
-                                    <form action="/Volunteer/disableVolunteer?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-volunteer-enable-disable-btn">
-                                        <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Disable<br>Volunteering</button>
-                                    </form>
-                                <?php } ?>
-                                <?php if ($volunteer_status == 0) { ?>
-                                    <form action="/Volunteer/enableVolunteer?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-volunteer-enable-disable-btn">
-                                        <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Enable<br>Volunteering</button>
-                                    </form>
-                                <?php } ?>
+                    <?php if ($status == 'published') { ?>
+                        <div class="card">
+                            <div class="card__background flex-col flex-center bg-image-4">
+                                <div class="flex-col flex-center box">
+                                    <?php if ($volunteer_status == 1) { ?>
+                                        <form action="/Volunteer/disableVolunteer?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-volunteer-enable-disable-btn">
+                                            <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Disable<br>Volunteering</button>
+                                        </form>
+                                    <?php } ?>
+                                    <?php if ($volunteer_status == 0) { ?>
+                                        <form action="/Volunteer/enableVolunteer?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-volunteer-enable-disable-btn">
+                                            <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Enable<br>Volunteering</button>
+                                        </form>
+                                    <?php } ?>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    <?php } else if ($status == 'ended') { ?>
+                        <div class="card" style="display: none;"></div>
+                    <?php } ?>
 
                     <div class="card">
                         <div class="card__background flex-col flex-center bg-image-4">
@@ -446,24 +454,28 @@
         </div>
 
 
-
-        <?php if ($volunteer_status == 0 && count($volunteers) == 0) { ?>
+        <?php if ($status = 'published') { ?>
+            <?php if ($volunteer_status == 0 && count($volunteers) == 0) { ?>
+                <div class="initial-donation-enable-btn">
+                    <button onclick="window.location.href='/Volunteer/enableVolunteer?event_id=<?= $_GET['event_id'] ?>'" class="btn btn-lg btn-solid" id="initial-volunteer-enable-btn" onclick="myFunction()">Enable Volunteers</button>
+                </div>
+            <?php } ?>
+        <?php } else if ($status = 'ended') { ?>
             <div class="initial-donation-enable-btn">
-                <button onclick="window.location.href='/Volunteer/enableVolunteer?event_id=<?= $_GET['event_id'] ?>'" class="btn btn-lg btn-solid" id="initial-volunteer-enable-btn" onclick="myFunction()">Enable Volunteers</button>
+                No volunteers
             </div>
         <?php } ?>
-
     </div>
     <div class="popup" id="publish">
-            <div class="content">
-                <div>
-                    <button class="btn-icon btn-close" onclick="togglePopup('publish'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
-                    <div id="qrcode" class="flex-col flex-center">
-                    </div>
-                    <button class="btn" onclick="printDiv()">Print QR</button>
+        <div class="content">
+            <div>
+                <button class="btn-icon btn-close" onclick="togglePopup('publish'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
+                <div id="qrcode" class="flex-col flex-center">
                 </div>
+                <button class="btn" onclick="printDiv()">Print QR</button>
             </div>
         </div>
+    </div>
 
 </body>
 

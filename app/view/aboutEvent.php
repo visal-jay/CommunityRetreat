@@ -288,7 +288,7 @@
                                     </div>
                                 </div>
                             <?php } ?>
-                        </div>
+                        </div> 
                     </div>
 
                     <div class="time-container">

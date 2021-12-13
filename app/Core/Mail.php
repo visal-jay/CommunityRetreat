@@ -54,4 +54,10 @@ class Mail
         $this->sendMail($recievers, $subject, $body);
     }
 
+    public function contactUsEmail($body_file,$data)
+    {
+        $body = View::renderTostring($body_file,$data);
+        $this->sendMail(["communityretreatproject@gmail.com"], "Request to contact", $body);
+    }
+
 }

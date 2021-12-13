@@ -261,15 +261,6 @@ class Events extends Model
     
     }
 
-    /*public function endEvents($event_id, $end_date, $status)
-    {
-        if($end_date < date("Y-m-d") && $status= 'published'){
-            $query = "UPDATE event INTO `volunteer_capacity`(`event_id`,`event_date`,`capacity`) VALUES (:event_id,:event_date,0)";
-            $params = ["event_id" =>$event_id, "event_date" =>  $event_date];
-            Model::insert($query,$params);
-        }   
-    }    */
-
     public function endEvents($event_id)
     {
         $query = "UPDATE event SET status ='ended', volunteer_status=0, donation_status=0 WHERE event_id = :event_id";
@@ -282,6 +273,13 @@ class Events extends Model
         $query = "SELECT event_id FROM event WHERE status='published' AND end_date < cast((now()) as date)";
         $params = [];
         $result = Model::select($query, $params);
+        return $result;
+    }
+
+    public function getDetailsofNearEvents()
+    {
+        $query = 'SELECT  DISTINCT event_id,volunteer_date FROM `volunteer` WHERE volunteer_date = CURDATE() + INTERVAL 7 DAY OR volunteer_date = CURDATE() + INTERVAL 3 DAY ';
+        $result = Model::select($query,[]);
         return $result;
     }
 }

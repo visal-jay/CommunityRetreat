@@ -1,7 +1,7 @@
 <?php
 class Controller
 {
-    /* function __construct()
+    function __construct()
     {
         Model::beginTransaction();
     }
@@ -9,7 +9,7 @@ class Controller
     function __destruct()
     {
         Model::endTransaction();
-    } */
+    }
 
     public  static function redirect(string $location, $parameters = [])
     {

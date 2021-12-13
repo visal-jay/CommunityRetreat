@@ -68,54 +68,51 @@ const date = new Date();
 
 
 
-function popupLoad(index,selected_date){
+function popupLoad(index){
 
     document.querySelector('.event-items').innerHTML ="";
-    if(index==-1){
-        document.querySelector('.date-event-popup p').innerHTML = selected_date; 
-        document.querySelector('.event-items').innerHTML = `<h2  style=" text-align:center;padding-top:0.5rem;color: lightslategray;">No events</h2>`;
+   
+   
+    for(let eventIndex=0; eventIndex< calender_data2[index].event.length;eventIndex++){
+
+       
+        document.querySelector('.date-event-popup p').innerHTML =  months[calender_data2[index].month-1] + " " +calender_data2[index].date +" "+date.getFullYear();
+
+        let eventcontainer = document.createElement('div');
+        eventcontainer.setAttribute("class","event-container");
+
+        let eventicondiv = document.createElement('div');
+        eventicondiv.setAttribute("class","flag-container");
+
+        let i = document.createElement('i');
+        i.setAttribute("class","far fa-flag fa-1x clr-green");
+        eventicondiv.appendChild(i);
+
+        eventcontainer.appendChild(eventicondiv);
+
+        let eventdetailsdiv = document.createElement('div');
+        eventdetailsdiv.setAttribute("class","event-details-container");
+
+        let Eventname = document.createElement('h4');
+        let eventlink = document.createElement('a');
+        eventlink.setAttribute("href","/Event/view?page=about&&event_id="+calender_data2[index].event[eventIndex].event_id);
+        eventlink.innerHTML = calender_data2[index].event[eventIndex].eventname;
+        Eventname.appendChild(eventlink);
+        eventdetailsdiv.appendChild(Eventname);
+
+        let Organizationname = document.createElement('p5');
+        Organizationname.innerHTML = "Event By " + calender_data2[index].event[eventIndex].organization;
+        eventdetailsdiv.appendChild(Organizationname);
+
+        eventcontainer.appendChild(eventdetailsdiv);
+        document.querySelector('.event-items').appendChild(eventcontainer);
+
+    
     }
-    else{
-        for(let eventIndex=0; eventIndex< calender_data2[index].event.length;eventIndex++){
-
-            document.querySelector('.date-event-popup p').innerHTML =  months[calender_data2[index].month-1] + " " +calender_data2[index].date +" "+date.getFullYear();
-    
-            let eventcontainer = document.createElement('div');
-            eventcontainer.setAttribute("class","event-container");
-    
-            let eventicondiv = document.createElement('div');
-            eventicondiv.setAttribute("class","flag-container");
-    
-            let i = document.createElement('i');
-            i.setAttribute("class","far fa-flag fa-1x clr-green");
-            eventicondiv.appendChild(i);
-    
-            eventcontainer.appendChild(eventicondiv);
-    
-            let eventdetailsdiv = document.createElement('div');
-            eventdetailsdiv.setAttribute("class","event-details-container");
-    
-            let Eventname = document.createElement('h4');
-            let eventlink = document.createElement('a');
-            eventlink.setAttribute("href","/Event/view?page=about&&event_id="+calender_data2[index].event[eventIndex].event_id);
-            eventlink.innerHTML = calender_data2[index].event[eventIndex].eventname;
-            Eventname.appendChild(eventlink);
-            eventdetailsdiv.appendChild(Eventname);
-    
-            let Organizationname = document.createElement('p5');
-            Organizationname.innerHTML = "Event By " + calender_data2[index].event[eventIndex].organization;
-            eventdetailsdiv.appendChild(Organizationname);
-    
-            eventcontainer.appendChild(eventdetailsdiv);
-            document.querySelector('.event-items').appendChild(eventcontainer);
-        }
-
-    }
-
-    // var popup = document.querySelector('.event-popup-container');
-    // var body = document.querySelector('.body');
-    // body.classList.toggle("overflow");
-    // popup.classList.toggle("pop-up-load");
+    var popup = document.querySelector('.event-popup-container');
+    var body = document.querySelector('.body');
+    body.classList.toggle("overflow");
+    popup.classList.toggle("pop-up-load");
 }
 
 
@@ -134,7 +131,10 @@ const renderCalender = ()=>{
 
     const lastdayindex = new Date(date.getFullYear(),date.getMonth()+1,0).getDay();
 
-    //const nextdays = 7 - lastdayindex -1;
+    //const nextdays = 7 -lastdayindex -1;
+   
+
+
 
     document.querySelector('.date h1').innerHTML = months[date.getMonth()];
 
@@ -153,24 +153,21 @@ const renderCalender = ()=>{
     for( let i=1; i<=lastday;i++){
         
         const index  = calender_data2.findIndex((day) => day.date == i&& date.getMonth()==day.month-1);
-        var selected_date = months[date.getMonth()]+' '+i+' '+date.getFullYear();
+
        
         if(( i=== new Date().getDate()&& date.getMonth() === new Date().getMonth())&& (index != -1)){
-            days += `<div class="event-days" id="i" onclick="popupLoad('${index}','${selected_date}')">${i}</div>`;
-            popupLoad(index,selected_date);
+            days += `<div class="event-days" id="i" onclick="popupLoad('${index}')">${i}</div>`;
         }  
         else if( i=== new Date().getDate()&& date.getMonth() === new Date().getMonth()){
-            days += `<div class = "today" id ='${i}' onclick="popupLoad('${index}','${selected_date}')" >${i}</div>`;
-            popupLoad(index,selected_date);
-         
+            days += '<div class = "today" id ="'+i+ '" onClick="alert()" >'+i+'</div>';
          } 
         
         else if (index != -1){
-            days += `<div class="event-days" id="i" onclick="popupLoad('${index}','${selected_date}')">${i}</div>`;
+            days += `<div class="event-days" id="i" onclick="popupLoad('${index}')">${i}</div>`;
         }
  
         else{
-            days += `<div id =${i} onclick="popupLoad('${index}','${selected_date}')">${i}</div>`;
+            days += '<div id = ' + i + '>'+i+'</div>';
         }
        
     }

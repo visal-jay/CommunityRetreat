@@ -49,6 +49,7 @@ class VolunteerController{
 
     public function updateVolunteerCapacity()
     { //update volunteering capacity
+        Controller::accessCheck(["moderator","organization"],$_GET['event_id']);
         $volunteer = new Volunteer;
         $event_details = (new Events)->getDetails($_GET['event_id']);
         $volunteer->updateVolunteerCapacity($_GET["event_id"],$_POST);
@@ -94,15 +95,29 @@ class VolunteerController{
         View::render('volunteerReport', $data);/*send all the data to volunteerReport page*/
     }
 
-    public function sendNotificationstoVolunteers($notification,$path,$event_id)
+    public function sendNotificationstoVolunteers($notification,$path,$event_id,$body_file,$data,$subject)
     {
         $volunteer = new Volunteer();
-        $volunteers = $volunteer->getVolunteeredUid($_POST["event_id"]);
+        $volunteers = $volunteer->getVolunteeredUid($event_id);
         $path = "window.location.href='" . $path . "'";
         for ($i = 0; $i < count($volunteers); $i++){
             foreach ($volunteers[$i] as $uid){
-                (new UserController)->sendNotifications($notification,$uid,"event",$path,$event_id);
+                (new UserController)->sendNotifications($notification,$uid,"event",$path,$event_id,$body_file,$data,$subject);
             }
+        }
+
+    }
+
+    public function notifyNearEvents(){
+        $volunteer_controller = new VolunteerController();
+        $events = new Events();
+        $near_events = $events->getDetailsofNearEvents();
+        foreach ($near_events as $event){
+            $event_details = $events->getDetails($event['event_id']);
+            if($event['volunteer_date'] == Date('Y-m-d', strtotime('+3 days')))
+                $volunteer_controller->sendNotificationstoVolunteers("Only 3 days more for {$event_details['event_name']}","/Event/view?page=about&event_id={$event["event_id"]}",$event["event_id"],"nearEventMail",["event_name" => $event_details['event_name'] ,"remaining_days_count" => 3],"3 days more...!");
+            if($event['volunteer_date'] == Date('Y-m-d', strtotime('+7 days')))
+                $volunteer_controller->sendNotificationstoVolunteers("Only 7 days more for {$event_details['event_name']}","/Event/view?page=about&event_id={$event["event_id"]}",$event["event_id"],"nearEventMail",["event_name" => $event_details['event_name'] ,"remaining_days_count" => 7],"7 days more...!");
         }
 
     }

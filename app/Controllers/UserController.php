@@ -141,9 +141,13 @@ class UserController{
         View::render("notification",[],$user_roles);
     }
 
-    function sendNotifications($notification,$uid,$status,$path,$event_id =-1){
+    function sendNotifications($notification,$uid,$status,$path,$event_id =-1,$body_file,$data,$subject){
         $user = new User();
+        $email = new Mail();
+        $user_details = $user->getDetails($uid);
+        $data["receiver_name"] = $user_details['username'];
         $user->insertNotification($notification,$uid,$status,$path,$event_id);
+        $email->notificationEmail($user_details['email'],$body_file,$data,$subject);
     }
 
     function checkNotificationViewed(){

@@ -7,14 +7,24 @@ class EventController
 
     public function view()
     {
-        if ($event_details = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["event_name" => '', "cover_photo" => ''])) {
+        if ($event_details = array_intersect_key((new Events)->getDetails($_GET["event_id"]),["event_name" => '', "cover_photo" => ''])) {
             $page=isset($_GET["page"]) ? $_GET["page"] : "about" ;
             $this->$page($event_details);
         } else
             Controller::redirect("/User/home");
     }
 
-    public function about()
+    public function home ($event_details){
+        $user_roles = Controller::accessCheck(["moderator","treasurer", "organization", "guest_user", "registered_user","admin"], $_GET["event_id"]);
+        $event = new Events;
+        if ($event_details = $event->getDetails($_GET["event_id"])) {
+            $data = $event_details;
+            View::render("eventPage", $data, $user_roles);
+        } else
+            Controller::redirect("/User/home");
+    }
+
+    public function about($event_details)
     {
         $user_roles = Controller::accessCheck(["moderator","treasurer", "organization", "guest_user", "registered_user","admin"], $_GET["event_id"]);
         $event = new Events;
@@ -29,6 +39,7 @@ class EventController
             $data["volunteer_capacity_exceeded"]=$volunteer->checkVolunteerCount($_GET["event_id"],$data['start_date'],$data['end_date']);
             $data["volunteer_date"] = $volunteer->getVolunteeredDates($uid,$_GET["event_id"]);
             View::render("eventPage", $data, $user_roles);
+           
         } 
         else
             Controller::redirect("/User/home");
@@ -123,11 +134,11 @@ class EventController
         $volunteered_uid = $volunteer->getvolunteereduidOutofRange( $_GET["event_id"], $_POST["start_date"], $_POST["end_date"]);
         for ($i = 0; $i < count($volunteered_uid); $i++) {
             foreach ($volunteered_uid[$i] as $uid) {
-                (new UserController)->sendNotifications("{$_POST['event_name']} event informations has been changed.Please volunteer again..!",$uid,"event","window.location.href='/event/view?page=about&&event_id={$_GET["event_id"]}'",$_GET["event_id"]);
+                (new UserController)->sendNotifications("{$_POST['event_name']} event informations has been changed.Please volunteer again..!",$uid,"event","window.location.href='/Event/view?page=about&&event_id={$_GET["event_id"]}'",$_GET["event_id"],"eventUpdateMail",["event_name"=>$_POST['event_name'] ,"volunteered_date_changed"=> true],"{$_POST['event_name']} event informations has been changed..!");
                 $volunteer->removeVolunteersOutofRange( $_GET["event_id"],$uid,$_POST["start_date"],$_POST["end_date"]);
             }
         }
-        (new VolunteerController)->sendNotificationstoVolunteers("{$_POST['event_name']} event informations has been changed!","/event/view?page=about&event_id={$_GET["event_id"]}",$_GET["event_id"]);
+        (new VolunteerController)->sendNotificationstoVolunteers("{$_POST['event_name']} event informations has been changed!","/Event/view?page=about&event_id={$_GET["event_id"]}",$_GET["event_id"],"eventUpdateMail",["event_name"=>$_POST['event_name'] ,"volunteered_date_changed"=> false],"{$_POST['event_name']} event informations has been changed..!");
         $events = new Events;
         $events->updateDetails(array_merge($_POST, $_GET));
         Controller::redirect("/Event/view", ["page" => "about", "event_id" => $_GET["event_id"]]);
@@ -145,7 +156,7 @@ class EventController
         if (gmdate("Y-m-d", $time) < $end_date) {
             (new DonationsController)->donationRefund($_POST["event_id"]);
         }
-        (new VolunteerController)->sendNotificationstoVolunteers("{$event_details['event_name']} event  has been removed.","/",$_POST["event_id"]);
+        (new VolunteerController)->sendNotificationstoVolunteers("{$event_details['event_name']} event  has been removed.","/",$_POST["event_id"],"removeEventMail",["event_name"=>$event_details['event_name']],"{$event_details['event_name']} event  has been removed.");
         (new Volunteer)->removeVolunteers($_POST["event_id"]);
         $event->remove($_POST["event_id"]);
         Controller::redirect("/Organisation/events");

@@ -346,52 +346,48 @@
                     <div class="capacity-div">
                         <h3>Volunteer Capacity</h3>
 
-                            <!-- capacity bars to be checked -->
-                            <form action="/Volunteer/updateVolunteerCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" id="volunteer-capacity">
-                               <?php 
-                               $i=0;
-                               foreach($volunteer_capacities as $capacity){
-                                    echo "<div class='flex-row' style='justify-content:space-between;'>";
+                        <!-- capacity bars to be checked -->
+                        <!-- capacity bars to be checked -->
+                        <form action="/Volunteer/updateVolunteerCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" id="volunteer-capacity">
+                            <?php
+                            $i = 0;
+                            foreach ($volunteer_capacities as $capacity) {
+                                echo "<div class='flex-row' style='justify-content:space-between;'>";
 
-                                        echo "<div style='min-width:fit-content'; >";
-                                            echo "<p>" .$capacity['event_date']."</p>";
-                                        echo "</div>";
+                                echo "<div style='min-width:fit-content'; >";
+                                echo "<p>" . $capacity['event_date'] . "</p>";
+                                echo "</div>";
 
-                                        echo "<div style='min-width:60%;margin:auto'>";
-                                            echo "<div class='grey-bar margin-md' style='min-width:40px; min-width:100px; width:" . ($capacity['capacity'] / max(array_column($volunteer_capacities,'capacity'))*100) . "%'>";
-                                            $sum_capacity = isset($volunteer_sum[$capacity['event_date']][0]['volunteer_sum']) ? $volunteer_sum[$capacity['event_date']][0]['volunteer_sum']:0;
-                                                echo "<div class='filled-bar' style='min-width:40px; width: ".($sum_capacity/($capacity['capacity']==0?1:$capacity['capacity'])*100)."%'>";
-                                                echo (int)($sum_capacity/($capacity['capacity']==0?1:$capacity['capacity'])*100)."%";
-                                                echo "</div>";
-                                            echo "</div>";
-                                        echo "</div>";
+                                echo "<div style='min-width:60%;margin:auto'>";
+                                echo "<div class='grey-bar margin-md' style='min-width:40px; min-width:100px; width:" . ($capacity['capacity'] / max(array_column($volunteer_capacities, 'capacity')) * 100) . "%'>";
+                                $sum_capacity = isset($volunteer_sum[$capacity['event_date']][0]['volunteer_sum']) ? $volunteer_sum[$capacity['event_date']][0]['volunteer_sum'] : 0;
+                                echo "<div class='filled-bar' style='min-width:40px; width: " . ($sum_capacity / ($capacity['capacity'] == 0 ? 1 : $capacity['capacity']) * 100) . "%'>";
+                                echo ($sum_capacity / ($capacity['capacity'] == 0 ? 1 : $capacity['capacity']) * 100) . "%";
+                                echo "</div>";
+                                echo "</div>";
+                                echo "</div>";
 
-                                        echo "<div style='margin:auto;'>";
-                                            echo "<p class='data'>" . $volunteer_capacities[$i]['capacity'] . "</p>";
-                                            echo "<input name='";
-                                            echo $i;
-                                            echo "' type='number' value=";
-                                            echo $volunteer_capacities[$i]['capacity'];
-                                            echo "  min=";
-                                            foreach ($volunteer_sum[$volunteer_capacities[$i]['event_date']] as $sum) {
-                                                echo $sum['volunteer_sum'];
-                                            }
-                                            echo " max='10000000' class='capacity form form-ctrl hidden' style='margin: 0.3rem;' />";
-                                            $i=$i+1;
-                                        echo "</div>";
-
-                                    echo "</div>";
+                                echo "<div style='margin:auto;'>";
+                                echo "<p class='data'>" . $volunteer_capacities[$i]['capacity'] . "</p>";
+                                echo "<input name='";
+                                echo $i;
+                                echo "' type='number' value=";
+                                echo $volunteer_capacities[$i]['capacity'];
+                                echo "  min=";
+                                foreach ($volunteer_sum[$volunteer_capacities[$i]['event_date']] as $sum) {
+                                    echo $sum['volunteer_sum'];
                                 }
                                 echo " max='10000000' class='capacity form form-ctrl hidden' style='margin: 0.3rem;' />";
                                 $i = $i + 1;
                                 echo "</div>";
 
                                 echo "</div>";
+                            }
                             ?>
                         </form>
 
                         <div>
-                            <?php if ($status == 'published') { ?>
+                            <?php if ($status == 'published' || $status=='added' ) { ?>
                                 <button class="btn btn-solid btn-md data btn-small edit-btn" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
                                 <div class="flex-row flex-center">
                                     <div class="edit-save-btn">
@@ -401,8 +397,6 @@
                                         <button class=" btn btn-solid form hidden save-btn btn-small" type="submit" form="volunteer-capacity">Save &nbsp; <i class="fas fa-check "></i></button>
                                     </div>
                                 </div>
-                            <?php } else if ($status == 'ended') { ?>
-                                <div style="display: none;"></div>
                             <?php } ?>
 
                         </div>

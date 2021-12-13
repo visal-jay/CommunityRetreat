@@ -90,23 +90,21 @@
 </style>
 
 <body>
-    <div class="background">
-        <div class="container">
-            <div class="screen">
-                <div class="screen-header"></div>
-                <form action="Main/contactUs" class="screen-body" method="post">
-                    <div class="screen-body-item left">
-                        <div class="app-title">
-                            <span>CONTACT</span>
-                            <span>US</span>
+    <div style="display:flex">
+        <div style="flex: 0 1 700px; margin: auto; padding: 10px">
+            <div style="position: relative; background: #03142d; border-radius: 15px">
+                <div style="display: flex; align-items: center; padding: 10px 20px; background: #1e9e7d; border-top-left-radius: 15px; border-top-right-radius: 15px"></div>
+                <form action="Main/contactUs" style="display: flex" method="post">
+                    <div style="flex: 1; padding: 50px; display: flex; flex-direction: column">
+                        
+                        <div style="margin-bottom: 15px">
+                        <div style="display: flex; flex-direction: column; position: relative; color: #16c79a; font-size: 26px">
+                            <span>CONTACTED US</span>
                         </div>
-                        <div class="app-form-group">
-                            <h4>From : Venodi Widanagamage</h4>
-                            <p>venodiwidanagamage@gmail.com</p>
-                            <p>0776631087</p>
-                        </div>
-                        <div class="app-form-group message">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At vitae atque totam id eligendi commodi? Sed impedit nam eos magni dolore rem rerum! Omnis, inventore quod quas nostrum qui voluptas!</p>
+                            <h4 style="width: 100%; padding: 10px 0; background: none; border: none; border-bottom: 1px solid #666; color: #eeeeee; font-size: 12px; text-transform: inherit; outline: none; transition: border-color .2s">From : <?= $name ?> </h4>
+                            <p style="width: 100%; padding: 10px 0; background: none; border: none; border-bottom: 1px solid #666; color: #eeeeee; font-size: 12px; text-transform: inherit; outline: none; transition: border-color .2s">Email : <?= $email ?></p>
+                            <p style="width: 100%; padding: 10px 0; background: none; border: none; border-bottom: 1px solid #666; color: #eeeeee; font-size: 12px; text-transform: inherit; outline: none; transition: border-color .2s">Contact Number : <?= $contact_no ?></p>
+                            <p style="width: 100%; padding: 10px 0; background: none; border: none; border-bottom: 1px solid #666; color: #eeeeee; font-size: 12px; text-transform: inherit; outline: none; transition: border-color .2s">Message: <br> <?= $message ?></p>
                         </div>
                     </div>
                 </form>

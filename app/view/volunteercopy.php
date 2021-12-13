@@ -361,7 +361,7 @@
                                             echo "<div class='grey-bar margin-md' style='min-width:40px; min-width:100px; width:" . ($capacity['capacity'] / max(array_column($volunteer_capacities,'capacity'))*100) . "%'>";
                                             $sum_capacity = isset($volunteer_sum[$capacity['event_date']][0]['volunteer_sum']) ? $volunteer_sum[$capacity['event_date']][0]['volunteer_sum']:0;
                                                 echo "<div class='filled-bar' style='min-width:40px; width: ".($sum_capacity/($capacity['capacity']==0?1:$capacity['capacity'])*100)."%'>";
-                                                echo ($sum_capacity/($capacity['capacity']==0?1:$capacity['capacity'])*100)."%";
+                                                echo (int)($sum_capacity/($capacity['capacity']==0?1:$capacity['capacity'])*100)."%";
                                                 echo "</div>";
                                             echo "</div>";
                                         echo "</div>";

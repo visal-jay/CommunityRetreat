@@ -242,7 +242,7 @@
         <div id="background">
 
             <?php if ($registered_user) { ?>
-                <div class="flex-col flex-center margin-side-lg">
+                <div class="flex-col flex-center margin-side-lg" style="align-items: flex-start;">
                     <button class="btn btn-solid btn-close margin-lg" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')">Give Feedback &nbsp; <i class="far fa-comment-dots"></i></button>
                 </div>
             <?php } ?>

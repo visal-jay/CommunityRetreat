@@ -179,7 +179,7 @@
             margin: 10px 0px 0px 0px;
         }
 
-        .popup .content{
+        .popup .content {
             width: 80%;
         }
 
@@ -189,7 +189,7 @@
 
 <body>
     <div id="background">
-        <div class="flex-col flex-center margin-side-lg">
+        <div class="flex-col flex-center margin-side-lg" style="align-items: flex-start;">
             <button class="btn btn-solid btn-close margin-lg" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')">Add Task &nbsp; <i class="fas fa-plus"></i></button>
         </div>
 

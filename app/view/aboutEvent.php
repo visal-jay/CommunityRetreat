@@ -288,7 +288,7 @@
                                     </div>
                                 </div>
                             <?php } ?>
-                        </div> 
+                        </div>
                     </div>
 
                     <div class="time-container">
@@ -653,6 +653,14 @@
     <?php if ($registered_user && isset($_GET["action"]) && $_GET["action"] == "volunteer") { ?>
         window.addEventListener('load', (event) => {
             togglePopup('volunteer-form');
+            blur_background('background');
+            stillBackground('id1')
+        });
+    <?php } ?>
+
+    <?php if ($registered_user && isset($_GET["action"]) && $_GET["action"] == "complain") { ?>
+        window.addEventListener('load', (event) => {
+            togglePopup('complaint-form');
             blur_background('background');
             stillBackground('id1')
         });

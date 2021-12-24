@@ -7,13 +7,14 @@ class VolunteerController{
         $user_roles = Controller::accessCheck(["moderator", "organization"],$_GET["event_id"]);
         $data = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["volunteer_status" => '', "volunteer_capacity" => '', "status" => '']);
         $volunteer = new Volunteer();
-        $pagination= Model::pagination("volunteer", 10, "WHERE event_id= :event_id", ["event_id"=>$_GET["event_id"]]);
         if(isset($_POST["volunteer_date"]) && $_POST["volunteer_date"]!=""){
-            $volunteer_details = $volunteer->getVolunteerDetails($_GET["event_id"],$_POST["volunteer_date"]);
+            $pagination= Model::pagination("volunteer", 10, "WHERE event_id= :event_id AND volunteer_date = :volunteer_date", ["event_id"=>$_GET["event_id"], "volunteer_date"=>$_POST["volunteer_date"]]);
+            $volunteer_details = $volunteer->getVolunteerDetails($_GET["event_id"],$_POST["volunteer_date"], $pagination["offset"], $pagination["no_of_records_per_page"]);
             $data["volunteer_date_req"]=$_POST["volunteer_date"];
         }
         else{
-            $volunteer_details = $volunteer->getVolunteerDetails($_GET["event_id"]);
+            $pagination= Model::pagination("volunteer", 10, "WHERE event_id= :event_id", ["event_id"=>$_GET["event_id"]]);
+            $volunteer_details = $volunteer->getVolunteerDetails($_GET["event_id"], $pagination["offset"], $pagination["no_of_records_per_page"]);
             $data["volunteer_date_req"]=FALSE;
         }
 
@@ -21,7 +22,7 @@ class VolunteerController{
         $data["volunteers"] = $volunteer_details;
         $data['volunteer_capacities'] = $volunteer->getVolunteerCapacities($_GET["event_id"]);
         $data['volunteer_sum'] = $volunteer->getVolunteerSum($_GET["event_id"]);
-        $data = array_merge($data, $event_details);
+        $data = array_merge($data, $event_details, $pagination);
         
         View::render('eventPage', $data, $user_roles);
     }

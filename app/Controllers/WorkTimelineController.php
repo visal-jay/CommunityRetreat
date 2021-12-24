@@ -5,8 +5,9 @@ class WorkTimelineController
     public function view($event_details)
     {
         $user_roles = Controller::accessCheck(["organization", "treasurer", "moderator",], $_GET["event_id"]);
+        $pagination= Model::pagination("work_timeline", 5, "WHERE event_id= :event_id", ["event_id"=> $_GET["event_id"]]);
         $data["tasks"] = (new Task)->getTask($_GET["event_id"]);
-        $data = array_merge($data, $event_details);
+        $data = array_merge($data, $event_details, $pagination);
         View::render("eventPage", $data, $user_roles);
     }
 

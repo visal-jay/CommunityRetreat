@@ -244,6 +244,31 @@
         </div>
     </div>
 
+    <div class="flex-row flex-center">
+        <ul class="pagination">
+            <li><a href="/Event/view?event_id=<?= $_GET['event_id'] ?>&&page=forum"><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i>&nbsp;First</a></li>
+            <li class="<?php if ($pageno <= 1) {
+                            echo 'disabled';
+                        } ?>">
+                <a href="<?php if ($pageno <= 1) {
+                                echo '';
+                            } else {
+                                echo "/Event/view?event_id=" . $_GET['event_id'] . "&&page=forum&&pageno=" . ($pageno - 1);
+                            } ?>"><i class="fas fa-chevron-left"></i>&nbsp;Prev</a>
+            </li>
+            <li class="<?php if ($pageno >= $total_pages) {
+                            echo 'disabled';
+                        } ?>">
+                <a href="<?php if ($pageno >= $total_pages) {
+                                echo '';
+                            } else {
+                                echo "/Event/view?event_id=" . $_GET['event_id'] . "&&page=forum&&pageno=" . ($pageno + 1);
+                            } ?>">Next&nbsp;<i class="fas fa-chevron-right"></i></a>
+            </li>
+            <li><a href="/Event/view?event_id=<?= $_GET['event_id'] ?>&&page=forum&&pageno=<?php echo $total_pages; ?>">Last&nbsp;<i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right"></i></a></li>
+        </ul>
+    </div>
+
     <?php if ($organization || $moderator) { ?>
         <div class="popup" id="form-div">
             <div class="content">
@@ -288,7 +313,7 @@
                     </div>
 
                     <input type="hidden" name="announcement_id" id="edit-announcement-id">
-                    <button class="btn btn-solid margin-md" type="submit" >Save</button>
+                    <button class="btn btn-solid margin-md" type="submit">Save</button>
 
                     <div>
                         <button type="button" class="btn-icon btn-close" onclick="togglePopup('edit-div'); blur_background('background'); stillBackground('id1')"><i class="fas fa-times"></i></button>
@@ -297,11 +322,11 @@
             </div>
         </div>
     <?php } ?>
-<!-- popup -->
+    <!-- popup -->
     <div class="popup" id="update_announcement_id">
-            <div class="content">
+        <div class="content">
 
-                <?php foreach ($announcements as $announcement) { ?>
+            <?php foreach ($announcements as $announcement) { ?>
                 <div class="card-container margin-md">
                     <div class="event-card-details" id="<?= $announcement["announcement_id"] ?>">
                         <h3 class="margin-md"><?= $announcement["title"] ?></h3>
@@ -310,12 +335,12 @@
                     </div>
                 </div>
             <?php } ?>
-                    <div>
-                        <button type="button" class="btn-icon btn-close" onclick="window.location.href='/Event/view?page=forum&event_id=<?= $_GET['event_id'] ?>' "><i class="fas fa-times"></i></button>
-                    </div>
+            <div>
+                <button type="button" class="btn-icon btn-close" onclick="window.location.href='/Event/view?page=forum&event_id=<?= $_GET['event_id'] ?>' "><i class="fas fa-times"></i></button>
             </div>
         </div>
-<!-- popup -->
+    </div>
+    <!-- popup -->
 </body>
 <style>
 
@@ -430,8 +455,8 @@
     });
 
     document.getElementById("update-form").addEventListener("submit", () => {
-        if (editor_obj_update.getData() == ""){
-        let span = document.createElement("span");
+        if (editor_obj_update.getData() == "") {
+            let span = document.createElement("span");
             document.getElementById("edit-announcement").insertAdjacentElement("beforebegin", span);
             let msg = "Please fill in this field";
             span.innerHTML = "<i class='fas fa-exclamation-circle'></i> &nbsp" + msg;
@@ -441,7 +466,7 @@
             event.preventDefault();
         }
     });
-    
+
 
     function togglePopup(id) {
         document.getElementById(id).classList.toggle("active");
@@ -454,10 +479,13 @@
     function stillBackground(id) {
         document.getElementById(id).classList.toggle("still");
     }
-    
-    <?php if($registered_user && isset($_GET["update_announcement_id"])) { ?> 
+
+    <?php if ($registered_user && isset($_GET["update_announcement_id"])) { ?>
         window.addEventListener('load', (event) => {
-        togglePopup('update_announcement_id'); blur_background('background'); stillBackground('id1') });
+            togglePopup('update_announcement_id');
+            blur_background('background');
+            stillBackground('id1')
+        });
     <?php } ?>
 
     function add() {

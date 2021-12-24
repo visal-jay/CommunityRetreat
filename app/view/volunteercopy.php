@@ -174,7 +174,7 @@
         border-radius: 20px;
         overflow: hidden;
         height: 20px;
-        background-color: #ccbcbc;
+        background-color: #e5e4e4;
         padding-right: 5px;
     }
 
@@ -182,8 +182,9 @@
         border-radius: 20px;
         overflow: hidden;
         height: 100%;
-        background-color: #16c79a;
+        background-color: #f59b91;
         align-items: left;
+        font-size: 0.9rem;
     }
 
     .capacity {
@@ -203,7 +204,7 @@
     }
 
     .bg-image-4 {
-        background-image: url(https://i.pinimg.com/originals/aa/dc/46/aadc465a5e3610a59490aefa1755bde1.jpg);
+        background-image: url(https://wallpaperaccess.com/full/1832900.jpg);
     }
 
     .card:hover .card__background {
@@ -387,7 +388,7 @@
                         </form>
 
                         <div>
-                            <?php if ($status == 'published' || $status=='added' ) { ?>
+                            <?php if ($status == 'published' || $status == 'added') { ?>
                                 <button class="btn btn-solid btn-md data btn-small edit-btn" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
                                 <div class="flex-row flex-center">
                                     <div class="edit-save-btn">
@@ -475,6 +476,31 @@
             </div>
         </div>
     </div>
+
+    <!-- <div class="flex-row flex-center">
+        <ul class="pagination">
+            <li><a href="/Event/view?event_id=<?= $_GET['event_id'] ?>&&page=volunteers"><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i>&nbsp;First</a></li>
+            <li class="<?php if ($pageno <= 1) {
+                            echo 'disabled';
+                        } ?>">
+                <a href="<?php if ($pageno <= 1) {
+                                echo '';
+                            } else {
+                                echo "/Event/view?event_id=" . $_GET['event_id'] . "&&page=volunteers&&pageno=" . ($pageno - 1);
+                            } ?>"><i class="fas fa-chevron-left"></i>&nbsp;Prev</a>
+            </li>
+            <li class="<?php if ($pageno >= $total_pages) {
+                            echo 'disabled';
+                        } ?>">
+                <a href="<?php if ($pageno >= $total_pages) {
+                                echo '';
+                            } else {
+                                echo "/Event/view?event_id=" . $_GET['event_id'] . "&&page=volunteers&&pageno=" . ($pageno + 1);
+                            } ?>">Next&nbsp;<i class="fas fa-chevron-right"></i></a>
+            </li>
+            <li><a href="/Event/view?event_id=<?= $_GET['event_id'] ?>&&page=volunteers&&pageno=<?php echo $total_pages; ?>">Last&nbsp;<i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right"></i></a></li>
+        </ul>
+    </div> -->
 
 </body>
 

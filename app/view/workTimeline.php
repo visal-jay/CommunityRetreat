@@ -236,6 +236,31 @@
         </div>
     </div>
 
+    <div class="flex-row flex-center">
+        <ul class="pagination">
+            <li><a href="/Event/view?event_id=<?= $_GET['event_id'] ?>&&page=timeline"><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i>&nbsp;First</a></li>
+            <li class="<?php if ($pageno <= 1) {
+                            echo 'disabled';
+                        } ?>">
+                <a href="<?php if ($pageno <= 1) {
+                                echo '';
+                            } else {
+                                echo "/Event/view?event_id=" . $_GET['event_id'] . "&&page=timeline&&pageno=" . ($pageno - 1);
+                            } ?>"><i class="fas fa-chevron-left"></i>&nbsp;Prev</a>
+            </li>
+            <li class="<?php if ($pageno >= $total_pages) {
+                            echo 'disabled';
+                        } ?>">
+                <a href="<?php if ($pageno >= $total_pages) {
+                                echo '';
+                            } else {
+                                echo "/Event/view?event_id=" . $_GET['event_id'] . "&&page=timeline&&pageno=" . ($pageno + 1);
+                            } ?>">Next&nbsp;<i class="fas fa-chevron-right"></i></a>
+            </li>
+            <li><a href="/Event/view?event_id=<?= $_GET['event_id'] ?>&&page=timeline&&pageno=<?php echo $total_pages; ?>">Last&nbsp;<i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right"></i></a></li>
+        </ul>
+    </div>
+
     <?php if ($organization || $moderator) { ?>
         <div class="popup" id="form">
             <div class="content">

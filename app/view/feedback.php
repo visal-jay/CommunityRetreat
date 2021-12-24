@@ -153,14 +153,15 @@
     }
 
 
-    .grid-container{
+    .grid-container {
         display: grid;
         height: 100%;
         grid-gap: 1rem;
-        grid-template-columns:repeat(auto-fill,300px);     
+        grid-template-columns: repeat(auto-fill, 300px);
 
     }
-    .feedback-card{
+
+    .feedback-card {
 
         min-height: 100px;
         margin: 0;
@@ -168,31 +169,34 @@
         width: 230px;
 
     }
-    .feedback-card:hover{
+
+    .feedback-card:hover {
         transform: scale(1.02);
         transition-duration: 0.5s;
     }
 
-    .image-div{
-        display:flex;
+    .image-div {
+        display: flex;
         align-self: center;
         height: 60px;
         width: 60px;
         border-radius: 50%;
         overflow: hidden;
-        transform: translate(0%,0%);
-        border:2px solid  rgb(252, 246, 246);
+        transform: translate(0%, 0%);
+        border: 2px solid rgb(252, 246, 246);
         background: rgb(202, 196, 196);
         object-fit: cover;
     }
-    .image-div img{
+
+    .image-div img {
         height: 60px;
-        width: 60px;    
+        width: 60px;
     }
-    .description{
-        font-size:medium; 
-        font-weight:300; 
-        margin:20px 0 10px;
+
+    .description {
+        font-size: medium;
+        font-weight: 300;
+        margin: 20px 0 10px;
         height: 5rem;
         overflow: scroll;
     }
@@ -216,23 +220,23 @@
         .event-card-details {
             flex-direction: column;
         }
-        .feedback-card{
+
+        .feedback-card {
             width: 230px;
         }
     }
 
- 
+
     @media screen and (max-width:800px) {
         .grid-container {
             grid-gap: 10px;
             grid-template-columns: repeat(auto-fill, 280px);
         }
-        .feedback-card{
+
+        .feedback-card {
             width: 200px;
         }
     }
- 
-
 </style>
 
 <?php include "feedbackComplaint.php" ?>
@@ -269,27 +273,27 @@
                             <div class="flex-col margin-md event-card-details">
                                 <div class="flex-row">
                                     <div>
-                                        <img class="image-div" src="/../..<?=$feedback["profile_pic"]?>">
-                                    </div>                                
+                                        <img class="image-div" src="/../..<?= $feedback["profile_pic"] ?>">
+                                    </div>
                                     <div>
                                         <h3 class="margin-md" style="margin:12px 10px 10px 10px; "><?= $feedback["username"] ?></h3>
                                     </div>
                                 </div>
                                 <div class="description">
-                                    <description class="margin-md " style="font-size:medium; font-weight:350; margin:20px 0 10px;"><?= $feedback["feedback"] ?></description>  
+                                    <description class="margin-md " style="font-size:medium; font-weight:350; margin:20px 0 10px;"><?= $feedback["feedback"] ?></description>
                                 </div>
                                 <div class="margin-md flex-row flex-center">
-                                        <?php for ($i = 1; $i < 6; $i++) {
-                                            if ($i <= $feedback["rate"]) { ?>
-                                                <span class="fas fa-star fa-sm checked"></span>
-                                            <?php } else { ?>
-                                                <span class="fas fa-star fa-sm"></span>
-                                        <?php }
-                                        } ?>
+                                    <?php for ($i = 1; $i < 6; $i++) {
+                                        if ($i <= $feedback["rate"]) { ?>
+                                            <span class="fas fa-star fa-sm checked"></span>
+                                        <?php } else { ?>
+                                            <span class="fas fa-star fa-sm"></span>
+                                    <?php }
+                                    } ?>
                                 </div>
                                 <div class="flex-col flex-center">
                                     <date style="font-size: 0.8rem; font-weight:100;"><?= date('j M Y ', strtotime($feedback['time_stamp'])) ?></date>
-                                    
+
                                     <?php if ($organization || $moderator) { ?>
                                         <button class="btn bg-green flex-col margin-md " style="border-radius: 40px; width: 200px; " onclick="window.location.href='/Feedback/statusToggle?event_id=<?= $_GET['event_id'] ?>&&feedback_id=<?= $feedback['feedback_id'] ?>'">
                                             <?php if ($feedback["status"] == 'show') { ?>
@@ -298,12 +302,12 @@
                                                 <i class="far fa-eye clr-white"></i>
                                             <?php } ?>
                                         </button>
-                                
-                                        <button class="btn btn-solid complaint-btn" style="background-color: #ff002b; border:none; border-radius: 40px; width: 200px;" onclick ="popupFormandFillComplaint('complaint-form','<?= $feedback['username']?>','<?= $feedback['feedback_id'] ?>','<?= $feedback['uid'] ?>','<?= $_GET['event_id'] ?>');";>Complain &nbsp;<i class="far fa-comments"></i></button>
-    
-                                    <?php } ?>    
+
+                                        <button class="btn btn-solid complaint-btn" style="background-color: #ff002b; border:none; border-radius: 40px; width: 200px;" onclick="popupFormandFillComplaint('complaint-form','<?= $feedback['username'] ?>','<?= $feedback['feedback_id'] ?>','<?= $feedback['uid'] ?>','<?= $_GET['event_id'] ?>');" ;>Complain &nbsp;<i class="far fa-comments"></i></button>
+
+                                    <?php } ?>
                                 </div>
-                                
+
                             </div>
                         </div>
 
@@ -311,6 +315,31 @@
                 </div>
             </div>
 
+        </div>
+
+        <div class="flex-row flex-center">
+            <ul class="pagination">
+                <li><a href="/Event/view?event_id=<?= $_GET['event_id'] ?>&&page=feedback"><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i>&nbsp;First</a></li>
+                <li class="<?php if ($pageno <= 1) {
+                                echo 'disabled';
+                            } ?>">
+                    <a href="<?php if ($pageno <= 1) {
+                                    echo '';
+                                } else {
+                                    echo "/Event/view?event_id=".$_GET['event_id']."&&page=feedback&&pageno=" . ($pageno - 1);
+                                } ?>"><i class="fas fa-chevron-left"></i>&nbsp;Prev</a>
+                </li>
+                <li class="<?php if ($pageno >= $total_pages) {
+                                echo 'disabled';
+                            } ?>">
+                    <a href="<?php if ($pageno >= $total_pages) {
+                                    echo '';
+                                } else {
+                                    echo "/Event/view?event_id=".$_GET['event_id']."&&page=feedback&&pageno=" . ($pageno + 1);
+                                } ?>">Next&nbsp;<i class="fas fa-chevron-right"></i></a>
+                </li>
+                <li><a href="/Event/view?event_id=<?= $_GET['event_id'] ?>&&page=feedback&&pageno=<?php echo $total_pages; ?>">Last&nbsp;<i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right"></i></a></li>
+            </ul>
         </div>
 
         <?php if ($registered_user) { ?>
@@ -355,8 +384,8 @@
         <?php } ?>
     </div>
 
-    <div class="popup" id="complaint_feedback_id" >
-        <div class="content" >
+    <div class="popup" id="complaint_feedback_id">
+        <div class="content">
             <?php foreach ($feedbacks as $feedback) { ?>
                 <div class="card-container margin-md <?php if ($feedback["status"] == 'hide') echo 'opacity-reduce' ?>">
                     <div class="flex-col flex-center margin-md event-card-details">
@@ -371,10 +400,10 @@
                             <?php }
                             } ?>
                         </div>
-            
-                        <description class="margin-md"><?= $feedback["feedback"]?></description>
+
+                        <description class="margin-md"><?= $feedback["feedback"] ?></description>
                     </div>
-            
+
                 </div>
             <?php } ?>
 
@@ -384,11 +413,10 @@
         </div>
     </div>
 
-    
+
 </body>
 
 <script>
-
     function togglePopup(id) {
         document.getElementById(id).classList.toggle("active");
     }
@@ -401,11 +429,13 @@
         document.getElementById(id).classList.toggle("still");
     }
 
-    <?php if($admin && isset($_GET["complaint_feedback_id"])) { ?> 
+    <?php if ($admin && isset($_GET["complaint_feedback_id"])) { ?>
         window.addEventListener('load', (event) => {
-        togglePopup('complaint_feedback_id'); blur_background('background'); stillBackground('id1') });
+            togglePopup('complaint_feedback_id');
+            blur_background('background');
+            stillBackground('id1')
+        });
     <?php } ?>
-
 </script>
 
 </html>

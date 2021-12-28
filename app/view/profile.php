@@ -36,7 +36,7 @@
                     <h2 id="name"><?= $username; ?></h2>
                 </div>
             <!-- Activity-log-button -->
-                <a href="activityLog" class="view-activitylog-btn" role="button"><i class="fa fa-history"></i>&nbsp&nbspActivity log</a>
+                <a href="/User/viewActivityLog" class="view-activitylog-btn" role="button"><i class="fa fa-history"></i>&nbsp&nbspActivity log</a>
 
             </div>
 

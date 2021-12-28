@@ -108,6 +108,18 @@ if (isset($_SESSION["user"]["user_type"])) {
             <div class="center" style="text-align: center;">
                 <canvas class="canvas" id="myChart"></canvas>
             </div>
+
+            <div>
+                <form action="/Donations/donationReport?event_id=<?= $_GET["event_id"] ?>" method="post">
+                    <label for="donate_date">Sort by donating date</label>
+                    <select class="form-ctrl" id="donate_date" name="date" onchange="this.form.submit()">
+                    <option value="all" selected>all</option>
+                    <?php foreach($period as $period) { ?>
+                    <option value="<?= $period ?>" <?php if($selected_date ==$period) echo "selected"; ?>><?= $period ?></option>
+                <?php } ?>   
+                </select>
+                </form>
+            </div>
             <table class="table">
                 <!--Display the report of all the donations-->
                 <tr>

@@ -193,10 +193,12 @@
     .center {
         text-align: center;
     }
-    .volunteer-container{
+
+    .volunteer-container {
         display: none;
     }
-    .donation-container{
+
+    .donation-container {
         display: none;
     }
 
@@ -259,11 +261,13 @@
         }
     }
 </style>
- 
-<body id="body" >
+
+<body id="body">
     <div id="background">
         <div class="flex-col flex-center">
-        <h1>About</h1>
+            <div class="container-size">
+                <h1>About</h1>
+            </div>
             <div class="content border-round container-size margin-md" id="details" style="background-color: #eeeeee">
                 <?php if ($organization || $moderator) { ?>
                     <form action="/Event/updateDetails?event_id=<?= $_GET["event_id"] ?>" method="post" id="update-form" enctype="multipart/form-data">
@@ -385,7 +389,7 @@
                 <?php } ?>
 
             </div>
-            <?php if ($volunteer_status == 1) { ?>
+            <?php if (($volunteer_status == 1) && ($status != 'ended')){ ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md volunteer-container" style="background-color: #03142d;">
                     <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
                     <div class="progress" data-width="<?php if ($volunteer_percent == "NULL") echo "0";
@@ -403,7 +407,7 @@
                 </div>
             <?php } ?>
 
-            <?php if ($donation_status == 1) { ?>
+            <?php if (($donation_status == 1) && ($status != 'ended')) { ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md donation-container" style="background-color: #03142d; text-align:center">
                     <p style="color:white">Would you like to give value to your hard-earned money by contributing to this community service project?</p>
                     <div class="progress" data-width="<?php if ($donation_percent == NULL) echo "0";
@@ -445,7 +449,7 @@
                 </div>
             </div>
 
-            <?php if ($moderator || $organization) { ?>
+            <?php if (($moderator || $organization ) && ($status != 'ended')) { ?>
                 <div class="flex-row flex-center content border-round container-size1">
                     <button class="btn data margin-lg" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
                     <button type="button" class="btn btn-solid bg-red border-red form margin-side-md hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
@@ -638,6 +642,28 @@
         document.getElementById(id).classList.toggle("blurred")
     }
 
+    <?php if ($registered_user && isset($_GET["action"]) && $_GET["action"] == "donate") { ?>
+        window.addEventListener('load', (event) => {
+            togglePopup('form');
+            blur_background('background');
+            stillBackground('id1')
+        });
+    <?php } ?>
+
+    <?php if ($registered_user && isset($_GET["action"]) && $_GET["action"] == "volunteer") { ?>
+        window.addEventListener('load', (event) => {
+            togglePopup('volunteer-form');
+            blur_background('background');
+            stillBackground('id1')
+        });
+    <?php } ?>
+
+    <?php if ($registered_user && isset($_GET["action"]) && $_GET["action"] == "complain") { ?>
+        window.addEventListener('load', (event) =>{
+            popupForm('complaint-form');
+        });
+    <?php } ?>
+
     function disableSubmit() {
         document.getElementById("donate-btn").disabled = true;
     }
@@ -762,24 +788,23 @@
         complaint_status.setAttribute("value", 'event');
 
     }
-    
+
     fillComplaint();
 
-    function renderVoluneerDonationContainers(){
+    function renderVoluneerDonationContainers() {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         var donation_container = document.querySelector('.donation-container');
         var volunteer_container = document.querySelector('.volunteer-container');
-        if(urlParams.get('action') == "volunteer"){
+        if (urlParams.get('action') == "volunteer") {
             volunteer_container.style.display = 'flex';
             console.log('hello pik');
         }
-        if(urlParams.get('action') == "donate"){
+        if (urlParams.get('action') == "donate") {
             donation_container.style.display = 'flex';
         }
     }
     renderVoluneerDonationContainers();
-
 </script>
 
 </html>

@@ -16,9 +16,19 @@ class Donations extends Model
             return $result;
     }
 
+   /* public function getDonateDetails($event_id, $offset, $no_of_records_per_page)
+    {
+        /*get donation details from backend to UI*/
+        /*
+        $query = 'SELECT donation.amount, date(time_stamp) as date, registered_user.username FROM donation LEFT JOIN registered_user ON donation.uid=registered_user.uid WHERE event_id =:event_id LIMIT :offset , :no_of_records_per_page';
+        $params = ["event_id" => $event_id, "offset" => $offset, "no_of_records_per_page" => $no_of_records_per_page];
+        $result = Model::select($query, $params);
+        return $result;
+    }*/
+
     public function getDonateDetails($event_id, $offset, $no_of_records_per_page)
     {/*get donation details from backend to UI*/
-        $query = 'SELECT donation.amount, date(time_stamp) as date, registered_user.username FROM donation LEFT JOIN registered_user ON donation.uid=registered_user.uid WHERE event_id =:event_id LIMIT :offset , :no_of_records_per_page';
+        $query = 'SELECT SUM(donation.amount) as amount, registered_user.username FROM donation LEFT JOIN registered_user ON donation.uid=registered_user.uid WHERE event_id =:event_id GROUP BY donation.uid LIMIT :offset , :no_of_records_per_page';
         $params = ["event_id" => $event_id, "offset" => $offset, "no_of_records_per_page" => $no_of_records_per_page];
         $result = Model::select($query, $params);
         return $result;
@@ -66,12 +76,18 @@ class Donations extends Model
         return $result;
     }
 
-    public function donationReportGenerate($event_id)
+    public function donationReportGenerate($event_id, $donate_date)
     {/*generate a report with all the details of donations*/
-        $query = 'SELECT donation.amount, date(time_stamp) as date, registered_user.username FROM donation LEFT JOIN registered_user ON donation.uid=registered_user.uid WHERE event_id =:event_id';
-        $params = ["event_id" => $event_id];
+        if($donate_date != -1 && $donate_date!="all"){
+        $query = 'SELECT donation.amount, date(time_stamp) as date, registered_user.username FROM donation LEFT JOIN registered_user ON donation.uid=registered_user.uid WHERE event_id =:event_id AND date(time_stamp) = :donate_date' ;
+        $params = ["event_id" => $event_id, "donate_date" => $donate_date];
+        }else{
+            $query = 'SELECT donation.amount, date(time_stamp) as date, registered_user.username FROM donation LEFT JOIN registered_user ON donation.uid=registered_user.uid WHERE event_id =:event_id';
+            $params = ["event_id" => $event_id];
+        }
         $result = Model::select($query, $params);
         return $result;
+    
     }
 
     public function donationRefund($event_id)

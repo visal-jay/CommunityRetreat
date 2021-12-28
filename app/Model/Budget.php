@@ -243,7 +243,7 @@ class Budget extends Model
 
     public function getDailyIncomeSum($event_id)
     {
-        $query = 'SELECT date_format(time_stamp,"%x-%m-%d") as day, SUM(amount) as income_sum FROM income WHERE event_id = :event_id AND status="current" GROUP BY day ORDER BY day ASC';
+        $query = 'SELECT date_format(time_stamp,"%x-%m-%d") as day, SUM(amount) as amount FROM income WHERE event_id = :event_id AND status="current" OR status= "donation" GROUP BY day ORDER BY day ASC';
         $params = ["event_id" => $event_id];
         $result = Model::select($query, $params);
         return $result;
@@ -251,7 +251,7 @@ class Budget extends Model
 
     public function getDailyExpenseSum($event_id)
     {
-        $query = 'SELECT date_format(time_stamp,"%x-%m-%d") as day, SUM(amount) as expense_sum FROM expense WHERE event_id = :event_id AND status="current" GROUP BY day ORDER BY day ASC';
+        $query = 'SELECT date_format(time_stamp,"%x-%m-%d") as day, SUM(amount) as amount FROM expense WHERE event_id = :event_id AND status="current" GROUP BY day ORDER BY day ASC';
         $params = ["event_id" => $event_id];
         $result = Model::select($query, $params);
         return $result;

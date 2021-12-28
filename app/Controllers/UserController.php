@@ -124,15 +124,19 @@ class UserController{
     }
 
     function viewActivityLog(){
+        $uid = $_SESSION['user']['uid'];
+        $user_roles = Controller::accessCheck(["admin","registered_user","organization"]);
+        $pagination = Model::pagination("activity_log", 10, " WHERE uid = :uid", ["uid" => $uid]);
         $user = new User();
-        $activities = $user->getActivity();
-        echo json_encode($activities);
+        $data['activities'] = $user->getActivity(["uid" =>$uid,"offset" => $pagination["offset"], "no_of_records_per_page" => $pagination["no_of_records_per_page"]]);
+        View::render("history",array_merge($data,$pagination),$user_roles);
     }
 
 
     function removeActivity(){
         $user = new User();
         $user->deleteActivity($_POST['time_stamp']);
+        Controller::redirect("viewActivityLog");
     }
 
     public function notifications(){

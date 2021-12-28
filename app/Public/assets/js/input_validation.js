@@ -6,7 +6,6 @@ if (typeof password_regex === 'undefined') {
 }
 
 
-
 document.querySelectorAll(".form-ctrl").forEach(ValidationMessages);
 
 document.querySelectorAll("form").forEach((form) => {

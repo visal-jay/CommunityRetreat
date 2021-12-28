@@ -202,14 +202,14 @@
         <div class="container">
             <div class="screen">
                 <div class="screen-header"></div>
-                <form action="Main/contactUs" class="screen-body" method="post">
+                <form action="/Main/contactEmail" class="screen-body" method="post">
                     <div class="screen-body-item left">
                         <div class="app-title">
                             <span>CONTACT</span>
                             <span>US</span>
                         </div>
                         <div class="app-form-group message">
-                            <textarea class="app-form-control" name="messege" placeholder="MESSAGE" required></textarea>
+                            <textarea class="app-form-control" name="message" placeholder="MESSAGE" required></textarea>
                         </div>
                     </div>
                     <div class="screen-body-item">
@@ -218,10 +218,10 @@
                                 <input class="app-form-control" name="name" placeholder="NAME" required>
                             </div>
                             <div class="app-form-group">
-                                <input class="app-form-control" name="email" placeholder="EMAIL" required>
+                                <input type="email" class="app-form-control" name="email" placeholder="EMAIL" required>
                             </div>
                             <div class="app-form-group">
-                                <input class="app-form-control" name="contact_no" placeholder="CONTACT NO" required>
+                                <input type="tel" class="app-form-control" name="contact_no" placeholder="CONTACT NO" required>
                             </div>
                             <div class="app-form-group buttons">
                                 <button class="app-form-button">CANCEL</button>

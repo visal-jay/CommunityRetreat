@@ -77,9 +77,11 @@
     </div>
 
     <div class="container">
+        <h2 style="display:flex; justify-content: center">Volunteers</h2>
         <div class="center graph" style="text-align: center;display: flex; justify-content: center; margin:20px;">
             <canvas id="myChart1" style="display: block; height: 350px; width: 750px;"></canvas>
         </div>
+        <h2 style="display:flex; justify-content: center">Donations</h2>
         <div class="center graph" style="text-align: center;display: flex; justify-content: center; margin:20px;">
             <canvas id="myChart" style="display: block; height: 350px;width: 750px;"></canvas>
         </div>

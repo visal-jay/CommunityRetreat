@@ -8,14 +8,18 @@ class Announcement extends Model{
         Model::insert($query, $params);
     }
 
-    public function getAnnouncement($event_id,$announcement_id=-1){
-        if($announcement_id != -1){
+    public function getAnnouncement($event_id,$announcement_id=-1, $offset=0, $no_of_records_per_page=0){
+        if($announcement_id==-1 && $offset==0 && $no_of_records_per_page==0){
+            $query = "SELECT `title`, `announcement`, `announcement_id`, date(time_stamp) AS date FROM announcement WHERE event_id= :event_id ORDER BY time_stamp DESC";
+            $params = ["event_id"=> $event_id];
+        }
+        else if($announcement_id != -1){
             $query = "SELECT `title`, `announcement`, `announcement_id`, date(time_stamp) AS date FROM announcement WHERE event_id= :event_id AND announcement_id= :announcement_id";
             $params = ["event_id"=> $event_id, "announcement_id"=> $announcement_id];
         }
         else{
-            $query = "SELECT `title`, `announcement`, `announcement_id`, date(time_stamp) AS date FROM announcement WHERE event_id= :event_id ORDER BY time_stamp DESC";
-            $params = ["event_id"=> $event_id];
+            $query = "SELECT `title`, `announcement`, `announcement_id`, date(time_stamp) AS date FROM announcement WHERE event_id= :event_id ORDER BY time_stamp DESC LIMIT :offset , :no_of_records_per_page";
+            $params = ["event_id"=> $event_id, "offset" => $offset, "no_of_records_per_page" => $no_of_records_per_page];
         }
         $result = Model::select($query, $params);
         return $result;

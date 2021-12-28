@@ -124,10 +124,10 @@ class User extends Model
         User::insert($query,$params);
     }
 
-    function getActivity(){
+    function getActivity($data){
     
-        $params = ["uid" => $_SESSION['user']['uid']];
-        $query = 'SELECT event_details.event_name,event_details.event_id,activity_log.activity,activity_log.time_stamp FROM activity_log LEFT JOIN event_details ON activity_log.event_id = event_details.event_id WHERE  activity_log.uid = :uid ORDER BY time_stamp DESC';
+        $params = $data;
+        $query = 'SELECT event_details.event_name,event_details.event_id,activity_log.activity,activity_log.time_stamp FROM activity_log LEFT JOIN event_details ON activity_log.event_id = event_details.event_id WHERE  activity_log.uid = :uid ORDER BY time_stamp DESC LIMIT :offset , :no_of_records_per_page';
         $activities = User::select( $query,$params);
 
          return $activities;  

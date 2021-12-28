@@ -95,6 +95,7 @@
             }
             #event-search{
                 width: 50%;
+                color:aliceblue;
             }
             .table{
                 width: 70%;
@@ -196,55 +197,64 @@
                 </tr>                
             </thead>
             <tbody id="table-body" >
+                <?php foreach($administrations as $administration){ 
+                    if( $administration['moderator_flag'] == 1 && $administration['treasurer_flag'] == 0){
+                ?>
+                        <tr id="data-row">
+                            <td id="event-name-td" data-label="EVENT"><a class="clr-black" href='/Event/view?page=about&&event_id=<?=$administration['event_id']?>'><?=$administration['event_name']?></a></td>
+                            <td data-label="ORGANIZATION"><?=$administration['organisation_username']?></td>
+                            <td data-label="USER ROLE">Moderator</td>
+                        </tr>
+                <?php } elseif($administration['moderator_flag'] == 0 && $administration['treasurer_flag'] == 1){
+                ?>
+                        <tr id="data-row">
+                            <td id="event-name-td" data-label="EVENT"><a class="clr-black" href='/Event/view?page=about&&event_id=<?=$administration['event_id']?>'><?=$administration['event_name']?></a></td>
+                            <td data-label="ORGANIZATION"><?=$administration['organisation_username']?></td>
+                            <td data-label="USER ROLE">Treasurer</td>
+                        </tr>
+                <?php }elseif($administration['moderator_flag'] == 1 && $administration['treasurer_flag'] == 1){?>
+                        <tr id="data-row">
+                            <td id="event-name-td" data-label="EVENT"><a class="clr-black" href='/Event/view?page=about&&event_id=<?=$administration['event_id']?>'><?=$administration['event_name']?></a></td>
+                            <td data-label="ORGANIZATION"><?=$administration['organisation_username']?></td>
+                            <td data-label="USER ROLE">Moderator&nbsp/&nbspTreasurer</td>
+                        </tr>
+                    <?php } 
+                    }?>
 
             </tbody>   
         </table>
+       
    
     </div>
-    
+    <div class="flex-row flex-center ">
+            <ul class="pagination">
+                <li><a href="/RegisteredUser/administratored?pageno=1"><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i>&nbsp;First</a></li>
+                <li class="<?php if ($pageno <= 1) {
+                                echo 'disabled';
+                            } ?>">
+                    <a href="<?php if ($pageno <= 1) {
+                                    echo '';
+                                } else {
+                                    echo "/RegisteredUser/administratored?pageno=" . ($pageno - 1);
+                                } ?>"><i class="fas fa-chevron-left"></i>&nbsp;Prev</a>
+                </li>
+                <li class="<?php if ($pageno >= $total_pages) {
+                                echo 'disabled';
+                            } ?>">
+                    <a href="<?php if ($pageno >= $total_pages) {
+                                    echo '#';
+                                } else {
+                                    echo "/RegisteredUser/administratored?pageno=" . ($pageno + 1);
+                                } ?>">Next&nbsp;<i class="fas fa-chevron-right"></i></a>
+                </li>
+                <li><a href="/RegisteredUser/administratored?pageno=<?php echo $total_pages; ?>">Last&nbsp;<i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right"></i></a></li>
+            </ul>
+        </div>
+ 
     
 </body>
 <script>
-    function renderDetails(){
-        $.ajax({
-        url: "/RegisteredUser/viewAdministration",
-        type: "post",
-        success : function(results){
-            result = JSON.parse(results);
-            console.log(result[1]);
-            let tbody = document.getElementById("table-body");
-                for(let i=0 ; i<result.length ;i++){
-                    if(result[i].moderator_flag == 1 && result[i].treasurer_flag == 0){
-                        tbody.innerHTML += `<tr id="data-row">
-                                            <td id="event-name-td" data-label="EVENT"><a class="clr-black" href='/Event/view?page=about&&event_id=${result[i].event_id}'>${result[i].event_name}</a></td>
-                                            <td data-label="ORGANIZATION">${result[i].organisation_username}</td>
-                                            <td data-label="USER ROLE">Moderator</td>
-                                        </tr>`;
-
-                    }
-                    else if(result[i].moderator_flag == 0 && result[i].treasurer_flag == 1){
-                        tbody.innerHTML += `<tr id="data-row">
-                                            <td id="event-name-td" data-label="EVENT"><a class="clr-black" href='/Event/view?page=about&&event_id=${result[i].event_id}'>${result[i].event_name}</a></td>
-                                            <td data-label="ORGANIZATION">${result[i].organisation_username}</td>
-                                            <td data-label="USER ROLE">Treasurer</td>
-                                        </tr>`;
-
-                    }
-                    else if(result[i].moderator_flag == 1 && result[i].treasurer_flag == 1){
-                        tbody.innerHTML += `<tr id="data-row">
-                                            <td id="event-name-td" data-label="EVENT"><a class="clr-black" href='/Event/view?page=about&&event_id=${result[i].event_id}'>${result[i].event_name}</a></td>
-                                            <td data-label="ORGANIZATION">${result[i].organisation_username}</td>
-                                            <td data-label="USER ROLE">Moderator&nbsp/&nbspTreasurer</td>
-                                        </tr>`;
-
-                    }
-                }
-
-            }
-
-        });
-    }
-
+   
     function searchEvent(){
         var input = document.getElementById("event-search");
         var filter = input.value.toUpperCase();

@@ -92,6 +92,11 @@
     color: lightslategray;
     padding-top: 0.2rem;
 }
+@media screen and (max-width: 800px) {
+    .notifications-form{
+        height:100vh;
+    }
+}
 
 
 @media screen  and (max-width: 500px){

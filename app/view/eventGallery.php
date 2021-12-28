@@ -151,9 +151,7 @@
         <div class="flex-row flex-center position-absolute position-bottom">
             <ul class="pagination">
                 <li><a href="/Organisation/gallery?pageno=1"><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i>&nbsp;First</a></li>
-                <li class="<?php if ($pageno <= 1) {
-                                echo 'disabled';
-                            } ?>">
+                <li class="<?php if ($pageno <= 1) {echo 'disabled';} ?>">
                     <a href="<?php if ($pageno <= 1) {
                                     echo '';
                                 } else {

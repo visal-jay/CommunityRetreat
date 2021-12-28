@@ -119,7 +119,6 @@ class VolunteerController{
             if($event['volunteer_date'] == Date('Y-m-d', strtotime('+7 days')))
                 $volunteer_controller->sendNotificationstoVolunteers("Only 7 days more for {$event_details['event_name']}","/Event/view?page=about&event_id={$event["event_id"]}",$event["event_id"],"nearEventMail",["event_name" => $event_details['event_name'] ,"remaining_days_count" => 7],"7 days more...!");
         }
-
     }
 }
 

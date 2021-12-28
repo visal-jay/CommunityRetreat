@@ -316,8 +316,8 @@
                     <div class="venue-container">
                         <div class="flex-row margin-lg ">
                             <i class="btn-icon icon-width fas fa-map-marker-alt clr-green margin-side-lg"></i>
-                            <div class="flex-col form hidden">
-                                <div class="border-round<?php if (!isset($latitude) && !isset($longitude) && ($mode == "Virtual")) echo "form hidden" ?>" id="map"></div>
+                            <div class="flex-col">
+                                <div class="border-round<?php if (!isset($latitude) && !isset($longitude) && ($mode == "Virtual")) echo "form hidden"; ?>" id="map"></div>
                                 <div class="latlang" class="form hidden">
                                     <input class="hidden" name="longitude" id="longitude" value=NULL>
                                     <input class="hidden" name="latitude" id="latitude" value=NULL>
@@ -656,12 +656,6 @@
 
     }
 
-    function resizeMap() {
-        console.log(document.getElementById("details").offsetWidth);
-        document.getElementById("map").style.width = parseInt(document.getElementById("details").offsetWidth) * 0.7 + "px";
-    }
-    window.addEventListener("resize", resizeMap);
-
 
     function animateProgressBar(el, width) {
 
@@ -729,13 +723,13 @@
 
         var myLatlng = new google.maps.LatLng(latitude, longitude);
 
-
         marker = new google.maps.Marker({
             position: myLatlng,
             draggable: false,
             title: "Event location"
         });
 
+        console.log(latitude, longitude);
         // To add the marker to the map, call setMap();
         marker.setMap(map);
 
@@ -748,6 +742,13 @@
         map.setCenter(myLatlng);
         map.setZoom(15);
     }
+
+    function resizeMap() {
+        console.log(document.getElementById("details").offsetWidth);
+        document.getElementById("map").style.width = parseInt(document.getElementById("details").offsetWidth) * 0.7 + "px";
+    }
+    window.addEventListener("resize", resizeMap);
+
 
     function fillComplaint() {
         const queryString = window.location.search;

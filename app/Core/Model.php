@@ -63,12 +63,12 @@ class Model
     
     public static function pagination($table, $no_of_records_per_page,$extrenal_query="", $params = [])
     {
-        $query="SELECT COUNT(*) as count FROM " . $table . " " . $extrenal_query; 
+        $query="SELECT COUNT(*) as count FROM " . $table . " " . $extrenal_query; //total number of rows count
         $result = Model::select($query,$params);
-        $pagination["no_of_records_per_page"]=$no_of_records_per_page;
-        $pagination["pageno"]= isset($_GET["pageno"]) ? $_GET["pageno"] : 1;
-        $pagination["offset"]=($pagination["pageno"]-1) * $no_of_records_per_page;
-        $pagination["total_pages"]=ceil($result[0]["count"]/$no_of_records_per_page);
+        $pagination["no_of_records_per_page"]=$no_of_records_per_page; //limit in each page
+        $pagination["pageno"]= isset($_GET["pageno"]) ? $_GET["pageno"] : 1; //current page
+        $pagination["offset"]=($pagination["pageno"]-1) * $no_of_records_per_page; //starting offset
+        $pagination["total_pages"]=ceil($result[0]["count"]/$no_of_records_per_page); //total pages
         return($pagination);
     }
 }

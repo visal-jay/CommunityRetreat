@@ -70,6 +70,7 @@
             .popup{
                 height: 400px;
             }
+
            
         }
 

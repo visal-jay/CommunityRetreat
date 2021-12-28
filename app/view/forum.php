@@ -210,7 +210,7 @@
 
 <body>
     <div id="background" style="width: 100%;">
-        <?php if ($organization || $moderator) { ?>
+        <?php if (($organization || $moderator) && ($status != 'ended')) { ?>
             <div class="flex-col flex-center margin-side-lg">
                 <button class="btn btn-solid btn-close margin-lg" onclick="togglePopup('form-div'); blur_background('background'); stillBackground('id1')">Add Announcement &nbsp; <i class="fas fa-plus"></i></button>
             </div>

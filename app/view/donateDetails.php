@@ -294,9 +294,6 @@
     <div class="<?php if ($donation_status == 0 && count($donations) == 0) { ?>blur <?php } ?>flex-center flex-col" id="background">
         <div class="container-size">
             <h1>Donation Details</h1>
-            <div class="column section">
-                <h4>Capacity</h4>
-            </div>
 
             <div id="container" class="grid card-grid">
 
@@ -333,30 +330,61 @@
                                         <button class=" btn btn-solid form hidden btn-small save-btn" type="submit" form="donation-capacity">Save &nbsp; <i class="fas fa-check "></i></button>
                                     </div>
                                 </div>
+                            <?php } else if ($status == 'ended') { ?>
+                                <form action="/Donations/updateDonationCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" class="flex-col flex-center" style="display: none;" id="donation-capacity">
+                                    <!--enter the donation capacity and save it in the database-->
+                                    <label for="" class="hidden"> </label>
+                                    <input name="donation_capacity" type="number" value="<?= $donation_capacity ?>" min="<?= $donation_sum ?>" class=" form form-ctrl donation_capacity hidden" style="width: 80%;" required />
+                                </form>
+                                <button class="btn btn-solid data edit-btn" style="display: none;" onclick="edit()">Edit
+                                    &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
+                                <div class="flex-row flex-center">
+                                    <div class="edit-save-btn ">
+                                        <button class=" btn btn-solid bg-red border-red form hidden btn-small close-btn" onclick="edit()">Close &nbsp;&nbsp;<i class="fas fa-times "></i></button>
+                                    </div>
+                                    <div class="edit-save-btn">
+                                        <button class=" btn btn-solid form hidden btn-small save-btn" type="submit" form="donation-capacity">Save &nbsp; <i class="fas fa-check "></i></button>
+                                    </div>
+                                </div>
                             <?php } ?>
                         </div>
                     </div>
                 </div>
 
-                <div class="card">
-                    <div class="card__background flex-col flex-center bg-image-4">
-                        <div class="flex-col flex-center box">
-                            <?php if ($donation_status == 1 && $status == 'published') { ?>
+                <?php if ($donation_status == 1 && $status == 'published') { ?>
+                    <div class="card">
+                        <div class="card__background flex-col flex-center bg-image-4">
+                            <div class="flex-col flex-center box">
                                 <form action="/Donations/disableDonation?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-donation-enable-disable-btn">
                                     <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Disable
                                         Donations</button>
                                 </form>
-                            <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php } else if ($status == 'ended') { ?>
+                    <div class="card" style="display:none">
+                       
+                    </div>
+                <?php } ?>
 
-                            <?php if ($donation_status == 0 && $status == 'published') { ?>
+                <?php if ($donation_status == 0 && $status == 'published') { ?>
+                    <div class="card">
+                        <div class="card__background flex-col flex-center bg-image-4">
+                            <div class="flex-col flex-center box">
                                 <form action="/Donations/enableDonation?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-donation-enable-disable-btn">
                                     <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Enable
                                         Donations</button>
                                 </form>
-                            <?php } ?>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php } else if ($status == 'ended') { ?>
+                    <div class="card" style="display:none">
+                        
+                    </div>
+                <?php } ?>
+
             </div>
 
 
@@ -433,6 +461,16 @@
                 <p class="clr-red"><i class='fas fa-exclamation-circle clr-red'></i>You're not authorized to enable donations</p>
             <?php } ?>
         </div>
+
+    <?php }
+    if ($donation_status == 0 && count($donations) == 0 && $status == 'ended') { ?>
+        <div class=" initial-donation-enable-btn">
+            <!--initally enable the donations-->
+            <div class=" flex-col flex-center">
+                <h2>No donations collected</h2>
+            </div>
+        </div>
+
 
     <?php } ?>
 </body>

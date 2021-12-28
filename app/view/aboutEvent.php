@@ -193,10 +193,12 @@
     .center {
         text-align: center;
     }
-    .volunteer-container{
+
+    .volunteer-container {
         display: none;
     }
-    .donation-container{
+
+    .donation-container {
         display: none;
     }
 
@@ -259,11 +261,13 @@
         }
     }
 </style>
- 
-<body id="body" >
+
+<body id="body">
     <div id="background">
         <div class="flex-col flex-center">
-            <h1>About</h1>
+            <div class="container-size">
+                <h1>About</h1>
+            </div>
             <div class="content border-round container-size margin-md" id="details" style="background-color: #eeeeee">
                 <?php if ($organization || $moderator) { ?>
                     <form action="/Event/updateDetails?event_id=<?= $_GET["event_id"] ?>" method="post" id="update-form" enctype="multipart/form-data">
@@ -638,6 +642,30 @@
         document.getElementById(id).classList.toggle("blurred")
     }
 
+    <?php if ($registered_user && isset($_GET["action"]) && $_GET["action"] == "donate") { ?>
+        window.addEventListener('load', (event) => {
+            togglePopup('form');
+            blur_background('background');
+            stillBackground('id1')
+        });
+    <?php } ?>
+
+    <?php if ($registered_user && isset($_GET["action"]) && $_GET["action"] == "volunteer") { ?>
+        window.addEventListener('load', (event) => {
+            togglePopup('volunteer-form');
+            blur_background('background');
+            stillBackground('id1')
+        });
+    <?php } ?>
+
+    <?php if ($registered_user && isset($_GET["action"]) && $_GET["action"] == "complain") { ?>
+        window.addEventListener('load', (event) => {
+            togglePopup('complaint-form');
+            blur_background('background');
+            stillBackground('id1')
+        });
+    <?php } ?>
+
     function disableSubmit() {
         document.getElementById("donate-btn").disabled = true;
     }
@@ -758,26 +786,26 @@
         var complaint_name = document.getElementById('complaint_name');
         complaint_name.setAttribute("value", '<?= $event_name ?>');
         var complaint_status = document.getElementById('complaint_status');
-        complaint_status.setAttribute("value",'event');
+        complaint_status.setAttribute("value", 'event');
+
     }
-    
+
     fillComplaint();
 
-    function renderVoluneerDonationContainers(){
+    function renderVoluneerDonationContainers() {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         var donation_container = document.querySelector('.donation-container');
         var volunteer_container = document.querySelector('.volunteer-container');
-        if(urlParams.get('action') == "volunteer"){
+        if (urlParams.get('action') == "volunteer") {
             volunteer_container.style.display = 'flex';
             console.log('hello pik');
         }
-        if(urlParams.get('action') == "donation"){
+        if (urlParams.get('action') == "donate") {
             donation_container.style.display = 'flex';
         }
     }
     renderVoluneerDonationContainers();
-
 </script>
 
 </html>

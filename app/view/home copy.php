@@ -59,7 +59,7 @@
     }
 
     search {
-        scroll-snap-align: end;
+        scroll-snap-align: center;
         width: 100%;
         max-width: 100%;
         background-color: #0A1931;
@@ -508,7 +508,7 @@
 
     <div class="home-div " style="display: none;">
         <div class="homepage flex-col flex-center">
-            <div class="flex-col flex-center" style="position:relative;">
+            <div class="flex-col flex-center" style="position:relative;height: 80vh;">
                 <video autoplay muted loop id="myVideo">
                     <source src="/Public/assets/volunteer.mp4" type=video/mp4>
                 </video>
@@ -516,19 +516,21 @@
                     <h1>Let's join CommunityRetreat</h1>
                 </div>
             </div>
+            <div class="flex-col flex-center" style="height: 100vh;width:100%;">
+                <search class="flex-col flex-center border-round" style="height: 50%;width: 100%;position: relative;">
+                    <h1 class="clr-white animated fadeInRight">Let's find what you like</h1>
+                    <div class="flex-row-to-col flex-center">
+                        <form action="/Search/view" method="get" class="search-bar" style="height:fit-content">
+                            <input style="color:white" type="search" name="search" class="form-ctrl" placeholder="Search">
+                            <button type="" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
+                        </form>
+                        <button class="btn btn-solid" id="near-me" onclick="nearme()"><i class="fas fa-map-marker-alt"></i>&nbsp;Near me</button>
+                        <img src="/Public/assets/search.svg" alt="" style="max-width: 45%;max-height:95%;position:absolute;top:0;right:0;">
+                    </div>
+                </search>
+            </div>
 
-            <search class="flex-col flex-center border-round">
-                <h1 class="clr-white animated fadeInRight">Let's find what you like</h1>
-                <div class="flex-row-to-col flex-center">
-                    <form action="/Search/view" method="get" class="search-bar" style="height:fit-content">
-                        <input style="color:white" type="search" name="search" class="form-ctrl" placeholder="Search">
-                        <button type="" class="btn-icon clr-green "><i class=" fa fa-search "> </i></button>
-                    </form>
-                    <button class="btn btn-solid" id="near-me" onclick="nearme()"><i class="fas fa-map-marker-alt"></i>&nbsp;Near me</button>
-                </div>
-            </search>
-
-            <div class ="flex-col flex-center" style="height: 100vh;">
+            <div class="flex-col flex-center" style="height: 100vh;">
                 <div class="home-events">
                     <div class="flex-row flex-center">
                         <video class="border-round" autoplay muted loop>
@@ -548,71 +550,71 @@
             </div>
 
             <?php if ($guest_user) { ?>
-                <div class ="flex-col flex-center" style="height: 100vh;">
-                <div class="item flex-row-to-col flex-space">
-                    <register class="flex-col flex-center">
-                        <img src="/Public/assets/volunteer.png" alt="">
-                        <div class="flex-col flex-center">
-                            <h3>Register as an User</h3>
-                            <p style="text-align: center">By registering as an user you will be eligible to VOLUNTEER for events proudly. <br> You will be able to push yourself more and DONATE generously. </p>
-                            <div><a href="/Login/view?signup=true&&signupUser=true">Sign up as a volunteer <i class="fas fa-long-arrow-alt-right"></i></a></div>
-                        </div>
-                    </register>
-                    <register class="flex-col flex-center">
-                        <img src="/Public/assets/organisation.png" alt="">
-                        <div class="flex-col flex-center">
-                            <h3>Register as an Organisation</h3>
-                            <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
-                            <div><a href="/Login/view?signup=true&&signupOrg=true">Sign up as a organisation <i class="fas fa-long-arrow-alt-right"></i></a></div>
-                        </div>
-                    </register>
+                <div class="flex-col flex-center" style="height: 100vh;">
+                    <div class="item flex-row-to-col flex-space">
+                        <register class="flex-col flex-center">
+                            <img src="/Public/assets/volunteer.png" alt="">
+                            <div class="flex-col flex-center">
+                                <h3>Register as an User</h3>
+                                <p style="text-align: center">By registering as an user you will be eligible to VOLUNTEER for events proudly. <br> You will be able to push yourself more and DONATE generously. </p>
+                                <div><a href="/Login/view?signup=true&&signupUser=true">Sign up as a volunteer <i class="fas fa-long-arrow-alt-right"></i></a></div>
+                            </div>
+                        </register>
+                        <register class="flex-col flex-center">
+                            <img src="/Public/assets/organisation.png" alt="">
+                            <div class="flex-col flex-center">
+                                <h3>Register as an Organisation</h3>
+                                <p style="text-align: center">You are an not an individual but and organisation? <br> Even better! <br> Now you can sign up as Organisation and ORGANIZE events and find passionate communities for relavant events.</p>
+                                <div><a href="/Login/view?signup=true&&signupOrg=true">Sign up as a organisation <i class="fas fa-long-arrow-alt-right"></i></a></div>
+                            </div>
+                        </register>
+                    </div>
                 </div>
-            </div>
             <?php } ?>
 
-            <div class ="flex-col flex-center" style="height: 100vh;">
-            <div class="home-events">
-                <div class="flex-col flex-center">
-                    <img src="/Public/assets/sample-1.svg" alt="">
-                    <h1 class="animated fadeInRight">Recently added</h2>
-                        <p style="text-align: center">Interested in newly published events?<br> Here is your place!<br> Keep scrolling left to find out more and more events.</p>
-                </div>
-                <div class="flex-row margin-lg" id='recent-events'></div>
-            </div>
-            </div>
-
-            <div class ="flex-col flex-center" style="height: 100vh;">
-            <div class="home-events">
-                <div id="map" class="margin-side-md grid-row-2"></div>
-                <div class="flex-col flex-center grid-row-1">
-                    <img src="/Public/assets/sample-2.svg" alt="">
-                    <h2>Near me</h2>
-                    <p style="text-align: center">Look what we've found!<br>We got the events within your reach for you!</p>
+            <div class="flex-col flex-center" style="height: 100vh;">
+                <div class="home-events">
+                    <div class="flex-col flex-center">
+                        <img src="/Public/assets/sample-1.svg" alt="">
+                        <h1 class="animated fadeInRight">Recently added</h2>
+                            <p style="text-align: center">Interested in newly published events?<br> Here is your place!<br> Keep scrolling left to find out more and more events.</p>
+                    </div>
+                    <div class="flex-row margin-lg" id='recent-events'></div>
                 </div>
             </div>
-            </div>
 
-            <div class ="flex-col flex-center" style="height: 100vh;">
-            <div class="home-events">
-                <div class="flex-col flex-center">
-                    <img src="/Public/assets/sample-3.svg" alt="">
-                    <h2 class="animated fadeInRight">Need your donations</h2>
-                    <p style="text-align: center">The events that are waiting just for your kindness and generosity.<br>Join the donors' community <br>&<br> support the good-willed projects.</p>
-                </div>
-                <div class="flex-row margin-lg" id='donation-events'></div>
-            </div>
-            </div>
-
-            <div class ="flex-col flex-center" style="height: 100vh;">
-            <div class="home-events">
-                <div class="flex-row margin-lg grid-row-2" id='volunteer-events'></div>
-
-                <div class="flex-col flex-center grid-row-1">
-                    <img src="/Public/assets/sample-4.svg" alt="">
-                    <h2>Need your engagement</h2>
-                    <p style="text-align: center">The events that are waiting just for you.<br> Hurry up and be a proud VOLUNTEER!<br> Become a responsible citizen and be a part of making a better society.</p>
+            <div class="flex-col flex-center" style="height: 100vh;">
+                <div class="home-events">
+                    <div id="map" class="margin-side-md grid-row-2"></div>
+                    <div class="flex-col flex-center grid-row-1">
+                        <img src="/Public/assets/sample-2.svg" alt="">
+                        <h2>Near me</h2>
+                        <p style="text-align: center">Look what we've found!<br>We got the events within your reach for you!</p>
+                    </div>
                 </div>
             </div>
+
+            <div class="flex-col flex-center" style="height: 100vh;">
+                <div class="home-events">
+                    <div class="flex-col flex-center">
+                        <img src="/Public/assets/sample-3.svg" alt="">
+                        <h2 class="animated fadeInRight">Need your donations</h2>
+                        <p style="text-align: center">The events that are waiting just for your kindness and generosity.<br>Join the donors' community <br>&<br> support the good-willed projects.</p>
+                    </div>
+                    <div class="flex-row margin-lg" id='donation-events'></div>
+                </div>
+            </div>
+
+            <div class="flex-col flex-center" style="height: 100vh;">
+                <div class="home-events">
+                    <div class="flex-row margin-lg grid-row-2" id='volunteer-events'></div>
+
+                    <div class="flex-col flex-center grid-row-1">
+                        <img src="/Public/assets/sample-4.svg" alt="">
+                        <h2>Need your engagement</h2>
+                        <p style="text-align: center">The events that are waiting just for you.<br> Hurry up and be a proud VOLUNTEER!<br> Become a responsible citizen and be a part of making a better society.</p>
+                    </div>
+                </div>
             </div>
         </div>
         <?php include "footer.php"; ?>

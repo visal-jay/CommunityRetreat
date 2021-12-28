@@ -14,7 +14,17 @@ class EventController
             Controller::redirect("/User/home");
     }
 
-    public function about()
+    public function home ($event_details){
+        $user_roles = Controller::accessCheck(["moderator","treasurer", "organization", "guest_user", "registered_user","admin"], $_GET["event_id"]);
+        $event = new Events;
+        if ($event_details = $event->getDetails($_GET["event_id"])) {
+            $data = $event_details;
+            View::render("eventPage", $data, $user_roles);
+        } else
+            Controller::redirect("/User/home");
+    }
+
+    public function about($event_details)
     {
         $user_roles = Controller::accessCheck(["moderator","treasurer", "organization", "guest_user", "registered_user","admin"], $_GET["event_id"]);
         $event = new Events;

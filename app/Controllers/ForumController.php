@@ -12,10 +12,10 @@ class ForumController
         if (isset($_GET["update_announcement_id"]) && $user_roles["registered_user"]) {
             $data["announcements"] = (new Announcement)->getAnnouncement($_GET["event_id"], $_GET["update_announcement_id"]);
         } else {
-            $data["announcements"] = (new Announcement)->getAnnouncement($_GET["event_id"]);
             $pagination = Model::pagination("announcement", 5, "WHERE event_id= :event_id", ["event_id" => $_GET["event_id"]]);
+            $data["announcements"] = (new Announcement)->getAnnouncement($_GET["event_id"], -1, $pagination["offset"], $pagination["no_of_records_per_page"]);
         }
-        $data = array_merge($data, $event_details);
+        $data = array_merge($data, $event_details, $pagination);
         View::render("eventPage", $data, $user_roles);
     }
 

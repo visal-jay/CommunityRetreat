@@ -1,14 +1,19 @@
 <?php
 class Task extends Model
 {
-    public function getTask($event_id, $task_id = -1)
+    public function getTask($event_id, $task_id = -1, $offset=0, $no_of_records_per_page=0)
     {
-        if ($task_id != -1) {
-            $query = "SELECT `task`, `task_id`, `start_date`, `end_date`, `completed` FROM work_timeline WHERE task_id= :task_id";
-            $params = ["task_id" => $task_id];
-        } else {
+        if($task_id == -1 && $offset==0 && $no_of_records_per_page==0){
             $query = "SELECT `task`, `task_id`, `start_date`, `end_date`, `completed` FROM work_timeline WHERE event_id= :event_id ORDER BY `start_date` ASC";
             $params = ["event_id" => $event_id];
+        }
+        else if ($task_id != -1) {
+            $query = "SELECT `task`, `task_id`, `start_date`, `end_date`, `completed` FROM work_timeline WHERE task_id= :task_id LIMIT :offset , :no_of_records_per_page";
+            $params = ["task_id" => $task_id, "offset" => $offset, "no_of_records_per_page" => $no_of_records_per_page];
+        } 
+        else {
+            $query = "SELECT `task`, `task_id`, `start_date`, `end_date`, `completed` FROM work_timeline WHERE event_id= :event_id ORDER BY `start_date` ASC LIMIT :offset , :no_of_records_per_page";
+            $params = ["event_id" => $event_id, "offset" => $offset, "no_of_records_per_page" => $no_of_records_per_page];
         }
         $result = Model::select($query, $params);
         return $result;

@@ -118,18 +118,22 @@
 
 <body>
     <div class="flex-col flex-center margin-side-lg position-relative">
-        <h1>Gallery</h1>
+        <div class="flex-row" style="align-items: baseline; width: 83%;">
+            <div>
+                <h1>Gallery</h1>
+            </div>
+            <?php if ($moderator || $organization || $registered_user) { ?>
+                <form class="form flex-col flex-center" id="file-form" style="align-items: flex-start;" method="post" enctype="multipart/form-data" data-validated="null">
+                    <label for="files">
+                        <div class="btn btn-solid margin-lg">Add photo &nbsp; <i class="fas fa-plus"></i></div>
+                    </label>
+                    <input type="file" class="hidden" id="files" name="photo" accept=".jpg, .jpeg, .png" multiple />
+                    <div id="selected_files" class="file-grid margin-md"></div>
+                    <button type="submit" class="btn save-button hidden">Save</button>
+                </form>
+            <?php } ?>
+        </div>
 
-        <?php if ($moderator || $organization || $registered_user) { ?>
-            <form class="form flex-col flex-center" id="file-form" method="post" enctype="multipart/form-data" data-validated="null">
-                <label for="files">
-                    <div class="btn btn-solid margin-lg">Add photo &nbsp; <i class="fas fa-plus"></i></div>
-                </label>
-                <input type="file" class="hidden" id="files" name="photo" accept=".jpg, .jpeg, .png" multiple />
-                <div id="selected_files" class="file-grid margin-md"></div>
-                <button type="submit" class="btn save-button hidden">Save</button>
-            </form>
-        <?php } ?>
 
         <div class="grid margin-lg">
             <?php foreach ($photos as $photo) { ?>
@@ -240,7 +244,7 @@
             cache: false,
             processData: false,
             success: (data) => {
-                console.log("success message",data);
+                console.log("success message", data);
                 if (data == "success") {
                     setTimeout(() => {
                         location.reload();

@@ -5,20 +5,20 @@ class FeedbackController {
     {
         Controller::validateForm([], ["event_id"]);   
         $user_roles = Controller::accessCheck(["registered_user", "organization", "moderator","guest_user", "admin"],$_GET["event_id"]);
-        $pagination= Model::pagination("event_feedback", 5, "WHERE event_id= :event_id", ["event_id"=> $_GET["event_id"]]);
         $feedback = new Feedback;
         $data["feedbacks"] = array();
         if(isset($_GET["complaint_feedback_id"]) && $user_roles["admin"]){
             $data["feedbacks"] = $feedback->getFeedback(-1,$_GET["complaint_feedback_id"]);
         }
         else if ($user_roles["moderator"] || $user_roles["organization"] || $user_roles["admin"]){
-            $data["feedbacks"] = $feedback->getFeedback($_GET["event_id"]);
+            $pagination= Model::pagination("event_feedback", 9, "WHERE event_id= :event_id", ["event_id"=> $_GET["event_id"]]);
+            $data["feedbacks"] = $feedback->getFeedback($_GET["event_id"], -1, $pagination["offset"], $pagination["no_of_records_per_page"]);
         }
         else if ($user_roles["registered_user"] || $user_roles["guest_user"]){
-            $data["feedbacks"] = $feedback->getFeedback($_GET["event_id"], -1, 'show');
+            $pagination= Model::pagination("event_feedback", 9, "WHERE event_id= :event_id AND status= :status", ["event_id"=> $_GET["event_id"],"status"=>'show']);
+            $data["feedbacks"] = $feedback->getFeedback($_GET["event_id"], -1, $pagination["offset"], $pagination["no_of_records_per_page"], 'show');
         }
-        $data = array_merge($data, $event_details);
-        $data = array_merge($data, $feedback->totalFeedback($_GET["event_id"]));
+        $data = array_merge($data, $event_details, $feedback->totalFeedback($_GET["event_id"]), $pagination);
         View::render('eventPage', $data, $user_roles);
     }
 

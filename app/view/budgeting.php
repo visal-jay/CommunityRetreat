@@ -8,11 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-pie-chart/2.1.6/jquery.easypiechart.min.js" charset="utf-8"></script>
+    
 </head>
 
 <style>
-
     #chart {
         max-width: 760px;
         margin: 35px auto;
@@ -336,7 +343,7 @@
             padding: 15px;
         }
 
-        .apexcharts-toolbar{
+        .apexcharts-toolbar {
             display: none;
         }
     }
@@ -370,9 +377,13 @@
             <button class="btn btn-md btn-solid" onclick="window.location.href=' /Budget/budgetReport?event_id=<?= $_GET['event_id'] ?>'">Full
                 Budget details</button>
         </div>
-
+<!--
         <div id="chart">
             <div id="timeline-chart"></div>
+        </div>
+-->
+        <div class="center canvas-graph">
+            <canvas id="myChart"></canvas>
         </div>
 
         <div class="container">
@@ -518,7 +529,7 @@
                 <input type="text" class="hidden" name="record_id" id="record_id">
 
                 <div class="flex-row-to-col flex-center">
-                    <input type="hidden" name="event_id" value=<?= $_GET['event_id'] ?> >
+                    <input type="hidden" name="event_id" value=<?= $_GET['event_id'] ?>>
                     <button type="submit" id="save" name="event_id" class="btn btn-solid update-save-btn">Save</button>
                     <button type="button" class="btn bg-red clr-white delete-cancel-btn" onclick="togglePopup('update-form');blur_background('container');stillBackground('id1')">Cancel</button>
                 </div>
@@ -526,186 +537,243 @@
             </form>
         </div>
     </div>
-
-    </body>
-    <script src="/Public/assets/js/input_validation.js"></script>
-    <script>
-        const data = <?php echo json_encode($income_graph); ?> ;
-        console.log(data);
-        /*Calculate the balance of incomes and expenses*/
-        document.getElementById("balance").innerHTML = "<div>Balance :</div><div> Rs. " +
-            (parseInt('<?= $income_sum  ?>') - parseInt('<?= $expense_sum ?>')).toString().replace(
-                /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","); + "uihui" + "</div>";
+</body>
+<script src="/Public/assets/js/input_validation.js"></script>
+<script>
+    /*Calculate the balance of incomes and expenses*/
+    document.getElementById("balance").innerHTML = "<div>Balance :</div><div> Rs. " +
+        (parseInt('<?= $income_sum  ?>') - parseInt('<?= $expense_sum ?>')).toString().replace(
+            /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","); + "uihui" + "</div>";
 
 
-        function income_null(id) {
-            let income_sum = parseInt('<?= $income_sum ?>');
-            if (income_sum == 0) {
-                document.getElementById(id).classList.toggle("hidden");
-            }
-        }
-
-        function expense_null(id) {
-            let expense_sum = parseInt('<?= $expense_sum ?>');
-            if (expense_sum == 0) {
-                document.getElementById(id).classList.toggle("hidden");
-            }
-        }
-
-        expense_null("expense-show-hide-btn");
-        income_null("income-show-hide-btn");
-
-        function show(id) {
-            document.getElementById(id).classList.toggle("height100");
-            /*show the rest of the incomes and expenses byclicking the drop down button*/
-        }
-
-        function show_hide(id) {
+    function income_null(id) {
+        let income_sum = parseInt('<?= $income_sum ?>');
+        if (income_sum == 0) {
             document.getElementById(id).classList.toggle("hidden");
-            /*show and hide the form where incomes and expenses can be added*/
         }
+    }
 
-        function togglePopup(id, description = 0, amount = 0, record_id, event_id) {
-            var form = document.getElementById(id);
-            console.log(record_id);
-            form.classList.toggle("active");
-            form.querySelector("#details").setAttribute("value", description);
-            form.querySelector("#amount").setAttribute("value", amount);
-            form.querySelector("#record_id").setAttribute("value", record_id);
-            form.querySelector("#save").setAttribute("value", event_id);
-            /*show the popup to update an income or an expense*/
+    function expense_null(id) {
+        let expense_sum = parseInt('<?= $expense_sum ?>');
+        if (expense_sum == 0) {
+            document.getElementById(id).classList.toggle("hidden");
         }
+    }
 
-        function blur_background(id) {
-            document.getElementById(id).classList.toggle("blurred")
-            /*when popup is shown background is blurred*/
+    expense_null("expense-show-hide-btn");
+    income_null("income-show-hide-btn");
+
+    function show(id) {
+        document.getElementById(id).classList.toggle("height100");
+        /*show the rest of the incomes and expenses byclicking the drop down button*/
+    }
+
+    function show_hide(id) {
+        document.getElementById(id).classList.toggle("hidden");
+        /*show and hide the form where incomes and expenses can be added*/
+    }
+
+    function togglePopup(id, description = 0, amount = 0, record_id, event_id) {
+        var form = document.getElementById(id);
+        console.log(record_id);
+        form.classList.toggle("active");
+        form.querySelector("#details").setAttribute("value", description);
+        form.querySelector("#amount").setAttribute("value", amount);
+        form.querySelector("#record_id").setAttribute("value", record_id);
+        form.querySelector("#save").setAttribute("value", event_id);
+        /*show the popup to update an income or an expense*/
+    }
+
+    function blur_background(id) {
+        document.getElementById(id).classList.toggle("blurred")
+        /*when popup is shown background is blurred*/
+    }
+
+    function stillBackground(id) {
+        document.getElementById(id).classList.toggle("still");
+        //when popup is shown background is still
+    }
+
+    function change_button(id) {
+        var x = document.getElementById(id)
+
+        if (x.className == "fas fa-chevron-down") {
+            x.className = "fas fa-chevron-up";
+        } else {
+            x.className = "fas fa-chevron-down";
         }
+        /*when down button is clicked it changes to up button.*/
+    }
+</script>
 
-        function stillBackground(id) {
-            document.getElementById(id).classList.toggle("still");
-            //when popup is shown background is still
-        }
-
-        function change_button(id) {
-            var x = document.getElementById(id)
-
-            if (x.className == "fas fa-chevron-down") {
-                x.className = "fas fa-chevron-up";
-            } else {
-                x.className = "fas fa-chevron-down";
+<script>
+    /*
+    var options = {
+        chart: {
+            type: "area",
+            height: 300,
+            foreColor: "#999",
+            stacked: true,
+            dropShadow: {
+                enabled: true,
+                enabledSeries: [0],
+                top: -2,
+                left: 2,
+                blur: 5,
+                opacity: 0.06
             }
-            /*when down button is clicked it changes to up button.*/
-        }
-    </script>
-
-    <script>
-        var options = {
-            chart: {
-                type: "area",
-                height: 300,
-                foreColor: "#999",
-                stacked: true,
-                dropShadow: {
-                    enabled: true,
-                    enabledSeries: [0],
-                    top: -2,
-                    left: 2,
-                    blur: 5,
-                    opacity: 0.06
-                }
-            },
-            colors: ['#00E396', '#0090FF', '#FFFF50'],
-            stroke: {
-                curve: "smooth",
-                width: 3
-            },
-            dataLabels: {
-                enabled: false
-            },
-            series: [{
-                name: 'Income',
-                data:  <?php echo json_encode($income_graph); ?>
-            }, {
-                name: 'Expense',
-                data:  <?php echo json_encode($expense_graph); ?>
+        },
+        colors: ['#00E396', '#0090FF', '#FFFF50'],
+        stroke: {
+            curve: "smooth",
+            width: 3
+        },
+        dataLabels: {
+            enabled: false
+        },
+        series: [{
+            name: 'Income',
+            data: <?php echo json_encode($income_graph); ?>
+        }, {
+            name: 'Expense',
+            data: <?php echo json_encode($expense_graph); ?>
+        }, {
+            name: 'Balance',
+            data: <?php echo json_encode($balance_graph); ?>
+        }],
+        markers: {
+            size: 0,
+            strokeColor: "#fff",
+            strokeWidth: 3,
+            strokeOpacity: 1,
+            fillOpacity: 1,
+            hover: {
+                size: 6
             }
-            , {
-                name: 'Balance',
-                data:  <?php echo json_encode($balance_graph); ?>
-            }],
-            markers: {
-                size: 0,
-                strokeColor: "#fff",
-                strokeWidth: 3,
-                strokeOpacity: 1,
-                fillOpacity: 1,
-                hover: {
-                    size: 6
-                }
+        },
+        xaxis: {
+            type: "datetime",
+            axisBorder: {
+                show: false
             },
-            xaxis: {
-                type: "datetime",
-                axisBorder: {
-                    show: false
-                },
-                axisTicks: {
-                    show: false
-                }
-            },
-            yaxis: {
-                labels: {
-                    offsetX: 14,
-                    offsetY: -5
-                },
-                tooltip: {
-                    enabled: true
-                }
-            },
-            grid: {
-                padding: {
-                    left: -5,
-                    right: 5
-                }
+            axisTicks: {
+                show: false
+            }
+        },
+        yaxis: {
+            labels: {
+                offsetX: 14,
+                offsetY: -5
             },
             tooltip: {
-                x: {
-                    format: "dd MMM yyyy"
-                },
-            },
-            legend: {
-                position: 'top',
-                horizontalAlign: 'left'
-            },
-            fill: {
-                type: "solid",
-                fillOpacity: 0.7
+                enabled: true
             }
-        };
-
-        var chart = new ApexCharts(document.querySelector("#timeline-chart"), options);
-
-        chart.render();
-
-        function generateDayWiseTimeSeries(s, count) {
-            var values = [
-                [
-                    4, 3, 10, 9, 29, 19, 25, 9, 12, 7, 19, 5, 13, 9, 17, 2, 7, 5
-                ],
-                [
-                    2, 3, 8, 7, 22, 16, 23, 7, 11, 5, 12, 5, 10, 4, 15, 2, 6, 2
-                ]
-            ];
-            var i = 0;
-            var series = [];
-            var x = new Date("11 Nov 2012").getTime();
-            while (i < count) {
-                series.push([x, values[s][i]]);
-                x += 86400000;
-                i++;
+        },
+        grid: {
+            padding: {
+                left: -5,
+                right: 5
             }
-            return series;
+        },
+        tooltip: {
+            x: {
+                format: "dd MMM yyyy"
+            },
+        },
+        legend: {
+            position: 'top',
+            horizontalAlign: 'left'
+        },
+        fill: {
+            type: "solid",
+            fillOpacity: 0.7
         }
-    </script>
+    };
+
+    var chart = new ApexCharts(document.querySelector("#timeline-chart"), options);
+
+    chart.render();
+
+    function generateDayWiseTimeSeries(s, count) {
+        var values = [
+            [
+                4, 3, 10, 9, 29, 19, 25, 9, 12, 7, 19, 5, 13, 9, 17, 2, 7, 5
+            ],
+            [
+                2, 3, 8, 7, 22, 16, 23, 7, 11, 5, 12, 5, 10, 4, 15, 2, 6, 2
+            ]
+        ];
+        var i = 0;
+        var series = [];
+        var x = new Date("11 Nov 2012").getTime();
+        while (i < count) {
+            series.push([x, values[s][i]]);
+            x += 86400000;
+            i++;
+        }
+        return series;
+    }*/
+</script>
+
+<script>
+    /*send data to the graph*/
+    const income_graph = <?= $income_graph ?>;
+    const expense_graph = <?= $expense_graph ?>;
+
+    console.log(expense_graph);
+    let keys = [];
+    let amounts_income = [];
+    let amounts_expense = [];
+    for (const event in income_graph) {
+        keys.push(income_graph[event]["day"]);
+        amounts_income.push(income_graph[event]["amount"]);
+    }
+    for (const event in expense_graph) {
+        amounts_expense.push(expense_graph[event]["amount"]);
+    }
+  
+
+    var myLineChart = new Chart('myChart', {
+        type: 'line',
+        data: {
+            labels: keys,
+            datasets: [{
+                label: 'Incomes',
+                data: amounts_income,
+                borderColor: '#F08080',
+                backgroundColor: 'transparent'
+            },
+            {
+                label: 'Expense',
+                data: amounts_expense,
+                borderColor: '#00FFFF',
+                backgroundColor: 'transparent'
+            }]
+
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Amount',
+                    },
+                }],
+                x: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Date',
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                    }
+
+                }]
+            }
+        }
+    });
+</script>
 
 
 </html>

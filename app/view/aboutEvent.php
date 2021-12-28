@@ -659,10 +659,8 @@
     <?php } ?>
 
     <?php if ($registered_user && isset($_GET["action"]) && $_GET["action"] == "complain") { ?>
-        window.addEventListener('load', (event) => {
-            togglePopup('complaint-form');
-            blur_background('background');
-            stillBackground('id1')
+        window.addEventListener('load', (event) =>{
+            popupForm('complaint-form');
         });
     <?php } ?>
 

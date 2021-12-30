@@ -1,10 +1,10 @@
-if (typeof tel_regex === 'undefined') {
+/* if (typeof tel_regex === 'undefined') {
     const tel_regex= /^[+]?[0-9]{10,11}$/ ;
 }
 if (typeof password_regex === 'undefined') {
     const password_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 }
-
+ */
 const password_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 const tel_regex= /^[+]?[0-9]{10,11}$/ ;
 

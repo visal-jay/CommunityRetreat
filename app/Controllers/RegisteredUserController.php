@@ -35,18 +35,13 @@ class RegisteredUserController {
     //View administration
     public function administratored(){
         $user_roles=Controller::accessCheck(["registered_user"]);
-        View::render("adminstration",[],$user_roles);
-    }
-    function viewAdministration(){
+        $uid=$_SESSION["user"]["uid"];
+        $pagination = Model::pagination("moderator_treasurer", 10, " WHERE uid = :uid", ["uid" => $uid]);
         $registered_user = new RegisteredUser();
-        $administrations = $registered_user->getAdministrations();
-        echo json_encode($administrations);   
+        $data['administrations'] = $registered_user->getAdministrations(["uid" =>$uid,"offset" => $pagination["offset"], "no_of_records_per_page" => $pagination["no_of_records_per_page"]]);
+        View::render("adminstration",array_merge($data,$pagination),$user_roles);
     }
-    //View activity_log
-    public function activityLog(){
-        $user_roles=Controller::accessCheck(["registered_user"]);
-        View::render('history',$user_roles);
-    }
+
    
 }
 

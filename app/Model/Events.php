@@ -148,9 +148,7 @@ class Events extends Model
             }
             $date_query = $date_query . " ) AND ";
             $query = $query . $date_query;
-
-            /* $query = $query . $query_filter_date;
-            $params["start_date"] = $start_date; */
+            
         }
 
         if ($name != NULL) {

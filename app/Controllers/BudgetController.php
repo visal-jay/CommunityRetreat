@@ -16,8 +16,6 @@ class BudgetController
         $expense_sum = $budget->getExpenseSum($_GET["event_id"]);
         $donate_sum = $budget->getDonationSum($_GET["event_id"]);
         $donate_sum = $budget->getDonationSum($_GET["event_id"]);
-        $data["budget_graph"] = json_encode($budget->getBudgetReport(["event_id" => $_GET["event_id"]]));
-
 
         $data["incomes"] = $income_details;
         $data["expenses"] = $expense_details;
@@ -28,10 +26,19 @@ class BudgetController
 
         /* var_dump($budget->getDailyBalance($_GET["event_id"]));
         exit(); */
-        $data["income_graph"] = $this->converAssocitiveArraytoNumericArray($budget->getDailyIncomeSum($_GET["event_id"]));
+        $income_graph = $budget->getDailyIncomeSum($_GET["event_id"]);
+        $expense_graph = $budget->getDailyExpenseSum($_GET["event_id"]);
+        //$balance_graph = $budget->getDailyBalance($_GET["event_id"]);
 
-        $data["expense_graph"] = $this->converAssocitiveArraytoNumericArray($budget->getDailyExpenseSum($_GET["event_id"]));
-        $data["balance_graph"] = $this->converAssocitiveArraytoNumericArray($budget->getDailyBalance($_GET["event_id"]));
+        $dates = array_merge(array_column($income_graph, "day"), array_column($expense_graph, "day"));
+        $chart = [];
+        foreach ($dates as $date){
+            $chart[]=["day"=>$date ,"amount" => 0];
+        }
+
+        $data["income_graph"] = json_encode(array_merge($chart, $income_graph));
+        $data["expense_graph"] = json_encode(array_merge($chart, $expense_graph));
+
         //$balance_graph = $budget->getDailyBalance($_GET["event_id"]);
         $event_details = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["event_name" => '', "cover_photo" => '']);
         $data = array_merge($event_details, $data);
@@ -154,19 +161,18 @@ class BudgetController
         View::render('budgetReport', $data);/*send those data to budgetReport view file*/
     }
 
-    public function converAssocitiveArraytoNumericArray($input_array){/*convert the associative array to numeric array*/
+    public function converAssocitiveArraytoNumericArray($input_array)
+    {/*convert the associative array to numeric array*/
         /*var_dump($input_array);
         exit();*/
         $numeric_array = array();
-        foreach($input_array as $array){
+        foreach ($input_array as $array) {
             $temp_array = array();
-            foreach($array as $key => $value){
+            foreach ($array as $key => $value) {
                 array_push($temp_array, $value);
             }
             array_push($numeric_array, $temp_array);
         }
         return $numeric_array;
     }
-
-
 }

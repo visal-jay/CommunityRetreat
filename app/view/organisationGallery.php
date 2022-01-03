@@ -160,7 +160,7 @@
                                 echo 'disabled';
                             } ?>">
                     <a href="<?php if ($pageno >= $total_pages) {
-                                    echo '#';
+                                    echo '';
                                 } else {
                                     echo "/Organisation/gallery?pageno=" . ($pageno + 1);
                                 } ?>">Next&nbsp;<i class="fas fa-chevron-right"></i></a>

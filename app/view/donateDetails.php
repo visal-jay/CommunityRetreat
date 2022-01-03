@@ -63,10 +63,6 @@
         text-align: right;
     }
 
-    .section {
-        flex: 1;
-    }
-
     .edit-btn,
     .close-btn,
     .save-btn {
@@ -112,28 +108,6 @@
         text-align: center;
     }
 
-    .capacity-box {
-        background-color: lightgrey;
-        width: 180px;
-        height: 180px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-    }
-
-    #progressBar {
-        margin: 20px;
-        width: 200px;
-        height: 200px;
-    }
-
-    .capacity-edit {
-        width: 180 px;
-        height: 180 px;
-        padding: 0 px;
-    }
-
     .progress-box .box .chart {
         position: relative;
         width: 100%;
@@ -148,9 +122,6 @@
     .progress-box .box {
         display: block;
         text-align: center;
-    }
-
-    .progress-box .box {
         width: 100%;
     }
 
@@ -233,8 +204,8 @@
 
     .grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        grid-gap: 5rem;
+        grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+        grid-gap: 3rem;
         grid-auto-rows: minmax(180px, auto);
         grid-auto-flow: dense;
         padding: 1px;
@@ -364,7 +335,7 @@
                     </div>
                 <?php } else if ($status == 'ended') { ?>
                     <div class="card" style="display:none">
-                       
+
                     </div>
                 <?php } ?>
 
@@ -373,7 +344,7 @@
                         <div class="card__background flex-col flex-center bg-image-4">
                             <div class="flex-col flex-center box">
                                 <form action="/Donations/enableDonation?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-donation-enable-disable-btn">
-                                    <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Enable
+                                    <button class="btn btn-sm btn-solid" id="enable-disable-btn" type="submit">Enable
                                         Donations</button>
                                 </form>
                             </div>
@@ -381,10 +352,21 @@
                     </div>
                 <?php } else if ($status == 'ended') { ?>
                     <div class="card" style="display:none">
-                        
+
                     </div>
                 <?php } ?>
 
+                <div class="card">
+                    <div class="card__background flex-col flex-center bg-image-4">
+                        <div class="flex-col flex-center box">
+                            <div class="full-donation-details-btn">
+                                <!--Display the full donation details-->
+                                <button class="btn btn-sm btn-solid" onclick="window.location.href=' /Donations/donationReport?event_id=<?= $_GET['event_id'] ?>'">Full
+                                    donation details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
@@ -401,13 +383,9 @@
             <div>
                 <!--Display all the donations-->
                 <table id="table" class="center table">
-                    <col style="width:30%">
-                    <col style="width:40%">
-                    <col style="width:30%">
                     <thead>
                         <tr class="headers">
                             <th class="overflow">Name</th>
-                            <th>Date</th>
                             <th class="amount">Amount</th>
                         </tr>
                     </thead>
@@ -415,7 +393,6 @@
                         <?php foreach ($donations as $donation) { ?>
                             <tr>
                                 <td class="overflow"><?= $donation["username"] ?></td>
-                                <td><?= $donation["date"] ?></td>
                                 <td class="amount">
                                     <?php echo 'Rs. ' . number_format($donation["amount"], 2) ?></td>
                             </tr>
@@ -425,10 +402,29 @@
                 <hr>
             </div>
 
-            <div class="full-donation-details-btn">
-                <!--Display the full donation details-->
-                <button class="btn btn-md btn-solid" onclick="window.location.href=' /Donations/donationReport?event_id=<?= $_GET['event_id'] ?>'">Full
-                    donation details</button>
+            <div class="flex-row flex-center">
+                <ul class="pagination">
+                    <li><a href="/Event/view?event_id=<?= $_GET['event_id'] ?>&&page=donations&&pageno=1"><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i>&nbsp;First</a></li>
+                    <li class="<?php if ($pageno <= 1) {
+                                    echo 'disabled';
+                                } ?>">
+                        <a href="<?php if ($pageno <= 1) {
+                                        echo '';
+                                    } else {
+                                        echo "/Event/view?event_id=" . $_GET['event_id'] . "&&page=donations&&pageno=" . ($pageno - 1);
+                                    } ?>"><i class="fas fa-chevron-left"></i>&nbsp;Prev</a>
+                    </li>
+                    <li class="<?php if ($pageno >= $total_pages) {
+                                    echo 'disabled';
+                                } ?>">
+                        <a href="<?php if ($pageno >= $total_pages) {
+                                        echo '#';
+                                    } else {
+                                        echo "/Event/view?event_id=" . $_GET['event_id'] . "&&page=donations&&pageno=" . ($pageno + 1);
+                                    } ?>">Next&nbsp;<i class="fas fa-chevron-right"></i></a>
+                    </li>
+                    <li><a href="/Event/view?event_id=<?= $_GET['event_id'] ?>&&page=donations&&pageno=<?php echo $total_pages; ?>">Last&nbsp;<i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right"></i></a></li>
+                </ul>
             </div>
 
         </div>

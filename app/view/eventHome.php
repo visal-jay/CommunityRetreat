@@ -176,7 +176,7 @@
 </style>
 
 <body>
-    
+
     <div id="container" class="grid card-grid">
         <div class="card  box one span-col-4 span-row-2">
             <div class="card__background gradient-2 bg-event" style=" background-image: linear-gradient(0deg, rgb(32 32 32 / 72%), rgb(255 255 255 / 0%)), url(<?= $cover_photo ?>);">
@@ -191,7 +191,11 @@
                     <div class="flex-col flex-center box">
                         <h1 class="clr-white"><?php echo (int)$donation_percent ?>%</h1>
                         <p class="clr-white">Collected</p>
-                        <button class="btn btn-solid margin-md" onclick="window.location.href='/Event/view?page=about&event_id=<?= $_GET['event_id'] ?>&action=donate'">Donate</button>
+                        <?php if ($registered_user) { ?>
+                            <button class="btn btn-solid margin-md" onclick="window.location.href='/Event/view?page=about&event_id=<?= $_GET['event_id'] ?>&action=donate'">Donate</button>
+                        <?php } else { ?>
+                            <button class="btn btn-solid margin-md">Donate</button>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -203,7 +207,11 @@
                     <div class="flex-col flex-center box">
                         <h1 class="clr-white"><?php echo (int)$volunteer_percent ?>%</h1>
                         <p class="clr-white">Volunteered</p>
-                        <button class="btn btn-solid margin-md" onclick="window.location.href='/Event/view?page=about&event_id=<?= $_GET['event_id'] ?>&action=volunteer''">Volunteer</button>
+                        <?php if ($registered_user) { ?>
+                            <button class="btn btn-solid margin-md" onclick="window.location.href='/Event/view?page=about&event_id=<?= $_GET['event_id'] ?>&action=volunteer'">Volunteer</button>
+                        <?php } else { ?>
+                            <button class="btn btn-solid margin-md">Volunteer</button>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -270,7 +278,11 @@
                 <div class="flex-col flex-center">
                     <h2 class="clr-white" style="text-align: center;">Something wrong?</h2>
                     <div class="margin-md">
-                        <button class="btn clr-red bg-white border-red">Complain</button>
+                        <?php if ($registered_user) { ?>
+                            <button class="btn clr-red bg-white border-red" onclick="window.location.href='/kiiki88?page=about&event_id=<?= $_GET['event_id'] ?>&action=complain'">Complain</button>
+                        <?php } else { ?>
+                            <button class="btn clr-red bg-white border-red">Complain</button>
+                        <?php } ?>
                     </div>
                 </div>
             </div>

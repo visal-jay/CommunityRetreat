@@ -154,14 +154,12 @@
         </div>
         <div class="flex-row flex-center position-absolute position-bottom">
             <ul class="pagination">
-                <li><a href="/Organisation/gallery?pageno=1"><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i>&nbsp;First</a></li>
-                <li class="<?php if ($pageno <= 1) {
-                                echo 'disabled';
-                            } ?>">
+                <li><a href="/Event/view?page=gallery&&event_id=<?= $_GET["event_id"] ?>&&pageno=1"><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i>&nbsp;First</a></li>
+                <li class="<?php if ($pageno <= 1) {echo 'disabled';} ?>">
                     <a href="<?php if ($pageno <= 1) {
                                     echo '';
                                 } else {
-                                    echo "/Organisation/gallery?pageno=" . ($pageno - 1);
+                                    echo "/Event/view?page=gallery&&event_id=" .$_GET["event_id"] . "&&pageno=" . ($pageno - 1);
                                 } ?>"><i class="fas fa-chevron-left"></i>&nbsp;Prev</a>
                 </li>
                 <li class="<?php if ($pageno >= $total_pages) {
@@ -170,10 +168,10 @@
                     <a href="<?php if ($pageno >= $total_pages) {
                                     echo '#';
                                 } else {
-                                    echo "/Organisation/gallery?pageno=" . ($pageno + 1);
+                                    echo "/Event/view?page=gallery&&event_id=" .$_GET["event_id"] . "&&pageno=" . ($pageno + 1);
                                 } ?>">Next&nbsp;<i class="fas fa-chevron-right"></i></a>
                 </li>
-                <li><a href="/Organisation/gallery?pageno=<?php echo $total_pages; ?>">Last&nbsp;<i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right"></i></a></li>
+                <li><a href="/Event/view?page=gallery&&event_id=<?= $_GET["event_id"] ?>&&pageno=<?php echo $total_pages; ?>">Last&nbsp;<i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right"></i></a></li>
             </ul>
         </div>
     </div>

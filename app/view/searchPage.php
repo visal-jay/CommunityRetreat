@@ -55,7 +55,7 @@
         width: 30%;
     }
 
-      .choice-menu {
+    .choice-menu {
         display: none;
     }
 
@@ -188,6 +188,7 @@
     .map-index {
         z-index: -1;
     }
+
     @media screen and (max-width:600px) {
         .show-choices {
             padding: 0.4em;
@@ -314,9 +315,29 @@
         <!-- map end -->
 
         <!-- search result event grids start -->
-        <events class="grid">
-        </events>
+        <event-container class="flex-col flex-center">
+            <div class="flex-row flex-center margin-lg width-100">
+                <hr style="width: 30%;">Events
+                <hr style="width: 30%;">
+            </div>
+            <events class="grid">
+            </events>
+            <button class="btn btn-solid margin-md" id="more-1">More</button>
+        </event-container>
         <!-- search result event grids end -->
+
+        <!-- search result Organizations grids start -->
+        <organization-container class="flex-col flex-center">
+            <div class="flex-row flex-center margin-lg width-100">
+                <hr style="width: 30%;">Organizations
+                <hr style="width: 30%;">
+            </div>
+            <organizations class="grid">
+            </organizations>
+            <button class="btn btn-solid margin-md" id="more-2">More</button>
+        </organization-container>
+        <!-- search result Organizations grids end -->
+
 
     </div>
 
@@ -334,19 +355,44 @@
             calendarShow();
     });
 
+
+    /* event and organisation more buttons */
+    let event_list_offset = 0;
+    document.getElementById("more-1").addEventListener("click", () => {
+        event_list_offset = event_list_offset + 1;
+        search("", "", "", "", event_list_offset);
+    });
+
+    let organization_list_offset = 0;
+    document.getElementById("more-2").addEventListener("click", () => {
+        organization_list_offset = organization_list_offset + 1;
+        let name = document.getElementById("in-search").value;
+        orgSearch(name, organization_list_offset);
+    });
+
+
+    /* chnage parameteres in search function */
     function searchType() {
         let mode = document.getElementById("mode");
         let sort = document.getElementById("sort");
         let way = document.getElementById("way");
         let date = document.getElementById("calendar-button");
         let map = document.getElementById("map-button");
-        let search_type=document.getElementById("search-type");
+        let search_type = document.getElementById("search-type");
+        let event_container = document.querySelector("event-container");
+        let organization_container = document.querySelector("organization-container");
+        organization_container.classList.add("hidden");
+        event_container.classList.add("hidden");
 
         if (search_type.value == "event" || search_type.value == "all") {
+            if (search_type.value == "all")
+                organization_container.classList.remove("hidden");
+            event_container.classList.remove("hidden");
             mode.disabled = sort.disabled = way.disabled = date.disabled = map.disabled = false;
             map.style.opacity = date.style.opacity = "1";
 
         } else if (search_type.value == "organization") {
+            organization_container.classList.remove("hidden");
             map.style.opacity = date.style.opacity = "0.5";
             mode.disabled = sort.disabled = way.disabled = date.disabled = map.disabled = true;
             let map_container = document.getElementById('map-container');
@@ -393,7 +439,7 @@
     }
 
     /* event search ajax */
-    async function search(latitude = "", longitude = "", range = "", is_virtual = "") {
+    async function search(latitude = "", longitude = "", range = "", is_virtual = "", offset = 0) {
 
         let parent_container = document.querySelector('events');
         var name = document.getElementById("in-search").value;
@@ -401,11 +447,11 @@
         var date = document.getElementById("calendar-input").value;
         var sort = document.getElementById("sort").value == "Sort by" ? "" : document.getElementById("sort").value;
         var way = document.getElementById("way").value == "Sort" ? "" : document.getElementById("way").value;
-
-        if (range || mode || date || sort || way){
+        let limit = 6;
+        if (range || mode || date || sort || way) {
             document.getElementById("search-type").value = "event";
-            searchType();
         }
+        searchType();
 
         if (latitude == "" || longitude == "") {
             const position = await getCoordinates();
@@ -413,9 +459,9 @@
             longitude = position.coords.longitude;
         }
 
-        if(!document.getElementById('map-container').classList.contains("hidden")){
-            range=40;
-            is_virtual=0;
+        if (!document.getElementById('map-container').classList.contains("hidden")) {
+            range = 40;
+            is_virtual = 0;
         }
 
 
@@ -435,9 +481,22 @@
                     way: way,
                     status: 'published',
                     is_virtual: is_virtual,
+                    offset: offset * limit,
+                    limit: limit
                 },
+
                 success: function(result) {
-                    parent_container.innerHTML = "";
+                    let more_button = document.getElementById("more-1");
+                    if (offset == 0) {
+                        parent_container.innerHTML = "";
+                        event_list_offset = 0;
+                        more_button.classList.remove("hidden");
+                    }
+                    if (result.length != limit) {
+                        more_button.classList.add("hidden");
+                    } else {
+                        more_button.classList.remove("hidden");
+                    }
                     hideMarkers();
                     result.forEach(evn => {
                         let template = `
@@ -518,24 +577,40 @@
             });
         }
         if (!(range || mode || date || sort || way) && (document.getElementById("search-type").value == "organization")) {
-            parent_container.innerHTML = "";
+            //document.querySelector('Organizations').innerHTML = "";
             orgSearch(name);
-        } else if (document.getElementById("search-type").value == "all" &&  document.getElementById('map-container').classList.contains("hidden"))
+        } else if (document.getElementById("search-type").value == "all" && document.getElementById('map-container').classList.contains("hidden"))
             orgSearch(name);
 
     }
 
     /* orgnaiztion search ajax */
-    function orgSearch(name) {
+    function orgSearch(name, offset = 0) {
+        let limit = 6;
         $.ajax({
             url: "/Search/searchOrganisation", //the page containing php script
             type: "post", //request type,
             dataType: 'json',
             data: {
                 org_username: name,
+                offset: offset * limit,
+                limit: limit
             },
             success: function(result) {
-                let parent_container = document.querySelector('events');
+                let parent_container = document.querySelector('Organizations');
+                let more_button = document.getElementById("more-2");
+                
+                if (offset == 0) {
+                    parent_container.innerHTML = "";
+                    organization_list_offset = 0;
+                    more_button.classList.remove("hidden");
+                }
+
+                if (result.length != limit) {
+                    more_button.classList.add("hidden");
+                } else {
+                    more_button.classList.remove("hidden");
+                }
                 result.forEach(org => {
                     let template = `
                     <figure onclick="location.href = '/Organisation/view?org_id=${org.uid}&page=about' ">
@@ -646,10 +721,14 @@
         let longitude = position.coords.longitude;
         let map = document.getElementById('map-container');
         if (map.classList.contains("hidden")) {
-            document.getElementById("search-type").value="event";
+            document.getElementById("mode").options[0].selected = true;
+            document.getElementById("search-type").value = "event";
+            searchType();
             map.classList.toggle("hidden");
-            debounce(search(latitude, longitude,40,0),1000);
+            debounce(search(latitude, longitude, 40, 0), 1000);
         } else {
+            document.getElementById("search-type").options[0].selected = true;
+            searchType();
             map.classList.toggle("hidden");
             search(latitude, longitude);
         }

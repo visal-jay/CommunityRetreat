@@ -404,6 +404,30 @@ header .logo img {
   background: #16c79a;
 }
 
+.width-100 {
+  width: 100%;
+}
+
+.width-80 {
+  width: 80%;
+}
+
+.width-50 {
+  width: 50%;
+}
+
+.height-100 {
+  height: 100%;
+}
+
+.height-80 {
+  height: 80%;
+}
+
+.height-50 {
+  height: 50%;
+}
+
 @media (max-width: 800px) {
   .btn-lg{
     font-size: 1.1rem;

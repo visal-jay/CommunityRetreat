@@ -320,8 +320,8 @@
                     <div class="venue-container">
                         <div class="flex-row margin-lg ">
                             <i class="btn-icon icon-width fas fa-map-marker-alt clr-green margin-side-lg"></i>
-                            <div class="flex-col form hidden">
-                                <div class="border-round<?php if (!isset($latitude) && !isset($longitude) && ($mode == "Virtual")) echo "form hidden" ?>" id="map"></div>
+                            <div class="flex-col">
+                                <div class="border-round<?php if (!isset($latitude) && !isset($longitude) && ($mode == "Virtual")) echo "form hidden"; ?>" id="map"></div>
                                 <div class="latlang" class="form hidden">
                                     <input class="hidden" name="longitude" id="longitude" value=NULL>
                                     <input class="hidden" name="latitude" id="latitude" value=NULL>
@@ -389,7 +389,7 @@
                 <?php } ?>
 
             </div>
-            <?php if ($volunteer_status == 1) { ?>
+            <?php if (($volunteer_status == 1) && ($status != 'ended')){ ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md volunteer-container" style="background-color: #03142d;">
                     <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
                     <div class="progress" data-width="<?php if ($volunteer_percent == "NULL") echo "0";
@@ -407,7 +407,7 @@
                 </div>
             <?php } ?>
 
-            <?php if ($donation_status == 1) { ?>
+            <?php if (($donation_status == 1) && ($status != 'ended')) { ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md donation-container" style="background-color: #03142d; text-align:center">
                     <p style="color:white">Would you like to give value to your hard-earned money by contributing to this community service project?</p>
                     <div class="progress" data-width="<?php if ($donation_percent == NULL) echo "0";
@@ -449,7 +449,7 @@
                 </div>
             </div>
 
-            <?php if ($moderator || $organization) { ?>
+            <?php if (($moderator || $organization ) && ($status != 'ended')) { ?>
                 <div class="flex-row flex-center content border-round container-size1">
                     <button class="btn data margin-lg" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
                     <button type="button" class="btn btn-solid bg-red border-red form margin-side-md hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
@@ -659,10 +659,8 @@
     <?php } ?>
 
     <?php if ($registered_user && isset($_GET["action"]) && $_GET["action"] == "complain") { ?>
-        window.addEventListener('load', (event) => {
-            togglePopup('complaint-form');
-            blur_background('background');
-            stillBackground('id1')
+        window.addEventListener('load', (event) =>{
+            popupForm('complaint-form');
         });
     <?php } ?>
 
@@ -683,12 +681,6 @@
         }
 
     }
-
-    function resizeMap() {
-        console.log(document.getElementById("details").offsetWidth);
-        document.getElementById("map").style.width = parseInt(document.getElementById("details").offsetWidth) * 0.7 + "px";
-    }
-    window.addEventListener("resize", resizeMap);
 
 
     function animateProgressBar(el, width) {
@@ -757,13 +749,13 @@
 
         var myLatlng = new google.maps.LatLng(latitude, longitude);
 
-
         marker = new google.maps.Marker({
             position: myLatlng,
             draggable: false,
             title: "Event location"
         });
 
+        console.log(latitude, longitude);
         // To add the marker to the map, call setMap();
         marker.setMap(map);
 
@@ -776,6 +768,13 @@
         map.setCenter(myLatlng);
         map.setZoom(15);
     }
+
+    function resizeMap() {
+        console.log(document.getElementById("details").offsetWidth);
+        document.getElementById("map").style.width = parseInt(document.getElementById("details").offsetWidth) * 0.7 + "px";
+    }
+    window.addEventListener("resize", resizeMap);
+
 
     function fillComplaint() {
         const queryString = window.location.search;

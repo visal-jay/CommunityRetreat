@@ -111,6 +111,8 @@ class Organisation extends User
         $query_table = 'FROM organization WHERE ';
         $query_filter_organization_name = ' username LIKE  :org_username AND ';
         $query_filter_last = ' 1=1 ';
+        $query_filter_limit = ' LIMIT :offset , :limit ';
+
 
         $query = $query_select_primary;
 
@@ -122,6 +124,13 @@ class Organisation extends User
         }
 
         $query = $query . $query_filter_last;
+
+        if ($limit != NULL && $offset!=NULL) {
+            $query = $query . $query_filter_limit;
+            $params["limit"] = $limit;
+            $params["offset"] =$offset;
+        }
+
         $result = Model::select($query, $params);
 
         if (count($result) == 0)

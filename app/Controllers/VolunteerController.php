@@ -7,23 +7,12 @@ class VolunteerController{
         $user_roles = Controller::accessCheck(["moderator", "organization"],$_GET["event_id"]);
         $data = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["volunteer_status" => '', "volunteer_capacity" => '', "status" => '']);
         $volunteer = new Volunteer();
-        if(isset($_POST["volunteer_date"]) && $_POST["volunteer_date"]!=""){
-            $pagination= Model::pagination("volunteer", 10, "WHERE event_id= :event_id AND volunteer_date = :volunteer_date", ["event_id"=>$_GET["event_id"], "volunteer_date"=>$_POST["volunteer_date"]]);
-            $volunteer_details = $volunteer->getVolunteerDetails($_GET["event_id"],$_POST["volunteer_date"], $pagination["offset"], $pagination["no_of_records_per_page"]);
-            $data["volunteer_date_req"]=$_POST["volunteer_date"];
-        }
-        else{
-            $pagination= Model::pagination("volunteer", 10, "WHERE event_id= :event_id", ["event_id"=>$_GET["event_id"]]);
-            $volunteer_details = $volunteer->getVolunteerDetails($_GET["event_id"], $pagination["offset"], $pagination["no_of_records_per_page"]);
-            $data["volunteer_date_req"]=FALSE;
-        }
 
         $data["volunteer_graph"] = json_encode($volunteer->getReport(["event_id" => $_GET["event_id"]]));
-        $data["volunteers"] = $volunteer_details;
         $data['volunteer_capacities'] = $volunteer->getVolunteerCapacities($_GET["event_id"]);
         $data['volunteer_sum'] = $volunteer->getVolunteerSum($_GET["event_id"]);
-        $data = array_merge($data, $event_details, $pagination);
-        
+        $data["volunteers"] =  $volunteer->getVolunteerDetails($_GET["event_id"]);
+        $data = array_merge($data, $event_details);
         View::render('eventPage', $data, $user_roles);
     }
     public function disableVolunteer()
@@ -88,9 +77,17 @@ class VolunteerController{
     public function volunteerReport()
     {
         Controller::validateForm([], ["url", "event_id"]);
-        Controller::accessCheck(["organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/ 
+        Controller::accessCheck(["organization","moderator"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/ 
         $volunteer = new Volunteer;
-        $data["volunteers"] = $volunteer->getVolunteerDetails($_GET["event_id"]);
+        if(isset($_POST["volunteer_date"]) && $_POST["volunteer_date"]!=""){
+            $data["volunteers"] = $volunteer->getVolunteerDetails($_GET["event_id"],0,0,$_POST["volunteer_date"]);
+            $data["volunteer_date_req"]=$_POST["volunteer_date"];
+        }
+        else{
+            $data["volunteers"] = $volunteer->getVolunteerDetails($_GET["event_id"]);
+            $data["volunteer_date_req"]=FALSE;
+        }
+        $data['volunteer_capacities'] = $volunteer->getVolunteerCapacities($_GET["event_id"]);
         $data["volunteer_graph"] = json_encode($volunteer->getReport(["event_id" => $_GET["event_id"]]));
         $data["event_name"]  = (new Events)->getDetails($_GET["event_id"])["event_name"];
         View::render('volunteerReport', $data);/*send all the data to volunteerReport page*/

@@ -11,11 +11,11 @@ class FeedbackController {
             $data["feedbacks"] = $feedback->getFeedback(-1,$_GET["complaint_feedback_id"]);
         }
         else if ($user_roles["moderator"] || $user_roles["organization"] || $user_roles["admin"]){
-            $pagination= Model::pagination("event_feedback", 9, "WHERE event_id= :event_id", ["event_id"=> $_GET["event_id"]]);
+            $pagination= Model::pagination("event_feedback", 8, "WHERE event_id= :event_id", ["event_id"=> $_GET["event_id"]]);
             $data["feedbacks"] = $feedback->getFeedback($_GET["event_id"], -1, $pagination["offset"], $pagination["no_of_records_per_page"]);
         }
         else if ($user_roles["registered_user"] || $user_roles["guest_user"]){
-            $pagination= Model::pagination("event_feedback", 9, "WHERE event_id= :event_id AND status= :status", ["event_id"=> $_GET["event_id"],"status"=>'show']);
+            $pagination= Model::pagination("event_feedback", 8, "WHERE event_id= :event_id AND status= :status", ["event_id"=> $_GET["event_id"],"status"=>'show']);
             $data["feedbacks"] = $feedback->getFeedback($_GET["event_id"], -1, $pagination["offset"], $pagination["no_of_records_per_page"], 'show');
         }
         $data = array_merge($data, $event_details, $feedback->totalFeedback($_GET["event_id"]), $pagination);

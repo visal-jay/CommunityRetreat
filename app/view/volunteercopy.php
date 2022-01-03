@@ -28,10 +28,9 @@
     .initial-donation-enable-btn {
         text-align: center;
         transform: translate(-50%, -50%);
-        top: 110%;
         left: 50%;
         position: absolute;
-
+        top:110%;
         width: 100%;
     }
 
@@ -346,7 +345,7 @@
 
                     <div class="capacity-div">
                         <h3>Volunteer Capacity</h3>
-
+                        <?php var_dump( max(max(array_column($volunteer_capacities, 'capacity')),1) ); ?>
                         <!-- capacity bars to be checked -->
                         <!-- capacity bars to be checked -->
                         <form action="/Volunteer/updateVolunteerCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" id="volunteer-capacity">
@@ -360,10 +359,10 @@
                                 echo "</div>";
 
                                 echo "<div style='min-width:60%;margin:auto'>";
-                                echo "<div class='grey-bar margin-md' style='min-width:40px; min-width:100px; width:" . ($capacity['capacity'] / max(array_column($volunteer_capacities, 'capacity')) * 100) . "%'>";
+                                echo "<div class='grey-bar margin-md' style='min-width:40px; min-width:100px; width:" . ($capacity['capacity'] / max(max(array_column($volunteer_capacities, 'capacity')),1) * 100) . "%'>";
                                 $sum_capacity = isset($volunteer_sum[$capacity['event_date']][0]['volunteer_sum']) ? $volunteer_sum[$capacity['event_date']][0]['volunteer_sum'] : 0;
                                 echo "<div class='filled-bar' style='min-width:40px; width: " . ($sum_capacity / ($capacity['capacity'] == 0 ? 1 : $capacity['capacity']) * 100) . "%'>";
-                                echo ($sum_capacity / ($capacity['capacity'] == 0 ? 1 : $capacity['capacity']) * 100) . "%";
+                                echo (int)($sum_capacity / ($capacity['capacity'] == 0 ? 1 : $capacity['capacity']) * 100) . "%";
                                 echo "</div>";
                                 echo "</div>";
                                 echo "</div>";
@@ -453,7 +452,8 @@
             </div>
         </div>
 
-
+    <?php var_dump($volunteers) ;?> 
+    </div>
         <?php if ($status = 'published') { ?>
             <?php if ($volunteer_status == 0 && count($volunteers) == 0) { ?>
                 <div class="initial-donation-enable-btn">

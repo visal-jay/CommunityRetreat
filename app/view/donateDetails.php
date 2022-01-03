@@ -51,7 +51,7 @@
     }
 
     .container-size {
-        width: 70%;
+        width: 80%;
         text-align: center;
     }
 
@@ -204,7 +204,7 @@
 
     .grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
         grid-gap: 3rem;
         grid-auto-rows: minmax(180px, auto);
         grid-auto-flow: dense;
@@ -291,7 +291,7 @@
                                     <label for="" class="hidden"> </label>
                                     <input name="donation_capacity" type="number" value="<?= $donation_capacity ?>" min="<?= $donation_sum ?>" class=" form form-ctrl donation_capacity hidden" style="width: 80%;" required />
                                 </form>
-                                <button class="btn btn-solid data edit-btn" onclick="edit()">Edit
+                                <button class="btn btn-small btn-solid data edit-btn" onclick="edit()">Edit
                                     &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
                                 <div class="flex-row flex-center">
                                     <div class="edit-save-btn ">
@@ -327,7 +327,7 @@
                         <div class="card__background flex-col flex-center bg-image-4">
                             <div class="flex-col flex-center box">
                                 <form action="/Donations/disableDonation?event_id=<?= $_GET["event_id"] ?>" method="post" class=" secondary-donation-enable-disable-btn">
-                                    <button class="btn btn-md btn-solid" id="enable-disable-btn" type="submit">Disable
+                                    <button class="btn btn-sm btn-solid" id="enable-disable-btn" type="submit">Disable
                                         Donations</button>
                                 </form>
                             </div>
@@ -563,7 +563,6 @@
 <script type="text/javascript">
     $(function() {
         $('.chart').easyPieChart({
-            size: 160,
             barColor: "#ffffff",
             scaleLength: 0,
             lineWidth: 15,

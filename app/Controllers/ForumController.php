@@ -15,6 +15,7 @@ class ForumController
             $pagination = Model::pagination("announcement", 5, "WHERE event_id= :event_id", ["event_id" => $_GET["event_id"]]);
             $data["announcements"] = (new Announcement)->getAnnouncement($_GET["event_id"], -1, $pagination["offset"], $pagination["no_of_records_per_page"]);
         }
+        $data["current_date"] = gmdate("Y-m-d", (int)shell_exec("date '+%s'"));
         $data = array_merge($data, $event_details, $pagination);
         View::render("eventPage", $data, $user_roles);
     }

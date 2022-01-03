@@ -345,7 +345,6 @@
 
                     <div class="capacity-div">
                         <h3>Volunteer Capacity</h3>
-                        <?php var_dump( max(max(array_column($volunteer_capacities, 'capacity')),1) ); ?>
                         <!-- capacity bars to be checked -->
                         <!-- capacity bars to be checked -->
                         <form action="/Volunteer/updateVolunteerCapacity?event_id=<?= $_GET["event_id"] ?>" method="post" id="volunteer-capacity">
@@ -452,7 +451,6 @@
             </div>
         </div>
 
-    <?php var_dump($volunteers) ;?> 
     </div>
         <?php if ($status = 'published') { ?>
             <?php if ($volunteer_status == 0 && count($volunteers) == 0) { ?>

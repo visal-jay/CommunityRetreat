@@ -7,7 +7,7 @@ class EventController
 
     public function view()
     {
-        if ($event_details = array_intersect_key((new Events)->getDetails($_GET["event_id"]),["event_name" => '', "cover_photo" => '',"status" => ''])) {
+        if ($event_details = array_intersect_key((new Events)->getDetails($_GET["event_id"]),["event_name" => '', "cover_photo" => '',"status" => '', "end_date"=>''])) {
             $page=isset($_GET["page"]) ? $_GET["page"] : "about" ;
             $this->$page($event_details);
         } else

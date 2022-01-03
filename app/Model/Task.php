@@ -8,8 +8,8 @@ class Task extends Model
             $params = ["event_id" => $event_id];
         }
         else if ($task_id != -1) {
-            $query = "SELECT `task`, `task_id`, `start_date`, `end_date`, `completed` FROM work_timeline WHERE task_id= :task_id LIMIT :offset , :no_of_records_per_page";
-            $params = ["task_id" => $task_id, "offset" => $offset, "no_of_records_per_page" => $no_of_records_per_page];
+            $query = "SELECT `task`, `task_id`, `start_date`, `end_date`, `completed` FROM work_timeline WHERE task_id= :task_id ";
+            $params = ["task_id" => $task_id];
         } 
         else {
             $query = "SELECT `task`, `task_id`, `start_date`, `end_date`, `completed` FROM work_timeline WHERE event_id= :event_id ORDER BY `start_date` ASC LIMIT :offset , :no_of_records_per_page";

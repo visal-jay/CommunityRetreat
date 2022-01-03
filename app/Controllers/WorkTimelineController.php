@@ -67,7 +67,7 @@ class WorkTimelineController
         Controller::validateForm([], ["event_id", "task_id"]);
         Controller::accessCheck(["organization", "moderator"], $_GET["event_id"]);
         $event = (new Events)->getDetails($_GET["event_id"]);
-        (new UserController)->addActivity("You completed a task of {$event['event_name']}", $_GET["event_id"]);
+        (new UserController)->addActivity("Some changes has been done in work timeline of {$event['event_name']}", $_GET["event_id"]);
         $id = (new Organisation)->getUserRoles($_GET["event_id"]);
         for ($i = 0; $i < count($id); $i++){
             if ($id[$i]["moderator_flag"] == 1) {

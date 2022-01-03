@@ -211,7 +211,7 @@
 <body>
     <div id="background" style="width: 100%;">
 
-        <?php if (($organization || $moderator) && ($status != 'ended')) { ?>
+        <?php if ($organization || $moderator) { ?>
 
             <div class="flex-col flex-center margin-side-lg" style="align-items: flex-start;">
 
@@ -226,7 +226,7 @@
                         <date><?= $announcement["date"] ?></date>
                         <description class="margin-md description"><?= $announcement["announcement"] ?></description>
 
-                        <?php if ($organization || $moderator) { ?>
+                        <?php if (($organization || $moderator) && (($end_date < $announcement["date"] && $status =="ended") || $status != "ended" )) { ?>
                             <update class="margin-md">
                                 <button class="btn btn-small margin-side-md" onclick="edit(); editForm('<?= $announcement['title'] ?>','<?= $announcement['announcement_id'] ?>'); togglePopup('edit-div'); blur_background('background'); stillBackground('id1');"> <i class="btn-icon far fa-edit margin-side-md"></i>&nbsp;Edit</button>
                                 <button class="btn btn-small clr-red border-red " onclick="remove()" required style="font-family:Ubuntu, sans-serif,  FontAwesome"> &#xf2ed; &nbsp;Remove </button>

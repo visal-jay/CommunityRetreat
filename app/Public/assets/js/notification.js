@@ -1,6 +1,5 @@
 
 let notification_data = renderNotifications();
-console.log(notification_data);
 
 let notify_data = [];
 
@@ -56,40 +55,38 @@ for(let i=0;i<notification_data.length;i++){
     }
    
 }
-console.log(notify_data[0][0].imgname);
+
 
 
 notify_data.map(addDatacontainer);
 
 function addDatacontainer(data){
-
-    let notificationbar = document.createElement('div');
-    notificationbar.setAttribute("class","notificationbar");
-    let imagediv =  document.createElement('div');
-    imagediv.setAttribute("class","image-div");
-    let img = document.createElement('img');
-    img.setAttribute("src",data[0].imgname);
-    imagediv.appendChild(img);
-    notificationbar.appendChild(imagediv);
-    let descriptiondiv=  document.createElement('div');
-    descriptiondiv.setAttribute("class","description");
-    descriptiondiv.setAttribute("onClick",data[0].path);
-    descriptiondiv.innerText = data[0].description;
-    // let time_stamp_container = document.createElement('div');
-    // time_stamp_container.setAttribute("class","timestamp-container");
-    // let date = document.createElement('p');
-    // date.setAttribute("id","date-text"); 
-    const time_stamp = new Date(data[0].date);
-    // date.innerText = time_stamp .toLocaleDateString('en-GB', {  day: 'numeric', month: 'short', year:  'numeric',});
-    // time_stamp_container.appendChild(date);
-    let time = document.createElement('p');
-    time.setAttribute("id","moment-text");  
-    time.innerText = moment(time_stamp).fromNow();
-    descriptiondiv.appendChild(time);
-    notificationbar.appendChild(descriptiondiv);
-    document.querySelector('.notifications-form').appendChild(notificationbar);
-    let horizontal_line = document.createElement('hr');
-    document.querySelector('.notifications-form').appendChild(horizontal_line);
+    if(data[0]==[]){
+        console.log(data);
+    }
+    else{
+        let notificationbar = document.createElement('div');
+        notificationbar.setAttribute("class","notificationbar");
+        let imagediv =  document.createElement('div');
+        imagediv.setAttribute("class","image-div");
+        let img = document.createElement('img');
+        img.setAttribute("src",data[0].imgname);
+        imagediv.appendChild(img);
+        notificationbar.appendChild(imagediv);
+        let descriptiondiv=  document.createElement('div');
+        descriptiondiv.setAttribute("class","description");
+        descriptiondiv.setAttribute("onClick",data[0].path);
+        descriptiondiv.innerText = data[0].description;
+        const time_stamp = new Date(data[0].date);
+        let time = document.createElement('p');
+        time.setAttribute("id","moment-text");  
+        time.innerText = moment(time_stamp).fromNow();
+        descriptiondiv.appendChild(time);
+        notificationbar.appendChild(descriptiondiv);
+        document.querySelector('.notifications-form').appendChild(notificationbar);
+        let horizontal_line = document.createElement('hr');
+        document.querySelector('.notifications-form').appendChild(horizontal_line);
+    }
  
 }
 

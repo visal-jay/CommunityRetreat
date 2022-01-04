@@ -36,9 +36,22 @@ class BudgetController
             $chart[]=["day"=>$date ,"amount" => 0];
         }
 
-        $data["income_graph"] = json_encode(array_merge($chart, $income_graph));
-        $data["expense_graph"] = json_encode(array_merge($chart, $expense_graph));
+        $data["income_graph"] = json_encode(array_merge_recursive($chart, $income_graph));
+        $data["expense_graph"] = json_encode(array_merge_recursive($chart, $expense_graph));
 
+        /*echo "<pre>";
+        var_dump($income_graph);
+        echo "</pre>";
+
+        echo "<pre>";
+        var_dump($chart);
+        echo "</pre>";
+
+        echo "<pre>";
+        var_dump(array_map("unserialize", array_unique(array_map("serialize", array_merge($income_graph,$chart)))));
+        echo "</pre>";
+        exit();*/
+        
         //$balance_graph = $budget->getDailyBalance($_GET["event_id"]);
         $event_details = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["event_name" => '', "cover_photo" => '']);
         $data = array_merge($event_details, $data);

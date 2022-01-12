@@ -101,10 +101,10 @@ class RegisteredUser extends User
 
     }
     public function getAdministrations($data){
-        $administrations = [];
+        $administrations = array();
         $params = $data;
         $query = 'SELECT event_details.event_id,event_details.event_name,event_details.organisation_username,moderator_treasurer.moderator_flag,moderator_treasurer.treasurer_flag FROM moderator_treasurer JOIN  event_details ON moderator_treasurer.event_id = event_details.event_id WHERE uid =:uid LIMIT :offset , :no_of_records_per_page';
-        $administrations = Model::select($query,$params);
+        $administrations = Model::select($query,$params) ? Model::select($query,$params) : NULL;
         return $administrations;
     }
 

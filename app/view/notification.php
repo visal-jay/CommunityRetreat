@@ -29,13 +29,13 @@
             grid-gap: 1rem;
             margin: 2rem auto;
             width: 90%;
-            height: 110vh;
+            height: 120vh;
         }
         .popup{
             display: flex;
             flex-direction: column;
             grid-area: event-popup;
-            min-height: 100%;
+            height: 100%;
             border-radius: 12px;
             padding: 1rem;
             box-shadow: 0 2px 12px rgba(32,32,32,.3);
@@ -81,13 +81,13 @@
 
 
 
-<body class="body">
+<body class="body" onload="renderNotifications()">
     <button class="btn calendar-view-btn" style=" color:white;background: #05a9b3;border:none" onclick="toggleCalendar()"><i class="fas fa-arrow-circle-left"></i>&nbsp&nbspCalendar&nbsp&nbsp<i class="fas fa-calendar-alt"></i></button>
     
     <div class="grid-container">
                 
             <div class="notifications-form">
-
+                <h2  id="empty-div-message" style=" text-align:center;padding-top:0.5rem;color: lightslategray;">No Notifications Yet</h2>
 
             </div>
  

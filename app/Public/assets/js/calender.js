@@ -1,5 +1,7 @@
 "use strict";
 
+const date = new Date();
+
 const months = [
     "January",
     "February",
@@ -58,13 +60,6 @@ for(let i=0 ; i<event_details.length ; i++ ){
     }
 
 }
-console.log(calender_data2);
-
-
-
-
-
-const date = new Date();
 
 
 

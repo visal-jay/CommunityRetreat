@@ -177,7 +177,7 @@
 </head>
 <?php include "nav.php" ?>
 
-<body onload="renderDetails()">
+<body>
 
     <h1 id="topic">
         Administration
@@ -197,29 +197,39 @@
                 </tr>                
             </thead>
             <tbody id="table-body" >
-                <?php foreach($administrations as $administration){ 
-                    if( $administration['moderator_flag'] == 1 && $administration['treasurer_flag'] == 0){
+                <?php if(isset($administrations)){
+                    foreach($administrations as $administration){ 
+                        if( $administration['moderator_flag'] == 1 && $administration['treasurer_flag'] == 0){
                 ?>
-                        <tr id="data-row">
-                            <td id="event-name-td" data-label="EVENT"><a class="clr-black" href='/Event/view?page=about&&event_id=<?=$administration['event_id']?>'><?=$administration['event_name']?></a></td>
-                            <td data-label="ORGANIZATION"><?=$administration['organisation_username']?></td>
-                            <td data-label="USER ROLE">Moderator</td>
-                        </tr>
-                <?php } elseif($administration['moderator_flag'] == 0 && $administration['treasurer_flag'] == 1){
+                            <tr id="data-row">
+                                <td id="event-name-td" data-label="EVENT"><a class="clr-black" href='/Event/view?page=about&&event_id=<?=$administration['event_id']?>'><?=$administration['event_name']?></a></td>
+                                <td data-label="ORGANIZATION"><?=$administration['organisation_username']?></td>
+                                <td data-label="USER ROLE">Moderator</td>
+                            </tr>
+                <?php   } elseif($administration['moderator_flag'] == 0 && $administration['treasurer_flag'] == 1){
                 ?>
-                        <tr id="data-row">
-                            <td id="event-name-td" data-label="EVENT"><a class="clr-black" href='/Event/view?page=about&&event_id=<?=$administration['event_id']?>'><?=$administration['event_name']?></a></td>
-                            <td data-label="ORGANIZATION"><?=$administration['organisation_username']?></td>
-                            <td data-label="USER ROLE">Treasurer</td>
-                        </tr>
-                <?php }elseif($administration['moderator_flag'] == 1 && $administration['treasurer_flag'] == 1){?>
-                        <tr id="data-row">
-                            <td id="event-name-td" data-label="EVENT"><a class="clr-black" href='/Event/view?page=about&&event_id=<?=$administration['event_id']?>'><?=$administration['event_name']?></a></td>
-                            <td data-label="ORGANIZATION"><?=$administration['organisation_username']?></td>
-                            <td data-label="USER ROLE">Moderator&nbsp/&nbspTreasurer</td>
-                        </tr>
+                            <tr id="data-row">
+                                <td id="event-name-td" data-label="EVENT"><a class="clr-black" href='/Event/view?page=about&&event_id=<?=$administration['event_id']?>'><?=$administration['event_name']?></a></td>
+                                <td data-label="ORGANIZATION"><?=$administration['organisation_username']?></td>
+                                <td data-label="USER ROLE">Treasurer</td>
+                            </tr>
+                <?php   } elseif($administration['moderator_flag'] == 1 && $administration['treasurer_flag'] == 1){?>
+                            <tr id="data-row">
+                                <td id="event-name-td" data-label="EVENT"><a class="clr-black" href='/Event/view?page=about&&event_id=<?=$administration['event_id']?>'><?=$administration['event_name']?></a></td>
+                                <td data-label="ORGANIZATION"><?=$administration['organisation_username']?></td>
+                                <td data-label="USER ROLE">Moderator&nbsp/&nbspTreasurer</td>
+                            </tr>
                     <?php } 
-                    }?>
+                    }
+                }else{ ?>
+                         <tr id="data-row">
+                             <td  style="height:10rem;" colspan = 3 >
+                                <h2   style=" text-align:center;padding-top:0.5rem;color: lightslategray;">No Administrations Yet</h2>
+                             </td>
+                        </tr>
+
+                <?php }
+                ?>
 
             </tbody>   
         </table>

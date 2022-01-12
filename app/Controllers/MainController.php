@@ -19,6 +19,16 @@ class MainController
         View::render("contactUs",$user_roles);
     }
 
+    public function contactEmail()
+    {
+        Controller::validateForm(["message","name","email","contact_no"], []); 
+        $user_roles = Controller::accessCheck(["organization","registered_user","guest_user"]);
+        $data= $_POST;
+        (new Mail)->contactUsEmail("contactEmail", $data);
+        Controller::redirect("/Main/index");
+    }
+
+
     public function termsandconditions()
     {
         $user_roles = Controller::accessCheck(["organization","registered_user","guest_user"]);

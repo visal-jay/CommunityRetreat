@@ -179,7 +179,7 @@
             margin: 10px 0px 0px 0px;
         }
 
-        .popup .content{
+        .popup .content {
             width: 80%;
         }
 
@@ -189,7 +189,7 @@
 
 <body>
     <div id="background">
-        <div class="flex-col flex-center margin-side-lg">
+        <div class="flex-col flex-center margin-side-lg" style="align-items: flex-start;">
             <button class="btn btn-solid btn-close margin-lg" onclick="togglePopup('form'); blur_background('background'); stillBackground('id1')">Add Task &nbsp; <i class="fas fa-plus"></i></button>
         </div>
 
@@ -234,6 +234,31 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="flex-row flex-center">
+        <ul class="pagination">
+            <li><a href="/Event/view?event_id=<?= $_GET['event_id'] ?>&&page=timeline"><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i>&nbsp;First</a></li>
+            <li class="<?php if ($pageno <= 1) {
+                            echo 'disabled';
+                        } ?>">
+                <a href="<?php if ($pageno <= 1) {
+                                echo '';
+                            } else {
+                                echo "/Event/view?event_id=" . $_GET['event_id'] . "&&page=timeline&&pageno=" . ($pageno - 1);
+                            } ?>"><i class="fas fa-chevron-left"></i>&nbsp;Prev</a>
+            </li>
+            <li class="<?php if ($pageno >= $total_pages) {
+                            echo 'disabled';
+                        } ?>">
+                <a href="<?php if ($pageno >= $total_pages) {
+                                echo '';
+                            } else {
+                                echo "/Event/view?event_id=" . $_GET['event_id'] . "&&page=timeline&&pageno=" . ($pageno + 1);
+                            } ?>">Next&nbsp;<i class="fas fa-chevron-right"></i></a>
+            </li>
+            <li><a href="/Event/view?event_id=<?= $_GET['event_id'] ?>&&page=timeline&&pageno=<?php echo $total_pages; ?>">Last&nbsp;<i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right"></i></a></li>
+        </ul>
     </div>
 
     <?php if ($organization || $moderator) { ?>

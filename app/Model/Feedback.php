@@ -8,18 +8,22 @@ class Feedback extends Model{
         Model::insert($query, $params);
     }
 
-    public function getFeedback($event_id=-1, $feedback_id=-1, $status=NULL){
-        if($feedback_id != -1){
+    public function getFeedback($event_id=-1, $feedback_id=-1, $offset=0, $no_of_records_per_page=0, $status=NULL){
+        if ($feedback_id==-1 && $offset==0 && $no_of_records_per_page==0 && $status==NULL){
+            $query = "SELECT `feedback_id`, `feedback`, `time_stamp`, `rate`, event_feedback.uid, event_feedback.status,registered_user.profile_pic, registered_user.username FROM event_feedback LEFT JOIN registered_user ON event_feedback.uid=registered_user.uid WHERE event_id= :event_id ORDER BY time_stamp DESC";
+            $params = ["event_id"=> $event_id];
+        }
+        else if($feedback_id != -1){
             $query = "SELECT `feedback_id`, `feedback`, `time_stamp`, `rate`, event_feedback.uid, event_feedback.status,registered_user.profile_pic, registered_user.username FROM event_feedback LEFT JOIN registered_user ON event_feedback.uid=registered_user.uid WHERE feedback_id= :feedback_id";
             $params = ["feedback_id"=> $feedback_id];
         }
         else if($event_id != -1 && $status != NULL){
-            $query = "SELECT `feedback_id`, `feedback`, `time_stamp`, `rate`, event_feedback.uid, event_feedback.status,registered_user.profile_pic, registered_user.username FROM event_feedback LEFT JOIN registered_user ON event_feedback.uid=registered_user.uid WHERE event_id= :event_id AND status = :status ORDER BY time_stamp DESC";
-            $params = ["event_id"=> $event_id, "status"=> $status];
+            $query = "SELECT `feedback_id`, `feedback`, `time_stamp`, `rate`, event_feedback.uid, event_feedback.status,registered_user.profile_pic, registered_user.username FROM event_feedback LEFT JOIN registered_user ON event_feedback.uid=registered_user.uid WHERE event_id= :event_id AND status = :status ORDER BY time_stamp DESC LIMIT :offset , :no_of_records_per_page";
+            $params = ["event_id"=> $event_id, "status"=> $status, "offset" => $offset, "no_of_records_per_page" => $no_of_records_per_page];
         }
         else{
-            $query = "SELECT `feedback_id`, `feedback`, `time_stamp`, `rate`, event_feedback.uid, event_feedback.status,registered_user.profile_pic, registered_user.username FROM event_feedback LEFT JOIN registered_user ON event_feedback.uid=registered_user.uid WHERE event_id= :event_id ORDER BY time_stamp DESC";
-            $params = ["event_id"=> $event_id];
+            $query = "SELECT `feedback_id`, `feedback`, `time_stamp`, `rate`, event_feedback.uid, event_feedback.status,registered_user.profile_pic, registered_user.username FROM event_feedback LEFT JOIN registered_user ON event_feedback.uid=registered_user.uid WHERE event_id= :event_id ORDER BY time_stamp DESC LIMIT :offset , :no_of_records_per_page";
+            $params = ["event_id"=> $event_id, "offset" => $offset, "no_of_records_per_page" => $no_of_records_per_page];
         }
         $result = Model::select($query, $params);
         return $result;

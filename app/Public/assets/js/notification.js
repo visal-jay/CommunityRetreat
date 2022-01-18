@@ -118,6 +118,7 @@ function renderNotifications(){
         // load_more_button.setAttribute('class', 'btn');
         load_more_button.setAttribute('id', 'loadmore_btn');
         load_more_button.style.color = '#05a9b3';
+        load_more_button.style.margin = '10px 0 0 0';
         load_more_button.style.cursor = 'pointer';
         load_more_button.innerText = "Load more";
         load_more_button.value = 0;

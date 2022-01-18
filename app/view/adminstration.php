@@ -34,8 +34,8 @@
         }
 
         .table-container{
-            margin: 10px auto;
-            height: 80%;
+            margin: 10px auto 50px;
+
         }
         .table{
             position: absoulte;

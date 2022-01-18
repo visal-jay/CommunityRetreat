@@ -49,10 +49,12 @@
         .calendar-view-btn{
             display: none;
         }
-        @media screen and (max-width: 800px) {
+        @media screen and (max-width: 900px) {
             .grid-container{
                 display: flex;
                 flex-direction: column;
+                height: 95vh;
+                width: 90%;
             }
             .popup, .calender{
                 display: none;   

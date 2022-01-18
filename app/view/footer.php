@@ -11,7 +11,6 @@
 
     <style>
         .main-footer {
-            position: relative;
             background-color: #03142d;
             height: 10rem;
             display: flex;
@@ -19,9 +18,10 @@
             align-items: center;
             flex-direction: column;
             margin-top: 20px;
-            bottom: 0px;
+            position: relative;
+            left: 0;
+            bottom: 0;
             width: 100%;
-
 
         }
 

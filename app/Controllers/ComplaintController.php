@@ -3,6 +3,7 @@ class ComplaintController{
 
     public function makeComplaint(){
 
+        Controller::accessCheck(["registered_user", "organization"]);/*check whether organization or registered user accessed it.*/
         $complaint = new Complaint();
         // Controller::validateForm(['uid','event_id','complaint_name','complaint','complaint_status']);
         $complainant_uid = $_SESSION["user"]["uid"];

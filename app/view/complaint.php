@@ -62,8 +62,11 @@
     </style>
 </head>
 <body>
-
-<button class="btn btn-solid" style="background-color: red; border:none;" onclick="popupForm('complaint-form');">Complain &nbsp;<i class="far fa-comments"></i></button>
+<?php if($guest_user){ ?>
+    <button class="btn btn-solid" style="background-color: red; border:none;" onclick="window.location.href='/Login/view';">Complain &nbsp;<i class="far fa-comments"></i></button>
+<?php } else { ?>
+    <button class="btn btn-solid" style="background-color: red; border:none;" onclick="popupForm('complaint-form');">Complain &nbsp;<i class="far fa-comments"></i></button>
+<?php } ?>
 
 <div class="complaint-container">
         <div class="complaint-popup-box" id="complaint-form">

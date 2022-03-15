@@ -260,7 +260,7 @@
                         <span class="fas fa-star fa-sm"></span>
                 <?php }
                 } ?>
-                <p class="margin-md"><?= $avg_rate ?> average based on <?= $total ?> reviews.</p>
+                <p class="margin-md"><?= sprintf('%0.2f', round($avg_rate, 2)) ?> average based on <?= $total ?> reviews.</p>
             </div>
             <hr class="margin-lg" style="border:3px solid #f1f1f1">
 

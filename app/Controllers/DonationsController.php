@@ -75,17 +75,30 @@ class DonationsController
         Controller::validateForm([], ["url", "event_id"]);
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
         $donation = new Donations;
-        $data["donations"] = $donation->donationReportGenerate($_GET["event_id"], isset($_POST["date"]) ? $_POST["date"] : -1 );
-        $data["selected_date"]= isset($_POST["date"]) ? $_POST["date"] : -1;
+        $data["donations"] = $donation->donationReportGenerate($_GET["event_id"], isset($_POST["date"]) ? $_POST["date"] : -1);
+        $data["selected_date"] = isset($_POST["date"]) ? $_POST["date"] : -1;
         $data["donations_graph"] = json_encode($donation->getReport(["event_id" => $_GET["event_id"]]));
         $event_details = (new Events)->getDetails($_GET["event_id"]);
         $time = (int)shell_exec("date '+%s'");
         $start_date = $event_details["start_date"];
-        $end_date = gmdate("Y-m-d", $time) < $event_details["end_date"] && $time!=0 ? gmdate("Y-m-d", $time) : $event_details["end_date"];
-        $end_date=$event_details["end_date"];
+
+        
+        $dates = array_column(json_decode($data["donations_graph"]),"day");
+        $min =min($dates);
+        
+        if(sizeof($dates)==0 || $min>$start_date){
+            $first_date = $event_details["start_date"];
+        } else{
+            $first_date = $min;
+        }
+
+        $data["donations"] = $donation->donationReportGenerate($_GET["event_id"], isset($_POST["date"]) ? $_POST["date"] : -1);
+
+        $end_date = gmdate("Y-m-d", $time) < $event_details["end_date"] && $time != 0 ? gmdate("Y-m-d", $time) : $event_details["end_date"];
+        $end_date = $event_details["end_date"];
         $data["event_name"]  = $event_details["event_name"];
         $period = new DatePeriod(
-            new DateTime($start_date),
+            new DateTime($first_date),
             new DateInterval('P1D'),
             new DateTime($end_date)
         );
@@ -93,8 +106,6 @@ class DonationsController
         foreach ($period as $date) {
             $data["period"][] = $date->format('Y-m-d');
         }
-
-        
 
 
         View::render('donationsReport', $data);/*send all the data to donationsReport page*/

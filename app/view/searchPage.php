@@ -345,7 +345,7 @@
 
 <?php include "footer.php" ?>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk&callback=initMap&libraries=&v=weekly" async></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSB7zeeAI3QC42UmxHEFqS715ulfPFASc&callback=initMap&libraries=&v=weekly" async></script>
 <script>
     /* input calendar hide out of the calendar div*/
     document.addEventListener("click", (evt) => {

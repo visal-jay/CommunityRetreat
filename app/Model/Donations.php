@@ -6,25 +6,16 @@ class Donations extends Model
 
     public function getReport($data)
     {/*get the donation sum and date and send it to the graph in view file*/
-        $query = "SELECT SUM(amount) as donation_sum ,date_format(time_stamp,'%x-%m-%d') as day FROM donation WHERE event_id = :event_id GROUP BY day ORDER BY day ASC";
+        $query = "SELECT SUM(amount) as donation_sum ,amount as amount, date_format(time_stamp,'%x-%m-%d') as day FROM donation WHERE event_id = :event_id GROUP BY day ORDER BY day ASC";
         $params = ["event_id" => $data["event_id"]];
         $result = Model::select($query, $params);
-
+        /*var_dump($result);
+exit;*/
         if (count($result) == 0)
             return false;
         else
             return $result;
     }
-
-   /* public function getDonateDetails($event_id, $offset, $no_of_records_per_page)
-    {
-        /*get donation details from backend to UI*/
-        /*
-        $query = 'SELECT donation.amount, date(time_stamp) as date, registered_user.username FROM donation LEFT JOIN registered_user ON donation.uid=registered_user.uid WHERE event_id =:event_id LIMIT :offset , :no_of_records_per_page';
-        $params = ["event_id" => $event_id, "offset" => $offset, "no_of_records_per_page" => $no_of_records_per_page];
-        $result = Model::select($query, $params);
-        return $result;
-    }*/
 
     public function getDonateDetails($event_id, $offset, $no_of_records_per_page)
     {/*get donation details from backend to UI*/
@@ -47,17 +38,6 @@ class Donations extends Model
         $params = ["event_id" => $event_id];
         Model::insert($query, $params);
 
-        /*$query = 'SELECT organization.account_number, event.event_id FROM organization LEFT JOIN event ON organization.org_uid=event.org_uid WHERE org_uid =:org_uid';
-        
-        if($query['account_number'] = "NULL"){
-            echo 'You have no authorization to enable donations';
-        }
-        else{
-            $query ='UPDATE event SET donation_status=1 WHERE event_id =:event_id';
-            $params = ["event_id" => $event_id];
-            $result=Model::insert($query,$params);
-            return $result;
-        }*/
     }
 
     public function updateDonationCapacity($event_id, $donation_capacity)
@@ -78,16 +58,15 @@ class Donations extends Model
 
     public function donationReportGenerate($event_id, $donate_date)
     {/*generate a report with all the details of donations*/
-        if($donate_date != -1 && $donate_date!="all"){
-        $query = 'SELECT donation.amount, date(time_stamp) as date, registered_user.username FROM donation LEFT JOIN registered_user ON donation.uid=registered_user.uid WHERE event_id =:event_id AND date(time_stamp) = :donate_date' ;
-        $params = ["event_id" => $event_id, "donate_date" => $donate_date];
-        }else{
+        if ($donate_date != -1 && $donate_date != "all") {
+            $query = 'SELECT donation.amount, date(time_stamp) as date, registered_user.username FROM donation LEFT JOIN registered_user ON donation.uid=registered_user.uid WHERE event_id =:event_id AND date(time_stamp) = :donate_date';
+            $params = ["event_id" => $event_id, "donate_date" => $donate_date];
+        } else {
             $query = 'SELECT donation.amount, date(time_stamp) as date, registered_user.username FROM donation LEFT JOIN registered_user ON donation.uid=registered_user.uid WHERE event_id =:event_id';
             $params = ["event_id" => $event_id];
         }
         $result = Model::select($query, $params);
         return $result;
-    
     }
 
     public function donationRefund($event_id)

@@ -12,13 +12,16 @@
 
 <style>
     button,
-    input {
+    #contactus_input{
         font-weight: 700;
         letter-spacing: 1.4px;
     }
 
     .background {
         display: flex;
+        height: 70%;
+        justify-content: center;
+        align-items: center;      
     }
 
     .container {
@@ -105,14 +108,14 @@
         height: 40px;
     }
 
-    textarea {
+    #contactus-textarea {
         height: 60px;
         font-weight: 700;
         letter-spacing: 1.4px;
         margin-top: 20px;
     }
 
-    textarea::placeholder {
+    #contactus-textarea::placeholder {
         font-size: 12px;
     }
 
@@ -209,19 +212,19 @@
                             <span>US</span>
                         </div>
                         <div class="app-form-group message">
-                            <textarea class="app-form-control" name="message" placeholder="MESSAGE" required></textarea>
+                            <textarea id="contactus-textarea"class="app-form-control" name="message" placeholder="MESSAGE" required></textarea>
                         </div>
                     </div>
                     <div class="screen-body-item">
                         <div class="app-form">
                             <div class="app-form-group">
-                                <input class="app-form-control" name="name" placeholder="NAME" required>
+                                <input id="contactus-input" class="app-form-control" name="name" placeholder="NAME" required>
                             </div>
                             <div class="app-form-group">
-                                <input type="email" class="app-form-control" name="email" placeholder="EMAIL" required>
+                                <input id="contactus-input" type="email" class="app-form-control" name="email" placeholder="EMAIL" required>
                             </div>
                             <div class="app-form-group">
-                                <input type="tel" class="app-form-control" name="contact_no" placeholder="CONTACT NO" required>
+                                <input id="contactus-input" type="tel" class="app-form-control" name="contact_no" placeholder="CONTACT NO" required>
                             </div>
                             <div class="app-form-group buttons">
                                 <button class="app-form-button">CANCEL</button>

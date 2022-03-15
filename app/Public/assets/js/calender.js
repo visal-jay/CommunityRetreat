@@ -1,5 +1,7 @@
 "use strict";
 
+const date = new Date();
+
 const months = [
     "January",
     "February",
@@ -58,13 +60,6 @@ for(let i=0 ; i<event_details.length ; i++ ){
     }
 
 }
-console.log(calender_data2);
-
-
-
-
-
-const date = new Date();
 
 
 
@@ -112,10 +107,6 @@ function popupLoad(index,selected_date){
 
     }
 
-    // var popup = document.querySelector('.event-popup-container');
-    // var body = document.querySelector('.body');
-    // body.classList.toggle("overflow");
-    // popup.classList.toggle("pop-up-load");
 }
 
 
@@ -176,10 +167,6 @@ const renderCalender = ()=>{
     }
 
     
-    /*for(let k=1;k<=nextdays;k++){
-         days += '<div>'+k+'</div>';
-   
-    }*/
     monthdays.innerHTML = days;
 }
 

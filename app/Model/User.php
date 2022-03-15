@@ -125,11 +125,10 @@ class User extends Model
     }
 
     function getActivity($data){
-    
+
         $params = $data;
         $query = 'SELECT event_details.event_name,event_details.event_id,activity_log.activity,activity_log.time_stamp FROM activity_log LEFT JOIN event_details ON activity_log.event_id = event_details.event_id WHERE  activity_log.uid = :uid ORDER BY time_stamp DESC LIMIT :offset , :no_of_records_per_page';
-        $activities = User::select( $query,$params);
-
+        $activities = User::select( $query,$params) ? User::select( $query,$params) : NULL;
          return $activities;  
     }
 
@@ -154,6 +153,7 @@ class User extends Model
     }
 
     function getNotifications(){
+        $notifications = [];
         $params = ["uid" => $_SESSION["user"]["uid"] ];
         $query = 'SELECT reg.profile_pic AS reguser_profile_pic,org.profile_pic AS org_profile_pic,event_details.organisation_username,event_details.cover_photo AS event_cover_pic,event_details.event_name,notification.event_id AS event_id,notification.description AS description ,notification.time_stamp AS time_stamp,notification.viewed AS viewed,notification.status AS status,notification.path AS path FROM notification JOIN event_details ON notification.event_id = event_details.event_id RIGHT JOIN registered_user reg ON notification.uid  =reg.uid  RIGHT JOIN organization org ON event_details.org_uid = org.uid  WHERE  notification.uid = :uid ORDER BY time_stamp DESC';
         $notifications = User::select($query,$params);

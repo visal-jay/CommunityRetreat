@@ -175,9 +175,7 @@
                             <input type="email" class="form-ctrl" value="<?= $email; ?>" name="email" required onkeyup="checkMail(this.value)" required /><br>
 
                             <div class="intro-update-btn">
-                                <button type="submit" id="email-submit-btn" class="btn bg-green clr-white" onclick=" updateField('email','emailupdater')" <?php if (isset($_GET['invaliderr'])) {
-                                                                                                                                                                echo "disabled";
-                                                                                                                                                            } ?>>Update</button>
+                                <button type="submit" id="email-submit-btn" class="btn bg-green clr-white" onclick=" updateField('email','emailupdater')" >Update</button>
                                 <button type="button" class="btn bg-red border-red clr-white" onclick=" showEddite('emailupdater')">Cancel</button>
                             </div>
                         </div>

@@ -12,7 +12,11 @@
 
 <style>
     .page{
-        min-height: 53%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 70vh;
     }
     .box {
         max-width: inherit;

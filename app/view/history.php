@@ -33,30 +33,41 @@
                 </thead>
                 <tbody id="table-body">
 
-                <?php foreach($activities as $activity){?>
-                    <tr>
-                        <td>
-                            <div class="data-label">Date</div>
-                            <div class="data date"><?=date("D M j  Y",strtotime($activity['time_stamp']));?></div>
-                        </td>
-                        <td>
-                            <div class="data-label">Activity</div>
-                            <div class="data">
+                <?php 
+                    if(isset($activities)){
+                        foreach($activities as $activity){?>
+                            <tr>
+                                <td>
+                                    <div class="data-label">Date</div>
+                                    <div class="data date"><?=date("D M j  Y",strtotime($activity['time_stamp']));?></div>
+                                </td>
+                                <td>
+                                    <div class="data-label">Activity</div>
+                                    <div class="data">
 
-                            <?php if($activity['event_id'] != NULL){?>
-                                <a href="/Event/view?page=about&&event_id=<?=$activity['event_id']?>"><?=$activity['activity']?></a>
-                            <?php } else{?>
-                                <p><?=$activity['activity']?></p>
-                            <?php } ?>
+                                    <?php if($activity['event_id'] != NULL){?>
+                                        <a href="/Event/view?page=about&&event_id=<?=$activity['event_id']?>"><?=$activity['activity']?></a>
+                                    <?php } else{?>
+                                        <p><?=$activity['activity']?></p>
+                                    <?php } ?>
 
-                            </div>
-                        </td>
-                        <td class="action-div">
-                            <div class="action"></div>
-                            <button class="btn bg-red clr-white border-red "  onclick="popupLoad('<?=$activity['time_stamp']?>')">Remove</button>
-                        </td>
-                    </tr>
+                                    </div>
+                                </td>
+                                <td class="action-div">
+                                    <div class="action"></div>
+                                    <button class="btn bg-red clr-white border-red "  onclick="popupLoad('<?=$activity['time_stamp']?>')">Remove</button>
+                                </td>
+                            </tr>
+                <?php   } 
+                    } else{ 
+                ?> 
+                            <tr id="data-row">
+                                <td  style="height:10rem;" colspan = 3 >
+                                    <h2   style=" text-align:center;padding-top:0.5rem;color: lightslategray;">No Activities Yet</h2>
+                                </td>
+                            </tr>
                 <?php } ?>
+
                 </tbody>
                   
             </table>

@@ -32,25 +32,25 @@ class BudgetController
 
         $dates = array_merge(array_column($income_graph, "day"), array_column($expense_graph, "day"));
         $chart = [];
-        foreach ($dates as $date){
-            $chart[]=["day"=>$date ,"amount" => 0];
+        foreach ($dates as $date) {
+            $chart[] = ["day" => $date, "amount" => 0];
         }
 
-        $data["income_graph"] = json_encode(array_merge_recursive($chart, $income_graph));
-        $data["expense_graph"] = json_encode(array_merge_recursive($chart, $expense_graph));
+        $temp_income_graph = array_merge($income_graph, $chart);
+        $data["income_graph"] = (array_intersect_key($temp_income_graph, array_unique(array_column($temp_income_graph, 'day'))));
+        $temp_expense_graph = array_merge($expense_graph, $chart);
+        $data["expense_graph"] = (array_intersect_key($temp_expense_graph, array_unique(array_column($temp_expense_graph, 'day'))));
 
-        /*echo "<pre>";
-        var_dump($income_graph);
-        echo "</pre>";
+        usort($data["expense_graph"], function ($a, $b) {
+            return strcmp($a['day'], $b['day']);
+        });
 
-        echo "<pre>";
-        var_dump($chart);
-        echo "</pre>";
+        usort($data["income_graph"], function ($a, $b) {
+            return strcmp($a['day'], $b['day']);
+        });
 
-        echo "<pre>";
-        var_dump(array_map("unserialize", array_unique(array_map("serialize", array_merge($income_graph,$chart)))));
-        echo "</pre>";
-        exit();*/
+        $data["expense_graph"] = json_encode($data["expense_graph"]);
+        $data["income_graph"] = json_encode($data["income_graph"]);
         
         //$balance_graph = $budget->getDailyBalance($_GET["event_id"]);
         $event_details = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["event_name" => '', "cover_photo" => '']);

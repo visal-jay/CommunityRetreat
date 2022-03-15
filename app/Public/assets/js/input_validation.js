@@ -92,11 +92,10 @@ async function validateField(input) {
 		return false;
 	}
 
-	if(input.name=="username" && input.value.length>=10){
+/* 	if(input.name=="username" && input.value.length>=10){
 		addErrorMsg(input, "Use less than 10 charachters");
 		return false;
-	}
-
+	} */
 
 	return true;
 }

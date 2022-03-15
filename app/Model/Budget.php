@@ -243,7 +243,7 @@ class Budget extends Model
 
     public function getDailyIncomeSum($event_id)
     {
-        $query = 'SELECT date_format(time_stamp,"%x-%m-%d") as day, SUM(amount) as amount FROM income WHERE event_id = :event_id AND status="current" OR status= "donation" GROUP BY day ORDER BY day ASC';
+        $query = 'SELECT date_format(time_stamp,"%Y-%m-%d") as day, SUM(amount) as amount FROM income WHERE event_id = :event_id AND (status="current" OR status= "donation") GROUP BY day ORDER BY day ASC';
         $params = ["event_id" => $event_id];
         $result = Model::select($query, $params);
         return $result;
@@ -251,7 +251,7 @@ class Budget extends Model
 
     public function getDailyExpenseSum($event_id)
     {
-        $query = 'SELECT date_format(time_stamp,"%x-%m-%d") as day, SUM(amount) as amount FROM expense WHERE event_id = :event_id AND status="current" GROUP BY day ORDER BY day ASC';
+        $query = 'SELECT date_format(time_stamp,"%Y-%m-%d") as day, SUM(amount) as amount FROM expense WHERE event_id = :event_id AND status="current" GROUP BY day ORDER BY day ASC';
         $params = ["event_id" => $event_id];
         $result = Model::select($query, $params);
         return $result;
@@ -259,7 +259,7 @@ class Budget extends Model
 
     public function getDailyBalance($event_id)
     {
-        $query = 'SELECT day, SUM(balance) FROM (SELECT date_format(time_stamp,"%x-%m-%d") AS "day", amount as balance FROM income WHERE event_id = :event_id_1 AND status="current" UNION SELECT date_format(time_stamp,"%x-%m-%d") AS "day", amount*(-1) AS balance FROM expense WHERE event_id = :event_id_2 AND status ="current" ) balancetab GROUP BY day ORDER BY day';
+        $query = 'SELECT day, SUM(balance) FROM (SELECT date_format(time_stamp,"%Y-%m-%d") AS "day", amount as balance FROM income WHERE event_id = :event_id_1 AND status="current" UNION SELECT date_format(time_stamp,"%x-%m-%d") AS "day", amount*(-1) AS balance FROM expense WHERE event_id = :event_id_2 AND status ="current" ) balancetab GROUP BY day ORDER BY day';
         $params = ["event_id_1" => $event_id,"event_id_2" => $event_id];
         $result = Model::select($query, $params);
         return $result;

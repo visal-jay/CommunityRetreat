@@ -98,7 +98,7 @@ class Events extends Model
         if ($city != NULL) {
             $city = trim($city);
             $city = str_replace(" ", "+", $city);
-            $result = json_decode(file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address=" . $city . ",LK&key=AIzaSyAN2HxM42eIrEG1e5b9ar2H_2_V6bMRjWk"), true)["results"][0]["geometry"]["location"];
+            $result = json_decode(file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address=" . $city . ",LK&key=AIzaSyBSB7zeeAI3QC42UmxHEFqS715ulfPFASc"), true)["results"][0]["geometry"]["location"];
             $longitude = $result["lng"];
             $latitude = $result["lat"];
         }

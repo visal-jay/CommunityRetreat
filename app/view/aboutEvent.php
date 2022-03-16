@@ -462,7 +462,7 @@
             <?php } ?>
         </div>
         <!-- complaint div -->
-        <?php if(!$organization || !$admin) include "complaint.php" ?>
+        <?php if(!($organization||$admin)) include "complaint.php" ?>
     </div>
 
     <div class="popup" id="publish">

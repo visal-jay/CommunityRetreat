@@ -240,7 +240,6 @@
             <p>Do you have a suggestion or found some bug? Let us know in the field below.</p>
             <textarea cols="40" rows="8" placeholder="Describe here" class="feedback-textarea form-ctrl" name="feedback" required></textarea>
             <div class="confirm-buttons">
-
                 <button type="submit" class="btn bg-green clr-white border-green">Submit</button>
                 <button type="button" onclick="popup()" class="btn bg-red clr-white border-red">Cancel</button>
             </div>
@@ -249,7 +248,7 @@
     </div>
 
     <footer class="main-footer">
-        <?php if (!$admin) { ?>
+        <?php if ($organization || $registered_user ||$moderator || $treasurer) { ?>
             <div class="footer-content-container">
                 <div class="footer-main-content">
                     <p onclick="window.location.href='/Main/aboutUs'" class="footer-content">About Us</p>

@@ -15,7 +15,7 @@
     <title>About Event</title>
 
     <!-- meta for facebook sharer -->
-    <meta property="og:url" content="https://www.communityretreat.me/Event/view?page=about&event_id=<?= $_GET['event_id'] ?>">
+    <meta property="og:url" content="https://www.communityretreat.me/Event/view?page=home&event_id=<?= $_GET['event_id'] ?>">
     <meta property="og:type" content="website" />
     <meta property="og:title" content="<?= $event_name ?>" />
     <meta property="og:description" content="Volunteer, Donate events" />
@@ -462,7 +462,7 @@
             <?php } ?>
         </div>
         <!-- complaint div -->
-        <?php include "complaint.php" ?>
+        <?php if(!$organization || !$admin) include "complaint.php" ?>
     </div>
 
     <div class="popup" id="publish">

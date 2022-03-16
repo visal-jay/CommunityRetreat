@@ -282,7 +282,7 @@
 
 
 </body>
-<?php if((isset($_GET["page"]) && $_GET["page"]=="about") || $organization) {include "complaint.php"; ?>
+<?php if((isset($_GET["page"]) && $_GET["page"]=="about") || !($organization || $admin)) {include "complaint.php"; ?>
 <?php include "footer.php";} ?>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSB7zeeAI3QC42UmxHEFqS715ulfPFASc&callback=initMap&libraries=&v=weekly" async></script>
 

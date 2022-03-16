@@ -170,8 +170,4 @@ class OrganisationController
         Controller::redirect("/Event/view", ["page" =>'userroles', "event_id" => $_GET["event_id"],$user_roles]);
     }
 
-    function test()
-    {
-        var_dump(Model::pagination("organization", 10));
-    }
 }

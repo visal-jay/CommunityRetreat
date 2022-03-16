@@ -31,6 +31,11 @@ class ComplaintController{
        
     }
 
+    public function getComplaints($data){
+        $complaint = new Complaint;
+        $result = $complaint->getComplaints($data);
+        return $result;
+    }
     public function dismissComplaint(){
         $complaint = new Complaint;
         $complaint->removeComplaint($_POST['complaint_id']);

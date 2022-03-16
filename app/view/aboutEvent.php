@@ -19,7 +19,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="<?= $event_name ?>" />
     <meta property="og:description" content="Volunteer, Donate events" />
-    <meta property="og:image" content="https://www.communityretreat.me<?= $cover_photo ?>" />
+    <meta property="og:image" content="https://www.communityretreat.me/<?= $cover_photo ?>" />
 </head>
 
 

@@ -358,7 +358,7 @@
             <div class="bold sum flex-row">
                 <!--display the sum of incomes-->
                 <div>Sum of Incomes :</div>
-                <div><?php echo 'Rs. ' . number_format($income_sum, 2) ?></div>
+                <div><?php echo 'Rs. ' . number_format($income_sum + $donation_sum, 2) ?></div>
             </div>
 
             <div class="bold sum flex-row">
@@ -540,7 +540,7 @@
 <script>
     /*Calculate the balance of incomes and expenses*/
     document.getElementById("balance").innerHTML = "<div>Balance :</div><div> Rs. " +
-        (parseInt('<?= $income_sum  ?>') - parseInt('<?= $expense_sum ?>')).toString().replace(
+        (parseInt('<?= $income_sum  ?>') + parseInt('<?= $donation_sum ?>') - parseInt('<?= $expense_sum ?>')).toString().replace(
             /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","); + "uihui" + "</div>";
 
 

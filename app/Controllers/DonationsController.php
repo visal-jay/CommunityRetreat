@@ -76,6 +76,7 @@ class DonationsController
         $data["donations"] = $donation->donationReportGenerate($_GET["event_id"], isset($_POST["date"]) ? $_POST["date"] : -1);
         $data["selected_date"] = isset($_POST["date"]) ? $_POST["date"] : -1;
         $data["donations_graph"] = json_encode($donation->getReport(["event_id" => $_GET["event_id"]]));
+        $data["donation_sum"] = $donation->getDonationSum($_GET["event_id"]);
         $event_details = (new Events)->getDetails($_GET["event_id"]);
         $time = (int)shell_exec("date '+%s'");
         $start_date = $event_details["start_date"];

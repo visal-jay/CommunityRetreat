@@ -15,7 +15,6 @@ class BudgetController
         $income_sum = $budget->getIncomeSum($_GET["event_id"]);
         $expense_sum = $budget->getExpenseSum($_GET["event_id"]);
         $donate_sum = $budget->getDonationSum($_GET["event_id"]);
-        $donate_sum = $budget->getDonationSum($_GET["event_id"]);
 
         $data["incomes"] = $income_details;
         $data["expenses"] = $expense_details;
@@ -118,6 +117,7 @@ class BudgetController
         $budget = new Budget();
         $income_report = $budget->IncomeReportGenerate($_GET["event_id"]);
         $expense_report = $budget->ExpenseReportGenerate($_GET["event_id"]);
+        
 
         /*get incomes and expenses and all the details of them in to an array*/
         $data["report"] = $expense_report;
@@ -136,6 +136,7 @@ class BudgetController
         $data["report"] = $current_report;
         $data["income_sum"] = $budget->getIncomeSum($_GET["event_id"]);
         $data["expense_sum"]  = $budget->getExpenseSum($_GET["event_id"]);
+        $data["donation_sum"] = $budget->getDonationSum($_GET["event_id"]);
         $data["event_name"]  = (new Events)->getDetails($_GET["event_id"])["event_name"];
         View::render('budgetReport', $data);/*send those data to budgetReport view file*/
     }

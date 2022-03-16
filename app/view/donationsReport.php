@@ -134,6 +134,11 @@ if (isset($_SESSION["user"]["user_type"])) {
                         <td class="amount"><?php echo 'Rs. ' . number_format($donation["amount"], 2) ?></td>
                     </tr>
                 <?php } ?>
+                <tr>
+                    <td><b>Total</b></td>
+                    <td></td>
+                    <td class="amount"><b><?php echo 'Rs. ' . number_format($donation_sum, 2) ?></b></td>
+                </tr>
             </table>
         </div>
 

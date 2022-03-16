@@ -70,8 +70,6 @@ class DonationsController
 
     public function donationReport()/*Generate the report of all the donations*/
     {
-        /* echo "hi";
-        exit(); */
         Controller::validateForm([], ["url", "event_id"]);
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
         $donation = new Donations;
@@ -114,7 +112,6 @@ class DonationsController
     public function donationCredit($event_id)
     {/*change the status in database when donations are credited to organizations account*/
 
-        //Controller::validateForm([], []);
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
         (new UserController)->addActivity("Update donation status as credited", $_GET["event_id"]);
         $donation = new Donations;
@@ -180,7 +177,6 @@ class DonationsController
     public function donationRefund($event_id)
     {/*change the status in database when donations are refunded*/
 
-        //Controller::validateForm([], []);
         Controller::accessCheck(["admin", "organization"]);/*check whether organization or admin accessed it.*/
         $donation = new Donations;
         $donation_details = $donation->getRefundDetails($event_id);

@@ -166,12 +166,12 @@ class Volunteer extends Model
     }
 
     //complete this
-    public function markParticipation()
+    public function markParticipation($event_id)
     {
         $time = (int)shell_exec("date '+%s'");
         $date = date("Y-m-d", $time);
         $query = "INSERT INTO volunteer (uid,volunteer_date,event_id,participated) VALUES (:uid,:volunteer_date,:event_id,1) ON DUPLICATE KEY UPDATE participated=1";
-        $params = ["uid" => $_SESSION["user"]["uid"], "event_id" => $_GET["event_id"], "volunteer_date" => $date];
+        $params = ["uid" => $_SESSION["user"]["uid"], "event_id" => $event_id, "volunteer_date" => $date];
         Model::insert($query, $params);
     }
 

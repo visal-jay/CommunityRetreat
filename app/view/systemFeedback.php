@@ -13,7 +13,6 @@
 <style>
   .system-feedback-container{
     display: flex;
-    justify-content: space-between;
     flex-direction: column;
     width: 80%;
     min-height: 100%;

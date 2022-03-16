@@ -23,12 +23,8 @@ class BudgetController
         $data["expense_sum"] = $expense_sum;
         $data["donation_sum"] = $donate_sum;
 
-
-        /* var_dump($budget->getDailyBalance($_GET["event_id"]));
-        exit(); */
         $income_graph = $budget->getDailyIncomeSum($_GET["event_id"]);
         $expense_graph = $budget->getDailyExpenseSum($_GET["event_id"]);
-        //$balance_graph = $budget->getDailyBalance($_GET["event_id"]);
 
         $dates = array_merge(array_column($income_graph, "day"), array_column($expense_graph, "day"));
         $chart = [];
@@ -51,44 +47,14 @@ class BudgetController
 
         $data["expense_graph"] = json_encode($data["expense_graph"]);
         $data["income_graph"] = json_encode($data["income_graph"]);
-        
-        //$balance_graph = $budget->getDailyBalance($_GET["event_id"]);
+
         $event_details = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["event_name" => '', "cover_photo" => '']);
         $data = array_merge($event_details, $data);
         View::render("eventPage", $data, $user_roles);/*send data to the event page*/
     }
 
-    /*public function addIncome(){//add incomes to the budget
-        Controller::validateForm(["details", "amount", "event_id"], ["url"]);
-        Controller::accessCheck(["organization","treasurer"],$_POST["event_id"]);//check whether organization or treasurer accessed it.
-        (new UserController)->addActivity("Add Income", $_GET["event_id"]);
-        $data=array_merge($_GET, $_POST);
-        $validate=new Validation;
-        if(!$validate->currency($_POST["amount"]))//find whether amount is valid
-             Controller::redirect("/Event/view?page=budget&&event_id=" .$_POST["event_id"],["amountErr"=>"Inavlid amount"]);
-
-        (new Budget)->addIncome($data);
-        Controller::redirect("/Event/view",["page"=>'budget',"event_id"=> $_POST["event_id"]]);//redirect to event page after adding the income.
-    }
-    */
-
-    /* public function addExpense(){//add expenses to the budget
-
-        Controller::validateForm(["details", "amount", "event_id"], ["url"]);
-        Controller::accessCheck(["organization","treasurer"],$_POST["event_id"]);//check whether organization or treasurer accessed it.
-        (new UserController)->addActivity("Add Expense", $_GET["event_id"]);
-
-        $data=array_merge($_GET, $_POST);    
-        $validate=new Validation;
-        if(!$validate->currency($_POST["amount"]))//find whether amount is valid
-             Controller::redirect("/Event/view?page=budget&&event_id=" .$_POST["event_id"],["amountErr"=>"Inavlid amount"]);
-     
-        (new Budget)->addExpense($data);
-        Controller::redirect("/Event/view",["page"=>'budget',"event_id"=> $_POST["event_id"]]);//redirect to event page after adding the expense.
-    }*/
-
     public function addIncomeAndExpense()
-    {/*add expenses to the budget*/
+    {/*add incomes and expenses to the budget*/
 
         Controller::accessCheck(["organization", "treasurer"], $_POST["event_id"]);/*check whether organization or treasurer accessed it.*/
 
@@ -176,8 +142,6 @@ class BudgetController
 
     public function converAssocitiveArraytoNumericArray($input_array)
     {/*convert the associative array to numeric array*/
-        /*var_dump($input_array);
-        exit();*/
         $numeric_array = array();
         foreach ($input_array as $array) {
             $temp_array = array();

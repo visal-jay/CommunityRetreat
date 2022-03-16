@@ -2,7 +2,7 @@
 
 class SystemfeedbackController{
 
-    public function getSystemFeedbacks(){
+    public function makeSystemFeedbacks(){
         Controller::validateForm(["feedback"]);
         $user_roles=Controller::accessCheck(["admin","organization","registered_user"]);
         $feedback = new Systemfeedback();
@@ -14,6 +14,12 @@ class SystemfeedbackController{
             Controller::redirect("/Organisation/dashboard");
         elseif($user_roles["registered_user"] || $user_roles["guest_user"])
             View::render("home",[],$user_roles);
+    }
+
+    public function getSystemFeedbacks($data){
+        $systemFeedback=new Systemfeedback();
+        $systemFeedbacks= $systemFeedback->renderSystemFeedbacks($data);
+        return $systemFeedbacks;
     }
 
 }

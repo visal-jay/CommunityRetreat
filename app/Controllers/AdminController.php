@@ -37,18 +37,20 @@ class AdminController{
     //View complaints
     public function complaint(){
         $user_roles=Controller::accessCheck(["admin"]);
-        $data['complaints'] = (new Complaint)->getComplaints();
-        View::render("admin",$data,$user_roles);
+        $pagination = Model::pagination("complaint", 10, "", []);
+        $data['complaints'] = (new ComplaintController)->getComplaints(["offset" => $pagination["offset"], "no_of_records_per_page" => $pagination["no_of_records_per_page"]]);
+        View::render("admin",array_merge($data,$pagination),$user_roles);
     }
 
 
     //Post system feedbacks to view
     public function systemFeedbacks(){
         $user_roles=Controller::accessCheck(["admin"]);
-        $systemFeedback=new Systemfeedback();
-        $systemFeedbacks= $systemFeedback->renderSystemFeedbacks();
+        $pagination = Model::pagination("system_feedback", 10, "", []);
+        $systemFeedback=new SystemfeedbackController();
+        $systemFeedbacks= $systemFeedback->getSystemFeedbacks(["offset" => $pagination["offset"], "no_of_records_per_page" => $pagination["no_of_records_per_page"]]);
         $data['system_feedbacks'] = $systemFeedbacks;
-        View::render("systemFeedback",$data,$user_roles);
+        View::render("systemFeedback",array_merge($data,$pagination),$user_roles);
  
     }
 
@@ -71,7 +73,7 @@ class AdminController{
     }
 
     function removeEvent(){
-        $event = new Events();
+        $event = new EventController();
         $complaint = new Complaint;
         $event_id = $_POST['event_id'];
         //sendNotificationMail($uid)

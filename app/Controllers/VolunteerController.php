@@ -58,7 +58,7 @@ class VolunteerController
         $today = gmdate("Y-m-d", (int)shell_exec("date '+%s'"));
         // check if today is betwwen start and end date of event
         if ($today >= $event_details['start_date'] && $today <= $event_details['end_date']) {
-            //(new UserController)->addActivity("You marked your participation in {$event_details['event_name']}", $_GET['event_id']);
+            (new UserController)->addActivity("You marked your participation in {$event_details['event_name']}", $_GET['event_id']);
             (new Volunteer)->markParticipation($_GET["event_id"]);
             View::render("volunteerThank");
         } else {

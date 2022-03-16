@@ -9,9 +9,10 @@ class Complaint extends Model{
 
     }
 
-    public function getComplaints(){
-        $query = 'SELECT complaint.event_id,complaint.uid,reg.username,complaint.complaint_id, complaint.complaint_name, complaint.complaint ,complaint.date, complaint.path FROM complaint JOIN registered_user reg ON complaint.complainant_uid = reg.uid ORDER BY date DESC';
-        $result = Model::select($query,[]);                                          
+    public function getComplaints($data){
+        $params = $data;
+        $query = 'SELECT complaint.event_id,complaint.uid,reg.username,complaint.complaint_id, complaint.complaint_name, complaint.complaint ,complaint.date, complaint.path FROM complaint JOIN registered_user reg ON complaint.complainant_uid = reg.uid ORDER BY date DESC LIMIT :offset , :no_of_records_per_page';
+        $result = Model::select($query,$params);                                          
         return $result;
     }
 

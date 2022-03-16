@@ -234,7 +234,7 @@
     <div class="feedback-container">
 
         <!-- Feedback form -->
-        <form action="/Systemfeedback/getSystemFeedbacks" method="post" class="feedback-form">
+        <form action="/Systemfeedback/makeSystemFeedbacks" method="post" class="feedback-form">
 
             <h2>Send us some feedback !</h2>
             <p>Do you have a suggestion or found some bug? Let us know in the field below.</p>

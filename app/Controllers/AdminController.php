@@ -40,7 +40,6 @@ class AdminController{
         $pagination = Model::pagination("complaint", 10, "", []);
         $data['complaints'] = (new ComplaintController)->getComplaints(["offset" => $pagination["offset"], "no_of_records_per_page" => $pagination["no_of_records_per_page"]]);
         View::render("admin",array_merge($data,$pagination),$user_roles);
-
     }
 
 

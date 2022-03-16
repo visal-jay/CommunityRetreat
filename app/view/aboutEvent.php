@@ -15,7 +15,7 @@
     <title>About Event</title>
 
     <!-- meta for facebook sharer -->
-    <meta property="og:url" content="https://www.communityretreat.me/Event/view?page=about&event_id=<?= $_GET['event_id'] ?>">
+    <meta property="og:url" content="https://www.communityretreat.me/Event/view?page=home&event_id=<?= $_GET['event_id'] ?>">
     <meta property="og:type" content="website" />
     <meta property="og:title" content="<?= $event_name ?>" />
     <meta property="og:description" content="Volunteer, Donate events" />
@@ -389,7 +389,7 @@
                 <?php } ?>
 
             </div>
-            <?php if (($volunteer_status == 1) && ($status != 'ended')) { ?>
+            <?php if (($volunteer_status == 1) && ($status != 'ended')){ ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md volunteer-container" style="background-color: #03142d;">
                     <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>
                     <div class="progress" data-width="<?php if ($volunteer_percent == "NULL") echo "0";
@@ -449,7 +449,7 @@
                 </div>
             </div>
 
-            <?php if (($moderator || $organization) && ($status != 'ended')) { ?>
+            <?php if (($moderator || $organization ) && ($status != 'ended')) { ?>
                 <div class="flex-row flex-center content border-round container-size1">
                     <button class="btn data margin-lg" onclick="edit()">Edit &nbsp;&nbsp; <i class="fas fa-edit "></i></button>
                     <button type="button" class="btn btn-solid bg-red border-red form margin-side-md hidden" onclick="edit()">Close &nbsp;&nbsp; <i class="fas fa-times "></i></button>
@@ -460,11 +460,9 @@
                     <?php } ?>
                 </div>
             <?php } ?>
-            <div class="container-size1">
-                <!-- complaint div -->
-                <?php include "complaint.php" ?>
-            </div>
         </div>
+        <!-- complaint div -->
+        <?php if(!($organization||$admin)) include "complaint.php" ?>
     </div>
 
     <div class="popup" id="publish">
@@ -661,7 +659,7 @@
     <?php } ?>
 
     <?php if ($registered_user && isset($_GET["action"]) && $_GET["action"] == "complain") { ?>
-        window.addEventListener('load', (event) => {
+        window.addEventListener('load', (event) =>{
             popupForm('complaint-form');
         });
     <?php } ?>

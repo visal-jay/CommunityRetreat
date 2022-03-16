@@ -38,6 +38,8 @@ class AdminController{
     public function complaint(){
         $user_roles=Controller::accessCheck(["admin"]);
         $data['complaints'] = (new Complaint)->getComplaints();
+        var_dump($data['complaints']);
+        exit;
         View::render("admin",$data,$user_roles);
     }
 

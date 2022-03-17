@@ -358,7 +358,7 @@
             <div class="bold sum flex-row">
                 <!--display the sum of incomes-->
                 <div>Sum of Incomes :</div>
-                <div><?php echo 'Rs. ' . number_format($income_sum, 2) ?></div>
+                <div><?php echo 'Rs. ' . number_format($income_sum + $donation_sum, 2) ?></div>
             </div>
 
             <div class="bold sum flex-row">
@@ -432,7 +432,7 @@
                     <h3 class="details-overflow"></h3>
                     <h3 class="amount-field">Incomes</h3>
                     <h3 class="amount-field">Expenses</h3>
-                    <div class="flex-row btn-field hidden" style="visibility: hidden;">
+                    <div class="flex-row btn-field" style="visibility: hidden;">
                         <div>
                             <!--Update the income and save it in database-->
                             <button class="btn btn-solid update-save-btn " onclick="togglePopup('update-form','<?= $income['details'] ?>', '<?= $income['amount'] ?>', '<?= $income['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
@@ -452,7 +452,7 @@
                     <p class="details-overflow">Donations</p>
                     <p class="amount-field"><?php echo 'Rs. ' . number_format($donation_sum, 2) ?></p>
                     <p class="amount-field"></p>
-                    <div class="flex-row btn-field hidden" style="visibility: hidden;">
+                    <div class="flex-row btn-field" style="visibility: hidden;">
                         <div>
                             <!--Update the income and save it in database-->
                             <button class="btn btn-solid update-save-btn " onclick="togglePopup('update-form','<?= $income['details'] ?>', '<?= $income['amount'] ?>', '<?= $income['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
@@ -500,10 +500,12 @@
             </div>
         </div>
 
+        <?php if(sizeof($report)>9) { ?>
         <div id="income-show-hide-btn" class="income-expense-show-hide-btn">
             <!--Show all the hidden incomes-->
             <button class=" btn btn-solid read-more-btn" onclick="show('income-info');change_button('income-down-btn');"><i id="income-down-btn" class="fas fa-chevron-down"></i></button>
         </div>
+        <?php } ?>
 
     </div>
 
@@ -538,7 +540,7 @@
 <script>
     /*Calculate the balance of incomes and expenses*/
     document.getElementById("balance").innerHTML = "<div>Balance :</div><div> Rs. " +
-        (parseInt('<?= $income_sum  ?>') - parseInt('<?= $expense_sum ?>')).toString().replace(
+        (parseInt('<?= $income_sum  ?>') + parseInt('<?= $donation_sum ?>') - parseInt('<?= $expense_sum ?>')).toString().replace(
             /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","); + "uihui" + "</div>";
 
 

@@ -89,4 +89,28 @@ class Controller
             //Controller::redirect('/Login/view',["redirect"=>$redirect]);
         }
     }
+
+    //function to send POST request to the server
+    public static function send_post_request($url, $data)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $server_output = curl_exec($ch);
+        curl_close($ch);
+        return $server_output;
+    }
+
+    //function to send GET request to the server
+    public static function send_get_request($url)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $server_output = curl_exec($ch);
+        curl_close($ch);
+        return $server_output;
+    }
 }

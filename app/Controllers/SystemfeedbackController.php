@@ -21,5 +21,9 @@ class SystemfeedbackController{
         $systemFeedbacks= $systemFeedback->renderSystemFeedbacks($data);
         return $systemFeedbacks;
     }
+    public function setFeedbackViewed($data){
+        $systemFeedback=new Systemfeedback();
+        $systemFeedback->changeFeedbackState($data);
+    }
 
 }

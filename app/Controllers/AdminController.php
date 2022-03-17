@@ -50,15 +50,14 @@ class AdminController{
         $systemFeedback=new SystemfeedbackController();
         $systemFeedbacks= $systemFeedback->getSystemFeedbacks(["offset" => $pagination["offset"], "no_of_records_per_page" => $pagination["no_of_records_per_page"]]);
         $data['system_feedbacks'] = $systemFeedbacks;
-        View::render("systemFeedback",array_merge($data,$pagination),$user_roles);
- 
+        View::render("systemFeedback",array_merge($data,$pagination),$user_roles); 
     }
 
     //Mark system feedbacks as viewed
     public function feedbackViewed(){
-        $systemFeedback=new Systemfeedback();
+        $systemFeedback=new SystemfeedbackController();
         $data=["feedback_id"=>$_POST['feedback_id']];
-        $systemFeedback->changeFeedbackState($data);
+        $systemFeedback->setFeedbackViewed($data);
         Controller::redirect("systemFeedbacks");
     }
 
@@ -76,7 +75,6 @@ class AdminController{
         $event = new EventController();
         $complaint = new Complaint;
         $event_id = $_POST['event_id'];
-        //sendNotificationMail($uid)
         $event->remove($event_id);
         $complaint->removeComplaint($_POST['complaint_id']);
         Controller::redirect("complaint");

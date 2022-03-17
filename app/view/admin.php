@@ -83,7 +83,7 @@
                         <p><b>By: </b><?= $complaint['username'] ?></p>
                     </div>
                     <div class='margin-side-md' style="display: flex; align-items: center;width: 210px;">
-                        <p><b>Date: </b><?= $complaint['date'] ?>
+                        <p><b>Date: </b><?= date(' F j, Y', strtotime($complaint['date'])) ?>
                         <p>
                     </div>
                     <div class='margin-side-md' style="display: flex; align-items: center;width: 150px;">

@@ -90,7 +90,7 @@ function renderNotifications(){
             notificationbar.appendChild(imagediv);
             let descriptiondiv=  document.createElement('div');
             descriptiondiv.setAttribute("class","description");
-            descriptiondiv.setAttribute("onClick",notify_data[i].path);
+            descriptiondiv.setAttribute("onClick",notify_data[i][0].path);
             descriptiondiv.innerText = notify_data[i][0].description;
             const time_stamp = new Date(notify_data[i][0].date);
             let time = document.createElement('p');

@@ -62,10 +62,10 @@ class AdminController{
     }
 
     function removeUser(){
-        $user = new User();
-        $complaint = new Complaint;
+        $user = new UserController();
+        $complaint = new ComplaintController;
         $uid = $_POST['uid'];
-        //sendNotificationMail($uid)
+        $user->sendNotifications("Your account has been removed...!",$uid,"system","",-1,"removeUserMail",[],"Sorry, Your account has been removed..!");
         $user->removeUser($uid);
         $complaint->removeComplaint($_POST['complaint_id']);
         Controller::redirect("complaint");
@@ -73,11 +73,11 @@ class AdminController{
 
     function removeEvent(){
         $event = new EventController();
-        $complaint = new Complaint;
-        $event_id = $_POST['event_id'];
-        $event->remove($event_id);
+        $complaint = new ComplaintController;
+        $data= ["event_id" => $_POST['event_id']];
+        Controller::send_post_request("Event/remove",$data);
         $complaint->removeComplaint($_POST['complaint_id']);
-        Controller::redirect("complaint");
+        Controller::redirect("complaint");    
     }
 
 }

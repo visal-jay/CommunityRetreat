@@ -76,7 +76,8 @@ class AdminController{
         $data= ["event_id" => $_POST['event_id']];
         $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === 0 ? 'https://' : 'http://';
         $DOMAIN = $protocol . $_SERVER['HTTP_HOST'];
-        Controller::send_post_request($DOMAIN."Event/remove",$data);
+        Controller::send_post_request($DOMAIN."/Event/remove",$data);
+        exit;
         $complaint->removeComplaint($_POST['complaint_id']);
         Controller::redirect("complaint");    
     }

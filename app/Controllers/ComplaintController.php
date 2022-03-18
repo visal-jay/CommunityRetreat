@@ -23,7 +23,8 @@ class ComplaintController{
         }
         else if($_POST['complaint_status'] == "user"){
             $path = "window.location.href='/Feedback/statusToggle?event_id={$_POST['event_id']}&&feedback_id={$_POST['feedback_id']}'";
-            $data = ["complainant_uid" => $complainant_uid, "uid" =>$_POST['uid'], "event_id" => NULL , "complaint_name" =>  $_POST['complaint_name'] , "complaint" =>  $_POST['complaint'], "status" =>  $_POST['complaint_status'], "path" => $path ];
+            $event_details = (new Events)->getDetails($_POST["event_id"]);
+            $data = ["complainant_uid" => $complainant_uid, "uid" =>$_POST['uid'], "event_id" => $_POST['event_id'] , "complaint_name" =>  $_POST['complaint_name'] , "complaint" =>  $_POST['complaint'], "status" =>  $_POST['complaint_status'], "path" => $path ];
             $complaint->addComplaint($data);
             Controller::redirect("/Event/view", ["page" => "feedback", "event_id" => $_POST["event_id"]]);
         }

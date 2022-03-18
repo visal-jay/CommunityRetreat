@@ -64,21 +64,21 @@ class AdminController{
     function removeUser(){
         $user = new UserController();
         $complaint = new ComplaintController;
-        $uid = $_POST['uid'];
-        $user->sendNotifications("Your account has been removed...!",$uid,"system","",-1,"removeUserMail",[],"Sorry, Your account has been removed..!");
-        $user->removeUser($uid);
-        $complaint->removeComplaint($_POST['complaint_id']);
+        $data= ["uid" =>$_POST['uid'], "status" => $_POST['status']];
+        $user->sendNotifications("Your account has been removed...!",$data['uid'],"system","",-1,"removeUserMail",[],"Sorry, Your account has been removed..!");
+        $user->removeUser($data['uid']);
+        $complaint->removeComplaint($data);
         Controller::redirect("complaint");
     }
 
     function removeEvent(){
         $complaint = new ComplaintController;
-        $data= ["event_id" => $_POST['event_id']];
+        $post_data= ["event_id" => $_POST['event_id']];
         $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === 0 ? 'https://' : 'http://';
         $DOMAIN = $protocol . $_SERVER['HTTP_HOST'];
-        Controller::send_post_request($DOMAIN."/Event/remove",$data);
-        exit;
-        $complaint->removeComplaint($_POST['complaint_id']);
+        Controller::send_post_request($DOMAIN."/Event/remove",$post_data);
+        $data= ["event_id" =>$_POST['event_id'], "status" => $_POST['status']];
+        $complaint->removeComplaint($data);
         Controller::redirect("complaint");    
     }
 

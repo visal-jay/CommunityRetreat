@@ -94,14 +94,16 @@
                             <button class='btn btn-small bg-red clr-white' onclick="remove_complaint();" style="border: none;">Resolve</button>
                             <div class="flex-row flex-space " style="display: none;">
                                
-                                <?php if ($complaint['event_id'] != NULL) { ?>
+                                <?php if ( $complaint['status'] == 'event') { ?>
                                     <p class="margin-side-md" style="white-space: nowrap;">Remove this event?</p>
                                     <form method="post" action="/Admin/removeEvent" class="flex-row flex-center">
                                     <input name="event_id" type="hidden" value="<?= $complaint["event_id"] ?>">
+                                    <input name="status" type="hidden" value="<?= $complaint["status"] ?>">
                                 <?php } else { ?>
                                     <p class="margin-side-md" style="white-space: nowrap;">Remove this user?</p>
                                     <form method="post" action="/Admin/removeUser" class="flex-row flex-center">
                                         <input name="uid" type="hidden" value="<?= $complaint["uid"] ?>">
+                                        <input name="status" type="hidden" value="<?= $complaint["status"] ?>">
                                         <?php } ?>
                                         <input type="hidden" name="complaint_id" value="<?= $complaint['complaint_id'] ?>"></input>
                                         <button class="btn-icon flex-row flex-center"><i type="submit" class="fas fa-check clr-green margin-side-md"></i>&nbsp;</button>

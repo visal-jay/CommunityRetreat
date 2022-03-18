@@ -23,9 +23,15 @@ class Complaint extends Model{
         return $result;
     }
 
-    public function deleteComplaint($complaint_id){
-        $query = 'DELETE FROM complaint WHERE complaint_id = :complaint_id';
-        $params = ['complaint_id' => $complaint_id];
+    public function deleteComplaint($data){
+        if($data['status'] == 'user' || $data['status'] == 'organization'){
+            $query = 'DELETE FROM complaint WHERE uid = :uid';
+            $params = ['uid' => $data['uid']];
+        }
+        else{
+            $query = 'DELETE FROM complaint WHERE status = :status AND event_id = :event_id';
+            $params = ['event_id' => $data['event_id'],'status' => $data['status']];
+        }      
         Model::insert($query,$params);
     }
 }

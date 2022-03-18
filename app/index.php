@@ -26,5 +26,3 @@ if(!isset($_SESSION)) session_start();
 $routing = new Routing();
 
 $routing->process($_SERVER['QUERY_STRING']);
-
-

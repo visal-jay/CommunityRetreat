@@ -148,13 +148,15 @@ class EventController
     {
         Controller::validateForm(["event_id"], []);
         Controller::accessCheck(["admin", "organization"]);
+        var_dump($_SESSION);
         $time = (int)shell_exec("date '+%s'");
         $event = new Events();
         $event_details = $event->getDetails($_POST["event_id"]);
         $end_date = $event_details["end_date"];
-        $userroles = (new Organisation)->getUserRoles($_GET["event_id"]);
+        $userroles = (new Organisation)->getUserRoles($_POST["event_id"]);
         $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === 0 ? 'https://' : 'http://';
         $DOMAIN = $protocol . $_SERVER['HTTP_HOST'];
+        var_dump($userroles);
         foreach($userroles as $user)
         {
             if($user["moderator_flag"])  

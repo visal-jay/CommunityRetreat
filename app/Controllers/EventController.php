@@ -152,7 +152,17 @@ class EventController
         $event = new Events();
         $event_details = $event->getDetails($_POST["event_id"]);
         $end_date = $event_details["end_date"];
-
+        $userroles = (new Organisation)->getUserRoles($_GET["event_id"]);
+        $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === 0 ? 'https://' : 'http://';
+        $DOMAIN = $protocol . $_SERVER['HTTP_HOST'];
+        foreach($userroles as $user)
+        {
+            if($user["moderator_flag"])  
+                Controller::send_post_request($DOMAIN."/Organisation/deleteUserRole?event_id" . $_POST["evnet_id"],["role"=>"Moderator","uid"=>$user["uid"]]);
+            if($user["treasurer_flag"])
+                Controller::send_post_request($DOMAIN."/Organisation/deleteUserRole?event_id" . $_POST["evnet_id"],["role"=>"Treasurer","uid"=>$user["uid"]]);
+        }
+        
         if (gmdate("Y-m-d", $time) < $end_date) {
             (new DonationsController)->donationRefund($_POST["event_id"]);
         }

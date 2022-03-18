@@ -94,7 +94,7 @@ class DonationsController
         $data["donations"] = $donation->donationReportGenerate($_GET["event_id"], isset($_POST["date"]) ? $_POST["date"] : -1);
 
         $end_date = gmdate("Y-m-d", $time) < $event_details["end_date"] && $time != 0 ? gmdate("Y-m-d", $time) : $event_details["end_date"];
-        $end_date = $event_details["end_date"];
+        //$end_date = $event_details["end_date"];
         $data["event_name"]  = $event_details["event_name"];
         $period = new DatePeriod(
             new DateTime($first_date),

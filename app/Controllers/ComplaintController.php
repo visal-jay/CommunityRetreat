@@ -18,7 +18,7 @@ class ComplaintController{
             $path = "window.location.href='/Organisation/view?page=about&org_id={$_POST['uid']}'";
             $data = ["complainant_uid" => $complainant_uid, "uid" =>$_POST['uid'], "event_id" => NULL , "complaint_name" => $_POST['complaint_name'] , "complaint" =>  $_POST['complaint'], "status" =>  $_POST['complaint_status'], "path" => $path ];
             $complaint->addComplaint($data);
-            Controller::redirect("/Organisation/view");
+            Controller::redirect("/Organisation/view",["org_id" => $_POST["uid"], "page" => "about"]);
 
         }
         else if($_POST['complaint_status'] == "user"){

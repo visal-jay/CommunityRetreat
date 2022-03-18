@@ -3,7 +3,7 @@
 class SearchController {
 
     function view() {
-        $user_roles=Controller::accessCheck(["guest_user","registered_user"]);
+        $user_roles=Controller::accessCheck(["guest_user","registered_user","admin"]);
         View::render("searchPage",[],$user_roles);
     }
 

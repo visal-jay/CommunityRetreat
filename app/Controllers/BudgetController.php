@@ -30,12 +30,12 @@ class BudgetController
         foreach ($dates as $date) {
             $chart[] = ["day" => $date, "amount" => 0];
         }
-
+        
         $temp_income_graph = array_merge($income_graph, $chart);
         $data["income_graph"] = (array_intersect_key($temp_income_graph, array_unique(array_column($temp_income_graph, 'day'))));
         $temp_expense_graph = array_merge($expense_graph, $chart);
         $data["expense_graph"] = (array_intersect_key($temp_expense_graph, array_unique(array_column($temp_expense_graph, 'day'))));
-
+        
         usort($data["expense_graph"], function ($a, $b) {
             return strcmp($a['day'], $b['day']);
         });
@@ -84,7 +84,7 @@ class BudgetController
         $budget = new Budget();
         $validate = new Validation;
         if (!$validate->currency($_POST["amount"]))/*find whether updated amount is valid*/
-            Controller::redirect("/Event/view?page=budget&&event_id=" . $_POST["event_id"], ["amountErr" => "Inavlid amount"]);
+            Controller::redirect("/Event/view", ["page"=>"budget","event_id" => $_POST["event_id"],"amountErr" => "Inavlid amount"]);
         if (strpos($_POST["record_id"], 'INC') !== false) {
             $budget->updateIncome($_POST);
         } else if (strpos($_POST["record_id"], 'EXP') !== false) {

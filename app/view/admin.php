@@ -80,7 +80,7 @@
                         <h4 style="cursor: pointer;" onclick="<?= $complaint['path'] ?>"><?= $complaint['complaint_name'] ?></h4>
                     </div>
                     <div class='margin-side-md' style="display: flex; align-items: center;width: 195px;">
-                        <p><b>By: </b><?= $complaint['username'] ?></p>
+                        <p><b>By: </b><?= $complaint['complainant_name'] ?></p>
                     </div>
                     <div class='margin-side-md' style="display: flex; align-items: center;width: 210px;">
                         <p><b>Date: </b><?= date(' F j, Y', strtotime($complaint['date'])) ?>

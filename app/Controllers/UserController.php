@@ -171,6 +171,11 @@ class UserController{
         echo json_encode(array("taken"=>(new User)->checkUserEmail($_POST["email"])));
     }
 
+    function removeUser($data){
+        $user = new User();
+        $user->removeUser($data);
+    }
+
 
 
 }

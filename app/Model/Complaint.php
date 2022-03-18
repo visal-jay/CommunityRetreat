@@ -16,7 +16,7 @@ class Complaint extends Model{
         return $result;
     }
 
-    public function removeComplaint($complaint_id){
+    public function deleteComplaint($complaint_id){
         $query = 'DELETE FROM complaint WHERE complaint_id = :complaint_id';
         $params = ['complaint_id' => $complaint_id];
         Model::insert($query,$params);

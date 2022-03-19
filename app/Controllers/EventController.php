@@ -156,7 +156,6 @@ class EventController
         $userroles = (new Organisation)->getUserRoles($_POST["event_id"]);
         $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === 0 ? 'https://' : 'http://';
         $DOMAIN = $protocol . $_SERVER['HTTP_HOST'];
-        var_dump($userroles);
         foreach($userroles as $user)
         {
             if($user["moderator_flag"])  

@@ -148,7 +148,9 @@ class EventController
     {
         Controller::validateForm(["event_id"], []);
         Controller::accessCheck(["admin", "organization"]);
-        var_dump($_SESSION);
+        //var_dump($_SESSION);
+        //var_dump($_POST);
+        
         $time = (int)shell_exec("date '+%s'");
         $event = new Events();
         $event_details = $event->getDetails($_POST["event_id"]);
@@ -159,9 +161,9 @@ class EventController
         foreach($userroles as $user)
         {
             if($user["moderator_flag"])  
-                Controller::send_post_request($DOMAIN."/Organisation/deleteUserRole?event_id" . $_POST["evnet_id"],["role"=>"Moderator","uid"=>$user["uid"]]);
+                Controller::send_post_request($DOMAIN."/Organisation/deleteUserRole?event_id" . $_POST["event_id"],["role"=>"Moderator","uid"=>$user["uid"]]);
             if($user["treasurer_flag"])
-                Controller::send_post_request($DOMAIN."/Organisation/deleteUserRole?event_id" . $_POST["evnet_id"],["role"=>"Treasurer","uid"=>$user["uid"]]);
+                Controller::send_post_request($DOMAIN."/Organisation/deleteUserRole?event_id" . $_POST["event_id"],["role"=>"Treasurer","uid"=>$user["uid"]]);
         }
         
         if (gmdate("Y-m-d", $time) < $end_date) {
@@ -170,6 +172,7 @@ class EventController
         (new VolunteerController)->sendNotificationstoVolunteers("{$event_details['event_name']} event  has been removed.","/",$_POST["event_id"],"removeEventMail",["event_name"=>$event_details['event_name']],"{$event_details['event_name']} event  has been removed.");
         (new Volunteer)->removeVolunteers($_POST["event_id"]);
         $event->remove($_POST["event_id"]);
+        
         Controller::redirect("/Organisation/events");
     }
 

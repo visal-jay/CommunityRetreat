@@ -189,17 +189,18 @@ class UserController
     {
         $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === 0 ? 'https://' : 'http://';
         $DOMAIN = $protocol . $_SERVER['HTTP_HOST'];
-        if (stripos($uid, "ORG")) {
-            $events = (new Events)->query(["org_id" => $uid]);
+        if (stripos($uid, "ORG")!==false) {
+            $events = (new Events)->query(["org_uid" => $uid]);
             foreach ($events as $event)
-                Controller::send_post_request($DOMAIN . "/Event/remove", $event["event_id"]);
-        } elseif (stripos($uid, "REG")) {
+                Controller::send_post_request($DOMAIN . "/Event/remove", ["event_id" => $event['event_id']]);
+           
+        } elseif (stripos($uid, "REG")!==false) {
             $administrations = (new RegisteredUser)->getAdministrations(["uid" => $uid, "offset" => 0, "no_of_records_per_page" => 18446744073709551615]);
             foreach ($administrations as $administration) {
                 if ($administration["moderator_flag"])
-                    Controller::send_post_request($DOMAIN . "/Organisation/deleteUserRole?event_id" . $administration["evnet_id"], ["role" => "Moderator", "uid" => $uid]);
+                    Controller::send_post_request($DOMAIN . "/Organisation/deleteUserRole?event_id" . $administration["event_id"], ["role" => "Moderator", "uid" => $uid]);
                 if ($administration["treasurer_flag"])
-                    Controller::send_post_request($DOMAIN . "/Organisation/deleteUserRole?event_id" . $administration["evnet_id"], ["role" => "Treasurer", "uid" => $uid]);
+                    Controller::send_post_request($DOMAIN . "/Organisation/deleteUserRole?event_id" . $administration["event_id"], ["role" => "Treasurer", "uid" => $uid]);
             }
         }
         $user = new User();

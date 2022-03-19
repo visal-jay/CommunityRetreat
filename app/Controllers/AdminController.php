@@ -81,13 +81,13 @@ class AdminController{
         $user_roles = (new Organisation)->getUserRoles($_POST['event_id']);
         $event_details = (new Events)->getDetails($_POST['event_id']);
 
-        if($user_roles == []){
+        if($user_roles != []){
             foreach($user_roles as $user_role){
                 
                 $user->sendNotifications($event_details['event_name']." event has been removed...!",$user_role['uid'],"system","",$post_data['event_id'],"removeEventMail",["event_name" => $event_details['event_name']],$event_details['event_name']." event has been removed...!");
             }
         }
-        
+
        if($event_details['org_uid'] != NULL){
             $user->sendNotifications($event_details['event_name']." event has been removed...!",$event_details['org_uid'],"system","",-1,"removeEventMail",["event_name" => $event_details['event_name']],$event_details['event_name']." event has been removed...!");
        }

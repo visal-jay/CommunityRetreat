@@ -72,6 +72,10 @@ class Donations extends Model
         $query = "UPDATE `donation` SET `donation_status` = 'refunded' WHERE  `event_id` =:event_id";
         $params = ["event_id" => $event_id];
         Model::insert($query, $params);
+
+        $query = "UPDATE `income` SET `status`= 'deleted' WHERE `event_id` =:event_id";
+        $params = ["event_id" => $event_id];
+        Model::insert($query, $params);
     }
 
     public function donationCredit()

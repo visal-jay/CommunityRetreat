@@ -148,8 +148,6 @@ class EventController
     {
         Controller::validateForm(["event_id"], []);
         Controller::accessCheck(["admin", "organization"]);
-        //var_dump($_SESSION);
-        //var_dump($_POST);
         
         $time = (int)shell_exec("date '+%s'");
         $event = new Events();
@@ -172,7 +170,6 @@ class EventController
         (new VolunteerController)->sendNotificationstoVolunteers("{$event_details['event_name']} event  has been removed.","/",$_POST["event_id"],"removeEventMail",["event_name"=>$event_details['event_name']],"{$event_details['event_name']} event  has been removed.");
         (new Volunteer)->removeVolunteers($_POST["event_id"]);
         $event->remove($_POST["event_id"]);
-        
         Controller::redirect("/Organisation/events");
     }
 

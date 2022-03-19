@@ -55,6 +55,7 @@ class AdminController{
 
     //Mark system feedbacks as viewed
     public function feedbackViewed(){
+        Controller::validateForm(['feedback_id'],[]);
         $systemFeedback=new SystemfeedbackController();
         $data=["feedback_id"=>$_POST['feedback_id']];
         $systemFeedback->setFeedbackViewed($data);
@@ -62,6 +63,7 @@ class AdminController{
     }
 
     function removeUser(){
+        Controller::validateForm(['uid','status'],[]);
         $user = new UserController();
         $complaint = new ComplaintController;
         $data= ["uid" =>$_POST['uid'], "status" => $_POST['status']];
@@ -72,8 +74,24 @@ class AdminController{
     }
 
     function removeEvent(){
+        Controller::validateForm(['event_id','status'],[]);
         $complaint = new ComplaintController;
+        $user = new UserController();    
         $post_data= ["event_id" => $_POST['event_id']];
+        $user_roles = (new Organisation)->getUserRoles($_POST['event_id']);
+        $event_details = (new Events)->getDetails($_POST['event_id']);
+
+        if($user_roles == []){
+            foreach($user_roles as $user_role){
+                
+                $user->sendNotifications($event_details['event_name']." event has been removed...!",$user_role['uid'],"system","",$post_data['event_id'],"removeEventMail",["event_name" => $event_details['event_name']],$event_details['event_name']." event has been removed...!");
+            }
+        }
+        
+       if($event_details['org_uid'] != NULL){
+            $user->sendNotifications($event_details['event_name']." event has been removed...!",$event_details['org_uid'],"system","",-1,"removeEventMail",["event_name" => $event_details['event_name']],$event_details['event_name']." event has been removed...!");
+       }
+       
         $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === 0 ? 'https://' : 'http://';
         $DOMAIN = $protocol . $_SERVER['HTTP_HOST'];
         Controller::send_post_request($DOMAIN."/Event/remove",$post_data);

@@ -33,7 +33,7 @@
                             <h2
                               style="font-family:Whitney,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;font-weight:500;font-size:20px;color:#4f545c;letter-spacing:0.27px">
                               Hey <?= $receiver_name?>,</h2>
-                              <p><?=$event_name?> event  has been removed.</p>
+                              <p>Sorry, <?=$event_name?> event  has been removed.</p>
 
                           </div>
                         </td>

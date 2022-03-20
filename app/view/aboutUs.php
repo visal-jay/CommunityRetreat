@@ -151,7 +151,7 @@
 <?php include "nav.php" ?>
 
 <body>
-    <div class="container" style="min-height:65%">
+    <div class="container" style="min-height:80%">
         <h2>About Us</h2>
         <p class="margin-md">We are a group of four second year computer science undergraduates at University of Colombo School of Computing</p>
 

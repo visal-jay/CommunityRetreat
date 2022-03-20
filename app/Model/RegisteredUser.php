@@ -6,7 +6,7 @@ class RegisteredUser extends User
 {
     //Function for get user roles(Moderator/Treasurer)
     public function getUserRoles($uid,$event_id){
-        $query = 'SELECT  moderator_flag,treasurer_flag FROM moderator_treasurer WHERE uid = :uid AND event_id = :event_id';
+        $query = 'SELECT  moderator_flag,treasurer_flag FROM moderator_treasurer JOIN event_details ON moderator_treasurer.event_id = event_details.event_id WHERE moderator_treasurer.uid = :uid AND moderator_treasurer.event_id = :event_id AND NOT event_details.status = "deleted"';
         $params = ["uid" => $uid,"event_id"=>$event_id];
         $result=User::select($query,$params);
         $data=array();

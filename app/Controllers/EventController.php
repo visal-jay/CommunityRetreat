@@ -148,7 +148,7 @@ class EventController
     {
         Controller::validateForm(["event_id"], []);
         Controller::accessCheck(["admin", "organization"]);
-        var_dump($_SESSION);
+        
         $time = (int)shell_exec("date '+%s'");
         $event = new Events();
         $event_details = $event->getDetails($_POST["event_id"]);
@@ -156,13 +156,12 @@ class EventController
         $userroles = (new Organisation)->getUserRoles($_POST["event_id"]);
         $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === 0 ? 'https://' : 'http://';
         $DOMAIN = $protocol . $_SERVER['HTTP_HOST'];
-        var_dump($userroles);
         foreach($userroles as $user)
         {
             if($user["moderator_flag"])  
-                Controller::send_post_request($DOMAIN."/Organisation/deleteUserRole?event_id" . $_POST["evnet_id"],["role"=>"Moderator","uid"=>$user["uid"]]);
+                Controller::send_post_request($DOMAIN."/Organisation/deleteUserRole?event_id" . $_POST["event_id"],["role"=>"Moderator","uid"=>$user["uid"]]);
             if($user["treasurer_flag"])
-                Controller::send_post_request($DOMAIN."/Organisation/deleteUserRole?event_id" . $_POST["evnet_id"],["role"=>"Treasurer","uid"=>$user["uid"]]);
+                Controller::send_post_request($DOMAIN."/Organisation/deleteUserRole?event_id" . $_POST["event_id"],["role"=>"Treasurer","uid"=>$user["uid"]]);
         }
         
         if (gmdate("Y-m-d", $time) < $end_date) {

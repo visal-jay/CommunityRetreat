@@ -19,7 +19,7 @@
 
     .background {
         display: flex;
-        height: 70%;
+        min-height: 90%;
         justify-content: center;
         align-items: center;      
     }

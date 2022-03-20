@@ -8,7 +8,7 @@ class EventController
     public function view()
     {
         if ($event_details = array_intersect_key((new Events)->getDetails($_GET["event_id"]),["event_name" => '', "cover_photo" => '',"status" => '', "end_date"=>''])) {
-            $page=isset($_GET["page"]) ? $_GET["page"] : "about" ;
+            $page=isset($_GET["page"]) ? $_GET["page"] : "home" ;
             $this->$page($event_details);
         } else
             Controller::redirect("/User/home");
@@ -123,7 +123,7 @@ class EventController
     public function updateDetails()
     {
         Controller::accessCheck(["moderator", "organization", "guest_user", "registered_user"], $_GET["event_id"]);
-
+        $user = new UserController;
         $validate = new Validation;
         foreach ($_POST as $key => $value) {
             $_POST[$key] = trim($_POST[$key]);
@@ -134,7 +134,7 @@ class EventController
         $volunteered_uid = $volunteer->getvolunteereduidOutofRange( $_GET["event_id"], $_POST["start_date"], $_POST["end_date"]);
         for ($i = 0; $i < count($volunteered_uid); $i++) {
             foreach ($volunteered_uid[$i] as $uid) {
-                (new UserController)->sendNotifications("{$_POST['event_name']} event informations has been changed.Please volunteer again..!",$uid,"event","window.location.href='/Event/view?page=about&&event_id={$_GET["event_id"]}'",$_GET["event_id"],"eventUpdateMail",["event_name"=>$_POST['event_name'] ,"volunteered_date_changed"=> true],"{$_POST['event_name']} event informations has been changed..!");
+                $user->sendNotifications("{$_POST['event_name']} event informations has been changed.Please volunteer again..!",$uid,"event","window.location.href='/Event/view?page=about&&event_id={$_GET["event_id"]}'",$_GET["event_id"],"eventUpdateMail",["event_name"=>$_POST['event_name'] ,"volunteered_date_changed"=> true],"{$_POST['event_name']} event informations has been changed..!");
                 $volunteer->removeVolunteersOutofRange( $_GET["event_id"],$uid,$_POST["start_date"],$_POST["end_date"]);
             }
         }

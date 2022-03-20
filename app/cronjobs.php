@@ -19,4 +19,4 @@ $events = new EventController();
 $events->endEvents();
 
 $volhnteer = new VolunteerController();
-#$volhnteer->notifyNearEvents();
+$volhnteer->notifyNearEvents();

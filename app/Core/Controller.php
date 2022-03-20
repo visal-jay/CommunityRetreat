@@ -46,10 +46,13 @@ class Controller
         if (isset($_SESSION["user"]["user_type"])) {
             if (in_array($_SESSION["user"]["user_type"], $userroles))
                 $data[$_SESSION["user"]["user_type"]] = true;
+            
+                //var_dump($userroles);
+             
 
             //treasurer moderetator access check
             $moderator_treasurer = (new RegisteredUser)->getUserRoles($_SESSION["user"]["uid"], $event_id);
-
+            
             if ($moderator_treasurer && $event_status != "deleted") {
                 $data["registered_user"] = true;
                 if (in_array("moderator", $moderator_treasurer) && in_array("moderator", $userroles)) {
@@ -67,7 +70,7 @@ class Controller
             //organization admin access check
             if ($_SESSION["user"]["user_type"] == "organization" && in_array("organization", $userroles) && $event_id != '-1' && $event_status!="deleted" && $event_org == $_SESSION["user"]["uid"])
                 {}
-            else if ($event_id!='-1')
+            else if ($_SESSION["user"]["user_type"] == "organization" && in_array("organization", $userroles) && $event_id!='-1')
                 Controller::redirect("/Organisation/events");
             /* if ($_SESSION["user"]["user_type"] == "organization" && in_array("organization", $userroles) && $event_id != '-1') {
                 var_dump($event_org);
@@ -91,6 +94,7 @@ class Controller
 
         elseif (in_array("guest_user", $userroles)) {
             $data["guest_user"] = true;
+            
             if($event_id != '-1' && $event_status != "published")
                 Controller::redirect("/");
         }

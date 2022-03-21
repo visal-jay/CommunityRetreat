@@ -16,7 +16,7 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        height: 70vh;
+        min-height: 90%;
     }
     .box {
         max-width: inherit;

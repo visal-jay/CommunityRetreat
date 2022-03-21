@@ -248,14 +248,16 @@
     </div>
 
     <footer class="main-footer">
-        <?php if ($organization || $registered_user ||$moderator || $treasurer) { ?>
+        <?php if (!$admin) { ?>
             <div class="footer-content-container">
                 <div class="footer-main-content">
                     <p onclick="window.location.href='/Main/aboutUs'" class="footer-content">About Us</p>
                 </div>
+             <?php if (!$guest_user) { ?>
                 <div class="footer-main-content">
                     <p class="footer-content" onclick="popup()">Feedback Us</p>
                 </div>
+            <?php } ?>
                 <div class="footer-main-content">
                     <p onclick="window.location.href='/Main/contactUs'" class="footer-content">Contact Us</p>
                 </div>

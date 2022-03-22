@@ -2,7 +2,6 @@
 
 class VolunteerController{
     //volunteer
-
     public function view($event_details){
         $user_roles = Controller::accessCheck(["moderator", "organization"],$_GET["event_id"]);
         $data = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["volunteer_status" => '', "volunteer_capacity" => '', "status" => '']);
@@ -15,6 +14,7 @@ class VolunteerController{
         $data = array_merge($data, $event_details);
         View::render('eventPage', $data, $user_roles);
     }
+
     public function disableVolunteer()
     { //disable donations for an event
         Controller::validateForm([],["event_id"]);
@@ -58,10 +58,12 @@ class VolunteerController{
 
     
     public function volunteerEvent(){
+        //selected days list
         if(isset($_POST['volunteer_date'])){
             Controller::validateForm(["volunteer_date"],["event_id"]);
             $volunteer_dates = $_POST['volunteer_date'];  
         }
+        //empty volunteer list
         else{
             $volunteer_dates =[];
         }
@@ -70,7 +72,6 @@ class VolunteerController{
         $description = $volunteer->addVolunteerDetails($_SESSION["user"]["uid"],$event_id,$volunteer_dates);
         (new UserController)->addActivity($description,$event_id);
         Controller::redirect("/Event/view", ["page" => "about", "event_id" => $event_id ]);
-
     }
 
 
@@ -79,10 +80,12 @@ class VolunteerController{
         Controller::validateForm([], ["url", "event_id"]);
         Controller::accessCheck(["organization","moderator"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/ 
         $volunteer = new Volunteer;
+        //filtering
         if(isset($_POST["volunteer_date"]) && $_POST["volunteer_date"]!=""){
             $data["volunteers"] = $volunteer->getVolunteerDetails($_GET["event_id"],0,0,$_POST["volunteer_date"]);
             $data["volunteer_date_req"]=$_POST["volunteer_date"];
         }
+        //without filtering
         else{
             $data["volunteers"] = $volunteer->getVolunteerDetails($_GET["event_id"]);
             $data["volunteer_date_req"]=FALSE;
@@ -103,7 +106,6 @@ class VolunteerController{
                 (new UserController)->sendNotifications($notification,$uid,"event",$path,$event_id,$body_file,$data,$subject);
             }
         }
-
     }
 
     public function notifyNearEvents(){

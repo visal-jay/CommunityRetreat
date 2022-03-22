@@ -325,7 +325,7 @@
             </div>
         </div>
     <?php } ?>
-    <!-- popup -->
+    <!-- update announcement popup -->
     <div class="popup" id="update_announcement_id">
         <div class="content">
 

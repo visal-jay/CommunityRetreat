@@ -450,7 +450,7 @@
                 <?php } ?>
             </div>
             <?php if ($have_account_number == "TRUE" && ($organization || $treasurer)) { ?>
-                <button onclick="window.location.href='/Donations/enableDonation?event_id= <?= $_GET['event_id'] ?>'" class="btn btn-lg btn-solid" id="initial-donation-enable-btn" onclick='blur_background() ' >Enable Donations</button>
+                <button onclick="window.location.href='/Donations/enableDonation?event_id=<?= $_GET['event_id'] ?>'" class="btn btn-lg btn-solid" id="initial-donation-enable-btn" onclick='blur_background() ' >Enable Donations</button>
             <?php } else if ($have_account_number == "FALSE" && ($organization)) { ?>
                 <button onclick="window.location.href='/Organisation/profile?email_Update_Err=Please+insert+bank+account+details'" class="btn btn-lg btn-solid" id="initial-donation-enable-btn" >Enable Donations</button>
             <?php } else if ($have_account_number == "FALSE" && ($treasurer)) { ?>

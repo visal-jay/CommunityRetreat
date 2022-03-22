@@ -72,35 +72,36 @@ class DonationsController
         $donation = new Donations;
         $data["donations"] = $donation->donationReportGenerate($_GET["event_id"], isset($_POST["date"]) ? $_POST["date"] : -1);
         $data["selected_date"] = isset($_POST["date"]) ? $_POST["date"] : -1;
-        $data["donations_graph"] = json_encode($donation->getReport(["event_id" => $_GET["event_id"]]));
+        $donation_graph = $donation->getReport(["event_id" => $_GET["event_id"]]);
+        $data["donations_graph"] = json_encode($donation_graph);
         $data["donation_sum"] = $donation->getDonationSum($_GET["event_id"]);
         $event_details = (new Events)->getDetails($_GET["event_id"]);
+        $data["event_name"]  = $event_details["event_name"];
         $time = (int)shell_exec("date '+%s'");
         $start_date = $event_details["start_date"];
 
-        
-        $dates = array_column(json_decode($data["donations_graph"]),"day");
-        $min =min($dates);
-        
-        if(sizeof($dates)==0 || $min>$start_date){
-            $first_date = $event_details["start_date"];
-        } else{
-            $first_date = $min;
-        }
+        if ($donation_graph) {
+            $dates = array_column($donation_graph, "day");
+            $min = min($dates);
 
-        $data["donations"] = $donation->donationReportGenerate($_GET["event_id"], isset($_POST["date"]) ? $_POST["date"] : -1);
+            if (sizeof($dates) == 0 || $min > $start_date) {
+                $first_date = $event_details["start_date"];
+            } else {
+                $first_date = $min;
+            }
 
-        $end_date = gmdate("Y-m-d", $time) < $event_details["end_date"] && $time != 0 ? gmdate("Y-m-d", $time) : $event_details["end_date"];
-        //$end_date = $event_details["end_date"];
-        $data["event_name"]  = $event_details["event_name"];
-        $period = new DatePeriod(
-            new DateTime($first_date),
-            new DateInterval('P1D'),
-            new DateTime($end_date)
-        );
+            $end_date = gmdate("Y-m-d", $time) < $event_details["end_date"] && $time != 0 ? gmdate("Y-m-d", $time) : $event_details["end_date"];
+            $period = new DatePeriod(
+                new DateTime($first_date),
+                new DateInterval('P1D'),
+                new DateTime($end_date)
+            );
 
-        foreach ($period as $date) {
-            $data["period"][] = $date->format('Y-m-d');
+            foreach ($period as $date) {
+                $data["period"][] = $date->format('Y-m-d');
+            }
+        } else {
+            $data["period"] = [];
         }
 
 

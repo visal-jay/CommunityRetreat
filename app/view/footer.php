@@ -234,13 +234,12 @@
     <div class="feedback-container">
 
         <!-- Feedback form -->
-        <form action="/Systemfeedback/getSystemFeedbacks" method="post" class="feedback-form">
+        <form action="/Systemfeedback/makeSystemFeedbacks" method="post" class="feedback-form">
 
             <h2>Send us some feedback !</h2>
             <p>Do you have a suggestion or found some bug? Let us know in the field below.</p>
             <textarea cols="40" rows="8" placeholder="Describe here" class="feedback-textarea form-ctrl" name="feedback" required></textarea>
             <div class="confirm-buttons">
-
                 <button type="submit" class="btn bg-green clr-white border-green">Submit</button>
                 <button type="button" onclick="popup()" class="btn bg-red clr-white border-red">Cancel</button>
             </div>
@@ -254,9 +253,11 @@
                 <div class="footer-main-content">
                     <p onclick="window.location.href='/Main/aboutUs'" class="footer-content">About Us</p>
                 </div>
+             <?php if (!$guest_user) { ?>
                 <div class="footer-main-content">
                     <p class="footer-content" onclick="popup()">Feedback Us</p>
                 </div>
+            <?php } ?>
                 <div class="footer-main-content">
                     <p onclick="window.location.href='/Main/contactUs'" class="footer-content">Contact Us</p>
                 </div>

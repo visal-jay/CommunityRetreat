@@ -358,7 +358,7 @@
             <div class="bold sum flex-row">
                 <!--display the sum of incomes-->
                 <div>Sum of Incomes :</div>
-                <div><?php echo 'Rs. ' . number_format($income_sum, 2) ?></div>
+                <div><?php echo 'Rs. ' . number_format($income_sum + $donation_sum, 2) ?></div>
             </div>
 
             <div class="bold sum flex-row">
@@ -377,11 +377,7 @@
             <button class="btn btn-md btn-solid" onclick="window.location.href=' /Budget/budgetReport?event_id=<?= $_GET['event_id'] ?>'">Full
                 Budget details</button>
         </div>
-<!--
-        <div id="chart">
-            <div id="timeline-chart"></div>
-        </div>
--->
+
         <div class="center canvas-graph">
             <canvas id="myChart"></canvas>
         </div>
@@ -436,7 +432,7 @@
                     <h3 class="details-overflow"></h3>
                     <h3 class="amount-field">Incomes</h3>
                     <h3 class="amount-field">Expenses</h3>
-                    <div class="flex-row btn-field hidden" style="visibility: hidden;">
+                    <div class="flex-row btn-field" style="visibility: hidden;">
                         <div>
                             <!--Update the income and save it in database-->
                             <button class="btn btn-solid update-save-btn " onclick="togglePopup('update-form','<?= $income['details'] ?>', '<?= $income['amount'] ?>', '<?= $income['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
@@ -456,7 +452,7 @@
                     <p class="details-overflow">Donations</p>
                     <p class="amount-field"><?php echo 'Rs. ' . number_format($donation_sum, 2) ?></p>
                     <p class="amount-field"></p>
-                    <div class="flex-row btn-field hidden" style="visibility: hidden;">
+                    <div class="flex-row btn-field" style="visibility: hidden;">
                         <div>
                             <!--Update the income and save it in database-->
                             <button class="btn btn-solid update-save-btn " onclick="togglePopup('update-form','<?= $income['details'] ?>', '<?= $income['amount'] ?>', '<?= $income['record_id'] ?>','<?= $_GET['event_id'] ?>'); blur_background('container');stillBackground('id1')">update</button>
@@ -504,10 +500,12 @@
             </div>
         </div>
 
+        <?php if(sizeof($report)>9) { ?>
         <div id="income-show-hide-btn" class="income-expense-show-hide-btn">
             <!--Show all the hidden incomes-->
             <button class=" btn btn-solid read-more-btn" onclick="show('income-info');change_button('income-down-btn');"><i id="income-down-btn" class="fas fa-chevron-down"></i></button>
         </div>
+        <?php } ?>
 
     </div>
 
@@ -542,7 +540,7 @@
 <script>
     /*Calculate the balance of incomes and expenses*/
     document.getElementById("balance").innerHTML = "<div>Balance :</div><div> Rs. " +
-        (parseInt('<?= $income_sum  ?>') - parseInt('<?= $expense_sum ?>')).toString().replace(
+        (parseInt('<?= $income_sum  ?>') + parseInt('<?= $donation_sum ?>') - parseInt('<?= $expense_sum ?>')).toString().replace(
             /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","); + "uihui" + "</div>";
 
 
@@ -604,115 +602,6 @@
         }
         /*when down button is clicked it changes to up button.*/
     }
-</script>
-
-<script>
-    /*
-    var options = {
-        chart: {
-            type: "area",
-            height: 300,
-            foreColor: "#999",
-            stacked: true,
-            dropShadow: {
-                enabled: true,
-                enabledSeries: [0],
-                top: -2,
-                left: 2,
-                blur: 5,
-                opacity: 0.06
-            }
-        },
-        colors: ['#00E396', '#0090FF', '#FFFF50'],
-        stroke: {
-            curve: "smooth",
-            width: 3
-        },
-        dataLabels: {
-            enabled: false
-        },
-        series: [{
-            name: 'Income',
-            data: <?php echo json_encode($income_graph); ?>
-        }, {
-            name: 'Expense',
-            data: <?php echo json_encode($expense_graph); ?>
-        }, {
-            name: 'Balance',
-            data: <?php echo json_encode($balance_graph); ?>
-        }],
-        markers: {
-            size: 0,
-            strokeColor: "#fff",
-            strokeWidth: 3,
-            strokeOpacity: 1,
-            fillOpacity: 1,
-            hover: {
-                size: 6
-            }
-        },
-        xaxis: {
-            type: "datetime",
-            axisBorder: {
-                show: false
-            },
-            axisTicks: {
-                show: false
-            }
-        },
-        yaxis: {
-            labels: {
-                offsetX: 14,
-                offsetY: -5
-            },
-            tooltip: {
-                enabled: true
-            }
-        },
-        grid: {
-            padding: {
-                left: -5,
-                right: 5
-            }
-        },
-        tooltip: {
-            x: {
-                format: "dd MMM yyyy"
-            },
-        },
-        legend: {
-            position: 'top',
-            horizontalAlign: 'left'
-        },
-        fill: {
-            type: "solid",
-            fillOpacity: 0.7
-        }
-    };
-
-    var chart = new ApexCharts(document.querySelector("#timeline-chart"), options);
-
-    chart.render();
-
-    function generateDayWiseTimeSeries(s, count) {
-        var values = [
-            [
-                4, 3, 10, 9, 29, 19, 25, 9, 12, 7, 19, 5, 13, 9, 17, 2, 7, 5
-            ],
-            [
-                2, 3, 8, 7, 22, 16, 23, 7, 11, 5, 12, 5, 10, 4, 15, 2, 6, 2
-            ]
-        ];
-        var i = 0;
-        var series = [];
-        var x = new Date("11 Nov 2012").getTime();
-        while (i < count) {
-            series.push([x, values[s][i]]);
-            x += 86400000;
-            i++;
-        }
-        return series;
-    }*/
 </script>
 
 <script>

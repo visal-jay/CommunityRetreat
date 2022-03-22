@@ -70,14 +70,13 @@ class DonationsController
 
     public function donationReport()/*Generate the report of all the donations*/
     {
-        /* echo "hi";
-        exit(); */
         Controller::validateForm([], ["url", "event_id"]);
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
         $donation = new Donations;
         $data["donations"] = $donation->donationReportGenerate($_GET["event_id"], isset($_POST["date"]) ? $_POST["date"] : -1);
         $data["selected_date"] = isset($_POST["date"]) ? $_POST["date"] : -1;
         $data["donations_graph"] = json_encode($donation->getReport(["event_id" => $_GET["event_id"]]));
+        $data["donation_sum"] = $donation->getDonationSum($_GET["event_id"]);
         $event_details = (new Events)->getDetails($_GET["event_id"]);
         $time = (int)shell_exec("date '+%s'");
         $start_date = $event_details["start_date"];
@@ -95,7 +94,7 @@ class DonationsController
         $data["donations"] = $donation->donationReportGenerate($_GET["event_id"], isset($_POST["date"]) ? $_POST["date"] : -1);
 
         $end_date = gmdate("Y-m-d", $time) < $event_details["end_date"] && $time != 0 ? gmdate("Y-m-d", $time) : $event_details["end_date"];
-        $end_date = $event_details["end_date"];
+        //$end_date = $event_details["end_date"];
         $data["event_name"]  = $event_details["event_name"];
         $period = new DatePeriod(
             new DateTime($first_date),
@@ -114,7 +113,6 @@ class DonationsController
     public function donationCredit($event_id)
     {/*change the status in database when donations are credited to organizations account*/
 
-        //Controller::validateForm([], []);
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
         (new UserController)->addActivity("Update donation status as credited", $_GET["event_id"]);
         $donation = new Donations;
@@ -180,7 +178,6 @@ class DonationsController
     public function donationRefund($event_id)
     {/*change the status in database when donations are refunded*/
 
-        //Controller::validateForm([], []);
         Controller::accessCheck(["admin", "organization"]);/*check whether organization or admin accessed it.*/
         $donation = new Donations;
         $donation_details = $donation->getRefundDetails($event_id);

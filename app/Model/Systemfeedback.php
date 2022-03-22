@@ -9,10 +9,10 @@ class Systemfeedback extends Model{
         Model::insert($query,$params); 
 
     }
-    public function renderSystemFeedbacks(){
+    public function renderSystemFeedbacks($data){
 
-        $query = "SELECT * FROM system_feedback ORDER BY date DESC";
-        $params = [];
+        $query = "SELECT * FROM system_feedback ORDER BY date DESC LIMIT :offset , :no_of_records_per_page";
+        $params = $data;
         $results = Model::select($query,$params);
         return $results;
 

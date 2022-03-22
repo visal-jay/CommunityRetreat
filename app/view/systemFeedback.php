@@ -13,7 +13,6 @@
 <style>
   .system-feedback-container{
     display: flex;
-    justify-content: space-between;
     flex-direction: column;
     width: 80%;
     min-height: 100%;
@@ -42,7 +41,7 @@
             ?>
                 <form action="/Admin/feedbackViewed" method="post" class="flex-center margin-md">
                     <input type="hidden" name="feedback_id" value="<?= $system_feedback['feedback_id']?>" ></input>
-                    <button  class="btn bg-green clr-white " id="view-btn" >View</button>
+                    <button  class="btn bg-green clr-white " id="view-btn" >Mark as viewed</button>
                 </form>
             <?php }
              else if( $system_feedback['viewed'] == 1){
@@ -60,7 +59,31 @@
 
  
 </div>
-   
+
+<div class="flex-row flex-center ">
+            <ul class="pagination">
+                <li><a href="/Admin/systemFeedbacks?pageno=1"><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i>&nbsp;First</a></li>
+                <li class="<?php if ($pageno <= 1) {
+                                echo 'disabled';
+                            } ?>">
+                    <a href="<?php if ($pageno <= 1) {
+                                    echo '';
+                                } else {
+                                    echo "/Admin/systemFeedbacks?pageno=" . ($pageno - 1);
+                                } ?>"><i class="fas fa-chevron-left"></i>&nbsp;Prev</a>
+                </li>
+                <li class="<?php if ($pageno >= $total_pages) {
+                                echo 'disabled';
+                            } ?>">
+                    <a href="<?php if ($pageno >= $total_pages) {
+                                    echo '#';
+                                } else {
+                                    echo "/Admin/systemFeedbacks?pageno=" . ($pageno + 1);
+                                } ?>">Next&nbsp;<i class="fas fa-chevron-right"></i></a>
+                </li>
+                <li><a href="/Admin/systemFeedbacks?pageno=<?php echo $total_pages; ?>">Last&nbsp;<i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right"></i></a></li>
+            </ul>
+        </div>
 </body>
 <?php include "footer.php"?>
 

@@ -158,7 +158,7 @@ class OrganisationController
     function deleteUserRole()
     {
         Controller::validateForm(["role", "uid"], ["event_id"]);
-        $user_roles = Controller::accessCheck(["organization"]);
+        $user_roles = Controller::accessCheck(["organization","admin"]);
         $userController = new UserController();
         (new Organisation)->deleteUserRole($_POST["uid"], $_POST["role"], $_GET["event_id"]);
         $event_details = (new Events)->getDetails( $_GET["event_id"]);
@@ -170,8 +170,4 @@ class OrganisationController
         Controller::redirect("/Event/view", ["page" =>'userroles', "event_id" => $_GET["event_id"],$user_roles]);
     }
 
-    function test()
-    {
-        var_dump(Model::pagination("organization", 10));
-    }
 }

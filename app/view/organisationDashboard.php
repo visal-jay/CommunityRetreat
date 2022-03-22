@@ -220,7 +220,7 @@
         </div>
 
         <?php if ($registered_user || $guest_user || $admin) { ?>
-            <?php $page=$_GET["page"]; ?>
+            <?php $page = $_GET["page"]; ?>
             <div class="nav-secondary">
                 <div class="nav-secondary-bar margin-lg">
                     <a class="btn margin-side-md <?php if ($page == "about") echo "nav-active"; ?>" style=" margin-bottom:10px;" href="/Organisation/view?page=about&&org_id=<?= $_GET["org_id"] ?>">About</a>
@@ -272,6 +272,7 @@
                             <button type="submit" class="btn btn-solid form hidden">Save &nbsp; <i class="fas fa-check "></i></button>
                         </div>
                     <?php } ?>
+                    <?php if ((isset($_GET["page"]) && $_GET["page"] == "about") || !($organization || $admin)) include "complaint.php"; ?>
                 </div>
             </div>
             <!-- about organisation end -->
@@ -282,8 +283,9 @@
 
 
 </body>
-<?php if((isset($_GET["page"]) && $_GET["page"]=="about") || $organization) {include "complaint.php"; ?>
-<?php include "footer.php";} ?>
+
+<?php if ((isset($_GET["page"]) && $_GET["page"] == "about")) include "footer.php"; ?>
+
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSB7zeeAI3QC42UmxHEFqS715ulfPFASc&callback=initMap&libraries=&v=weekly" async></script>
 
 <script>
@@ -354,23 +356,23 @@
             zoom: 6,
         });
         if (lat != "" && long != "" && lat != "0" && long != "0")
-            showPosition(lat,long);
-        else{
+            showPosition(lat, long);
+        else {
             navigator.geolocation.getCurrentPosition((position) => {
-            lat = position.coords.latitude;
-            long = position.coords.longitude;
-            showPosition(lat,long);
-        });
+                lat = position.coords.latitude;
+                long = position.coords.longitude;
+                showPosition(lat, long);
+            });
         }
     }
 
 
-  
 
 
 
-    function showPosition(lat,long) {
-        console.log(lat,long);
+
+    function showPosition(lat, long) {
+        console.log(lat, long);
         var myLatlng = new google.maps.LatLng(lat, long);
 
         marker = new google.maps.Marker({
@@ -391,21 +393,18 @@
         });
     }
 
-    function fillComplaint(){
+    function fillComplaint() {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         var complaint_event_id = document.getElementById("complaint_uid");
-        complaint_event_id.setAttribute("value",urlParams.get('org_id'));
+        complaint_event_id.setAttribute("value", urlParams.get('org_id'));
         var complaint_name = document.getElementById('complaint_name');
-        complaint_name.setAttribute("value",'<?= $username ?>'); 
+        complaint_name.setAttribute("value", '<?= $username ?>');
         var complaint_status = document.getElementById('complaint_status');
-        complaint_status.setAttribute("value",'organization');
+        complaint_status.setAttribute("value", 'organization');
     }
 
     fillComplaint();
-
-    
-
 </script>
 
 </html>

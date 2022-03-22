@@ -273,20 +273,30 @@
             </div>
         </div>
 
-        <div class="card box one">
-            <div class="flex-row flex-center card__background bg-red">
-                <div class="flex-col flex-center">
-                    <h2 class="clr-white" style="text-align: center;">Something wrong?</h2>
-                    <div class="margin-md">
-                        <?php if ($registered_user) { ?>
+
+        <?php if ($registered_user || $guest_user) { ?>
+            <div class="card box one">
+                <div class="flex-row flex-center card__background bg-red">
+                    <div class="flex-col flex-center">
+                        <h2 class="clr-white" style="text-align: center;">Something wrong?</h2>
+                        <div class="margin-md">
                             <button class="btn clr-red bg-white border-red" onclick="window.location.href='/kiiki88?page=about&event_id=<?= $_GET['event_id'] ?>&action=complain'">Complain</button>
-                        <?php } else { ?>
-                            <button class="btn clr-red bg-white border-red">Complain</button>
-                        <?php } ?>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php } else { ?>
+            <div class="card box one hidden">
+                <div class="flex-row flex-center card__background bg-red">
+                    <div class="flex-col flex-center">
+                        <h2 class="clr-white" style="text-align: center;">Something wrong?</h2>
+                        <div class="margin-md">
+                            <button class="btn clr-red bg-white border-red">Complain</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
 
     </div>
 

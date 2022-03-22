@@ -8,7 +8,7 @@ class EventController
     public function view()
     {
         if ($event_details = array_intersect_key((new Events)->getDetails($_GET["event_id"]),["event_name" => '', "cover_photo" => '',"status" => '', "end_date"=>''])) {
-            $page=isset($_GET["page"]) ? $_GET["page"] : "about" ;
+            $page=isset($_GET["page"]) ? $_GET["page"] : "home" ;
             $this->$page($event_details);
         } else
             Controller::redirect("/User/home");
@@ -63,7 +63,7 @@ class EventController
     public function gallery($event_details)
     {
         $user_roles = Controller::accessCheck(["moderator", "organization", "guest_user", "registered_user", "treasurer"], $_GET["event_id"]);
-        $pagination = Model::pagination("add_photo", 10, " WHERE event_id = :event_id", ["event_id" => $_GET["event_id"]]);
+        $pagination = Model::pagination("add_photo", 12, " WHERE event_id = :event_id", ["event_id" => $_GET["event_id"]]);
         if (!$data = (new Gallery)->getGallery(["event_id" => $_GET["event_id"], "offset" => $pagination["offset"], "no_of_records_per_page" => $pagination["no_of_records_per_page"]]))
             $data = array();
         else
@@ -123,7 +123,7 @@ class EventController
     public function updateDetails()
     {
         Controller::accessCheck(["moderator", "organization", "guest_user", "registered_user"], $_GET["event_id"]);
-
+        $user = new UserController;
         $validate = new Validation;
         foreach ($_POST as $key => $value) {
             $_POST[$key] = trim($_POST[$key]);
@@ -134,7 +134,7 @@ class EventController
         $volunteered_uid = $volunteer->getvolunteereduidOutofRange( $_GET["event_id"], $_POST["start_date"], $_POST["end_date"]);
         for ($i = 0; $i < count($volunteered_uid); $i++) {
             foreach ($volunteered_uid[$i] as $uid) {
-                (new UserController)->sendNotifications("{$_POST['event_name']} event informations has been changed.Please volunteer again..!",$uid,"event","window.location.href='/Event/view?page=about&&event_id={$_GET["event_id"]}'",$_GET["event_id"],"eventUpdateMail",["event_name"=>$_POST['event_name'] ,"volunteered_date_changed"=> true],"{$_POST['event_name']} event informations has been changed..!");
+                $user->sendNotifications("{$_POST['event_name']} event informations has been changed.Please volunteer again..!",$uid,"event","window.location.href='/Event/view?page=about&&event_id={$_GET["event_id"]}'",$_GET["event_id"],"eventUpdateMail",["event_name"=>$_POST['event_name'] ,"volunteered_date_changed"=> true],"{$_POST['event_name']} event informations has been changed..!");
                 $volunteer->removeVolunteersOutofRange( $_GET["event_id"],$uid,$_POST["start_date"],$_POST["end_date"]);
             }
         }
@@ -148,11 +148,22 @@ class EventController
     {
         Controller::validateForm(["event_id"], []);
         Controller::accessCheck(["admin", "organization"]);
+        
         $time = (int)shell_exec("date '+%s'");
         $event = new Events();
         $event_details = $event->getDetails($_POST["event_id"]);
         $end_date = $event_details["end_date"];
-
+        $userroles = (new Organisation)->getUserRoles($_POST["event_id"]);
+        $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === 0 ? 'https://' : 'http://';
+        $DOMAIN = $protocol . $_SERVER['HTTP_HOST'];
+        foreach($userroles as $user)
+        {
+            if($user["moderator_flag"])  
+                Controller::send_post_request($DOMAIN."/Organisation/deleteUserRole?event_id" . $_POST["event_id"],["role"=>"Moderator","uid"=>$user["uid"]]);
+            if($user["treasurer_flag"])
+                Controller::send_post_request($DOMAIN."/Organisation/deleteUserRole?event_id" . $_POST["event_id"],["role"=>"Treasurer","uid"=>$user["uid"]]);
+        }
+        
         if (gmdate("Y-m-d", $time) < $end_date) {
             (new DonationsController)->donationRefund($_POST["event_id"]);
         }

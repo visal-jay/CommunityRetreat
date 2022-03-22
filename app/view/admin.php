@@ -80,10 +80,10 @@
                         <h4 style="cursor: pointer;" onclick="<?= $complaint['path'] ?>"><?= $complaint['complaint_name'] ?></h4>
                     </div>
                     <div class='margin-side-md' style="display: flex; align-items: center;width: 195px;">
-                        <p><b>By: </b><?= $complaint['username'] ?></p>
+                        <p><b>By: </b><?= $complaint['complainant_name'] ?></p>
                     </div>
                     <div class='margin-side-md' style="display: flex; align-items: center;width: 210px;">
-                        <p><b>Date: </b><?= $complaint['date'] ?>
+                        <p><b>Date: </b><?= date(' F j, Y', strtotime($complaint['date'])) ?>
                         <p>
                     </div>
                     <div class='margin-side-md' style="display: flex; align-items: center;width: 150px;">
@@ -93,13 +93,17 @@
                         <div class="flex-row flex-center">
                             <button class='btn btn-small bg-red clr-white' onclick="remove_complaint();" style="border: none;">Resolve</button>
                             <div class="flex-row flex-space " style="display: none;">
-                                <p class="margin-side-md" style="white-space: nowrap;">Remove this user?</p>
-                                <?php if ($complaint['event_id'] != NULL) { ?>
+                               
+                                <?php if ( $complaint['status'] == 'event') { ?>
+                                    <p class="margin-side-md" style="white-space: nowrap;">Remove this event?</p>
                                     <form method="post" action="/Admin/removeEvent" class="flex-row flex-center">
-                                        <input name="event_id" type="hidden" value="<?= $complaint["event_id"] ?>">
-                                    <?php } else { ?>
-                                        <form method="post" action="/Admin/removeUser" class="flex-row flex-center">
-                                            <input name="uid" type="hidden" value="<?= $complaint["uid"] ?>">
+                                    <input name="event_id" type="hidden" value="<?= $complaint["event_id"] ?>">
+                                    <input name="status" type="hidden" value="<?= $complaint["status"] ?>">
+                                <?php } else { ?>
+                                    <p class="margin-side-md" style="white-space: nowrap;">Remove this user?</p>
+                                    <form method="post" action="/Admin/removeUser" class="flex-row flex-center">
+                                        <input name="uid" type="hidden" value="<?= $complaint["uid"] ?>">
+                                        <input name="status" type="hidden" value="<?= $complaint["status"] ?>">
                                         <?php } ?>
                                         <input type="hidden" name="complaint_id" value="<?= $complaint['complaint_id'] ?>"></input>
                                         <button class="btn-icon flex-row flex-center"><i type="submit" class="fas fa-check clr-green margin-side-md"></i>&nbsp;</button>
@@ -118,6 +122,31 @@
         <?php } ?>
 
     </div>
+
+    <div class="flex-row flex-center ">
+            <ul class="pagination">
+                <li><a href="/Admin/complaint?pageno=1"><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i>&nbsp;First</a></li>
+                <li class="<?php if ($pageno <= 1) {
+                                echo 'disabled';
+                            } ?>">
+                    <a href="<?php if ($pageno <= 1) {
+                                    echo '';
+                                } else {
+                                    echo "/Admin/complaint?pageno=" . ($pageno - 1);
+                                } ?>"><i class="fas fa-chevron-left"></i>&nbsp;Prev</a>
+                </li>
+                <li class="<?php if ($pageno >= $total_pages) {
+                                echo 'disabled';
+                            } ?>">
+                    <a href="<?php if ($pageno >= $total_pages) {
+                                    echo '#';
+                                } else {
+                                    echo "/Admin/complaint?pageno=" . ($pageno + 1);
+                                } ?>">Next&nbsp;<i class="fas fa-chevron-right"></i></a>
+                </li>
+                <li><a href="/Admin/complaint?pageno=<?php echo $total_pages; ?>">Last&nbsp;<i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right"></i></a></li>
+            </ul>
+        </div>
 
 </body>
 <?php include "footer.php" ?>

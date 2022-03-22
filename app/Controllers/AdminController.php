@@ -37,47 +37,59 @@ class AdminController{
     //View complaints
     public function complaint(){
         $user_roles=Controller::accessCheck(["admin"]);
-        $data['complaints'] = (new Complaint)->getComplaints();
-        View::render("admin",$data,$user_roles);
+        $pagination = Model::pagination("complaint", 10, "", []);
+        $data['complaints'] = (new ComplaintController)->getComplaints(["offset" => $pagination["offset"], "no_of_records_per_page" => $pagination["no_of_records_per_page"]]);
+        View::render("admin",array_merge($data,$pagination),$user_roles);
     }
 
 
     //Post system feedbacks to view
     public function systemFeedbacks(){
         $user_roles=Controller::accessCheck(["admin"]);
-        $systemFeedback=new Systemfeedback();
-        $systemFeedbacks= $systemFeedback->renderSystemFeedbacks();
+        $pagination = Model::pagination("system_feedback", 10, "", []);
+        $systemFeedback=new SystemfeedbackController();
+        $systemFeedbacks= $systemFeedback->getSystemFeedbacks(["offset" => $pagination["offset"], "no_of_records_per_page" => $pagination["no_of_records_per_page"]]);
         $data['system_feedbacks'] = $systemFeedbacks;
-        View::render("systemFeedback",$data,$user_roles);
- 
+        View::render("systemFeedback",array_merge($data,$pagination),$user_roles); 
     }
 
     //Mark system feedbacks as viewed
     public function feedbackViewed(){
-        $systemFeedback=new Systemfeedback();
+        Controller::validateForm(['feedback_id'],[]);
+        $systemFeedback=new SystemfeedbackController();
         $data=["feedback_id"=>$_POST['feedback_id']];
-        $systemFeedback->changeFeedbackState($data);
+        $systemFeedback->setFeedbackViewed($data);
         Controller::redirect("systemFeedbacks");
     }
 
     function removeUser(){
-        $user = new User();
-        $complaint = new Complaint;
-        $uid = $_POST['uid'];
-        //sendNotificationMail($uid)
-        $user->removeUser($uid);
-        $complaint->removeComplaint($_POST['complaint_id']);
+        Controller::validateForm(['uid','status'],[]);
+        $user = new UserController();
+        $complaint = new ComplaintController;
+        $data= ["uid" =>$_POST['uid'], "status" => $_POST['status']];
+        $user->sendNotifications("Your account has been removed...!",$data['uid'],"system","",-1,"removeUserMail",[],"Sorry, Your account has been removed..!");
+        $user->removeUser($data['uid']);
+        $complaint->removeComplaint($data);
         Controller::redirect("complaint");
     }
 
     function removeEvent(){
-        $event = new Events();
-        $complaint = new Complaint;
-        $event_id = $_POST['event_id'];
-        //sendNotificationMail($uid)
-        $event->remove($event_id);
-        $complaint->removeComplaint($_POST['complaint_id']);
-        Controller::redirect("complaint");
+        Controller::validateForm(['event_id','status'],[]);
+        $complaint = new ComplaintController;
+        $user = new UserController();    
+        $post_data= ["event_id" => $_POST['event_id']];
+        $event_details = (new Events)->getDetails($_POST['event_id']);
+
+        if($event_details['org_uid'] != NULL){
+            $user->sendNotifications($event_details['event_name']." event has been removed...!",$event_details['org_uid'],"system","",-1,"removeEventMail",["event_name" => $event_details['event_name']],$event_details['event_name']." event has been removed...!");
+        }
+       
+        $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === 0 ? 'https://' : 'http://';
+        $DOMAIN = $protocol . $_SERVER['HTTP_HOST'];
+        Controller::send_post_request($DOMAIN."/Event/remove",$post_data);
+        $data= ["event_id" =>$_POST['event_id'], "status" => $_POST['status']];
+        $complaint->removeComplaint($data);
+        Controller::redirect("complaint");    
     }
 
 }

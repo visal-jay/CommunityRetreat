@@ -77,28 +77,6 @@
     }
 </style>
 
-<?php
-if (!isset($moderator)) $moderator = false;
-if (!isset($treasurer)) $treasurer = false;
-$organization = $admin = $registered_user = $guest_user = false;
-
-if (isset($_SESSION["user"]["user_type"])) {
-    if ($_SESSION["user"]["user_type"] == "organization") {
-        $organization = true;
-    }
-
-    if ($_SESSION["user"]["user_type"] == "admin") {
-        $admin = true;
-    }
-
-    if ($_SESSION["user"]["user_type"] == "registered_user") {
-        $registered_user = true;
-    }
-} else {
-    $guest_user = true;
-}
-?>
-
 <body>
     <header class="header">
 
@@ -137,7 +115,12 @@ if (isset($_SESSION["user"]["user_type"])) {
                     <th class="right">Income</th>
                     <th class="right">Expense</th>
                 </tr>
-
+                <tr>
+                    <td></td>
+                    <td>Donations</td>
+                    <td class="right"><?php echo 'Rs. ' . number_format($donation_sum, 2) ?></td>
+                    <td class="right"></td>
+                </tr>
                 <?php foreach ($report as $report) { ?>
                     <tr>
                         <td><?= $report["date"] ?></td>
@@ -159,7 +142,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                     <!--Display the total of incomes and total of expenses-->
                     <td><b>Total</b></td>
                     <td></td>
-                    <td class="right"><b><?php echo 'Rs. ' . number_format($income_sum, 2) ?></b></td>
+                    <td class="right"><b><?php echo 'Rs. ' . number_format($income_sum + $donation_sum, 2) ?></b></td>
                     <td class="right"><b><?php echo 'Rs. ' . number_format($expense_sum, 2) ?></b></td>
                 </tr>
 

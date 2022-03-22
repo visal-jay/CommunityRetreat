@@ -35,6 +35,7 @@
 
         .table-container{
             margin: 10px auto 50px;
+            min-height: 90%;
 
         }
         .table{

@@ -113,10 +113,8 @@ class EventController
 
     public function addEvent()
     {
-        $validate = new Validation;
-
+        Controller::accessCheck(["organization"]);
         (new Events)->addEvent($_POST);
-
         Controller::redirect("/Organisation/events");
     }
 

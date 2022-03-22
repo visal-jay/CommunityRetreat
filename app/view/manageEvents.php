@@ -10,7 +10,6 @@
     <title>Document</title>
 </head>
 <style>
-
     .main-container {
         min-height: 100%;
         align-items: center;
@@ -25,6 +24,15 @@
         background-color: #f8f8f8;
         font-size: 16px;
         resize: none;
+    }
+
+    .event-status {
+        margin-bottom: 0;
+        color: white;
+        padding: 4px;
+        border-radius: 15px;
+        text-align: center;
+        font-size: 0.85em;
     }
 
     .events {
@@ -189,6 +197,15 @@
                     <a class="event-link" href="/Event/view?page=about&&event_id=<?= $event["event_id"] ?>">
                         <h3 class="heading"><?= $event["event_name"] ?></h3>
                     </a>
+                    <?php if ($event["status"] == "added") { ?>
+                        <p class="margin-side-md event-status" style="background-color: #f3b362;">Created</p>
+                    <?php } elseif ($event["status"] == "published") { ?>
+                        <p class="margin-side-md event-status" style="background-color: #44c9d6;">Published</p>
+                    <?php } elseif ($event["status"] == "deleted") { ?>
+                        <p class="margin-side-md event-status" style="background-color: #F67280;">Deleted</p>
+                    <?php } elseif ($event["status"] == "ended") { ?>
+                        <p class="margin-side-md event-status" style="background-color: #77e7ab;">Ended</p>
+                    <?php } ?>
                     <div class="event-card-details margin-md">
                         <table>
                             <tr>

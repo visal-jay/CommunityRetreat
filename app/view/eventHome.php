@@ -194,7 +194,7 @@
                         <?php if ($registered_user) { ?>
                             <button class="btn btn-solid margin-md" onclick="window.location.href='/Event/view?page=about&event_id=<?= $_GET['event_id'] ?>&action=donate'">Donate</button>
                         <?php } else { ?>
-                            <button class="btn btn-solid margin-md">Donate</button>
+                            <button class="btn btn-solid margin-md" onclick="window.location.href='/Login/view'"]>Donate</button>
                         <?php } ?>
                     </div>
                 </div>
@@ -210,7 +210,7 @@
                         <?php if ($registered_user) { ?>
                             <button class="btn btn-solid margin-md" onclick="window.location.href='/Event/view?page=about&event_id=<?= $_GET['event_id'] ?>&action=volunteer'">Volunteer</button>
                         <?php } else { ?>
-                            <button class="btn btn-solid margin-md">Volunteer</button>
+                            <button class="btn btn-solid margin-md" onclick="window.location.href='/Login/view'">Volunteer</button>
                         <?php } ?>
                     </div>
                 </div>

@@ -811,7 +811,7 @@
             type: "post", //request type,
             dataType: 'json',
             data: {
-                status: 'published',
+                status: ['published'],
                 latitude: latitude,
                 longitude: longitude,
                 distance: range,
@@ -926,7 +926,7 @@
             type: "post", //request type,
             dataType: 'json',
             data: {
-                status: 'published',
+                status: ['published'],
                 latitude: latitude,
                 longitude: longitude,
                 distance: 20,

@@ -20,11 +20,8 @@ class DonationsController
         $data["donations_graph"] = json_encode($donation->getReport(["event_id" => $_GET["event_id"]]));
         $event = new Events;
         $data["donation_percent"] = $event->getDetails($_GET["event_id"])["donation_percent"];
-        $check_accountNo = (new Organisation)->getDetails($_SESSION['user']['uid']);
 
-
-        if ($check_accountNo['account_number'] != NULL || $check_accountNo["bank_name"] != NULL) {
-
+        if ($check_accountNo['account_number'] != NULL && $check_accountNo["bank_name"] != NULL) {
             $data["have_account_number"] = "TRUE";
         } else {
             $data["have_account_number"] = "FALSE";

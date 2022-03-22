@@ -479,7 +479,7 @@
                     start_date: date,
                     order_type: sort,
                     way: way,
-                    <?php if ($registered_user || $guest_user) echo "status: 'published'," ?>
+                    <?php if ($registered_user || $guest_user) echo "status: ['published','ended']," ?>
                    /*  status: 'published', */
                     is_virtual: is_virtual,
                     offset: offset * limit,
@@ -515,9 +515,7 @@
                                     </div>
                                 </div>
                                 <p class="margin-md" style="margin-bottom:0;color:white;padding:4px;background-color:#F67280;border-radius:15px;text-align:center;font-size:0.85em;">Event</p>
-                                <?php if ($admin) { ?>
-                                    <p class="margin-md" style="margin-bottom:0;"><b>${evn.status}</b></p>
-                                <?php }   ?>
+                                <p class="margin-md" style="margin-bottom:0;"><b>${evn.status}</b></p>
                                 <p class="margin-md" style="margin-bottom:0;"><b>${evn.event_name}</b></p>
                                 <p class="margin-md about" style="margin-top:0">${evn.start_date==evn.end_date ? evn.end_date : 'From:'+evn.start_date+'<br>To:'+evn.end_date}</p>
                                 <div class="flex-col margin-side-md" >

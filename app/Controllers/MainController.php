@@ -22,9 +22,9 @@ class MainController
     public function contactEmail()
     {
         Controller::validateForm(["message","name","email","contact_no"], []); 
-        $user_roles = Controller::accessCheck(["organization","registered_user","guest_user"]);
+        Controller::accessCheck(["organization","registered_user","guest_user"]);
         $data= $_POST;
-        (new Mail)->contactUsEmail("contactEmail", $data);
+        (new Mail)->contactUsEmail("contactEmail", $data); //Contact us emails are self driected mails.
         Controller::redirect("/Main/index");
     }
 

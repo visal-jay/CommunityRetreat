@@ -213,6 +213,13 @@
                                     <span class="input-error password-error error"><?php if (isset($_GET["passwordErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp" . $_GET['passwordErr']; ?></span>
                                     <input type="password" class="password-error form-ctrl" name="password" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
                                 </div>
+                                <div class="form-item">
+                                    <a href="/Main/termsandconditions" target="_blank" style="color: black;">Terms and Conditions</a>
+                                    <div class="flex-row">
+                                        <label>I have read Terms & Conditions</label>
+                                        <input type="checkbox" class="" name="" id="" required>
+                                    </div>
+                                </div>
                                 <input name="signupUser" value="registered-user" type="hidden">
                                 <button type="submit" class="btn btn-solid margin-md">Sign Up</button>
                             </form>
@@ -235,6 +242,13 @@
                                     <label>Password</label>
                                     <span class="input-error password-error error"><?php if (isset($_GET["passwordErr"])) echo "<i class='fas fa-exclamation-circle'></i> &nbsp" . $_GET['passwordErr']; ?></span>
                                     <input name="password" type="password" class="form-ctrl" placeholder="&#xf13e; &nbsp; Enter Password" required style="font-family:Arial, FontAwesome" />
+                                </div>
+                                <div class="form-item">
+                                    <a href="/Main/termsandconditions" target="_blank" style="color: black;">Terms and Conditions</a>
+                                    <div class="flex-row">
+                                        <label>I have read Terms & Conditions</label>
+                                        <input type="checkbox" class="" name="" id="" required>
+                                    </div>
                                 </div>
                                 <input name="signupOrg" value="organization" type="hidden">
                                 <button type="submit" class="btn btn-solid margin-md">Sign Up</button>

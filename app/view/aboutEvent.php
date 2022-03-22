@@ -194,14 +194,6 @@
         text-align: center;
     }
 
-    .volunteer-container {
-        display: none;
-    }
-
-    .donation-container {
-        display: none;
-    }
-
     @media screen and (max-width:800px) {
         .progress {
             width: 75%;
@@ -389,6 +381,7 @@
                 <?php } ?>
 
             </div>
+
             <?php if (($volunteer_status == 1) && ($status != 'ended')) { ?>
                 <div class="flex-col flex-center content border-round container-size1 margin-md volunteer-container" style="background-color: #03142d;">
                     <p class="margin-md" style="color:white; text-align:center">Interested in joining hands with us?</p>

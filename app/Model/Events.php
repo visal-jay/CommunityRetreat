@@ -27,8 +27,7 @@ class Events extends Model
         $event_id = $stmt->fetchColumn();
         $stmt->closeCursor();
         $db->commit();
-        $this->insertVolunteerCapacities($event_id,$params['start_date'],$params['end_date']);
-
+        $this->insertVolunteerCapacities($event_id, $params['start_date'], $params['end_date']);
     }
 
     //remove an exsiting event
@@ -91,7 +90,7 @@ class Events extends Model
 
     public function query($args)
     {
-        $name = $city = $latitude = $longitude = $mode = $start_date = $org_uid = $distance = $order_type = $way = $status =$not_status= $limit= $offset = $donation_capacity = $volunteer_capacity = $volunteer_status = $donation_status=$is_virtual = NULL;
+        $name = $city = $latitude = $longitude = $mode = $start_date = $org_uid = $distance = $order_type = $way = $status = $not_status = $limit = $offset = $donation_capacity = $volunteer_capacity = $volunteer_status = $donation_status = $is_virtual = NULL;
         extract($args, EXTR_OVERWRITE);
         $params = array();
 
@@ -102,14 +101,14 @@ class Events extends Model
             $longitude = $result["lng"];
             $latitude = $result["lat"];
         }
-        //$query='SELECT event_id, ( 6371 * acos( cos( radians(6.848) ) * cos( radians( ST_X(latlang) ) ) * cos( radians( ST_Y(latlang) ) - radians(80.005) ) + sin( radians(6.848) ) * sin( radians( ST_X(latlang) ) ) ) ) AS distance FROM event';
+
         $query_select_primary = "SELECT * ";
         $query_select_secondary = ', ( 6371 * acos( cos( radians(:latitude) ) * cos( radians( ST_X(latlang) ) ) * cos( radians( ST_Y(latlang) ) - radians(:longitude) ) + sin( radians(:latitude2) ) * sin( radians( ST_X(latlang) ) ) ) ) AS distance ';
         $query_table = 'FROM event_details WHERE ';
         $query_filter_event_mode = ' mode=:mode AND ';
         $query_filter_date = ' start_date= :start_date AND ';
         $query_filter_organzation = ' org_uid =:org_uid AND ';
-        $query_filter_status = ' status =:status AND ';
+        $query_filter_status = ' status =:status';
         $query_filter_name = ' event_name LIKE :name AND';
         $query_filter_volunteer_status = ' volunteer_status = :volunteer_status AND';
         $query_filter_donation_status = ' donation_status = :donation_status AND';
@@ -148,7 +147,6 @@ class Events extends Model
             }
             $date_query = $date_query . " ) AND ";
             $query = $query . $date_query;
-            
         }
 
         if ($name != NULL) {
@@ -175,9 +173,9 @@ class Events extends Model
             $query = $query . $query_filter_donation_capacity;
         }
 
-        if($is_virtual != NULL){
+        if ($is_virtual != NULL) {
             $query = $query . $query_is_virtual;
-            $params["is_virtual"]=$is_virtual;
+            $params["is_virtual"] = $is_virtual;
         }
 
         if ($org_uid != NULL) {
@@ -186,13 +184,18 @@ class Events extends Model
         }
 
         if ($status != NULL) {
-            if ($not_status!=NULL)
-                $query=$query. " NOT ";
-            $query = $query . $query_filter_status;
-            $params["status"] = $status;
+            for($i=0 ; $i<count($status) ; $i++) {
+                if ($not_status != NULL)
+                    $query = $query . " NOT ";
+                $query = $query . $query_filter_status . "_$i";
+                if ($i<count($status)-1)
+                    $query = $query . " OR ";
+                $params["status_$i"] = $status[$i];
+            }
+            $query = $query . " AND ";
         }
 
-/*         if ($order_type == 'volunteer_percent')
+        /*         if ($order_type == 'volunteer_percent')
             $query = $query . ' volunteer_percent=volunteer_percent AND ';
 
         if ($order_type == 'donation_percent')
@@ -224,14 +227,15 @@ class Events extends Model
             $query = $query . " " . $way;
         }
 
-        if ($limit != NULL && $offset!=NULL) {
+        if ($limit != NULL && $offset != NULL) {
             $query = $query . $query_filter_limit;
             $params["limit"] = $limit;
-            $params["offset"] =$offset;
+            $params["offset"] = $offset;
         }
 
         /* var_dump($query);
-        var_dump($params); */
+        var_dump($params);
+        exit; */
         $result = Model::select($query, $params);
 
         if (count($result) == 0)
@@ -239,24 +243,24 @@ class Events extends Model
         return $result;
     }
 
-    public function insertVolunteerCapacities($event_id,$start_date,$end_date){
+    public function insertVolunteerCapacities($event_id, $start_date, $end_date)
+    {
 
         $startDate = new DateTime($start_date);
         $interval = new DateInterval('P1D');
         $realEnd = new DateTime($end_date);
         $realEnd->add($interval);
-    
-    
+
+
         $period = new DatePeriod($startDate, $interval, $realEnd);
-    
+
         foreach ($period as $date) {
             $event_date = $date->format('Y-m-d');
             $capacity_query = "INSERT IGNORE INTO `volunteer_capacity`(`event_id`,`event_date`,`capacity`) VALUES (:event_id,:event_date,0)";
-            $capacity_params = ["event_id" =>$event_id, "event_date" =>  $event_date];
+            $capacity_params = ["event_id" => $event_id, "event_date" =>  $event_date];
             var_dump($event_date);
-            Model::insert($capacity_query,$capacity_params);
+            Model::insert($capacity_query, $capacity_params);
         }
-    
     }
 
     public function endEvents($event_id)
@@ -277,10 +281,7 @@ class Events extends Model
     public function getDetailsofNearEvents()
     {
         $query = 'SELECT  DISTINCT event_id,volunteer_date FROM `volunteer` WHERE volunteer_date = CURDATE() + INTERVAL 7 DAY OR volunteer_date = CURDATE() + INTERVAL 3 DAY ';
-        $result = Model::select($query,[]);
+        $result = Model::select($query, []);
         return $result;
     }
 }
-
-
-

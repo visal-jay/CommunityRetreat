@@ -46,9 +46,6 @@ class Controller
         if (isset($_SESSION["user"]["user_type"])) {
             if (in_array($_SESSION["user"]["user_type"], $userroles))
                 $data[$_SESSION["user"]["user_type"]] = true;
-            
-                //var_dump($userroles);
-             
 
             //treasurer moderetator access check
             $moderator_treasurer = (new RegisteredUser)->getUserRoles($_SESSION["user"]["uid"], $event_id);

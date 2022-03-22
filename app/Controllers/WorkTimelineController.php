@@ -55,7 +55,7 @@ class WorkTimelineController
         $id = (new Organisation)->getUserRoles($_GET["event_id"]);
         for ($i = 0; $i < count($id); $i++){
             if ($id[$i]["moderator_flag"] == 1) {
-                (new UserController)->sendNotifications("Some task of {$event['event_name']} has been deleted!", $id[$i]["uid"], "event", "window.location.href='/event/view?page=about&&event_id={$_GET["event_id"]}'", $_GET["event_id"],"deleteNewTaskMail",["event_name" => $event['event_name']],"Some task of {$event['event_name']} has been deleted!");
+                (new UserController)->sendNotifications("Some task of {$event['event_name']} has been deleted!", $id[$i]["uid"], "event", "window.location.href='/event/view?page=about&&event_id={$_GET["event_id"]}'", $_GET["event_id"],"deleteTaskMail",["event_name" => $event['event_name']],"Some task of {$event['event_name']} has been deleted!");
             }
         }
         (new Task)->deleteTask($_POST["task_id"]);

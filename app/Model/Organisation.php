@@ -232,7 +232,7 @@ class Organisation extends User
         $event = new Events;
         $donations = new Donations;
         $data["events"] = array();
-        if ($result = $event->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "published", "donation_status" => true])){
+        if ($result = $event->query(["org_uid" => $_SESSION["user"]["uid"], "status" => ["published"], "donation_status" => true])){
             foreach ($result as $event) {
                 if ($donation_details = $donations->getReport(["event_id" => $event["event_id"]])) {
                     $start_date = $date = new DateTime($donation_details[0]["day"]);
@@ -270,7 +270,7 @@ class Organisation extends User
     {
         $events = new Events;;
         $data["events"] = array();
-        if ($result = $events->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "published", "donation_capacity" => true])) {
+        if ($result = $events->query(["org_uid" => $_SESSION["user"]["uid"], "status" => ["published"], "donation_capacity" => true])) {
             foreach ($result as $event)
                 $data["events"][$event["event_name"]] = $event["donation_percent"];
         }
@@ -283,7 +283,7 @@ class Organisation extends User
         $event = new Events;
         $volunteers = new Volunteer;
         $data["events"] = array();
-        if ($result = $event->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "published", "volunteer_capacity" => true]))
+        if ($result = $event->query(["org_uid" => $_SESSION["user"]["uid"], "status" => ["published"], "volunteer_capacity" => true]))
             foreach ($result as $event) {
                 if ($volunteer_details = $volunteers->getReport(["event_id" => $event["event_id"]])) {
                     $start_date = $date = new DateTime($volunteer_details[0]["day"]);
@@ -320,7 +320,7 @@ class Organisation extends User
     {
         $events = new Events;;
         $data["events"] = array();
-        if ($result = $events->query(["org_uid" => $_SESSION["user"]["uid"], "status" => "published", "volunteer_capacity" => true])) {
+        if ($result = $events->query(["org_uid" => $_SESSION["user"]["uid"], "status" => ["published"], "volunteer_capacity" => true])) {
             foreach ($result as $event)
                 $data["events"][$event["event_name"]] = $event["volunteer_percent"];
         }

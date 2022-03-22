@@ -185,7 +185,7 @@
                 </div>
             </div>
         </div>
-        <?php if ($donation_status == 1) { ?>
+        <?php if (($donation_status == 1) && ($status == 'published')) { ?>
             <div class="card">
                 <div class="card__background flex-col flex-center bg-image-1">
                     <div class="flex-col flex-center box">
@@ -201,7 +201,7 @@
             </div>
         <?php } ?>
 
-        <?php if ($volunteer_status == 1) { ?>
+        <?php if (($volunteer_status == 1) && ($status == 'published')) { ?>
             <div class="card">
                 <div class="card__background flex-col flex-center bg-image-2">
                     <div class="flex-col flex-center box">

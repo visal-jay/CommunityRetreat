@@ -100,47 +100,38 @@ class DonationsController
         /*check whether organization or treasurer accessed it.*/
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);
         $donation = new Donations;
-
-        /* get donation details to data array */
         $data["donations"] = $donation->donationReportGenerate($_GET["event_id"], isset($_POST["date"]) ? $_POST["date"] : -1);
-        /* get selected date from drop down bar */
         $data["selected_date"] = isset($_POST["date"]) ? $_POST["date"] : -1;
-        /* send the donation details to javascript jfunction for donation graph */
-        $data["donations_graph"] = json_encode($donation->getReport(["event_id" => $_GET["event_id"]]));
-        /* send donation sum */
+        $donation_graph = $donation->getReport(["event_id" => $_GET["event_id"]]);
+        $data["donations_graph"] = json_encode($donation_graph);
         $data["donation_sum"] = $donation->getDonationSum($_GET["event_id"]);
-        /* send event details */
         $event_details = (new Events)->getDetails($_GET["event_id"]);
-        /* converting date format*/
-        $time = (int)shell_exec("date '+%s'");
-        /* get the event start date */
-        $start_date = $event_details["start_date"];
-        /* get the dates of the donations into dates array */
-        $dates = array_column(json_decode($data["donations_graph"]),"day");
-        /* get the earliest of the dates array */
-        $min =min($dates);
-        /*check whether earliest donating date is later than the starting date of the event*/
-        if(sizeof($dates)==0 || $min>$start_date){
-            /* if then the first date would be starting date of the event*/
-            $first_date = $event_details["start_date"];
-        } else{
-            /* else the first date would be first donated day*/
-            $first_date = $min;
-        }
-        /* send all the donation details to data array*/
-        $data["donations"] = $donation->donationReportGenerate($_GET["event_id"], isset($_POST["date"]) ? $_POST["date"] : -1);
-        $end_date = gmdate("Y-m-d", $time) < $event_details["end_date"] && $time != 0 ? gmdate("Y-m-d", $time) : $event_details["end_date"];
-        //$end_date = $event_details["end_date"];
-        /* get event name in to data array */
         $data["event_name"]  = $event_details["event_name"];
-        $period = new DatePeriod(
-            new DateTime($first_date),
-            new DateInterval('P1D'),
-            new DateTime($end_date)
-        );
+        $time = (int)shell_exec("date '+%s'");
+        $start_date = $event_details["start_date"];
 
-        foreach ($period as $date) {
-            $data["period"][] = $date->format('Y-m-d');
+        if ($donation_graph) {
+            $dates = array_column($donation_graph, "day");
+            $min = min($dates);
+
+            if (sizeof($dates) == 0 || $min > $start_date) {
+                $first_date = $event_details["start_date"];
+            } else {
+                $first_date = $min;
+            }
+
+            $end_date = gmdate("Y-m-d", $time) < $event_details["end_date"] && $time != 0 ? gmdate("Y-m-d", $time) : $event_details["end_date"];
+            $period = new DatePeriod(
+                new DateTime($first_date),
+                new DateInterval('P1D'),
+                new DateTime($end_date)
+            );
+
+            foreach ($period as $date) {
+                $data["period"][] = $date->format('Y-m-d');
+            }
+        } else {
+            $data["period"] = [];
         }
 
         /*send all the data to donationsReport page*/

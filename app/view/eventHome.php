@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/Public/assets/newstyles.css">
     <link rel="me" href="https://twitter.com/twitterdev">
-    <link rel="canonical" href="/web/tweet-button">
+    <link rel="canonical" href="/Event/view?page=home&event_id=<?= $_GET['event_id'] ?>">
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -185,7 +185,7 @@
                 </div>
             </div>
         </div>
-        <?php if ($donation_status == 1) { ?>
+        <?php if (($donation_status == 1) && ($status == 'published')) { ?>
             <div class="card">
                 <div class="card__background flex-col flex-center bg-image-1">
                     <div class="flex-col flex-center box">
@@ -201,7 +201,7 @@
             </div>
         <?php } ?>
 
-        <?php if ($volunteer_status == 1) { ?>
+        <?php if (($volunteer_status == 1) && ($status == 'published')) { ?>
             <div class="card">
                 <div class="card__background flex-col flex-center bg-image-2">
                     <div class="flex-col flex-center box">
@@ -280,7 +280,7 @@
                     <div class="flex-col flex-center">
                         <h2 class="clr-white" style="text-align: center;">Something wrong?</h2>
                         <div class="margin-md">
-                            <button class="btn clr-red bg-white border-red" onclick="window.location.href='/kiiki88?page=about&event_id=<?= $_GET['event_id'] ?>&action=complain'">Complain</button>
+                            <button class="btn clr-red bg-white border-red" onclick="window.location.href='/Event/view?page=about&event_id=<?= $_GET['event_id'] ?>&action=complain'">Complain</button>
                         </div>
                     </div>
                 </div>

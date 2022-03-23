@@ -100,23 +100,34 @@ class DonationsController
         /*check whether organization or treasurer accessed it.*/
         Controller::accessCheck(["treasurer", "organization"], $_GET["event_id"]);
         $donation = new Donations;
+        /* get donation details to data array */
         $data["donations"] = $donation->donationReportGenerate($_GET["event_id"], isset($_POST["date"]) ? $_POST["date"] : -1);
+        /* get selected date from drop down bar */
         $data["selected_date"] = isset($_POST["date"]) ? $_POST["date"] : -1;
         $donation_graph = $donation->getReport(["event_id" => $_GET["event_id"]]);
+        /* send the donation details to javascript jfunction for donation graph */
         $data["donations_graph"] = json_encode($donation_graph);
+        /* send donation sum */
         $data["donation_sum"] = $donation->getDonationSum($_GET["event_id"]);
+        /* send event details */
         $event_details = (new Events)->getDetails($_GET["event_id"]);
         $data["event_name"]  = $event_details["event_name"];
+        /* converting date format*/
         $time = (int)shell_exec("date '+%s'");
+        /* get the event start date */
         $start_date = $event_details["start_date"];
 
         if ($donation_graph) {
+            /* get the dates of the donations into dates array */
             $dates = array_column($donation_graph, "day");
+            /* get the earliest of the dates array */
             $min = min($dates);
-
+/*check whether earliest donating date is later than the starting date of the event*/
             if (sizeof($dates) == 0 || $min > $start_date) {
+                /* if then the first date would be starting date of the event*/
                 $first_date = $event_details["start_date"];
             } else {
+                /* else the first date would be first donated day*/
                 $first_date = $min;
             }
 

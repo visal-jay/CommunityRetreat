@@ -444,7 +444,7 @@
                         <li>If an Organization is removed from the system, all the donations will be refunded.</li>
                     </ul>
                     <div>
-                        <input type="checkbox" min="0" name="terms" id="terms" onchange="activateButton()"> I Agree Terms & Coditions
+                        <input type="checkbox" min="0" name="terms" id="terms" onchange="activateButton()" required> I Agree Terms & Coditions
                     </div>
                     </p>
                 <?php } ?>

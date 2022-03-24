@@ -18,10 +18,9 @@
             align-items: center;
             flex-direction: column;
             margin-top: 20px;
-            position: relative;
-            left: 0;
-            bottom: 0;
-            width: 100%;
+            position:relative;
+            bottom:0;
+            width:100%;
 
         }
 

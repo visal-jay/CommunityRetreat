@@ -209,7 +209,7 @@
 
 
 <body>
-    <div id="background" style="width: 100%;">
+    <div id="background" style="width: 100%; min-height: 90%">
 
         <?php if ($organization || $moderator) { ?>
 

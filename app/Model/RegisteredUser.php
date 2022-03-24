@@ -51,7 +51,7 @@ class RegisteredUser extends User
     public function changeUsername($uid,$data){
         $_SESSION["user"]["username"]=$data;
         $params = ["uid" => $uid , "username"=> $data];
-        $query = 'UPDATE registered_user SET username= :username   WHERE uid = :uid ' ;
+        $query = 'UPDATE registered_user SET username= :username   WHERE uid = :uid ' ;  //update username
         User::insert($query,$params);       
     }
 
@@ -59,7 +59,7 @@ class RegisteredUser extends User
     public function changeContactNumber($uid,$data){
         
         $params = ["uid" => "$uid" ,"contact_number"=> "$data[contact_number]"];
-        $query = 'UPDATE registered_user SET  contact_number = :contact_number  WHERE uid = :uid ' ;
+        $query = 'UPDATE registered_user SET  contact_number = :contact_number  WHERE uid = :uid ' ; //change Profilepic
         User::insert($query,$params);   
 
     }
@@ -68,7 +68,7 @@ class RegisteredUser extends User
     public function changeEmail($uid,$data){
         
         $params = ["uid" => "$uid" ,"email"=> "$data[email]"];
-        $query = 'UPDATE registered_user SET  email = :email  WHERE uid = :uid ' ;
+        $query = 'UPDATE registered_user SET  email = :email  WHERE uid = :uid ' ; //Change email
         User::insert($query,$params);   
             
     }
@@ -103,7 +103,7 @@ class RegisteredUser extends User
     public function getAdministrations($data){
         $administrations = array();
         $params = $data;
-        $query = 'SELECT event_details.event_id,event_details.event_name,event_details.organisation_username,moderator_treasurer.moderator_flag,moderator_treasurer.treasurer_flag FROM moderator_treasurer JOIN  event_details ON moderator_treasurer.event_id = event_details.event_id WHERE uid =:uid LIMIT :offset , :no_of_records_per_page';
+        $query = 'SELECT event_details.event_id,event_details.event_name,event_details.organisation_username,moderator_treasurer.moderator_flag,moderator_treasurer.treasurer_flag FROM moderator_treasurer JOIN  event_details ON moderator_treasurer.event_id = event_details.event_id WHERE uid =:uid LIMIT :offset , :no_of_records_per_page';  //Select administrations
         $administrations = Model::select($query,$params) ? Model::select($query,$params) : NULL;
         return $administrations;
     }

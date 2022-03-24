@@ -14,7 +14,7 @@ class VolunteerController
         $data['volunteer_capacities'] = $volunteer->getVolunteerCapacities($_GET["event_id"]); 
         $data['volunteer_sum'] = $volunteer->getVolunteerSum($_GET["event_id"]);
         $data["volunteers"] =  $volunteer->getVolunteerDetails($_GET["event_id"]);
-        $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === 0 ? 'https://' : 'http://'; //?
+        $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === 0 ? 'https://' : 'http://'; //setting up the domain
         $data["DOMAIN"] = $protocol . $_SERVER['HTTP_HOST']; 
         $data = array_merge($data, $event_details);
         View::render('eventPage', $data, $user_roles);

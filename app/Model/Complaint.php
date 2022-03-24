@@ -34,5 +34,11 @@ class Complaint extends Model{
         }      
         Model::insert($query,$params);
     }
+
+    public function dismissComplaint($data){
+        $query = 'DELETE FROM complaint WHERE complaint_id = :complaint_id';
+        $params = ['complaint_id' => $data];
+        Model::insert($query,$params);
+    }
 }
 ?>

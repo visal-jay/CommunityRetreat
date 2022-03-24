@@ -6,16 +6,16 @@ class VolunteerController
 
     public function view($event_details)
     {
-        $user_roles = Controller::accessCheck(["moderator", "organization"], $_GET["event_id"]);
-        $data = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["volunteer_status" => '', "volunteer_capacity" => '', "status" => '']);
-        $volunteer = new Volunteer();
+        $user_roles = Controller::accessCheck(["moderator", "organization"], $_GET["event_id"]); //only accessible by organization and moderator
+        $data = array_intersect_key((new Events)->getDetails($_GET["event_id"]), ["volunteer_status" => '', "volunteer_capacity" => '', "status" => '']); //getting common parameters of both both arrays, $_GET & [] 
+        $volunteer = new Volunteer(); //creating a new object from class Volunteer
 
-        $data["volunteer_graph"] = json_encode($volunteer->getReport(["event_id" => $_GET["event_id"]]));
-        $data['volunteer_capacities'] = $volunteer->getVolunteerCapacities($_GET["event_id"]);
+        $data["volunteer_graph"] = json_encode($volunteer->getReport(["event_id" => $_GET["event_id"]])); //json_encode inorder to identify by the javascript code
+        $data['volunteer_capacities'] = $volunteer->getVolunteerCapacities($_GET["event_id"]); 
         $data['volunteer_sum'] = $volunteer->getVolunteerSum($_GET["event_id"]);
         $data["volunteers"] =  $volunteer->getVolunteerDetails($_GET["event_id"]);
-        $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === 0 ? 'https://' : 'http://';
-        $data["DOMAIN"] = $protocol . $_SERVER['HTTP_HOST'];
+        $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === 0 ? 'https://' : 'http://'; //?
+        $data["DOMAIN"] = $protocol . $_SERVER['HTTP_HOST']; 
         $data = array_merge($data, $event_details);
         View::render('eventPage', $data, $user_roles);
     }
@@ -26,8 +26,8 @@ class VolunteerController
         Controller::accessCheck(["moderator", "organization"], $_GET['event_id']);
         $volunteer = new Volunteer;
         $volunteer->disableVolunteer($_GET["event_id"]);
-        $event_details = (new Events)->getDetails($_GET["event_id"]);
-        (new UserController)->addActivity("Disable volunteer for {$event_details['event_name']}", $_GET['event_id']);
+        $event_details = (new Events)->getDetails($_GET["event_id"]); //creating a new object from Events class and retrive event details
+        (new UserController)->addActivity("Disable volunteer for {$event_details['event_name']}", $_GET['event_id']); //inserting disabling volunteering activity
         Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "volunteers"]);
     }
 
@@ -58,12 +58,12 @@ class VolunteerController
         Controller::accessCheck(["registered_user"]);
         Controller::validateForm([], ["event_id"]);
         $event_details = (new Events)->getDetails($_GET['event_id']);
-        $today = gmdate("Y-m-d", (int)shell_exec("date '+%s'"));
+        $today = gmdate("Y-m-d", (int)shell_exec("date '+%s'")); //converting date format
         // check if today is betwwen start and end date of event
         if ($today >= $event_details['start_date'] && $today <= $event_details['end_date']) {
             (new UserController)->addActivity("You marked your participation in {$event_details['event_name']}", $_GET['event_id']);
             (new Volunteer)->markParticipation($_GET["event_id"]);
-            View::render("volunteerThank");
+            View::render("volunteerThank"); //popup messege 'Thank you for Volunteering'
         } else {
             Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "home","action" => "volunteer"]);
         }
@@ -82,7 +82,7 @@ class VolunteerController
         }
         $volunteer = new Volunteer();
         $event_id = $_GET['event_id'];
-        $description = $volunteer->addVolunteerDetails($_SESSION["user"]["uid"],$event_id,$volunteer_dates);
+        $description = $volunteer->addVolunteerDetails($_SESSION["user"]["uid"],$event_id,$volunteer_dates); //request on inserting operation in database
         (new UserController)->addActivity($description,$event_id);
         Controller::redirect("/Event/view", ["page" => "about", "event_id" => $event_id ]);
     }
@@ -125,7 +125,7 @@ class VolunteerController
     {
         $volunteer_controller = new VolunteerController();
         $events = new Events();
-        $near_events = $events->getDetailsofNearEvents();
+        $near_events = $events->getDetailsofNearEvents(); 
         foreach ($near_events as $event) {
             $event_details = $events->getDetails($event['event_id']);
             if ($event['volunteer_date'] == Date('Y-m-d', strtotime('+3 days')))

@@ -63,7 +63,8 @@ class VolunteerController
         if ($today >= $event_details['start_date'] && $today <= $event_details['end_date']) {
             (new UserController)->addActivity("You marked your participation in {$event_details['event_name']}", $_GET['event_id']);
             (new Volunteer)->markParticipation($_GET["event_id"]);
-            View::render("volunteerThank"); //popup messege 'Thank you for Volunteering'
+            $data["event_details"] = (new Events)->getDetails($_GET['event_id']);
+            View::render("volunteerThank", $data);
         } else {
             Controller::redirect("/Event/view", ["event_id" => $_GET["event_id"], "page" => "home","action" => "volunteer"]);
         }

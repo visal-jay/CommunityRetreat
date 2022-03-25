@@ -652,7 +652,15 @@
         });
     }
 
-    search();
+    /* check url query parameters */
+    let params = new URLSearchParams(location.search);
+    let range = params.get("distance");
+    document.getElementById("in-search").value = params.get("search");
+
+    console.log(params.get("distance"));
+
+    if(params.get("distance")!='null')
+        search();
     /* listen to search input text */
     document.getElementById("in-search").addEventListener('keyup', debounce(search, 500));
 
@@ -661,30 +669,24 @@
         document.getElementsByTagName("choices")[0].classList.toggle("show-choices");
     }
 
-    /* check url query parameters */
-    let params = new URLSearchParams(location.search);
-    let range = params.get("distance");
-    document.getElementById("in-search").value = params.get("search");
-
-
     /* map initilzation */
     var map;
     var markers = [];
 
     async function initMap() {
-        const position = await getCoordinates();
         if (global_latitude === undefined || global_longitude === undefined) {
             const position = await getCoordinates();
-            let latitude = position.coords.latitude;
-            let longitude = position.coords.longitude;
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
         } else {
-            let latitude = global_latitude;
-            let longitude = global_longitude;
+            var latitude = global_latitude;
+            var longitude = global_longitude;
         }
         const current_location = {
             lat: latitude,
             lng: longitude
         };
+        console.log(current_location);
         map = new google.maps.Map(document.getElementById("map"), {
             zoom: 12,
             center: current_location,

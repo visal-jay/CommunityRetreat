@@ -39,6 +39,7 @@
             border-radius: 12px;
             padding: 1rem;
             box-shadow: 0 2px 12px rgba(32,32,32,.3);
+            overflow: scroll;
         }
         .date-event-popup{
             display: flex;

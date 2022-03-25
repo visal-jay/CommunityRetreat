@@ -66,7 +66,7 @@ class SignupController
         $user = new User;
         $time = (int)shell_exec("date '+%s'");  //get current time
         $user_details=$user->authenticateWithMails($data["email"], $data["password"],0);    //authenticate if he email is for a user waiting to be verficiation
-        //check if the email verification isnot expired
+        //check if the email verification is not expired
         if($data["time"]>$time-86400 && $user_details) {
             $user->setVerification($user_details["uid"]); //verify user
             $user_details["username"]=$user->getUsername($user_details["uid"]); //get username

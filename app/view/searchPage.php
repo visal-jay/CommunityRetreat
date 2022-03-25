@@ -355,6 +355,16 @@
             calendarShow();
     });
 
+    let global_latitude = undefined;
+    let global_longitude = undefined;
+
+    async function setGlobalPosition() {
+        const position = await getCoordinates();
+        global_latitude = position.coords.latitude;
+        global_longitude = position.coords.longitude;
+    }
+
+    setGlobalPosition();
 
     /* event and organisation more buttons */
     let event_list_offset = 0;
@@ -454,9 +464,14 @@
         searchType();
 
         if (latitude == "" || longitude == "") {
-            const position = await getCoordinates();
-            latitude = position.coords.latitude;
-            longitude = position.coords.longitude;
+            if (global_latitude === undefined || global_longitude === undefined) {
+                const position = await getCoordinates();
+                latitude = position.coords.latitude;
+                longitude = position.coords.longitude;
+            } else {
+                latitude = global_latitude;
+                longitude = global_longitude;
+            }
         }
 
         if (!document.getElementById('map-container').classList.contains("hidden")) {
@@ -480,7 +495,7 @@
                     order_type: sort,
                     way: way,
                     <?php if ($registered_user || $guest_user) echo "status: ['published','ended']," ?>
-                   /*  status: 'published', */
+                    /*  status: 'published', */
                     is_virtual: is_virtual,
                     offset: offset * limit,
                     limit: limit
@@ -601,7 +616,7 @@
             success: function(result) {
                 let parent_container = document.querySelector('Organizations');
                 let more_button = document.getElementById("more-2");
-                
+
                 if (offset == 0) {
                     parent_container.innerHTML = "";
                     organization_list_offset = 0;
@@ -655,8 +670,14 @@
 
     async function initMap() {
         const position = await getCoordinates();
-        let latitude = position.coords.latitude;
-        let longitude = position.coords.longitude;
+        if (global_latitude === undefined || global_longitude === undefined) {
+            const position = await getCoordinates();
+            let latitude = position.coords.latitude;
+            let longitude = position.coords.longitude;
+        } else {
+            let latitude = global_latitude;
+            let longitude = global_longitude;
+        }
         const current_location = {
             lat: latitude,
             lng: longitude
@@ -718,19 +739,22 @@
     }
 
     async function toggleMap() {
-        const position = await getCoordinates();
-        let latitude = position.coords.latitude;
-        let longitude = position.coords.longitude;
+        if (global_latitude === undefined || global_longitude === undefined) {
+            const position = await getCoordinates();
+            let latitude = position.coords.latitude;
+            let longitude = position.coords.longitude;
+        } else {
+            let latitude = global_latitude;
+            let longitude = global_longitude;
+        }
         let map = document.getElementById('map-container');
         if (map.classList.contains("hidden")) {
             document.getElementById("mode").options[0].selected = true;
             document.getElementById("search-type").value = "event";
-            searchType();
             map.classList.toggle("hidden");
-            debounce(search(latitude, longitude, 40, 0), 1000);
+            search(latitude, longitude, 40, 0);
         } else {
             document.getElementById("search-type").options[0].selected = true;
-            searchType();
             map.classList.toggle("hidden");
             search(latitude, longitude);
         }

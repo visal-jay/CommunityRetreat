@@ -468,6 +468,8 @@
                 const position = await getCoordinates();
                 latitude = position.coords.latitude;
                 longitude = position.coords.longitude;
+                global_latitude = latitude;
+                global_longitude = longitude;
             } else {
                 latitude = global_latitude;
                 longitude = global_longitude;

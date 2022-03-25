@@ -650,6 +650,7 @@
         });
     }
 
+    search();
     /* listen to search input text */
     document.getElementById("in-search").addEventListener('keyup', debounce(search, 500));
 
@@ -713,10 +714,7 @@
             resizeMap();
             search(latitude, longitude, 40, 0);
 
-        } else {
-            search(latitude, longitude);
-
-        }
+        } 
     }
 
     function hideMarkers() {

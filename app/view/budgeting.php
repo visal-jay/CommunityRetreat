@@ -32,7 +32,6 @@
     }
 
     .income-info {
-        max-height: 200px;
         overflow: hidden;
         transition: all .5s ease-in-out;
         filter: blur(0px);

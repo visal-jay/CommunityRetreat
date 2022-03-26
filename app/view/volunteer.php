@@ -10,7 +10,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="/Libararies/qrcode/qrcode.js"></script>
     <script src="/Libararies/qrcode/qrcode.min.js"></script>
-    <title>Details of Volunteers</title>
+    <link rel="icon" href="/Public/assets/visal logo.png" type="image/icon type">
+    <title>Communityretreat</title>
 </head>
 
 <style>

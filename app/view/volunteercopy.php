@@ -11,7 +11,8 @@
     <script src="/Libararies/qrcode/qrcode.js"></script>
     <script src="/Libararies/qrcode/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-    <title>CommunityRetreat</title>
+    <link rel="icon" href="/Public/assets/visal logo.png" type="image/icon type">
+    <title>Communityretreat</title>
 </head>
 
 <style>

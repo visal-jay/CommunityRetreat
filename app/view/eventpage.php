@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/Public/assets/newstyles.css">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
-    <title>Event Page</title>
+    <link rel="icon" href="/Public/assets/visal logo.png" type="image/icon type">
+    <title>Communityretreat</title>
     <meta property="og:url" content="https://www.communityretreat.me/Event/view?page=about&event_id=<?= $_GET['event_id'] ?>" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="<?= $event_name ?>" />

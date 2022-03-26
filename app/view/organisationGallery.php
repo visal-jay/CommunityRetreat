@@ -177,6 +177,7 @@
 
 <script>
     const input = document.querySelector('#files');
+    let save_flag = false;
     input.addEventListener('change', handleFileSelect);
 
     document.querySelector("#file-form").addEventListener("submit", handleForm);
@@ -224,6 +225,14 @@
 
 
     function handleForm(event) {
+        if (save_flag) {
+            event.preventDefault();
+            return;
+        }
+        save_flag = true;
+        let save_button = document.querySelector(".save-button");
+        save_button.disabled = true;
+
         if (storedFiles.length == 0)
             location.reload();
 
@@ -263,6 +272,7 @@
                 }
             }
         });
+        save_button.disabled = false;
     }
 
     function removeFile(e) {

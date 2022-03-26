@@ -114,9 +114,23 @@ class Controller
         }
     }
 
+    
+
     //function to send POST request to the server
     public static function send_post_request($url, $data)
-    {
+    { 
+        if (!function_exists('getallheaders')) {
+            function getallheaders() {
+            $headers = [];
+            foreach ($_SERVER as $name => $value) {
+                if (substr($name, 0, 5) == 'HTTP_') {
+                    $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+                }
+            }
+            return $headers;
+            }
+        }
+        
         $ch = curl_init();
         $headers = array(
             "Cookie: " . getallheaders()["Cookie"],

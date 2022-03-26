@@ -62,7 +62,7 @@
 
 <body>
     <header class="header">
-        <a class=" logo ">
+        <a class=" logo " href="/User/home">
             <img src="/Public/assets/visal logo.png ">
         </a>
         <nav class="main-nav ">

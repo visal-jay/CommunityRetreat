@@ -608,7 +608,6 @@
     const income_graph = <?= $income_graph ?>;
     const expense_graph = <?= $expense_graph ?>;
 
-    console.log(expense_graph);
     let keys = [];
     let amounts_income = [];
     let amounts_expense = [];

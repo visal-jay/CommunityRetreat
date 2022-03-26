@@ -50,8 +50,9 @@ class ComplaintController{
         return $result;
     }
     public function dismissComplaint(){
-        /* call removeComplaint function*/
-        $this->removeComplaint($_POST['complaint_id']);
+
+        $complaint = new Complaint;
+        $complaint->dismissComplaint($_POST['complaint_id']);
         Controller::redirect("/Admin/complaint");
     }
     public function removeComplaint($data){

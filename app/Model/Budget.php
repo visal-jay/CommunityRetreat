@@ -226,7 +226,8 @@ class Budget extends Model
 
         /*get incomes and expenses and all the details of them in to an array*/
         $data["report"] = $expense_report;
-        array_push($data["report"], ...$income_report);
+        if (is_array($income_report))
+            array_push($data["report"], ...$income_report);
         usort($data["report"], function ($a, $b) {/*sort the data according to date*/
             return $a['date'] <=> $b['date'];
         });

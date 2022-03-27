@@ -174,7 +174,6 @@
         overflow: hidden;
         height: 20px;
         background-color: #e5e4e4;
-        padding-right: 5px;
     }
 
     .filled-bar {
@@ -360,8 +359,9 @@
                                 echo "<div style='min-width:60%;margin:auto'>";
                                 echo "<div class='grey-bar margin-md' style='min-width:40px; min-width:100px; width:" . ($capacity['capacity'] / max(max(array_column($volunteer_capacities, 'capacity')),1) * 100) . "%'>";
                                 $sum_capacity = isset($volunteer_sum[$capacity['event_date']][0]['volunteer_sum']) ? $volunteer_sum[$capacity['event_date']][0]['volunteer_sum'] : 0;
-                                echo "<div class='filled-bar' style='min-width:40px; width: " . ($sum_capacity / ($capacity['capacity'] == 0 ? 1 : $capacity['capacity']) * 100) . "%'>";
-                                echo (int)($sum_capacity / ($capacity['capacity'] == 0 ? 1 : $capacity['capacity']) * 100) . "%";
+                                $filled_percentage = ($sum_capacity / ($capacity['capacity'] == 0 ? 1 : $capacity['capacity']) * 100);
+                                echo "<div class='filled-bar' style='min-width:40px; width: " . ($filled_percentage > 100 ? 100 : $filled_percentage) . "%'>";
+                                echo (int)$filled_percentage . "%";
                                 echo "</div>";
                                 echo "</div>";
                                 echo "</div>";

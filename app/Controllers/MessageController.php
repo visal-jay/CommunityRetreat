@@ -58,7 +58,10 @@ class MessageController
     public function sendMessage()
     {
         $user = isset($_GET["event_id"]) ? "EVN" . trim($_GET["event_id"]) : $_SESSION["user"]["uid"];
-        (new Message)->insertMessage($user, $_POST["reciever"], $_POST["message"]);
+        $user = preg_replace( '/[^a-z0-9 ]/i', '', $user); //remove any special characters
+        $reciever =  preg_replace('/\s+/', '', $_POST["reciever"]); //remove any whitesapce errros of event id
+        $reciever = preg_replace( '/[^a-z0-9 ]/i', '', $reciever); //remove any special characters
+        (new Message)->insertMessage($user, $reciever, $_POST["message"]);
     }
 
     //new chat

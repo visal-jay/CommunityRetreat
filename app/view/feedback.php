@@ -348,7 +348,7 @@
                     <form action="/Feedback/addFeedback?event_id= <?= $_GET["event_id"] ?>" method="post" class="form-container">
 
                         <div class="form-item">
-                            <label>Tell us what you think about "event name" </label>
+                            <label>Tell us what you think about <?= $event_name?> </label>
                             <textarea name="feedback" class="form-ctrl" placeholder="Enter feedback" id="feedback" required></textarea>
                         </div>
 

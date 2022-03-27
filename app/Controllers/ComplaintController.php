@@ -10,21 +10,28 @@ class ComplaintController{
         if($_POST['complaint_status'] =='event'){ // If status of given complaint is event 
 
             $path = "window.location.href='/Event/view?page=about&&event_id={$_POST["event_id"]}'";
+            /*send all details in data array*/
             $data = ["complainant_uid" => $complainant_uid, "uid" => NULL , "event_id" => $_POST['event_id'] , "complaint_name" => $_POST['complaint_name'] ,"complaint" => $_POST['complaint'], "status" =>  $_POST['complaint_status'], "path" => $path ];
+            /*call addComplaint function in complaint model*/
             $complaint->addComplaint($data);
             Controller::redirect("/Event/view", ["event_id" => $_POST["event_id"], "page" => "about"]);
         }
         else if($_POST['complaint_status'] == "organization"){ // If status of given complaint is organization
             $path = "window.location.href='/Organisation/view?page=about&org_id={$_POST['uid']}'";
+            /*send all details in data array*/
             $data = ["complainant_uid" => $complainant_uid, "uid" =>$_POST['uid'], "event_id" => NULL , "complaint_name" => $_POST['complaint_name'] , "complaint" =>  $_POST['complaint'], "status" =>  $_POST['complaint_status'], "path" => $path ];
+            /*call addComplaint function in complaint model*/
             $complaint->addComplaint($data);
             Controller::redirect("/Organisation/view",["org_id" => $_POST["uid"], "page" => "about"]);
 
         }
         else if($_POST['complaint_status'] == "user"){ // If status of given complaint is user
             $path = "window.location.href='/Feedback/statusToggle?event_id={$_POST['event_id']}&&feedback_id={$_POST['feedback_id']}'";
+            /* get event details*/
             $event_details = (new Events)->getDetails($_POST["event_id"]);
+            /*send all details in data array*/
             $data = ["complainant_uid" => $complainant_uid, "uid" =>$_POST['uid'], "event_id" => $_POST['event_id'] , "complaint_name" =>  $_POST['complaint_name'] , "complaint" =>  $_POST['complaint'], "status" =>  $_POST['complaint_status'], "path" => $path ];
+            /*call addComplaint function in complaint model*/
             $complaint->addComplaint($data);
             Controller::redirect("/Event/view", ["page" => "feedback", "event_id" => $_POST["event_id"]]);
         }
@@ -41,6 +48,7 @@ class ComplaintController{
 
     //Dismiss the complaint
     public function dismissComplaint(){
+
         $complaint = new Complaint;
         $complaint->dismissComplaint($_POST['complaint_id']); //Call model to get complaint
         Controller::redirect("/Admin/complaint");
@@ -49,7 +57,8 @@ class ComplaintController{
     //Remove an existing complaint
     public function removeComplaint($data){
          $complaint = new Complaint;
-         $complaint->deleteComplaint($data); //Call model to delete complaint
+         /* call deleteComplaint function in complaint model*/
+         $complaint->deleteComplaint($data);
     }
  
     

@@ -9,18 +9,25 @@ class BudgetController
         /* allow only organization, moderator and treasurer*/ 
         $user_roles = Controller::accessCheck(["organization", "moderator", "treasurer"], $_GET["event_id"]);
         $budget = new Budget();
+        /* get budget details to data array */ 
         $data["report"] = $budget->getBudget($_GET["event_id"]);
 
         $expense_details = $budget->getExpenseDetails($_GET["event_id"]);
         $income_details = $budget->getIncomeDetails($_GET["event_id"]);
+        /* get income sum */
         $income_sum = $budget->getIncomeSum($_GET["event_id"]);
+        /* get expense sum */
         $expense_sum = $budget->getExpenseSum($_GET["event_id"]);
+        /* get donation sum */
         $donate_sum = $budget->getDonationSum($_GET["event_id"]);
 
         $data["incomes"] = $income_details;
         $data["expenses"] = $expense_details;
+        /* get income sum to the data array*/
         $data["income_sum"] = $income_sum;
+        /* get expense sum to the data array*/
         $data["expense_sum"] = $expense_sum;
+        /* get donation sum to the data array*/
         $data["donation_sum"] = $donate_sum;
 
     /*sending amounts dates and  income and expense graph in an associative array*/

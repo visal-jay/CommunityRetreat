@@ -210,7 +210,7 @@
                                 <div><?= $task["task"] ?></div>
 
                                 <update class="margin-md flex-row-to-col">
-                                    <button class="btn btn-small margin-md" onclick="edit(); editForm('<?= $task['start_date'] ?>','<?= $task['end_date'] ?>','<?= $task['task'] ?>' ,'<?= $task['task_id'] ?>'); togglePopup('edit-form'); blur_background('background'); stillBackground('id1');"><i class="btn-icon far fa-edit margin-side-md"></i>Edit</button>
+                                    <button class="btn btn-small margin-md" onclick=" editForm('<?= $task['start_date'] ?>','<?= $task['end_date'] ?>','<?= $task['task'] ?>' ,'<?= $task['task_id'] ?>'); togglePopup('edit-form'); blur_background('background'); stillBackground('id1');"><i class="btn-icon far fa-edit margin-side-md"></i>Edit</button>
 
                                     <?php if ($task['completed'] == 0) { ?>
                                         <button class="btn btn-small margin-md" onclick="window.location.href='/WorkTimeline/completed?event_id=<?= $_GET['event_id'] ?>&&task_id=<?= $task['task_id'] ?>'"><i class="far fa-check-square"></i>&nbsp;&nbsp;Mark as completed</button>
@@ -340,17 +340,6 @@
         document.getElementById(id).classList.toggle("still");
     }
 
-    function edit() {
-        var data = document.getElementsByClassName("data");
-        var form = document.getElementsByClassName("form");
-        for (var i = 0; i < data.length; i++) {
-            data[i].classList.toggle("hidden");
-        }
-        for (var i = 0; i < form.length; i++) {
-            form[i].classList.toggle("hidden");
-        }
-    }
-
     document.getElementById("start_date").addEventListener("change", () => {
         document.getElementById("end_date").setAttribute("min", document.getElementById("start_date").value);
     });
@@ -373,7 +362,6 @@
     }
 
     function cancel() {
-        edit();
         var cancel = event.target.parentNode;
         cancel.style.display = "none";
         cancel.previousElementSibling.style.display = "";

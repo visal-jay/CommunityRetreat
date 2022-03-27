@@ -367,7 +367,7 @@
                                 echo "</div>";
                                 echo "</div>";
 
-                                echo "<div style='margin:auto;'>";
+                                echo "<div class='flex-col flex-center' style='margin:auto;'>";
                                 echo "<p class='data'>" . $volunteer_capacities[$i]['capacity'] . "</p>";
                                 echo "<input name='";
                                 echo $i;

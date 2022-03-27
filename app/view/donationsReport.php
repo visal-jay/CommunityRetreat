@@ -45,6 +45,7 @@
     .container {
         width: 80%;
         max-width: none;
+        padding-bottom: 20px;
     }
 
     .date-time-container {

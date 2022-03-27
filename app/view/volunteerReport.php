@@ -180,7 +180,7 @@ if (isset($_SESSION["user"]["user_type"])) {
                         ?>
                     <?php } ?>
                     <br>
-                    <div><?= array_sum(array_map('intval',array_column($volunteer_count, "participants"))); ?></div>
+                    <div><?= array_sum(array_map('intval',array_column($participant_count, "participants"))); ?></div>
                 </div>
             </div>
 

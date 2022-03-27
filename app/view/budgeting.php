@@ -501,7 +501,7 @@
             </div>
         </div>
 
-        <?php if(sizeof($report)>=9) { ?>
+        <?php if(sizeof($report)>=7) { ?>
         <div id="income-show-hide-btn" class="income-expense-show-hide-btn">
             <!--Show all the hidden incomes-->
             <button class=" btn btn-solid read-more-btn" onclick="show('income-info');change_button('income-down-btn');"><i id="income-down-btn" class="fas fa-chevron-down"></i></button>

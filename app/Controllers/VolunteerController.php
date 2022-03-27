@@ -14,6 +14,7 @@ class VolunteerController
         $data['volunteer_capacities'] = $volunteer->getVolunteerCapacities($_GET["event_id"]); 
         $data['volunteer_sum'] = $volunteer->getVolunteerSum($_GET["event_id"]);
         $data["volunteers"] =  $volunteer->getVolunteerDetails($_GET["event_id"]);
+
         $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === 0 ? 'https://' : 'http://'; //setting up the domain
         $data["DOMAIN"] = $protocol . $_SERVER['HTTP_HOST']; 
         $data = array_merge($data, $event_details);
@@ -94,6 +95,11 @@ class VolunteerController
         Controller::validateForm([], ["url", "event_id"]);
         Controller::accessCheck(["organization", "moderator"], $_GET["event_id"]);/*check whether organization or treasurer accessed it.*/
         $volunteer = new Volunteer;
+
+        $data["volunteer_count"]=$volunteer-> getDailyVolunteerCount($_GET["event_id"]);
+        $data["participant_count"]=$volunteer-> getParticipantCount($_GET["event_id"]);
+        $data["dates"] = $volunteer->getEventVolunteerDates($_GET["event_id"]);
+
         //filtering
         if(isset($_POST["volunteer_date"]) && $_POST["volunteer_date"]!=""){
             $data["volunteers"] = $volunteer->getVolunteerDetails($_GET["event_id"],0,0,$_POST["volunteer_date"]);

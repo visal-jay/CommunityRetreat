@@ -31,7 +31,6 @@
         width: 100%;
         background: #e2dfdf;
         text-align: center;
-        margin: 20px;
         border-collapse: collapse;
     }
 
@@ -45,6 +44,7 @@
     .container {
         width: 80%;
         max-width: none;
+        padding-bottom: 20px;
     }
 
     .date-time-container {
@@ -64,6 +64,29 @@
     .volunteer-field {
         text-align: left;
 
+    }
+
+    .income-expenxe-balance-container {
+        margin-bottom: 20px;
+        border-color: #16c79a;
+        border-radius: 8px;
+        background-color: #eeeeee;
+        box-shadow: 2px 4px #ccbcbc;
+        padding: 5px;
+        text-align: center;
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .sum {
+        margin: 15px;
+        text-align: center;
+    }
+
+    .bold {
+        font-weight: 700;
+        align-items: center;
+        display: flex;
     }
 </style>
 
@@ -115,20 +138,56 @@ if (isset($_SESSION["user"]["user_type"])) {
                 <canvas class="canvas" id="myChart"></canvas>
             </div>
 
-            <form action="/Volunteer/volunteerReport?event_id=<?= $_GET["event_id"] ?>" method="post">
-                <label for="volunteer_date">Sort by volunteering date</label>
-                <select class="form-ctrl" id="volunteer_date" name="volunteer_date" onchange="this.form.submit()">
-                    <option value="" selected>All</option>
-                    <?php for ($i = 0; $i < count($volunteer_capacities); $i++) {
-                        if ($volunteer_date_req == $volunteer_capacities[$i]['event_date']) { ?>
-                            <option value="<?= $volunteer_capacities[$i]['event_date'] ?>" selected><?= $volunteer_capacities[$i]['event_date'] ?></option>
-                        <?php } else {  ?>
-                            <option value="<?= $volunteer_capacities[$i]['event_date'] ?>"><?= $volunteer_capacities[$i]['event_date'] ?></option>
-                    <?php }
-                    } ?>
-                </select>
-            </form>
+            <div class="income-expenxe-balance-container flex-row">
+                <div class="bold sum flex-col">
+                    <div>Dates :
+                        <?php foreach ($dates as $date) { ?>
+                            <!--display the sum of incomes-->
+                            <div>
+                                <?= $date ?>
+                            </div>
+                        <?php } ?>
+                    </div>
+                </div>
+                <div class="bold sum flex-col">Total volunteers :
+                    <?php foreach ($dates as $date) { ?>
+                        <!--display the sum of incomes-->
+                        <?php if ($index = array_search($date, array_column($volunteer_count, "day")))
+                            echo "<div>" . $volunteer_count[$index]["daily_volunteers"] . "</div>";
+                        else
+                            echo "<div>0</div>";
+                        ?>
+                    <?php } ?>
+                </div>
 
+            <div class="bold sum flex-col">
+                <div>Actual participants :
+                    <?php foreach ($dates as $date) { ?>
+                        <!--display the sum of expenses-->
+                        <?php if ($index = array_search($date, array_column($participant_count, "day")))
+                            echo "<div>" . $participant_count[$index]["participants"] . "</div>";
+                        else
+                            echo "<div>0</div>";
+                        ?>
+                    <?php } ?>
+                </div>
+            </div>
+
+        </div>
+        <form action="/Volunteer/volunteerReport?event_id=<?= $_GET["event_id"] ?>" method="post">
+            <label for="volunteer_date">Sort by volunteering date</label>
+            <select class="form-ctrl" id="volunteer_date" name="volunteer_date" onchange="this.form.submit()">
+                <option value="" selected>All</option>
+                <?php for ($i = 0; $i < count($volunteer_capacities); $i++) {
+                    if ($volunteer_date_req == $volunteer_capacities[$i]['event_date']) { ?>
+                        <option value="<?= $volunteer_capacities[$i]['event_date'] ?>" selected><?= $volunteer_capacities[$i]['event_date'] ?></option>
+                    <?php } else {  ?>
+                        <option value="<?= $volunteer_capacities[$i]['event_date'] ?>"><?= $volunteer_capacities[$i]['event_date'] ?></option>
+                <?php }
+                } ?>
+            </select>
+        </form>
+        <div>
             <table class="table">
                 <!--Display the report of all the volunteers-->
                 <tr>
@@ -155,6 +214,8 @@ if (isset($_SESSION["user"]["user_type"])) {
                 <?php } ?>
             </table>
         </div>
+
+    </div>
 
     </div>
 </body>

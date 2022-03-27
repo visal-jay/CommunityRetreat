@@ -30,7 +30,7 @@
         transform: translate(-50%, -50%);
         left: 50%;
         position: absolute;
-        top:110%;
+        top: 110%;
         width: 100%;
     }
 
@@ -257,6 +257,7 @@
         border-radius: 8px;
     }
 
+
     @media screen and (max-width:768px) {
 
         table,
@@ -312,6 +313,17 @@
         .capacity-div {
             width: 320px;
         }
+
+        .income-expenxe-balance-container {
+            display: flex;
+            flex-direction: column;
+            margin: 4px;
+        }
+
+        .sum {
+            margin: 5px;
+            justify-content: space-between;
+        }
     }
 
     @keyframes gradient {
@@ -333,7 +345,11 @@
 
 <body>
 
-    <div class="<?php if ($volunteer_status == 0 && count($volunteers) == 0) { ?>blur <?php } ?>flex-center flex-col container-size" id="background">
+    <div class="<?php
+
+                use Twig\Node\Expression\Binary\DivBinary;
+
+                if ($volunteer_status == 0 && count($volunteers) == 0) { ?>blur <?php } ?>flex-center flex-col container-size" id="background">
         <h1>Details of Volunteers</h1>
 
         <div class="row container donation-capacity-container">
@@ -357,7 +373,7 @@
                                 echo "</div>";
 
                                 echo "<div style='min-width:60%;margin:auto'>";
-                                echo "<div class='grey-bar margin-md' style='min-width:40px; min-width:100px; width:" . ($capacity['capacity'] / max(max(array_column($volunteer_capacities, 'capacity')),1) * 100) . "%'>";
+                                echo "<div class='grey-bar margin-md' style='min-width:40px; min-width:100px; width:" . ($capacity['capacity'] / max(max(array_column($volunteer_capacities, 'capacity')), 1) * 100) . "%'>";
                                 $sum_capacity = isset($volunteer_sum[$capacity['event_date']][0]['volunteer_sum']) ? $volunteer_sum[$capacity['event_date']][0]['volunteer_sum'] : 0;
                                 $filled_percentage = ($sum_capacity / ($capacity['capacity'] == 0 ? 1 : $capacity['capacity']) * 100);
                                 echo "<div class='filled-bar' style='min-width:40px; width: " . ($filled_percentage > 100 ? 100 : $filled_percentage) . "%'>";
@@ -452,17 +468,17 @@
         </div>
 
     </div>
-        <?php if ($status = 'published') { ?>
-            <?php if ($volunteer_status == 0 && count($volunteers) == 0) { ?>
-                <div class="initial-donation-enable-btn">
-                    <button onclick="window.location.href='/Volunteer/enableVolunteer?event_id=<?= $_GET['event_id'] ?>'" class="btn btn-lg btn-solid" id="initial-volunteer-enable-btn" onclick="myFunction()">Enable Volunteers</button>
-                </div>
-            <?php } ?>
-        <?php } else if ($status = 'ended') { ?>
+    <?php if ($status = 'published') { ?>
+        <?php if ($volunteer_status == 0 && count($volunteers) == 0) { ?>
             <div class="initial-donation-enable-btn">
-                No volunteers
+                <button onclick="window.location.href='/Volunteer/enableVolunteer?event_id=<?= $_GET['event_id'] ?>'" class="btn btn-lg btn-solid" id="initial-volunteer-enable-btn" onclick="myFunction()">Enable Volunteers</button>
             </div>
         <?php } ?>
+    <?php } else if ($status = 'ended') { ?>
+        <div class="initial-donation-enable-btn">
+            No volunteers
+        </div>
+    <?php } ?>
     </div>
     <div class="popup" id="publish">
         <div class="content">

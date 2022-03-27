@@ -205,5 +205,40 @@ class Volunteer extends Model
             return $result;
     }
 
+    public function getDailyVolunteerCount($event_id){
+        $query= "SELECT COUNT(uid) as daily_volunteers, date_format(date,'%x-%m-%d') as day FROM volunteer WHERE event_id = :event_id GROUP BY day ORDER BY day ASC";
+        $params = ["event_id" => $event_id];
+        $result = Model::select($query, $params);
+        if (count($result) == 0)
+            return false;
+        else
+            return $result;
+    }
+
+    public function getParticipantCount($event_id){
+        $query= "SELECT COUNT(uid) as participants, date_format(volunteer_date,'%x-%m-%d') as day FROM volunteer WHERE participated = 1 AND event_id = :event_id GROUP BY day ORDER BY day ASC";
+        $params = ["event_id" => $event_id];
+        $result = Model::select($query, $params);
+        if (count($result) == 0)
+            return false;
+        else
+            return $result;
+    }
+
+    public function getEventVolunteerDates($event_id){
+        $event  = (new Events)->getDetails($event_id);
+        $startDate = new DateTime($event["start_date"]);
+        $interval = new DateInterval('P1D');
+        $realEnd = new DateTime($event["end_date"]);
+        $realEnd->add(new DateInterval('P1D'));
+        $period = new DatePeriod($startDate, $interval, $realEnd);
+        $dates=[];
+        foreach($period as $date){
+            $event_day = $date->format('Y-m-d');
+            array_push($dates, $event_day);
+        }
+        return $dates;
+    }
+
 
 }

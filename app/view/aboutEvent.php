@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <title>About Event</title>
+    <link rel="icon" href="/Public/assets/visal logo.png" type="image/icon type">
+    <title>Communityretreat</title>
 
     <!-- meta for facebook sharer -->
     <meta property="og:url" content="https://www.communityretreat.me/Event/view?page=home&event_id=<?= $_GET['event_id'] ?>">

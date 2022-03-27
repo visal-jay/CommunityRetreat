@@ -9,7 +9,8 @@
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
-    <title>Document</title>
+    <link rel="icon" href="/Public/assets/visal logo.png" type="image/icon type">
+    <title>Communityretreat</title>
 </head>
 <style>
     h1 {
@@ -136,6 +137,7 @@
     }
 
     .heading {
+        width: 100%;
         position: absolute;
         top: 40px;
     }
@@ -275,7 +277,8 @@
     }
 
     #myVideo {
-        scroll-snap-align: center;
+        scroll-snap-align: end;
+        height: 80vh;
     }
 
     @media screen and (max-width:767px) {
@@ -288,6 +291,7 @@
         }
 
         .heading {
+            width: 100%;
             position: absolute;
             top: 10px;
         }
@@ -508,7 +512,7 @@
 
     <div class="home-div " style="display: none;">
         <div class="homepage flex-col flex-center">
-            <div class="flex-col flex-center" style="position:relative;height: 80vh;">
+            <div class="flex-col" style="position:relative;height: 80vh;">
                 <video autoplay muted loop id="myVideo">
                     <source src="/Public/assets/volunteer.mp4" type=video/mp4>
                 </video>

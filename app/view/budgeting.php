@@ -2,7 +2,8 @@
 <html lang="en" id="id1">
 
 <head>
-    <title>Budget</title>
+    <link rel="icon" href="/Public/assets/visal logo.png" type="image/icon type">
+    <title>Communityretreat</title>
     <link rel="stylesheet" href="/Public/assets/newstyles.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -32,7 +33,7 @@
     }
 
     .income-info {
-        max-height: 200px;
+        max-height: 220px;
         overflow: hidden;
         transition: all .5s ease-in-out;
         filter: blur(0px);
@@ -500,7 +501,7 @@
             </div>
         </div>
 
-        <?php if(sizeof($report)>9) { ?>
+        <?php if(sizeof($report)>=9) { ?>
         <div id="income-show-hide-btn" class="income-expense-show-hide-btn">
             <!--Show all the hidden incomes-->
             <button class=" btn btn-solid read-more-btn" onclick="show('income-info');change_button('income-down-btn');"><i id="income-down-btn" class="fas fa-chevron-down"></i></button>

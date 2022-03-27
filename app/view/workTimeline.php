@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="/Public/assets/newstyles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
-    <title>Work Timeline</title>
+    <link rel="icon" href="/Public/assets/visal logo.png" type="image/icon type">
+    <title>Communityretreat</title>
 </head>
 
 <style>

@@ -117,8 +117,8 @@ class Controller
     
 
     //function to send POST request to the server
-    public static function send_post_request($url, $data)
-    { 
+    public static function send_post_request($url, $data){
+
         if (!function_exists('getallheaders')) {
             function getallheaders() {
             $headers = [];

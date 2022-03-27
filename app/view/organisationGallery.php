@@ -9,7 +9,8 @@
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <title>Document</title>
+    <link rel="icon" href="/Public/assets/visal logo.png" type="image/icon type">
+    <title>Communityretreat</title>
 </head>
 <style>
     .form {
@@ -177,6 +178,7 @@
 
 <script>
     const input = document.querySelector('#files');
+    let save_flag = false;
     input.addEventListener('change', handleFileSelect);
 
     document.querySelector("#file-form").addEventListener("submit", handleForm);
@@ -224,6 +226,14 @@
 
 
     function handleForm(event) {
+        if (save_flag) {
+            event.preventDefault();
+            return;
+        }
+        save_flag = true;
+        let save_button = document.querySelector(".save-button");
+        save_button.disabled = true;
+
         if (storedFiles.length == 0)
             location.reload();
 
@@ -263,6 +273,7 @@
                 }
             }
         });
+        save_button.disabled = false;
     }
 
     function removeFile(e) {

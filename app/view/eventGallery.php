@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="/Public/assets/newstyles.css">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <title>Event Gallery</title>
+    <link rel="icon" href="/Public/assets/visal logo.png" type="image/icon type">
+    <title>Communityretreat</title>
 </head>
 <style>
     .form {
@@ -155,11 +156,13 @@
         <div class="flex-row flex-center position-absolute position-bottom">
             <ul class="pagination">
                 <li><a href="/Event/view?page=gallery&&event_id=<?= $_GET["event_id"] ?>&&pageno=1"><i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i>&nbsp;First</a></li>
-                <li class="<?php if ($pageno <= 1) {echo 'disabled';} ?>">
+                <li class="<?php if ($pageno <= 1) {
+                                echo 'disabled';
+                            } ?>">
                     <a href="<?php if ($pageno <= 1) {
                                     echo '';
                                 } else {
-                                    echo "/Event/view?page=gallery&&event_id=" .$_GET["event_id"] . "&&pageno=" . ($pageno - 1);
+                                    echo "/Event/view?page=gallery&&event_id=" . $_GET["event_id"] . "&&pageno=" . ($pageno - 1);
                                 } ?>"><i class="fas fa-chevron-left"></i>&nbsp;Prev</a>
                 </li>
                 <li class="<?php if ($pageno >= $total_pages) {
@@ -168,7 +171,7 @@
                     <a href="<?php if ($pageno >= $total_pages) {
                                     echo '#';
                                 } else {
-                                    echo "/Event/view?page=gallery&&event_id=" .$_GET["event_id"] . "&&pageno=" . ($pageno + 1);
+                                    echo "/Event/view?page=gallery&&event_id=" . $_GET["event_id"] . "&&pageno=" . ($pageno + 1);
                                 } ?>">Next&nbsp;<i class="fas fa-chevron-right"></i></a>
                 </li>
                 <li><a href="/Event/view?page=gallery&&event_id=<?= $_GET["event_id"] ?>&&pageno=<?php echo $total_pages; ?>">Last&nbsp;<i class="fas fa-chevron-right"></i><i class="fas fa-chevron-right"></i></a></li>
@@ -180,6 +183,7 @@
 
 <script>
     const input = document.querySelector('#files');
+    let save_flag = false;
     input.addEventListener('change', handleFileSelect);
 
     document.querySelector("#file-form").addEventListener("submit", handleForm);
@@ -224,6 +228,14 @@
 
 
     function handleForm(event) {
+        if (save_flag) {
+            event.preventDefault();
+            return;
+        }
+        save_flag = true;
+        let save_button = document.querySelector(".save-button");
+        save_button.disabled = true;
+        console.log("dasda");
         if (storedFiles.length == 0)
             location.reload();
 
@@ -264,6 +276,7 @@
                 }
             }
         });
+        save_button.disabled = false;
     }
 
     function removeFile(e) {

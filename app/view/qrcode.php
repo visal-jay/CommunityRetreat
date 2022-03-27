@@ -9,7 +9,8 @@
     <script src="/Libararies/qrcode/qrcode.js" ></script>
 <script src="/Libararies/qrcode/qrcode.min.js" ></script>
 
-    <title>Document</title>
+    <link rel="icon" href="/Public/assets/visal logo.png" type="image/icon type">
+    <title>Communityretreat</title>
 </head>
 
 <body>

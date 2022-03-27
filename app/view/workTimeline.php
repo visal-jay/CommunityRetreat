@@ -275,12 +275,12 @@
 
                     <div class="form-item">
                         <label>Start Date</label>
-                        <input type="date" name="start_date" class="form form-ctrl" data-placeholder="Task starts on?" required></input>
+                        <input type="date" id="start_date" name="start_date" class="form form-ctrl" data-placeholder="Task starts on?" required></input>
                     </div>
 
                     <div class="form-item">
                         <label>End Date</label>
-                        <input type="date" name="end_date" class="form form-ctrl" data-placeholder="Task ends on?" required></input>
+                        <input type="date" id="end_date" name="end_date" class="form form-ctrl" data-placeholder="Task ends on?" required></input>
                     </div>
 
                     <div class="form-item">
@@ -351,8 +351,17 @@
         }
     }
 
+    document.getElementById("start_date").addEventListener("change", () => {
+        document.getElementById("end_date").setAttribute("min", document.getElementById("start_date").value);
+    });
+
+    document.getElementById("edit-start-date").addEventListener("change", () => {
+        document.getElementById("edit-end-date").setAttribute("min", document.getElementById("edit-start-date").value);
+    });
+
     function editForm(start_date, end_date, task, task_id) {
         document.getElementById("edit-start-date").value = start_date;
+        document.getElementById("edit-end-date").setAttribute("min", document.getElementById("edit-start-date").value);
         document.getElementById("edit-end-date").value = end_date;
         document.getElementById("edit-task").value = task;
         document.getElementById("edit-task-id").value = task_id;
@@ -364,6 +373,7 @@
     }
 
     function cancel() {
+        edit();
         var cancel = event.target.parentNode;
         cancel.style.display = "none";
         cancel.previousElementSibling.style.display = "";

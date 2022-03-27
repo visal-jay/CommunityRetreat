@@ -149,6 +149,8 @@ if (isset($_SESSION["user"]["user_type"])) {
                             </div>
                         <?php } ?>
                     </div>
+                    <br>
+                    <div>Total</div>
                 </div>
                 <div class="bold sum flex-col">Total volunteers :
                     <?php foreach ($dates as $date) { ?>
@@ -161,6 +163,8 @@ if (isset($_SESSION["user"]["user_type"])) {
                             echo "<div>0</div>";
                         ?>
                     <?php } ?>
+                    <br>
+                   <div><?= array_sum(array_map('intval',array_column($volunteer_count, "daily_volunteers"))); ?></div>
                 </div>
 
             <div class="bold sum flex-col">
@@ -175,6 +179,8 @@ if (isset($_SESSION["user"]["user_type"])) {
                             echo "<div>0</div>";
                         ?>
                     <?php } ?>
+                    <br>
+                    <div><?= array_sum(array_map('intval',array_column($volunteer_count, "participants"))); ?></div>
                 </div>
             </div>
 

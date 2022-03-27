@@ -10,7 +10,8 @@ class Systemfeedback extends Model{
         Model::insert($query,$params); 
 
     } 
-    
+
+    //Get feedbacks to render to view
     public function renderSystemFeedbacks($data){
 
         $query = "SELECT * FROM system_feedback ORDER BY date DESC LIMIT :offset , :no_of_records_per_page";
@@ -19,6 +20,8 @@ class Systemfeedback extends Model{
         return $results;
 
     }
+
+    //Set feedback as viewed
     public function changeFeedbackState($data){
         
         $query = "UPDATE system_feedback SET viewed = 1 WHERE feedback_id =:feedback_id";

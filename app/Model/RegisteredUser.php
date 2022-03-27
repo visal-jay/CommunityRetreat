@@ -91,7 +91,7 @@ class RegisteredUser extends User
         for($i=0;$i<count($result);$i++){
 
             $event_params = ["event_id" =>  $result[$i]['event_id'],"volunteer_date" => $result[$i]['volunteer_date']];
-            $get_event_query = 'SELECT  volunteer.event_id,event_name,organisation_username ,MONTH(volunteer_date) AS month, DAY(volunteer_date) AS day FROM event_details JOIN volunteer  ON event_details.event_id = volunteer.event_id WHERE  volunteer.event_id = :event_id AND volunteer.volunteer_date =:volunteer_date '; //Get event details from event view
+            $get_event_query = "SELECT  volunteer.event_id,event_name,organisation_username ,MONTH(volunteer_date) AS month, DAY(volunteer_date) AS day FROM event_details JOIN volunteer  ON event_details.event_id = volunteer.event_id WHERE  volunteer.event_id = :event_id AND volunteer.volunteer_date =:volunteer_date AND event_details.status = 'published' "; //Get event details from event view
             $event_result = Model::select($get_event_query,  $event_params);
             array_push($event_details,$event_result);
         }

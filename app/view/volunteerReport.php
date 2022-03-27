@@ -153,7 +153,9 @@ if (isset($_SESSION["user"]["user_type"])) {
                 <div class="bold sum flex-col">Total volunteers :
                     <?php foreach ($dates as $date) { ?>
                         <!--display the sum of incomes-->
-                        <?php if ($index = array_search($date, array_column($volunteer_count, "day")))
+                        <?php
+                        $index = array_search($date, array_column($volunteer_count, "day"));
+                         if ($index !== false)
                             echo "<div>" . $volunteer_count[$index]["daily_volunteers"] . "</div>";
                         else
                             echo "<div>0</div>";
@@ -165,7 +167,9 @@ if (isset($_SESSION["user"]["user_type"])) {
                 <div>Actual participants :
                     <?php foreach ($dates as $date) { ?>
                         <!--display the sum of expenses-->
-                        <?php if ($index = array_search($date, array_column($participant_count, "day")))
+                        <?php
+                        $index = array_search($date, array_column($participant_count, "day")); 
+                        if ($index !== false)
                             echo "<div>" . $participant_count[$index]["participants"] . "</div>";
                         else
                             echo "<div>0</div>";

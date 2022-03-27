@@ -206,7 +206,7 @@ class Volunteer extends Model
     }
 
     public function getDailyVolunteerCount($event_id){
-        $query= "SELECT COUNT(uid) as daily_volunteers, date_format(date,'%x-%m-%d') as day FROM volunteer WHERE event_id = :event_id GROUP BY day ORDER BY day ASC";
+        $query= "SELECT COUNT(uid) as daily_volunteers, date_format(volunteer_date,'%x-%m-%d') as day FROM volunteer WHERE event_id = :event_id GROUP BY day ORDER BY day ASC";
         $params = ["event_id" => $event_id];
         $result = Model::select($query, $params);
         if (count($result) == 0)

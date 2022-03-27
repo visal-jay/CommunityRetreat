@@ -278,6 +278,7 @@
 
     #myVideo {
         scroll-snap-align: end;
+        height: 80vh;
     }
 
     @media screen and (max-width:767px) {

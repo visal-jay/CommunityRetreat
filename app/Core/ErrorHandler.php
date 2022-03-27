@@ -18,6 +18,13 @@ class ErrorHandler
         if ($code != 404) {
             $code = 500;
         }
+        if($code==404){
+            $user_roles = Controller::accessCheck(["admin","organization","registered_user","guest_user"]);
+            View::render("nav",[],$user_roles);
+            View::render("error/error404",[],$user_roles);
+            View::render("footer",[],$user_roles);
+            return;
+        }
         $arr = array('message' => 'blah'); //etc
 
 

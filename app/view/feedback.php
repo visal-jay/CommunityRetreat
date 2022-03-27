@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
-    <title>CommunityRetreat</title>
+    <link rel="icon" href="/Public/assets/visal logo.png" type="image/icon type">
+    <title>Communityretreat</title>
 </head>
 
 <style>
@@ -345,7 +346,7 @@
         <?php if ($registered_user) { ?>
             <div class="popup" id="form">
                 <div class="content">
-                    <form action="/Feedback/addFeedback?event_id= <?= $_GET["event_id"] ?>" method="post" class="form-container">
+                    <form action="/Feedback/addFeedback?event_id=<?= $_GET["event_id"] ?>" method="post" class="form-container">
 
                         <div class="form-item">
                             <label>Tell us what you think about <?= $event_name?> </label>

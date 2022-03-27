@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="/Public/assets/newstyles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://kit.fontawesome.com/c119b7fc61.js" crossorigin="anonymous"></script>
-    <title>Work Timeline</title>
+    <link rel="icon" href="/Public/assets/visal logo.png" type="image/icon type">
+    <title>Communityretreat</title>
 </head>
 
 <style>
@@ -209,7 +210,7 @@
                                 <div><?= $task["task"] ?></div>
 
                                 <update class="margin-md flex-row-to-col">
-                                    <button class="btn btn-small margin-md" onclick="edit(); editForm('<?= $task['start_date'] ?>','<?= $task['end_date'] ?>','<?= $task['task'] ?>' ,'<?= $task['task_id'] ?>'); togglePopup('edit-form'); blur_background('background'); stillBackground('id1');"><i class="btn-icon far fa-edit margin-side-md"></i>Edit</button>
+                                    <button class="btn btn-small margin-md" onclick=" editForm('<?= $task['start_date'] ?>','<?= $task['end_date'] ?>','<?= $task['task'] ?>' ,'<?= $task['task_id'] ?>'); togglePopup('edit-form'); blur_background('background'); stillBackground('id1');"><i class="btn-icon far fa-edit margin-side-md"></i>Edit</button>
 
                                     <?php if ($task['completed'] == 0) { ?>
                                         <button class="btn btn-small margin-md" onclick="window.location.href='/WorkTimeline/completed?event_id=<?= $_GET['event_id'] ?>&&task_id=<?= $task['task_id'] ?>'"><i class="far fa-check-square"></i>&nbsp;&nbsp;Mark as completed</button>
@@ -274,12 +275,12 @@
 
                     <div class="form-item">
                         <label>Start Date</label>
-                        <input type="date" name="start_date" class="form form-ctrl" data-placeholder="Task starts on?" required></input>
+                        <input type="date" id="start_date" name="start_date" class="form form-ctrl" data-placeholder="Task starts on?" required></input>
                     </div>
 
                     <div class="form-item">
                         <label>End Date</label>
-                        <input type="date" name="end_date" class="form form-ctrl" data-placeholder="Task ends on?" required></input>
+                        <input type="date" id="end_date" name="end_date" class="form form-ctrl" data-placeholder="Task ends on?" required></input>
                     </div>
 
                     <div class="form-item">
@@ -339,19 +340,17 @@
         document.getElementById(id).classList.toggle("still");
     }
 
-    function edit() {
-        var data = document.getElementsByClassName("data");
-        var form = document.getElementsByClassName("form");
-        for (var i = 0; i < data.length; i++) {
-            data[i].classList.toggle("hidden");
-        }
-        for (var i = 0; i < form.length; i++) {
-            form[i].classList.toggle("hidden");
-        }
-    }
+    document.getElementById("start_date").addEventListener("change", () => {
+        document.getElementById("end_date").setAttribute("min", document.getElementById("start_date").value);
+    });
+
+    document.getElementById("edit-start-date").addEventListener("change", () => {
+        document.getElementById("edit-end-date").setAttribute("min", document.getElementById("edit-start-date").value);
+    });
 
     function editForm(start_date, end_date, task, task_id) {
         document.getElementById("edit-start-date").value = start_date;
+        document.getElementById("edit-end-date").setAttribute("min", document.getElementById("edit-start-date").value);
         document.getElementById("edit-end-date").value = end_date;
         document.getElementById("edit-task").value = task;
         document.getElementById("edit-task-id").value = task_id;

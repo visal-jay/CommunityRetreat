@@ -36,8 +36,8 @@ class WorkTimelineController
         (new UserController)->addActivity("You edited an existing task of {$event['event_name']}", $_GET["event_id"]); //insert a new activity
         $id = (new Organisation)->getUserRoles($_GET["event_id"]);
         for ($i = 0; $i < count($id); $i++){
-            if ($id[$i]["moderator_flag"] == 1) { //sending notifications to all moderators
-                (new UserController)->sendNotifications("Some task details of {$event['event_name']} has been edited!", $id[$i]["uid"], "event", "window.location.href='/event/view?page=about&&event_id={$_GET["event_id"]}'", $_GET["event_id"],"editNewTaskMail",["event_name" => $event['event_name']],"Some task of {$event['event_name']} has been edited...!");
+            if ($id[$i]["moderator_flag"] == 1) {
+                (new UserController)->sendNotifications("Some task details of {$event['event_name']} has been edited!", $id[$i]["uid"], "event", "window.location.href='/event/view?page=about&&event_id={$_GET["event_id"]}'", $_GET["event_id"],"editTaskMail",["event_name" => $event['event_name']],"Some task of {$event['event_name']} has been edited...!");
             }
         }
         $_POST["event_id"] = $_GET["event_id"];

@@ -1,8 +1,8 @@
 "use strict";
 
-const date = new Date();
+const date = new Date(); //Create date object
 
-const months = [
+const months = [    
     "January",
     "February",
     "March",
@@ -14,13 +14,12 @@ const months = [
     "September",
     "October",
     "November",
-    "December"
-    
-];
+    "December"   
+];  //Month array
 
 
 
-let event_details = renderEvents();
+let event_details = renderEvents();  //Get event details for the calendar
 
 let calender_data2=[];
 
@@ -28,13 +27,13 @@ for(let i=0 ; i<event_details.length ; i++ ){
 
     let same_date_event = calender_data2.filter(date => { 
         console.log(date.date +  "==" + event_details[i][0].day + "&&" + date.month  +  "==" + event_details[i][0].month);
-        return date.date == event_details[i][0].day && date.month == event_details[i][0].month});
+        return date.date == event_details[i][0].day && date.month == event_details[i][0].month}); //check event date one by one and returns the same date events
     console.log(same_date_event);
-    if(same_date_event.length > 0){
+    if(same_date_event.length > 0){ // If Array that have events which have same date > 0
 
-        let item_index = calender_data2.findIndex(date => {return date.date == event_details[i][0].day && date.month == event_details[i][0].month});
+        let item_index = calender_data2.findIndex(date => {return date.date == event_details[i][0].day && date.month == event_details[i][0].month}); //Find the indexes of the events that are held on same date
         console.log(item_index);
-        calender_data2[item_index].event.push
+        calender_data2[item_index].event.push  //Push to event details to array
            ( {
                 event_id: event_details[i][0].event_id,
                 eventname: event_details[i][0].event_name,
@@ -65,13 +64,13 @@ for(let i=0 ; i<event_details.length ; i++ ){
 
 function popupLoad(index,selected_date){
 
-    document.querySelector('.event-items').innerHTML ="";
-    if(index==-1){
+    document.querySelector('.event-items').innerHTML =""; //By default set event items division as empty
+    if(index==-1){ //If no events on selected date 
         document.querySelector('.date-event-popup p').innerHTML = selected_date; 
-        document.querySelector('.event-items').innerHTML = `<h2  style=" text-align:center;padding-top:0.5rem;color: lightslategray;">No events</h2>`;
+        document.querySelector('.event-items').innerHTML = `<h2  style=" text-align:center;padding-top:0.5rem;color: lightslategray;">No events</h2>`; //Set no events
     }
     else{
-        for(let eventIndex=0; eventIndex< calender_data2[index].event.length;eventIndex++){
+        for(let eventIndex=0; eventIndex < calender_data2[index].event.length;eventIndex++){
 
             document.querySelector('.date-event-popup p').innerHTML =  months[calender_data2[index].month-1] + " " +calender_data2[index].date +" "+date.getFullYear();
     

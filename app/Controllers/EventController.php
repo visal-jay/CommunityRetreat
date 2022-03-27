@@ -129,16 +129,16 @@ class EventController
                 unset($_POST[$key]);
         }
         $volunteer = new Volunteer;
-        $volunteered_uid = $volunteer->getvolunteereduidOutofRange( $_GET["event_id"], $_POST["start_date"], $_POST["end_date"]);
+        $volunteered_uid = $volunteer->getvolunteereduidOutofRange( $_GET["event_id"], $_POST["start_date"], $_POST["end_date"]); //Get volunteers uids which are not belongs to of updated event date range
         for ($i = 0; $i < count($volunteered_uid); $i++) {
             foreach ($volunteered_uid[$i] as $uid) {
-                $user->sendNotifications("{$_POST['event_name']} event informations has been changed.Please volunteer again..!",$uid,"event","window.location.href='/Event/view?page=about&&event_id={$_GET["event_id"]}'",$_GET["event_id"],"eventUpdateMail",["event_name"=>$_POST['event_name'] ,"volunteered_date_changed"=> true],"{$_POST['event_name']} event informations has been changed..!");
-                $volunteer->removeVolunteersOutofRange( $_GET["event_id"],$uid,$_POST["start_date"],$_POST["end_date"]);
+                $user->sendNotifications("{$_POST['event_name']} event informations has been changed.Please volunteer again..!",$uid,"event","window.location.href='/Event/view?page=about&&event_id={$_GET["event_id"]}'",$_GET["event_id"],"eventUpdateMail",["event_name"=>$_POST['event_name'] ,"volunteered_date_changed"=> true],"{$_POST['event_name']} event informations has been changed..!"); //Send notifications to volunteers who are kicked out because of the event date range update.
+                $volunteer->removeVolunteersOutofRange( $_GET["event_id"],$uid,$_POST["start_date"],$_POST["end_date"]); //Remove volunteers who are kicked out because of the event date range update.
             }
         }
-        (new VolunteerController)->sendNotificationstoVolunteers("{$_POST['event_name']} event informations has been changed!","/Event/view?page=about&event_id={$_GET["event_id"]}",$_GET["event_id"],"eventUpdateMail",["event_name"=>$_POST['event_name'] ,"volunteered_date_changed"=> false],"{$_POST['event_name']} event informations has been changed..!");
+        (new VolunteerController)->sendNotificationstoVolunteers("{$_POST['event_name']} event informations has been changed!","/Event/view?page=about&event_id={$_GET["event_id"]}",$_GET["event_id"],"eventUpdateMail",["event_name"=>$_POST['event_name'] ,"volunteered_date_changed"=> false],"{$_POST['event_name']} event informations has been changed..!"); //Send notifications to volunteers who are not kicked out because of the event date range update.
         $events = new Events;
-        $events->updateDetails(array_merge($_POST, $_GET));
+        $events->updateDetails(array_merge($_POST, $_GET)); //Update the event details
         Controller::redirect("/Event/view", ["page" => "about", "event_id" => $_GET["event_id"]]);
     }
 
@@ -151,23 +151,23 @@ class EventController
         $event = new Events();
         $event_details = $event->getDetails($_POST["event_id"]);
         $end_date = $event_details["end_date"];
-        $userroles = (new Organisation)->getUserRoles($_POST["event_id"]);
+        $userroles = (new Organisation)->getUserRoles($_POST["event_id"]); //Get moderators and treasurers of the event
         $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === 0 ? 'https://' : 'http://';
         $DOMAIN = $protocol . $_SERVER['HTTP_HOST'];
         foreach($userroles as $user)
         {
             if($user["moderator_flag"])  
-                Controller::send_post_request($DOMAIN."/Organisation/deleteUserRole?event_id" . $_POST["event_id"],["role"=>"Moderator","uid"=>$user["uid"]]);
+                Controller::send_post_request($DOMAIN."/Organisation/deleteUserRole?event_id" . $_POST["event_id"],["role"=>"Moderator","uid"=>$user["uid"]]); //Send post request to  call deleteUserrole method to delete moderator of the removed event
             if($user["treasurer_flag"])
-                Controller::send_post_request($DOMAIN."/Organisation/deleteUserRole?event_id" . $_POST["event_id"],["role"=>"Treasurer","uid"=>$user["uid"]]);
+                Controller::send_post_request($DOMAIN."/Organisation/deleteUserRole?event_id" . $_POST["event_id"],["role"=>"Treasurer","uid"=>$user["uid"]]); //Send post request to  call deleteUserrole method to delete treasurer of the removed event
         }
         
         if (gmdate("Y-m-d", $time) < $end_date) {
-            (new DonationsController)->donationRefund($_POST["event_id"]);
+            (new DonationsController)->donationRefund($_POST["event_id"]); //Refund the donation of the removed event
         }
-        (new VolunteerController)->sendNotificationstoVolunteers("{$event_details['event_name']} event  has been removed.","/",$_POST["event_id"],"removeEventMail",["event_name"=>$event_details['event_name']],"{$event_details['event_name']} event  has been removed.");
-        (new Volunteer)->removeVolunteers($_POST["event_id"]);
-        $event->remove($_POST["event_id"]);
+        (new VolunteerController)->sendNotificationstoVolunteers("{$event_details['event_name']} event  has been removed.","/",$_POST["event_id"],"removeEventMail",["event_name"=>$event_details['event_name']],"{$event_details['event_name']} event  has been removed."); //Send notification to all the volunteers who are volunteered to the removed event
+        (new Volunteer)->removeVolunteers($_POST["event_id"]); //Remove volunteers of the removed event
+        $event->remove($_POST["event_id"]); //Remove event
         Controller::redirect("/Organisation/events");
     }
 

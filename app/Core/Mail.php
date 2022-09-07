@@ -21,7 +21,7 @@ class Mail
         $this->mail->Host       = 'smtp.sendgrid.net;';
         $this->mail->SMTPAuth   = true;
         $this->mail->Username   = 'apikey';
-        $this->mail->Password   = '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';
+        $this->mail->Password   = getenv('SENDGRID_API_KEY');
         $this->mail->SMTPSecure = 'tls';
         $this->mail->Port       = 587;
         $this->mail->setFrom('communityretreatproject@gmail.com', 'Commuintyretreat');

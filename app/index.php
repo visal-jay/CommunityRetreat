@@ -11,9 +11,13 @@ function autoLoad($name)
     else if (file_exists('./Core/' . $name . '.php')) {
         require_once './Core/' . $name . '.php';
     }
+    require_once '.env';
 }
 
 spl_autoload_register('autoLoad');
+
+$dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__);
+$dotenv->load();
 
 error_reporting(E_ALL);
 set_error_handler('ErrorHandler::error');
